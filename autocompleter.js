@@ -41,7 +41,7 @@ AutoFieldFromLocal = Class.create({
     var self = this;
     this.listElements.each(function (li) {					
       Event.observe(li, 'mouseover', self.onMouseOverList.bindAsEventListener(self));
-      Event.observe(li, 'click', self.updateField.bindAsEventListener(self));
+      Event.observe(li, 'mousedown', self.updateField.bindAsEventListener(self));
     });
     this.hideMask();
   },
@@ -60,11 +60,18 @@ AutoFieldFromLocal = Class.create({
     }
   },
   onBlured: function () {
+	// make sure input field has been updated before input lost cursor and completerDiv hide.
+	// input will not be updated when mouse left button pressed long time and not release it 
+	// because input lost focus. Using 
+	// Event.observe(li, 'mousedown', self.updateField.bindAsEventListener(self));
+	// instead of click event on li element. 
+	// Event.observe(li, 'list', self.updateField.bindAsEventListener(self));
     var self = this;
+	// Event.observe(document, 'mouseup', function(){self.completerDiv.hide();self.hideMask();});
     if (this.timer) clearTimeout(this.timer);
     this.timer = setTimeout(function () {
-      self.hideMask();
-      self.completerDiv.hide();
+    	    self.completerDiv.hide();
+    	    self.hideMask();
     }, 100);
   },
   updateField: function () {
@@ -79,7 +86,7 @@ AutoFieldFromLocal = Class.create({
   },
   onSelectList: function () {
     this.listElements.each(function (li) {
-      li.style.backgroundColor = "#fff";					
+      li.style.backgroundColor = "#fff";			
     });
     this.listElements[this.index].style.backgroundColor = "#ffb";
   },
@@ -87,7 +94,7 @@ AutoFieldFromLocal = Class.create({
     var maxScrollTop = this.completerDiv.scrollHeight - this.completerDiv.clientHeight;
     var scrollBottom = this.completerDiv.clientHeight + this.completerDiv.scrollTop;
     var listHeight = this.listElements[0] ? this.listElements[0].clientHeight : 20; 
-    // TODO , get li.clientHeight after insert li element and then remove it if ul list has no li child.
+    // TODO, get li.clientHeight after insert li element and then remove it if ul list has no li child.
     if (this.index == 0) 
       this.completerDiv.scrollTop = 0;
     else if (this.index == this.listElements.length - 1)
@@ -133,6 +140,7 @@ AutoFieldFromLocal = Class.create({
         return;
       case Event.KEY_TAB:
       case Event.KEY_RETURN:
+      	if (!this.listsShowed()) return;
         this.updateField();
         Event.stop(event);
         return;
@@ -147,7 +155,7 @@ AutoFieldFromLocal = Class.create({
           return;
         }
     }
-      if (this.observer) clearTimeout(this.observer);
+    if (this.observer) clearTimeout(this.observer);
     var self = this;
     this.observer = setTimeout(function () {self.onFieldChange(event)}, 100);				
   },
@@ -168,7 +176,7 @@ onFieldChange: function (event) {
         // safari 13px, firefox3 14px
         // li width must be set 100% and display block for ie, and ie scrollbar movement has related with li width, sign...
         // font size should be little than 14px in ie
-        listItems += "<li style='line-height:20px;padding:0;margin:0;display:block;width:100%;cursor:default;'>" + item + "</li>";
+        listItems += "<li style='line-height:20px;padding:0;margin:0;display:block;width:100%;cursor:default;white-space:nowrap;'>" + item + "</li>";
         if (!find) find = true;
       }
     });

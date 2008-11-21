@@ -19,8 +19,7 @@ Tabs.prototype = {
 			removableClassName: "removable",
 			activedTabClassName: "activedTab",
 			tabContentClassName: "tabContent", // tab content default hidden.
-			activedTabContentClassName: "activedTabContent", // show which tab content.
-			removable: false // if true, mean this tab can be removed.
+			activedTabContentClassName: "activedTabContent" // show which tab content.
 		};
 		this.options = Object.extend(options, arguments[1] || {});
 		this.tabs = $A(document.getElementsByTagName("LI")).select(function(li){
@@ -33,6 +32,7 @@ Tabs.prototype = {
 		// find the first actived tab.
 		this.activedTab = activedTabs.length > 0 ? activedTabs[0] : this.tabs[0];
 		this.activedTab.addClassName(this.options.activedTabClassName);
+		// TODO: first descendant may not anchor link!
 		this.activedLink = this.activedTab.firstDescendant(); // li:first-child => a
 		// console.log(this.activedLink);
 		$(this.activedLink.title).addClassName(this.options.activedTabContentClassName);
@@ -85,7 +85,7 @@ Tabs.prototype = {
 		var list = document.createElement("LI");
 		list.setAttribute("class", this.options.tabClassName);
 		list.appendChild(link);
-		if (arguments[3] || this.options.removable) {
+		if (arguments[3]) {
 			var span = document.createElement("SPAN");
 			span.setAttribute("class", this.options.removableClassName);
 			list.appendChild(span);

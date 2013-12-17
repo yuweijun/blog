@@ -1,0 +1,5 @@
+TODO LIST:
+
+Turn register globals off.
+Check database connection config in setup.
+debugger css and js move to out file.

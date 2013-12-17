@@ -1,0 +1,528 @@
+h1,h2,h3,h4,h5,h6,p {
+	margin: 0;
+	padding: 0;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: Verdana;
+}
+
+hr {
+	color: #333;
+	border: 1px solid #121212;
+}
+
+pre {
+	height: auto;
+	overflow-x: scroll;
+}
+
+fieldset {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+a {
+	color: #6598b8;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #222;
+	text-decoration: underline;
+}
+
+a img {
+	border: none;
+}
+
+code {
+	color: #3366cc;
+	font-style: italic;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: trebuchet ms, arial, helvetica, sans-serif;
+	background: #252C34 url(images/body_bg.jpg) top center no-repeat;
+}
+
+/* Header and wrapper */
+#wrapper {
+	margin: 0 auto;
+	width: 960px;
+	text-align: left;
+	padding: 0;
+}
+
+#header {
+	padding: 0;
+	clear: both;
+	height: 44px;
+	width: 960px;
+	margin: 0 auto;
+	background: #333;
+}
+
+#headerright {
+	text-align: right;
+	float: right;
+	width: 100px;
+	margin: 0 20px;
+	height: 44px;
+}
+
+#headerright a {
+	color: #fff;
+	font-size: 12px;
+	text-decoration: none;
+}
+	
+#headerleft {
+	float: left;
+	width: 500px;
+	font-size: 24px;
+	padding: 0;
+	margin: 0 20px;
+	height: 44px;
+	line-height: 44px;
+}
+
+#headerleft a {
+	color: #fff;
+	text-decoration: none;
+}
+
+#newpost {
+    position: relative;
+}
+
+#newpost a {
+    left: 180px;
+    font-size: 10px;
+    position: absolute;
+    top: 5px;
+    color: hsla(270, 90%, 85%, 1);
+}
+
+#newpost a:hover {
+    color: hsla(210, 80%, 55%, 1);
+}
+
+/* Top Content */
+#main {
+	margin: 5px 15px 0 15px;
+	clear: both;
+	width: 930px;
+	padding-bottom: 5px;
+}
+
+.comments {
+	text-align: right;
+}
+
+.posts {
+	margin: 5px 0 25px 0;
+	padding: 8px 15px;
+	background: url(images/bg-trans.png) repeat;
+}
+
+h2.postTitle {
+	overflow: hidden;
+	height: 24px;
+}
+
+.posts h2.postTitle a {
+	font-size: 16pt;
+	font-weight: normal;
+	color: #fff;
+}
+
+.posts h2.postTitle a:hover {
+	text-decoration: none;
+	color: #abd1ea;
+}
+
+.posts p.postMeta {
+	font-size: 9pt;
+	color: #cdcdcd;
+}
+
+.posts p.postMeta a {
+	text-decoration: underline;
+	color: #fff;
+}
+
+.posts p.postMeta a:hover {
+	color: #ccc;
+}
+
+.posts div.postContent {
+	color: #efefef;
+	margin: 8px 0;
+	height: 135px;
+	overflow: hidden;
+}
+
+.posts div.postContent p {
+	font-size: 14px;
+	color: #000;
+}
+
+.posts div.postContent a {
+	text-decoration: underline;
+	color: #fff;
+}
+
+.posts div.postContent a:hover {
+	text-decoration: underline;
+	color: #ff9933;
+}
+
+.posts div.postContent ul,.posts div.postContent ol {
+	padding: 0 0 0 30px;
+}
+
+.posts div.postContent ul li,.posts div.postContent ol li {
+	color: #eee;
+}
+
+.posts span.postComments,.posts span.topMore,.posts span.topTags {
+	font-size: 9pt;
+	font-style: italic;
+	background: url(images/bg-trans.png) repeat;
+	padding: 8px 10px;
+	margin-right: 5px;
+	line-height: 27pt;
+	color: #fff;
+	border: 1px solid #111;
+}
+
+.posts span.linkpages {
+	font-size: 9pt;
+	font-style: italic;
+	color: #fff;
+	margin-bottom: 10px;
+	display: block;
+}
+
+.posts span.linkpages a:hover {
+	color: #ddd;
+}
+
+.posts span.postComments:hover {
+	background: #040404;
+}
+
+.posts span.postComments a {
+	color: #fff;
+	background: url(images/comments.gif) left no-repeat;
+	padding-left: 20px;
+	line-height: 27pt;
+	vertical-align: middle;
+}
+
+.posts span.postComments a:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+
+ul.pagination {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul.pagination li {
+	display: block;
+	float: left;
+	border: 1px solid #fff;
+	margin: 0 0 0 10px;
+	width: 20px;
+	font-size: 12px;
+	color: #fff;
+	line-height: 20px;
+	height: 20px;
+	text-align: center;
+	background: url(images/bg-trans.png) repeat;
+}
+
+/* Comments */
+#comments {
+	margin-bottom: 10px;
+	margin-top: 15px;
+	background: #040404;
+	width: 530px;
+	/* fixes bug in IE7 where putting focus on the text makes it disappear behind the background. yeah, weird. they call it a dimensional bug. */
+	border: 1px solid #090909;
+	padding: 0px 15px 10px 15px;
+	color: #fff;
+}
+
+#comments h3 {
+	font-size: 10pt;
+	font-weight: normal;
+	color: #fff;
+	margin: 15px 0;
+	padding: 0;
+}
+
+#comments p a {
+	color: #6598b8;
+}
+
+#comments p a:hover {
+	color: #fff;
+}
+
+#comments p {
+	padding: 0;
+	margin: 7px 0;
+}
+
+#loginform {
+	margin: 20px;
+	text-align: center;
+}
+
+ul.commentlist,ul.trackback {
+	list-style-type: none;
+	margin: 10px 0;
+	font-size: 9pt;
+}
+
+.commentlist li,.trackback li {
+	margin: 10px 0 15px 0;
+	padding: 10px;
+	background: #080808;
+	border: 1px solid #040404;
+	list-style-type: none;
+}
+
+.commentlist li.alt {
+	background: #000;
+	border: 1px solid #020202;
+	border: none;
+	margin-top: 10px;
+}
+
+.commentlist li.cleared {
+	background: transparent;
+	border: none;
+}
+
+.commentlist a:hover {
+	color: #eee;
+}
+
+.commentlist a.gravatar {
+	float: left;
+	margin: 0 15px 10px 0;
+	width: 60px;
+}
+
+.commentlist .commentbody {
+	margin: 0;
+	padding: 0;
+}
+
+.commentlist .commentbody p a {
+	text-decoration: underline;
+}
+
+.commentlist cite {
+	font-size: 10pt;
+	font-style: normal;
+	color: #ddd;
+}
+
+.commentlist small.commentmetadata a {
+	color: #666;
+}
+
+.commentlist p {
+	color: #dedede;
+}
+
+#respond {
+	clear: both;
+	margin-top: 15px;
+}
+
+textarea#comment {
+	width: 450px;
+	background: #fff;
+	color: #111;
+	padding: 10px;
+}
+
+#comments #submit {
+	margin: 0;
+}
+
+/* footer*/
+#footer {
+	clear: both;
+	background: #000;
+	border: 1px solid #070707;
+	padding: 15px 15px 10px 15px;
+}
+
+#footer p {
+	font-size: 9pt;
+	color: #bbb;
+	padding: 0;
+}
+
+#footer a {
+	color: #bbb;
+	text-decoration: underline;
+}
+
+#footer a:hover {
+	color: #fff;
+}
+
+#footerleft {
+	text-align: center;
+}
+
+#footerright {
+	float: right;
+	width: 300px;
+	text-align: right;
+}
+
+#searchform {
+	margin: 0 15px;
+	text-align: right;
+}
+
+/* Misc */
+.highlight {
+	color: #222;
+	font-weight: bold;
+}
+
+.cleared {
+	margin: 0;
+	padding: 0;
+	clear: both;
+}
+
+.alignleft {
+	float: left;
+	margin: 5px 10px 5px 0;
+}
+
+.alignright {
+	float: right;
+	margin: 5px 0 5px 10px;
+}
+
+.aligncenter,div.aligncenter {
+	margin: 10px auto;
+	text-align: center;
+	display: block;
+}
+
+img.alignleft {
+	float: left;
+	margin: 5px 10px 5px 0;
+}
+
+img.alignright {
+	float: right;
+	margin: 5px 0 5px 10px;
+}
+
+img.aligncenter {
+	margin: 10px auto;
+	text-align: center;
+	display: block;
+}
+
+#nextprevious {
+	float: right;
+}
+
+ul.paging {
+	width: 100%;
+	float: right;
+	margin: 0px;
+	padding: 0px;
+	font-size: 13px;
+	list-style: none;
+}
+
+ul.paging li {
+	height: 21px;
+	line-height: 21px;
+	float: left;
+	text-align: center;
+	margin-left: 5px;
+}
+
+ul.paging a {
+	padding: 2px 8px;
+	font-weight: normal
+}
+
+ul.paging span {
+	padding: 2px 3px;
+	font-weight: bold;
+	color: #000;
+	font-size: 13px;
+}
+
+ul.paging a {
+	color: #000;
+	text-decoration: none;
+	border: 1px solid #000;
+}
+
+ul.paging a:hover {
+	text-decoration: none;
+	background: url(images/bg-trans.png) repeat;
+	color: #fff;
+}
+
+ul.paging a.prn:hover {
+	background: url(images/bg-trans.png) repeat;
+}
+
+#postEditForm {
+	height: 620px;
+	width: 960px;
+	border: 0;
+	margin: 20px auto;
+}
+
+#contentContainer {
+	width: 930px;
+	height: 500px;
+	margin: 20px auto;
+}
+
+#titleContainer {
+	width: 100%;
+	text-align: center;
+}
+
+#title {
+	width: 930px;
+}
+
+#content {
+	height: 100%;
+	width: 100%;
+	border: 0;
+	margin: 0;
+}
+
+#actionContainer {
+	width: 100%;
+	text-align: center;
+}

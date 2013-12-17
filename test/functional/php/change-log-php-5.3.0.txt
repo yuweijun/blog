@@ -1,0 +1,265 @@
+Version 5.3.0
+
+30-Jun-2009
+Upgraded bundled PCRE to version 7.9. (Nuno)
+Upgraded bundled sqlite to version 3.6.15. (Scott)
+Moved extensions to PECL (Derick, Lukas, Pierre, Scott):
+ext/dbase
+ext/fbsql
+ext/fdf
+ext/ncurses
+ext/mhash (BC layer is now entirely within ext/hash)
+ext/ming
+ext/msql
+ext/sybase (not maintained anymore, sybase_ct has to be used instead)
+Removed the experimental RPL (master/slave) functions from mysqli. (Andrey)
+Removed zend.ze1_compatibility_mode. (Dmitry)
+Removed all zend_extension_* php.ini directives. Zend extensions are now always loaded using zend_extension directive. (Derick)
+Removed special treatment of "/tmp" in sessions for open_basedir. Note: This undocumented behaviour was introduced in 5.2.2. (Alexey)
+Removed shebang line check from CGI sapi (checked by scanner). (Dmitry)
+Changed PCRE, Reflection and SPL extensions to be always enabled. (Marcus)
+Changed md5() to use improved implementation. (Solar Designer, Dmitry)
+Changed HTTP stream wrapper to accept any code between and including 200 to 399 as successful. (Mike, Noah Fontes)
+Changed __call() to be invoked on private/protected method access, similar to properties and __get(). (Andrei)
+Changed dl() to be disabled by default. Enabled only when explicitly registered by the SAPI. Currently enabled with cli, cgi and embed SAPIs. (Dmitry)
+Changed opendir(), dir() and scandir() to use default context when no context argument is passed. (Sara)
+Changed open_basedir to allow tightening in runtime contexts. (Sara)
+Changed PHP/Zend extensions to use flexible build IDs. (Stas)
+Changed error level E_ERROR into E_WARNING in Soap extension methods parameter validation. (Felipe)
+Changed openssl info to show the shared library version number. (Scott)
+Changed floating point behaviour to consistently use double precision on all platforms and with all compilers. (Christian Seiler)
+Changed round() to act more intuitively when rounding to a certain precision and round very large and very small exponents correctly. (Christian Seiler)
+Changed session_start() to return false when session startup fails. (Jani)
+Changed property_exists() to check the existence of a property independent of accessibility (like method_exists()). (Felipe)
+Changed array_reduce() to allow mixed $initial (Christian Seiler)
+Improved PHP syntax and semantics:
+Added lambda functions and closures. (Christian Seiler, Dmitry)
+Added "jump label" operator (limited "goto"). (Dmitry, Sara)
+Added NOWDOC syntax. (Gwynne Raskind, Stas, Dmitry)
+Added HEREDOC syntax with double quotes. (Lars Strojny, Felipe)
+Added support for using static HEREDOCs to initialize static variables and class members or constants. (Matt)
+Improved syntax highlighting and consistency for variables in double-quoted strings and literal text in HEREDOCs and backticks. (Matt)
+Added "?:" operator. (Marcus)
+Added support for namespaces. (Dmitry, Stas, Gregory, Marcus)
+Added support for Late Static Binding. (Dmitry, Etienne Kneuss)
+Added support for __callStatic() magic method. (Sara)
+Added forward_static_call(_array) to complete LSB. (Mike Lively)
+Added support for dynamic access of static members using $foo::myFunc(). (Etienne Kneuss)
+Improved checks for callbacks. (Marcus)
+Added __DIR__ constant. (Lars Strojny)
+Added new error modes E_USER_DEPRECATED and E_DEPRECATED. E_DEPRECATED is used to inform about stuff being scheduled for removal in future PHP versions. (Lars Strojny, Felipe, Marcus)
+Added "request_order" INI variable to control specifically $_REQUEST behavior. (Stas)
+Added support for exception linking. (Marcus)
+Added ability to handle exceptions in destructors. (Marcus)
+Improved PHP runtime speed and memory usage:
+Substitute global-scope, persistent constants with their values at compile time. (Matt)
+Optimized ZEND_SIGNED_MULTIPLY_LONG(). (Matt)
+Removed direct executor recursion. (Dmitry)
+Use fastcall calling convention in executor on x86. (Dmitry)
+Use IS_CV for direct access to $this variable. (Dmitry)
+Use ZEND_FREE() opcode instead of ZEND_SWITCH_FREE(IS_TMP_VAR). (Dmitry)
+Lazy EG(active_symbol_table) initialization. (Dmitry)
+Optimized ZEND_RETURN opcode to not allocate and copy return value if it is not used. (Dmitry)
+Replaced all flex based scanners with re2c based scanners. (Marcus, Nuno, Scott)
+Added garbage collector. (David Wang, Dmitry).
+Improved PHP binary size and startup speed with GCC4 visibility control. (Nuno)
+Improved engine stack implementation for better performance and stability. (Dmitry)
+Improved memory usage by moving constants to read only memory. (Dmitry, Pierre)
+Changed exception handling. Now each op_array doesn't contain ZEND_HANDLE_EXCEPTION opcode in the end. (Dmitry)
+Optimized require_once() and include_once() by eliminating fopen(3) on second usage. (Dmitry)
+Optimized ZEND_FETCH_CLASS + ZEND_ADD_INTERFACE into single ZEND_ADD_INTERFACE opcode. (Dmitry)
+Optimized string searching for a single character. (Michal Dziemianko, Scott)
+Optimized interpolated strings to use one less opcode. (Matt)
+Improved php.ini handling: (Jani)
+Added ".htaccess" style user-defined php.ini files support for CGI/FastCGI.
+Added support for special [PATH=/opt/httpd/www.example.com/] and [HOST=www.example.com] sections. Directives set in these sections can not be overridden by user-defined ini-files or during runtime.
+Added better error reporting for php.ini syntax errors.
+Allowed using full path to load modules using "extension" directive.
+Allowed "ini-variables" to be used almost everywhere ini php.ini files.
+Allowed using alphanumeric/variable indexes in "array" ini options.
+Added 3rd optional parameter to parse_ini_file() to specify the scanning mode of INI_SCANNER_NORMAL or INI_SCANNER_RAW. In raw mode option values and section values are treated as-is.
+Fixed get_cfg_var() to be able to return "array" ini options.
+Added optional parameter to ini_get_all() to only retrieve the current value. (Hannes)
+Improved Windows support:
+Update all libraries to their latest stable version. (Pierre, Rob, Liz, Garrett).
+Added Windows support for stat(), touch(), filemtime(), filesize() and related functions. (Pierre)
+Re-added socket_create_pair() for Windows in sockets extension. (Kalle)
+Added inet_pton() and inet_ntop() also for Windows platforms. (Kalle, Pierre)
+Added mcrypt_create_iv() for Windows platforms. (Pierre)
+Added ACL Cache support on Windows. (Kanwaljeet Singla, Pierre, Venkat Raman Don)
+Added constants based on Windows' GetVersionEx information. PHP_WINDOWS_VERSION_* and PHP_WINDOWS_NT_*. (Pierre)
+Added support for ACL (is_writable, is_readable, reports now correct results) on Windows. (Pierre, Venkat Raman Don, Kanwaljeet Singla)
+Added support for fnmatch() on Windows. (Pierre)
+Added support for time_nanosleep() and time_sleep_until() on Windows. (Pierre)
+Added support for symlink(), readlink(), linkinfo() and link() on Windows. They are available only when the running platform supports them. (Pierre)
+the GMP extension now relies on MPIR instead of the GMP library. (Pierre)
+Added Windows support for stream_socket_pair(). (Kalle)
+Drop all external dependencies for the core features. (Pierre)
+Drastically improve the build procedure (Pierre, Kalle, Rob):
+VC9 (Visual C++ 2008) or later support
+Initial experimental x64 support
+MSI installer now supports all recent Windows versions, including Windows 7. (John, Kanwaljeet Singla)
+Improved and cleaned CGI code:
+FastCGI is now always enabled and cannot be disabled. See sapi/cgi/CHANGES for more details. (Dmitry)
+Added CGI SAPI -T option which can be used to measure execution time of script repeated several times. (Dmitry)
+Improved streams:
+Fixed confusing error message on failure when no errors are logged. (Greg)
+Added stream_supports_lock() function. (Benjamin Schulz)
+Added context parameter for copy() function. (Sara)
+Added "glob://" stream wrapper. (Marcus)
+Added "params" as optional parameter for stream_context_create(). (Sara)
+Added ability to use stream wrappers in include_path. (Gregory, Dmitry)
+Improved DNS API
+Added Windows support for dns_check_record(), dns_get_mx(), checkdnsrr() and getmxrr(). (Pierre)
+Added support for old style DNS functions (supports OSX and FBSD). (Scott)
+Added a new "entries" array in dns_check_record() containing the TXT elements. (Felipe, Pierre)
+Improved hash extension:
+Changed mhash to be a wrapper layer around the hash extension. (Scott)
+Added hash_copy() function. (Tony)
+Added sha224 hash algorithm to the hash extension. (Scott)
+Improved IMAP support (Pierre):
+Added imap_gc() to clear the imap cache
+Added imap_utf8_to_mutf7() and imap_mutf7_to_utf8()
+Improved mbstring extension:
+Added "mbstring.http_output_conv_mimetypes" INI directive that allows common non-text types such as "application/xhtml+xml" to be converted by mb_output_handler(). (Moriyoshi)
+Improved OCI8 extension (Chris Jones/Oracle Corp.):
+Added Database Resident Connection Pooling (DRCP) and Fast Application Notification (FAN) support.
+Added support for Oracle External Authentication (not supported on Windows).
+Improve persistent connection handling of restarted DBs.
+Added SQLT_AFC (aka CHAR datatype) support to oci_bind_by_name.
+Fixed bug #45458 (Numeric keys for associative arrays are not handled properly)
+Fixed bug #41069 (Segmentation fault with query over DB link).
+Fixed define of SQLT_BDOUBLE and SQLT_BFLOAT constants with Oracle 10g ORACLE_HOME builds.
+Changed default value of oci8.default_prefetch from 10 to 100.
+Fixed PECL bug #16035 (OCI8: oci_connect without ORACLE_HOME defined causes segfault) (Chris Jones/Oracle Corp.)
+Fixed PECL bug #15988 (OCI8: sqlnet.ora isn't read with older Oracle libraries) (Chris Jones/Oracle Corp.)
+Fixed PECL bug #14268 (Allow "pecl install oci8" command to "autodetect" an Instant Client RPM install) (Chris Jones/Oracle Corp.)
+Fixed PECL bug #12431 (OCI8 ping functionality is broken).
+Allow building (e.g from PECL) the PHP 5.3-based OCI8 code with PHP 4.3.9 onwards.
+Provide separate extensions for Oracle 11g and 10g on Windows. (Pierre, Chris)
+Improved OpenSSL extension:
+Added support for OpenSSL digest and cipher functions. (Dmitry)
+Added access to internal values of DSA, RSA and DH keys. (Dmitry)
+Fixed a memory leak on openssl_decrypt(). (Henrique)
+Fixed segfault caused by openssl_pkey_new(). (Henrique)
+Fixed bug caused by uninitilized variables in openssl_pkcs7_encrypt() and openssl_pkcs7_sign(). (Henrique)
+Fixed error message in openssl_seal(). (Henrique)
+Improved pcntl extension: (Arnaud)
+Added pcntl_signal_dispatch().
+Added pcntl_sigprocmask().
+Added pcntl_sigwaitinfo().
+Added pcntl_sigtimedwait().
+Improved SOAP extension:
+Added support for element names in context of XMLSchema's <any>. (Dmitry)
+Added ability to use Traversable objects instead of plain arrays. (Joshua Reese, Dmitry)
+Fixed possible crash bug caused by an uninitialized value. (Zdash Urf)
+Improved SPL extension:
+Added SPL to list of standard extensions that cannot be disabled. (Marcus)
+Added ability to store associative information with objects in SplObjectStorage. (Marcus)
+Added ArrayAccess support to SplObjectStorage. (Marcus)
+Added SplDoublyLinkedList, SplStack, SplQueue classes. (Etienne)
+Added FilesystemIterator. (Marcus)
+Added GlobIterator. (Marcus)
+Added SplHeap, SplMinHeap, SplMaxHeap, SplPriorityQueue classes. (Etienne)
+Added new parameter $prepend to spl_autoload_register(). (Etienne)
+Added SplFixedArray. (Etienne, Tony)
+Added delaying exceptions in SPL's autoload mechanism. (Marcus)
+Added RecursiveTreeIterator. (Arnaud, Marcus)
+Added MultipleIterator. (Arnaud, Marcus, Johannes)
+Improved Zend Engine:
+Added "compact" handler for Zend MM storage. (Dmitry)
+Added "+" and "*" specifiers to zend_parse_parameters(). (Andrei)
+Added concept of "delayed early binding" that allows opcode caches to perform class declaration (early and/or run-time binding) in exactly the same order as vanilla PHP. (Dmitry)
+Improved crypt() function: (Pierre)
+Added Blowfish and extended DES support. (Using Blowfish implementation from Solar Designer).
+Made crypt features portable by providing our own implementations for crypt_r and the algorithms which are used when OS does not provide them. PHP implementations are always used for Windows builds.
+Deprecated session_register(), session_unregister() and session_is_registered(). (Hannes)
+Deprecated define_syslog_variables(). (Kalle)
+Deprecated ereg extension. (Felipe)
+Added new extensions:
+Added Enchant extension as a way to access spell checkers. (Pierre)
+Added fileinfo extension as replacement for mime_magic extension. (Derick)
+Added intl extension for Internationalization. (Ed B., Vladimir I., Dmitry L., Stanislav M., Vadim S., Kirti V.)
+Added mysqlnd extension as replacement for libmysql for ext/mysql, mysqli and PDO_mysql. (Andrey, Johannes, Ulf)
+Added phar extension for handling PHP Archives. (Greg, Marcus, Steph)
+Added SQLite3 extension. (Scott)
+Added new date/time functionality: (Derick)
+date_parse_from_format(): Parse date/time strings according to a format.
+date_create_from_format()/DateTime::createFromFormat(): Create a date/time object by parsing a date/time string according to a given format.
+date_get_last_errors()/DateTime::getLastErrors(): Return a list of warnings and errors that were found while parsing a date/time string through:
+strtotime() / new DateTime
+date_create_from_format() / DateTime::createFromFormat()
+date_parse_from_format().
+support for abbreviation and offset based timezone specifiers for the 'e' format specifier, DateTime::__construct(), DateTime::getTimeZone() and DateTimeZone::getName().
+support for selectively listing timezone identifiers by continent or country code through timezone_identifiers_list() / DateTimezone::listIdentifiers().
+timezone_location_get() / DateTimezone::getLocation() for retrieving location information from timezones.
+date_timestamp_set() / DateTime::setTimestamp() to set a Unix timestamp without invoking the date parser. (Scott, Derick)
+date_timestamp_get() / DateTime::getTimestamp() to retrieve the Unix timestamp belonging to a date object.
+two optional parameters to timezone_transitions_get() / DateTimeZone::getTranstions() to limit the range of transitions being returned.
+support for "first/last day of <month>" style texts.
+support for date/time strings returned by MS SQL.
+support for serialization and unserialization of DateTime objects.
+support for diffing date/times through date_diff() / DateTime::diff().
+support for adding/subtracting weekdays with strtotime() and DateTime::modify().
+DateInterval class to represent the difference between two date/times.
+support for parsing ISO intervals for use with DateInterval.
+date_add() / DateTime::add(), date_sub() / DateTime::sub() for applying an interval to an existing date/time.
+proper support for "this week", "previous week"/"last week" and "next week" phrases so that they actually mean the week and not a seven day period around the current day.
+support for "<xth> <weekday> of" and "last <weekday> of" phrases to be used with months - like in "last saturday of februari 2008".
+support for "back of <hour>" and "front of <hour>" phrases that are used in Scotland.
+DatePeriod class which supports iterating over a DateTime object applying DateInterval on each iteration, up to an end date or limited by maximum number of occurences.
+Added compatibility mode in GD, imagerotate, image(filled)ellipse imagefilter, imageconvolution and imagecolormatch are now always enabled. (Pierre)
+Added array_replace() and array_replace_recursive() functions. (Matt)
+Added ReflectionProperty::setAccessible() method that allows non-public property's values to be read through ::getValue() and set through ::setValue(). (Derick, Sebastian)
+Added msg_queue_exists() function to sysvmsg extension. (Benjamin Schulz)
+Added Firebird specific attributes that can be set via PDO::setAttribute() to control formatting of date/timestamp columns: PDO::FB_ATTR_DATE_FORMAT, PDO::FB_ATTR_TIME_FORMAT and PDO::FB_ATTR_TIMESTAMP_FORMAT. (Lars W)
+Added gmp_testbit() function. (Stas)
+Added icon format support to getimagesize(). (Scott)
+Added LDAP_OPT_NETWORK_TIMEOUT option for ldap_set_option() to allow setting network timeout (FR #42837). (Jani)
+Added optional escape character parameter to fgetcsv(). (David Soria Parra)
+Added an optional parameter to strstr() and stristr() for retrieval of either the part of haystack before or after first occurrence of needle. (Johannes, Felipe)
+Added xsl->setProfiling() for profiling stylesheets. (Christian)
+Added long-option feature to getopt() and made getopt() available also on win32 systems by adding a common getopt implementation into core. (David Soria Parra, Jani)
+Added support for optional values, and = as separator, in getopt(). (Hannes)
+Added lcfirst() function. (David C)
+Added PREG_BAD_UTF8_OFFSET_ERROR constant. (Nuno)
+Added native support for asinh(), acosh(), atanh(), log1p() and expm1(). (Kalle)
+Added LIBXML_LOADED_VERSION constant (libxml2 version currently used). (Rob)
+Added JSON_FORCE_OBJECT flag to json_encode(). (Scott, Richard Quadling)
+Added timezone_version_get() to retrieve the version of the used timezone database. (Derick)
+Added 'n' flag to fopen to allow passing O_NONBLOCK to the underlying open(2) system call. (Mikko)
+Added "dechunk" filter which can decode HTTP responses with chunked transfer-encoding. HTTP streams use this filter automatically in case "Transfer-Encoding: chunked" header is present in response. It's possible to disable this behaviour using "http"=>array("auto_decode"=>0) in stream context. (Dmitry)
+Added support for CP850 encoding in mbstring extension. (Denis Giffeler, Moriyoshi)
+Added stream_cast() and stream_set_options() to user-space stream wrappers, allowing stream_select(), stream_set_blocking(), stream_set_timeout() and stream_set_write_buffer() to work with user-space stream wrappers. (Arnaud)
+Added header_remove() function. (chsc at peytz dot dk, Arnaud)
+Added stream_context_get_params() function. (Arnaud)
+Added optional parameter "new" to sybase_connect(). (Timm)
+Added parse_ini_string() function. (grange at lemonde dot fr, Arnaud)
+Added str_getcsv() function. (Sara)
+Added openssl_random_pseudo_bytes() function. (Scott)
+Added ability to send user defined HTTP headers with SOAP request. (Brian J.France, Dmitry)
+Added concatenation option to bz2.decompress stream filter. (Keisial at gmail dot com, Greg)
+Added support for using compressed connections with PDO_mysql. (Johannes)
+Added the ability for json_decode() to take a user specified depth. (Scott)
+Added support for the mysql_stmt_next_result() function from libmysql. (Andrey)
+Added function preg_filter() that does grep and replace in one go. (Marcus)
+Added system independent realpath() implementation which caches intermediate directories in realpath-cache. (Dmitry)
+Added optional clear_realpath_cache and filename parameters to clearstatcache(). (Jani, Arnaud)
+Added litespeed SAPI module. (George Wang)
+Added ext/hash support to ext/session's ID generator. (Sara)
+Added quoted_printable_encode() function. (Tony)
+Added stream_context_set_default() function. (Davey Shafik)
+Added optional "is_xhtml" parameter to nl2br() which makes the function output <br> when false and <br /> when true (FR #34381). (Kalle)
+Added PHP_MAXPATHLEN constant (maximum length of a path). (Pierre)
+Added support for SSH via libssh2 in cURL. (Pierre)
+Added support for gray levels PNG image with alpha in GD extension. (Pierre)
+Added support for salsa hashing functions in HASH extension. (Scott)
+Added DOMNode::getLineNo to get line number of parsed node. (Rob)
+Added table info to PDO::getColumnMeta() with SQLite. (Martin Jansen, Scott)
+Added mail logging functionality that allows logging of mail sent via mail() function. (Ilia)
+Added json_last_error() to return any error information from json_decode(). (Scott)
+Added gethostname() to return the current system host name. (Ilia)
+Added shm_has_var() function. (Mike)
+Added depth parameter to json_decode() to lower the nesting depth from the maximum if required. (Scott)
+Added pixelation support in imagefilter(). (Takeshi Abe, Kalle)
+Added SplObjectStorage::addAll/removeAll. (Etienne)

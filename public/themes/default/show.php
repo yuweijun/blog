@@ -42,13 +42,13 @@
 		</div>
 		<!-- end post -->
 
-		<div id="comments">
+		<div id="comments" class="hide">
 			<h3><?php echo $comment_count ?> comment so far</h3>
 			<span class="add_your_comment"><a href="#respond">Add Your Comment</a></span>
 			<div class="clear"></div>
 		</div>
 
-		<ol class="commentlist">
+		<ol class="commentlist hide">
 			<?php foreach ($comments as $key => $comment) { ?>
 			<li class="comment even thread-even depth-1" id="li-comment-1">
 				<div id="comment-<?php echo $comment->id ?>">
@@ -79,7 +79,7 @@
 			<?php } ?>
 		</ol>
 
-		<div id="respond">
+		<div id="respond" class="hide">
 			<div class="h3_cancel_reply">
 				<h3>Your Comment</h3>
 				<div class="clear"></div>

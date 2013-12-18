@@ -51,4 +51,3 @@ class CommentsController extends ApplicationController {
 
 }
 ?>
-	

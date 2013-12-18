@@ -973,7 +973,8 @@ html, body, #page_wrap{
 }
 
 body > #page_wrap{
-	height: auto; min-height: 100%;
+	height: auto; 
+    min-height: 100%;
 }
 
 #container{
@@ -981,4 +982,12 @@ body > #page_wrap{
 
 #footer{
 	height: 48px;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
 }

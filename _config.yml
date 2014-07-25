@@ -1,8 +1,8 @@
 # Site settings
-title: Notes
+title: Blog
 email: test.yu@qq.com
 description: "personal notes."
-baseurl: "/notes"
+baseurl: ""
 url: "http://github.com"
 twitter_username: yuweijun
 github_username:  yuweijun

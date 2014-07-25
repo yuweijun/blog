@@ -2,7 +2,7 @@
 title: Blog
 email: test.yu@qq.com
 description: "personal notes."
-baseurl: ""
+baseurl: "/blog"
 url: "http://github.com"
 twitter_username: yuweijun
 github_username:  yuweijun

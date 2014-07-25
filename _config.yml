@@ -1,0 +1,12 @@
+# Site settings
+title: Notes
+email: test.yu@qq.com
+description: "personal notes."
+baseurl: "/notes"
+url: "http://github.com"
+twitter_username: yuweijun
+github_username:  yuweijun
+
+# Build settings
+markdown: kramdown
+permalink: pretty

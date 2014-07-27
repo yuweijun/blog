@@ -1,11 +1,6 @@
 # Site settings
 title: Blog
-email: test.yu@qq.com
-description: "personal notes."
 baseurl: "/blog"
-url: "http://github.com"
-twitter_username: yuweijun
-github_username:  yuweijun
 
 # Build settings
 markdown: kramdown

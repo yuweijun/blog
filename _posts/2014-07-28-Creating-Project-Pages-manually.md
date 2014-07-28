@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "Creating Project pages Manually!"
+date:   2014-07-28 10:44:05
+categories: jekyll update
+---
+
 Creating Project Pages manually
 ===============================
 

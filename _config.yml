@@ -1,7 +1,0 @@
-# Site settings
-title: Blog
-baseurl: "/blog"
-
-# Build settings
-markdown: kramdown
-permalink: pretty

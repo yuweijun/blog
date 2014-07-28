@@ -1,0 +1,12 @@
+# Site settings
+title: Blog
+email: test.yu@gmail.com
+description: "notes by jekyll"
+baseurl: "/blog"
+url: "http://yuweijun.github.io/blog/"
+twitter_username: yuweijun
+github_username: yuweijun
+
+# Build settings
+markdown: kramdown
+permalink: pretty

@@ -1,7 +1,7 @@
 # Site settings
-title: Blog
+title: yuweijun's Blog
 email: test.yu@gmail.com
-description: "notes by jekyll"
+description: '{"select": "jQuery", "from": "javascript libraries"}'
 baseurl: "/blog"
 url: "http://yuweijun.github.io/blog/"
 twitter_username: yuweijun

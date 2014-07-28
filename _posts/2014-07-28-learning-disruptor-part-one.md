@@ -9,6 +9,7 @@ categories: java disruptor
 翻译自Disruptor git库教程
 -----------------------
 [英文地址](https://github.com/LMAX-Exchange/disruptor/wiki/Getting-Started)
+[中文地址](http://ifeve.com/disruptor-getting-started/)
 
 获得Disruptor
 可以通过Maven或者下载jar来安装Disruptor。只要把对应的jar放在Java classpath就可以了。

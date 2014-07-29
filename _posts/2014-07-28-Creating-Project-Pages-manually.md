@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Creating Project pages Manually!"
-date:   2014-07-28 10:44:05
+date: 2014-07-28
 categories: jekyll update
 ---
 

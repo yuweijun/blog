@@ -2,7 +2,7 @@
 layout: post
 title: "Disruptor入门"
 tags: java disruptor
-date: 2014-07-28 21:44:22
+date: 2014-07-28
 categories: java disruptor
 ---
 

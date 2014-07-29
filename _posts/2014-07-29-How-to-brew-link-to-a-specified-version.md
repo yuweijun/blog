@@ -1,7 +1,7 @@
 ---
 layout: post
-date: 2014-07-29 17:41
 title: How can I brew link to a specific version?
+date: 2014-07-29
 categories: howto
 ---
 

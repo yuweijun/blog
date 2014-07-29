@@ -6,7 +6,7 @@ date: 2014-07-28 21:44:22
 categories: java disruptor
 ---
 
-翻译自Disruptor git库教程
+原文来源如下，实际运行有点小问题，略做修改
 -----------------------
 [英文地址](https://github.com/LMAX-Exchange/disruptor/wiki/Getting-Started)
 [中文地址](http://ifeve.com/disruptor-getting-started/)

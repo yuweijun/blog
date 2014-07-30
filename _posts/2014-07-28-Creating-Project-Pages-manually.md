@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Creating Project pages Manually!"
-date: 2014-07-28
+title:  "Creating github project pages manually!"
+date: "Wed Jul 28 2014 12:40:26 GMT+0800 (CST)"
 categories: jekyll update
 ---
 

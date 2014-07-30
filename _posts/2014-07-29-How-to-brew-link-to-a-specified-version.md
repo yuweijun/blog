@@ -1,7 +1,7 @@
 ---
 layout: post
 title: How can I brew link to a specific version?
-date: 2014-07-29
+date: "Wed Jul 29 2014 11:40:26 GMT+0800 (CST)"
 categories: howto
 ---
 

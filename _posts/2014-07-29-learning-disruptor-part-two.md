@@ -72,7 +72,6 @@ public class DisruptorTest {
          * }
          * </pre>
          */
-
         System.out.println("开始生产");
         for (int i = 0; i < 10; i++) {
             long next = buffer.next();

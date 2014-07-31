@@ -5,33 +5,37 @@ title: jQuery debug plugin
 categories: jquery
 ---
 
+jQuery debug plugin source:
+
 {% highlight javascript %}
 // jquery.debug.js plugin
 (function($) {
 
-	if (window.console) {
-		// can't using Function.apply() for safari/chrome console.
-		// extend $.console using window.console, don't work in safari/chrome using $.extend()
-		$.console = window.console;
-	} else {
-		// define $.console object for browsers without window.console.
-		$.console = {};
-		$.each(['assert', 'clear', 'info', 'log', 'warn', 'error'], function(index, name) {
-			$.console[name] = $.noop;
-		});
-	}
+    if (window.console) {
+        // can't using Function.apply() for safari/chrome console.
+        // extend $.console using window.console, don't work in safari/chrome using $.extend()
+        $.console = window.console;
+    } else {
+        // define $.console object for browsers without window.console.
+        $.console = {};
+        $.each(['assert', 'clear', 'info', 'log', 'warn', 'error'], function(index, name) {
+            $.console[name] = $.noop;
+        });
+    }
 
-	$.fn.debug = function(msg) {
-		return this.each(function() {
-			if ($.isFunction(msg)) {
-				msg.apply(this);
+    $.fn.debug = function(msg) {
+        return this.each(function() {
+            if ($.isFunction(msg)) {
+                msg.apply(this);
             } else if (msg) {
-				$.console.log(msg);
-			} else {
-				$.console.log(this);
-			}
-		});
-	};
+                $.console.log(msg);
+            } else {
+                $.console.log(this);
+            }
+        });
+    };
 
 })(jQuery);
+
 {% endhighlight %}
+

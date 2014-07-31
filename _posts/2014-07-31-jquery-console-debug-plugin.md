@@ -5,7 +5,7 @@ title: jQuery debug plugin
 categories: jquery
 ---
 
-{% highlight %}
+{% highlight javascript %}
 // jquery.debug.js plugin
 (function($) {
 
@@ -34,5 +34,4 @@ categories: jquery
 	};
 
 })(jQuery);
-{% endhightlight %}
-
+{% endhighlight %}

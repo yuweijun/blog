@@ -289,10 +289,10 @@ jQuery.each({
 
 这里需要注意它这句话，因为或运算符`||`比三目运算符`?:`的优先级别高，而全等`===`运算符又比或运算符`||`优先级高。
 
-    也就是说先计算classNames === false，
-    再计算this.className || classNames === false，
-    和jQuery.data( this, "__className__" ) || ""，
-    最后进行三目运算。
+> 也就是说先计算classNames === false，
+> 再计算this.className || classNames === false，
+> 和jQuery.data( this, "__className__" ) || ""，
+> 最后进行三目运算。
 
 {% highlight javascript %}
 // toggle whole className

@@ -883,8 +883,8 @@ jQuery中ajax请求的options参数，关于beforeSend, error, dataFilter, succe
 在ajax请求的options中可以设置这5个回调方法： beforeSend, error, dataFilter, success and complete
 分别会在ajax请求的不同阶段中调用，如下说明：
 
-    beforeSend(xhr, options): 在ajax请求发出前被调用，如果返回false，可以取消ajax请求，并触发全局ajaxStop事件。
-    error(xhr, status, errMsg): 在ajax请求失败的时候被调用，并触发全局的ajaxError事件。
-    dataFilter(data, dataType): 在ajax请求返回success之后，用此方法对ajax请求返回的response body作预处理，并且必须返回一个新的data作为ajax请求的返回结果。
-    success(data, status, xhr): 在ajsx请求成功后调用此回调方法。
-    complete(xhr, status): 在ajax请求完成之后运行，注意此方法除了在beforeSend()回调返回false，取消ajax请求之后不触发，其他无论ajax请求成功失败都会调用。
+> * beforeSend(xhr, options): 在ajax请求发出前被调用，如果返回false，可以取消ajax请求，并触发全局ajaxStop事件。
+> * error(xhr, status, errMsg): 在ajax请求失败的时候被调用，并触发全局的ajaxError事件。
+> * dataFilter(data, dataType): 在ajax请求返回success之后，用此方法对ajax请求返回的response body作预处理，并且必须返回一个新的data作为ajax请求的返回结果。
+> * success(data, status, xhr): 在ajsx请求成功后调用此回调方法。
+> * complete(xhr, status): 在ajax请求完成之后运行，注意此方法除了在beforeSend()回调返回false，取消ajax请求之后不触发，其他无论ajax请求成功失败都会调用。

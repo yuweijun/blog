@@ -83,6 +83,7 @@ jQuery.extend({
 {% endhighlight %}
 
 rootjQuery此外只是声明变量，没有初始化，即为undefined，在源码定义完jQuery方法之后才赋值，在使用jQuery方法查找对象时，如果没有传入context，则默认context即为rootjQuery：
+
 {% highlight javascript %}
 // All jQuery objects should point back to these
 rootjQuery = jQuery(document);
@@ -90,7 +91,7 @@ rootjQuery = jQuery(document);
 
 对于slice 方法，ECMAScript 262 中 15.4.4.10 Array.prototype.slice (start, end) 章节有备注：
 
-NOTE: The slice function is intentionally generic; it does not require that its this value be an Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether the slice function can be applied successfully to a host object is implementation-dependent.
+> NOTE: The slice function is intentionally generic; it does not require that its this value be an Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether the slice function can be applied successfully to a host object is implementation-dependent.
 
 几个正则表达式暂略说明，后面几个Class的实例方法的简写，主要是方便代码书写，其中Array.prototype.slice方法最为常用，将一个类数组的对象转化为真正的array对象，如function中的Arguments对象。
 
@@ -98,7 +99,8 @@ Array.prototype.push方法用得非常巧妙，利用push方法快速构造出�
 
 与slice方法一样，push/pop等数组方法也可以用在非数组对象上，15.4.4.7 Array.prototype.push ( [ item1 [ , item2 [ , … ] ] ] )上备注：
 
-NOTE: The push function is intentionally generic; it does not require that its this value be an Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether the push function can be applied successfully to a host object is implementation-dependent.
+> NOTE: The push function is intentionally generic; it does not require that its this value be an Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether the push function can be applied successfully to a host object is implementation-dependent.
+
 {% highlight javascript %}
 var ArrayList = function() {
     // 这里利用Array push快速构造一个类数组的对象
@@ -269,7 +271,7 @@ init: function( selector, context ) {
 
 在jQuery1.4版本中，这个jQuery()核心方法多了以下这种用法：
 
-Pre 1.4, jQuery supported adding attributes to an element collection via the useful "attr" method, which can be passed both an attribute name and value, or an object specifying several attributes. jQuery 1.4 adds support for passing an attributes object as the second argument to the jQuery function itself, upon element creation.
+> Pre 1.4, jQuery supported adding attributes to an element collection via the useful "attr" method, which can be passed both an attribute name and value, or an object specifying several attributes. jQuery 1.4 adds support for passing an attributes object as the second argument to the jQuery function itself, upon element creation.
 
 {% highlight javascript %}
 // examples:
@@ -561,8 +563,9 @@ get()方法是返回当前jquery对象中的某个DOM对象，支持负数做为
 
 get()方法里用到了jQuery.fn.slice方法，这是jQuery的一个筛选方法，与jQuery.fn.find方法性质一样，需要说明的是Array.prototype.slice方法：
 
-    start可以为负数，从start位置开始到end位置，并且end位置的值不包括进来，数据位置是以0开始计数的。
-    slice(start, end): Returns a new array that contains the elements of the array from the element numbered start, up to, but not including, the element numbered end.
+> start可以为负数，从start位置开始到end位置，并且end位置的值不包括进来，数据位置是以0开始计数的。
+>
+> slice(start, end): Returns a new array that contains the elements of the array from the element numbered start, up to, but not including, the element numbered end.
 
 jQuery.fn.each方法是用于遍历jquery对象中DOM对象，代码实际是调用了jQuery静态工具方法jQuery.each，这里不细说明此方法。
 
@@ -664,86 +667,115 @@ jQuery.extend = jQuery.fn.extend = function() {
 
 这个方法的官方文档说明比较详细，其中几个例子在此页面有测试：
 
-    jQuery.extend( target, [ object1 ], [ objectN ] ) Returns: Object
-    version added: 1.0
-    Description: Merge the contents of two or more objects together into the first object.
-
-    jQuery.extend( target, [ object1 ], [ objectN ] )
-    version added: 1.1.4
-    target: An object that will receive the new properties if additional objects are passed in or that will extend the jQuery namespace if it is the sole argument.
-    object1: An object containing additional properties to merge in.
-    objectN: Additional objects containing properties to merge in.
-
-    jQuery.extend( [ deep ], target, object1, [ objectN ] )
-    deep: If true, the merge becomes recursive (aka. deep copy).
-    target: The object to extend. It will receive the new properties.
-    object1: An object containing additional properties to merge in.
-    objectN: Additional objects containing properties to merge in.
-
-    When we supply two or more objects to $.extend(), properties from all of the objects are added to the target object.
-
-    If only one argument is supplied to $.extend(), this means the target argument was omitted. In this case, the jQuery object itself is assumed to be the target. By doing this, we can add new functions to the jQuery namespace. This can be useful for plugin authors wishing to add new methods to JQuery.
-
-    Keep in mind that the target object (first argument) will be modified, and will also be returned from $.extend(). If, however, we want to preserve both of the original objects, we can do so by passing an empty object as the target:
-
-    var object = $.extend({}, object1, object2);
-    The merge performed by $.extend() is not recursive by default; if a property of the first object is itself an object or array, it will be completely overwritten by a property with the same key in the second object. The values are not merged. This can be seen in the example below by examining the value of banana. However, by passing true for the first function argument, objects will be recursively merged.
-
-    Undefined properties are not copied. However, properties inherited from the object's prototype will be copied over.
-
-    Examples:
-    Example: Merge two objects, modifying the first.
-
-    var object1 = {
-      apple: 0,
-      banana: {weight: 52, price: 100},
-      cherry: 97
-    };
-    var object2 = {
-      banana: {price: 200},
-      durian: 100
-    };
-
-    $.extend(object1, object2);
-    Result:
-    object1 === {apple: 0, banana: {price: 200}, cherry: 97, durian: 100}
-    Example: Merge two objects recursively, modifying the first.
-
-    var object1 = {
-      apple: 0,
-      banana: {weight: 52, price: 100},
-      cherry: 97
-    };
-    var object2 = {
-      banana: {price: 200},
-      durian: 100
-    };
-
-    $.extend(true, object1, object2);
-    Result:
-    object1 === {apple: 0, banana: {weight: 52, price: 200}, cherry: 97, durian: 100}
-
-    Example: Merge settings and options, modifying settings.
-    var settings = { validate: false, limit: 5, name: "foo" };
-    var options = { validate: true, name: "bar" };
-    jQuery.extend(settings, options);
-    Result:
-    settings == { validate: true, limit: 5, name: "bar" }
-
-    Example: Merge defaults and options, without modifying the defaults. This is a common plugin development pattern.
-    var empty = {}
-    var defaults = { validate: false, limit: 5, name: "foo" };
-    var options = { validate: true, name: "bar" };
-    var settings = $.extend(empty, defaults, options);
-    Result:
-    settings == { validate: true, limit: 5, name: "bar" }
-    empty == { validate: true, limit: 5, name: "bar" }
+> jQuery.extend( target, [ object1 ], [ objectN ] ) Returns: Object
+>
+> version added: 1.0
+>
+> Description: Merge the contents of two or more objects together into the first object.
+>
+> jQuery.extend( target, [ object1 ], [ objectN ] )
+>
+> version added: 1.1.4
+>
+> target: An object that will receive the new properties if additional objects are passed in or that will extend the jQuery namespace if it is the sole argument.
+>
+> object1: An object containing additional properties to merge in.
+>
+> objectN: Additional objects containing properties to merge in.
+>
+> jQuery.extend( [ deep ], target, object1, [ objectN ] )
+>
+> deep: If true, the merge becomes recursive (aka. deep copy).
+>
+> target: The object to extend. It will receive the new properties.
+>
+> object1: An object containing additional properties to merge in.
+>
+> objectN: Additional objects containing properties to merge in.
+>
+> When we supply two or more objects to $.extend(), properties from all of the objects are added to the target object.
+>
+> If only one argument is supplied to $.extend(), this means the target argument was omitted. In this case, the jQuery object itself is assumed to be the target. By doing this, we can add new functions to the jQuery namespace. This can be useful for plugin authors wishing to add new methods to JQuery.
+>
+> Keep in mind that the target object (first argument) will be modified, and will also be returned from $.extend(). If, however, we want to preserve both of the original objects, we can do so by passing an empty object as the target:
+>
+> var object = $.extend({}, object1, object2);
+>
+> The merge performed by $.extend() is not recursive by default; if a property of the first object is itself an object or array, it will be completely overwritten by a property with the same key in the second object. The values are not merged. This can be seen in the example below by examining the value of banana. However, by passing true for the first function argument, objects will be recursively merged.
+>
+> Undefined properties are not copied. However, properties inherited from the object's prototype will be copied over.
+>
+> Examples:
+>
+> Example: Merge two objects, modifying the first.
+>
+> {% highlight javascript %}
+var object1 = {
+  apple: 0,
+  banana: {weight: 52, price: 100},
+  cherry: 97
+};
+var object2 = {
+  banana: {price: 200},
+  durian: 100
+};
+$.extend(object1, object2);
+{% endhighlight %}
+> Result:
+>
+> object1 === {apple: 0, banana: {price: 200}, cherry: 97, durian: 100}
+>
+> Example: Merge two objects recursively, modifying the first.
+>
+> {% highlight javascript %}
+var object1 = {
+  apple: 0,
+  banana: {weight: 52, price: 100},
+  cherry: 97
+};
+var object2 = {
+  banana: {price: 200},
+  durian: 100
+};
+$.extend(true, object1, object2);
+{% endhighlight %}
+>
+> Result:
+>
+> object1 === {apple: 0, banana: {weight: 52, price: 200}, cherry: 97, durian: 100}
+>
+> Example: Merge settings and options, modifying settings.
+>
+> {% highlight javascript %}
+var settings = { validate: false, limit: 5, name: "foo" };
+var options = { validate: true, name: "bar" };
+jQuery.extend(settings, options);
+{% endhighlight %}
+>
+> Result:
+>
+> settings == { validate: true, limit: 5, name: "bar" }
+>
+> Example: Merge defaults and options, without modifying the defaults. This is a common plugin development pattern.
+>
+> {% highlight javascript %}
+var empty = {}
+var defaults = { validate: false, limit: 5, name: "foo" };
+var options = { validate: true, name: "bar" };
+var settings = $.extend(empty, defaults, options);
+{% endhighlight %}
+>
+> Result:
+>
+> settings == { validate: true, limit: 5, name: "bar" }
+>
+> empty == { validate: true, limit: 5, name: "bar" }
 
 更多关于jQuery通过extend方法添加进来的静态方法，可查看关于静态方法部分的源码分析
 
-ID-Based Selectors: Beginning your selector with an ID is always best.
-
-The $.fn.find approach is faster because the first selection is handled without going through the Sizzle selector engine — ID-only selections are handled using document.getElementById(), which is extremely fast because it is native to the browser.
+> ID-Based Selectors: Beginning your selector with an ID is always best.
+>
+> The $.fn.find approach is faster because the first selection is handled without going through the Sizzle selector engine — ID-only selections are handled using document.getElementById(), which is extremely fast because it is native to the browser.
 
 {% highlight javascript %}
 // fast

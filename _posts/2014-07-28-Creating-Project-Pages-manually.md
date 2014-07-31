@@ -5,9 +5,6 @@ date: "Wed Jul 28 2014 12:40:26 GMT+0800 (CST)"
 categories: jekyll update
 ---
 
-Creating Project Pages manually
-===============================
-
 If you're familiar with command-line Git, it's straightforward to manually create a Project Pages site.
 
 Make a fresh clone

@@ -1,7 +1,7 @@
 ---
 layout: post
 date: "Wed Jul 30 2014 17:54:54 GMT+0800 (CST)"
-title: git clone之后的分支管理
+title: git分支管理
 categories: howto
 ---
 

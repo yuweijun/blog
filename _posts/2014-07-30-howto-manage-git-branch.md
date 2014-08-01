@@ -20,13 +20,13 @@ $ git clone git@github.com:twbs/bootstrap.git
 $ git clone -b gh-pages git@github.com:twbs/bootsrap.git
 {% endhighlight %}
 
-也可以在clone之后，直接从origin检出分支：
+也可以在clone之后，从origin检出分支：
 
 {% highlight bash %}
 $ git checkout -t origin/gh-pages
 {% endhighlight %}
 
-或者是直接从本地切换分支：
+或者是从本地切换分支：
 
 {% highlight bash %}
 $ git checkout gh-pages
@@ -34,26 +34,27 @@ $ git checkout gh-pages
 
 参数说明：
 
-    -t, --track
-       When creating a new branch, set up configuration to mark the start-point branch as "upstream" from the new branch. This configuration will tell git to show the relationship between the two branches in git status and git branch -v. Furthermore, it directs git pull without arguments to pull from the upstream when the new branch is checked out.
-
-       This behavior is the default when the start point is a remote-tracking branch. Set the branch.autosetupmerge configuration variable to false if you want git checkout and git branch to always behave as if --no-track were given. Set it to always if you want this behavior when the start-point is either a local or remote-tracking branch.
+> -t, --track
+>
+>    When creating a new branch, set up configuration to mark the start-point branch as "upstream" from the new branch. This configuration will tell git to show the relationship between the two branches in git status and git branch -v. Furthermore, it directs git pull without arguments to pull from the upstream when the new branch is checked out.
+>
+>    This behavior is the default when the start point is a remote-tracking branch. Set the branch.autosetupmerge configuration variable to false if you want git checkout and git branch to always behave as if --no-track were given. Set it to always if you want this behavior when the start-point is either a local or remote-tracking branch.
 
 查看分支
 --------
 参数说明:
 
-    -r, --remotes
-       list or delete (if used with -d) the remote-tracking branches.
-
-    -a, --all
-       list both remote-tracking branches and local branches.
+> -r, --remotes
+>
+>    list or delete (if used with -d) the remote-tracking branches.
+>
+> -a, --all
+>
+>    list both remote-tracking branches and local branches.
 
 {% highlight bash %}
 $ git branch -r
 $ git branch -av
-{% endhighlight %}
-
     origin/HEAD -> origin/master
     origin/bundle
     origin/derp
@@ -66,6 +67,7 @@ $ git branch -av
     origin/master
     origin/media-query-mixins
     origin/sauce-screenshots
+{% endhighlight %}
 
 删除分支
 --------

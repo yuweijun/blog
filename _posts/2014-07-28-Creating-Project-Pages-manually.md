@@ -15,13 +15,13 @@ To set up a Project Pages site, you need to create a new "orphan" branch (a bran
 {% highlight bash %}
 # Clone our repository
 $ git clone https://github.com/user/repository.git
-Cloning into 'repository'...
-remote: Counting objects: 2791, done.
-remote: Compressing objects: 100% (1225/1225), done.
-remote: Total 2791 (delta 1722), reused 2513 (delta 1493)
-Receiving objects: 100% (2791/2791), 3.77 MiB | 969 KiB/s, done.
-Resolving deltas: 100% (1722/1722), done.
-Create a gh-pages branch
+    Cloning into 'repository'...
+    remote: Counting objects: 2791, done.
+    remote: Compressing objects: 100% (1225/1225), done.
+    remote: Total 2791 (delta 1722), reused 2513 (delta 1493)
+    Receiving objects: 100% (2791/2791), 3.77 MiB | 969 KiB/s, done.
+    Resolving deltas: 100% (1722/1722), done.
+    Create a gh-pages branch
 {% endhighlight %}
 
 Once you have a clean repository, you'll need to create the new gh-pages branch and remove all content from the working directory and index:
@@ -31,7 +31,7 @@ $ cd repository
 
 # Creates our branch, without any parents (it's an orphan!)
 $ git checkout --orphan gh-pages
-Switched to a new branch 'gh-pages'
+    Switched to a new branch 'gh-pages'
 
 # Remove all files from the old working tree
 $ git rm -rf .

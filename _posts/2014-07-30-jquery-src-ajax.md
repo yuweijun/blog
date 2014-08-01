@@ -433,7 +433,7 @@ jQuery.extend({
 {% highlight javascript %}
 var jsc = now(),
     // rscript二个尖括号被我转义过，注意
-    rscript = /&lt;script(.|\s)*?\/script&gt;/gi,
+    rscript = /<script(.|\s)*?\/script>/gi,
     rselectTextarea = /select|textarea/i,
     rinput = /color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week/i,
     jsre = /=\?(&|$)/,
@@ -469,7 +469,7 @@ jQuery.fn.extend({
         // We could modify the example above to use only part of the document that is fetched:
         // $('#result').load('ajax/test.html #container');
         // When this method executes, it retrieves the content of ajax/test.html, but then jQuery parses the returned document to find the element with an ID of container. This element, along with its contents, is inserted into the element with an ID of result, and the rest of the retrieved document is discarded.
-        // Note that the document retrieved cannot be a full HTML document; that is, it cannot include (for example) &lt;html&gt;, &lt;title&gt;, or &lt;head&gt; elements. jQuery uses the browser's innerHTML property on a &lt;div&gt; element to parse the document, and most browsers will not allow non-body elements to be parsed in this way.
+        // Note that the document retrieved cannot be a full HTML document; that is, it cannot include (for example) <html>, <title>, or <head> elements. jQuery uses the browser's innerHTML property on a <div> element to parse the document, and most browsers will not allow non-body elements to be parsed in this way.
         // .load()方法中传入的url字符串中可以用空格做为分隔符，空格前面的为url，后面的则作为url返回页面的selector
         // 将load得到的response body根据这些selector匹配后，再将匹配的元素插入当前jquery对象匹配的元素中
         var off = url.indexOf(" ");
@@ -515,7 +515,7 @@ jQuery.fn.extend({
                         jQuery("< div />")
                             // inject the contents of the document in, removing the scripts
                             // to avoid any 'Permission Denied' errors in IE
-                            // rscript = /&lt;script(.|\s)*?\/script&gt;/gi，过滤掉返回文本中的脚本内容
+                            // rscript = /<script(.|\s)*?\/script>/gi，过滤掉返回文本中的脚本内容
                             .append(res.responseText.replace(rscript, ""))
 
                             // 从ajax返回的文本中，找到匹配空格后面的selector部分的元素，并将这些元素添加到当前jquery对象匹配的元素中

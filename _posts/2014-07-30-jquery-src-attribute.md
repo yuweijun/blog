@@ -63,7 +63,7 @@ jQuery.extend({
         // name可能是jQuery.fn的一个方法，如.text(), .css(), .click()
         // 把value作为name方法的参数进行调用，并返回调用结果
         // 这个可以结合jQuery()方法使用，如下面例子中的text这个key，a标签并没有text属性，将会调用jQuery.fn.text()方法：
-        // jQuery('&lt;a/&gt;', { id: 'foo', href: 'http://www.google.com', title: 'a Googler', rel: 'external', text: 'Google!' });
+        // jQuery('<a/>', { id: 'foo', href: 'http://www.google.com', title: 'a Googler', rel: 'external', text: 'Google!' });
         if ( name in jQuery.fn && name !== "attr" ) {
             return jQuery(elem)[name](value);
         }

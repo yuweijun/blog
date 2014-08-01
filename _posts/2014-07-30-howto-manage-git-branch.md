@@ -7,15 +7,30 @@ categories: howto
 
 一般而言，我们要检出一个git项目会使用git clone命令，git clone默认会把远程仓库包括全部分支，完整clone下来：
 
-`$ git clone git@github.com:twbs/bootstrap.git`
+{% highlight bash %}
+$ git clone git@github.com:twbs/bootstrap.git
+{% endhighlight %}
 
-但是如果想直接切某个分支，那命令则为：
+检出分支
+--------
 
-`$ git clone -b gh-pages git@github.com:twbs/bootsrap.git`
+直接检出某个分支：
 
-也可以在检出主分支之后，直接从本地检出：
+{% highlight bash %}
+$ git clone -b gh-pages git@github.com:twbs/bootsrap.git
+{% endhighlight %}
 
-`$ git checkout -t origin/gh-pages`
+也可以在clone之后，直接从origin检出分支：
+
+{% highlight bash %}
+$ git checkout -t origin/gh-pages
+{% endhighlight %}
+
+或者是直接从本地切换分支：
+
+{% highlight bash %}
+$ git checkout gh-pages
+{% endhighlight %}
 
 参数说明：
 
@@ -24,10 +39,8 @@ categories: howto
 
        This behavior is the default when the start point is a remote-tracking branch. Set the branch.autosetupmerge configuration variable to false if you want git checkout and git branch to always behave as if --no-track were given. Set it to always if you want this behavior when the start-point is either a local or remote-tracking branch.
 
-它默认会在本地建立一个和远程分支名字一样的分支，这样就可以在分支上修改，并且commit了。如果只是checkout，没有-t的话，只是切出代码，并没有tracking分支的。
-
-查看branch列表
---------------
+查看分支
+--------
 参数说明:
 
     -r, --remotes
@@ -36,8 +49,10 @@ categories: howto
     -a, --all
        list both remote-tracking branches and local branches.
 
-
-`$ git branch -r`
+{% highlight bash %}
+$ git branch -r
+$ git branch -av
+{% endhighlight %}
 
     origin/HEAD -> origin/master
     origin/bundle
@@ -51,4 +66,12 @@ categories: howto
     origin/master
     origin/media-query-mixins
     origin/sauce-screenshots
+
+删除分支
+--------
+
+删除远程分支则加-r参数
+{% highlight bash %}
+$ git branch -d branch-name
+{% endhighlight %}
 

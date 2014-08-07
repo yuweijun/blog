@@ -27,6 +27,20 @@ if has('gui_running')
 endif
 {% endhighlight %}
 
+在Ubuntu 12.04中安装 `Ubuntu Mono derivative powerline` 字体后，修改vim配置文件:
+
+{% highlight vim %}
+Bundle 'bling/vim-airline'
+if has('gui_running')
+    let g:airline_powerline_fonts = 1
+    win 150 43
+    " set fonts for gui vim
+    set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+    " hide the gui menubar
+    set guioptions=ie
+endif
+{% endhighlight %}
+
 可以在vim下查看帮助: `:h airline`
 
 ![Screenshot](https://github.com/bling/vim-airline/wiki/screenshots/demo.gif)

@@ -1,7 +1,7 @@
 # Site settings
 title: yuweijun's Blog
-email: yuweijun@live.com
-description: '{"select": "jQuery", "from": "javascript libraries"}'
+email: test.yu@gmail.com
+description: "{\"type\":\"编程笔记\"}"
 baseurl: "/blog"
 url: "http://yuweijun.github.io"
 twitter_username: yuweijun

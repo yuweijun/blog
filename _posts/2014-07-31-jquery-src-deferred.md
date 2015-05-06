@@ -16,6 +16,7 @@ categories: jquery src
 3. [JavaScript异步编程的Promise模式](http://www.infoq.com/cn/news/2011/09/js-promise)
 4. [Asynchronous Programming in JavaScript with “Promises”](http://blogs.msdn.com/b/ie/archive/2011/09/11/asynchronous-programming-in-javascript-with-promises.aspx)
 5. [CommonJS Promise/A](http://wiki.commonjs.org/wiki/Promises/A)
+6. [jQuery.Deferred对象 -- JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/jquery/deferred.html)，这份说明是后来网上看到补上的，写得很好。
 
 jQuery的Deferred实现代码量不多，但要看懂源代码还是相当的费神，回调非常多:
 
@@ -87,6 +88,7 @@ _Deferred: function() {
                 return this;
             },
 
+            // resolve方法将deferred对象的状态从pending改为resolved，reject方法则将状态从pending改为rejected。
             // resolve with this as context and given arguments
             resolve: function() {
                 deferred.resolveWith( this, arguments );
@@ -114,6 +116,11 @@ Deferred: function( func ) {
     var deferred = jQuery._Deferred(),
         failDeferred = jQuery._Deferred(),
         promise;
+
+    // deferred对象在状态改变时，会触发回调函数。
+    // done方法指定状态变为resolved（操作成功）时的回调函数；
+    // fail方法指定状态变为rejected（操作失败）时的回调函数；
+    // always方法指定，不管状态变为resolved或rejected，都会触发的方法。
     // Add errorDeferred methods, then and promise
     jQuery.extend( deferred, {
         then: function( doneCallbacks, failCallbacks ) {
@@ -222,6 +229,9 @@ when: function( firstParam ) {
 > The Promise exposes only the Deferred methods needed to attach additional handlers or determine the state (then, done, fail, isResolved, and isRejected), but not ones that change the state (resolve, reject, resolveWith, and rejectWith). As of jQuery 1.6, the Promise also exposes the always and pipe Deferred methods.
 
 {% highlight javascript %}
+// 一般情况下，从外部改变第三方完成的异步操作（比如Ajax）的状态是毫无意义的。为了防止用户这样做，可以在deferred对象的基础上，返回一个针对它的promise对象。
+// 简单说，promise对象就是不能改变状态的deferred对象，也就是deferred的只读版。或者更通俗地理解成，promise是一个对将要完成的任务的承诺，排除了其他人破坏这个承诺的可能性，只能等待承诺方给出结果。
+// 你可以通过promise对象，为原始的deferred对象添加回调函数，查询它的状态，但是无法改变它的状态，也就是说promise对象不允许你调用resolve和reject方法。
 var // Promise methods
 promiseMethods = "done fail isResolved isRejected promise then always pipe".split( " " ),
 // Static reference to slice
@@ -229,7 +239,7 @@ sliceDeferred = [].slice;
 
 jQuery.extend({
 // 其实这个方法只是一个简单的回调对象的队列，加入了队列元素添加移除控制和状态控制，队列有状态标记：canceled, fired, firing
-// 要理解下面Deffered对象二个队列(done和fail)是怎么添加回调对象的，其关键是在_Deferred的一些方法里引用了其定义时的变量deferred，比如在done, resole方法中，而非使用this来指向deferred这个对象，因为在Deferred这个方法里有2个deferred的实例对象(failDeferred和deferred)，其中failDeferred对象的done方法被另外deferred对象作为fail方法引用了，如果在done方法中使用this，这个时候，this是指向deferred的，而不是failDeferred，那就不能将fail使用的回调对象放到failDeferred的队列中了
+// 要理解下面Deferred对象二个队列(done和fail)是怎么添加回调对象的，其关键是在_Deferred的一些方法里引用了其定义时的变量deferred，比如在done, resole方法中，而非使用this来指向deferred这个对象，因为在Deferred这个方法里有2个deferred的实例对象(failDeferred和deferred)，其中failDeferred对象的done方法被另外deferred对象作为fail方法引用了，如果在done方法中使用this，这个时候，this是指向deferred的，而不是failDeferred，那就不能将fail使用的回调对象放到failDeferred的队列中了
 // Create a simple deferred (one callbacks list)
 _Deferred: function() {...},
 
@@ -245,16 +255,8 @@ when: function() {...}
 
 1.6中新添加的pipe方法:
 {% highlight javascript %}
-// 当jQuery.Deferred(fn)在调用时传入一个回调方法时，这个fn会收到deferred对象这样的一个参数，摘录部分代码如下：
-// Call given func if any
-if ( func ) {
-    func.call( deferred, deferred );
-}
-return deferred;
-
-// 根据上面的代码说明，可以明白pipe方法中那个newDefer参数，就是其jQuery.Deferred()方法调用生成的deferred对象
-// 这段代码有点像搞的，将对象自己做为自己方法参数的参数
 pipe: function( fnDone, fnFail ) {
+    // 根据上面的代码说明，可以明白pipe方法中那个newDefer参数，就是其jQuery.Deferred()方法调用生成的deferred对象
     return jQuery.Deferred(function( newDefer ) {
         jQuery.each( {
             done: [ fnDone, "resolve" ],
@@ -283,3 +285,39 @@ pipe: function( fnDone, fnFail ) {
 },
 {% endhighlight %}
 
+$.Deferred()的用例，可以查看jQuery-1.5.js版本中的ajax方法，在什么时机调用resolveWith：
+{% highlight javascript %}
+function done( status, statusText, responses, headers) {
+    // ... 省略部分源码
+    // Success/Error
+    if ( isSuccess ) {
+        // ajax完成之后触发deferred.resolveWith
+        deferred.resolveWith( callbackContext, [ success, statusText, jXHR ] );
+    } else {
+        deferred.rejectWith( callbackContext, [ jXHR, statusText, error ] );
+    }
+
+    // Status-dependent callbacks
+    jXHR.statusCode( statusCode );
+    statusCode = undefined;
+
+    if ( s.global ) {
+        globalEventContext.trigger( "ajax" + ( isSuccess ? "Success" : "Error" ),
+                [ jXHR, s, isSuccess ? success : error ] );
+    }
+
+    // Complete
+    completeDeferred.resolveWith( callbackContext, [ jXHR, statusText ] );
+
+    if ( s.global ) {
+        globalEventContext.trigger( "ajaxComplete", [ jXHR, s] );
+        // Handle the global AJAX counter
+        if ( !( --jQuery.active ) ) {
+            jQuery.event.trigger( "ajaxStop" );
+        }
+    }
+}
+
+// Attach deferreds
+deferred.promise( jXHR );
+{% endhighlight %}

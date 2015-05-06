@@ -12,7 +12,7 @@ $ brew install macvim
 $ git clone git@github.com:Lokaltog/powerline-fonts.git
 {% endhighlight %}
 
-双击下载后Meslo文件夹中的这个字体: `Meslo LG S Regular for Powerline.otf`，然后在 `~/.vimrc` 中配置如下内容，此处使用bundle管理vim插件:
+运行powerline-fonts目录的install.sh即可，或者是双击下载后Meslo文件夹中的这个字体: `Meslo LG S Regular for Powerline.otf`，然后在 `~/.vimrc` 中配置如下内容，此处使用bundle管理vim插件:
 
 {% highlight vim %}
 Bundle 'bling/vim-airline'

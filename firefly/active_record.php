@@ -453,8 +453,13 @@ abstract class ActiveRecord {
             if(get_magic_quotes_gpc()) {
                 $value = stripslashes($value);
             }
+            // for mysqli
+            if(function_exists('mysqli_real_escape_string')) {
+                return self::get_connection()->real_escape_string($value);
+            }
+            // for mysql
             if(function_exists('mysql_real_escape_string')) {
-                return mysql_real_escape_string($value);
+                return self::get_connection()->real_escape_string($value);
             }
             if(function_exists('pg_escape_string')) {
                 return pg_escape_string($value);

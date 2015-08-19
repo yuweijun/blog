@@ -59,6 +59,10 @@ class MysqlImprovement implements DatabaseAdapter {
     return self::$mysqli->affected_rows();
   }
 
+  public function real_escape_string($string) {
+    return self::$mysqli->real_escape_string($string);
+  }
+
   public function empty_insert_statement($table_name) {
     $sql = "INSERT INTO " . $table_name . " VALUES()";
     return $this->create($sql);

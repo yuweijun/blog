@@ -2,7 +2,7 @@
 
 $config = array (
   'development' => array (
-    'adapter' => 'mysqlimprovement',
+    'adapter' => 'mysqli',
     'encoding' => 'utf8',
     'port' => 3306,
     'database' => 'firefly_development',
@@ -11,7 +11,7 @@ $config = array (
     'host' => 'localhost'
   ),
   'test' => array (
-    'adapter' => 'mysqlimprovement',
+    'adapter' => 'mysqli',
     'encoding' => 'utf8',
     'port' => 3306,
     'database' => 'firefly_development',
@@ -20,7 +20,7 @@ $config = array (
     'host' => 'localhost'
   ),
   'production' => array (
-    'adapter' => 'mysqlimprovement',
+    'adapter' => 'mysqli',
     'encoding' => 'utf8',
     'port' => 3306,
     'database' => 'firefly_development',

@@ -102,8 +102,11 @@ abstract class ActiveRecord {
     public static function establish_connection($config) {
         self::validate_connection_params($config);
         $adapter = strtolower($config['adapter']);
+        if ($adapter == 'mysqli') {
+            $adapter = 'mysqlimprovement';
+        }
         require_once('database_adapters' . DS . $adapter . '.php');
-        return call_user_func(array($config['adapter'], 'establish_connection'), $config['host'], $config['username'], $config['password'], $config['database'], $config['port'], $config['encoding']);
+        return call_user_func(array($adapter, 'establish_connection'), $config['host'], $config['username'], $config['password'], $config['database'], $config['port'], $config['encoding']);
     }
 
     public static function get_connection() {

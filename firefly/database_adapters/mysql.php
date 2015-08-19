@@ -11,7 +11,7 @@ class Mysql implements DatabaseAdapter {
 
 	public static function establish_connection($host, $username, $password, $database, $encoding = 'utf8') {
 		if(self::$instance == null) {
-			self::$instance = new Mysql();
+			self::$instance = new MysqlImprovement();
 			self::$connection = mysql_connect($host, $username, $password);
 			$boolean = mysql_select_db($database) or self::$instance->error("Please check access privileges for '$username'@'$host' on '$database'.");
 			mysql_query("SET NAMES $encoding");
@@ -98,7 +98,7 @@ class Mysql implements DatabaseAdapter {
 	public function __clone() {
 		throw new FireflyException('clone is not allowed.');
 	}
-	
+
 	private function query($sql) {
 		return mysql_query($sql);
 	}

@@ -35,7 +35,8 @@ class Dispatcher {
 		$this->params = $this->request->parameters();
 		include_once(FIREFLY_APP_DIR . DS . 'controllers' . DS . strtolower($this->params['controller']) . '_controller.php');
 		$class_name = str_replace('_', '', $this->params['controller']) . "Controller";
-		$class_name = array_pop(explode(DS, $class_name));
+        $exp = explode(DS, $class_name);
+		$class_name = array_pop($exp);
 		$this->controller = new $class_name($this->request, $this->response);
 		$this->render();
 		Plugin::get_reference()->register('dispatch.end', array('Logger', 'output'));

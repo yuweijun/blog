@@ -23,11 +23,6 @@ abstract class ActiveRecord {
 	private static $cached_active_records = array();
 
 	/**
-	 * cache readonly active record objects.
-	 */
-	private static $cached_readonly_active_records = array();
-
-	/**
 	 * cache all table names for all models.
 	 */
 	private static $cached_table_names = array();
@@ -127,30 +122,6 @@ abstract class ActiveRecord {
 	}
 
 	/**
-	 * random get a connection such as slave connection for readonly query.
-	 */
-	public static function get_readonly_connection($config = array()) {
-		if(empty($config)) {
-			if(self::$slave_connection == null) {
-				$config_file = self::get_configuration_file();
-				$slaves = array();
-				require($config_file);
-				$size = count($slaves);
-				if($size > 0) {
-					$sid = rand(0, $size -1);
-					$config = $slaves[$sid];
-					self::$slave_connection = self::establish_connection($config);
-				} else {
-					return self::get_connection();
-				}
-			}
-			return self::$slave_connection;
-		} else {
-			return self::establish_connection($config);
-		}
-	}
-
-	/**
 	 * Find method first parameter may be:
 	 * 1. id.
 	 * 2. ids array.
@@ -159,17 +130,16 @@ abstract class ActiveRecord {
 	 * 5. 'last'.
 	 *
 	 * This method second parameter options keys list
-	 * 1. readonly: if true, first get slave connection, if no slave connection, using application database connection. default value is false.
-	 * 2. select: sql select fields list.
-	 * 3. joins: join tables.
-	 * 4. confitions(where): sql conditions setting.
-	 * 5. group:
-	 * 6. having:
-	 * 7. order:
-	 * 8. limit:
-	 * 9. offset:
-	 * 10. lock: string such as 'LOCK IN SHARE MODE' or true ('for update').
-	 * 11. include: for preload configed association models.
+	 * 1. select: sql select fields list.
+	 * 2. joins: join tables.
+	 * 3. confitions(where): sql conditions setting.
+	 * 4. group:
+	 * 5. having:
+	 * 6. order:
+	 * 7. limit:
+	 * 8. offset:
+	 * 9. lock: string such as 'LOCK IN SHARE MODE' or true ('for update').
+	 * 10. include: for preload configed association models.
 	 * 	   include option avoid 1 + N sql problem using LEFT OUTER JOIN the included models.
 	 * 	   include option can not be used to include self-join association.
 	 *     include option will ignore 'select' and 'joins' in $options.
@@ -223,16 +193,15 @@ abstract class ActiveRecord {
 	/**
 	 * Find results using complicated sql, Usally for select database operation.
 	 * Don't use this method to update or delete operation.
-	 * If $readonly is true and slave connection is exists, using slave connections.
 	 * If $direct is true, will return query resultset by sql directly.
 	 */
-	public static function find_by_sql($sql, $readonly = false, $direct = false) {
-		$records = self::fetch_rows($sql, $readonly);
+	public static function find_by_sql($sql, $direct = false) {
+		$records = self::fetch_rows($sql);
 		if($direct) {
 			return $records;
 		}
 		$model_name = self::get_model_name();
-		return self::get_model_objects($model_name, $records, $readonly);
+		return self::get_model_objects($model_name, $records);
 	}
 
 	/**
@@ -312,7 +281,6 @@ abstract class ActiveRecord {
 	public static function counter($id, $column_name, $step = 1) {
 		$model_name = self::get_model_name();
 		if(isset(self::$cached_active_records[$model_name]) && isset(self::$cached_active_records[$model_name][$id])) {
-			// ignore object in $cached_readonly_active_records which main used to maintain slave connection object.
 			$object = self::$cached_active_records[$model_name][$id];
 			$object->attributes[$column_name] = $object->attributes[$column_name] + $step;
 			$object->save();
@@ -384,13 +352,11 @@ abstract class ActiveRecord {
 	 */
 	public static function clear_cache() {
 		self::$cached_active_records = array();
-		self::$cached_readonly_active_records = array();
 	}
 
 	public static function clear_model_cache() {
 		$model_name = self::get_model_name();
 		self::$cached_active_records[$model_name] = array();
-		self::$cached_readonly_active_records[$model_name] = array();
 	}
 
 	public static function get_table_name() {
@@ -451,7 +417,7 @@ abstract class ActiveRecord {
 			self::do_action('transaction_rollback');
 		}
 	}
-	
+
 	// ======= ActiveRecord private static methods =======
 
 	private static function quote_column_name($column_name) {
@@ -606,12 +572,8 @@ abstract class ActiveRecord {
 		}
 	}
 
-	private static function cache_active_record_object($model_name, $id, $object, $readonly = false) {
-		if($readonly) {
-			self::$cached_readonly_active_records[$model_name][$id] = $object;
-		} else {
-			self::$cached_active_records[$model_name][$id] = $object;
-		}
+	private static function cache_active_record_object($model_name, $id, $object) {
+        self::$cached_active_records[$model_name][$id] = $object;
 	}
 
 	private static function construct_finder_sql($model_name, $options) {
@@ -720,8 +682,7 @@ abstract class ActiveRecord {
 		if(is_null($id)) {
 			return false;
 		}
-		$readonly = self::get_readonly_from_options($options);
-		$cached_object = self::find_object_from_caches($model_name, $id, $readonly);
+		$cached_object = self::find_object_from_caches($model_name, $id);
 		if(!is_null($cached_object)) {
 			return $cached_object;
 		}
@@ -749,41 +710,31 @@ abstract class ActiveRecord {
 			return self::find_with_eager_load_associations($model_name, $options, $include_associations);
 		}
 		$cache = self::get_cache_from_options($model_name, $options);
-		$readonly = self::get_readonly_from_options($options);
 		$sql = self::construct_finder_sql($model_name, $options);
-		$records = self::fetch_rows($sql, $readonly);
+		$records = self::fetch_rows($sql);
 
 		$active_record_objects = array();
 		$primary_key = self::get_primary_key_by_model($model_name);
 		foreach($records as $record) {
-			$object = self::get_model_object($model_name, $primary_key, $record, $readonly, $cache);
+			$object = self::get_model_object($model_name, $primary_key, $record, $cache);
 			if($cache) {
 				// cache active record object with all properties found without select option.
 				$id = $object->id();
-				self::cache_active_record_object($model_name, $id, $object, $readonly);
+				self::cache_active_record_object($model_name, $id, $object);
 			}
 			$active_record_objects[] = $object;
 		}
 		return $active_record_objects;
 	}
 
-	private static function find_object_from_caches($model_name, $id, $readonly = false) {
+	private static function find_object_from_caches($model_name, $id) {
 		// first level cache, optimize performance of has_many and belongs_to query.
-		if($readonly) {
-			if(!isset(self::$cached_readonly_active_records[$model_name])) {
-				self::$cached_readonly_active_records[$model_name] = array();
-			}
-			if(isset(self::$cached_readonly_active_records[$model_name][$id])) {
-				return self::$cached_readonly_active_records[$model_name][$id];
-			}
-		} else {
-			if(!isset(self::$cached_active_records[$model_name])) {
-				self::$cached_active_records[$model_name] = array();
-			}
-			if(isset(self::$cached_active_records[$model_name][$id])) {
-				return self::$cached_active_records[$model_name][$id];
-			}
-		}
+        if(!isset(self::$cached_active_records[$model_name])) {
+            self::$cached_active_records[$model_name] = array();
+        }
+        if(isset(self::$cached_active_records[$model_name][$id])) {
+            return self::$cached_active_records[$model_name][$id];
+        }
 		return null;
 	}
 
@@ -795,16 +746,12 @@ abstract class ActiveRecord {
 		if(isset(self::$cached_active_records[$model_name])) {
 			self::$cached_active_records[$model_name] = self::filter(self::$cached_active_records[$model_name], $conditions, true);
 		}
-		if(isset(self::$cached_readonly_active_records[$model_name])) {
-			self::$cached_readonly_active_records[$model_name] = self::filter(self::$cached_readonly_active_records[$model_name], $conditions, true);
-		}
 	}
 
 	private static function find_with_eager_load_associations($model_name, $options, $include_associations) {
 		$sql = self::construct_finder_sql_with_associations($model_name, $options, $include_associations);
-		$readonly = self::get_readonly_from_options($options);
-		$records = self::fetch_rows($sql, $readonly);
-		return self::get_eager_load_objects($model_name, $records, $include_associations, $readonly);
+		$records = self::fetch_rows($sql);
+		return self::get_eager_load_objects($model_name, $records, $include_associations);
 	}
 
 	private static function get_readonly_attributes($model_name) {
@@ -880,13 +827,6 @@ abstract class ActiveRecord {
 		return self::$cached_model_ancestors[$class];
 	}
 
-	private static function get_readonly_from_options($options) {
-		if(isset($options['readonly'])) {
-			return $options['readonly'];
-		}
-		return false;
-	}
-
 	/**
 	 * only cache full properties of model object.
 	 */
@@ -905,17 +845,16 @@ abstract class ActiveRecord {
 	/**
 	 * map eager load resultset to associated model objects.
 	 */
-	private static function get_eager_load_objects($model_name, $records, $include_associations, $readonly) {
+	private static function get_eager_load_objects($model_name, $records, $include_associations) {
 		$objects = array();
 		$null_assoc_records = array();
 		foreach($records as $record) {
 			$table_index = 0;
-			$object = self::get_model_object_by_record($model_name, $record, $table_index, $readonly);
+			$object = self::get_model_object_by_record($model_name, $record, $table_index);
 			$id = $object->id();
 			$null_assoc_records[$id] = array('has_many' => array(), 'has_one' => array(), 'belongs_to' => array());
 			foreach($include_associations as $assoc_type => $associations) {
 				foreach ($associations as $association_id => $association) {
-					$association_readonly = self::get_association_readonly($association, $readonly);
 					if(!isset($null_assoc_records[$id][$assoc_type][$association_id])) {
 						$null_assoc_records[$id][$assoc_type][$association_id] = false;
 					}
@@ -931,12 +870,12 @@ abstract class ActiveRecord {
 						if(!isset($object->attributes[$association_id])) {
 							$object->attributes[$association_id] = array();
 						}
-						$assoc_object =  self::get_model_object_by_record($assoc_model_name, $record, $table_index, $association_readonly);
+						$assoc_object =  self::get_model_object_by_record($assoc_model_name, $record, $table_index);
 						if($assoc_object) {
 							// avoid push array $object->attributes[$association_id] the same object repeatly using unique primary id.
 							$assoc_object_id = $assoc_object->id();
 							$object->attributes[$association_id][$assoc_object_id] = $assoc_object;
-							self::cache_active_record_object($assoc_model_name, $assoc_object_id, $assoc_object, $association_readonly);
+							self::cache_active_record_object($assoc_model_name, $assoc_object_id, $assoc_object);
 						} else {
 							// begin match null record and ignore other rows for current $object.
 							$null_assoc_records[$id][$assoc_type][$association_id] = true;
@@ -944,12 +883,12 @@ abstract class ActiveRecord {
 					} else {
 						// has_one and belongs_to associations.
 						if(!isset($object->attributes[$association_id])) {
-							$assoc_object =  self::get_model_object_by_record($assoc_model_name, $record, $table_index, $association_readonly);
+							$assoc_object =  self::get_model_object_by_record($assoc_model_name, $record, $table_index);
 							if($assoc_object) {
 								$assoc_object_id = $assoc_object->id();
 								// $object primary key should not be null.
 								$object->attributes[$association_id] = $assoc_object;
-								self::cache_active_record_object($assoc_model_name, $assoc_object_id, $assoc_object, $association_readonly);
+								self::cache_active_record_object($assoc_model_name, $assoc_object_id, $assoc_object);
 							} else {
 								// begin match null record and ignore other rows for current $object.
 								$null_assoc_records[$id][$assoc_type][$association_id] = true;
@@ -960,7 +899,7 @@ abstract class ActiveRecord {
 			}
 			// update $object cache according to $object primary key.
 			$objects[$id] = $object;
-			self::cache_active_record_object($model_name, $id, $object, $readonly);
+			self::cache_active_record_object($model_name, $id, $object);
 		}
 		foreach($include_associations['has_many'] as $association_id => $association) {
 			foreach($objects as $object) {
@@ -970,33 +909,30 @@ abstract class ActiveRecord {
 		return array_values($objects);
 	}
 
-	private static function get_model_objects($model_name, $records, $readonly = false) {
+	private static function get_model_objects($model_name, $records) {
 		$active_record_objects = array();
 		$primary_key = self::get_primary_key_by_model($model_name);
 		foreach($records as $record) {
-			$active_record_objects[] = self::get_model_object($model_name, $primary_key, $record, $readonly);
+			$active_record_objects[] = self::get_model_object($model_name, $primary_key, $record);
 		}
 		return $active_record_objects;
 	}
 
-	private static function get_model_object($model_name, $primary_key, $attributes, $readonly = false, $cache = false) {
+	private static function get_model_object($model_name, $primary_key, $attributes, $cache = false) {
 		$object = null;
 		if($cache) {
 			$id = $attributes[$primary_key];
-			$object = self::find_object_from_caches($model_name, $id, $readonly);
+			$object = self::find_object_from_caches($model_name, $id);
 		}
 		if(is_null($object)) {
 			// create this object if there is no such object in caches.
 			$object = new $model_name($attributes);
 			$object->new_active_record = false;
-			if($readonly) {
-				$object->readonly_active_record = true;
-			}
 		}
 		return $object;
 	}
 
-	private static function get_model_object_by_record($model_name, $record, $table_index, $readonly) {
+	private static function get_model_object_by_record($model_name, $record, $table_index) {
 		$attributes = array();
 		$columns = self::columns($model_name);
 		foreach($columns as $index => $column) {
@@ -1006,7 +942,7 @@ abstract class ActiveRecord {
 		}
 		$primary_key = self::get_primary_key_by_model($model_name);
 		if($attributes[$primary_key]) {
-			return self::get_model_object($model_name, $primary_key, $attributes, $readonly, true);
+			return self::get_model_object($model_name, $primary_key, $attributes, true);
 		} else {
 			return null;
 		}
@@ -1049,19 +985,19 @@ abstract class ActiveRecord {
 		return $keys;
 	}
 
-	private static function get_association_objects($object, $options, $readonly = false) {
+	private static function get_association_objects($object, $options) {
 		// $options['include'] is string and value is association_id.
 		$association_id = $options['include'];
 		$model_name = $object->get_object_model_name();
 		$associations = self::get_associations($model_name);
 		if(in_array($association_id, array_keys($associations['has_one']))) {
-			self::get_has_one_association_objects($object, $model_name, $association_id, $associations['has_one'][$association_id], $readonly);
+			self::get_has_one_association_objects($object, $model_name, $association_id, $associations['has_one'][$association_id]);
 		}
 		elseif(in_array($association_id, array_keys($associations['has_many']))) {
-			self::get_has_many_association_objects($object, $model_name, $association_id, $associations['has_many'][$association_id], $readonly);
+			self::get_has_many_association_objects($object, $model_name, $association_id, $associations['has_many'][$association_id]);
 		}
 		elseif(in_array($association_id, array_keys($associations['belongs_to']))) {
-			self::get_belongs_to_association_objects($object, $model_name, $association_id, $associations['belongs_to'][$association_id], $readonly);
+			self::get_belongs_to_association_objects($object, $model_name, $association_id, $associations['belongs_to'][$association_id]);
 		} else {
 			throw new FireflyException("Unknown association: " . $association_id);
 		}
@@ -1128,15 +1064,6 @@ abstract class ActiveRecord {
 		}
 	}
 
-	private static function get_association_readonly($association, $readonly = false) {
-		if(!$readonly) {
-			if(isset($association['readonly']) && $association['readonly'] === true) {
-				$readonly = true;
-			}
-		}
-		return $readonly;
-	}
-
 	/**
 	 * Specifies a one-to-one association with another class. This method should only be used
 	 * if this class contains the foreign key. If the other class contains the foreign key,
@@ -1151,14 +1078,11 @@ abstract class ActiveRecord {
 	 * [foreign_key]
 	 *   Specify the foreign key used for the association. By default this is guessed to be the name
 	 *   of the associated class with an "_id" suffix.
-	 * [readonly]
-	 *   If true, the associated object is readonly through the association.
 	 */
-	private static function get_belongs_to_association_objects($object, $model_name, $association_id, $belongs_to_assoc, $readonly) {
-		$association_readonly = self::get_association_readonly($belongs_to_assoc, $readonly);
+	private static function get_belongs_to_association_objects($object, $model_name, $association_id, $belongs_to_assoc) {
 		$assoc_model_name = self::get_association_model_name('belongs_to', $association_id, $belongs_to_assoc);
 		$foreign_key = self::get_foreign_key('belongs_to', $model_name, $assoc_model_name, $belongs_to_assoc);
-		$belongs_to_object = self::find_one($assoc_model_name, $object->attributes[$foreign_key], array('readonly' => $association_readonly));
+		$belongs_to_object = self::find_one($assoc_model_name, $object->attributes[$foreign_key]);
 		$object->attributes[$association_id] = $belongs_to_object;
 	}
 
@@ -1180,15 +1104,12 @@ abstract class ActiveRecord {
 	 *   Specify the foreign key used for the association. By default this is guessed to be the name
 	 *   of this class in lower-case and "_id" suffixed. So a Person class that makes a +has_one+ association
 	 *   will use "person_id" as the default <tt>foreign_key</tt>.
-	 * [readonly]
-	 *   If true, the associated object is readonly through the association.
 	 */
-	private static function get_has_one_association_objects($object, $model_name, $association_id, $has_one_assoc, $readonly) {
-		$association_readonly = self::get_association_readonly($has_one_assoc, $readonly);
+	private static function get_has_one_association_objects($object, $model_name, $association_id, $has_one_assoc) {
 		$assoc_model_name = self::get_association_model_name('has_one', $association_id, $has_one_assoc);
 		$foreign_key = self::get_foreign_key('has_one', $model_name, $assoc_model_name, $has_one_assoc);
 		$conditions = array_merge(self::get_association_conditions($has_one_assoc), array($foreign_key => $object->id()));
-		$has_one_object = self::find_first($assoc_model_name, array('readonly' => $association_readonly, 'conditions' => $conditions));
+		$has_one_object = self::find_first($assoc_model_name, array('conditions' => $conditions));
 		$object->attributes[$association_id] = $has_one_object;
 	}
 
@@ -1212,12 +1133,9 @@ abstract class ActiveRecord {
 	 *   [relation_table] is the name of relation table.
 	 *   [column1] is foreign key of current model, default value is model_name suffixed with '_id'.
 	 *   [column2] is foreign key of association model, default value is association_model_name suffixed with '_id'.
-	 * [readonly]
-	 *   If true, all the associated objects are readonly through the association.
 	 */
-	private static function get_has_many_association_objects($object, $model_name, $association_id, $has_many_assoc, $readonly) {
+	private static function get_has_many_association_objects($object, $model_name, $association_id, $has_many_assoc) {
 		$assoc_model_name = self::get_association_model_name('has_many', $association_id, $has_many_assoc);
-		$association_readonly = self::get_association_readonly($has_many_assoc, $readonly);
 		$foreign_key = self::get_foreign_key('has_many', $model_name, $assoc_model_name, $has_many_assoc);
 		$conditions = self::get_association_conditions($has_many_assoc);
 		$joins = self::get_many_to_many_joins($has_many_assoc, $assoc_model_name);
@@ -1237,7 +1155,7 @@ abstract class ActiveRecord {
 		} else {
 			$conditions = array_merge($conditions, array($foreign_key => $object->id()));
 		}
-		$has_many_objects = self::find_all($assoc_model_name, array('joins' => $joins, 'conditions' => $conditions, 'readonly' => $association_readonly));
+		$has_many_objects = self::find_all($assoc_model_name, array('joins' => $joins, 'conditions' => $conditions));
 		$object->attributes[$association_id] = $has_many_objects;
 	}
 
@@ -1312,29 +1230,29 @@ abstract class ActiveRecord {
 
 	private static function add_select_fields($table_name, $options) {
 		if(isset($options['select']) && $select = $options['select']) {
-			return $select . " ";
+			return $select;
 		} else {
 			if(isset($options['joins'])) {
-				return $table_name . ".* ";
+				return $table_name . ".*";
 			} else {
-				return "* ";
+				return "*";
 			}
 		}
 	}
 
 	private static function add_from_tables($table_name, $options) {
-		$sql = "FROM ";
+		$sql = " FROM ";
 		if(isset($options['from']) && $from = $options['from']) {
-			return $sql . $from . " ";
+			return $sql . $from;
 		} else {
-			return $sql . $table_name . " ";
+			return $sql . $table_name;
 		}
 	}
 
 	private static function add_joins($options) {
 		$joins = "";
 		if(isset($options['joins']) && $joins = $options['joins']) {
-			$joins = " " . $options['joins'] . " ";
+			$joins = " " . $options['joins'];
 		}
 		return $joins;
 	}
@@ -1446,7 +1364,7 @@ abstract class ActiveRecord {
 	private static function add_order($options) {
 		$order = "";
 		if(isset($options['order']) && $order = $options['order']) {
-			$order = " ORDER BY $order ";
+			$order = " ORDER BY $order";
 		}
 		return $order;
 	}
@@ -1454,9 +1372,9 @@ abstract class ActiveRecord {
 	private static function add_group($options) {
 		$group = "";
 		if(isset($options['group']) && $group = $options['group']) {
-			$group = " GROUP BY $group ";
+			$group = " GROUP BY $group";
 			if(isset($options['having']) && $having = $options['having']) {
-				$group .= " HAVING $having ";
+				$group .= " HAVING $having";
 			}
 		}
 		return $group;
@@ -1524,7 +1442,7 @@ abstract class ActiveRecord {
 		}
 		return self::$cached_table_columns[$model_name];
 	}
-	
+
 	private static function do_action($hook, $parameters = '') {
 		if (function_exists('do_action')) {
 			do_action($hook, $parameters);
@@ -1532,12 +1450,9 @@ abstract class ActiveRecord {
 	}
 
 	/**
-	 * if readonly is true, using slave connection firstly.
+	 * fetcb rows by sql
 	 */
-	private static function fetch_rows($sql, $readonly) {
-		if($readonly) {
-			return self::get_readonly_connection()->fetch_rows($sql);
-		}
+	private static function fetch_rows($sql) {
 		return self::get_connection()->fetch_rows($sql);
 	}
 
@@ -1546,7 +1461,6 @@ abstract class ActiveRecord {
 	private $new_active_record = true;
 	private $lower_class_name = false;
 	private $session_active_record = false;
-	private $readonly_active_record = false;
 	private $active_record_errors = array();
 
 	public $attributes;
@@ -1654,13 +1568,8 @@ abstract class ActiveRecord {
 	public function reload() {
 		$model_name = $this->get_object_model_name();
 		$id = $this->id();
-		$readonly = $this->is_readonly();
-		if($readonly) {
-			self::$cached_readonly_active_records[$model_name][$id] = null;
-		} else {
-			self::$cached_active_records[$model_name][$id] = null;
-		}
-		$obj = self::find_one($model_name, $id, array('readonly' => $readonly));
+        self::$cached_active_records[$model_name][$id] = null;
+		$obj = self::find_one($model_name, $id);
 		$this->attributes = $obj->attributes;
 	}
 
@@ -1671,24 +1580,17 @@ abstract class ActiveRecord {
 		return array_keys($this->attributes);
 	}
 
-	/**
-	 * Returns +true+ if the record is read only.
-	 */
-	public function is_readonly() {
-		return $this->readonly_active_record;
-	}
-
 	public function is_new_object() {
 		return $this->new_active_record;
 	}
-	
+
 	public function is_session_object() {
 		if (func_num_args() == 1) {
 			$this->session_active_record = func_get_arg(0);
 		}
 		return $this->session_active_record;
 	}
-	
+
 	// =============================== Errors ===============================
 
 	/**
@@ -1859,9 +1761,6 @@ abstract class ActiveRecord {
 	}
 
 	private function create_or_update($validate) {
-		if($this->readonly_active_record) {
-			throw new FireflyException("Readonly record can not be updated or created!");
-		}
 		if($validate && !$this->is_valid()) {
 			return false;
 		}
@@ -2115,8 +2014,7 @@ abstract class ActiveRecord {
 			$model_name = $this->get_object_model_name();
 			if(in_array($key, self::get_association_keys($model_name))) {
 				// for has_many, has_one and belongs_to properties.
-				$readonly = $this->is_readonly();
-				self::get_association_objects($this, array('include' => $key), $readonly);
+				self::get_association_objects($this, array('include' => $key));
 				return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : null;
 			} else {
 				// for table columns which value is null.

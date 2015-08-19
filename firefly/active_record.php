@@ -453,11 +453,6 @@ abstract class ActiveRecord {
             if(get_magic_quotes_gpc()) {
                 $value = stripslashes($value);
             }
-            // for mysqli
-            if(function_exists('mysqli_real_escape_string')) {
-                return mysqli_real_escape_string($value);
-            }
-            // for mysql
             if(function_exists('mysql_real_escape_string')) {
                 return mysql_real_escape_string($value);
             }

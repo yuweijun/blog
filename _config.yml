@@ -1,6 +1,6 @@
 # Site settings
 title: yuweijun's Blog
-email: test.yu@gmail.com
+email: yuweijun@live.com
 description: "{\"type\":\"编程笔记\"}"
 baseurl: "/blog"
 url: "http://yuweijun.github.io"
@@ -9,4 +9,5 @@ github_username: yuweijun
 
 # Build settings
 markdown: kramdown
-permalink: pretty
+paginate: 15
+gems: [jekyll-paginate]

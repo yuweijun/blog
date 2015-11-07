@@ -2,7 +2,7 @@
 
   <div class="wrap">
 
-    <div class="footer-col-1 column">
+    <div class="footer-col-4 column">
       <ul>
         {% if site.github_username %}<li>
           <a href="https://github.com/{{ site.github_username }}">
@@ -24,6 +24,7 @@
           </a>
         </li>{% endif %}
         <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+        <li><a href="{{ "/feed.xml" | prepend: site.baseurl }}">subscribe via RSS</a></li>
       </ul>
     </div>
 

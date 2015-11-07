@@ -428,3 +428,11 @@ img { max-width: 100%; }
     margin: 0 0 15px; }
 
 }
+
+.pagination {
+  float: right;
+}
+
+.pagination a {
+  margin: 0 3px;
+}

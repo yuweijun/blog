@@ -1,7 +1,7 @@
 ---
 layout: post
+title: "ECMAScript 6 入门[阮一峰 著]"
 date: "Sat Aug 02 2014 10:42:12 GMT+0800 (CST)"
-title: ECMAScript 6 入门[阮一峰 著]
 categories: javascript
 ---
 

@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "jQuery-1.4.2 data部分源码分析"
+title: "jQuery-1.4.2 data部分源码分析"
 date: "Wed Jul 31 2014 20:32:36 GMT+0800 (CST)"
-categories: jquery src
+categories: jquery
 ---
 
 jQuery本身的二个静态方法jQuery.data()和jQuery.removeData()，jQuery.fn.data()/jQuery.fn.removeData()都是调用这二个方法对jquery对象中所有匹配的DOM元素进行操作：

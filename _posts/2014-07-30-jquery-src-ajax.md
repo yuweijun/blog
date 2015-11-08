@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "jQuery-1.4.2 ajax部分源码分析"
+title: "jQuery-1.4.2 ajax部分源码分析"
 date: "Wed Jul 30 2014 20:58:36 GMT+0800 (CST)"
-categories: jquery src
+categories: jquery
 ---
 
 jQuery.ajax在官方有非常详细的[文档说明](http://api.jquery.com/jQuery.ajax/)。其真正的核心方法是jQuery.ajax()方法，一般并不需要用此方法进行ajax操作，而使用更高级的方法，如jQuery.get()/jQuery.fn.load()/jQuery.post()/jQuery.getScript()等。

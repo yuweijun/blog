@@ -1,9 +1,8 @@
 ---
 layout: post
 title: "Disruptor Demo"
-tags: java disruptor
 date: "Tue Jul 29 2014 22:20:34 GMT+0800 (CST)"
-categories: java disruptor
+categories: java
 ---
 
 基于disruptor 3.3.0版本的一个示例，这是[原文地址](http://blog.csdn.net/jiang_bing/article/details/9292163)，略有调整，其中用到的几个类可从[前文](http://yuweijun.github.io/blog/java/disruptor/2014/07/28/learning-disruptor-part-one/)获得。

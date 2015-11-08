@@ -1,8 +1,8 @@
 ---
 layout: post
-title: How can I brew link to a specific version?
+title: "How can I brew link to a specific version"
 date: "Wed Jul 29 2014 11:40:26 GMT+0800 (CST)"
-categories: howto
+categories: macos
 ---
 
 [Reference](http://stackoverflow.com/questions/13477363/how-can-i-brew-link-a-specific-version)

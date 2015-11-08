@@ -2,7 +2,7 @@
 layout: post
 title:  "jQuery-1.4.2 event部分源码分析"
 date: "Wed Jul 31 2014 21:50:36 GMT+0800 (CST)"
-categories: jquery src
+categories: jquery
 ---
 
 下面是Dean Edwards关于javascript事件机制处理的[源码](http://dean.edwards.name/weblog/2005/10/add-event/)

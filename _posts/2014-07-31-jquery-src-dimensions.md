@@ -2,7 +2,7 @@
 layout: post
 title:  "jQuery-1.4.2 dimensions部分源码分析"
 date: "Wed Jul 31 2014 21:45:36 GMT+0800 (CST)"
-categories: jquery src
+categories: jquery
 ---
 
 jQuery.fn.width()和jQuery.fn.css("width")的区别

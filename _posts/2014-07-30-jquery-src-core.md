@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "jQuery-1.4.2 core部分源码分析"
+title: "jQuery-1.4.2 core部分源码分析"
 date: "Wed Jul 30 2014 21:40:26 GMT+0800 (CST)"
-categories: jquery src
+categories: jquery
 ---
 
 jQuery()方法，这其实是jQuery构造方法的封装，在new关键词漏写时也是正确的返回jquery对象的，看后面关于jQuery.fn.init构造方法说明：

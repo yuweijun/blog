@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Batch rename files using bash script"
+title: "Batch rename files using bash script"
 date: "Wed May 06 2015 15:23:57 GMT+0800 (CST)"
-categories: bash script
+categories: bash
 ---
 
 这个主要是为了方便批量重名命图片文件而写的，并且只是我简单针对小写文件名为jpg/png的图片做了处理，其他形式需要传后缀名进来，在第二个参数中指定文件扩展名：

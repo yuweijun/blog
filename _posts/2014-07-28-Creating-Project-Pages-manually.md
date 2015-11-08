@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Creating github project pages manually!"
+title: "Creating github project pages manually!"
 date: "Wed Jul 28 2014 12:40:26 GMT+0800 (CST)"
-categories: jekyll update
+categories: ruby
 ---
 
 If you're familiar with command-line Git, it's straightforward to manually create a Project Pages site.

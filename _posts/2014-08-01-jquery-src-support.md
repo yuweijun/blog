@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "jQuery-1.4.2 support部分源码分析"
+title: "jQuery-1.4.2 support部分源码分析"
 date: "Fri Aug 01 2014 22:49:32 GMT+0800 (CST)"
-categories: jquery src
+categories: jquery
 ---
 
 Event detection without browser sniffing

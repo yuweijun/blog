@@ -1,8 +1,8 @@
 ---
 layout: post
+title: "Difference sed on MacOSX and Linux"
 date: "Fri Aug 01 2014 23:10:36 GMT+0800 (CST)"
-title: Difference sed on MacOSX and Linux
-categories: howto
+categories: linux
 ---
 
 sed正则替换内容时，碰到在Linux上正常执行的命令在MacOSX执行失败的问题，如：

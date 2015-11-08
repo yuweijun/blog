@@ -2,7 +2,7 @@
 layout: post
 date: "Thu Jul 31 2014 12:15:30 GMT+0800 (CST)"
 title: jQuery debug plugin
-categories: jquery debug
+categories: jquery
 ---
 
 自己使用的javascript debug插件源码:

@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "jQuery-1.4.2 fx部分源码分析"
+title: "jQuery-1.4.2 fx部分源码分析"
 date: "Fri Aug 01 2014 21:12:52 GMT+0800 (CST)"
-categories: jquery src
+categories: jquery
 ---
 
 ###Examples of jQuery.fn.fx

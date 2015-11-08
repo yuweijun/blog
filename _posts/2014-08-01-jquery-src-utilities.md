@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "jQuery-1.4.2 utilities部分源码分析"
+title: "jQuery-1.4.2 utilities部分源码分析"
 date: "Fri Aug 01 2014 22:52:32 GMT+0800 (CST)"
-categories: jquery src
+categories: jquery
 ---
 
 jQuery.extend方法是扩展jQuery本身的静态对象，各方法解释直接写在jQuery源码注释前:

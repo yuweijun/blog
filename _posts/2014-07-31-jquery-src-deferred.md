@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "jQuery-1.5 deferred部分源码分析"
+title: "jQuery-1.5 deferred部分源码分析"
 date: "Wed Jul 31 2014 21:35:36 GMT+0800 (CST)"
-categories: jquery src
+categories: jquery
 ---
 
 关于1.5中新引进来的jQuery.Deferred方法，在官方文档中的说明摘录部分如下，这个方法实现是基于CommonJS Promises/A的设计模式，这个设计模式主要用于异步编程。其中一种处理模式称为promise，它代表了一种可能会长时间运行而且不一定必须完整的操作的结果。这种模式不会阻塞和等待长时间的操作完成，而是返回一个代表了承诺的（promised）结果的对象。

@@ -1,9 +1,8 @@
 ---
 layout: post
 title: "Disruptor入门"
-tags: java disruptor
 date: "Wed Jul 28 2014 14:04:26 GMT+0800 (CST)"
-categories: java disruptor
+categories: java
 ---
 
 原文来源如下，实际运行有点小问题，略做修改

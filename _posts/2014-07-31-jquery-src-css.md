@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "jQuery-1.4.2 css部分源码分析"
+title: "jQuery-1.4.2 css部分源码分析"
 date: "Wed Jul 31 2014 20:23:36 GMT+0800 (CST)"
-categories: jquery src
+categories: jquery
 ---
 
 CSS 相关的jQuery方法官方文档如下所列，各方法逐一分析：

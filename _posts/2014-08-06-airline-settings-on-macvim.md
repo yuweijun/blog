@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "在macvim中为vim-airline配色"
+title: "在macvim中为vim-airline配色"
 date: "Wed Aug 06 2014 21:37:32 GMT+0800 (CST)"
-categories: howto
+categories: vim
 ---
 
 使用brew安装macvim，并下载powerline-fonts安装：

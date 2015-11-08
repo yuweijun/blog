@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "jQuery-1.4.2 manipulation部分源码分析"
+title: "jQuery-1.4.2 manipulation部分源码分析"
 date: "Fri Aug 01 2014 21:37:32 GMT+0800 (CST)"
-categories: jquery src
+categories: jquery
 ---
 
 manipulation部分源码分析

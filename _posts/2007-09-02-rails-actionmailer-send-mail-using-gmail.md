@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rails ActionMailer send mail using GMail"
+title: "rails actionmailer send mail using gmail"
 date: "Sun Sep 02 2007 21:20:00 GMT+0800 (CST)"
 categories: ruby
 ---

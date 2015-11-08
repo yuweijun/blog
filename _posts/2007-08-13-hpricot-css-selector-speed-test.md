@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Hpricot CSS Selector speed test"
+title: "hpricot css selector speed test"
 date: "Mon Aug 13 2007 23:11:00 GMT+0800 (CST)"
 categories: ruby
 ---

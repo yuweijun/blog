@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "prototype.js Ajax.Responders.register"
+title: "prototype.js ajax.responders.register"
 date: "Mon Jul 23 2007 10:45:00 GMT+0800 (CST)"
 categories: javascript
 ---

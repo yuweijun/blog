@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rails Routes 详解"
+title: "rails routes 详解"
 date: "Sun Aug 26 2007 23:34:00 GMT+0800 (CST)"
 categories: ruby
 ---

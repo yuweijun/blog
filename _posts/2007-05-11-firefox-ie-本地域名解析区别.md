@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Firefox和IE的本地hosts域名解析区别"
+title: "firefox和ie的本地hosts域名解析区别"
 date: "Fri May 11 2007 22:39:00 GMT+0800 (CST)"
 categories: firefox
 ---

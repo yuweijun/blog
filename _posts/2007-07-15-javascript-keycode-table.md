@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "javascript keyCode table"
+title: "javascript keycode table"
 date: "Sun Jul 15 2007 16:08:00 GMT+0800 (CST)"
 categories: javascript
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Ruby realize cookies management"
+title: "ruby realize cookies management"
 date: "Thu Aug 23 2007 11:51:00 GMT+0800 (CST)"
 categories: ruby
 ---

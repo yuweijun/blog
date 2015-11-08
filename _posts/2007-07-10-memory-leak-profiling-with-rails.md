@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Memory leak profiling with Rails"
+title: "memory leak profiling with rails"
 date: "Tue Jul 10 2007 15:36:00 GMT+0800 (CST)"
 categories: ruby
 ---

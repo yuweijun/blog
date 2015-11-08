@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Linux fetchmail 使用实例"
+title: "linux fetchmail 使用实例"
 date: "Tue May 15 2007 22:41:00 GMT+0800 (CST)"
 categories: linux
 ---

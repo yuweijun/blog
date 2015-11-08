@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "mysql configure 安装参数及其查看方法"
+title: "mysql configure 安装参数及其查看方法"
 date: "Thu May 24 2007 22:23:00 GMT+0800 (CST)"
 categories: mysql
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "mysqld_safe 启动选项文件使用说明"
+title: "mysqld_safe 启动选项文件使用说明"
 date: "Thu May 26 2007 22:55:00 GMT+0800 (CST)"
 categories: mysql
 ---

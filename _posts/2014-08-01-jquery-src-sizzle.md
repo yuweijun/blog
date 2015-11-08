@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "jQuery-1.4.2 sizzle部分源码分析"
+title: "jquery-1.4.2 sizzle部分源码分析"
 date: "Fri Aug 01 2014 22:47:32 GMT+0800 (CST)"
 categories: jquery
 ---

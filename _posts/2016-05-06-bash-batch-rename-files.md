@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Batch rename files using bash script"
+title: "batch rename files using bash script"
 date: "Wed May 06 2015 15:23:57 GMT+0800 (CST)"
 categories: bash
 ---

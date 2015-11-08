@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "speed optimization for javascript innerHTML"
+title: "speed optimization for javascript innerhtml"
 date: "Fri Sep 14 2007 11:16:00 GMT+0800 (CST)"
 categories: javascript
 ---

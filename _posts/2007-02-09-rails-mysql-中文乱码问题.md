@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rails Mysql 中文乱码问题"
+title: "rails mysql 中文乱码问题"
 date: "Fri Feb 09 2007 15:46:00 GMT+0800 (CST)"
 categories: mysql
 ---

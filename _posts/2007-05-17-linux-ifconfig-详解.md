@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "linux ifconfig 详解"
+title: "linux ifconfig 详解"
 date: "Thu May 17 2007 23:59:00 GMT+0800 (CST)"
 categories: linux
 ---

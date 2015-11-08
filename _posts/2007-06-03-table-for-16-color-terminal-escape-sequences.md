@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Table for 16-color terminal escape sequences"
+title: "table for 16-color terminal escape sequences"
 date: "Sun Jun 03 2007 23:55:00 GMT+0800 (CST)"
 categories: linux
 ---

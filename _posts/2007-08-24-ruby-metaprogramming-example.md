@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Ruby metaprogramming example"
+title: "ruby metaprogramming example"
 date: "Fri Aug 24 2007 11:41:00 GMT+0800 (CST)"
 categories: ruby
 ---

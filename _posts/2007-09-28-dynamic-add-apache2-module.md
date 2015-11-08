@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "动态增加Apache2的模块"
+title: "动态增加apache2的模块"
 date: "Fri Sep 28 2007 15:11:00 GMT+0800 (CST)"
 categories: linux
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "linux route 详解"
+title: "linux route 详解"
 date: "Mon May 21 2007 12:01:00 GMT+0800 (CST)"
 categories: linux
 ---

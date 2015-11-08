@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "prototype.js Object.extend example"
+title: "prototype.js object.extend example"
 date: "Sun Aug 05 2007 15:25:00 GMT+0800 (CST)"
 categories: javascript
 ---

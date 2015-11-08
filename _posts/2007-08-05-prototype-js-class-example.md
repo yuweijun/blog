@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "prototype.js Class.create example"
+title: "prototype.js class.create example"
 date: "Sun Aug 05 2007 14:31:00 GMT+0800 (CST)"
 categories: javascript
 ---

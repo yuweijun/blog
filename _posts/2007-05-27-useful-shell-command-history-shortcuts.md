@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Useful Shell Command History Shortcuts"
+title: "useful shell command history shortcuts"
 date: "Thu May 27 2007 13:34:00 GMT+0800 (CST)"
 categories: linux
 ---

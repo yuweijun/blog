@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Classical Inheritance in JavaScript"
+title: "classical inheritance in javascript"
 date: "Fri Aug 10 2007 02:00:00 GMT+0800 (CST)"
 categories: javascript
 ---

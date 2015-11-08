@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "prototype.js String.gsub example"
+title: "prototype.js string.gsub example"
 date: "Sun Aug 05 2007 19:34:00 GMT+0800 (CST)"
 categories: javascript
 ---

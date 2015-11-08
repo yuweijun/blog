@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Disruptor入门"
+title: "disruptor入门"
 date: "Wed Jul 28 2014 14:04:26 GMT+0800 (CST)"
 categories: java
 ---

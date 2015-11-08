@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Welcome to Jekyll!"
+title: "welcome to jekyll!"
 date: "Wed Jul 28 2014 11:40:26 GMT+0800 (CST)"
 categories: ruby
 ---

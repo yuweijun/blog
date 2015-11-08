@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Ruby Block二种写法之间的区别"
+title: "ruby block二种写法之间的区别"
 date: "Sun Jun 13 2007 11:38:00 GMT+0800 (CST)"
 categories: ruby
 ---

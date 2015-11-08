@@ -1,7 +1,7 @@
 ---
 layout: post
+title: "jquery debug plugin"
 date: "Thu Jul 31 2014 12:15:30 GMT+0800 (CST)"
-title: jQuery debug plugin
 categories: jquery
 ---
 

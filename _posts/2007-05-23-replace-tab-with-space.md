@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "replace Tab with Space"
+title: "replace tab with space"
 date: "Mon May 21 2007 12:01:00 GMT+0800 (CST)"
 categories: linux
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "addEvent of javascript"
+title: "addevent of javascript"
 date: "Sun Jul 29 2007 00:16:00 GMT+0800 (CST)"
 categories: javascript
 ---

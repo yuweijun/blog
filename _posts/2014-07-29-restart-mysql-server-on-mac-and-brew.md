@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Mac上brew安裝的mysql如何重启"
+title: "mac上brew安裝的mysql如何重启"
 date: "Tue Jul 29 2014 20:32:00 GMT+0800 (CST)"
 categories: macos
 ---

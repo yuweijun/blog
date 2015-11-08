@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Difference sed on MacOSX and Linux"
+title: "difference sed on macosx and linux"
 date: "Fri Aug 01 2014 23:10:36 GMT+0800 (CST)"
 categories: linux
 ---

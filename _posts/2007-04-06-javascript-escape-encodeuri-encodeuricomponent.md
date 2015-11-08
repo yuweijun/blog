@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "JavaScript escape encodeURI encodeURIComponent"
+title: "javascript escape encodeuri encodeuricomponent"
 date: "Fri Apr 06 2007 17:13:00 GMT+0800 (CST)"
 categories: javascript
 ---

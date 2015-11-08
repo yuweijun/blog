@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Ruby Quiz author's currying explain"
+title: "ruby quiz author's currying explain"
 date: "Thu Aug 09 2007 00:27:00 GMT+0800 (CST)"
 categories: ruby
 ---

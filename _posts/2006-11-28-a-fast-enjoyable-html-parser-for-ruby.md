@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "A Fast, Enjoyable HTML Parser for Ruby"
+title: "a fast, enjoyable html parser for ruby"
 date: "Tue Nov 28 2006 22:24:00 GMT+0800 (CST)"
 categories: ruby
 ---

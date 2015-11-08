@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rails ActiveRecord Observer usage"
+title: "rails activerecord observer usage"
 date: "Sun Aug 26 2007 20:30:00 GMT+0800 (CST)"
 categories: ruby
 ---

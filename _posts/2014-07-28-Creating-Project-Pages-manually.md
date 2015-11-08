@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Creating github project pages manually!"
+title: "creating github project pages manually!"
 date: "Wed Jul 28 2014 12:40:26 GMT+0800 (CST)"
 categories: ruby
 ---

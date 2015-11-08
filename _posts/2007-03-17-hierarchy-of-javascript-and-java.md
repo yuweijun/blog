@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Hierarchy of javascript and java"
+title: "hierarchy of javascript and java"
 date: "Sat Mar 17 2007 18:26:00 GMT+0800 (CST)"
 categories: javascript
 ---

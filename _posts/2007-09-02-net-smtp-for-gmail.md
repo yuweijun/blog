@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Net::SMTP for Gmail"
+title: "net::smtp for gmail"
 date: "Sun Sep 02 2007 17:09:00 GMT+0800 (CST)"
 categories: ruby
 ---

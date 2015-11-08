@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Ruby spreadsheet/excel生成Excel"
+title: "ruby spreadsheet/excel生成excel"
 date: "Thu Aug 16 2007 12:21:00 GMT+0800 (CST)"
 categories: ruby
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Properties and Methods of the XMLHTTP Object"
+title: "properties and methods of the xmlhttp object"
 date: "Sun Feb 25 2007 13:54:00 GMT+0800 (CST)"
 categories: javascript
 ---

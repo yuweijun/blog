@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "MySQL load apache2 logs"
+title: "mysql load apache2 logs"
 date: "Thu May 27 2007 19:58:00 GMT+0800 (CST)"
 categories: mysql
 ---

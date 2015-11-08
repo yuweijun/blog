@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Ubuntu scim 五笔输入法设置"
+title: "ubuntu scim 五笔输入法设置"
 date: "Wed May 09 2007 10:53:00 GMT+0800 (CST)"
 categories: ubuntu
 ---

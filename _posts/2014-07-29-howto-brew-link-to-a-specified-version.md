@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How can I brew link to a specific version"
+title: "how can i brew link to a specific version"
 date: "Wed Jul 29 2014 11:40:26 GMT+0800 (CST)"
 categories: macos
 ---

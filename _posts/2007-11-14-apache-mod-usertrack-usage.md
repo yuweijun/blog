@@ -10,12 +10,12 @@ categories: linux
 在虚拟主机的配置里再加上以下配置，其中具体的参数含义可参考此链接：[mod_usertrack](http://httpd.apache.org/docs/1.3/mod/mod_usertrack.html)
 
 {% highlight bash %}
-  CookieTracking on
-  CookieStyle Cookie
-  CookieExpires "2 weeks"
-  CookieDomain .foo.bar
-  CustomLog logs/cookie-track.log "%{cookie}n %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
-  CookieName FOO_BAR
+CookieTracking on
+CookieStyle Cookie
+CookieExpires "2 weeks"
+CookieDomain .foo.bar
+CustomLog logs/cookie-track.log "%{cookie}n %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
+CookieName FOO_BAR
 {% endhighlight %}
 
 重启apache即可。

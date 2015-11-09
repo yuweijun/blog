@@ -109,7 +109,6 @@ virtual=192.168.1.199:80
         # persistent=600
         protocol=tcp
         checktype=negotiate
-
 {% endhighlight %}
 
 在WEB Server的根目录下要有heartbeat.html这个文件，并且里面内容为Test Page字符串，Ldirector检测到这个文件并接收到的字符串能匹配上这个字符串即认为此Real Server为活跃的，不然会从集群中移除此server

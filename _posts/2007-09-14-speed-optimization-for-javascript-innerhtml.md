@@ -28,4 +28,7 @@ function replaceHtml(el, html) {
 };
 {% endhighlight %}
 
-Reference: [faster-than-innerhtml](http://blog.stevenlevithan.com/archives/faster-than-innerhtml)
+References
+----
+
+1. [faster-than-innerhtml](http://blog.stevenlevithan.com/archives/faster-than-innerhtml)

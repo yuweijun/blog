@@ -7,7 +7,7 @@ categories: javascript
 
 scriptaculous.js自动完成功能测试。
 
-CSS源码
+css
 -----
 
 {% highlight css %}
@@ -37,7 +37,7 @@ div.autocomplete ul li {
 }
 {% endhighlight %}
 
-javascript源码
+javascript
 -----
 
 {% highlight javascript %}
@@ -75,7 +75,7 @@ var my_completer = new Ajax.Autocompleter("autocomplete", "autocomplete_choices"
 });
 {% endhighlight %}
 
-html源码
+html
 -----
 
 {% highlight html %}
@@ -88,7 +88,7 @@ html源码
 <div id="autocomplete_choices" class="autocomplete"></div>
 {% endhighlight %}
 
-ajax调用的ajax_response.html源码
+ajax调用的ajax_response.html
 -----
 
 {% highlight html %}

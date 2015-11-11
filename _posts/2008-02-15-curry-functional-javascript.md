@@ -27,7 +27,8 @@ alert(arr.yaslice(3));
 // arr.slice(2,3) => 's'
 {% endhighlight %}
 
-References:
+References
+-----
 
 1. [http://ejohn.org/blog/partial-functions-in-javascript/](http://ejohn.org/blog/partial-functions-in-javascript/)
 2. [http://osteele.com/sources/javascript/functional/](http://osteele.com/sources/javascript/functional/)

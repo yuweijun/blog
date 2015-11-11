@@ -5,7 +5,7 @@ date: "Fri Feb 22 2008 15:18:00 GMT+0800 (CST)"
 categories: javascript
 ---
 
-html源码
+html
 -----
 
 {% highlight html %}
@@ -18,7 +18,7 @@ html源码
 </ul>
 {% endhighlight %}
 
-javascript源码
+javascript
 -----
 
 {% highlight javascript %}

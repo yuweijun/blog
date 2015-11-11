@@ -93,4 +93,7 @@ Net::SMTP.class_eval do
 end
 {% endhighlight %}
 
-reference: http://blog.pomozov.info/posts/how-to-send-actionmailer-mails-to-gmailcom.html
+References
+-----
+
+1. [http://blog.pomozov.info/posts/how-to-send-actionmailer-mails-to-gmailcom.html](http://blog.pomozov.info/posts/how-to-send-actionmailer-mails-to-gmailcom.html)

@@ -3,11 +3,11 @@ title: yuweijun's blog
 email: yuweijun@live.com
 description: "{\"type\":\"编程笔记\"}"
 baseurl: "/blog"
-url: "http://yuweijun.github.io"
+url: "http://www.4e00.com/blog"
 twitter_username: yuweijun
 github_username: yuweijun
 
 # Build settings
 markdown: kramdown
-paginate: 15
+paginate: 26
 gems: [jekyll-paginate]

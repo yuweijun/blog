@@ -199,7 +199,7 @@ img {
 .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
     line-height: 1;
     font-weight: 300;
-    margin: 40px 0 20px;
+    margin: 30px 0 20px;
 }
 .post-content h2 {
     font-size: 32px;
@@ -225,7 +225,7 @@ img {
 .post-content ul, .post-content ol {
     padding-left: 20px;
 }
-.post pre, .post code {
+.post .highlight pre {
     border: 1px solid #d5d5e9;
     padding: 8px 12px;
     -webkit-border-radius: 3px;
@@ -236,17 +236,23 @@ img {
     white-space: pre-wrap;
     background-color: #eef;
 }
-.post pre {
-    background-color: #eef;
-}
-.post .highlight pre {
-    background-color: #eef;
-}
-.post code {
+.post p code {
     padding: 1px 5px;
+    margin: 0 3px;
+    border: 1px solid #d5d5e9;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 15px;
+    overflow: auto;
+    white-space: pre-wrap;
+    background-color: #eef;
 }
 .post ul, .post ol {
-    margin-left: 0;
+    border: 1px solid #eee;
+    padding: 8px 20px 8px 40px;
+    border-radius: 3px;
+    background-color: #efe;
 }
 .post pre code {
     border: 0;

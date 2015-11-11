@@ -5,7 +5,7 @@ date: "Sat Jan 26 2008 14:59:00 GMT+0800 (CST)"
 categories: javascript
 ---
 
-html源码
+html
 -----
 
 {% highlight html %}
@@ -14,7 +14,7 @@ html源码
  </div>
 {% endhighlight %}
 
-javascript源码
+javascript
 -----
 
 {% highlight javascript %}

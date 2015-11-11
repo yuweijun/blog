@@ -452,10 +452,10 @@ clientLeft为左边border宽度的像素值(只有数值)，即clientLeft == par
 
 clientWidth为div中间的可视区域宽度，不包括scrollbar的宽度，这里因为浏览器不同，scrollbar的宽度也是不同的，所以不同浏览器中clientWidth值也会不一样
 
-参考文章：
+References
+-----
 
-* http://jljlpch.javaeye.com/blog/232480
-* http://www.jb51.net/article/18340.htm
-* http://www.cssrain.cn/article.asp?id=1365
-* http://www.cnblogs.com/believe3301/archive/2008/07/19/1246806.html
-
+1. [http://jljlpch.javaeye.com/blog/232480](http://jljlpch.javaeye.com/blog/232480)
+2. [http://www.jb51.net/article/18340.htm](http://www.jb51.net/article/18340.htm)
+3. [http://www.cssrain.cn/article.asp?id=1365](http://www.cssrain.cn/article.asp?id=1365)
+4. [http://www.cnblogs.com/believe3301/archive/2008/07/19/1246806.html](http://www.cnblogs.com/believe3301/archive/2008/07/19/1246806.html)

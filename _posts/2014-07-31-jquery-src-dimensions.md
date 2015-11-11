@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "jquery-1.4.2 dimensions部分源码分析"
+title: "jquery-1.4.2 dimensions部分源码分析"
 date: "Wed Jul 31 2014 21:45:36 GMT+0800 (CST)"
 categories: jquery
 ---

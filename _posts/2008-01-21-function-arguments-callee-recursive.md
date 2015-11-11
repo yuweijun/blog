@@ -6,7 +6,7 @@ categories: javascript
 ---
 
 
-Early versions of JavaScript did not allow named function expressions, and because of that we could not make a recursive function expression:
+Early versions of javascript did not allow named function expressions, and because of that we could not make a recursive function expression:
 
 {% highlight javascript %}
 // This snippet will work:
@@ -34,8 +34,8 @@ map(function(n) {
 Warning: The 5th edition of ECMAScript (ES5) forbids use of arguments.callee() in strict mode. Avoid using arguments.callee() by either giving function expressions a name or use a function declaration where a function must call itself.
 {% endhighlight %}
 
-Reference
+References
 -----
 
-1. [Why was the arguments.callee.caller property deprecated in JavaScript?](http://stackoverflow.com/questions/103598/why-was-the-arguments-callee-caller-property-deprecated-in-javascript)
-2. [arguments.callee of MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments/callee)
+1. [Why was the arguments.callee.caller property deprecated in Javascript?](http://stackoverflow.com/questions/103598/why-was-the-arguments-callee-caller-property-deprecated-in-javascript)
+2. [arguments.callee of MDN](https://developer.mozilla.org/en-US/docs/Web/javascript/reference/functions/arguments/callee)

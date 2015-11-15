@@ -8,7 +8,7 @@ categories: ruby
 ruby
 -----
 
-{% highlight rub %}
+{% highlight ruby %}
 require 'cgi'
 def unicode_utf8(unicode_string)
   unicode_string.gsub(/\\u\w{4}/) do |s|

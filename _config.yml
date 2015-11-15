@@ -9,5 +9,5 @@ github_username: yuweijun
 
 # Build settings
 markdown: kramdown
-paginate: 26
+paginate: 25
 gems: [jekyll-paginate]

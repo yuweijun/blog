@@ -8,14 +8,14 @@ categories: linux
 当IE在访问如下url
 -----
 
-{% highlight texttt %}
+{% highlight text %}
 http://localhost/a.html?q=中文
 {% endhighlight %}
 
 在apache2 log里能看到以下内容
 -----
 
-{% highlight texttt %}
+{% highlight text %}
 GET /a.html?q=\xd6\xd0\xce\xc4 HTTP/1.1
 {% endhighlight %}
 
@@ -24,7 +24,7 @@ GET /a.html?q=\xd6\xd0\xce\xc4 HTTP/1.1
 
 日志中看到的内容是对字符串进行urlencode过后的格式：
 
-{% highlight texttt %}
+{% highlight text %}
 GET /a.html?q=%D6%D0%CE%C4 HTTP/1.1
 {% endhighlight %}
 

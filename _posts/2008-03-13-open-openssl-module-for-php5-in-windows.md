@@ -8,7 +8,7 @@ categories: php
 控制台看到如下警告
 =====
 
-{% highlight tex %}
+{% highlight text %}
 Warning: SoapClient::SoapClient() [function.SoapClient-SoapClient]: I/O warning : failed to load external entity "http://localhost:9090/test?wsdl" in test.php on line 13
 {% endhighlight %}
 

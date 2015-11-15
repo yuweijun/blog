@@ -7,7 +7,7 @@ categories: javascript
 
 `\b`Match a word boundary. That is, match the position between a `\w` character and a `\W` character or between a `\w` character and the beginning or end of a string. (Note, however, that `[\b]` matches `backspace`.)
 
-{% highlight tex %}
+{% highlight text %}
 \B Match a position that is not a word boundary.
 [\b] A literal backspace (special case).
 {% endhighlight %}

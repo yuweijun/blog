@@ -38,7 +38,7 @@ echo
 
 以上脚本运行后会输出以下结果：
 
-{% highlight tex %}
+{% highlight text %}
 Table for 16-color terminal escape sequences.
 Replace ESC with \033 in bash.
 

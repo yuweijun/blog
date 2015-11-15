@@ -7,7 +7,7 @@ categories: php
 
 当访问php页面时，得到一个500服务器内部错误（500 internal error ），服务器端错误日志如下：
 
-{% highlight tex %}
+{% highlight text %}
 2008-04-23 23:20:50: (mod_fastcgi.c.1743) connect failed: Connection refused on unix:/tmp/php-fastcgi.socket-3
 2008-04-23 23:20:50: (mod_fastcgi.c.2912) backend died; we'll disable it for 5 seconds and send the request to another backend instead: reconnects: 0 load: 1
 2008-04-23 23:20:50: (mod_fastcgi.c.2471) unexpected end-of-file (perhaps the fastcgi process died): pid: 350 socket: unix:/tmp/php-fastcgi.socket-3

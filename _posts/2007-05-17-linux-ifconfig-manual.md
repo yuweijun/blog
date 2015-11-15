@@ -20,7 +20,7 @@ ifconfig -interface [options] address
 主要参数
 -----
 
-{% highlight tex %}
+{% highlight text %}
 -interface：指定的网络接口名，如eth0和eth1。
 up：激活指定的网络接口卡。
 down：关闭指定的网络接口。

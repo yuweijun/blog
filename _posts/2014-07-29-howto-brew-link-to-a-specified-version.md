@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "how can i brew link to a specific version"
+title: "howto brew link to a specific version"
 date: "Wed Jul 29 2014 11:40:26 GMT+0800 (CST)"
 categories: macos
 ---
@@ -9,8 +9,8 @@ The usage info
 -----
 
 {% highlight bash %}
-Usage: `brew switch <formula> <version>`
-Example: `brew switch mysql 5.5.29`
+Usage: brew switch <formula> <version>
+Example: brew switch mysql 5.5.29
 {% endhighlight %}
 
 The versions installed on your system you can find with info: `brew info mysql`

@@ -8,7 +8,7 @@ categories: javascript
 说明
 -----
 
-{% highlight tex %}
+{% highlight text %}
 Number.toString(radix)
 Converts a number to a string, using a specified radix (base), and returns the string. radix must be between 2 and 36. If omitted, base 10 is used.
 {% endhighlight %}

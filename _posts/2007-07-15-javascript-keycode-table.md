@@ -7,7 +7,7 @@ categories: javascript
 
 javascript keyCode:
 
-{% highlight tex %}
+{% highlight text %}
 backspace               8
 tab                     9
 Enter                   13

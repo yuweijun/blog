@@ -2,7 +2,7 @@
 layout: post
 title: "ubuntu scim 五笔输入法设置"
 date: "Wed May 09 2007 10:53:00 GMT+0800 (CST)"
-categories: ubuntu
+categories: linux
 ---
 
 默认安装后SCIM无法调出五笔，需要安装中文支持，在新立得和Administrator->Language support里安装或者是直接在命令行里输入:

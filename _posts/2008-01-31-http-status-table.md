@@ -2,7 +2,7 @@
 layout: post
 title: "http statuses"
 date: "Thu Jan 31 2008 10:29:00 GMT+0800 (CST)"
-categories: http
+categories: web
 ---
 
 |status code  | description |

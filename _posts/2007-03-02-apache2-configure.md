@@ -2,7 +2,7 @@
 layout: post
 title: "apache2 configure"
 date: "Fri Mar 02 2007 22:41:00 GMT+0800 (CST)"
-categories: apache2
+categories: linux
 ---
 
 apache-2.2.4 configure parameters:

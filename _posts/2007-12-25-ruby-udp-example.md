@@ -28,7 +28,7 @@ u2.send('Hello world!' , 0)
 接收结果
 -----
 
-{% highlight tex %}
+{% highlight text %}
 ["Hello world!", ["AF_INET", 32818, "localhost", "127.0.0.1"]]
 {% endhighlight %}
 

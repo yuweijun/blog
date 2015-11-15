@@ -2,7 +2,7 @@
 layout: post
 title: "git分支管理"
 date: "Wed Jul 30 2014 17:54:54 GMT+0800 (CST)"
-categories: git
+categories: linux
 ---
 
 一般而言，我们要检出一个git项目会使用git clone命令，git clone默认会把远程仓库包括全部分支，完整clone下来：

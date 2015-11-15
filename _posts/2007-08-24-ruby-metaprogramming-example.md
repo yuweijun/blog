@@ -7,7 +7,7 @@ categories: ruby
 
 ruby metaprogramming需要熟悉Ruby的一些方法和类：
 
-{% highlight tex %}
+{% highlight text %}
 eval
 class_eval
 module_eval

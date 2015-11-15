@@ -30,7 +30,7 @@ map(function(n) {
 });
 {% endhighlight %}
 
-{% highlight tex %}
+{% highlight text %}
 Warning: The 5th edition of ECMAScript (ES5) forbids use of arguments.callee() in strict mode. Avoid using arguments.callee() by either giving function expressions a name or use a function declaration where a function must call itself.
 {% endhighlight %}
 

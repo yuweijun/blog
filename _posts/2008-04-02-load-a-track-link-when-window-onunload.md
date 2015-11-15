@@ -7,7 +7,7 @@ categories: javascript
 
 When close this window or leave this page will get request below, this trick may be cause bad user experience, and Opera will ignore it:
 
-{% highlight tex %}
+{% highlight text %}
 192.168.0.1 - - [02/Apr/2008:23:10:18 +0800] "GET /track.html?1207149018624 HTTP/1.1" 301 253
 {% endhighlight %}
 

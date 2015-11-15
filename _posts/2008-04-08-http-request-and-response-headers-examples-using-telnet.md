@@ -2,7 +2,7 @@
 layout: post
 title: "http request and response headers examples using telnet"
 date: "Tue Apr 08 2008 23:48:00 GMT+0800 (CST)"
-categories: http
+categories: web
 ---
 
 使用telnet进行http模拟请求。

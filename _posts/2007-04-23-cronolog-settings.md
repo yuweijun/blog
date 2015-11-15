@@ -23,7 +23,7 @@ $ cat access_log |/usr/local/cronolog/sbin/cronolog -p 13hours /home/test/%Y-%m-
 
 这个需要看一下Cronolog文档说明，如下：
 
-{% highlight tex %}
+{% highlight text %}
 -p PERIOD
 --period=PERIOD
 

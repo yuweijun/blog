@@ -9,7 +9,7 @@ Row size too large. The maximum row size for the used table type, not counting B
 
 一个表有130个varchar(255)字段，gbk编码，建表报以上错误，原因如下:
 
-{% highlight tex %}
+{% highlight text %}
 130 * 255 * 2 = 66560 > 66535 (GBK 2字节)
 {% endhighlight %}
 

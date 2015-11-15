@@ -7,7 +7,7 @@ categories: vim
 
 看下面2行的区别并复制下面第一行到任何文本编辑器中查看效果。
 
-{% highlight textt %}
+{% highlight text %}
 ‮tset (e202u\:值edocinu)OLR符字制控
 
 ‭控制字符LRO(unicode值:\u202d) test
@@ -15,7 +15,7 @@ categories: vim
 
 其他Unicode空白字符
 
-{% highlight textt %}
+{% highlight text %}
 &#8234;
 &#8235;
 &#8236;

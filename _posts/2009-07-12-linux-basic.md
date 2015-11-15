@@ -8,7 +8,7 @@ categories: linux
 linux/unix历史
 -----
 
-{% highlight textt %}
+{% highlight text %}
 1973 UNIX
 1977 BSD (Bill Joy) -> FreeBSD
 1979 AT&T 版权声明
@@ -45,7 +45,7 @@ keyboard shortcut
 Linux 目录和文件相关命令
 -----
 
-{% highlight textt %}
+{% highlight text %}
 文件权限：所属用户(user)、所属组(group)、其他人(other)
 drwxr-xr-x   19        user            staff     646     Mar 11 18:39  Books
 [属性]       [文件数]  [所属用户]      [所属组]  [大小]  [修改日期]    [文件名]

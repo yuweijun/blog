@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "convert ^M to newline character in textt files"
+title: "convert ^M to newline character in text files"
 date: "Tue Aug 11 2009 12:46:00 GMT+0800 (CST)"
 categories: vim
 ---
@@ -29,9 +29,9 @@ MacOSX uses carriage return (\r)
 Windows/DOS use both (\n\r)
 {% endhighlight %}
 
-To prevent the `^M` from showing up in files, be sure to use the `ASCII` (textt) mode when transfering textt files.
+To prevent the `^M` from showing up in files, be sure to use the `ASCII` (text) mode when transfering text files.
 
 References
 -----
 
-1. [http://blog.eukhost.com/webhosting/convert-m-to-newline-character-in-textt-files/](http://blog.eukhost.com/webhosting/convert-m-to-newline-character-in-textt-files/)
+1. [http://blog.eukhost.com/webhosting/convert-m-to-newline-character-in-text-files/](http://blog.eukhost.com/webhosting/convert-m-to-newline-character-in-text-files/)

@@ -20,7 +20,7 @@ bug重现-haslayout引起
 
 如下图所示，在文本和浮动元素之间就会出现一个莫名其妙的3像素间隙。
 
-![ie6-text-3px-bug](/img/web/ie6-3px-bug.png)
+![ie6-text-3px-bug]({{ site.baseurl }}/img/web/ie6-3px-bug.png)
 
 bug fix
 -----

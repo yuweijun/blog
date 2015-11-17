@@ -16,9 +16,8 @@ wget断点续传
 -----
 
 {% highlight text %}
--c
-   --continue
-       Continue getting a partially-downloaded file.  This is useful when you want to finish up a download started by a previous instance of Wget, or by another program.
+-c --continue
+    Continue getting a partially-downloaded file.  This is useful when you want to finish up a download started by a previous instance of Wget, or by another program.
 {% endhighlight %}
 
 {% highlight bash %}
@@ -36,7 +35,7 @@ $> wget \
      --html-extension \
      --convert-links \
      --restrict-file-names=windows \
-     --domains www.4e00.org \
+     --domains www.4e00.com \
      --no-parent \
      http://www.4e00.com/blog/
 {% endhighlight %}

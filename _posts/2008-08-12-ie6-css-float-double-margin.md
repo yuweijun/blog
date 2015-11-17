@@ -18,7 +18,7 @@ ie6 bug
 解决方法
 -----
 
-只需要多设置一个`display: inline;`即可，代码如下：
+这个是因为ie6的haslayout造成的bug，只需要多设置一个`display: inline;`即可，代码如下：
 
 {% highlight css %}
 .ie-bug-div {

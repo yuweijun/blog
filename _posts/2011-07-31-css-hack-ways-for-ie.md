@@ -12,14 +12,14 @@ ie6，在属性名前加下划线`_`
 #underline { _color: blue }
 {% endhighlight %}
 
-ie6, ie7，在属性名前加星号`*`
+ie6，ie7，在属性名前加星号`*`
 -----
 
 {% highlight css %}
 #asterisk { *color: blue; }
 {% endhighlight %}
 
-ie6, ie7, ie8，在属性值后面加上`\9`
+ie6，ie7，ie8，在属性值后面加上`\9`
 -----
 
 {% highlight css %}

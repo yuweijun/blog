@@ -51,7 +51,7 @@ console.log(div1.currentStyle.hasLayout);
 ie6中可以触发元素haslayout的属性
 -----
 
-{% highlight css %}
+{% highlight text %}
 float: left或right
 display: inline-block
 position: absolute
@@ -64,7 +64,7 @@ writing-mode: tb-rl
 ie7中可以触发元素的haslayout的属性
 -----
 
-{% highlight css %}
+{% highlight text %}
 min-height: 任意值
 min-width: 任意值
 max-height: 除none 外任意值
@@ -91,7 +91,7 @@ haslayout引起的bug及解决方法
 
 在另一条规则中重设以下属性为默认值将重置(或撤销)hasLayout：
 
-{% highlight css %}
+{% highlight text %}
 width, height (设为"auto")
 max-width, max-height (设为"none")(在ie7中)
 position (设为"static")
@@ -126,7 +126,7 @@ BFC是W3C CSS 2.1规范中的一个概念，它决定了元素如何对其内容
 BFC触发方式
 -----
 
-{% highlight css %}
+{% highlight text %}
 float: (任何值除了none)
 overflow:（任何值除了visible）
 display: (table-cell/table-caption/inline-block)

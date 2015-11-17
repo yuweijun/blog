@@ -43,7 +43,7 @@ endif
 
 可以在vim下查看帮助: `:h airline`
 
-![Screenshot](https://github.com/bling/vim-airline/wiki/screenshots/demo.gif)
+![Screenshot]({{ site.baseurl }}/img/linux/vim/vim-airline-demo.gif)
 
 资源列表:
 ----------

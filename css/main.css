@@ -208,19 +208,19 @@ img {
     font-size: 15px;
     overflow: auto;
     white-space: pre-wrap;
-    background-color: #eef;
+    background-color: #f9ffff;
 }
 .post ul, .post ol {
-    border: 1px solid #eee;
+    border: 1px solid #d5d5e9;
     padding: 8px 20px 8px 40px;
     border-radius: 3px;
-    background-color: #efe;
+    background-color: #f9ffff;
 }
 .post ol li {
     word-break: break-word;
 }
 .post ol li code {
-    padding: 1px 5px;
+    padding: 0 3px 2px 3px;;
     margin: 0 3px;
     border: 1px solid #d5d5e9;
     -webkit-border-radius: 3px;
@@ -230,6 +230,8 @@ img {
     overflow: auto;
     white-space: pre-wrap;
     background-color: #eef;
+    position: relative;
+    top: -1px;
 }
 .post p code {
     padding: 0 3px 2px 3px;
@@ -620,4 +622,20 @@ table > tbody > tr:nth-of-type(odd) {
 }
 table > tbody > tr:hover {
   background-color: #ffe;
+}
+
+/* post navigation */
+.post-navigation {
+    display: none;
+    width: auto;
+    overflow: hidden;
+}
+.post-navigation a {
+    display: block;
+    width: 50%;
+    float: left;
+    margin-top: 1em;
+}
+.post-navigation .next {
+    text-align: right;
 }

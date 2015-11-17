@@ -13,7 +13,6 @@ ie6下默认的字体尺寸大致在`12px`和`14px`之间，当你试图定义�
 <div style="height: 6px; font: 0px arial;"></div>
 或者
 <div style="height: 6px; overflow: hidden;"></div>
-都可以阻止ie的自作聪明。
 {% endhighlight %}
 
-该问题在ie7/firefox/opera下均不存在。
+该问题可能与ie6的haslayout有关系，在ie7/firefox/opera下均不存在。

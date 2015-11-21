@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "nodejs proxy server for google"
+title: "nodejs implements spider proxy server for google"
 date: "Thu Nov 19 2015 22:49:54 GMT+0800 (CST)"
 categories: javascript
 ---
 
-以nodejs request为基础做一个google代理服务器。
+以nodejs和request为基础写的一个google网页搜索结果的代理服务器。
 
 package.json
 -----
@@ -26,7 +26,7 @@ package.json
 }
 {% endhighlight %}
 
-processes.json
+pm2-google.json
 -----
 
 {% highlight json %}
@@ -43,7 +43,7 @@ processes.json
 }
 {% endhighlight %}
 
-proxy of www.google.com.hk
+spider proxy to www.google.com.hk
 -----
 
 {% highlight javascript %}
@@ -59,7 +59,7 @@ var server = http.createServer(function(request, response) {
 });
 
 server.listen(8000);
-console.log("google proxy server is listening");
+console.log("google search page spider server is listening on 8000");
 
 {% endhighlight %}
 
@@ -67,7 +67,7 @@ console.log("google proxy server is listening");
 -----
 
 {% highlight bash %}
-$> node_modules/pm2/bin/pm2 start processes.json
+$> node_modules/pm2/bin/pm2 start pm2-google.json
 {% endhighlight %}
 
 另外写了个手动抓取到内容，再返回给客户端的版本：
@@ -83,9 +83,6 @@ var server = http.createServer(function(request, response) {
     var google = "https://www.google.com.hk";
     var u = url.parse(request.url, true);
     var pathname = u.pathname;
-    var headers = {
-        "user-agent": request.headers["user-agent"]
-    };
 
     if (/^\/url/.test(pathname)) {
         response.writeHead(302, {
@@ -94,6 +91,9 @@ var server = http.createServer(function(request, response) {
         response.end();
     } else {
         console.log(request.url);
+        var headers = {
+            "user-agent": request.headers["user-agent"]
+        };
         var options = {
             url: google + request.url,
             encoding: null,
@@ -103,11 +103,7 @@ var server = http.createServer(function(request, response) {
             if (err) {
                 response.write("http client error: " + err.message);
             } else {
-		response.writeHead(res.statusCode, res.headers);
-                if (/html/i.test(request.headers.accept)) {
-                    console.log(request.headers);
-                    // response.writeHead(200, { "Content-Type": "text/html; charset=UTF-8" });
-                }
+                response.writeHead(res.statusCode, res.headers);
                 response.write(body);
             }
             response.end();
@@ -118,5 +114,5 @@ var server = http.createServer(function(request, response) {
 });
 
 server.listen(8000);
-console.log("google proxy server is listening");
+console.log("google search page spider server is listening on 8000");
 {% endhighlight %}

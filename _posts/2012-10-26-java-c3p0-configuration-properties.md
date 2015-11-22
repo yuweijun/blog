@@ -5,7 +5,7 @@ date: "Fri, 26 Oct 2012 16:19:26 +0800"
 categories: java
 ---
 
-c3p0配置参数说明
+c3p0配置属性说明
 -----
 
 {% highlight html %}
@@ -110,7 +110,7 @@ c3p0配置参数说明
 </c3p0-config>
 {% endhighlight %}
 
-c3p0 configure properties
+c3p0官方文档列出的全部配置属性
 -----
 
 {% highlight text %}
@@ -169,12 +169,10 @@ The fully-qualified class name of the JDBC driverClass that is expected to provi
 extensions
 Default: an empty java.util.Map
 A java.util.Map (raw type) containing the values of any user-defined configuration extensions defined for this DataSource.
-Does Not Support Per-User Overrides.
 
 factoryClassLocation
 Default: null
 DataSources that will be bound by JNDI and use that API's Referenceable interface to store themselves may specify a URL from which the class capable of dereferencing a them may be loaded. If (as is usually the case) the c3p0 libraries will be locally available to the JNDI service, leave this set as null.
-Does Not Support Per-User Overrides.
 forceIgnoreUnresolvedTransactions
 Default: false
 Strongly disrecommended. Setting this to true may lead to subtle and bizarre bugs. This is a terrible setting, leave it alone unless absolutely necessary. It is here to workaround broken databases / JDBC drivers that do not properly support transactions, but that allow Connections' autoCommit flags to go to false regardless. If you are using a database that supports transactions "partially" (this is oxymoronic, as the whole point of transactions is to perform operations reliably and completely, but nonetheless such databases are out there), if you feel comfortable ignoring the fact that Connections with autoCommit == false may be in the middle of transactions and may hold locks and other resources, you may turn off c3p0's wise default behavior, which is to protect itself, as well as the usability and consistency of the database, by either rolling back (default) or committing (see c3p0.autoCommitOnClose above) unresolved transactions. This should only be set to true when you are sure you are using a database that allows Connections' autoCommit flag to go to false, but offers no other meaningful support of transactions. Otherwise setting this to true is just a bad idea.
@@ -186,7 +184,6 @@ Setting this to true forces Connections to be checked-in synchronously, which un
 forceUseNamedDriverClass
 Default: false
 Setting the parameter driverClass causes that class to preload and register with java.sql.DriverManager. However, it does not on its own ensure that the driver used will be an instance of driverClass, as DriverManager may (in unusual cases) know of other driver classes which can handle the specified jdbcUrl. Setting this parameter to true causes c3p0 to ignore DriverManager and simply instantiate driverClass directly.
-Does Not Support Per-User Overrides.
 
 idleConnectionTestPeriod
 Default: 0
@@ -199,12 +196,10 @@ Number of Connections a pool will try to acquire upon startup. Should be between
 jdbcUrl
 Default: null
 The JDBC URL of the database from which Connections can and should be acquired. Should resolve via java.sql.DriverManager to an appropriate JDBC Driver (which you can ensure will be loaded and available by setting driverClass), or if you wish to specify which driver to use directly (and avoid DriverManager resolution), you may specify driverClass in combination with forceUseNamedDriverClass. Unless you are supplying your own unpooled DataSource, a must always be provided and appropriate for the JDBC driver, however it is resolved.
-Does Not Support Per-User Overrides.
 
 maxAdministrativeTaskTime
 Default: 0
 Seconds before c3p0's thread pool will try to interrupt an apparently hung task. Rarely useful. Many of c3p0's functions are not performed by client threads, but asynchronously by an internal thread pool. c3p0's asynchrony enhances client performance directly, and minimizes the length of time that critical locks are held by ensuring that slow jdbc operations are performed in non-lock-holding threads. If, however, some of these tasks "hang", that is they neither succeed nor fail with an Exception for a prolonged period of time, c3p0's thread pool can become exhausted and administrative tasks backed up. If the tasks are simply slow, the best way to resolve the problem is to increase the number of threads, via numHelperThreads. But if tasks sometimes hang indefinitely, you can use this parameter to force a call to the task thread's interrupt() method if a task exceeds a set time limit. [c3p0 will eventually recover from hung tasks anyway by signalling an "APPARENT DEADLOCK" (you'll see it as a warning in the logs), replacing the thread pool task threads, and interrupt()ing the original threads. But letting the pool go into APPARENT DEADLOCK and then recover means that for some periods, c3p0's performance will be impaired. So if you're seeing these messages, increasing numHelperThreads and setting maxAdministrativeTaskTime might help. maxAdministrativeTaskTime should be large enough that any resonable attempt to acquire a Connection from the database, to test a Connection, or to destroy a Connection, would be expected to succeed or fail within the time set. Zero (the default) means tasks are never interrupted, which is the best and safest policy under most circumstances. If tasks are just slow, allocate more threads. If tasks are hanging forever, try to figure out why, and maybe setting maxAdministrativeTaskTime can help in the meantime.
-Does Not Support Per-User Overrides.
 
 maxConnectionAge
 Default: 0
@@ -237,22 +232,18 @@ Minimum number of Connections a pool will maintain at any given time.
 numHelperThreads
 Default: 3
 c3p0 is very asynchronous. Slow JDBC operations are generally performed by helper threads that don't hold contended locks. Spreading these operations over multiple threads can significantly improve performance by allowing multiple operations to be performed simultaneously.
-Does Not Support Per-User Overrides.
 
 overrideDefaultUser
 Default: null
 Forces the username that should by PooledDataSources when a user calls the default getConnection() method. This is primarily useful when applications are pooling Connections from a non-c3p0 unpooled DataSource. Applications that use ComboPooledDataSource, or that wrap any c3p0-implemented unpooled DataSource can use the simple user property.
-Does Not Support Per-User Overrides.
 
 overrideDefaultPassword
 Default: null
 Forces the password that should by PooledDataSources when a user calls the default getConnection() method. This is primarily useful when applications are pooling Connections from a non-c3p0 unpooled DataSource. Applications that use ComboPooledDataSource, or that wrap any c3p0-implemented unpooled DataSource can use the simple password property.
-Does Not Support Per-User Overrides.
 
 password
 Default: null
 For applications using ComboPooledDataSource or any c3p0-implemented unpooled DataSources — DriverManagerDataSource or the DataSource returned by DataSources.unpooledDataSource( ... ) — defines the password that will be used for the DataSource's default getConnection() method.
-Does Not Support Per-User Overrides.
 
 preferredTestQuery
 Default: null
@@ -261,7 +252,6 @@ Defines the query that will be executed for all connection tests, if the default
 privilegeSpawnedThreads
 Default: false
 If true, c3p0-spawned Threads will have the java.security.AccessControlContext associated with c3p0 library classes. By default, c3p0-spawned Threads (helper threads, java.util.Timer threads) inherit their AccessControlContext from the client Thread that provokes initialization of the pool. This can sometimes be a problem, especially in application servers that support hot redeployment of client apps. If c3p0's Threads hold a reference to an AccessControlContext from the first client that hits them, it may be impossible to garbage collect a ClassLoader associated with that client when it is undeployed in a running VM. Also, it is possible client Threads might lack sufficient permission to perform operations that c3p0 requires. Setting this to true can resolve these issues.
-Does Not Support Per-User Overrides.
 
 propertyCycle
 Default: 0
@@ -270,7 +260,6 @@ Maximum time in seconds before user configuration constraints are enforced. Dete
 statementCacheNumDeferredCloseThreads
 Default: 0
 If set to a value greater than 0, the statement cache will track when Connections are in use, and only destroy Statements when their parent Connections are not otherwise in use. Although closing of a Statement while the parent Connection is in use is formally within spec, some databases and/or JDBC drivers, most notably Oracle, do not handle the case well and freeze, leading to deadlocks. Setting this parameter to a positive value should eliminate the issue. This parameter should only be set if you observe that attempts by c3p0 to close() cached statements freeze (usually you'll see APPARENT DEADLOCKS in your logs). If set, this parameter should almost always be set to 1. Basically, if you need more than one Thread dedicated solely to destroying cached Statements, you should set maxStatements and/or maxStatementsPerConnection so that you don't churn through Statements so quickly.
-Does Not Support Per-User Overrides.
 
 testConnectionOnCheckin
 Default: false
@@ -292,104 +281,57 @@ For applications using ComboPooledDataSource or any c3p0-implemented unpooled Da
 hibernate中c3p0的配置示例
 -----
 
-{% highlight text %}
-<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-    <property name="driverClass">
-        <value>org.sqlite.JDBC</value>
-    </property>
-    <property name="jdbcUrl">
-        <value>${hibernate.connection.url}</value>
-    </property>
-    <property name="user">
-        <value>${hibernate.connection.username}</value>
-    </property>
-    <property name="password">
-        <value>${hibernate.connection.password}</value>
-    </property>
-    <property name="acquireIncrement">
-        <value>3</value>
-    </property>
-    <property name="initialPoolSize">
-        <value>12</value>
-    </property>
-    <property name="minPoolSize">
-        <value>7</value>
-    </property>
-    <property name="maxPoolSize">
-        <value>20</value>
-    </property>
-    <property name="maxIdleTime">
-        <value>600</value>
-    </property>
-    <property name="idleConnectionTestPeriod">
-        <value>300</value>
-    </property>
-    <property name="maxStatements">
-        <value>100</value>
-    </property>
-    <property name="numHelperThreads">
-        <value>10</value>
-    </property>
-    <property name="acquireRetryAttempts">
-        <value>3</value>
-    </property>
-</bean>
+{% highlight xml %}
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:dbname</property>
+        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.connection.password">password</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+        <property name="hibernate.default_schema">schema-name</property>
+        <property name="show_sql">true</property>
+
+        <property name="hibernate.c3p0.min_size">5</property>
+        <property name="hibernate.c3p0.max_size">20</property>
+        <property name="hibernate.c3p0.timeout">300</property>
+        <property name="hibernate.c3p0.max_statements">50</property>
+        <property name="hibernate.c3p0.idle_test_period">3000</property>
+    </session-factory>
+</hibernate-configuration>
 {% endhighlight %}
 
-the most important configure properties with hibernate
+{% highlight properties %}
+hibernate.connection.driver_class = org.postgresql.Driver
+hibernate.connection.url = jdbc:postgresql://localhost/mydatabase
+hibernate.connection.username = myuser
+hibernate.connection.password = secret
+hibernate.dialect = org.hibernate.dialect.PostgreSQL82Dialect
+hibernate.c3p0.min_size = 5
+hibernate.c3p0.max_size = 20
+hibernate.c3p0.timeout = 1800
+hibernate.c3p0.max_statements = 50
+hibernate.c3p0.idle_test_period = 3000
+{% endhighlight %}
+
+Important configuration properties for the c3p0 connection pool
 -----
 
-{% highlight text %}
-initialPoolSize C3P0 default: 3
-
-minPoolSize Must be set in hibernate.cfg.xml (or hibernate.properties), Hibernate default: 1
-
-maxPoolSize Must be set in hibernate.cfg.xml (or hibernate.properties), Hibernate default: 100
-
-idleTestPeriod Must be set in hibernate.cfg.xml (or hibernate.properties), Hibernate default: 0
-
-If this is a number greater than 0, c3p0 will test all idle, pooled but unchecked-out connections, every this number of seconds.
-
-timeout Must be set in hibernate.cfg.xml (or hibernate.properties), Hibernate default: 0
-
-The seconds a Connection can remain pooled but unused before being discarded. Zero means idle connections never expire.
-
-maxStatements Must be set in hibernate.cfg.xml (or hibernate.properties), Hibernate default: 0
-
-The size of c3p0's PreparedStatement cache. Zero means statement caching is turned off.
-
-propertyCycle Must be set in c3p0.properties, C3P0 default: 300
-
-Maximum time in seconds before user configuration constraints are enforced. c3p0 enforces configuration constraints continually, and ignores this parameter. It is included for JDBC3 completeness.
-
-acquireIncrement Must be set in hibernate.cfg.xml (or hibernate.properties), Hibernate default: 1
-
-Determines how many connections at a time c3p0 will try to acquire when the pool is exhausted.
-
-testConnectionOnCheckout Must be set in c3p0.properties, C3P0 default: false
-
-Don't use it, this feature is very expensive. If set to true, an operation will be performed at every connection checkout to verify that the connection is valid. A better choice is to verify connections periodically using c3p0.idleConnectionTestPeriod.
-
-autoCommitOnClose Must be set in c3p0.properties, C3P0 default: false
-
-The JDBC spec is unfortunately silent on what should happen to unresolved, pending transactions on Connection close. C3P0's default policy is to rollback any uncommitted, pending work. (I think this is absolutely, undeniably the right policy, but there is no consensus among JDBC driver vendors.) Setting autoCommitOnClose to true causes uncommitted pending work to be committed, rather than rolled back on Connection close. [Note: Since the spec is absurdly unclear on this question, application authors who wish to avoid bugs and inconsistent behavior should ensure that all transactions are explicitly either committed or rolled-back before close is called.]
-
-forceIgnoreUnresolvedTransactions Must be set in c3p0.properties, C3P0 default: false
-
-Strongly disrecommended. Setting this to true may lead to subtle and bizarre bugs. This is a terrible setting, leave it alone unless absolutely necessary. It is here to work around broken databases / JDBC drivers that do not properly support transactions, but that allow Connections' autoCommit flags to be set to false regardless. If you are using a database that supports transactions "partially" (this is oxymoronic, as the whole point of transactions is to perform operations reliably and completely, but nevertheless, such databases exist), if you feel comfortable ignoring the fact that Connections with autoCommit == false may be in the middle of transactions and may hold locks and other resources, you may turn off c3p0's wise default behavior, which is to protect itself, as well as the usability and consistency of the database, by either rolling back (default) or committing (see c3p0.autoCommitOnClose above) unresolved transactions. This should only be set to true when you are sure you are using a database that allows Connections' autoCommit flag to go to false, but that it offers no other meaningful support of transactions. Otherwise setting this to true is just a bad idea.
-
-numHelperThreads Must be set in c3p0.properties, C3P0 default: 3
-
-c3p0 is very asynchronous. Slow JDBC operations are generally performed by helper threads that don't hold contended locks. Spreading these operations over multiple threads can significantly improve performance by allowing multiple operations to be performed simultaneously.
-
-factoryClassLocation Must be set in c3p0.properties, C3P0 default: null
-
-DataSources that will be bound by JNDI and use that API's Referenceable interface to store themselves may specify a URL from which the class capable of dereferencing a them may be loaded. If (as is usually the case) the c3p0 libraries will be locally available to the JNDI service, leave this set to null.
-{% endhighlight %}
+1. hibernate.c3p0.min_size – Minimum number of JDBC connections in the pool. Hibernate default: 1
+1. hibernate.c3p0.max_size – Maximum number of JDBC connections in the pool. Hibernate default: 100
+1. hibernate.c3p0.timeout – When an idle connection is removed from the pool (in second). Hibernate default: 0, never expire.
+1. hibernate.c3p0.max_statements – Number of prepared statements will be cached. Increase performance. Hibernate default: 0 , caching is disable.
+1. hibernate.c3p0.idle_test_period – idle time in seconds before a connection is automatically validated. Hibernate default: 0
 
 References
 -----
 
 1. [http://www.mchange.com/projects/c3p0/](http://www.mchange.com/projects/c3p0/)
 1. [http://blog.csdn.net/lip8654/article/details/2121369](http://blog.csdn.net/lip8654/article/details/2121369)
+1. [HowTo configure the C3P0 connection pool](https://developer.jboss.org/wiki/HowToConfigureTheC3P0ConnectionPool)
+1. [Hibernate Database access](https://docs.jboss.org/hibernate/orm/4.2/devguide/en-US/html/ch01.html#d5e83)
 1. [HowTo configure the C3P0 connection pool](https://developer.jboss.org/wiki/HowToConfigureTheC3P0ConnectionPool)

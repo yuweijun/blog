@@ -444,7 +444,7 @@ function getWindow( elem ) {
 }
 {% endhighlight %}
 
-![dhtmlpos](http://p.blog.csdn.net/images/p_blog_csdn_net/Rogues/EntryImages/20080820/css.gif)
+![css-javascript-position]({{ site.baseurl }}/img/web/ie/css-position.gif)
 
 图注：其中中间的div的position为non-static属性，其有style.left，style.top属性值，div向右下角有偏移量
 

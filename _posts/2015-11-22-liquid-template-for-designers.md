@@ -94,6 +94,47 @@ raw - temporarily disable tag processing to avoid syntax conflicts.
 unless - Mirror of if statement
 {% endhighlight %}
 
+jekyll filters
+-----
+
+{% highlight text %}
+{% raw %}
+{{ site.time | date_to_xmlschema }}
+{{ site.time | date_to_rfc822 }}
+{{ site.time | date_to_string }}
+{{ site.time | date_to_long_string }}
+{{ site.members | where:"graduation_year","2014" }}
+{{ site.members | group_by:"graduation_year" }}
+{{ page.content | xml_escape }}
+{{ "foo,bar;baz?" | cgi_escape }}
+{{ "foo, bar \baz?" | uri_escape }}
+{{ page.content | number_of_words }}
+{{ page.tags | array_to_sentence_string }}
+{{ page.excerpt | markdownify }}
+{{ some_scss | scssify }} {{ some_sass | sassify }}
+{{ "The _config.yml file" | slugify }}
+{{ "The _config.yml file" | slugify: 'pretty' }}
+{{ site.data.projects | jsonify }}
+{{ page.tags | sort }}
+{{ site.posts | sort: 'author' }}
+{{ site.pages | sort: 'title', 'last' }}
+{% endraw %}
+{% endhighlight %}
+
+jekyll tags
+-----
+
+{% highlight text %}
+{% raw %}
+{% include footer.html %}
+{% include footer.html param="value" variable-param=page.variable %}
+{{ include.param }}
+{% include_relative somedir/footer.html %}
+{% highlight ruby %}
+{% highlight ruby linenos %}
+{% endraw %}
+{% endhighlight %}
+
 References
 -----
 

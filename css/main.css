@@ -123,7 +123,7 @@ img {
 /* ----------------------------------------------------------*/
  .page-content {
     padding: 30px 0;
-    background-color: #fff;
+    background-color: white;
 }
 /* Home styles */
 
@@ -203,13 +203,13 @@ img {
     font-size: 15px;
     overflow: auto;
     white-space: pre-wrap;
-    background-color: #f9ffff;
+    background-color: rgba(200,215,215,0.1);
 }
 .post ul, .post ol {
     border: 1px solid #d5d5e9;
     padding: 8px 20px 8px 40px;
     border-radius: 3px;
-    background-color: #f9ffff;
+    background-color: rgba(200,215,215,0.1);
 }
 .post ol li {
     word-break: break-word;
@@ -219,20 +219,20 @@ img {
     margin: 0 3px;
     border: 1px solid #d5d5e9;
     border-radius: 2px;
-    font-size: 14px;
+    font-size: 85%;
     overflow: auto;
     white-space: pre-wrap;
-    background-color: #f9f9f9;
+    background-color: rgba(0, 0, 0, 0.04);
 }
 .post p code {
-    padding: 1px 3px;
+    padding: 1px 4px;
     margin: 0 3px;
     border: 1px solid #d5d5e9;
     border-radius: 2px;
-    font-size: 14px;
+    font-size: 85%;
     overflow: auto;
     white-space: pre-wrap;
-    background-color: #f9f9f9;
+    background-color: rgba(0, 0, 0, 0.04);
 }
 .post pre code {
     border: 0;
@@ -243,7 +243,7 @@ img {
  .post pre.terminal {
     border: 1px solid #000;
     background-color: #333;
-    color: #FFF;
+    color: white;
     border-radius: 3px;
 }
 .post pre.terminal code {
@@ -253,7 +253,7 @@ img {
 
 /* ----------------------------------------------------------*/
  .highlight {
-    background: #ffffff;
+    background: transparent;
 }
 .highlight .c {
     color: #999988;

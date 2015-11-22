@@ -72,7 +72,7 @@ $> node_modules/pm2/bin/pm2 start pm2-google.json
 
 另外写了个手动抓取到内容，再返回给客户端的版本：
 
-{% highlight nodejs %}
+{% highlight node %}
 #!/usr/bin/env node
 
 var http = require("http");

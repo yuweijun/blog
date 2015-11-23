@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "http proxy for node.js"
+title: "node-http-proxy usage example"
 date: "Sun, 22 Nov 2015 23:25:15 +0800"
-categories: javascript
+categories: nodejs
 ---
 
 `node-http-proxy`是用node.js实现的可编程的代理服务器类库，支持`websockets`，可作代理集群和负载均衡管理，可以根据自定义的逻辑，代理不同的请求到不同的服务器上去，如下例子。

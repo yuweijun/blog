@@ -2,7 +2,7 @@
 layout: post
 title: "nodejs实现google网页抓取"
 date: "Thu Nov 19 2015 22:49:54 GMT+0800 (CST)"
-categories: javascript
+categories: nodejs
 ---
 
 使用nodejs的`request`类库实现谷歌网页爬虫。

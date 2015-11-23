@@ -2,7 +2,7 @@
 layout: post
 title: "nodejs implements spider proxy server for google"
 date: "Thu Nov 19 2015 22:49:54 GMT+0800 (CST)"
-categories: javascript
+categories: nodejs
 ---
 
 以nodejs和request为基础写的一个google网页搜索结果的代理服务器。
@@ -54,6 +54,7 @@ var proxy = require("request");
 
 var server = http.createServer(function(request, response) {
     console.log(request.url);
+    request.headers.host = "www.google.com.hk";
     var url = "https://www.google.com.hk" + request.url;
     request.pipe(proxy(url)).pipe(response);
 });

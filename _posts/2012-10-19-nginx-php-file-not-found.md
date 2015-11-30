@@ -14,7 +14,7 @@ fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 可以用命令看`fastcgi_params`和`fastcgi.conf`这2个文件的区别，注意：`$document_root`和`$fastcgi_script_name`之间没有`/`。
 
 {% highlight bash %}
-$> diff fastcgi.conf fastcgi_params
+$ diff fastcgi.conf fastcgi_params
 2d1
 < fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
 {% endhighlight %}

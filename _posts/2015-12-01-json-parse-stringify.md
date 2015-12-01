@@ -5,8 +5,7 @@ date: "Tue, 01 Dec 2015 15:25:59 +0800"
 categories: javascript
 ---
 
-JSON对象示例
------
+### JSON对象示例
 
 {% highlight javascript %}
 var json = {"bindings": [
@@ -17,8 +16,7 @@ var json = {"bindings": [
 };
 {% endhighlight %}
 
-JSON文本转对象
------
+### JSON文本转对象
 
 ie6/ie7中不支持`JSON.parse()`方法，所以使用以下方式将JSON文本转化为对象。
 
@@ -35,9 +33,14 @@ JSON.stringify Function
 JSON.stringify(value [, replacer] [, space])
 {% endhighlight %}
 
-# 参数说明
+### 参数说明
 
 1. value: 将要序列化成 JSON 字符串的值，通常是对象或者数组。
+    1. 非数组对象的属性不能保证以特定的顺序出现在序列化后的字符串中。
+    2. 布尔值、数字、字符串的包装对象在序列化过程中会自动转换成对应的原始值。
+    3. undefined、任意的函数以及 symbol 值，在序列化过程中会被忽略（出现在非数组对象的属性值中时）或者被转换成 null（出现在数组中时）。
+    4. 所有以 symbol 为属性键的属性都会被完全忽略掉，即便 replacer 参数中强制指定包含了它们。
+    5. 不可枚举的属性会被忽略。
 2. replacer: 可选
     1. 如果该参数是一个函数，则在序列化过程中，对象属性的键和值会作为参数传入此函数，最后返回经过该函数的转换和处理后的值，替代原先传入的值。
     2. 如果返回`undefined`，则对应的属性键就会被忽略。
@@ -50,7 +53,53 @@ JSON.stringify(value [, replacer] [, space])
     4. space是其他字符，则返回结果中每层的属性名前会显示这些字符，只保留10个字符，多余的被忽略。
     5. 以下字符必须转义，`"`，`\`，`\b`，`\f`，`\n`，`\r`，`\t`，`\uhhhh`。
 
-# toJSON 方法
+### JSON.stringify()示例
+
+{% highlight javascript %}
+JSON.stringify({});                        // '{}'
+JSON.stringify(true);                      // 'true'
+JSON.stringify("foo");                     // '"foo"'
+JSON.stringify([1, "false", false]);       // '[1,"false",false]'
+JSON.stringify({ x: 5 });                  // '{"x":5}'
+
+JSON.stringify({x: 5, y: 6});
+// '{"x":5,"y":6}' 或者 '{"y":6,"x":5}' 都可能
+{% endhighlight %}
+
+布尔值、数字、字符串的包装对象在序列化过程中会自动转换成对应的原始值。
+
+{% highlight javascript %}
+JSON.stringify([new Number(1), new String("false"), new Boolean(false)]);
+// '[1,"false",false]'
+{% endhighlight %}
+
+`undefined`、任意的`function`以及`symbol`值，在序列化过程中会被忽略。
+
+{% highlight javascript %}
+JSON.stringify({x: undefined, y: Object, z: Symbol("")});
+// '{}'
+JSON.stringify([undefined, Object, Symbol("")]);
+// '[null,null,null]'
+JSON.stringify({[Symbol("foo")]: "foo"});
+// '{}'
+JSON.stringify({[Symbol.for("foo")]: "foo"}, [Symbol.for("foo")]);
+// '{}'
+JSON.stringify({[Symbol.for("foo")]: "foo"}, function (k, v) {
+  if (typeof k === "symbol"){
+    return "a symbol";
+  }
+});
+// '{}'
+{% endhighlight %}
+
+不可枚举的属性默认会被忽略。
+
+{% highlight javascript %}
+JSON.stringify( Object.create(null, { x: { value: 'x', enumerable: false }, y: { value: 'y', enumerable: true } }) );
+// '{"y":"y"}'
+{% endhighlight %}
+
+### toJSON 方法
 
 如果一个被序列化的对象拥有`toJSON`方法，那么该`toJSON`方法就会覆盖该对象默认的序列化行为：不是那个对象被序列化，而是调用`toJSON`方法后的返回值会被序列化，例如：
 
@@ -141,18 +190,18 @@ JSON.parse() 方法可以将一个 JSON 字符串解析成为一个 javascript �
 JSON.parse(text [, reviver])
 {% endhighlight %}
 
-# 参数说明
+### 参数说明
 
 1. text: 要解析的JSON字符串。
 2. reviver: 可选，一个函数，用来转换解析出的属性值。
     1. reviver返回合法值，使用此值替换原来的属性值。
     2. reviver返回`null`或者`undefined`，对应属性名被删除。
 
-# 返回值说明
+### 返回值说明
 
 从text字符串解析出的一个javascript对象或者数组。
 
-# 异常
+### 异常
 
 如果被解析的JSON字符串包含语法错误，则会抛出`SyntaxError`异常。`JSON.parse()`不允许逗号结尾，如下例：
 
@@ -161,8 +210,7 @@ JSON.parse('[1, 2, 3,]');
 // (program):1 Uncaught SyntaxError: Unexpected token ](…)
 {% endhighlight %}
 
-示例一，字符串转对象
------
+### 示例一，字符串转对象
 
 {% highlight javascript %}
 var jsontext = '{"firstname":"Jesper","surname":"Aaberg","phone":["555-0100","555-0120"]}';
@@ -180,8 +228,7 @@ while (newArr.length > 0) {
 }
 {% endhighlight %}
 
-示例二，字符串转成对象
------
+### 示例二，字符串转成对象
 
 {% highlight javascript %}
 myData = JSON.parse(text, function (key, value) {
@@ -197,8 +244,7 @@ myData = JSON.parse(text, function (key, value) {
 });
 {% endhighlight %}
 
-示例三，ISO日期格式字符串转化成UTC日期对象
------
+### 示例三，ISO日期格式字符串转化成UTC日期对象
 
 {% highlight javascript %}
 var jsontext = '{ "hiredate": "2008-01-01T12:00:00Z", "birthdate": "2008-12-25T12:00:00Z" }';
@@ -220,8 +266,7 @@ function dateReviver(key, value) {
 // Thu, 25 Dec 2008 12:00:00 UTC
 {% endhighlight %}
 
-示例四，使用reviver函数
------
+### 示例四，使用reviver函数
 
 如果指定了`reviver`函数，则解析出的javascript值（解析值）会经过一次转换后才将被最终返回（返回值）。
 

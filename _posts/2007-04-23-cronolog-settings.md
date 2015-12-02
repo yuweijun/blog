@@ -10,13 +10,13 @@ categories: linux
 假设安装目录为：`/usr/local/cronolog`
 
 {% highlight bash %}
-$ cat access_log |/usr/local/cronolog/sbin/cronolog -p 12hours /home/test/%Y-%m-%d.log
+$> cat access_log |/usr/local/cronolog/sbin/cronolog -p 12hours /home/test/%Y-%m-%d.log
 {% endhighlight %}
 
-无提示，正确在/home/test/目录下生成Log文件。
+命令运行之后并无提示，在请求发生之后，会在/home/test/目录下生成Log文件。
 
 {% highlight bash %}
-$ cat access_log |/usr/local/cronolog/sbin/cronolog -p 13hours /home/test/%Y-%m-%d.log
+$> cat access_log |/usr/local/cronolog/sbin/cronolog -p 13hours /home/test/%Y-%m-%d.log
 {% endhighlight %}
 
 提示：`/usr/local/cronolog/sbin/cronolog: invalid explicit period specification ((null))`
@@ -34,7 +34,7 @@ count must be a factor of the next higher unit, i.e you can specify 1, 2, 3, 4, 
 minutes but not say 7 minutes.
 {% endhighlight %}
 
-假设需要每4小时导出一次Log，则在http.conf里设置：
+假设需要每4小时导出一次Log，则在`http.conf`里设置：
 
 {% highlight bash %}
 CustomLog "|/usr/local/cronolog/sbin/cronolog -p 4hours /home/test/%Y-%m-%d-%H.log" common

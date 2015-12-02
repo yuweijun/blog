@@ -5,7 +5,7 @@ date: "Mon Apr 23 2007 16:21:00 GMT+0800 (CST)"
 categories: linux
 ---
 
-下载安装：http://cronolog.org/download/index.html
+点击[下载](http://cronolog.org/download/index.html)安装`cronolog`。
 
 假设安装目录为：`/usr/local/cronolog`
 

@@ -166,6 +166,7 @@ img {
 }
 .post-content {
     margin: 0;
+    overflow: hidden;
 }
 .post-content > * {
     margin: 20px 0;

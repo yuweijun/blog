@@ -5,7 +5,7 @@ date: "Wed Jul 30 2014 17:54:54 GMT+0800 (CST)"
 categories: linux
 ---
 
-一般而言，我们要检出一个git项目会使用git clone命令，git clone默认会把远程仓库包括全部分支，完整clone下来：
+一般而言，我们要检出一个git项目会使用`git clone`命令，`git clone`默认会把远程仓库包括全部分支，完整`clone`下来：
 
 {% highlight bash %}
 $> git clone git@github.com:twbs/bootstrap.git
@@ -36,15 +36,7 @@ $> git checkout -t origin/gh-pages
 $> git checkout gh-pages
 {% endhighlight %}
 
-参数说明：
-
-> -t, --track
->
->    When creating a new branch, set up configuration to mark the start-point branch as "upstream" from the new branch. This configuration will tell git to show the relationship between the two branches in git status and git branch -v. Furthermore, it directs git pull without arguments to pull from the upstream when the new branch is checked out.
->
->    This behavior is the default when the start point is a remote-tracking branch. Set the branch.autosetupmerge configuration variable to false if you want git checkout and git branch to always behave as if --no-track were given. Set it to always if you want this behavior when the start-point is either a local or remote-tracking branch.
-
-这里的参数说明不太好理解，用命令来操作一遍就会更了解一些，以git pull为例，下面这段内容从[阮一峰的博客](http://www.ruanyifeng.com/blog/2014/06/git_remote.html)复制过来的：
+这里的`-t`参数说明不太好理解，用命令来操作一遍就会更了解一些，以`git pull`为例：
 
 {% highlight bash %}
 $> git pull <远程主机名> <远程分支名>:<本地分支名>
@@ -62,14 +54,14 @@ $> git pull origin next:master
 $> git pull origin next
 {% endhighlight %}
 
-上面命令表示，取回origin/next分支，再与当前分支合并。实质上，这等同于先做git fetch，再做git merge。
+上面命令表示，取回`origin/next`分支，再与当前分支合并。实质上，这等同于先做`git fetch`，再做`git merge`。
 
 {% highlight bash %}
 $> git fetch origin
 $> git merge origin/next
 {% endhighlight %}
 
-在某些场合，Git会自动在本地分支与远程分支之间，建立一种追踪关系（tracking）。比如，在git clone的时候，所有本地分支默认与远程主机的同名分支，建立追踪关系，也就是说，本地的master分支自动"追踪"origin/master分支。
+在某些场合，Git会自动在本地分支与远程分支之间，建立一种追踪关系（tracking）。比如，在git clone的时候，所有本地分支默认与远程主机的同名分支，建立追踪关系，也就是说，本地的master分支自动“追踪”origin/master分支。
 
 Git也允许手动建立追踪关系。
 
@@ -79,7 +71,7 @@ $> git branch --set-upstream master origin/next
 
 上面命令指定master分支追踪origin/next分支。
 
-如果当前分支与远程分支存在追踪关系，git pull就可以省略远程分支名。
+如果当前分支与远程分支存在追踪关系，`git pull`就可以省略远程分支名。
 
 {% highlight bash %}
 $> git pull origin
@@ -97,7 +89,8 @@ $> git pull
 
 查看分支
 --------
-参数说明:
+
+### 参数说明:
 
 > -r, --remotes
 >
@@ -127,8 +120,14 @@ $> git branch -av
 删除分支
 --------
 
-删除远程分支则加-r参数
+删除远程分支则加`-r`参数：
+
 {% highlight bash %}
 $> git branch -d branch-name
 {% endhighlight %}
+
+References
+-----
+
+1. [git远程操作详解](http://www.ruanyifeng.com/blog/2014/06/git_remote.html)
 

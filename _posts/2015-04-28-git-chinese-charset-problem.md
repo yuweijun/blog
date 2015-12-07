@@ -11,7 +11,13 @@ categories: linux
 modified:   "public/\346\230\216\344\273\243\347\216\213\345\256\210/\347\216\213\345\256\210\350\241\214\344\271\246\345\274\240\346\241\202\345\262\251\345\242\223\345\277\227\351\223\255/info.json"
 {% endhighlight %}
 
-上面中文文字被显示成`\xxx\xxx\xxx`，是因为git对`0x80`以上的字符进行`quote`造成的。
+上面中文文字被显示成`\xxx\xxx\xxx`，是因为git对`0x80`以上的字符进行`quote`造成的，`man git-config`官方文档说明如下。
+
+{% highlight text %}
+core.quotePath
+
+The commands that output paths (e.g. ls-files, diff), when not given the -z option, will quote "unusual" characters in the pathname by enclosing the pathname in a double-quote pair and with backslashes the same way strings in C source code are quoted. If this variable is set to false, the bytes higher than 0x80 are not quoted but output as verbatim. Note that double quote, backslash and control characters are always quoted without -z regardless of the setting of this variable.
+{% endhighlight %}
 
 设置中文显示
 -----
@@ -19,3 +25,34 @@ modified:   "public/\346\230\216\344\273\243\347\216\213\345\256\210/\347\216\21
 {% highlight bash %}
 $> git config core.quotepath false
 {% endhighlight %}
+
+### 设置git编辑器
+
+如果用`git commit -a`提交文件时，linux中会默认使用`nano`做编辑器，如果需要更改编辑器，可以使用下面几种方式的任意一种。
+
+{% highlight bash %}
+$> git config --global core.editor "vim"
+{% endhighlight %}
+
+{% highlight bash %}
+$> export GIT_EDITOR=vim
+{% endhighlight %}
+
+使用`Sublime Text`则用以下命令：
+
+{% highlight bash %}
+$> git config --global core.editor "subl -n -w"
+{% endhighlight %}
+
+使用`TextMate`则用以下命令：
+
+{% highlight bash %}
+$> git config --global core.editor "mate -w"
+{% endhighlight %}
+
+References
+-----
+
+1. [Associating text editors with Git](https://help.github.com/articles/associating-text-editors-with-git/)
+2. [git-config Manual Page](https://www.kernel.org/pub/software/scm/git/docs/git-config.html)
+

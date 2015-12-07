@@ -60,7 +60,7 @@ $> n as 0.9.4 --debug some.js
 nvm
 -----
 
-`nvm`全称`node version manager`，它与`n`的实现方式不同，其是通过`shell`脚本实现的。
+`nvm`全称`node version manager`，完全基于bash shell实现。
 
 ### 安装nvm
 

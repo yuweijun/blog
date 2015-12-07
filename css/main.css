@@ -35,8 +35,8 @@ img {
 }
 /* Utility */
  .wrap:before, .wrap:after {
-    content:"";
-    displaytable;
+    content: "";
+    display: table;
 }
 .wrap:after {
     clear: both;
@@ -516,6 +516,7 @@ img {
     }
     .site-description {
         float: right;
+        margin-left: 0;
     }
     .site-nav {
         position: fixed;

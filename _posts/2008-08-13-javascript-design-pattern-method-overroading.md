@@ -5,7 +5,7 @@ date: "Wed Aug 13 2008 23:04:00 GMT+0800 (CST)"
 categories: javascript
 ---
 
-javascript中的方法重载实现
+javascript中的方法重载实现：
 
 {% highlight javascript %}
 // addMethod - By John Resig (MIT Licensed)
@@ -44,6 +44,7 @@ users.find("John", "Resig"); // Finds users by first and last name
 users.find("John", "E", "Resig"); // Finds all
 {% endhighlight %}
 
-References:
+References
+-----
 
 1. [John Resig](http://ejohn.org/blog/javascript-method-overloading/)

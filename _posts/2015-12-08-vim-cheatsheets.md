@@ -27,14 +27,5 @@ categories: vim
 
 ## 版本六
 
-![vim cheatsheet]({{ site.baseurl }}/img/linux/vim/vim-cheat-sheet-6.png)
-
-## 版本七
-
-![vim cheatsheet]({{ site.baseurl }}/img/linux/vim/vim-cheat-sheet-7.jpg)
-
-## 版本八
-
-![vim cheatsheet]({{ site.baseurl }}/img/linux/vim/vim-cheat-sheet-8.png)
-
+![vim cheatsheet]({{ site.baseurl }}/img/linux/vim/vim-cheat-sheet-6.jpg)
 

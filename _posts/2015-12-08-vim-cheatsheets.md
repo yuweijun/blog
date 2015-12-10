@@ -33,3 +33,11 @@ categories: vim
 
 ![vim cheatsheet]({{ site.baseurl }}/img/linux/vim/vim-cheat-sheet-7.png)
 
+## vim movement shortcuts
+
+![vim movement shortcuts]({{ site.baseurl }}/img/linux/vim/vim-movement-shortcuts.png)
+
+## 中文网页版本
+
+1. [a mobile friendly vim cheat sheet](http://vim.rtorr.com/lang/zh_cn/)
+

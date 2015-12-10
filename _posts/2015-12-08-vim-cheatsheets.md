@@ -29,3 +29,7 @@ categories: vim
 
 ![vim cheatsheet]({{ site.baseurl }}/img/linux/vim/vim-cheat-sheet-6.jpg)
 
+## 版本七
+
+![vim cheatsheet]({{ site.baseurl }}/img/linux/vim/vim-cheat-sheet-7.png)
+

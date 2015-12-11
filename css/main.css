@@ -106,10 +106,12 @@ img {
 }
 .site-footer li {
     font-size: 15px;
-    letter-spacing: -.3px;
     color: #828282;
     float: left;
     margin-left: 20px;
+}
+.icon.github {
+    margin-right: 3px;
 }
 .github-icon-svg, .twitter-icon-svg {
     display: inline-block;
@@ -124,7 +126,6 @@ img {
  .page-content {
     padding: 30px 0;
     background-color: white;
-    clear: left;
 }
 /* Home styles */
 
@@ -226,7 +227,7 @@ img {
     white-space: pre-wrap;
     background-color: rgba(0, 0, 0, 0.04);
 }
-.post p code {
+.post p code, .post kbd {
     padding: 1px 4px;
     margin: 0 3px;
     border: 1px solid #d5d5e9;

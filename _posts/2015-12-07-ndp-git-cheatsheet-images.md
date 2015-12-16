@@ -5,7 +5,7 @@ date: "Mon, 07 Dec 2015 17:05:39 +0800"
 categories: linux
 ---
 
-`git`中关于`stash`、`workspace`、`index`、`local respository`和`upstream repository`的关系图，下面这些图是从[NDP Software](http://ndpsoftware.com/git-cheatsheet.html)页面上截取的，图中的箭头代表了数据的流向，更详细的内容可以访问此页面了解和学习。
+`git`中关于`stash`、`workspace`、`index`、`local respository`和`upstream repository`的关系图，下面这些图是从[NDP Software](http://ndpsoftware.com/git-cheatsheet.html)页面上截取的，图中的箭头代表了数据的流向，更详细的内容可以访问此[页面](/tools/git-cheatsheet.html)了解和学习。
 
 ## STASH
 
@@ -31,4 +31,5 @@ References
 ------
 
 1. [Git Cheatsheet - NDP Software](http://ndpsoftware.com/git-cheatsheet.html)
+1. [NDP网页本地版本](/tools/git-cheatsheet.html)
 

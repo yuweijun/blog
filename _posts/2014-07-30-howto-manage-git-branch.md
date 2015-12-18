@@ -11,12 +11,11 @@ categories: linux
 $> git clone git@github.com:twbs/bootstrap.git
 {% endhighlight %}
 
-检出分支
---------
-
 git常用命令之间的关系:
 
 ![git]({{ site.baseurl }}/img/linux/git/git-commands.jpg)
+
+### 检出分支
 
 直接检出某个分支：
 
@@ -24,74 +23,61 @@ git常用命令之间的关系:
 $> git clone -b gh-pages git@github.com:twbs/bootsrap.git
 {% endhighlight %}
 
-也可以在clone之后，从origin检出分支：
+也可以在`clone`之后，从`origin`检出分支：
 
 {% highlight bash %}
 $> git checkout -t origin/gh-pages
 {% endhighlight %}
 
-或者是从本地切换分支，本地检出的分支与远端仓库同名分支，默认就会有tracking：
+或者是从本地切换分支，如果本地检出的分支与远端仓库同名分支，默认就会有tracking：
 
 {% highlight bash %}
 $> git checkout gh-pages
 {% endhighlight %}
 
-这里的`-t`参数说明不太好理解，用命令来操作一遍就会更了解一些，以`git pull`为例：
+### 分支创建
 
 {% highlight bash %}
-$> git pull <远程主机名> <远程分支名>:<本地分支名>
+$> git branch testing
 {% endhighlight %}
 
-比如，取回origin主机的next分支，与本地的master分支合并，需要写成下面这样。
+### 分支切换
+
+此命令只是创建了新分支，还是在原来的分支下工作，`HEAD`指针并没有变化：
 
 {% highlight bash %}
-$> git pull origin next:master
+$> git checkout testing
 {% endhighlight %}
 
-如果远程分支是与当前分支合并，则冒号后面的部分可以省略。
+新建一个分支并直接切换到新分支下：
 
 {% highlight bash %}
-$> git pull origin next
+$> git checkout -b iss53
+Switched to a new branch "iss53"
 {% endhighlight %}
 
-上面命令表示，取回`origin/next`分支，再与当前分支合并。实质上，这等同于先做`git fetch`，再做`git merge`。
+它是下面两条命令的简写：
 
 {% highlight bash %}
-$> git fetch origin
-$> git merge origin/next
+$> git branch iss53
+$> git checkout iss53
 {% endhighlight %}
 
-在某些场合，Git会自动在本地分支与远程分支之间，建立一种追踪关系（tracking）。比如，在git clone的时候，所有本地分支默认与远程主机的同名分支，建立追踪关系，也就是说，本地的master分支自动“追踪”origin/master分支。
+### 分支合并
 
-Git也允许手动建立追踪关系。
+比如要将上面`iss53`这个分支修改后的内容合并到主分支`master`上，需要先切到`master`分支上，再使用`merge`命令：
 
 {% highlight bash %}
-$> git branch --set-upstream master origin/next
+$> git checkout master
+$> git merge iss53
 {% endhighlight %}
 
-上面命令指定master分支追踪origin/next分支。
+另外还有一个命令`git rebase`可以和`git merge`命令配合，使得合并历史变得更简洁。
 
-如果当前分支与远程分支存在追踪关系，`git pull`就可以省略远程分支名。
+### 查看分支
 
-{% highlight bash %}
-$> git pull origin
-{% endhighlight %}
-
-上面命令表示，本地的当前分支自动与对应的origin主机"追踪分支"（remote-tracking branch）进行合并。
-
-如果当前分支只有一个追踪分支，连远程主机名都可以省略。
-
-{% highlight bash %}
-$> git pull
-{% endhighlight %}
-
-上面命令表示，当前分支自动与唯一一个追踪分支进行合并。
-
-查看分支
---------
-
-### 参数说明:
-
+> 参数说明:
+>
 > -r, --remotes
 >
 >    list or delete (if used with -d) the remote-tracking branches.
@@ -102,6 +88,7 @@ $> git pull
 
 {% highlight bash %}
 $> git branch -r
+
 $> git branch -av
     origin/HEAD -> origin/master
     origin/bundle
@@ -117,8 +104,7 @@ $> git branch -av
     origin/sauce-screenshots
 {% endhighlight %}
 
-删除分支
---------
+### 删除分支
 
 删除远程分支则加`-r`参数：
 
@@ -126,8 +112,18 @@ $> git branch -av
 $> git branch -d branch-name
 {% endhighlight %}
 
+### 删除远程分支
+
+可以运行带有 --delete 选项的 git push 命令来删除一个远程分支。如果想要从服务器上删除`serverfix`分支，运行下面的命令：
+
+{% highlight bash %}
+$ git push origin --delete serverfix
+To https://github.com/schacon/simplegit
+ - [deleted]         serverfix
+{% endhighlight %}
+
 References
 -----
 
-1. [git远程操作详解](http://www.ruanyifeng.com/blog/2014/06/git_remote.html)
+1. [git分支](http://yuweijun.github.io/git-zh/1-git-branching.html)
 

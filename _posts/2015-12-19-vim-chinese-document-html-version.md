@@ -277,5 +277,5 @@ References
 1. [http://vimdoc.sourceforge.net/htmldoc/usr_toc.html](http://vimdoc.sourceforge.net/htmldoc/usr_toc.html)
 2. [Vim中文手册](http://www.4e00.com/vim-zh/usr_toc.html)
 3. [Vim documentation](http://www.4e00.com/vim-en/usr_toc.html)
-4. [Vim documentation single html page](http://www.4e00.com/tools/vimum.html)
+4. [Vim documentation single html page](http://www.4e00.com/vim-en/vimum.html)
 

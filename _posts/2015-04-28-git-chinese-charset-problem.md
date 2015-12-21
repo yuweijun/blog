@@ -28,7 +28,7 @@ $> git config core.quotepath false
 
 ### 设置git编辑器
 
-默认会启用`shell`的环境变量`$EDITOR`所指定的软件，一般都是`vim`或`emacs`，也有些是`nano`。当然也可以按照起步介绍的方式，使用`git config --global core.editor`命令设定你喜欢的编辑软件。
+默认会启用`shell`的环境变量`$EDITOR`所指定的软件，一般都是`vim`或`emacs`，也有些是`nano`。当然也可以使用`git config --global core.editor`命令设定你喜欢的编辑软件。
 
 {% highlight bash %}
 $> git config --global core.editor "vim"

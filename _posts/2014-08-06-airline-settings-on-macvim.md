@@ -9,10 +9,10 @@ categories: vim
 
 {% highlight bash %}
 $ brew install macvim
-$ git clone git@github.com:Lokaltog/powerline-fonts.git
+$ git clone https://github.com/powerline/fonts.git
 {% endhighlight %}
 
-运行powerline-fonts目录的install.sh即可，或者是双击下载后Meslo文件夹中的这个字体: `Meslo LG S Regular for Powerline.otf`，然后在 `~/.vimrc` 中配置如下内容，此处使用bundle管理vim插件:
+运行`powerline-fonts`目录的`install.sh`即可，或者是双击下载后Meslo文件夹中的这个字体: `Meslo LG S Regular for Powerline.otf`，然后在 `~/.vimrc` 中配置如下内容，此处使用bundle管理vim插件:
 
 {% highlight vim %}
 Bundle 'bling/vim-airline'
@@ -45,11 +45,80 @@ endif
 
 ![Screenshot]({{ site.baseurl }}/img/linux/vim/vim-airline-demo.gif)
 
-资源列表:
-----------
+### airline theme设置
+
+可以使用命令`:AirlineTheme {theme-name}`设置状态条的配色主题，可以参考此[网页](https://github.com/bling/vim-airline/wiki/Screenshots)。`airline`支持的主题如下所示：
+
+1. badwolf
+1. badwolf
+1. base16
+1. base16
+1. behelit
+1. behelit
+1. bubblegum
+1. bubblegum
+1. dark
+1. dark
+1. durant
+1. durant
+1. hybridline
+1. hybridline
+1. hybrid
+1. hybrid
+1. jellybeans
+1. jellybeans
+1. kalisi
+1. kalisi
+1. kolor
+1. kolor
+1. laederon
+1. laederon
+1. light
+1. light
+1. lucius
+1. lucius
+1. luna
+1. luna
+1. molokai
+1. molokai
+1. monochrome
+1. monochrome
+1. murmur
+1. murmur
+1. papercolor
+1. papercolor
+1. powerlineish
+1. powerlineish
+1. raven
+1. raven
+1. serene
+1. serene
+1. silver
+1. silver
+1. simple
+1. simple
+1. solarized
+1. solarized
+1. sol
+1. sol
+1. term
+1. term
+1. tomorrow
+1. tomorrow
+1. ubaryd
+1. ubaryd
+1. understated
+1. understated
+1. wombat
+1. wombat
+1. zenburn
+
+References:
+-----
 
 1. [vim-airline](https://github.com/bling/vim-airline)
 2. [powerline-doc](https://powerline.readthedocs.org/en/latest/)
 3. [powerline-fonts](https://github.com/Lokaltog/powerline-fonts)
 4. [powerline](https://github.com/Lokaltog/powerline)
+5. [Screenshots of AirlineThemes](https://github.com/bling/vim-airline/wiki/Screenshots)
 

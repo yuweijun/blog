@@ -68,9 +68,10 @@ img {
 }
 .site-description {
     float: left;
-    line-height: 40px;
+    line-height: 32px;
     margin-left: 20px;
     font-size: 85%;
+    color: #999;
 }
 .site-nav {
     float: right;

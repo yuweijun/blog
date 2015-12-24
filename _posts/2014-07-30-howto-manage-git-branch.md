@@ -106,8 +106,6 @@ $> git branch -av
 
 ### 删除分支
 
-删除远程分支则加`-r`参数：
-
 {% highlight bash %}
 $> git branch -d branch-name
 {% endhighlight %}

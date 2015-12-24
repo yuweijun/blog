@@ -5,7 +5,7 @@ date: "Thu, 24 Dec 2015 13:54:43 +0800"
 categories: linux
 ---
 
-在linux中，可以利用系统提供的`man2html`命令，将linux命令的man手册转成html代码，将下面的源码保存为`man2html.sh`，这个脚本可以将man批量转化成html代码。
+在linux中，可以利用系统提供的`man2html`命令，将linux命令的man手册转成html代码，将下面的源码保存为`man2html.sh`，这个脚本可以将man批量转化成[html代码](http://www.4e00.com/manpages/index.html)。
 
 {% highlight bash %}
 #!/bin/bash

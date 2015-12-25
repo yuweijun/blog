@@ -5,7 +5,7 @@ date: "Thu, 24 Dec 2015 13:54:43 +0800"
 categories: linux
 ---
 
-在linux中，可以利用系统提供的`man2html`命令，将linux命令的man手册转成html代码，将下面的源码保存为`man2html.sh`，这个脚本可以将man批量转化成html代码。
+在linux中，可以利用系统提供的`man2html`命令，将linux命令的man手册转成html代码，将下面的源码保存为`man2html.sh`，这个脚本可以将man批量转化成[html代码](http://www.4e00.com/manpages/index.html)。
 
 {% highlight bash %}
 #!/bin/bash
@@ -49,12 +49,8 @@ then
             gunzip -c "${f}" > ${unzipfile}
             man2html ${unzipfile} > ${outputfilename}
 
-            sed -i 's/^Content-type: text\/html$/<!DOCTYPE html>/' ${outputfilename}
-            sed -i 's#</HEAD>#<meta charset="utf-8"></head>#' ${outputfilename}
-            sed -i 's#<BODY>#<body>\n <header class="site-header">\n <div class="wrap"> <div class="site-title"><a href="/man/index.html">linux man pages</a></div>\n <div class="site-description">{"type":"programming"}</div>\n </div>\n </header>\n <div class="page-content">#' ${outputfilename}
-            sed -i 's#</BODY>#</div></body>#' ${outputfilename}
-            sed -i 's#http://localhost/cgi-bin/man/man2html#/man/index.html#' ${outputfilename}
-            sed -i 's#</head>#\n<link rel="stylesheet" href="/man/css/man.css" type="text/css">\n</head>\n#' ${outputfilename}
+            sed -i 's#^Content-type: text/html$##' ${outputfilename}
+            sed -i 's#</HEAD>#<META charset="UTF-8"></HEAD>#' ${outputfilename}
         fi
     done
 fi

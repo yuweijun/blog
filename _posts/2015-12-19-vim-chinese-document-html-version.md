@@ -103,10 +103,12 @@ def vim2html anchors, file
         </div>
     </header>
     <div class="page-content">
-        <h2 class="vim-chapter">Vim documentation: #{filename}</h2>
-        <div class="vim-document">
-            <div class="pre">
+        <div class="wrap">
+            <h2 class="vim-chapter">Vim documentation: #{filename}</h2>
+            <div class="vim-document">
+                <div class="pre">
 #{document}
+                </div>
             </div>
         </div>
     </div>
@@ -207,13 +209,13 @@ code {
     border-top: 5px solid #333;
     border-bottom: 1px solid #e8e8e8;
     background-color: transparent;
+    font-size: 26px;
     width: 100%;
 }
 .wrap {
     max-width: 840px;
     padding: 0 12px;
     margin: 0 auto;
-    font-size: 26px;
     zoom: 1;
 }
 .wrap:before, .wrap:after {

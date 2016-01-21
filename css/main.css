@@ -198,7 +198,7 @@ img {
     margin: 30px 0;
 }
 .post .highlight pre {
-    border: 1px solid #d5d5e9;
+    border: 1px solid rgba(200,215,215,0.4);
     padding: 8px 12px;
     border-radius: 3px;
     font-size: 15px;
@@ -207,7 +207,7 @@ img {
     background-color: rgba(200,215,215,0.1);
 }
 .post ul, .post ol {
-    border: 1px solid #d5d5e9;
+    border: 1px solid rgba(200,215,215,0.4);
     padding: 8px 20px 8px 40px;
     border-radius: 3px;
     background-color: rgba(200,215,215,0.1);
@@ -218,7 +218,7 @@ img {
 .post ol li code {
     padding: 1px 3px;
     margin: 0 3px;
-    border: 1px solid #d5d5e9;
+    border: 1px solid rgba(200,215,215,0.4);
     border-radius: 2px;
     font-size: 85%;
     overflow: auto;
@@ -228,7 +228,7 @@ img {
 .post p code, .post kbd {
     padding: 1px 4px;
     margin: 0 3px;
-    border: 1px solid #d5d5e9;
+    border: 1px solid rgba(200,215,215,0.4);
     border-radius: 2px;
     font-size: 85%;
     overflow: auto;

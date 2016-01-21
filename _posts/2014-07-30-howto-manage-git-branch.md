@@ -112,11 +112,12 @@ $> git branch -d branch-name
 
 ### 删除远程分支
 
-可以运行带有 --delete 选项的 git push 命令来删除一个远程分支。如果想要从服务器上删除`serverfix`分支，运行下面的命令：
+可以运行带有`--delete`选项的`git push`命令来删除一个远程分支。如果想要从服务器上删除`serverfix`分支，运行下面的命令：
 
 {% highlight bash %}
-$ git push origin --delete serverfix
-To https://github.com/schacon/simplegit
+$> git push origin --delete serverfix
+
+...
  - [deleted]         serverfix
 {% endhighlight %}
 

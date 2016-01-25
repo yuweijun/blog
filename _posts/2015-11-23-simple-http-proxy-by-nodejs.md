@@ -14,7 +14,7 @@ http-proxy.js
 var http = require('http');
 
 http.createServer(function(request, response) {
-    var ip = request.connection.remoteAddress;;
+    var ip = request.connection.remoteAddress;
     console.log(ip + ": " + request.method + " " + request.url);
     console.log(JSON.stringify(request.headers, null, 4));
 

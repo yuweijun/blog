@@ -206,7 +206,7 @@ $> cp -r hadoop-dist/target/hadoop-2.7.1 ~/Applications/hadoop
 编译完成之后，添加以下内容到`~/.bash_profile`文件如下，尤其注意最后一句，设置`-Djava.library.path=<path>`：
 
 {% highlight bash %}
-export JAVA_HOME=`readlink /usr/bin/java | sed 's:/bin/java::g'`
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 export HADOOP_HOME=~/Applications/hadoop
 export HADOOP_PREFIX=$HADOOP_HOME
 export PATH=$PATH:$HADOOP_HOME/bin

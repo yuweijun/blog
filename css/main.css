@@ -198,24 +198,29 @@ img {
     margin: 30px 0;
 }
 .post .highlight pre {
-    border: 1px solid rgba(200,215,215,0.6);
     padding: 8px 12px;
     border-radius: 3px;
     font-size: 15px;
     overflow: auto;
     white-space: pre-wrap;
     background-color: rgba(200,215,215,0.15);
-}
-.post ul, .post ol {
     border: 1px solid rgba(200,215,215,0.6);
+}
+.post ul {
     padding: 8px 20px 8px 40px;
     border-radius: 3px;
     background-color: rgba(200,215,215,0.15);
+    border: 1px solid rgba(200,215,215,0.6);
 }
-.post ul ul, .post ul ol {
+.post ul ul, .post ul ol, .post ol ol {
     border-radius: 0;
     border: none;
     background-color: transparent;
+}
+.post ol {
+    padding: 8px 20px 8px 40px;
+    background-color: rgba(200,215,215,0.1);
+    border: 1px solid rgba(200,215,215,0.6);
 }
 .post ol li {
     word-break: break-word;
@@ -223,22 +228,22 @@ img {
 .post ol li code {
     padding: 1px 3px;
     margin: 0 3px;
-    border: 1px solid rgba(200,215,215,0.6);
     border-radius: 2px;
     font-size: 85%;
     overflow: auto;
     white-space: pre-wrap;
     background-color: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(200,215,215,0.6);
 }
 .post p code, .post kbd {
     padding: 1px 4px;
     margin: 0 3px;
-    border: 1px solid rgba(200,215,215,0.6);
     border-radius: 2px;
     font-size: 85%;
     overflow: auto;
     white-space: pre-wrap;
     background-color: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(200,215,215,0.6);
 }
 .post pre code {
     border: 0;

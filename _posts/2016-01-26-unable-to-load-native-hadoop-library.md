@@ -201,7 +201,7 @@ $> cp -r hadoop-dist/target/hadoop-2.7.1 ~/Applications/hadoop
 
 ### 设置hadoop本机运行环境
 
-> The bin/hadoop script ensures that the native hadoop library is on the library path via the system property: -Djava.library.path=<path>
+> The bin/hadoop script ensures that the native hadoop library is on the library path via the system property: `-Djava.library.path=<path>`
 
 编译完成之后，添加以下内容到`~/.bash_profile`文件如下，尤其注意最后一句，设置`-Djava.library.path=<path>`：
 
@@ -248,10 +248,9 @@ $> hadoop checknative -a
 >
 > 16/01/26 18:00:41 INFO util.ExitUtil: Exiting with status 1
 
-Refereneces
+References
 -----
 
-1. [Building Native Hadoop (v 2.4.1) libraries for OS X](http://gauravkohli.com/2014/09/28/building-native-hadoop-v-2-4-1-libraries-for-os-x/)
-2. [Native Libraries Guide](https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/NativeLibraries.html)
+1. [Native Libraries Guide](https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/NativeLibraries.html)
+2. [Mac OSX 下 Hadoop 使用本地库提高效率](http://rockyfeng.me/hadoop_native_library_mac.html)
 3. [CentOS7中编译Hadoop2.x](http://my.oschina.net/allman90/blog/486768)
-4. [Mac OSX 下 Hadoop 使用本地库提高效率](http://rockyfeng.me/hadoop_native_library_mac.html)

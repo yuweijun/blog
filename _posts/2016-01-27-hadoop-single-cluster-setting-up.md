@@ -57,7 +57,7 @@ Hadoop可以在单节点上以伪分布式的方式运行，Hadoop进程以分�
 
 Hadoop的配置文件位于`${HADOOP_HOME}/etc/hadoop/`中，这与Hadoop 1.x中配置文件位置不同，伪分布式需要修改2个配置文件`core-site.xml`和`hdfs-site.xml`。Hadoop的配置文件是`xml`格式，每个配置通过声明`property`的`name`和`value`来实现。
 
-修改配置文件`core-site.xml`，将当中的
+修改配置文件`etc/hadoop/core-site.xml`，将当中的
 
 {% highlight xml %}
 <configuration>
@@ -80,7 +80,7 @@ Hadoop的配置文件位于`${HADOOP_HOME}/etc/hadoop/`中，这与Hadoop 1.x中
 </configuration>
 {% endhighlight %}
 
-修改配置文件`hdfs-site.xml`：
+修改配置文件`etc/hadoop/hdfs-site.xml`：
 
 {% highlight xml %}
 <configuration>
@@ -183,7 +183,11 @@ $> stop-dfs.sh
 >
 > YARN是从`MapReduce`中分离出来的，负责资源管理与任务调度。YARN运行于`MapReduce`之上，提供了高可用性、高扩展性，前面通过`start-dfs.sh`启动Hadoop，仅仅是启动了`MapReduce`环境，我们可以启动YARN，让YARN来负责资源管理与任务调度。
 
-编辑`${HADOOP_HOME}etc/hadoop/mapred-site.xml`:
+创建并编辑`${HADOOP_HOME}/etc/hadoop/mapred-site.xml`:
+
+{% highlight bash %}
+$> cp etc/hadoop/mapred-site.xml.template etc/hadoop/mapred-site.xml
+{% endhighlight %}
 
 {% highlight xml %}
 <configuration>
@@ -194,7 +198,7 @@ $> stop-dfs.sh
 </configuration>
 {% endhighlight %}
 
-编辑`${HADOOP_HOME}etc/hadoop/yarn-site.xml`:
+编辑`${HADOOP_HOME}/etc/hadoop/yarn-site.xml`:
 
 {% highlight xml %}
 <configuration>

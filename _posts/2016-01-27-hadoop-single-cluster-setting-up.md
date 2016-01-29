@@ -86,7 +86,7 @@ Hadoop的配置文件位于`${HADOOP_HOME}/etc/hadoop/`中，这与Hadoop 1.x中
 <configuration>
     <property>
         <name>dfs.replication</name>
-        <value></value>
+        <value>1</value>
     </property>
     <property>
         <name>dfs.namenode.name.dir</name>

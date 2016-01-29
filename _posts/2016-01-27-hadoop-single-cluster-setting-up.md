@@ -169,6 +169,8 @@ $> cat output/*
 $> hdfs dfs -cat output/*
 {% endhighlight %}
 
+### hadoop dfs服务关闭
+
 运行完任务后，可以用以下命令关闭dfs后台服务：
 
 {% highlight bash %}
@@ -198,6 +200,10 @@ $> cp etc/hadoop/mapred-site.xml.template etc/hadoop/mapred-site.xml
 </configuration>
 {% endhighlight %}
 
+> 注意： 不启动YARN需重命名`mapred-site.xml`。
+>
+> 如果不想启动YARN，务必把配置文件`mapred-site.xml`重命名，改成`mapred-site.xml.template`，需要用时改回来就行。否则在该配置文件存在，而未开启YARN的情况下，运行程序会提示“Retrying connect to server: 0.0.0.0/0.0.0.0:8032″的错误，这也是为何该配置文件初始文件名为`mapred-site.xml.template`。
+
 编辑`${HADOOP_HOME}/etc/hadoop/yarn-site.xml`:
 
 {% highlight xml %}
@@ -209,18 +215,56 @@ $> cp etc/hadoop/mapred-site.xml.template etc/hadoop/mapred-site.xml
 </configuration>
 {% endhighlight %}
 
-启动`ResourceManager`和`NodeManager`后台进程:
+
+启动`ResourceManager`和`NodeManager`后台进程，并开启历史服务器，才能在web中查看任务运行情况，下面碰到的一个问题可以通过历史服务器上日志查到解决方法。
 
 {% highlight bash %}
 $> start-yarn.sh
+$> mr-jobhistory-daemon.sh start historyserver
 {% endhighlight %}
 
 通过web界面查看`ResourceManager`，默认地址为：`http://localhost:8088/`。
 
-关闭YARN：
+启动完成之后在命令行以下命令：
+
+{% highlight bash %}
+$> hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar grep input output-yarn 'dfs[a-z.]+'
+...
+For more detailed output, check application tracking page: http://localhost:8088/cluster/app/application_1454064430945_0001 Then, click on links to logs of each attempt.
+Diagnostics: Exception from container-launch.
+Container id: container_1454064430945_0001_02_000001
+Exit code: 127
+Stack trace: ExitCodeException exitCode=127:
+    at org.apache.hadoop.util.Shell.runCommand(Shell.java:545)
+    at org.apache.hadoop.util.Shell.run(Shell.java:456)
+...
+org.apache.hadoop.mapreduce.lib.input.InvalidInputException: Input path does not exist: hdfs://localhost:9000/user/<username>/grep-temp-1235671912
+    at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1290)
+...
+{% endhighlight %}
+
+运行命令报错，访问错误提示的url链接，查看任务`Log`，可以看到`stderr : Total file length is 48 bytes.`，再打开链接，发现错误提示为：`/bin/bash: /bin/java: No such file or directory`。如果没有启动刚才的历史服务器，可以到Hadoop日志目录下的`${HADOOP_HOME}/logs/userlogs/<application_number>/<container_number>/stderr `中查看错误信息。
+
+这因为在Mac OS上的java命令不在`/bin/java`这个位置上，运行以下命令，添加java的软链接：
+
+{% highlight bash %}
+$> sudo ln -s /usr/bin/java /bin/java
+{% endhighlight %}
+
+再次运行刚才失败的命令：
+
+{% highlight bash %}
+$> hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar grep input output-yarn 'dfs[a-z.]+'
+{% endhighlight %}
+
+### 关闭YARN
 
 {% highlight bash %}
 $> stop-yarn.sh
+$> mr-jobhistory-daemon.sh stop historyserver
+
+# show java processes
+$> jps
 {% endhighlight %}
 
 References
@@ -230,4 +274,6 @@ References
 2. [Hadoop: Setting up a Single Node Cluster.](https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/SingleCluster.html)
 3. [Hadoop安装教程单机/伪分布式配置](http://www.powerxing.com/install-hadoop-in-centos/)
 4. [unable to load native-hadoop library on Mac OS](/blog/java/2016/01/26/unable-to-load-native-hadoop-library.html)
-
+5. [/bin/bash: /bin/java: No such file or directory](http://bbs.csdn.net/topics/390969463)
+6. [JAVA_HOME detected in hadoop-config.sh under OS X does not work](https://issues.apache.org/jira/browse/HADOOP-8717)
+7. [YARN Job Problem: exited with exitCode: 127](https://cloudcelebrity.wordpress.com/2014/01/31/yarn-job-problem-application-application_-failed-1-times-due-to-am-container-for-xx-exited-with-exitcode-127/)

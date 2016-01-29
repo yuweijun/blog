@@ -29,6 +29,9 @@ $> brew install openssl
 
 {% highlight bash %}
 $> brew install https://raw.githubusercontent.com/Homebrew/homebrew-versions/master/protobuf250.rb
+$> protoc --version
+
+libprotoc 2.5.0
 {% endhighlight %}
 
 ### 下载git源码并切出hadoop-2.7.1版本

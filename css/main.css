@@ -342,7 +342,7 @@ img {
 }
 /* Generic.Output */
  .highlight .gp {
-    color: rgba(221, 17, 68, 0.6);
+    color: #008080;
 }
 /* Generic.Prompt */
  .highlight .gs {

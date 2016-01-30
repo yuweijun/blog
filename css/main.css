@@ -203,13 +203,13 @@ img {
     font-size: 15px;
     overflow: auto;
     white-space: pre-wrap;
-    background-color: rgba(200,215,215,0.15);
+    background-color: rgba(200,215,215,0.12);
     border: 1px solid rgba(200,215,215,0.6);
 }
 .post ul {
     padding: 8px 20px 8px 40px;
     border-radius: 3px;
-    background-color: rgba(200,215,215,0.15);
+    background-color: rgba(200,215,215,0.12);
     border: 1px solid rgba(200,215,215,0.6);
 }
 .post ul ul, .post ul ol, .post ol ol {
@@ -219,6 +219,7 @@ img {
 }
 .post ol {
     padding: 8px 20px 8px 40px;
+    border-radius: 3px;
     background-color: rgba(200,215,215,0.1);
     border: 1px solid rgba(200,215,215,0.6);
 }

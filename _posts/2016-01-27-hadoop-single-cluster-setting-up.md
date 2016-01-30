@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "hadoop-2.7.1 single cluster settings"
+title: "hadoop-2.7.1 single cluster settings on Mac OS"
 date: "Wed, 27 Jan 2016 17:58:58 +0800"
 categories: java
 ---
@@ -124,7 +124,7 @@ Starting secondary namenodes [0.0.0.0]
 
 > 启动时可能会有提示警告信息“WARN util.NativeCodeLoader ...”，这个提示不会影响正常使用。
 
-通过`jps`命令查看当前用户在系统中的java进程情况：
+启动完成后，通过`jps`命令查看当前用户在系统中的java进程情况，如果看不到`NameNode`进程就发生错误了，可以到logs目录下查看对应日志：
 
 {% highlight bash %}
 $> jps
@@ -143,6 +143,30 @@ $> cd ${HADOOP_HOME}
 $> hdfs dfs -mkdir /user
 $> hdfs dfs -mkdir /user/<username>
 {% endhighlight %}
+
+### NameNode启动错误
+
+> 执行命令`hdfs dfs -mkdir -p /user`可能会如下报错：
+>
+> mkdir: Call From MacBookPro.local/192.168.31.151 to localhost:9000 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  http://wiki.apache.org/hadoop/ConnectionRefused
+
+查看日志，可以看到其实是因为namenode根本就没有成功启动，所以前面要用`jps`命令查看java进程情况。
+
+> ERROR org.apache.hadoop.hdfs.server.namenode.NameNode: Failed to start namenode.
+org.apache.hadoop.hdfs.server.common.InconsistentFSStateException: Directory `/Users/<username>/Applications/hadoop/tmp/dfs/name` is in an inconsistent state: storage directory does not exist or is not accessible.
+
+如果发生这种情况，则执行以下命令，重新格式化namenode节点。
+
+{% highlight bash %}
+$> stop-dfs.sh
+$> rm -rf tmp
+$> hdfs namenode -format
+$> start-dfs.sh
+{% endhighlight %}
+
+再次检查一下`jps`情况，看看`NameNode`进程是否存在，然后再继续执行前面的mkdir的命令。
+
+### 测试hadoop jar example
 
 复制输入文件到HDFS分布式文件系统中：
 
@@ -179,7 +203,7 @@ $> stop-dfs.sh
 
 ### YARN配置
 
-在前面的Hadoop伪分布式测试环境中，没有启动YARN也可正常运行的。
+在前面的Hadoop伪分布式测试环境中，没有启动YARN也可正常运行`hadoop jar ...`命令的。
 
 > 有的读者可能会疑惑，怎么启动Hadoop后，见不到书上所说的`JobTracker`和`TaskTracker`，这是因为新版的Hadoop使用了新的`MapReduce`框架(MapReduce V2，也称为YARN，Yet Another Resource Negotiator)。
 >
@@ -202,7 +226,7 @@ $> cp etc/hadoop/mapred-site.xml.template etc/hadoop/mapred-site.xml
 
 > 注意： 不启动YARN需重命名`mapred-site.xml`。
 >
-> 如果不想启动YARN，务必把配置文件`mapred-site.xml`重命名，改成`mapred-site.xml.template`，需要用时改回来就行。否则在该配置文件存在，而未开启YARN的情况下，运行程序会提示“Retrying connect to server: 0.0.0.0/0.0.0.0:8032″的错误，这也是为何该配置文件初始文件名为`mapred-site.xml.template`。
+> 如果不想启动YARN，务必把配置文件`mapred-site.xml`重命名，改成`mapred-site.xml.template`，需要用时改回来就行。否则在该配置文件存在，而未开启YARN的情况下，运行程序会提示“Retrying connect to server: 0.0.0.0/0.0.0.0:8032”的错误，这也是为何该配置文件初始文件名为`mapred-site.xml.template`。
 
 编辑`${HADOOP_HOME}/etc/hadoop/yarn-site.xml`:
 
@@ -215,7 +239,6 @@ $> cp etc/hadoop/mapred-site.xml.template etc/hadoop/mapred-site.xml
 </configuration>
 {% endhighlight %}
 
-
 启动`ResourceManager`和`NodeManager`后台进程，并开启历史服务器，才能在web中查看任务运行情况，下面碰到的一个问题可以通过历史服务器上日志查到解决方法。
 
 {% highlight bash %}
@@ -225,27 +248,35 @@ $> mr-jobhistory-daemon.sh start historyserver
 
 通过web界面查看`ResourceManager`，默认地址为：`http://localhost:8088/`。
 
-启动完成之后在命令行以下命令：
+### Mac OS下/bin/java问题
+
+YARN启动完成之后，在命令行中运行以下命令：
 
 {% highlight bash %}
 $> hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar grep input output-yarn 'dfs[a-z.]+'
-...
+{% endhighlight %}
+
+运行命令报错：
+
+{% highlight bash %}
 For more detailed output, check application tracking page: http://localhost:8088/cluster/app/application_1454064430945_0001 Then, click on links to logs of each attempt.
 Diagnostics: Exception from container-launch.
 Container id: container_1454064430945_0001_02_000001
 Exit code: 127
 Stack trace: ExitCodeException exitCode=127:
     at org.apache.hadoop.util.Shell.runCommand(Shell.java:545)
-    at org.apache.hadoop.util.Shell.run(Shell.java:456)
-...
+... more
+
 org.apache.hadoop.mapreduce.lib.input.InvalidInputException: Input path does not exist: hdfs://localhost:9000/user/<username>/grep-temp-1235671912
     at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1290)
-...
+... more
 {% endhighlight %}
 
-运行命令报错，访问错误提示的url链接，查看任务`Log`，可以看到`stderr : Total file length is 48 bytes.`，再打开链接，发现错误提示为：`/bin/bash: /bin/java: No such file or directory`。如果没有启动刚才的历史服务器，可以到Hadoop日志目录下的`${HADOOP_HOME}/logs/userlogs/<application_number>/<container_number>/stderr `中查看错误信息。
+访问错误提示的链接，此处为`http://localhost:8088/cluster/app/application_1454064430945_0001`，依次点击链接查看`Log`，`stderr : Total file length is 48 bytes.`，看到错误日志提示内容：`/bin/bash: /bin/java: No such file or directory`。
 
-这因为在Mac OS上的java命令不在`/bin/java`这个位置上，运行以下命令，添加java的软链接：
+> 如果没有启动刚才的历史服务器，根据前面的错误提示，可以到${HADOOP_HOME}目录下的 `logs/userlogs/application_1454064430945_0001/container_1454064430945_0001_02_000001/stderr` 文件中查看错误信息，注意替换`application_id`和`container_id`。
+
+这个错误是因为在Mac OS上的java命令不在`/bin/java`这个位置上，运行以下命令，添加java的软链接：
 
 {% highlight bash %}
 $> sudo ln -s /usr/bin/java /bin/java
@@ -255,6 +286,80 @@ $> sudo ln -s /usr/bin/java /bin/java
 
 {% highlight bash %}
 $> hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar grep input output-yarn 'dfs[a-z.]+'
+{% endhighlight %}
+
+### hostname问题
+
+运行后如看到以下错误：
+
+{% highlight bash %}
+INFO org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.ParentQueue: Application removed - appId: application_1454123074116_0001 user: hadoopuser leaf-queue of parent: root #applications: 0
+2016-01-30 11:05:04,791 WARN org.apache.hadoop.yarn.server.resourcemanager.RMAuditLogger: USER=hadoopuser OPERATION=Application Finished - Failed TARGET=RMAppManager RESULT=FAILURE  DESCRIPTION=App failed with state: FAILED   PERMISSIONS=Application application_1454123074116_0001 failed 2 times due to Error launching appattempt_1454123074116_0001_000002. Got exception: java.io.IOException: Failed on local exception: java.io.IOException: java.io.EOFException; Host Details : local host is: "MacBookPro.local/192.168.31.151"; destination host is: "192.168.31.151":50706;
+    at org.apache.hadoop.net.NetUtils.wrapException(NetUtils.java:776)
+    at org.apache.hadoop.ipc.Client.call(Client.java:1480)
+    at org.apache.hadoop.ipc.Client.call(Client.java:1407)
+    at org.apache.hadoop.ipc.ProtobufRpcEngine$Invoker.invoke(ProtobufRpcEngine.java:229)
+    at com.sun.proxy.$Proxy32.startContainers(Unknown Source)
+    at org.apache.hadoop.yarn.api.impl.pb.client.ContainerManagementProtocolPBClientImpl.startContainers(ContainerManagementProtocolPBClientImpl.java:96)
+    at org.apache.hadoop.yarn.server.resourcemanager.amlauncher.AMLauncher.launch(AMLauncher.java:120)
+    at org.apache.hadoop.yarn.server.resourcemanager.amlauncher.AMLauncher.run(AMLauncher.java:254)
+    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+    at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.IOException: java.io.EOFException
+    at org.apache.hadoop.ipc.Client$Connection$1.run(Client.java:682)
+    at java.security.AccessController.doPrivileged(Native Method)
+    at javax.security.auth.Subject.doAs(Subject.java:422)
+    at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1657)
+    at org.apache.hadoop.ipc.Client$Connection.handleSaslConnectionFailure(Client.java:645)
+    at org.apache.hadoop.ipc.Client$Connection.setupIOstreams(Client.java:732)
+    at org.apache.hadoop.ipc.Client$Connection.access$2800(Client.java:370)
+    at org.apache.hadoop.ipc.Client.getConnection(Client.java:1529)
+    at org.apache.hadoop.ipc.Client.call(Client.java:1446)
+    ... 9 more
+Caused by: java.io.EOFException
+    at java.io.DataInputStream.readInt(DataInputStream.java:392)
+    at org.apache.hadoop.security.SaslRpcClient.saslConnect(SaslRpcClient.java:367)
+    at org.apache.hadoop.ipc.Client$Connection.setupSaslConnection(Client.java:555)
+    at org.apache.hadoop.ipc.Client$Connection.access$1800(Client.java:370)
+    at org.apache.hadoop.ipc.Client$Connection$2.run(Client.java:724)
+    at org.apache.hadoop.ipc.Client$Connection$2.run(Client.java:720)
+    at java.security.AccessController.doPrivileged(Native Method)
+    at javax.security.auth.Subject.doAs(Subject.java:422)
+    at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1657)
+    at org.apache.hadoop.ipc.Client$Connection.setupIOstreams(Client.java:720)
+    ... 12 more
+. Failing the application.
+{% endhighlight %}
+
+修改`etc/hadoop/core-site.xml`：
+{% highlight xml %}
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://localhost:9000</value>
+    </property>
+{% endhighlight %}
+
+根据电脑的hostname
+
+{% highlight bash %}
+$> hostname
+MacBookPro.local
+{% endhighlight %}
+
+修改为：
+
+{% highlight xml %}
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://MacBookPro.local:9000</value>
+    </property>
+{% endhighlight %}
+
+或者是`fs.defaultFS`的value用`hdfs://0.0.0.0:9000`，重启HDFS和YARN服务后再运行前面失败的命令：
+
+{% highlight bash %}
+$> hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar grep input output-hostname 'dfs[a-z.]+'
 {% endhighlight %}
 
 ### 关闭YARN
@@ -277,3 +382,4 @@ References
 5. [/bin/bash: /bin/java: No such file or directory](http://bbs.csdn.net/topics/390969463)
 6. [JAVA_HOME detected in hadoop-config.sh under OS X does not work](https://issues.apache.org/jira/browse/HADOOP-8717)
 7. [YARN Job Problem: exited with exitCode: 127](https://cloudcelebrity.wordpress.com/2014/01/31/yarn-job-problem-application-application_-failed-1-times-due-to-am-container-for-xx-exited-with-exitcode-127/)
+8. [yarn问题记录](http://blog.csdn.net/codepeak/article/details/13170147)

@@ -64,13 +64,13 @@ Hadoop的配置文件位于`${HADOOP_HOME}/etc/hadoop/`中，这与Hadoop 1.x中
 </configuration>
 {% endhighlight %}
 
-修改为以下配置，将其中`hadoop-username`替换为实际用户名，这里是Mac OS下的配置，linux下用户路径略有不同：
+修改为以下配置，将其中`<username>`替换为实际用户名，这里是Mac OS下的配置，linux下用户路径略有不同：
 
 {% highlight xml %}
 <configuration>
     <property>
         <name>hadoop.tmp.dir</name>
-        <value>file:///Users/hadoop-username/Applications/hadoop/tmp</value>
+        <value>file:///Users/<username>/Applications/hadoop/tmp</value>
         <description>Abase for other temporary directories.</description>
     </property>
     <property>
@@ -90,11 +90,11 @@ Hadoop的配置文件位于`${HADOOP_HOME}/etc/hadoop/`中，这与Hadoop 1.x中
     </property>
     <property>
         <name>dfs.namenode.name.dir</name>
-        <value>file:///Users/hadoop-username/Applications/hadoop/tmp/dfs/name</value>
+        <value>file:///Users/<username>/Applications/hadoop/tmp/dfs/name</value>
     </property>
     <property>
         <name>dfs.datanode.data.dir</name>
-        <value>file:///Users/hadoop-username/Applications/hadoop/tmp/dfs/data</value>
+        <value>file:///Users/<username>/Applications/hadoop/tmp/dfs/data</value>
     </property>
 </configuration>
 {% endhighlight %}
@@ -136,12 +136,12 @@ $> jps
 
 成功启动后，可以访问web界面`http://localhost:50070`查看`NameNode`和`Datanode`信息，还可以在线查看HDFS中的文件。
 
-初始化招待MapReduce任务的HDFS目录，`hadoop-username`使用当前系统登录的用户名：
+初始化MapReduce任务的HDFS目录，`<username>`使用当前系统登录的用户名：
 
 {% highlight bash %}
 $> cd ${HADOOP_HOME}
 $> hdfs dfs -mkdir /user
-$> hdfs dfs -mkdir /user/hadoop-username
+$> hdfs dfs -mkdir /user/<username>
 {% endhighlight %}
 
 ### NameNode启动错误
@@ -153,7 +153,7 @@ $> hdfs dfs -mkdir /user/hadoop-username
 查看日志，可以看到其实是因为namenode根本就没有成功启动，所以前面要用`jps`命令查看java进程情况。
 
 > ERROR org.apache.hadoop.hdfs.server.namenode.NameNode: Failed to start namenode.
-org.apache.hadoop.hdfs.server.common.InconsistentFSStateException: Directory `/Users/hadoop-username/Applications/hadoop/tmp/dfs/name` is in an inconsistent state: storage directory does not exist or is not accessible.
+org.apache.hadoop.hdfs.server.common.InconsistentFSStateException: Directory `/Users/<username>/Applications/hadoop/tmp/dfs/name` is in an inconsistent state: storage directory does not exist or is not accessible.
 
 如果发生这种情况，则执行以下命令，重新格式化namenode节点。
 
@@ -267,7 +267,7 @@ Stack trace: ExitCodeException exitCode=127:
     at org.apache.hadoop.util.Shell.runCommand(Shell.java:545)
 ... more
 
-org.apache.hadoop.mapreduce.lib.input.InvalidInputException: Input path does not exist: hdfs://localhost:9000/user/hadoop-username/grep-temp-1235671912
+org.apache.hadoop.mapreduce.lib.input.InvalidInputException: Input path does not exist: hdfs://localhost:9000/user/<username>/grep-temp-1235671912
     at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1290)
 ... more
 {% endhighlight %}

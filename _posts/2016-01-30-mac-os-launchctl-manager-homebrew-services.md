@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "homebrew servces简介"
+title: "homebrew service简介"
 date: "Sat, 30 Jan 2016 12:37:38 +0800"
 categories: macos
 ---

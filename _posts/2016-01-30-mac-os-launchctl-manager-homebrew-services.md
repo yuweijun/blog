@@ -37,6 +37,16 @@ $> brew services stop mysql
 $> brew services restart mysql
 {% endhighlight %}
 
+### List homebrew services
+
+{% highlight bash %}
+$> brew services list
+Name    Status  User  Plist
+mongodb stopped
+mysql   started david ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+nginx   stopped
+{% endhighlight %}
+
 ### Install and start dnsmasq service at boot
 
 {% highlight bash %}

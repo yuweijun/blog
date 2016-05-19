@@ -47,6 +47,22 @@ low 8 bit is: 0
 high 8 bit is: 78
 {% endhighlight %}
 
+javascript版本console示例
+-----
+
+{% highlight javascript %}
+c = '一'.charCodeAt(0)
+// 19968
+i = c & 0xFF
+// 0
+j = c >>> 8
+// 78
+j.toString(16)
+// "4e"
+i.toString(16)
+// "0"
+{% endhighlight %}
+
 高位`78`转为16进制为`4e`，将高、低8位转成的16进制字符串拼接起来即为`\u4e00`，这就是中文字`一`的unicode编码。
 
 在ajax请求返回的responseText或者json数据可以先在服务器端编码为unicode格式传给客户端浏览器，这样客户端的页面无论是什么编码，js都可以很好的处理返回的内容。

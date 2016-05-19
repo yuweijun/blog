@@ -53,9 +53,10 @@ javascript版本console示例
 {% highlight javascript %}
 c = '一'.charCodeAt(0)
 // 19968
-i = c & 0xFF
+i = c & 0xFF // c & 255
 // 0
-j = c >>> 8
+// 255的二进制即11111111，高位前8位全为0，那2个数字进行“与”操作之后，高8位就被抹去了
+j = c >>> 8 // 向右移动8字节，低位的8位就去掉了，只剩下高8位了
 // 78
 j.toString(16)
 // "4e"

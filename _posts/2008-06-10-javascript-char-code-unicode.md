@@ -5,7 +5,7 @@ date: "Tue Jun 10 2008 13:30:00 GMT+0800 (CST)"
 categories: javascript
 ---
 
-unicode实际上是一个编码表，每个字符用一个码点`code point`表示，并且每个字符用2个字节表示，简而言之就是将每一个字符用16位2进制数标识，但是通常都用4位的16进制数标识。例如：
+unicode实际上是一个编码表，码表中每个字符用一个码点`code point`表示，unicode目前普遍采用的编码方式是UCS-2，使用2个字节表示有码点的字符，简而言之就是将每一个字符用16位2进制数标识，但是通常都用4位的16进制数标识。javascript语言采用unicode字符集，并使用UCS-2编码方法，例如：
 
 1. 中文字符串"你好"的unicode编码16进制表示为：\u4f60\u597d;
 2. 中文字符串"你好"的unicode编码2进制表示为：01001111 01100000 01011001 01111101;
@@ -73,7 +73,7 @@ i.toString(16)
 javascript代码，验证字符串中是否包括中文字
 -----
 
-{% highlight bash %}
+{% highlight javascript %}
 /[\u4e00-\u9fa5]/.test(str)
 {% endhighlight %}
 

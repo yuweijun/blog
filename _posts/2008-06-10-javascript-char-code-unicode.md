@@ -1,27 +1,26 @@
 ---
 layout: post
-title: "字符串与unicode编码的相互转换"
+title: "字符char code与unicode编码的关系"
 date: "Tue Jun 10 2008 13:30:00 GMT+0800 (CST)"
 categories: javascript
 ---
 
-unicode编码简而言之就是将每一个字符用16位2进制数标识。但是通常都用4位的16进制数标识。例如：
+unicode实际上是一个编码表，每个字符用一个码点`code point`表示，并且每个字符用2个字节表示，简而言之就是将每一个字符用16位2进制数标识，但是通常都用4位的16进制数标识。例如：
 
-1. 中文字符串"你好"的unicode码为：\u4f60\u597d;
-2. 英文字符串"ab"的unicode码为：\u0061\u0062；
+1. 中文字符串"你好"的unicode编码16进制表示为：\u4f60\u597d;
+2. 中文字符串"你好"的unicode编码2进制表示为：01001111 01100000 01011001 01111101;
+3. 英文字符串"ab"的unicode编码16进制表示为：\u0061\u0062;
+4. 英文字符串"ab"的unicode编码2进制表示为：00000000 1100001 00000000 1100010;
 
-其中`\u`是标识unicode码用的，后面的4位16进制数则是对应字符的unicode码。
+其中`\u`是标识unicode码用的，后面的4位16进制数则是对应字符的unicode码点。
 
 unicode编码规则
 -----
 
-unicode码对每一个字符用4位16进制数表示。具体规则是：将一个字符(char)的高8位与低8位分别取出，转化为16进制数，
-如果转化的16进制数的长度不足2位，则在其后补0，然后将高、低8位转成的16进制字符串拼接起来并在前面补上`\u`即可。
+unicode码对每一个字符用4位16进制数表示，具体规则是：将一个字符(char)的高8位与低8位分别取出，转化为16进制数，如果转化的16进制数的长度不足2位，则在其后补0，然后将高、低8位转成的16进制字符串拼接起来并在前面补上`\u`即可。
 
 用java代码说明unicode的编码规则
 -----
-
-java的unicode解码编码的代码详见javaeye的帖子
 
 {% highlight java %}
 public class Unicode {
@@ -74,7 +73,7 @@ i.toString(16)
 javascript代码，验证字符串中是否包括中文字
 -----
 
-{% highlight javascript %}
+{% highlight bash %}
 /[\u4e00-\u9fa5]/.test(str)
 {% endhighlight %}
 
@@ -88,4 +87,4 @@ ruby中验证字符串中是否包括中文字
 References
 -----
 
-1. [http://haoi77.javaeye.com/blog/198840](http://haoi77.javaeye.com/blog/198840)
+1. [http://haoi77.iteye.com/blog/198840](http://haoi77.iteye.com/blog/198840)

@@ -119,7 +119,6 @@ Compare this method with using an and list to supply a default command-line argu
 ${parameter=default}, ${parameter:=default}
 =====
 
-
 If `parameter` not set, set it to `default`.
 
 Both forms nearly equivalent. The `:` makes a difference only when `$parameter` has been declared and is null, [1] as above.
@@ -128,12 +127,16 @@ Both forms nearly equivalent. The `:` makes a difference only when `$parameter` 
 echo ${var=abc}   # abc
 echo ${var=xyz}   # abc
 # $var had already been set to abc, so it did not change.
+{% endhighlight %}
 
 ${parameter+alt_value}, ${parameter:+alt_value}
+=====
+
 If `parameter` set, use `alt_value`, else use null string.
 
 Both forms nearly equivalent. The `:` makes a difference only when `parameter` has been declared and is null, see below.
 
+{% highlight bash %}
 echo "###### \${parameter+alt_value} ########"
 echo
 

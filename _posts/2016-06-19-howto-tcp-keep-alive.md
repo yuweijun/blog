@@ -5,26 +5,15 @@ date: Sun, 19 Jun 2016 20:02:35 +0800
 categories: linux
 ---
 
-Fabio Busatto
+Fabio Busatto <fabio.busatto@sikurezza.org>
 =====
-
-<fabio.busatto@sikurezza.org>
-
-2007-05-04
-
-Revision History
-Revision 1.0	2007-05-04	Revised by: FB
-First release, reviewed by TM.
 
 This document describes the TCP keepalive implementation in the linux kernel, introduces the overall concept and points to both system configuration and software development.
 
-* [Table of Contents](#table-of-contents)
+Table of Contents
+-----
+
 * [1\. Introduction](#introduction)
-* [1.1. Copyright and License](#copyright-and-license)
-* [1.2. Disclaimer](#disclaimer)
-* [1.3. Credits / Contributors](#credits--contributors)
-* [1.4. Feedback](#feedback)
-* [1.5. Translations](#translations)
 * [2\. TCP keepalive overview](#tcp-keepalive-overview)
 * [2.1. What is TCP keepalive?](#what-is-tcp-keepalive)
 * [2.2. Why use TCP keepalive?](#why-use-tcp-keepalive)
@@ -39,44 +28,7 @@ This document describes the TCP keepalive implementation in the linux kernel, in
 
 Understanding TCP keepalive is not necessary in most cases, but it's a subject that can be very useful under particular circumstances. You will need to know basic TCP/IP networking concepts, and the C programming language to understand all sections of this document.
 
-
 The main purpose of this HOWTO is to describe TCP keepalive in detail and demonstrate various application situations. After some initial theory, the discussion focuses on the Linux implementation of TCP keepalive routines in the modern Linux kernel releases (2.4.x, 2.6.x), and how system administrators can take advantage of these routines, with specific configuration examples and tricks.
-
-
-The second part of the HOWTO involves the programming interface exposed by the Linux kernel, and how to write TCP keepalive-enabled applications in the C language. Pratical examples are presented, and there is an introduction to the libkeepalive project, which permits legacy applications to benefit from keepalive with no code modification.
-
-1.1. Copyright and License
------
-
-This document, TCP Keepalive HOWTO, is copyrighted (c) 2007 by Fabio Busatto. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is available at http://www.gnu.org/copyleft/fdl.html.
-
-Source code included in this document is released under the terms of the GNU General Public License, Version 2 or any later version published by the Free Software Foundation. A copy of the license is available at http://www.gnu.org/copyleft/gpl.html.
-
-Linux is a registered trademark of Linus Torvalds.
-
-1.2. Disclaimer
------
-
-No liability for the contents of this document can be accepted. Use the concepts, examples and information at your own risk. There may be errors and inaccuracies that could be damaging to your system. Proceed with caution, and although this is highly unlikely, the author does not take any responsibility.
-
-All copyrights are held by their by their respective owners, unless specifically noted otherwise. Use of a term in this document should not be regarded as affecting the validity of any trademark or service mark. Naming of particular products or brands should not be seen as endorsements.
-
-1.3. Credits / Contributors
------
-
-This work is not especially related to any people that I should thank. But my life is, and my knowledge too: so, thanks to everyone that has supported me, prior to my birth, now, and in the future. Really.
-
-A special thank is due to Tabatha, the patient woman that read my work and made the needed reviews.
-
-1.4. Feedback
------
-
-Feedback is most certainly welcome for this document. Send your additions, comments and criticisms to the following email address: <fabio.busatto@sikurezza.org>.
-
-1.5. Translations
------
-
-There are no translated versions of this HOWTO at the time of publication. If you are interested in translating this HOWTO into other languages, please feel free to contact me. Your contribution will be very welcome.
 
 2\. TCP keepalive overview
 -----
@@ -88,9 +40,7 @@ In order to understand what TCP keepalive (which we will just call keepalive) do
 
 The keepalive concept is very simple: when you set up a TCP connection, you associate a set of timers. Some of these timers deal with the keepalive procedure. When the keepalive timer reaches zero, you send your peer a keepalive probe packet with no data in it and the ACK flag turned on. You can do this because of the TCP/IP specifications, as a sort of duplicate ACK, and the remote endpoint will have no arguments, as TCP is a stream-oriented protocol. On the other hand, you will receive a reply from the remote host (which doesn't need to support keepalive at all, just TCP/IP), with no data and the ACK set.
 
-
 If you receive a reply to your keepalive probe, you can assert that the connection is still up and running without worrying about the user-level implementation. In fact, TCP permits you to handle a stream, not packets, and so a zero-length data packet is not dangerous for the user program.
-
 
 This procedure is useful because if the other peers lose their connection (for example by rebooting) you will notice that the connection is broken, even if you don't have traffic on it. If the keepalive probes are not replied to by your peer, you can assert that the connection cannot be considered valid and then take the correct action.
 
@@ -173,7 +123,7 @@ Because the normal implementation puts the connection at the top of the list whe
 -----
 
 
-Linux has built-in support for keepalive. You need to enable TCP/IP networking in order to use it. You also need procfs support and sysctl support to be able to configure the kernel parameters at runtime.
+Linux has built-in support for keepalive. You need to enable TCP/IP networking in order to use it. You also need procfs support and `sysctl` support to be able to configure the kernel parameters at runtime.
 
 
 The procedures involving keepalive use three user-driven variables:
@@ -209,15 +159,15 @@ There are two ways to configure keepalive parameters inside the kernel via users
 $> sysctl net.inet.tcp | grep -E "keepidle|keepintvl|keepcnt"
 {% endhighlight %}
 
-We mainly discuss how this is accomplished on the procfs interface because it's the most used, recommended and the easiest to understand. The sysctl interface, particularly regarding the
-sysctl(2) syscall and not the
+We mainly discuss how this is accomplished on the procfs interface because it's the most used, recommended and the easiest to understand. The `sysctl` interface, particularly regarding the
+`sysctl(2)` syscall and not the
 
-sysctl(8) tool, is only here for the purpose of background knowledge.
+`sysctl(8)` tool, is only here for the purpose of background knowledge.
 
 3.1.1. The procfs interface
 -----
 
-This interface requires both `sysctl` and `procfs` to be built into the kernel, and `procfs` mounted somewhere in the filesystem (usually on `/proc`, as in the examples below). You can read the values for the actual parameters by "catting" files in `/proc/sys/net/ipv4/ directory`:
+This interface requires both `sysctl` and `procfs` to be built into the kernel, and `procfs` mounted somewhere in the filesystem (usually on `/proc`, as in the examples below). You can read the values for the actual parameters by "catting" files in `/proc/sys/net/ipv4/` directory:
 
 {% highlight bash %}
 $> cat /proc/sys/net/ipv4/tcp_keepalive_time
@@ -254,7 +204,7 @@ To be sure that all succeeds, recheck the files and confirm these new values are
 Remember that procfs handles special files, and you cannot perform any sort of operation on them because they're just an interface within the kernel space, not real files, so try your scripts before using them, and try to use simple access methods as in the examples shown earlier.
 
 
-You can access the interface through the sysctl(8) tool, specifying what you want to read or write.
+You can access the interface through the `sysctl(8)` tool, specifying what you want to read or write.
 
 
 {% highlight bash %}
@@ -266,8 +216,8 @@ net.ipv4.tcp_keepalive_probes = 9
 {% endhighlight %}
 
 
-Note that sysctl names are very close to
-procfs paths. Write is performed using the -w switch of sysctl (8):
+Note that `sysctl` names are very close to
+procfs paths. Write is performed using the -w switch of `sysctl(8)`:
 
 
 {% highlight bash %}
@@ -279,28 +229,25 @@ net.ipv4.tcp_keepalive_probes = 20
 {% endhighlight %}
 
 
-Note that sysctl (8) doesn't use sysctl(2) syscall, but reads and writes directly in the procfs subtree, so you will need procfs enabled in the kernel and mounted in the filesystem, just as you would if you directly accessed the files within the procfs interface.
+Note that `sysctl(8)` doesn't use `sysctl(2)` syscall, but reads and writes directly in the procfs subtree, so you will need procfs enabled in the kernel and mounted in the filesystem, just as you would if you directly accessed the files within the procfs interface.
 
-Sysctl(8) is just a different way to do the same thing.
+`sysctl(8)` is just a different way to do the same thing.
 
-3.1.2. The sysctl interface
+3.1.2. The `sysctl` interface
 -----
 
 
-There is another way to access kernel variables: sysctl(2 ) syscall. It can be useful when you don't have procfs available because the communication with the kernel is performed directly via syscall and not through the procfs subtree. There is currently no program that wraps this syscall (remember that
-sysctl(8) doesn't use it).
+There is another way to access kernel variables: `sysctl(2)` syscall. It can be useful when you don't have procfs available because the communication with the kernel is performed directly via syscall and not through the procfs subtree. There is currently no program that wraps this syscall (remember that `sysctl(8)` doesn't use it).
 
 
-For more details about using sysctl(2) refer to the manpage.
+For more details about using `sysctl(2)` refer to the manpage.
 
 3.2. Making changes persistent to reboot
 -----
 
-
 There are several ways to reconfigure your system every time it boots up. First, remember that every Linux distribution has its own set of init scripts called by init (8). The most common configurations include the /etc/rc.d/ directory, or the alternative, /etc/init.d/. In any case, you can set the parameters in any of the startup scripts, because keepalive rereads the values every time its procedures need them. So if you change the value of tcp_keepalive_intvl when the connection is still up, the kernel will use the new value going forward.
 
-
-There are three spots where the initialization commands should logically be placed: the first is where your network is configured, the second is the rc.local script, usually included in all distributions, which is known as the place where user configuration setups are done. The third place may already exist in your system. Referring back to the sysctl (8) tool, you can see that the -p switch loads settings from the /etc/sysctl.conf configuration file. In many cases your init script already performs the sysctl -p (you can "grep" it in the configuration directory for confirmation), and so you just have to add the lines in /etc/sysctl.conf to make them load at every boot. For more information about the syntax of sysctl.conf(5), refer to the manpage.
+There are three spots where the initialization commands should logically be placed: the first is where your network is configured, the second is the rc.local script, usually included in all distributions, which is known as the place where user configuration setups are done. The third place may already exist in your system. Referring back to the `sysctl` (8) tool, you can see that the -p switch loads settings from the `/etc/sysctl`.conf configuration file. In many cases your init script already performs the `sysctl -p` (you can "grep" it in the configuration directory for confirmation), and so you just have to add the lines in `/etc/sysctl`.conf to make them load at every boot. For more information about the syntax of `sysctl.conf`(5), refer to the manpage.
 
 For more information, visit the libkeepalive project homepage: [http://libkeepalive.sourceforge.net/](http://libkeepalive.sourceforge.net/)
 
@@ -309,3 +256,7 @@ References
 
 1. [TCP Keepalive HOWTO](http://www.tldp.org/HOWTO/html_single/TCP-Keepalive-HOWTO/)
 2. [a library that can be pre-loaded and that sets the TCP KEEP-ALIVE flag whenever socket(2) is called](https://github.com/flonatel/libdontdie)
+3. [The Internet Protocol Stack](https://www.w3.org/People/Frystyk/thesis/TcpIp.html)
+4. [TCP - How it works](http://www.potaroo.net/ispcol/2004-07-isp.htm)
+5. [2.6 TCP Connection Establishment and Termination](http://www.masterraghu.com/subjects/np/introduction/unix_network_programming_v1.3/ch02lev1sec6.html)
+6. [随手记之TCP Keepalive笔记](http://www.blogjava.net/yongboy/archive/2015/04/14/424413.html)

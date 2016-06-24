@@ -25,9 +25,6 @@ source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-complet
 source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh
 
 GIT_PS1_SHOWDIRTYSTATE=true
-parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
 
 # MAGENTA="\[\033[0;35m\]"
 # YELLOW="\[\033[0;33m\]"
@@ -35,8 +32,10 @@ parse_git_branch() {
 # LIGHT_GRAY="\[\033[0;37m\]"
 # CYAN="\[\033[0;36m\]"
 # GREEN="\[\033[0;32m\]"
-export PS1="\u@\W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+export PS1="\u@\W\[\033[32m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
 {% endhighlight %}
+
+PS1中的命令部分不要提到`function`里，否则切换`screen`命令会报错提示方法找不到。
 
 如果不安装Xcode，可以通过`brew`命令安装，也可以达到相同的效果，按照安装完成的提示相应设置即可：
 

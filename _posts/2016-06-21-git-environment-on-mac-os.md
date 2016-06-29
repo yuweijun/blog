@@ -54,7 +54,7 @@ $> brew install git bash-completion
 [alias]
     co = checkout
     st = status
-    last = log -n 20 --graph --decorate --pretty=oneline --abbrev-commit --all
+    last = log -n 30 --graph --decorate --oneline --stat
 [color "branch"]
     current = yellow reverse
     local = yellow
@@ -67,7 +67,7 @@ $> brew install git bash-completion
 [color "status"]
     added = yellow
     changed = green
-    untracked = cyan
+    untracked = red
 {% endhighlight %}
 
 References

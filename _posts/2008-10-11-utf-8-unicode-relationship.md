@@ -57,7 +57,7 @@ console.log(parseInt('111010001000001110100001', 2).toString(16));
 UTF-8 Encoding Scheme
 -----
 
-![UTF-8 Encoding Scheme]({{ site.baseurl }}/img/linux/utf-8_encoding_scheme.png)
+![UTF-8 Encoding Scheme]({{ site.baseurl }}/img/linux/utf-8-encoding-scheme.png)
 
 References
 -----

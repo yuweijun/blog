@@ -5,6 +5,24 @@ date: "Fri, 01 Jul 2016 17:36:21 +0800"
 categories: linux
 ---
 
+branches status before merge or rebase
+-----
+
+![git-branches-status]({{ site.baseurl }}/img/linux/git/git-branches-status.svg)
+
+branches status after git merge
+-----
+
+![git-merge-status]({{ site.baseurl }}/img/linux/git/git-merge-status.svg)
+
+branches status after git rebase
+-----
+
+![git-rebase-status]({{ site.baseurl }}/img/linux/git/git-rebase-status.svg)
+
+git merge and git rebase test scripts
+-----
+
 `git-merge-test.sh`测试脚本
 
 {% highlight bash %}
@@ -123,19 +141,42 @@ git branch -d feature
 git rebase简要说明
 -----
 
-1. The major benefit of rebasing is that you get a much cleaner project history, rebasing creates a linear history by moving your `feature` branch onto the tip of `master`.
-2. There are two `trade-offs` for this pristine commit history: `safety` and `traceability`.
-3. Instead of using a merge commit, rebasing `re-writes` the project history by creating `brand new commits` for each commit in the original branch.
-4. `git rebase -i master` can edit history of commits and comments.
-5. The Golden Rule of Rebasing: `NEVER USE IT ON PUBLIC BRANCHES`.
-6. Any changes from other developers need to be incorporated with `git merge` instead of `git rebase`.
-7. If you’re not entirely comfortable with git rebase, you can always perform the rebase in a temporary branch.
+1. `git rebase` 会产生一个修改过的很干净的项目提交历史，例如在`feature`分支上`git rebase master`，会将分支上的提交添加到`master`分支的最顶端(by creating brand new commits for each commit in origin branch)。
+2. `git rebase`操作有负面效果，影响项目提交历史的安全性(`safety`)和可追溯性(`traceability`)。
+3. `git rebase -i master`可以交互式压缩提交(`squash`)或者忽略指定提交。
+4. `git rebase`使用黄金守则: `NEVER USE IT ON PUBLIC BRANCHES`.
+5. 不要将主分支`rebase`到特性分支上(don't rebased `master` onto your `feature` branch: `git rebase feature`)。
+6. 其他开发者提交的新特性和修改(如patch)应该创建一个临时分支apply这些修改，再使用`git merge`合并修改到主分支上，而不是使用`git rebase`方式操作，因为`rebase`操作修改了提交历史，很难追溯哪些提交新增了这些特性和修改。
+
+在没有完全理解什么时候使用`git rebase`时，尽量在特性分支上再开个临时分支出来进行`rebase`操作，如下所示：
 
 {% highlight bash %}
 $> git checkout feature
+# [Create new branch from feature branch for rebasing]
 $> git checkout -b temporary-branch
 $> git rebase -i master
 # [Clean up the history]
+# pick ba7da2b v04-feature¬
+# pick 5f45d15 v05-feature¬
+# pick 43df101 v06-feature¬
+# pick be55443 v09_feature¬
+# Rebase 01642c6..be55443 onto 01642c6 (       4 TODO item(s))¬
+#¬
+# Commands:¬
+# p, pick = use commit¬
+# r, reword = use commit, but edit the commit message¬
+# e, edit = use commit, but stop for amending¬
+# s, squash = use commit, but meld into previous commit¬
+# f, fixup = like "squash", but discard this commit's log message¬
+# x, exec = run command (the rest of the line) using shell¬
+#¬
+# These lines can be re-ordered; they are executed from top to bottom.¬
+#¬
+# If you remove a line here THAT COMMIT WILL BE LOST.¬
+#¬
+# However, if you remove everything, the rebase will be aborted.¬
+#¬
+# Note that empty commits are commented out¬
 $> git checkout master
 $> git merge temporary-branch
 $> git branch -d temporary-branch

@@ -22,6 +22,7 @@ Table of Contents
 * [3\. Using TCP keepalive under Linux](#using-tcp-keepalive-under-linux)
 * [3.1. Configuring the kernel](#configuring-the-kernel)
 * [3.2. Making changes persistent to reboot](#making-changes-persistent-to-reboot)
+* [4.1. tcp keep alive packets dump example](#tcp-keep-alive-packets-dump-example)
 
 1\. Introduction
 -----
@@ -250,6 +251,11 @@ There are several ways to reconfigure your system every time it boots up. First,
 There are three spots where the initialization commands should logically be placed: the first is where your network is configured, the second is the rc.local script, usually included in all distributions, which is known as the place where user configuration setups are done. The third place may already exist in your system. Referring back to the `sysctl` (8) tool, you can see that the -p switch loads settings from the `/etc/sysctl`.conf configuration file. In many cases your init script already performs the `sysctl -p` (you can "grep" it in the configuration directory for confirmation), and so you just have to add the lines in `/etc/sysctl`.conf to make them load at every boot. For more information about the syntax of `sysctl.conf`(5), refer to the manpage.
 
 For more information, visit the libkeepalive project homepage: [http://libkeepalive.sourceforge.net/](http://libkeepalive.sourceforge.net/)
+
+4.1. tcp keep-alive packets dump example
+-----
+
+![tcp-keep-alive-dump]({{ site.baseurl }}/img/linux/tcp-keep-alive-packets.png)
 
 References
 -----

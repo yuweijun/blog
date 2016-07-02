@@ -17,25 +17,14 @@ alias ll='ls -la'
 
 # export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 # export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
-# export NVM_DIR="/Users/david/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-# Xcode installed firstly.
+# git command completion
 source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash
 source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh
-
-GIT_PS1_SHOWDIRTYSTATE=true
-
-# MAGENTA="\[\033[0;35m\]"
-# YELLOW="\[\033[0;33m\]"
-# BLUE="\[\033[34m\]"
-# LIGHT_GRAY="\[\033[0;37m\]"
-# CYAN="\[\033[0;36m\]"
-# GREEN="\[\033[0;32m\]"
-export PS1="\u@\W\[\033[32m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
+export PS1="\u@\W\[\033[35m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] \033[40m\033[1;32m$>\033[0m "
 {% endhighlight %}
 
-PS1中的命令部分不要提到`function`里，否则切换`screen`命令会报错提示方法找不到。
+PS1中的命令部分不要提到`function`里，否则使用`screen`命令会提示方法找不到。
 
 如果不安装Xcode，可以通过`brew`命令安装，也可以达到相同的效果，按照安装完成的提示相应设置即可：
 
@@ -77,3 +66,4 @@ References
 2. [Add Git Branch Name to Terminal Prompt (Mac)](http://mfitzp.io/article/add-git-branch-name-to-terminal-prompt-mac/)
 3. [How To Setup Git Completion And Repo State On Osx](http://www.4e00.com/blog/linux/2016/06/19/bash-scripting-manipulating-variables.html)
 4. [git-prompt.sh](https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh)
+5. [table for 16-color terminal escape sequences](http://www.4e00.com/blog/linux/2007/06/03/table-for-16-color-terminal-escape-sequences.html)

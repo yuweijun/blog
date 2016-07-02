@@ -21,7 +21,7 @@ alias ll='ls -la'
 # git command completion
 source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash
 source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh
-export PS1="\u@\W\033[35m\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\033[00m \033[40m\033[1;32m$>\033[00m "
+export PS1="\u@\W\033[35m\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\033[00m \033[1;32m$>\033[00m "
 {% endhighlight %}
 
 PS1中的命令部分不要提到`function`里，否则使用`screen`命令会提示方法找不到。

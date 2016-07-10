@@ -11,18 +11,31 @@ categories: linux
 
 {% highlight bash %}
 $> cat /etc/shells
+{% endhighlight %}
 
-# List of acceptable shells for chpass(1).
-# Ftpd will not allow users to connect who are not using
-# one of these shells.
+> \# List of acceptable shells for chpass(1).
+>
+> \# Ftpd will not allow users to connect who are not using
+>
+> \# one of these shells.
+>
+>
+>
+> /bin/bash
+>
+> /bin/csh
+>
+> /bin/ksh
+>
+> /bin/sh
+>
+> /bin/tcsh
+>
+> /bin/zsh
 
-/bin/bash
-/bin/csh
-/bin/ksh
-/bin/sh
-/bin/tcsh
-/bin/zsh
+切换到`zsh`并退出终端。
 
+{% highlight bash %}
 $> chsh -s /bin/zsh
 $> exist
 {% endhighlight %}
@@ -31,8 +44,9 @@ $> exist
 
 {% highlight bash %}
 $> echo $SHELL
-/bin/zsh
 {% endhighlight %}
+
+> /bin/zsh
 
 Oh My Zsh Installation
 -----
@@ -40,15 +54,17 @@ Oh My Zsh Installation
 {% highlight bash %}
 # using curl install on Mac OS
 $> sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-# or wget on linux
+{% endhighlight %}
+
+linux下还可以通过`wget`方式安装，`Mac OS`系统默认安装里没有安装`wget`命令。
+
+{% highlight bash %}
 $> sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 {% endhighlight %}
 
 安装完成之后，修改`~/.zshrc`配置文件，将主题改为`agnoster`。
 
-{% highlight bash %}
-ZSH_THEME="agnoster"
-{% endhighlight %}
+> ZSH_THEME="agnoster"
 
 Install a patched powerline font
 -----
@@ -71,9 +87,7 @@ $> brew install zsh-syntax-highlighting
 
 将以下这句脚本添加到`~/.zshrc`文件中。
 
-{% highlight bash %}
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-{% endhighlight %}
+> source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 Install zsh-autosuggestions
 -----
@@ -84,9 +98,7 @@ $> git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/
 
 绑定`ctrl + space`快捷键用于接受当前的自动完成提示，在`~/.zshrc`文件中加入下面的配置。
 
-{% highlight bash %}
-bindkey '^ ' autosuggest-accept
-{% endhighlight %}
+> bindkey '^ ' autosuggest-accept
 
 Install autojump
 -----
@@ -97,15 +109,11 @@ $> brew install autojump
 
 安装`zsh-autosuggestions`和`autojump`完成后在`~/.zshrc`中修改`plugins=(git)`为如下内容：
 
-{% highlight bash %}
-plugins=(git bundler osx rake ruby zsh-autosuggestions autojump)
-{% endhighlight %}
+> plugins=(git bundler osx rake ruby zsh-autosuggestions autojump)
 
 然后继续在`~/.zshrc`文件中添加：
 
-{% highlight bash %}
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-{% endhighlight %}
+> [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 {% highlight bash %}
 $> source ~/.zshrc

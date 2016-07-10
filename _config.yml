@@ -9,5 +9,9 @@ github_username: yuweijun
 
 # Build settings
 markdown: kramdown
+incremental: true
 paginate: 50
 gems: [jekyll-paginate]
+# turn off smart-quotes for both apostrophes/single-quotes and double quotes
+kramdown:
+  smart_quotes: ["apos", "apos", "quot", "quot"]

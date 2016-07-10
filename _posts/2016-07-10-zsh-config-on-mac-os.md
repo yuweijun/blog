@@ -38,6 +38,9 @@ Oh My Zsh Installation
 -----
 
 {% highlight bash %}
+# using curl install on Mac OS
+$> sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+# or wget on linux
 $> sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 {% endhighlight %}
 

@@ -53,14 +53,14 @@ ZSH_THEME="agnoster"
 Install a patched powerline font
 -----
 
-这里采用的`powerline`字体不是[https://github.com/powerline/fonts](https://github.com/powerline/fonts)里的那个`Menlo`字体，效果稍有不同，当然也可以用[powerline meslo](https://github.com/powerline/fonts/blob/master/Meslo/Meslo%20LG%20L%20Regular%20for%20Powerline.otf)。
+这里采用的`Menlo-for-Powerline`字体不是[https://github.com/powerline/fonts](https://github.com/powerline/fonts)里的那个`Meslo`字体，效果稍有不同，当然也可以用[Meslo LG L Regular for Powerline字体](https://github.com/powerline/fonts/blob/master/Meslo/Meslo%20LG%20L%20Regular%20for%20Powerline.otf)。
 
 {% highlight bash %}
 $> git clone git@github.com:abertsch/Menlo-for-Powerline.git
 $> open Menlo-for-Powerline
 {% endhighlight %}
 
-双击打开的文件夹中的字体文件，并点击安装字体，然后再修改`Terminal`的字体和字体大小（个人设置为16pt），最后退出重进终端查看效果。
+双击打开的文件夹中的字体文件，并点击安装字体，然后再修改`Terminal`的字体和字体大小（个人17吋Mac上设置为16pt，27吋iMac使用20pt），最后退出重进终端查看效果。
 
 Install zsh-syntax-highlighting
 -----
@@ -134,7 +134,7 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ![zsh-powerline-autojump-theme]({{ site.baseurl }}/img/linux/zsh-powerline-autojump-theme.png)
 
-oh-my-zsh官方配图
+oh-my-zsh官方iTerm2配图
 -----
 
 ![iterm2-powerline-theme]({{ site.baseurl }}/img/linux/iterm2-powerline-theme.png)

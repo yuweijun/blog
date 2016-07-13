@@ -140,7 +140,7 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 终端截图
 -----
 
-![zsh-powerline-autojump-theme]({{ site.baseurl }}/img/linux/zsh-powerline-autojump-theme.png)
+![zsh-powerline-autojump-theme]({{ site.baseurl }}/img/linux/zsh-powerline-autojump-theme.jpg)
 
 oh-my-zsh官方iTerm2配图
 -----

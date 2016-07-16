@@ -370,12 +370,12 @@ JDBC URL连接参数设置
 JDBC URL Format
 =====
 
-{% highlight txt %}
-jdbc:mysql://[host1][:port1][,[host2][:port2]]...[/[database]][?propertyName1=propertyValue1[&propertyName2=propertyValue2]...]
+> jdbc:mysql://[host1][:port1][,[host2][:port2]]...[/[database]][?propertyName1=propertyValue1[&propertyName2=propertyValue2]...]
 
-# below format is mandatory for IPv6 connections
-jdbc:mysql://address=(key1=value)[(key2=value)]...[,address=(key3=value)[(key4=value)]...]...[/[database]][?propertyName1=propertyValue1[&propertyName2=propertyValue2]...]
-{% endhighlight %}
+This is mandatory for IPv6 connections
+=====
+
+> jdbc:mysql://address=(key1=value)[(key2=value)]...[,address=(key3=value)[(key4=value)]...]...[/[database]][?propertyName1=propertyValue1[&propertyName2=propertyValue2]...]
 
 根据上面所说，假如使用`sendFractionalSeconds=false`形式的`JDBC URL`:
 

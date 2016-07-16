@@ -18,11 +18,9 @@ Example
 
 项目结构如下：
 
-{% highlight txt %}
-parent-pom.xml
-|
-|-> child-pom.xml
-{% endhighlight %}
+> parent-pom.xml
+>
+> └── child-pom.xml
 
 parent-pom.xml
 =====

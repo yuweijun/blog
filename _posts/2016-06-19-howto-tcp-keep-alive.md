@@ -72,7 +72,7 @@ Think of a simple TCP connection between Peer A and Peer B: there is the initial
 Keepalive can tell you when another peer becomes unreachable without the risk of false-positives. In fact, if the problem is in the network between two peers, the keepalive action is to wait some time and then retry, sending the keepalive packet before marking the connection as broken.
 
 
-{% highlight txt %}
+{% highlight html %}
    _____                                                     _____
   |     |                                                   |     |
   |  A  |                                                   |  B  |
@@ -104,7 +104,7 @@ Returning to Peers A and B, reconnect them. Once the channel is open, wait until
 Because the normal implementation puts the connection at the top of the list when one of its packets arrives and selects the last connection in the queue when it needs to eliminate an entry, periodically sending packets over the network is a good way to always be in a polar position with a minor risk of deletion.
 
 
-{% highlight txt %}
+{% highlight html %}
    _____           _____                                     _____
   |     |         |     |                                   |     |
   |  A  |         | NAT |                                   |  B  |

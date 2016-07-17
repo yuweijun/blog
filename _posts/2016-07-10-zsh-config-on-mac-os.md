@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "zsh config on mac os"
+title: "zsh config on MAC OS"
 date: Sun, 10 Jul 2016 10:46:12 +0800
 categories: linux
 ---

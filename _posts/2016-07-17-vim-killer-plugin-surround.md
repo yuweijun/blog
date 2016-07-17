@@ -39,29 +39,39 @@ vim普通模式中的命令
 
 当光标位于`Hello world!`的Hello这个单词字母上时，按组合命令`ysiw]`或者是`ysiw[`，结果分别如下，用`[`生成的配对标点带有空格：
 
-> [Hello] world!
+{% highlight text %}
+[Hello] world!
 
-> [ Hello ] world!
+[ Hello ] world!
+{% endhighlight %}
 
 在如上结果上执行命令`cs]}`或者是`cs]{`，结果如下，用`{`生成的配对标点带有空格：
 
-> {Hello} world!
+{% highlight text %}
+{Hello} world!
 
-> { Hello } world!
+{ Hello } world!
+{% endhighlight %}
 
 使用`yssb`或者是`yss)`命令将整行记录用小括号包起来：
 
-> ({ Hello } world!)
+{% highlight text %}
+({ Hello } world!)
+{% endhighlight %}
 
 上面命令`yssb`中的`b`是指右半边小括号`)`，另外还有字母`B`，`r`，`a`分别是指符号`}`，`]`，`>`。
 
 使用命令`ds{ds)`还原为原来的文本内容`Hello world!`。
 
-> Hello world!
+{% highlight text %}
+Hello world!
+{% endhighlight %}
 
 光标在单词`Hello`的任意一个字母上时，用命令`ysiw<em>`：
 
-> <em>Hello</em> world!
+{% highlight html %}
+<em>Hello</em> world!
+{% endhighlight %}
 
 光标在`<em>Hello</em>`任意字母上时，执行命令`dst`还原这个单词，`t`代表`tag`的意思：
 

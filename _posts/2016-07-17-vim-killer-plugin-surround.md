@@ -45,7 +45,7 @@ vim普通模式中的命令
 [ Hello ] world!
 {% endhighlight %}
 
-在如上结果上执行命令`cs]}`或者是`cs]{`，结果如下，用`{`生成的配对标点带有空格：
+在如上结果上执行命令`cs]}`或者是`cs]{`，`cs`命令可以理解为`Change Surround`，结果如下，用`{`生成的配对标点带有空格：
 
 {% highlight text %}
 {Hello} world!
@@ -137,7 +137,7 @@ line10
 </ul>
 {% endhighlight %}
 
-按`v`进入`visual model`，选中`line6`到`line10`所有行，然后按命令`gS<li>`，输出结果：
+按`v`进入`characterwise visual model`，选中`line6`到`line10`所有行，然后按命令`gS<li>`，输出结果：
 
 {% highlight html %}
 <ul>
@@ -172,10 +172,19 @@ Action repeat
 
 如果想让`.`操作对以上提到的`ds`，`cs`，`yss`，`ySS`命令生效，需要安装另一个插件：[repeat.vim](https://github.com/tpope/vim-repeat).
 
-Plaintext Text Objects
+Structure of an editing command
 -----
 
-vim中提供三种类型的`text-object`：`words`，`sentences`和`paragraphs`。
+vim中编辑命令的格式如下：
+
+{% highlight text %}
+<number><command><text object or motion>
+{% endhighlight %}
+
+一般的操作都是基于字母`characters`进行移动和编辑的，除了`characters`之外，vim还可以基于`words`，`sentences`，`paragraphs`这些单位进行移动和编辑，这些统称为`text-object`。
+
+Text objects commands
+-----
 
 | Type     | Command | Operation                                                |
 |:--------:|:-------:|:--------------------------------------------------------:|

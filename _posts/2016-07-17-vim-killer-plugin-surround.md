@@ -23,7 +23,7 @@ $> git clone git://github.com/tpope/vim-surround.git
 Help manual
 -----
 
-可以通过`:h surround`命令查看帮助手册，其中有在普通模式中命令操作举例说明：
+可以通过`:h surround`命令查看帮助手册，其中有在普通模式中命令操作举例说明，`*`是指光标所在字母上：
 
 | Old text               | Command     | New text                     |
 |:-----------------------|:------------|:-----------------------------|
@@ -73,7 +73,7 @@ Hello world!
 <em>Hello</em> world!
 {% endhighlight %}
 
-光标在`<em>Hello</em>`任意字母上时，执行命令`dst`还原这个单词，`t`代表`tag`的意思：
+光标在`<em>Hello</em>`任意字母上时，执行命令`dst`还原这个单词，`t`代表`tag`的意思。
 
 普通模式中多行操作
 =====

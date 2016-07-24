@@ -295,8 +295,7 @@ img {
     border: 1px solid rgba(215, 215, 215, 0.6);
 }
 
-.post p code,
-.post kbd {
+.post p code {
     padding: 1px 4px;
     margin: 0 3px;
     border-radius: 2px;
@@ -305,6 +304,19 @@ img {
     white-space: pre-wrap;
     background-color: rgba(0, 0, 0, 0.04);
     border: 1px solid rgba(215, 215, 215, 0.6);
+}
+
+.post kbd {
+    margin: 0 3px;
+    font-size: 85%;
+    overflow: auto;
+    white-space: pre-wrap;
+    border: 1px solid rgba(215, 215, 215, 0.6);
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px #aaa;
+    padding: 2px 10px 3px 10px;
 }
 
 .post pre code {

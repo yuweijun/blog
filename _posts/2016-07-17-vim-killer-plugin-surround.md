@@ -8,7 +8,7 @@ categories: vim
 What's surround.vim
 -----
 
-这个插件主要可以用来处理一些标点和标签配对相关的删除(Delete)、修改(Change)和复制(Yank)操作，如`""`，`''`，`<>`，`()`，`{}`，`[]`，`<p></p>`和`<div></div>`，所以在HTML、XML的配对标签编辑处理时尤其方便。
+这个插件主要可以用来处理一些标点和标签配对相关的删除(Delete)、修改(Change)和复制(Yank)操作，如<code>``</code>，`""`，`''`，`<>`，`()`，`{}`，`[]`，`<p></p>`和`<div></div>`，所以在HTML、XML的配对标签编辑处理时尤其方便。
 
 Install surround.vim
 -----
@@ -37,7 +37,7 @@ Help manual
 vim普通模式中的命令
 -----
 
-当光标位于`Hello world!`的Hello这个单词字母上时，按组合命令`ysiw]`或者是`ysiw[`，结果分别如下，用`[`生成的配对标点带有空格：
+当光标位于`Hello world!`的Hello这个单词字母上时，按组合命令`ysiw]`或者是`ysiw[`，`iw`是一个`text-object`，下面另详细说明。结果分别如下，用`[`生成的配对标点带有空格：
 
 {% highlight text %}
 [Hello] world!
@@ -115,7 +115,7 @@ line5
 Visual mode
 -----
 
-按`Shift+V`进入`linewise visual model`，光标从第一行`line6`上移到第五行`line10`，选中这5行记录，然后按命令`gS<ul>`。
+按`Shift+V`进入`linewise visual mode`，光标从第一行`line6`上移到第五行`line10`，选中这5行记录，然后按命令`gS<ul>`。
 
 {% highlight text %}
 line6
@@ -137,7 +137,9 @@ line10
 </ul>
 {% endhighlight %}
 
-按`v`进入`characterwise visual model`，选中`line6`到`line10`所有行，然后按命令`gS<li>`，输出结果：
+> In visual mode, a simple `S` with an argument wraps the selection.
+
+按`v`进入`characterwise visual mode`，选中`line6`到`line10`所有行，然后按命令`S<li>`或者`gS<li>`，输出结果：
 
 {% highlight html %}
 <ul>
@@ -148,6 +150,25 @@ line8
 line9
 line10
 </li></ul>
+{% endhighlight %}
+
+在`characterwise visual mode`，选中`line6`这5个字母，然后按命令`S<span>`，输出结果：
+
+{% highlight html %}
+<ul>
+<li>
+<span>line6</span>
+line7
+line8
+line9
+line10
+</li></ul>
+{% endhighlight %}
+
+这个操作是最易记忆和使用的，如果上述`S<span>`操作不成功，需要查看一下<kbd>S</kbd>键的最后绑定情况：
+
+{% highlight vim %}
+:verbose vmap S
 {% endhighlight %}
 
 Insert mode
@@ -229,3 +250,4 @@ References
 
 1. [surround.vim](https://github.com/tpope/vim-surround)
 2. [Vim Text Objects: The Definitive Guide](http://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guide/)
+3. [Vim Plugins You Should Know About, Part I: surround.vim](http://www.catonmat.net/blog/vim-plugins-surround-vim/)

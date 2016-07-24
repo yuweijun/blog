@@ -87,7 +87,7 @@ $> touch ~/.ansible.cfg
 Ping command test
 -----
 
-编辑`/etc/ansible/hosts`文件，加入以下远程服务地址，并且在这些远程服务器的`~/.ssh/authorized_keys`文件中加入了登录用户的ssh公钥，使得用户可以通过ssh可以无密码登录：
+编辑`/etc/ansible/hosts`文件，加入以下远程服务地址，并且在这些远程服务器的`~/.ssh/authorized_keys`文件中加入了登录用户的ssh公钥，使得用户可以通过ssh无密码登录：
 
 {% highlight text %}
 192.168.1.50
@@ -163,11 +163,11 @@ $> ansible -i ~/hosts all -a 'who'
 
 以上命令参数说明：
 
-1. `-i`表示`hosts`文件的位置，默认是`/etc/ansible/hosts`；
+1. `-i`表示`hosts`文件的位置，默认是`/etc/ansible/hosts`。
 2. `-a`后面是`module`的参数,这边没有指定`module`，即默认的`module`，是`command module`。
-3. `all`代表`host`所有服务器
+3. `all`代表`host`所有服务器。
 
-这一条命令就是对用户指定配置文件`~/hosts`中所有的`host`执行`who`命令。
+这条命令就是对用户指定配置文件`~/hosts`中所有的`host`执行`who`命令。
 
 修改ansible默认hosts文件位置
 -----
@@ -255,7 +255,7 @@ hosts: webservers
     shell: 'whoami > whoami.rst'
 {% endhighlight %}
 
-其中每个`task`一般就是调用一个ansible的模块，如调用`copy`模块复制文件到远程主机或调用`shell`模块执行命令。`tasks`中的各任务按次序逐个在`hosts`中指定的所有主机上执行即在所有主机上完成第一个任务后再开始第二个，如果中途发生错误所有已执行任务都将回滚因此在更正`playbook`后重新执行一次即可。
+其中每个`task`一般就是调用一个ansible的模块，如调用`copy`模块复制文件到远程主机或调用`shell`模块执行命令。`tasks`中的各任务按次序逐个在`hosts`中指定的所有主机上执行，即在所有主机上完成第一个任务后再开始第二个，如果中途发生错误所有已执行任务都将回滚因此在更正`playbook`后重新执行一次即可。
 
 运行以上配置文件：
 

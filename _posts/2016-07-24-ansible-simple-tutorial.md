@@ -293,4 +293,6 @@ References
 3. [Ansible 快速入门](http://cn.soulmachine.me/blog/20140127/)
 4. [轻量级自动化部署工具 Ansible](https://blog.eood.cn/the-ansible)
 5. [Ansible first book download](https://www.gitbook.com/book/ansible-book/ansible-first-book/details)
+6. [自动化运维工具ansible详细介绍](http://yangrong.blog.51cto.com/6945369/1559020)
+7. [自动化工具——ansible中文指南](https://www.the5fire.com/ansible-guide-cn.html)
 

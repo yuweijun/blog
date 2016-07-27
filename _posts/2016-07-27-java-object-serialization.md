@@ -32,6 +32,7 @@ Java为了方便开发人员将Java对象进行序列化及反序列化提供了
 在Java中，只要一个类实现了`java.io.Serializable`接口，那么它就可以被序列化，这个接口属于标记接口，源码如下：
 
 {% highlight java %}
+/*
  * @see java.io.ObjectOutputStream
  * @see java.io.ObjectInputStream
  * @see java.io.ObjectOutput

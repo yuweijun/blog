@@ -903,9 +903,227 @@ public class SerializableSingleton implements Serializable {
 
 > 2016-07-28 01:01:52.198 - INFO --- [           main] c.example.test.io.SerializableSingleton  [   51] : is the same object : true
 
+十、java.io.Externalizable
+-----
+
+`java.io.Externalizable`继承自`java.io.Serializable`接口，源码：
+
+{% highlight java %}
+public interface Externalizable extends java.io.Serializable {
+    void writeExternal(ObjectOutput out) throws IOException;
+    void readExternal(ObjectInput in) throws IOException, ClassNotFoundException;
+}
+{% endhighlight %}
+
+正如接口名字所提示的，对象序列化和反序列化由外部代码指定才会执行，`ExternalizableObject`如下代码：
+
+{% highlight java %}
+public class ExternalizableObject implements Externalizable {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExternalizableObject.class);
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        LOGGER.info("begin serialize object.");
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        LOGGER.info("begin deserialize object.");
+    }
+
+    @Override
+    public String toString() {
+        return "ExternalizableObject{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+}
+{% endhighlight %}
+
+运行`ExternalizableSerializeExample.main`方法如下：
+
+{% highlight java %}
+public class ExternalizableSerializeExample {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExternalizableSerializeExample.class);
+
+    public static void serialize(ExternalizableObject externalizableObject) throws FileNotFoundException, IOException {
+        File file = new File(System.getProperty("java.io.tmpdir") + "externalizableObject.ser");
+        ObjectOutputStream objectOutputStream = null;
+        try {
+            objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
+            objectOutputStream.writeObject(externalizableObject);
+            objectOutputStream.flush();
+        } finally {
+            if (objectOutputStream != null) {
+                objectOutputStream.close();
+            }
+        }
+    }
+
+    public static ExternalizableObject deSerialize() throws FileNotFoundException, IOException, ClassNotFoundException {
+        ObjectInputStream objectInputStream = null;
+        try {
+            File file = new File(System.getProperty("java.io.tmpdir") + "externalizableObject.ser");
+            objectInputStream = new ObjectInputStream(new FileInputStream(file));
+            Object object = objectInputStream.readObject();
+            ExternalizableObject deserializedObject = (ExternalizableObject) object;
+            LOGGER.info(deserializedObject.getName());
+            return deserializedObject;
+        } finally {
+            if (objectInputStream != null) {
+                objectInputStream.close();
+            }
+        }
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        ExternalizableObject externalizableObject = new ExternalizableObject();
+        externalizableObject.setName("externalizableObject");
+
+        serialize(externalizableObject);
+
+        ExternalizableObject deSerializedObject = deSerialize();
+        LOGGER.info("{}", deSerializedObject);
+    }
+
+}
+{% endhighlight %}
+
+运行结果如下，发现对象并没有被序列化：
+
+> 2016-07-28 22:14:53.932 - INFO --- [           main] c.example.test.io.ExternalizableObject   [   30] : begin serialize object.
+>
+> 2016-07-28 22:14:53.937 - INFO --- [           main] c.example.test.io.ExternalizableObject   [   35] : begin deserialize object.
+>
+> 2016-07-28 22:14:53.938 - INFO --- [           main] c.e.t.io.ExternalizableSerializeExample  [   36] : null
+>
+> 2016-07-28 22:14:53.939 - INFO --- [           main] c.e.t.io.ExternalizableSerializeExample  [   51] : ExternalizableObject{name='null'}
+
+JVM在序列化对象时，发现类实现了接口`Externalizable`，那么它会调用此对象的`writeExternal`方法，在反序列化时，则会调用readExternal方法，并不会像前面实现`Serializable`接口那样通过`ObjectOutputStream`和`ObjectInputStream`那样进行对象序列化和反序列化。
+
+还有一点值得注意：在使用`Externalizable`进行序列化的时候，在读取对象时，会调用被序列化类的无参构造器去创建一个新的对象，然后再将被保存对象的字段的值分别填充到新对象中。所以，实现`Externalizable`接口的类必须要提供一个`public`的无参的构造器，否则会有类似以下错误提示：
+
+> Exception in thread "main" java.io.InvalidClassException: com.example.test.io.ExternalizableObject; no valid constructor
+
+修改`ExternalizableObject`代码如下：
+
+{% highlight java %}
+public class ExternalizableObject implements Externalizable {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExternalizableObject.class);
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        LOGGER.info("begin serialize object.");
+        out.writeObject(name);
+    }
+
+    /**
+     * The readExternal method must read the values in the same sequence
+     * and with the same types as were written by writeExternal.
+     */
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        LOGGER.info("begin deserialize object.");
+        name = (String) in.readObject();
+    }
+
+    @Override
+    public String toString() {
+        return "ExternalizableObject{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+}
+{% endhighlight %}
+
+再次运行`ExternalizableSerializeExample.main`方法后，输出如下：
+
+> 2016-07-28 22:31:56.044 - INFO --- [           main] c.example.test.io.ExternalizableObject   [   30] : begin serialize object.
+>
+> 2016-07-28 22:31:56.055 - INFO --- [           main] c.example.test.io.ExternalizableObject   [   36] : begin deserialize object.
+>
+> 2016-07-28 22:31:56.057 - INFO --- [           main] c.e.t.io.ExternalizableSerializeExample  [   36] : externalizableObject
+>
+> 2016-07-28 22:31:56.058 - INFO --- [           main] c.e.t.io.ExternalizableSerializeExample  [   52] : ExternalizableObject{name='externalizableObject'}
+
+之所以提供`Externalizable`这个接口，主要是为了定制对象的序列化和反序列化，另外也有性能方面的提升，毕竟`Serializable`会通过java反射来执行序列化和反序列化，并且会将所有引用对象都进行序列化操作。
+
+十一、父类没有实现Externalizable
+
+只要在`writeExternal`和`readExternal`方法里以相同的顺序写入和读取父类属性即可：
+
+{% highlight java %}
+public class ExternalizableObject extends UnSerializableParent implements Externalizable {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExternalizableObject.class);
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        LOGGER.info("begin serialize object.");
+        out.writeObject(name);
+        out.writeObject(getParent());
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        LOGGER.info("begin deserialize object.");
+        name = (String) in.readObject();
+        String parent = (String) in.readObject();
+        setParent(parent);
+    }
+
+    @Override
+    public String toString() {
+        return "ExternalizableObject{" +
+                "name='" + name + '\'' +
+                ", parent='" + getParent() + '\'' +
+                '}';
+    }
+
+}
+{% endhighlight %}
+
+如果父类也实现了`Externalizable`接口，则子类的2个实现方法中通过`super.writeExternal(out)`和`super.readExternal(in)`调用父类的方法实现即可。
+
 References
 -----
 
 1. [Serialization in java](http://www.java2blog.com/2013/03/serialization-in-java.html)
 2. [单例与序列化的那些事儿](http://www.hollischuang.com/archives/1144)
+3. [Java对象的序列化与反序列化](http://www.hollischuang.com/archives/1150)
 

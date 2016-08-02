@@ -5,6 +5,23 @@ date: Sun, 24 Jul 2016 00:01:46 +0800
 categories: linux
 ---
 
+目录
+-----
+
+* [ANSIBLE](#ansible)
+* [ansible中的概念](#ansible-1)
+* [使用前提](#section)
+* [Mac OS上安装ansible](#mac-osansible)
+* [配置](#section-1)
+* [Ping command test](#ping-command-test)
+* [Echo command test](#echo-command-test)
+* [指定ansible hosts配置文件运行ad-hoc命令](#ansible-hostsad-hoc)
+* [修改ansible默认hosts文件位置](#ansiblehosts)
+* [playbook.yml配置](#playbookyml)
+* [playbook简单示例](#playbook)
+* [playbook的结构](#playbook-1)
+* [References](#references)
+
 ANSIBLE
 -----
 

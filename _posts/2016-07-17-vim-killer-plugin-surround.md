@@ -5,6 +5,22 @@ date: Sun, 17 Jul 2016 12:36:33 +0800
 categories: vim
 ---
 
+Index
+-----
+
+* [What's surround.vim](#whats-surroundvim)
+* [Install surround.vim](#install-surroundvim)
+* [Help manual](#help-manual)
+* [Normal mode](#normal-mode)
+* [Visual mode](#visual-mode)
+* [Insert mode](#insert-mode)
+* [Action repeat](#action-repeat)
+* [Structure of an editing command](#structure-of-an-editing-command)
+* [Text objects commands](#text-objects-commands)
+* [命令说明](#section-1)
+* [基于text-object的常用命令](#text-object)
+* [References](#references)
+
 What's surround.vim
 -----
 
@@ -33,8 +49,7 @@ Help manual
 |  if *x>3 {             |    ysW(     |   if ( x>3 ) {               |
 |  my $str = *whee!;     |    vllllS'  |   my $str = 'whee!';         |
 
-
-vim普通模式中的命令
+Normal mode
 -----
 
 当光标位于`Hello world!`的Hello这个单词字母上时，按组合命令`ysiw]`或者是`ysiw[`，`iw`是一个`text-object`，下面另详细说明。结果分别如下，用`[`生成的配对标点带有空格：

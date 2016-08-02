@@ -5,6 +5,8 @@ date: Sun, 19 Jun 2016 17:43:54 +0800
 categories: linux
 ---
 
+经常在linux命令行或者是bash脚本里定义变量和操作字符串，其中语法比较多，转[LDP文档](http://www.tldp.org/LDP/abs/html/parameter-substitution.html)做为手册和示例，便于查询。
+
 Manipulating and/or expanding variables
 -----
 

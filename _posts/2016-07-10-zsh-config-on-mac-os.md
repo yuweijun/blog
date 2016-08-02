@@ -154,3 +154,5 @@ References
 2. [Menlo for Powerline](https://github.com/abertsch/Menlo-for-Powerline)
 3. [A cd command that learns](https://github.com/wting/autojump)
 4. [Improve your shell using fish and oh my fish](http://jmolivas.com/improve-your-shell-using-fish-and-oh-my-fish)
+5. [oh-my-zsh fork](https://github.com/yuweijun/oh-my-zsh)
+

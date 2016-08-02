@@ -5,12 +5,30 @@ date: Wed, 27 Jul 2016 21:22:50 +0800
 categories: java
 ---
 
+目录
+-----
+
+* [Java 序列化简介](#java-)
+* [相关接口及类](#section)
+* [如何对Java对象进行序列化与反序列化](#java)
+* [当对象没有实现java.io.Serializable接口时](#javaioserializable)
+* [SerializableObject实现java.io.Serializable接口](#serializableobjectjavaioserializable)
+* [为SerializableObject声明serialVersionUID](#serializableobjectserialversionuid)
+* [当SerializableObject中有其他对象引用时](#serializableobject)
+* [手动将UnSerializableReference对象序列化和反序列化](#unserializablereference)
+* [如果父类是可序列化的，那么子类都是可序列化的](#section-1)
+* [如果父类是不可序列化的，而子类实现了java.io.Serializable接口](#javaioserializable-1)
+* [不能序列化static属性](#static)
+* [序列化对单例的破坏](#section-2)
+* [java.io.Externalizable](#javaioexternalizable)
+* [序列化的数据可以被签名和密封](#section-5)
+
 Java 序列化简介
 -----
 
 `Java对象序列化`是`JDK 1.1`中引入的一组开创性特性之一，是Java语言内建的一种对象持久化方式，用于作为一种将Java对象的状态转换为字节数组，以便存储或传输的机制，以后仍可以将字节数组转换回Java对象原有的状态。
 
-实际上，序列化的思想是`冻结`对象状态，传输对象状态（写到磁盘、通过网络RMI远程方法调用等），然后`解冻`状态，重新获得可用的Java对象。
+实际上，序列化的思想是`冻结`对象状态，`传输`对象状态，如写到磁盘或者通过网络使用RMI远程方法调用等，然后`解冻`对象状态，重新获得可用的Java对象。
 
 相关接口及类
 -----
@@ -72,7 +90,7 @@ public class SerializableObject {
 {% endhighlight %}
 
 SerializeDeserializeExample.java
------
+=====
 
 {% highlight java %}
 public class SerializeDeserializeExample {
@@ -1119,6 +1137,11 @@ public class ExternalizableObject extends UnSerializableParent implements Extern
 {% endhighlight %}
 
 如果父类也实现了`Externalizable`接口，则子类的2个实现方法中通过`super.writeExternal(out)`和`super.readExternal(in)`调用父类的方法实现即可。
+
+十一、序列化的数据可以被签名和密封
+-----
+
+如果需要对整个对象进行加密和签名，可以通过使用`writeObject`和`readObject`可以实现密码加密和签名管理，但最简单的是将它放在一个`javax.crypto.SealedObject`和`java.security.SignedObject`包装器中。两者都是可序列化的，所以将对象包装在`SealedObject`中，可以围绕原对象创建一个`Wrapper`，必须有对称密钥才能解密，而且密钥必须单独管理。同样，也可以将`SignedObject`用于数据验证，并且对称密钥也必须单独管理。
 
 References
 -----

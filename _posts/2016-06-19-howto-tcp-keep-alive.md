@@ -5,8 +5,7 @@ date: Sun, 19 Jun 2016 20:02:35 +0800
 categories: linux
 ---
 
-Fabio Busatto <fabio.busatto@sikurezza.org>
-=====
+本文是关于`TCP Keepalive`的一些基本知识点和系统设置方式说明，原文[TCP Keepalive HOWTO](http://www.tldp.org/HOWTO/html_single/TCP-Keepalive-HOWTO/)，作者Fabio Busatto <fabio.busatto@sikurezza.org>
 
 This document describes the TCP keepalive implementation in the linux kernel, introduces the overall concept and points to both system configuration and software development.
 

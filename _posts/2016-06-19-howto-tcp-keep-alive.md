@@ -254,7 +254,7 @@ For more information, visit the libkeepalive project homepage: [http://libkeepal
 4.1. tcp keep-alive packets dump example
 -----
 
-![tcp-keep-alive-dump]({{ site.baseurl }}/img/linux/tcp-keep-alive-packets.png)
+![tcp-keep-alive-dump]({{ site.baseurl }}/img/linux/tcp/tcp-keep-alive-packets.png)
 
 References
 -----

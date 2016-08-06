@@ -1,0 +1,225 @@
+---
+layout: post
+title: "tcp/ip reference"
+date: Thu, 04 Aug 2016 00:08:02 +0800
+categories: linux
+---
+
+wireshark install and usage
+-----
+
+下面示例中会用到`wireshark`抓包工具，安装`wireshark`并且通过一个http访问来查看TCP连接打开关闭请求的过程。
+
+{% highlight bash %}
+$> brew install wireshark --with-qt
+$> sudo wireshark-qt
+{% endhighlight %}
+
+`wireshark`过滤规则简单示例，更多使用说明可查阅[参考链接](https://www.wireshark.org/docs/man-pages/wireshark-filter.html)：
+
+{% highlight bash %}
+host 10.1.2.3
+ip src host 10.1.1.1
+ip.addr == 10.1.1.1
+ip.addr eq 10.1.1.1
+ip.src != 10.1.2.3 and ip.dst != 10.4.5.6
+src host 10.7.2.12 and not dst net 10.200.0.0/16
+tcp.port == 25
+tcp.dstport == 25
+tcp dst port 3128
+http.request.method == "POST"
+http.host == "www.google.com"
+{% endhighlight %}
+
+在`wireshark`中打开有数据流量的那个网络设备，并打开新的`Terminal`输入以下命令，发起一个http请求：
+
+{% highlight bash %}
+$> curl -o index.html http://www.baidu.com
+{% endhighlight %}
+
+请求完成将`wireshark`监控暂停，并保存结果到文件，方便重新分析使用。
+
+TCP连接建立
+-----
+
+TCP用三次握手`three-way handshake`过程建立一个连接，三次握手过程示意图如下：
+
+![tcp-states-connect]({{ site.baseurl }}/img/linux/tcp/tcp-states-connect.jpg)
+
+TCP连接建立一般是由服务器端打开一个套接字`socket`，然后监听来自客户端的连接，所以服务器端表示为被动打开`passive open`，客户端表示为主动打开`active open`，建立连接过程：
+
+1. SYN: 客户端通过向服务器端发送一个`SYN`来建立一个主动打开，作为三次握手的一部分。客户端把这段连接的初始序号设定为随机数`A`。
+2. SYN-ACK: 服务器端应当为一个合法的`SYN`回送一个`SYN/ACK`，`ACK`的确认码接收的序号上加`1`，也就是`A+1`，`SYN/ACK`包本身又有一个随机序号`B`。
+3. ACK: 最后，客户端再发送一个`ACK`，当服务端受到这个`ACK`的时候，就完成了三次握手，并进入了连接建立状态，此时包序号被设定为收到的确认号`A+1`，而响应则为`B+1`。
+
+wireshark抓包截图如下：
+
+![tcp-open-in-wireshark]({{ site.baseurl }}/img/linux/tcp/tcp-open-in-wireshark.png)
+
+如上图所示，前面3条记录是TCP建立连接的3次握手，图中的显示的初始序号为`0`，是为了方便查看而显示的序号相对值。
+
+TCP连接关闭
+-----
+
+TCP连接关闭使用了四次挥手过程`four-way handshake`，四次挥手过程示意图如下：
+
+![tcp-states-terminate]({{ site.baseurl }}/img/linux/tcp/tcp-states-terminate.jpg)
+
+1. 主动关闭方发送一个`FIN`并进入`FIN_WAIT1`状态；
+2. 被动关闭方接收到主动关闭方发送的`FIN`并发送`ACK`，此时被动关闭方进入`CLOSE_WAIT`状态；主动关闭方收到被动关闭方的`ACK`后，进入`FIN_WAIT2`状态；
+3. 被动关闭方发送一个`FIN`并进入`LAST_ACK`状态；
+4. 主动关闭方收到被动关闭方发送的`FIN`并发送`ACK`，此时主动关闭方进入`TIME_WAIT`状态，经过`2MSL`时间后关闭连接；被动关闭方收到主动关闭方的`ACK`后，关闭连接。
+
+wireshark抓包截图如下：
+
+![tcp-close-in-wireshark]({{ site.baseurl }}/img/linux/tcp/tcp-close-in-wireshark.png)
+
+如上图所示，最后面4条是关闭连接的4次挥手，红字那条的`ACK`序号不正确，所以忽略掉，最后本机又向服务器重发了一条正确序号的`ACK`消息。
+
+数据传输
+-----
+
+在TCP的数据传送状态，很多重要的机制保证了TCP的可靠性和强壮性。它们包括：
+
+1. 使用序号，对收到的TCP报文段进行排序以及检测重复的数据；
+2. 使用校验和来检测报文段的错误；
+3. 使用确认和计时器来检测和纠正丢包或延时。
+
+序列号和确认
+-----
+
+1. 在TCP的连接建立状态，两个主机的TCP层间要交换初始序号ISN: `initial sequence number`。
+2. 这些序号用于标识字节流中的数据，并且还是对应用层的数据字节进行记数的整数。
+3. 通常在每个TCP报文段中都有一对序号和确认号。
+4. TCP报文发送者将自己的字节编号做为序号，而将接收者的字节编号做为确认号。
+5. TCP报文的接收者为了确保可靠性，在接收到一定数量的连续字节流后才发送确认。
+6. `Seq`和`Ack`是以字节数为单位，所以`Ack`的时候，不能跳着确认，只能确认最大的连续收到的包。
+7. 这是对TCP的一种扩展，通常称为选择确认`Selective Acknowledgement`。
+8. 选择确认使得TCP接收者可以对乱序到达的数据块进行确认，每一组字节传输过后，ISN号都会递增1。
+
+通过使用序号和确认号，TCP层可以把收到的报文段中的字节按正确的顺序交付给应用层。序号是32位的无符号数，在它增大到`2^32-1`时，便会回绕到0。对于ISN的选择是TCP中关键的一个操作，它可以确保强壮性和安全性。
+
+数据传输举例
+-----
+
+1. 发送方首先发送第一个包含序列号为1(相对值)和1460字节数据的TCP报文段给接收方。
+2. 接收方以一个没有数据的TCP报文段来回复(只含报头)，用确认号1461来表示已完全收到并请求下一个报文段。
+3. 发送方然后发送第二个包含序列号为1461和1460字节数据的TCP报文段给接收方。
+4. 正常情况下，接收方以一个没有数据的TCP报文段来回复，用确认号2921(1461+1460)来表示已完全收到并请求下一个报文段，发送接收这样继续下去。
+5. 然而当这些数据包都是相连的情况下，接收方没有必要每一次都回应。比如，他收到第1到5条TCP报文段，只需回应第五条就行了。
+6. 在例子中第3条TCP报文段被丢失了，所以尽管他收到了第4和5条，然而他只能回应第2条。
+7. 发送方在发送了第三条以后，没能收到回应，因此当计时器`timer`过时`expire`时，他重发第三条。
+8. 每次发送者发送一条TCP报文段后，都会再次启动(Round Trip Time)：`RTT`，当第三条被成功接收，接收方可以直接确认第5条，因为4，5两条已收到。
+
+TCP状态机
+-----
+
+下表为`TCP`状态码列表，以`S`指代服务器，`C`指代客户端，`S&C`表示两者，`S/C`表示两者之一：
+
+1. LISTEN `S`: 服务启动后首先处于侦听LISTENING状态。
+2. SYN_SENT `C`: 在发送连接请求后等待匹配的连接请求。通过connect()函数向服务器发出一个同步`SYNC`信号后进入此状态。
+3. SYN_RECEIVED `S`: 已经收到并发送同步`SYNC`信号之后等待确认`ACK`请求。
+4. ESTABLISHED `S&C`: 连接已经建立，表示2台机器可以相互通信，此时连接两端是平等的。
+5. FIN_WAIT_1 `S&C`: 主动关闭端调用`close()`函数发出FIN请求包，表示本方的数据发送全部结束，等待TCP连接另一端的确认包或FIN请求包。
+6. FIN_WAIT_2 `S&C`: 主动关闭端在`FIN_WAIT_1`状态下收到确认包，进入等待远程TCP的连接终止请求的半关闭状态，这时可以接收数据，但不再发送数据。
+7. CLOSE_WAIT `S&C`: 被动关闭端接到`FIN`后，就发出`ACK`以回应`FIN`请求，并进入等待本地用户的连接终止请求的半关闭状态，这时可以发送数据，但不再接收数据。
+8. CLOSING `S&C`: 在发出`FIN`后，又收到对方发来的`FIN`后，进入等待对方对连接终止`FIN`的确认`ACK`的状态，少见。
+9. LAST_ACK `S&C`: 被动关闭端全部数据发送完成之后，向主动关闭端发送`FIN`，进入等待确认包的状态。
+10. TIME_WAIT `S/C`: 主动关闭端接收到`FIN`后，就发送`ACK`包，等待足够时间(2倍`MSL`时间)以确保被动关闭端收到了终止请求的确认包。
+11. CLOSED `S&C`: 连接关闭，代表双方无任何连接状态。
+
+![tcp-state-diagram]({{ site.baseurl }}/img/linux/tcp/tcp-state-diagram.png)
+
+TIME_WAIT and MSL
+-----
+
+1. `MSL`就是最大分节生命期`maximum segment lifetime`，这是一个IP数据包能在互联网上生存的最长时间，超过这个时间IP数据包将在网络中消失。
+2. `MSL`在RFC 1122上建议是`2分钟`，而源自berkeley的TCP实现传统上使用`30秒`。
+3. `TIME_WAIT`状态维持时间是两个`MSL`时间长度，也就是在`1-4分钟`，`Windows`操作系统就是4分钟。
+4. 进入`TIME_WAIT`状态的一般情况下是客户端，大多数服务器端一般执行被动关闭，服务器不会进入`TIME_WAIT`状态。
+5. 服务器端更多应该是`CLOSE_WAIT`状态。
+
+统计TCP连接状态
+----
+
+{% highlight bash %}
+$> netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+{% endhighlight %}
+
+上述命令输出如下：
+
+> TIME_WAIT 25
+>
+> ESTABLISHED 100
+>
+> LAST_ACK 12
+
+服务器上的监听服务列表
+-----
+
+{% highlight bash %}
+# The word tulpen means tulips(郁金香) in german
+$> netstat -tulpen
+{% endhighlight %}
+
+上述命令输出如下：
+
+> Active Internet connections (only servers)
+>
+> Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode       PID/Program name
+>
+> tcp        0      0 0.0.0.0:3000            0.0.0.0:*               LISTEN      0          11481       1497/node
+>
+> tcp        0      0 0.0.0.0:1723            0.0.0.0:*               LISTEN      0          9773        1010/pptpd
+>
+> tcp        0      0 0.0.0.0:8000            0.0.0.0:*               LISTEN      0          10994       1376/node
+>
+> tcp        0      0 203.88.168.146:8388     0.0.0.0:*               LISTEN      0          9811        1018/ss-server
+>
+> tcp        0      0 127.0.0.1:5000          0.0.0.0:*               LISTEN      0          4732265     30298/python
+>
+> tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      0          9225        862/nginx
+>
+> tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      0          8997        777/sshd
+>
+> tcp6       0      0 :::80                   :::*                    LISTEN      0          9226        862/nginx
+>
+> udp        0      0 127.0.0.1:123           0.0.0.0:*                           0          10618       1330/ntpd
+>
+> udp        0      0 203.88.168.146:8388     0.0.0.0:*                           0          9816        1018/ss-server
+>
+> udp6       0      0 :::123                  :::*                                0          10612       1330/ntpd
+
+TCP/IP headers format
+-----
+
+![tcp-header-format]({{ site.baseurl }}/img/linux/tcp/tcp-header-format.png)
+
+![ip4-header-format]({{ site.baseurl }}/img/linux/tcp/ip4-header-format.png)
+
+常见网络协议的头格式：
+
+1. [tcp-header-format.png]({{ site.baseurl }}/img/linux/tcp/tcp-header.png)
+2. [ip-header-format.png]({{ site.baseurl }}/img/linux/tcp/ip-header.png)
+3. [udp-header-format.png]({{ site.baseurl }}/img/linux/tcp/udp-header.png)
+4. [icmp-header-format.png]({{ site.baseurl }}/img/linux/tcp/icmp-header.png)
+
+关于TCP三次握手和四次挥手的示意图：
+
+1. [tcp-open.png]({{ site.baseurl }}/img/linux/tcp/tcp-open.png)
+2. [tcp-close.png]({{ site.baseurl }}/img/linux/tcp/tcp-close.png)
+3. [tcp-simultaneous-open.png]({{ site.baseurl }}/img/linux/tcp/tcp-simultaneous-open.png)
+4. [tcp-simultaneous-close.png]({{ site.baseurl }}/img/linux/tcp/tcp-simultaneous-close.png)
+5. [tcp-open-close.jpg]({{ site.baseurl }}/img/linux/tcp/tcp-open-close.jpg)
+
+文中配图主要来源于以下参考链接。
+
+References
+-----
+
+1. [Transmission Control Protocol](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
+2. [传输控制协议](https://zh.wikipedia.org/wiki/%E4%BC%A0%E8%BE%93%E6%8E%A7%E5%88%B6%E5%8D%8F%E8%AE%AE)
+3. [TCP/IP Reference](https://nmap.org/book/tcpip-ref.html)
+4. [TCP connection states](https://blog.confirm.ch/tcp-connection-states/)
+5. [wireshark-filter - Wireshark filter syntax and reference](https://www.wireshark.org/docs/man-pages/wireshark-filter.html)
+

@@ -226,14 +226,16 @@ TCP/IP headers format
 
 ![ip4-header-format]({{ site.baseurl }}/img/linux/tcp/ip4-header-format.png)
 
-常见网络协议的头格式：
+常见网络协议的头格式
+------
 
 1. [tcp-header-format.png]({{ site.baseurl }}/img/linux/tcp/tcp-header.png)
 2. [ip-header-format.png]({{ site.baseurl }}/img/linux/tcp/ip-header.png)
 3. [udp-header-format.png]({{ site.baseurl }}/img/linux/tcp/udp-header.png)
 4. [icmp-header-format.png]({{ site.baseurl }}/img/linux/tcp/icmp-header.png)
 
-TCP三次握手和四次挥手的示意图：
+TCP三次握手和四次挥手的示意图
+-----
 
 1. [tcp-open.png]({{ site.baseurl }}/img/linux/tcp/tcp-open.png)
 2. [tcp-close.png]({{ site.baseurl }}/img/linux/tcp/tcp-close.png)

@@ -103,7 +103,11 @@ wireshark抓包截图如下：
 
 {% highlight txt %}
 Sequence Number In + Bytes of Data Received = Acknowledgment Number Out
+{% endhighlight %}
 
+当前发送的报文序号和下一个报文序号之间的关系：
+
+{% highlight txt %}
 Sequence Number Out + Bytes of Data Sent = Next Sequence Number Out
 {% endhighlight %}
 

@@ -18,43 +18,48 @@ iptables的一些基本概念
 1. tables: raw/filter/nat/mangle/security，与本机最有关系的就是filter表，filter表是用于存放所有与防火墙相关操作的默认表。
 2. chains: 表由链组成，链是一些按顺序排列的规则的列表。默认的filter表包含`INPUT`，`OUTPUT`和`FORWARD`3条内建的链，这3条链作用于数据包过滤过程中的不同时间点，如上流程图所示。
 3. rules: 数据包的过滤基于rule。rule由一个target目标（数据包包匹配所有条件后的动作）和很多匹配（导致该规则可以应用的数据包所满足的条件）指定。
-4. targe: 目标使用`-j`或者`--jump`选项指定，target常用的是`ACCEPT`，`DROP`，`REJECT`。
+4. targe: 目标使用`-j`或者`--jump`选项指定，target常用的是`ACCEPT`，`DROP`，`REJECT`和`LOG`。
 
-如果目标是`REJECT`，数据包的命运会立刻被决定并且在当前表的数据包的处理过程会停止。
+如果目标是`REJECT`，数据包的命运会立刻被决定并且在当前表的数据包的处理过程会停止，也就是说`REJECT`会拦阻该数据包，并返回数据包通知对方，可以返回的数据包有几个选择：`ICMP port-unreachable`、`ICMP echo-reply`或是`tcp-reset`（这个数据包包会要求对方关闭联机），进行完此处理动作后，将不再比对其它规则，直接中断过滤程序。
 
 iptables常用参数说明
 -----
 
 | 参数                 | 说明                                       |
 |:---------------------|:-------------------------------------------|
-| -P  --policy         |  定义默认策略                              |
-| -L  --list           |  查看iptables规则列表                      |
-| -A  --append         |  在规则列表的最后增加1条规则               |
-| -I  --insert         |  在指定的位置插入1条规则                   |
-| -D  --delete         |  从规则列表中删除1条规则                   |
-| -R  --replace        |  替换规则列表中的某条规则                  |
-| -F  --flush          |  删除表中所有规则                          |
-| -Z  --zero           |  将表中数据包计数器和流量计数器归零        |
-| -X  --delete-chain   |  删除自定义链                              |
-| -v  --verbose        |  与-L他命令一起使用显示更多更详细的信息    |
+| -P  \--policy         |  定义默认策略                              |
+| -L  \--list           |  查看iptables规则列表                      |
+| -A  \--append         |  在规则列表的最后增加1条规则               |
+| -I  \--insert         |  在指定的位置插入1条规则                   |
+| -D  \--delete         |  从规则列表中删除1条规则                   |
+| -R  \--replace        |  替换规则列表中的某条规则                  |
+| -F  \--flush          |  删除表中所有规则                          |
+| -Z  \--zero           |  将表中数据包计数器和流量计数器归零        |
+| -X  \--delete-chain   |  删除自定义链                              |
+| -v  \--verbose        |  与-L他命令一起使用显示更多更详细的信息    |
 
 rules匹配参数说明
 -----
 
-| 匹配参数             | 说明                                       |
-|:---------------------|:-------------------------------------------|
-| -i --in-interface    | 指定数据包从哪个网络接口进入               |
-| -o --out-interface   | 指定数据包从哪个网络接口输出               |
-| -p ---proto          | 指定数据包匹配的协议，如TCP、UDP和ICMP等   |
-| -s --source          | 指定数据包匹配的源地址                     |
-|    --sport           | 指定数据包匹配的源端口号                   |
-|    --dport           | 指定数据包匹配的目的端口号                 |
-| -m --match           | 指定数据包规则所使用的过滤模块，如state    |
-| --state              | 一些数据包的状态                           |
+| 匹配参数             | 说明                                        |
+|:---------------------|:--------------------------------------------|
+| -i \--in-interface    | 指定数据包从哪个网络接口进入               |
+| -o \--out-interface   | 指定数据包从哪个网络接口输出               |
+| -p \--proto           | 指定数据包匹配的协议，如TCP、UDP和ICMP等   |
+| -s \--source          | 指定数据包匹配的源地址                     |
+|    \--sport           | 指定数据包匹配的源端口号                   |
+|    \--dport           | 指定数据包匹配的目的端口号                 |
+| -m \--match           | 指定数据包规则所使用的过滤模块，如state    |
+| \--state              | 数据包的状态                               |
+| \--icmp-type          | 后面必须要接ICMP的数据包类型，例如8        |
 
 因为只有`tcp`和`udp`的数据包才有端口号，因此要使用`--sport`和`--dport`时，要加上`-p tcp`或`-p udp`参数才可执行。
 
-过滤模块最常用的方式为`-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT`。
+过滤模块`-m`最常用的方式为：
+
+{% highlight bash %}
+$> iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+{% endhighlight %}
 
 数据包状态主要有：
 
@@ -68,12 +73,20 @@ iptables命令行使用示例
 
 上述提到`iptables`的5个表，最常用的是`filter`表，以下命令不指定参数`-t`，都是针对`filter`表操作。
 
+使用以下命令查看当前规则和匹配数：
+
+{% highlight bash %}
+$> iptables -nvL
+{% endhighlight %}
+
 本机操作可将`INPUT`链的策略设置为`DROP`，如下指令，远程SSH操作服务器测试时，使用下面那个指令。
+
 {% highlight bash %}
 $> iptables -P INPUT DROP
 {% endhighlight %}
 
 如果在远程服务器上测试`iptables`时，将`INPUT`改成`ACCEPT`，表示`filter`表的`INPUT`链默认接受一切请求。
+
 {% highlight bash %}
 $> iptables -P INPUT ACCEPT
 {% endhighlight %}
@@ -96,6 +109,13 @@ $> iptables -X
 $> iptables -Z
 {% endhighlight %}
 
+使用这些命令刷新和重置`iptables`到默认状态：
+
+{% highlight bash %}
+$> iptables -X
+$> iptables -F
+{% endhighlight %}
+
 允许来自于lo接口的数据包，如果没有此规则，你将不能通过127.0.0.1访问本地服务：
 
 {% highlight bash %}
@@ -116,57 +136,10 @@ $> iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 3306 -j ACCEPT
 $> iptables -A INPUT -p tcp -s 10.0.0.0/8 --dport 3306 -j ACCEPT
 {% endhighlight %}
 
-
-#允许所有对外请求的返回包：
-
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A INPUT -p icmp -j ACCEPT
-
 允许icmp包通过,也就是允许ping：
 
 {% highlight bash %}
 $> iptables -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
-{% endhighlight %}
-
-
-使用以下命令查看当前规则和匹配数：
-{% highlight bash %}
-$> iptables -nvL
-{% endhighlight %}
-
-使用这些命令刷新和重置`iptables`到默认状态：
-
-{% highlight bash %}
-$> iptables -X
-$> iptables -F
-{% endhighlight %}
-
-iptables相关的命令
------
-
-`iptables`是一个`Systemd`服务，因此可以这样启动：
-
-{% highlight bash %}
-$> systemctl enable iptables.service
-$> systemctl start iptables.service
-{% endhighlight %}
-
-通过命令行添加规则，配置文件不会自动改变，所以必须手动保存：
-
-{% highlight bash %}
-$> iptables-save > /etc/iptables/iptables.rules
-{% endhighlight %}
-
-修改配置文件后，需要重新加载服务：
-
-{% highlight bash %}
-$> systemctl reload iptables
-{% endhighlight %}
-
-或者通过`iptables`直接加载：
-
-{% highlight bash %}
-$> iptables-restore < /etc/iptables/iptables.rules
 {% endhighlight %}
 
 允许所有已经建立的和相关的连接：
@@ -209,6 +182,35 @@ $> iptables -A INPUT -j REJECT --reject-with icmp-proto-unreachable
 > back.  Without any error datagrams, it is difficult for
 >
 > the user to figure out what the problem is.
+
+iptables相关的其他命令
+-----
+
+`iptables`是一个`Systemd`服务，因此可以这样启动：
+
+{% highlight bash %}
+$> systemctl enable iptables.service
+$> systemctl start iptables.service
+{% endhighlight %}
+
+通过命令行添加规则，配置文件不会自动改变，所以必须手动保存：
+
+{% highlight bash %}
+$> iptables-save > /etc/iptables/iptables.rules
+$> service iptables save
+{% endhighlight %}
+
+修改配置文件后，需要重新加载服务：
+
+{% highlight bash %}
+$> systemctl reload iptables
+{% endhighlight %}
+
+或者通过`iptables`直接加载：
+
+{% highlight bash %}
+$> iptables-restore < /etc/iptables/iptables.rules
+{% endhighlight %}
 
 iptables示例脚本一
 -----

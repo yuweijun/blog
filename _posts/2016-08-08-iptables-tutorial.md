@@ -292,10 +292,12 @@ $> sysctl -w net.ipv4.ip_forward=1
 
 `Network Address Translation - NAT`一般情况下分为：
 
-1. `SNAT`: 源地址转换，是指在数据包从网卡发送出去的时候，把数据包中的源地址部分替换为指定的IP，这样接收方就认为数据包的来源是被替换的那个IP的主机，MASQUERADE，即俗称的IP欺骗，是用发送数据的网卡上的IP来替换源IP。
-2. `DNAT`: 目的地址转换，就是指数据包从网卡发送出去的时候，修改数据包中的目的IP，表现为如果你想访问A，可是因为网关做了`DNAT`，把所有访问A的数据包的目的IP全部修改为B，那么，你实际上访问的是B。
+1. `SNAT`: 源地址转换，是指在数据包从网卡发送出去的时候，把数据包中的源地址部分替换为指定的IP，这样接收方就认为数据包的来源是被替换的那个IP的主机，MASQUERADE，即俗称的IP欺骗，是用发送数据的网卡上的IP来替换源IP，主要用于内部共享IP访问外部。
+2. `DNAT`: 目的地址转换，就是指数据包从网卡进来的时候，修改数据包中的目的IP，转发给内网其他服务器，主要用于内部服务对外发布。
 
-因为路由是按目的地址来选择的，因此`DNAT`是在`PREROUTING`链上来进行的，而`SNAT`是在数据包发送出去的时候才进行，因此是在`POSTROUTING`链上进行的。
+参考下图，因为路由发生在`PREROUTING`和`FORWARD`之间，并且路由是按目的地址来选择的，因此目标地址转换`DNAT`必然是在`PREROUTING`链上来进行的，而`SNAT`是在数据包发送出去的时候才进行，因此是在`POSTROUTING`链上进行的，更详细的说明可参考[鸟哥的私房菜](http://linux.vbird.org/linux_server/0250simple_firewall.php#nat_what)，其中画有数据包流向和处理示意图，并且关于`NAT`服务器与路由器的区别也讲得很清楚。
+
+![iptables-flow-simple.png]({{ site.baseurl }}/img/linux/iptables/iptables-flow-simple.png)
 
 例如，把HTTP请求转发到`172.31.0.23`上的HTTP服务器，运行以下命令：
 
@@ -303,7 +305,7 @@ $> sysctl -w net.ipv4.ip_forward=1
 $> iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to 172.31.0.23:80
 {% endhighlight %}
 
-如果`FORWARD`链的数据包处理的默认策略是`DROP`，你就必须再加一条规则来允许转发进入的HTTP请求，因此目标`NAT`选路才有可能，运行以下命令可以达到这个目的：
+如果`FORWARD`链的数据包处理的默认策略是`DROP`，就必须再加一条规则来允许转发进入的HTTP请求，运行以下命令可以达到这个目的：
 
 {% highlight bash %}
 $> iptables -A FORWARD -i eth0 -p tcp --dport 80 -d 172.31.0.23 -j ACCEPT
@@ -332,15 +334,13 @@ iptables -A OUTPUT -p tcp --sport 31337 -j DROP
 iptables -A OUTPUT -p tcp --dport 31337 -j DROP
 iptables -A INPUT -s 192.168.10.1 -p tcp --dport 22 -j ACCEPT
 iptables -A INPUT -s 192.168.10.0/24 -p tcp --dport 22 -j ACCEPT
-iptables -A INPUT -i eth0 -p tcp -s 192.168.10.0/24 --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -o eth0 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
-iptables -A INPUT -i eth0 -p tcp -s 192.168.10.0/24 --dport 22 -m state --state ESTABLISHED -j ACCEPT
+iptables -A INPUT -i eth0 -p tcp -s 192.168.10.0/24 --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -o eth0 -p tcp --sport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT -m state --state INVALID -j DROP
 iptables -A OUTPUT -m state --state INVALID -j DROP
 
 iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT
-iptables -A FORWARD -i eth1 -o eh0 -j ACCEPT
 iptables -A FORWARD -s 192.168.1.0/24 -i eth0 -j DROP
 iptables -A FORWARD -p TCP ! --syn -m state --state NEW -j DROP
 iptables -A FORWARD -f -m limit --limit 100/s --limit-burst 100 -j ACCEPT
@@ -354,17 +354,18 @@ iptables -t nat -A PREROUTING -d 192.168.10.1 -j DROP
 iptables -t nat -A PREROUTING -p tcp --dport 80 -j DROP
 iptables -t nat -A PREROUTING -p tcp --dport 21 -d 192.168.10.1 -j DROP
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -o eth1 -s 192.168.0.0/24 -j SNAT --to-source 200.88.88.188
 {% endhighlight %}
 
 iptables数据包处理流程图参考
 -----
 
-1. [iptables-firewall-schema.png]({{ site.baseurl }}/img/linux/iptables/iptables-firewall-schema.png)
-2. [iptables-flow-chart.png]({{ site.baseurl }}/img/linux/iptables/iptables-flow-chart.png)
-3. [iptables-flow-cn.png]({{ site.baseurl }}/img/linux/iptables/iptables-flow-cn.png)
-4. [iptables-packet-flow.gif]({{ site.baseurl }}/img/linux/iptables/iptables-packet-flow.gif)
-5. [iptables-process-flow.png]({{ site.baseurl }}/img/linux/iptables/iptables-process-flow.png)
-6. [iptables-flow-simple.png]({{ site.baseurl }}/img/linux/iptables/iptables-flow-simple.png)
+1. [iptables-flow-chart.png]({{ site.baseurl }}/img/linux/iptables/iptables-flow-chart.png)
+2. [iptables-flow-cn.png]({{ site.baseurl }}/img/linux/iptables/iptables-flow-cn.png)
+3. [iptables-packet-flow.gif]({{ site.baseurl }}/img/linux/iptables/iptables-packet-flow.gif)
+4. [iptables-process-flow.png]({{ site.baseurl }}/img/linux/iptables/iptables-process-flow.png)
+5. [iptables-nat-snat.png]({{ site.baseurl }}/img/linux/iptables/iptables-nat-snat.png)
+6. [iptables-nat-dnat.png]({{ site.baseurl }}/img/linux/iptables/iptables-nat-dnat.png)
 
 References
 -----

@@ -21,6 +21,12 @@ categories: linux
 $> ssh -D 1080 -f -C -q -N -p 22 ssh-user@ssh-server-ip
 {% endhighlight %}
 
+如果要提供给局域网使用，则使用参数`-D HOST:PORT`格式：
+
+{% highlight bash %}
+$> ssh -D 192.168.31.101:1080 -f -C -q -N -p 22 ssh-user@ssh-server-ip
+{% endhighlight %}
+
 ### socks5代理服务器使用
 
 本地`socks5`代理服务建立之后，还需要进行相应设置才能起作用。

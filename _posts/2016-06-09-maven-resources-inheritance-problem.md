@@ -22,8 +22,7 @@ Example
 >
 > └── child-pom.xml
 
-parent-pom.xml
-=====
+#### parent-pom.xml
 
 {% highlight xml %}
 <resources>
@@ -44,8 +43,7 @@ parent-pom.xml
 
 如果以上配置之后，而子项目中不配置`<resources>`，那么`parent-pom.xml`中的设置在子项目完全有效。但是如果在子项目中有如下配置的话，就会完全无视`parent-pom.xml`中的配置了。
 
-child-pom.xml
-=====
+#### child-pom.xml
 
 {% highlight xml %}
 <resources>

@@ -367,13 +367,11 @@ JDBC URL连接参数设置
 >
 > Since version: 5.1.37
 
-JDBC URL Format
-=====
+#### JDBC URL Format
 
 > jdbc:mysql://[host1][:port1][,[host2][:port2]]...[/[database]][?propertyName1=propertyValue1[&propertyName2=propertyValue2]...]
 
-This is mandatory for IPv6 connections
-=====
+#### This is mandatory for IPv6 connections
 
 > jdbc:mysql://address=(key1=value)[(key2=value)]...[,address=(key3=value)[(key4=value)]...]...[/[database]][?propertyName1=propertyValue1[&propertyName2=propertyValue2]...]
 

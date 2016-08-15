@@ -10,8 +10,7 @@ categories: linux
 Manipulating and/or expanding variables
 -----
 
-${parameter}
-=====
+#### ${parameter}
 
 Same as `$parameter`, i.e., value of the variable parameter. In certain contexts, only the less ambiguous `${parameter}` form works.
 
@@ -26,8 +25,7 @@ PATH=${PATH}:/opt/bin  # Add /opt/bin to $PATH for duration of script.
 echo "New \$PATH = $PATH"
 {% endhighlight %}
 
-${parameter-default}, ${parameter:-default}
-=====
+#### ${parameter-default}, ${parameter:-default}
 
 If parameter not set, use default.
 
@@ -44,8 +42,7 @@ echo ${username-`whoami`}
 # Echoes the result of `whoami`, if variable $username is still unset.
 {% endhighlight %}
 
-Note
-=====
+#### Note
 
 `${parameter-default}` and `${parameter:-default}` are almost equivalent. The extra `:` makes a difference only when `parameter` has been declared, but is null.
 
@@ -118,8 +115,7 @@ See also Example 3-4, Example 31-2, and Example A-6.
 
 Compare this method with using an and list to supply a default command-line argument.
 
-${parameter=default}, ${parameter:=default}
-=====
+#### ${parameter=default}, ${parameter:=default}
 
 If `parameter` not set, set it to `default`.
 
@@ -131,8 +127,7 @@ echo ${var=xyz}   # abc
 # $var had already been set to abc, so it did not change.
 {% endhighlight %}
 
-${parameter+alt_value}, ${parameter:+alt_value}
-=====
+#### ${parameter+alt_value}, ${parameter:+alt_value}
 
 If `parameter` set, use `alt_value`, else use null string.
 
@@ -170,8 +165,7 @@ a=${param6:+xyz}
 echo "a = $a"      # a = xyz
 {% endhighlight %}
 
-${parameter?err_msg}, ${parameter:?err_msg}
-=====
+#### ${parameter?err_msg}, ${parameter:?err_msg}
 
 If parameter set, use it, else print `err_msg` and abort the script with [an exit](http://www.tldp.org/LDP/abs/html/exit-status.html#EXITSTATUSREF) status of 1.
 
@@ -267,13 +261,11 @@ exit 0  # Will exit here only if command-line parameter present.
 Variable length / Substring removal
 -----
 
-${#var}
-=====
+#### ${#var}
 
 `String length` (number of characters in `$var`). For an array, `${#array}` is the length of the first element in the array.
 
-Note
-=====
+#### Note
 
 Exceptions:
 
@@ -310,8 +302,7 @@ echo "Number of command-line arguments passed to script = ${#*}"
 exit 0
 {% endhighlight %}
 
-${var#Pattern}, ${var##Pattern}
-======
+#### ${var#Pattern}, ${var##Pattern}
 
 `${var#Pattern}` Remove from `$var` the `shortest` part of `$Pattern` that matches the front end of `$var`.
 
@@ -358,9 +349,7 @@ echo "${filename##*.}"      # data
                             # Extension of filename.
 {% endhighlight %}
 
-${var%Pattern}, ${var%%Pattern}
-=====
-
+#### ${var%Pattern}, ${var%%Pattern}
 
 `${var%Pattern}` Remove from `$var` the `shortest` part of `$Pattern` that matches the back end of `$var`.
 
@@ -459,25 +448,21 @@ Variable expansion / Substring replacement
 
 These constructs have been adopted from `ksh`.
 
-${var:pos}
-=====
+#### ${var:pos}
 
 Variable `var` expanded, starting from offset `pos`.
 
-${var:pos:len}
-=====
+#### ${var:pos:len}
 
 Expansion to a max of `len` characters of variable `var`, from offset `pos`. See Example A-13 for an example of the creative use of this operator.
 
-${var/Pattern/Replacement}
-=====
+#### ${var/Pattern/Replacement}
 
 First match of `Pattern`, within `var` replaced with `Replacement`.
 
 If `Replacement` is omitted, then the first match of `Pattern` is replaced by nothing, that is, deleted.
 
-${var//Pattern/Replacement}
-=====
+#### ${var//Pattern/Replacement}
 
 Global replacement. All matches of `Pattern`, within `var` replaced with `Replacement`.
 
@@ -550,13 +535,11 @@ echo "$path_name with all o's deleted = $t"
 exit 0
 {% endhighlight %}
 
-${var/#Pattern/Replacement}
-=====
+#### ${var/#Pattern/Replacement}
 
 If `prefix` of var matches Pattern, then substitute `Replacement` for `Pattern`.
 
-${var/%Pattern/Replacement}
-=====
+#### ${var/%Pattern/Replacement}
 
 If `suffix` of var matches Pattern, then substitute `Replacement` for `Pattern`.
 
@@ -600,8 +583,7 @@ echo "v4 = $v4"         # abc1234zip1234abc
 exit 0
 {% endhighlight %}
 
-${!varprefix*}, ${!varprefix@}
-=====
+#### ${!varprefix*}, ${!varprefix@}
 
 Matches `names` of all previously declared variables beginning with `varprefix`.
 
@@ -627,8 +609,7 @@ c=${!b}            #  Now, the more familiar type of indirect reference.
 echo $c            #  something_else
 {% endhighlight %}
 
-Notes
-=====
+#### Notes
 
 [1] If `$parameter` is null in a non-interactive script, it will terminate with a [127 exit status](http://www.tldp.org/LDP/abs/html/exitcodes.html#EXITCODESREF) (the Bash error code for "command not found").
 

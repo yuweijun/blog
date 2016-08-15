@@ -31,7 +31,7 @@ public class ClientCustomSSL {
 
     public final static void main(String[] args) throws Exception {
         // Trust own CA and all self-signed certs
-        SSLContext sslcontext = SSLContexts.custom().loadTrustMaterial(new File("my.keystore"), "nopassword".toCharArray(), new TrustSelfSignedStrategy()).build();
+        SSLContext sslcontext = SSLContexts.custom().loadTrustMaterial(new File("my.keystore"), "changeit".toCharArray(), new TrustSelfSignedStrategy()).build();
         // Allow TLSv1 protocol only
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, new String[] { "TLSv1" }, null, SSLConnectionSocketFactory.getDefaultHostnameVerifier());
         CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
@@ -57,116 +57,126 @@ public class ClientCustomSSL {
 }
 {% endhighlight %}
 
-以上代码中的`my.keystore`文件是使用`keytool`生成的。`keytool`是密钥和证书管理工具，`keystore`中包含二种数据，它使用户能够管理自己的公钥/私钥对`key`及相关证书`certificates`，通过数字签名自我认证或者是用户向别的用户/服务认证自己，它还允许用户储存他们的通信对等者的公钥（以证书形式）。
+以上代码中的`my.keystore`文件是使用java自带的工具`keytool`生成的，下面介绍一下这个工具其及使用方法。
+
+keytool
+-----
+
+`keytool`是java密钥和证书管理工具，可以用来创建包含公钥和密钥的的`keystore`(database)文件，并且利用`keystore`文件来创建只包含公钥的`truststore`文件，并发布这个`truststore`给客户端使用，`keystore`里包含两种数据：
+
+1. 密钥实体`key entity`: 密钥`secret key`又或者是私钥和配对公钥，采用非对称加密。
+2. 可信任的证书实体`trusted certificate entries`: 只包含公钥。
+3. 别名`alias`: 每个`keystore`都关联这一个独一无二的`alias`，这个`alias`通常不区分大小写。
 
 用keytool创建keystore文件
 -----
 
-创建keystore和密钥对(密码为nopassword)
+创建`keystore.jks`和密钥对，密码为`changeit`，`keytool`工具的参数详细说明，参考[官方文档](http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html)：
 
 {% highlight bash %}
-$> keytool -genkey -alias com.example -keyalg RSA -keystore my.keystore -keysize 2048
+$> keytool -genkey -alias server-alias -keyalg RSA -keypass changeit -storepass changeit -keystore keystore.jks
 {% endhighlight %}
+
+生成了`keystore.jks`文件之后，根据需求不同分二种证书做法，一种是CA认证的证书，一种是自签名认证的证书，先说CA证书制作：
+
+1. 为上面的`keystore.jks`生成证书请求文件(certificate signing request)，即`CSR`文件。
+2. 提交`CSR`给第三方权威`CA`机构认证，并获得有效的`CRT`证书文件。
+3. 将`CRT`证书配置到tomcat，或者是nginx和apache服务器中。
 
 CSR文件生成
 -----
 
-为存在的keystore生成证书请求文件`CSR(certificate signing request)`，正常会提交此文件给第三方权威的CA认证机构进行认证，并返回一份认证有效的`CRT`证书文件，然后加证书加入到`tomcat`或者是`apache`服务器配置中。
-
 {% highlight bash %}
-$> keytool -certreq -alias com.example -keystore my.keystore -file com.example.csr
+$> keytool -certreq -alias server-alias -keystore keystore.jks -keypass changeit -storepass changeit -file server.csr
 {% endhighlight %}
 
 CA证书导入
 -----
 
-导入SSL服务器证书到keystore
+导入`CRT`证书到客户端使用的`truststore.jks`公钥文件中：
 
 {% highlight bash %}
-$> keytool -import -trustcacerts -alias com.example -file com.example.crt -keystore my.keystore -storepass nopassword
+$> keytool -import -v -trustcacerts -alias server-alias -file server.crt -keystore truststore.jks -keypass changeit -storepass changeit
 {% endhighlight %}
 
 以上httpclient-4.5 https request例子运行时，访问`https://httpbin.org/`后抛出如下错误：
 
 > javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
 
-则需要在浏览器中将对应的`https://httpbin.org/`请求域名的CA证书从浏览器里导出另存为`httpbin.org.cer`，然后用keytool命令导入到java keystore文件中。
+则需要在浏览器中将对应的`https://httpbin.org/`请求域名的CA证书从浏览器里导出另存为`httpbin.org.cer`，然后用`keytool`命令导入到上述java代码指定的`my.keystore`文件中，`my.keystore`文件是一个包含公钥的`truststore`文件。
 
 {% highlight bash %}
-$> keytool -import -trustcacerts -alias httpbin.org -file httpbin.org.cer -keystore my.keystore -storepass nopassword
+$> keytool -import -trustcacerts -alias httpbin.org -file httpbin.org.cer -keystore my.keystore -storepass changeit
 {% endhighlight %}
 
-CRT证书的导出
+自签名证书的导出
 -----
 
+有些开发环境中使用的SSL证书不需要第三方CA权威机构认证，或者不是提供给浏览器使用的，只是提供给java内部进行服务器和客户端之间相互验证，那么可以使用自签名认证的方式生成`server.crt`文件：
+
 {% highlight bash %}
-$> keytool -export -alias com.example -keystore my.keystore -file com.example.crt -storepass nopassword
+$> keytool -export -alias server-alias -storepass changeit -keystore keystore.jks -file server.crt
 {% endhighlight %}
 
-为存在的keystore生成自签名证书
+自签名证书导入到truststore文件
 -----
 
-Generate a keystore and self-signed certificate
+将上面生成的`server.crt`文件导入到`cacerts.jks`文件中，这是提供给客户端使用的`truststore`文件：
 
 {% highlight bash %}
-$> keytool -genkey -keyalg RSA -alias selfsigned -keystore my.keystore -storepass nopassword -validity 360 -keysize 2048
+$> keytool -import -v -trustcacerts -alias server-alias -file server.crt -keystore cacerts.jks -keypass changeit -storepass changeit
 {% endhighlight %}
 
-keytool查看命令
+keytool其他命令示例
 -----
 
-查看单个证书 Check a stand-alone certificate
-=====
+#### 查看单个证书 Check a stand-alone certificate
 
 {% highlight bash %}
-$> keytool -printcert -v -file com.example.crt
+$> keytool -printcert -v -file server.crt
 {% endhighlight %}
 
-列出keystore存在的所有证书
-=====
+#### 列出keystore存在的所有证书
 
 {% highlight bash %}
-$> keytool -list -v -keystore my.keystore -storepass nopassword
+$> keytool -list -v -keystore keystore.jks -storepass changeit
 {% endhighlight %}
 
-使用别名查看keystore特定条目
-=====
+#### 使用别名查看keystore特定条目
 
 {% highlight bash %}
-$> keytool -list -v -keystore my.keystore -alias com.example -storepass nopassword
+$> keytool -list -v -keystore keystore.jks -alias server-alias -storepass changeit
 {% endhighlight %}
 
-删除keystore里面指定证书
------
+#### 删除keystore里面指定证书
 
 {% highlight bash %}
-$> keytool -delete -alias com.example -keystore my.keystore -storepass nopassword
+$> keytool -delete -alias server-alias -keystore keystore.jks -storepass changeit
 {% endhighlight %}
 
-更改keysore密码
------
+#### 更改keysore密码
 
 {% highlight bash %}
-$> keytool -storepasswd -new new_storepass -keystore my.keystore
+$> keytool -storepasswd -new new_storepassword -keystore keystore.jks
 {% endhighlight %}
 
-列出信任的CA证书
------
+#### 列出信任的CA证书
 
 {% highlight bash %}
+# for Mac OS
+$> export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 $> keytool -list -v -keystore $JAVA_HOME/jre/lib/security/cacerts
 {% endhighlight %}
 
-导入新的CA到信任证书
+#### 导入新的CA证书到信任证书
+
 {% highlight bash %}
-$> keytool -import -trustcacerts -file /path/to/ca/ca.pem -alias CA_ALIAS -keystore $JAVA_HOME/jre/lib/security/cacerts
+$> keytool -import -trustcacerts -file /path/to/ca.crt -alias CA_ALIAS -keystore $JAVA_HOME/jre/lib/security/cacerts
 {% endhighlight %}
 
 References
 -----
 
-1. [httpclient-4.5 custom ssl request](https://hc.apache.org/httpcomponents-client-ga/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java)
-2. [Tomcat SSL Installation Instructions](https://www.sslshopper.com/tomcat-ssl-installation-instructions.html)
-3. [The Most Common Java Keytool Keystore Commands](https://www.sslshopper.com/article-most-common-java-keytool-keystore-commands.html)
-4. [常用的Java Keytool Keystore命令](https://www.chinassl.net/ssltools/keytool-commands.html)
-5. [那些证书相关的玩意儿(SSL,X.509,PEM,DER,CRT,CER,KEY,CSR,P12等)](http://www.cnblogs.com/guogangj/p/4118605.html)
+1. [keytool - Key and Certificate Management Tool](http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html)
+2. [To Use keytool to Create a Server Certificate](https://docs.oracle.com/cd/E19798-01/821-1841/gjrgy/index.html)
+3. [httpclient-4.5 custom ssl request](https://hc.apache.org/httpcomponents-client-ga/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java)

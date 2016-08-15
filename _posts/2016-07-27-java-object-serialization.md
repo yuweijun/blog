@@ -89,8 +89,7 @@ public class SerializableObject {
 }
 {% endhighlight %}
 
-SerializeDeserializeExample.java
-=====
+#### SerializeDeserializeExample.java
 
 {% highlight java %}
 public class SerializeDeserializeExample {
@@ -851,8 +850,7 @@ private Object readOrdinaryObject(boolean unshared) throws IOException {
 }
 {% endhighlight %}
 
-防止序列化破坏单例模式
-=====
+#### 防止序列化破坏单例模式
 
 只要在`SerializableSingleton`类中定义`readResolve`方法就可以解决该问题：
 

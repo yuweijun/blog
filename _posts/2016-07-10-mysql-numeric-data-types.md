@@ -31,8 +31,7 @@ FLOAT/DOUBLE/DECIMAL/NUMERIC类型及区别
 6. 由于DECIMAL需要额外的空间和计算开销，只有在需要对小数进行精确计算的时候才使用DECIMAL，比如处理金融数据。
 7. 在实际处理金融数据时，可以将数据放大100倍到分或者放大100,000倍到厘进行INT或者BIGINT整数存储和计算，可以避免用FLOAT、DOUBLE计算产生的误差。
 
-关于NUMERIC(M,D)和DECIMAL(M,D)的说明
-======
+#### 关于NUMERIC(M,D)和DECIMAL(M,D)的说明
 
 > The SQL standard requires that the precision of NUMERIC(M,D) be exactly M digits. For DECIMAL(M,D), the standard requires a precision of at least M digits but permits more. In MySQL, DECIMAL(M,D) and NUMERIC(M,D) are the same, and both have a precision of exactly M digits.
 

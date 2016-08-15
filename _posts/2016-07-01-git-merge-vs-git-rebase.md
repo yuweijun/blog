@@ -68,8 +68,7 @@ git push
 git log --decorate --graph --oneline --stat --all
 {% endhighlight %}
 
-执行结果
-=====
+#### 执行结果
 
 ![git-merge-commands]({{ site.baseurl }}/img/linux/git/git-merge-history.jpg)
 
@@ -133,8 +132,7 @@ git branch -d feature
 # git rebase -i master
 {% endhighlight %}
 
-执行结果
-=====
+#### 执行结果
 
 ![git-rebase-commands]({{ site.baseurl }}/img/linux/git/git-rebase-history.jpg)
 

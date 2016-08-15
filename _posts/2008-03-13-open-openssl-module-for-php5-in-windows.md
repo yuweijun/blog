@@ -6,7 +6,7 @@ categories: php
 ---
 
 控制台看到如下警告
-=====
+-----
 
 {% highlight text %}
 Warning: SoapClient::SoapClient() [function.SoapClient-SoapClient]: I/O warning : failed to load external entity "http://localhost:9090/test?wsdl" in test.php on line 13
@@ -22,7 +22,7 @@ google了一下，是因为PHP的openssl模块没有打开。
 
 完成后可以在phpinfo()中看到类似消息如下：
 
-{% highlight bash %}
+{% highlight text %}
 openssl
 OpenSSL support enabled
 OpenSSL Version OpenSSL 0.9.8e 23 Feb 2007

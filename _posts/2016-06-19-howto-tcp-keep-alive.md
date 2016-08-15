@@ -128,18 +128,15 @@ Linux has built-in support for keepalive. You need to enable TCP/IP networking i
 
 The procedures involving keepalive use three user-driven variables:
 
-tcp_keepalive_time
-=====
+#### tcp_keepalive_time
 
 the interval between the last data packet sent (simple ACKs are not considered data) and the first keepalive probe; after the connection is marked to need keepalive, this counter is not used any further
 
-tcp_keepalive_intvl
-=====
+#### tcp_keepalive_intvl
 
 the interval between subsequential keepalive probes, regardless of what the connection has exchanged in the meantime
 
-tcp_keepalive_probes
-=====
+#### tcp_keepalive_probes
 
 the number of unacknowledged probes to send before considering the connection dead and notifying the application layer
 

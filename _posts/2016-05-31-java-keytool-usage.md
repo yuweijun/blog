@@ -90,6 +90,8 @@ CSR文件生成
 $> keytool -certreq -alias server-alias -keystore keystore.jks -keypass changeit -storepass changeit -file server.csr
 {% endhighlight %}
 
+提交此`server.csr`给第三方CA机构认证，并得到`server.crt`文件，使用下面的指令导入`truststore.jks`文件中，或者是直接配置到web服务器中。
+
 CA证书导入
 -----
 

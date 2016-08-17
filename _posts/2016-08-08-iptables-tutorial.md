@@ -252,6 +252,9 @@ iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 8388 -j ACCEPT
 iptables -t nat -A POSTROUTING -o eth1 -s 192.168.0.0/24 -j SNAT --to-source 200.88.88.188
 
 iptables -I FORWARD -p tcp --syn -i ppp+ -j TCPMSS --set-mss 1356
+
+iptables -A INPUT -j REJECT --reject-with icmp-host-prohibited
+iptables -A FORWARD -j REJECT --reject-with icmp-host-prohibited
 {% endhighlight %}
 
 /etc/sysconfit/iptables示例

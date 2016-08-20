@@ -1,9 +1,21 @@
 ---
 layout: post
 title: "java tool - jstack"
-date: Sun, 07 Aug 2016 21:51:18 +0800
+date: Sat, 20 Aug 2016 19:02:44 +0800
 categories: java
 ---
+
+* [java thread dump](#java-thread-dump)
+* [java tool - jstack](#java-tool---jstack)
+* [利用jstack查找占用CPU资源最多的那个线程](#jstackcpu)
+* [bash脚本检测最占CPU的java线程](#bashcpujava)
+* [jstack测试代码](#jstack)
+* [dump出来的线程说明](#dump)
+* [java线程的状态说明](#java)
+* [线程状态举例说明](#section-1)
+* [死锁测试代码](#section-2)
+* [其他工具和命令示例](#section-3)
+* [References](#references)
 
 本文介绍一些java原生提供的工具，分析java线程的死锁情况，定位特别占用系统资源的java线程。
 
@@ -136,7 +148,7 @@ public class WhileTrueDump {
 }
 {% endhighlight %}
 
-`jstack`导出线程栈如下：
+上述代码运行后，使用`jstack`导出的线程栈如下：
 
 {% highlight text %}
 2016-08-17 23:06:05
@@ -197,10 +209,10 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.77-b03 mixed mode):
 JNI global references: 6
 {% endhighlight %}
 
-dump出来的线程栈中的线程介绍
+dump出来的线程说明
 -----
 
-对以上导出的内容简单介绍一下。
+对以上导出的线程栈中的线程简单介绍一下。
 
 #### dump时间和虚拟机的信息
 
@@ -220,30 +232,22 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.77-b03 mixed mode):
 以上示例线程栈中各字段具体含义是：
 
 1. Thread name: `main`。
-2. 线程优先级：`prio=5`，默认是5。
+2. 线程优先级：`prio=5`，默认是Thread.NORM_PRIORITY`，即5，一般不要人为操作线程的优先级。
 3. thread id：`tid=0x00007ff4b4002800`。
-4. native id： `nid=0xb07`，和`top`命令查看的线程`$pid`对应，不过一个是`10进制`，一个是`16进制`，通过命令：`top -Hp $pid`，可以查看该进程的所有线程信息。
+4. native id： `nid=0xb07`，和`top`命令查看的线程`$pid`对应，不过`$nid`是`10进制`，`$pid`是`16进制`，通过命令：`top -Hp $pid`，可以查看该进程的所有线程信息。
 5. 线程的状态：`java.lang.Thread.State: RUNNABLE`。
 6. 线程栈地址：`[0x000000010b88f000]`。
-7. Java thread statck trace：这是最重要的数据，Java stack trace提供了大部分信息来精确定位问题根源。
+7. Java thread statck trace：这是最重要的信息，Java stack trace提供了大部分信息来精确定位问题根源。
 
 #### HotSpot VM Thread and Compiler Threads
 
 {% highlight text %}
-"C1 CompilerThread2" #7 daemon prio=9 os_prio=31 tid=0x00007ff4b482b800 nid=0x4103 waiting on condition [0x0000000000000000]
-   java.lang.Thread.State: RUNNABLE
-
-"C2 CompilerThread1" #6 daemon prio=9 os_prio=31 tid=0x00007ff4b383c800 nid=0x3f03 waiting on condition [0x0000000000000000]
-   java.lang.Thread.State: RUNNABLE
-
-"C2 CompilerThread0" #5 daemon prio=9 os_prio=31 tid=0x00007ff4b381a800 nid=0x3d03 waiting on condition [0x0000000000000000]
-   java.lang.Thread.State: RUNNABLE
-
-"CompilerThread0" daemon prio=10 tid=0x097e9000 nid=0xa9e waiting on condition [0x00000000]
-   java.lang.Thread.State: RUNNABLE
+"C1 CompilerThread2" #7 daemon prio=9 os_prio=31 tid=0x00007ff4b482b800 nid=0x4103 waiting on condition [0x0000000000000000] java.lang.Thread.State: RUNNABLE
+"C2 CompilerThread1" #6 daemon prio=9 os_prio=31 tid=0x00007ff4b383c800 nid=0x3f03 waiting on condition [0x0000000000000000] java.lang.Thread.State: RUNNABLE
+"C2 CompilerThread0" #5 daemon prio=9 os_prio=31 tid=0x00007ff4b381a800 nid=0x3d03 waiting on condition [0x0000000000000000] java.lang.Thread.State: RUNNABLE
+"CompilerThread0" daemon prio=10 tid=0x097e9000 nid=0xa9e waiting on condition [0x00000000] java.lang.Thread.State: RUNNABLE
 
 "VM Thread" os_prio=31 tid=0x00007ff4b3809800 nid=0x2903 runnable
-
 "VM Periodic Task Thread" os_prio=31 tid=0x00007ff4b3060000 nid=0x4503 waiting on condition
 {% endhighlight %}
 
@@ -259,23 +263,8 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.77-b03 mixed mode):
 #### Finalizer daemon
 
 {% highlight text %}
-"Finalizer" #3 daemon prio=8 os_prio=31 tid=0x00007ff4b3811000 nid=0x2d03 in Object.wait() [0x0000000121917000]
-   java.lang.Thread.State: WAITING (on object monitor)
-        at java.lang.Object.wait(Native Method)
-        - waiting on <0x0000000795588ee0> (a java.lang.ref.ReferenceQueue$Lock)
-        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:143)
-        - locked <0x0000000795588ee0> (a java.lang.ref.ReferenceQueue$Lock)
-        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:164)
-        at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:209)
-
-"Reference Handler" #2 daemon prio=10 os_prio=31 tid=0x00007ff4b380e000 nid=0x2b03 in Object.wait() [0x0000000121814000]
-   java.lang.Thread.State: WAITING (on object monitor)
-        at java.lang.Object.wait(Native Method)
-        - waiting on <0x0000000795586b50> (a java.lang.ref.Reference$Lock)
-        at java.lang.Object.wait(Object.java:502)
-        at java.lang.ref.Reference.tryHandlePending(Reference.java:191)
-        - locked <0x0000000795586b50> (a java.lang.ref.Reference$Lock)
-        at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)
+"Finalizer" #3 daemon prio=8 os_prio=31 tid=0x00007ff4b3811000 nid=0x2d03 in Object.wait() [0x0000000121917000] java.lang.Thread.State: WAITING (on object monitor)
+"Reference Handler" #2 daemon prio=10 os_prio=31 tid=0x00007ff4b380e000 nid=0x2b03 in Object.wait() [0x0000000121814000] java.lang.Thread.State: WAITING (on object monitor)
 {% endhighlight %}
 
 从上面可以看到有一个`Finalizer`守护线程正在运行。`Finalizer`线程是个单一职责的线程。这个线程会不停的循环等待`java.lang.ref.Finalizer.ReferenceQueue`中的新增对象。一旦`Finalizer`线程发现队列中出现了新的对象，它会弹出该对象，调用它的`finalize()`方法，将该引用从`Finalizer`类中移除，因此下次`GC`再执行的时候，这个`Finalizer`实例以及它引用的那个对象就可以回垃圾回收掉了。
@@ -285,12 +274,9 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.77-b03 mixed mode):
 #### Signal Dispatcher and Attach Listener daemons
 
 {% highlight text %}
-"Attach Listener" #9 daemon prio=9 os_prio=31 tid=0x00007ff4b3060800 nid=0x310b waiting on condition [0x0000000000000000]
-   java.lang.Thread.State: RUNNABLE
-"Service Thread" #8 daemon prio=9 os_prio=31 tid=0x00007ff4b3857800 nid=0x4303 runnable [0x0000000000000000]
-   java.lang.Thread.State: RUNNABLE
-"Signal Dispatcher" #4 daemon prio=9 os_prio=31 tid=0x00007ff4b381a000 nid=0x330f runnable [0x0000000000000000]
-   java.lang.Thread.State: RUNNABLE
+"Attach Listener" #9 daemon prio=9 os_prio=31 tid=0x00007ff4b3060800 nid=0x310b waiting on condition [0x0000000000000000] java.lang.Thread.State: RUNNABLE
+"Service Thread" #8 daemon prio=9 os_prio=31 tid=0x00007ff4b3857800 nid=0x4303 runnable [0x0000000000000000] java.lang.Thread.State: RUNNABLE
+"Signal Dispatcher" #4 daemon prio=9 os_prio=31 tid=0x00007ff4b381a000 nid=0x330f runnable [0x0000000000000000] java.lang.Thread.State: RUNNABLE
 {% endhighlight %}
 
 `Signal Dispatcher`是随jvm一起启动的，是jvm处理操作系统信号的线程。而在jvm启动时并不启动`Attach Listener`这个线程，这是`jstack`命令运行时启动的线程。
@@ -304,7 +290,9 @@ JNI global references: 6
 java线程的状态说明
 -----
 
-简单说一下线程栈转储中出现的线程状态说明，更加详细的定义可以参考`Thread.State`中的javadoc：
+简单说一下线程状态说明，以及一些java方法运行后会导致线程状态发生变化，参考下图，更加详细的线程状态的定义可以参考`Thread.State`中的javadoc：
+
+![thread-life-cycle]({{ site.baseurl }}/img/java/thread-life-cycle.png)
 
 #### 新建状态（NEW）
 
@@ -337,7 +325,6 @@ java线程的状态说明
 > reenter a synchronized block/method after calling
 >
 > {@link Object#wait() Object.wait}.
-
 
 #### 运行状态（RUNNING）
 
@@ -384,22 +371,23 @@ java线程的状态说明
 >
 > 5. {@link LockSupport#parkUntil LockSupport.parkUntil}
 
-#### 死亡状态（TERMINATED/DEAD）
+#### 死亡状态（DEAD）
 
-当线程执行完毕，或者抛出了未捕获的异常之后，会进入DEAD状态，该线程结束。
+当线程执行完毕，或者抛出了未捕获的异常之后，会进入`DEAD`状态，该线程结束，也就是`Thread.Status.TERMINATED`状态。
 
 线程状态举例说明
 -----
 
-Java中每个对象都有一个`内置锁`，也有一个内置的`线程表`，当程序运行到非静态的`synchronized`方法上时，会获得与正在执行代码类的当前实例`this`有关的锁；当运行到同步代码块时，获得与声明的对象有关的锁。
+Java中每个对象都有一个`内置锁`，也有一个内置的`线程表`，当程序运行到非静态的`synchronized`方法上时，会获得与正在执行代码类的当前实例`this`有关的锁；当运行到同步代码块时，获得与`synchronized(object)`声明的对象`object`的锁。
 
-释放锁是指持锁线程退出了`synchronized`方法或代码块，当程序运行到`synchronized`同步方法或代码块时对象锁才起作用。
+释放锁是指持锁线程退出了`synchronized`方法或代码块，当程序运行到`synchronized`同步方法或代码块内时对象锁才起作用。
 
-每个对象的监视器Monitor，即对象内置锁，在某个时刻，只能被一个线程拥有，该线程就是`Active Thread`，而其它线程都是`Waiting Thread`，分别在两个队列`Entry Set`和`Wait Set`里面等候。在`Entry Set`里面的线程都等待拿到对象的监视器Monitor，拿到了线程就成为了`RUNNABLE`线程，否则就会一直处于处于`waiting for monitor entry`，如下示例代码中的`B`线程。
-
-在`Wait Set`里面的线程都如饥似渴地等待拿到Monitor。他们是怎么进入到`Wait Set`的呢？当一个线程拿到了Monitor，但是在其他资源没有到位的情况下，调用同步锁对象（一般是synchronized()内的对象）的 wait() 方法，放弃了 Monitor，它就进入到了`Wait Set`队列。只有当其他线程通过notify() 或者 notifyAll()，释放了同步锁后，这个线程才会有机会重新去竞争Monitor。
+每个对象的监视器Monitor，即对象内置锁，在某个时刻，只能被一个线程拥有，该线程就是`Active Thread`，而其它线程都是`Waiting Thread`，分别在两个队列`Entry Set`和`Wait Set`里面等候，如下图所示。
 
 ![threads-using-object-monitor]({{ site.baseurl }}/img/java/threads-using-object-monitor.png)
+
+1. 在`Entry Set`里面的线程都等待拿到对象的监视器Monitor，但这里面的线程却一直没有拿到过Monitor，一旦拿到了对象的Monitor，该线程就成为了`RUNNABLE`线程，否则就会一直处于处于`waiting for monitor entry`，如下示例代码中的`B`线程。
+2. 在`Wait Set`里面的线程也都等待拿到对象的监视器Monitor，但与`Entry Set`中的`BLOCKED`的线程不同，这些线程原来都拿到过Monitor，却因为其他一些资源或者条件不满足，调用同步锁对象的`wait()`方法，放弃了Monitor，它就进入到了`Wait Set`队列。只有当其他线程通过`notify()`或者`notifyAll()`，释放了同步锁后，这个线程才会有机会重新去竞争Monitor。
 
 {% highlight java %}
 public class SynchronizedMonitorDump implements Runnable {
@@ -427,7 +415,7 @@ public class SynchronizedMonitorDump implements Runnable {
 }
 {% endhighlight %}
 
-上述代码对应导出的相关线程栈内容如下：
+上述代码对应导出的相关线程栈内容如下，其中`B`线程一直就在`Entry Set`中等待获得对象锁，然而一直不会得到这个锁，所以要重点关注`waiting for monitor entry`状态的线程：
 
 {% highlight text %}
 "B" #10 prio=5 os_prio=31 tid=0x00007f93ca02b800 nid=0x4903 waiting for monitor entry [0x0000000127831000]
@@ -446,216 +434,185 @@ public class SynchronizedMonitorDump implements Runnable {
         at java.lang.Thread.run(Thread.java:745)
 {% endhighlight %}
 
-其他用于查看java线程和内存问题的工具
+死锁测试代码
 -----
 
-1. jinfo
-2. jconsole
-3. jvisualvm
-4. [tda](https://java.net/projects/tda/downloads/directory/visualvm)
-5. jstat -gcutil $pid
-6. jmap -dump:file=dump.map $pid
 {% highlight java %}
+public class LeftRightDeadLock implements Runnable {
 
-public class WaitThread implements Runnable {
-    public void run() {
-        synchronized(this) {
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+    private final Object left = new Object();
+    private final Object right = new Object();
+
+    public void left() {
+        synchronized (left) {
+            synchronized (right) {
+                System.out.println(Thread.currentThread().getName() + " invoke method left");
             }
         }
     }
+
+    public void right() {
+        synchronized (right) {
+            synchronized (left) {
+                System.out.println(Thread.currentThread().getName() + " invoke method right");
+            }
+        }
+    }
+
+    public void run() {
+        for (int i = 0; i < 1; i--) {
+            left();
+            right();
+        }
+    }
+
     public static void main(String[] args) {
-        WaitThread t1 = new WaitThread();
-        Thread ta = new Thread(t1, "A");
-        Thread tb = new Thread(t1, "B");
-        ta.start();
-        tb.start();
+        LeftRightDeadLock t1 = new LeftRightDeadLock();
+        Thread a = new Thread(t1, "A");
+        Thread b = new Thread(t1, "B");
+
+        a.start();
+        b.start();
     }
 }
 {% endhighlight %}
 
-对应的stack:
+以上代码运行之后，通过`kill -3 $pid`将thread dump出来，内容如下：
 
-Java代码  收藏代码
-"B" prio=10 tid=0x08173000 nid=0x1304 in Object.wait() [0x8baf2000]
+{% highlight text %}
+2016-08-20 19:02:44
+Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.77-b03 mixed mode):
+
+"DestroyJavaVM" #12 prio=5 os_prio=31 tid=0x00007ff9cb802800 nid=0x1303 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"B" #11 prio=5 os_prio=31 tid=0x00007ff9cc054000 nid=0x4e03 waiting for monitor entry [0x0000000125ca3000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+    at com.example.test.threads.jstack.LeftRightDeadLock.left(LeftRightDeadLock.java:14)
+    - waiting to lock <0x000000079570dfe0> (a java.lang.Object)
+    - locked <0x000000079570dfd0> (a java.lang.Object)
+    at com.example.test.threads.jstack.LeftRightDeadLock.run(LeftRightDeadLock.java:29)
+    at java.lang.Thread.run(Thread.java:745)
+
+"A" #10 prio=5 os_prio=31 tid=0x00007ff9cc053800 nid=0x4c03 waiting for monitor entry [0x0000000125ba0000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+    at com.example.test.threads.jstack.LeftRightDeadLock.right(LeftRightDeadLock.java:22)
+    - waiting to lock <0x000000079570dfd0> (a java.lang.Object)
+    - locked <0x000000079570dfe0> (a java.lang.Object)
+    at com.example.test.threads.jstack.LeftRightDeadLock.run(LeftRightDeadLock.java:30)
+    at java.lang.Thread.run(Thread.java:745)
+
+"Monitor Ctrl-Break" #9 daemon prio=5 os_prio=31 tid=0x00007ff9cb005800 nid=0x4a03 runnable [0x0000000125a9d000]
+   java.lang.Thread.State: RUNNABLE
+    at java.net.PlainSocketImpl.socketAccept(Native Method)
+    at java.net.AbstractPlainSocketImpl.accept(AbstractPlainSocketImpl.java:409)
+    at java.net.ServerSocket.implAccept(ServerSocket.java:545)
+    at java.net.ServerSocket.accept(ServerSocket.java:513)
+    at com.intellij.rt.execution.application.AppMain$1.run(AppMain.java:79)
+    at java.lang.Thread.run(Thread.java:745)
+
+"Service Thread" #8 daemon prio=9 os_prio=31 tid=0x00007ff9cb824000 nid=0x4603 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C1 CompilerThread2" #7 daemon prio=9 os_prio=31 tid=0x00007ff9cc03a000 nid=0x4403 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread1" #6 daemon prio=9 os_prio=31 tid=0x00007ff9cc039000 nid=0x4203 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread0" #5 daemon prio=9 os_prio=31 tid=0x00007ff9ca81a800 nid=0x4003 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Signal Dispatcher" #4 daemon prio=9 os_prio=31 tid=0x00007ff9ca80e800 nid=0x3013 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Finalizer" #3 daemon prio=8 os_prio=31 tid=0x00007ff9ca80a800 nid=0x2d03 in Object.wait() [0x0000000123a38000]
    java.lang.Thread.State: WAITING (on object monitor)
     at java.lang.Object.wait(Native Method)
-    - waiting on <0xa9cb50e0> (a org.marshal.WaitThread)
-    at java.lang.Object.wait(Object.java:502)
-    at org.marshal.WaitThread.run(WaitThread.java:8)
-    - locked <0xa9cb50e0> (a org.marshal.WaitThread)
-    at java.lang.Thread.run(Thread.java:636)
+    - waiting on <0x0000000795588ee0> (a java.lang.ref.ReferenceQueue$Lock)
+    at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:143)
+    - locked <0x0000000795588ee0> (a java.lang.ref.ReferenceQueue$Lock)
+    at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:164)
+    at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:209)
 
-"A" prio=10 tid=0x08171c00 nid=0x1303 in Object.wait() [0x8bb43000]
+"Reference Handler" #2 daemon prio=10 os_prio=31 tid=0x00007ff9cb81d800 nid=0x2b03 in Object.wait() [0x0000000123935000]
    java.lang.Thread.State: WAITING (on object monitor)
     at java.lang.Object.wait(Native Method)
-    - waiting on <0xa9cb50e0> (a org.marshal.WaitThread)
+    - waiting on <0x0000000795586b50> (a java.lang.ref.Reference$Lock)
     at java.lang.Object.wait(Object.java:502)
-    at org.marshal.WaitThread.run(WaitThread.java:8)
-    - locked <0xa9cb50e0> (a org.marshal.WaitThread)
-    at java.lang.Thread.run(Thread.java:636)
- A和B线程都进入了`wait set`。B线程也拿到过这个Monitor，因为A线程释放过了，这也验证上面的话，他们都在等待得而复失的<0xa9cb50e0>。
+    at java.lang.ref.Reference.tryHandlePending(Reference.java:191)
+    - locked <0x0000000795586b50> (a java.lang.ref.Reference$Lock)
+    at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)
 
-基于我们经常讨论到的死锁问题，构造一段代码如下
+"VM Thread" os_prio=31 tid=0x00007ff9cc009000 nid=0x2903 runnable
 
-Java代码  收藏代码
-public class DeadThread implements Runnable{
+"GC task thread#0 (ParallelGC)" os_prio=31 tid=0x00007ff9cb00b800 nid=0x2103 runnable
 
-    private Object monitor_A = new Object();
+"GC task thread#1 (ParallelGC)" os_prio=31 tid=0x00007ff9cb00c000 nid=0x2303 runnable
 
-    private Object monitor_B = new Object();
+"GC task thread#2 (ParallelGC)" os_prio=31 tid=0x00007ff9cb00d000 nid=0x2503 runnable
 
-    public void  method_A(){
-         synchronized(monitor_A) {
-               synchronized(monitor_B) {
-                   System.out.println(Thread.currentThread().getName()+" invoke method A");
-               }
-           }
-    }
+"GC task thread#3 (ParallelGC)" os_prio=31 tid=0x00007ff9cb00d800 nid=0x2703 runnable
 
-    public void  method_B(){
-         synchronized(monitor_B) {
-               synchronized(monitor_A) {
-                   System.out.println(Thread.currentThread().getName()+" invoke method B");
-               }
-           }
-    }
+"VM Periodic Task Thread" os_prio=31 tid=0x00007ff9cb802000 nid=0x4803 waiting on condition
 
-    public void run() {
-        for(int i=0;i<1;i--){
-            method_A();
-            method_B();
-        }
-    }
+JNI global references: 21
 
-  public static void main(String[] args) {
-      DeadThread t1 = new DeadThread();
-       Thread ta = new Thread(t1, "A");
-       Thread tb = new Thread(t1, "B");
-
-       ta.start();
-       tb.start();
-  }
-}
-  对应的stack:
-
-Java代码  收藏代码
-"B" prio=10 tid=0x0898d000 nid=0x269a waiting for monitor entry [0x8baa2000]
-   java.lang.Thread.State: BLOCKED (on object monitor)
-    at org.marshal.DeadThread.method_A(DeadThread.java:11)
-    - waiting to lock <0xaa4d6f88> (a java.lang.Object)
-    - locked <0xaa4d6f80> (a java.lang.Object)
-    at org.marshal.DeadThread.run(DeadThread.java:28)
-    at java.lang.Thread.run(Thread.java:636)
-
-"A" prio=10 tid=0x0898b800 nid=0x2699 waiting for monitor entry [0x8baf3000]
-   java.lang.Thread.State: BLOCKED (on object monitor)
-    at org.marshal.DeadThread.method_B(DeadThread.java:19)
-    - waiting to lock <0xaa4d6f80> (a java.lang.Object)
-    - locked <0xaa4d6f88> (a java.lang.Object)
-    at org.marshal.DeadThread.run(DeadThread.java:29)
-    at java.lang.Thread.run(Thread.java:636)
- 同时注意到，在stack trace尾部信息
 
 Found one Java-level deadlock:
+=============================
 "B":
-  waiting to lock monitor 0x089615d8 (object 0xaa4d6f88, a java.lang.Object),
+  waiting to lock monitor 0x00007ff9cc00e0b8 (object 0x000000079570dfe0, a java.lang.Object),
   which is held by "A"
 "A":
-  waiting to lock monitor 0x08962258 (object 0xaa4d6f80, a java.lang.Object),
+  waiting to lock monitor 0x00007ff9cc00f6b8 (object 0x000000079570dfd0, a java.lang.Object),
   which is held by "B"
 
 Java stack information for the threads listed above:
+===================================================
 "B":
-    at org.marshal.DeadThread.method_A(DeadThread.java:11)
-    - waiting to lock <0xaa4d6f88> (a java.lang.Object)
-    - locked <0xaa4d6f80> (a java.lang.Object)
-    at org.marshal.DeadThread.run(DeadThread.java:28)
-    at java.lang.Thread.run(Thread.java:636)
+    at com.example.test.threads.jstack.LeftRightDeadLock.left(LeftRightDeadLock.java:14)
+    - waiting to lock <0x000000079570dfe0> (a java.lang.Object)
+    - locked <0x000000079570dfd0> (a java.lang.Object)
+    at com.example.test.threads.jstack.LeftRightDeadLock.run(LeftRightDeadLock.java:29)
+    at java.lang.Thread.run(Thread.java:745)
 "A":
-    at org.marshal.DeadThread.method_B(DeadThread.java:19)
-    - waiting to lock <0xaa4d6f80> (a java.lang.Object)
-    - locked <0xaa4d6f88> (a java.lang.Object)
-    at org.marshal.DeadThread.run(DeadThread.java:29)
-    at java.lang.Thread.run(Thread.java:636)
+    at com.example.test.threads.jstack.LeftRightDeadLock.right(LeftRightDeadLock.java:22)
+    - waiting to lock <0x000000079570dfd0> (a java.lang.Object)
+    - locked <0x000000079570dfe0> (a java.lang.Object)
+    at com.example.test.threads.jstack.LeftRightDeadLock.run(LeftRightDeadLock.java:30)
+    at java.lang.Thread.run(Thread.java:745)
 
 Found 1 deadlock.
-  stack中直接报告了Java级别的死锁，够智能吧。
 
+Heap
+ PSYoungGen      total 38400K, used 4659K [0x0000000795580000, 0x0000000798000000, 0x00000007c0000000)
+  eden space 33280K, 14% used [0x0000000795580000,0x0000000795a0cff0,0x0000000797600000)
+  from space 5120K, 0% used [0x0000000797b00000,0x0000000797b00000,0x0000000798000000)
+  to   space 5120K, 0% used [0x0000000797600000,0x0000000797600000,0x0000000797b00000)
+ ParOldGen       total 87552K, used 0K [0x0000000740000000, 0x0000000745580000, 0x0000000795580000)
+  object space 87552K, 0% used [0x0000000740000000,0x0000000740000000,0x0000000745580000)
+ Metaspace       used 2993K, capacity 4494K, committed 4864K, reserved 1056768K
+  class space    used 326K, capacity 386K, committed 512K, reserved 1048576K
+{% endhighlight %}
 
- jps主要用来输出JVM中运行的进程状态信息。语法格式如下：
+从上面的信息中可以发现一个死锁：`Found 1 deadlock.`，并且`A`线程和`B`线程都已经获得过`left`和`right`这2个对象锁。
 
-jps [options] [hostid]
-    如果不指定hostid就默认为当前主机或服务器。
+其他java工具和命令示例
+-----
 
-    命令行参数选项说明如下：
-
--q 不输出类名、Jar名和传入main方法的参数
-
--m 输出传入main方法的参数
-
--l 输出main类或Jar的全限名
-
--v 输出传入JVM的参数
-
-
-jmap（Memory Map）和jhat（Java Heap Analysis Tool）
-
-    jmap用来查看堆内存使用状况，一般结合jhat使用。
-
-    jmap语法格式如下：
-
-jmap [option] executable core
-
-jmap [option] [server-id@]remote-hostname-or-ip
-    如果运行在64位JVM上，可能需要指定-J-d64命令选项参数。
-jmap -permstat pid
-    打印进程的类加载器和类加载器加载的持久代对象信息，输出：类加载器名称、对象是否存活（不可靠）、对象地址、父类加载器、已加载的类大小等信息，如下图：
-
-使用jmap -histo[:live] pid查看堆内存中的对象数目、大小统计直方图，如果带上live则只统计活对象，如下
-
-jstat 实用程序可以用于收集各种各样不同的统计数据。jstat 统计数据被分类到`选项`中，这些选项在命令行中被指定作为第一参数。对于 JDK 1.6 来说，您可以通过采用命令 -options 运行 jstat 查看可用的选项清单。清单 1 中显示了部分选项：
-清单 1. jstat 选项
--class
--compiler
--gc
--gccapacity
--gccause
--gcnew
--gcnewcapacity
--gcold
--gcoldcapacity
--gcpermcapacity
--gcutil
--printcompilation
-实用程序的 JDK 记录（参见 参考资料）将告诉您清单 1 中每个选项返回的内容，但是其中大多数用于收集垃圾的收集器或者其部件的性能信息。-class 选项显示了加载及未加载的类（使其成为检测应用程序服务器或代码中 ClassLoader 泄露的重要实用程序，且 -compiler 和 -printcompilation 都显示了有关 Hotspot JIT 编译程序的信息。
-默认情况下，jstat 在您核对信息时显示信息。如果您希望每隔一定时间拍摄快照，请在 -options 指令后以毫秒为单位指定间隔时间。jstat 将持续显示监控进程信息的快照。如果您希望 jstat 在终止前进行特定数量的快照，在间隔时间/时间值后指定该数字。
-如果 5756 是几分钟前开始的运行 SwingSet2 程序的 VMID，那么下列命令将告诉 jstat 每 250 毫秒为 10 个佚代执行一次 gc 快照转储，然后停止：
-
-jstat -gc 31594 250 10
- S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT
-23552.0 24576.0  0.0    0.0   366080.0 322855.8  144896.0   50032.9   59136.0 57791.7 7424.0 7081.1     12    0.147   3      0.316    0.463
-23552.0 24576.0  0.0    0.0   366080.0 322855.8  144896.0   50032.9   59136.0 57791.7 7424.0 7081.1     12    0.147   3      0.316    0.463
-23552.0 24576.0  0.0    0.0   366080.0 322855.8  144896.0   50032.9   59136.0 57791.7 7424.0 7081.1     12    0.147   3      0.316    0.463
-23552.0 24576.0  0.0    0.0   366080.0 322855.8  144896.0   50032.9   59136.0 57791.7 7424.0 7081.1     12    0.147   3      0.316    0.463
-23552.0 24576.0  0.0    0.0   366080.0 322855.8  144896.0   50032.9   59136.0 57791.7 7424.0 7081.1     12    0.147   3      0.316    0.463
-23552.0 24576.0  0.0    0.0   366080.0 322855.8  144896.0   50032.9   59136.0 57791.7 7424.0 7081.1     12    0.147   3      0.316    0.463
-23552.0 24576.0  0.0    0.0   366080.0 322855.8  144896.0   50032.9   59136.0 57791.7 7424.0 7081.1     12    0.147   3      0.316    0.463
-23552.0 24576.0  0.0    0.0   366080.0 322855.8  144896.0   50032.9   59136.0 57791.7 7424.0 7081.1     12    0.147   3      0.316    0.463
-23552.0 24576.0  0.0    0.0   366080.0 322855.8  144896.0   50032.9   59136.0 57791.7 7424.0 7081.1     12    0.147   3      0.316    0.463
-23552.0 24576.0  0.0    0.0   366080.0 322855.8  144896.0   50032.9   59136.0 57791.7 7424.0 7081.1     12    0.147   3      0.316    0.463
-
-jhat (com.sun.tools.hat.Main)
-将堆转储至一个二进制文件后，您就可以使用 jhat 分析二进制堆转储文件。jhat 创建一个 HTTP/HTML 服务器，该服务器可以在浏览器中被浏览，提供一个关于堆的 object-by-object 视图，及时冻结。根据对象引用草率处理堆可能会非常可笑，您可以通过对总体混乱进行某种自动分析而获得更好的服务。幸运的是，jhat 支持 OQL 语法进行这样的分析。
-例如，对所有含有超过 100 个字符的 String 运行 OQL 查询看起来如下：
-select s from java.lang.String s where s.count >= 100
-结果作为对象链接显示，然后展示该对象的完整内容，字段引用作为可以解除引用的其他链接的其他对象。OQL 查询同样可以调用对象的方法，将正则表达式作为查询的一部分，并使用内置查询工具。一种查询工具，referrers() 函数，显示了引用指定类型对象的所有引用。下面是寻找所有参考 File 对象的查询：
-select referrers(f) from java.io.File f
-您可以查找 OQL 的完整语法及其在 jhat 浏览器环境内`OQL Help`页面上的特性。将 jhat 与 OQL 相结合是对行为不当的堆进行对象调查的有效方法。
+{% highlight bash %}
+$> jinfo
+$> jconsole
+$> jvisualvm
+$> jstat -gcutil $pid
+$> jstat -gc $pid 250 10
+$> jmap -dump:file=dump.map $pid
+$> jmap -histo[:live] $pid
+$> jps
+$> jps -v
+$> jhat
+{% endhighlight %}
 
 References
 -----
@@ -665,3 +622,5 @@ References
 3. [检测最耗cpu的java线程的脚本](http://hongjiang.info/find-busiest-thread-of-java/)
 4. [Java的Finalizer引发的内存溢出](http://it.deepinmind.com/gc/2014/05/13/debugging-to-understand-finalizer.html)
 5. [JVM Attach机制实现](http://lovestblog.cn/blog/2014/06/18/jvm-attach/)
+6. [tda](https://java.net/projects/tda/downloads/directory/visualvm)
+

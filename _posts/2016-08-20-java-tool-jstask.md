@@ -100,7 +100,7 @@ $> grep -A 30 -i $tid jstack.log
 bash脚本检测最占CPU的java线程
 -----
 
-把java进程的id直接会给下面这个bash脚本，可以直接找出java进程中哪个线程占用CPU资源最多：
+把java进程的id直接传给下面这个bash脚本，可以直接找出java进程中哪个线程占用CPU资源最多：
 
 {% highlight bash %}
 #! /bin/bash
@@ -232,7 +232,7 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.77-b03 mixed mode):
 以上示例线程栈中各字段具体含义是：
 
 1. Thread name: `main`。
-2. 线程优先级：`prio=5`，默认是Thread.NORM_PRIORITY`，即5，一般不要人为操作线程的优先级。
+2. 线程优先级：`prio=5`，默认是`Thread.NORM_PRIORITY`，即5，一般不要人为操作线程的优先级。
 3. thread id：`tid=0x00007ff4b4002800`。
 4. native id： `nid=0xb07`，和`top`命令查看的线程`$pid`对应，不过`$nid`是`10进制`，`$pid`是`16进制`，通过命令：`top -Hp $pid`，可以查看该进程的所有线程信息。
 5. 线程的状态：`java.lang.Thread.State: RUNNABLE`。
@@ -290,13 +290,13 @@ JNI global references: 6
 java线程的状态说明
 -----
 
-简单说一下线程状态说明，以及一些java方法运行后会导致线程状态发生变化，参考下图，更加详细的线程状态的定义可以参考`Thread.State`中的javadoc：
+简单说一下线程状态说明，以及一些java方法运行后会导致线程状态发生变化，参考下图，图中Thread.sleep()应该会进入`TIMED_WAITING`状态，更加详细的线程状态的定义可以参考`Thread.State`中的javadoc：
 
 ![thread-life-cycle]({{ site.baseurl }}/img/java/thread-life-cycle.png)
 
 #### 新建状态（NEW）
 
-用new语句创建的线程处于新建状态，此时它和其他Java对象一样，仅仅在堆区中被分配了内存。
+用new语句创建的线程处于新建状态，这个状态不会出现在导出的线程栈中。
 
 > Thread state for a thread which has not yet started.
 
@@ -378,16 +378,16 @@ java线程的状态说明
 线程状态举例说明
 -----
 
-Java中每个对象都有一个`内置锁`，也有一个内置的`线程表`，当程序运行到非静态的`synchronized`方法上时，会获得与正在执行代码类的当前实例`this`有关的锁；当运行到同步代码块时，获得与`synchronized(object)`声明的对象`object`的锁。
+Java中每个对象都有一个`内置锁`(object's monitor)，当程序运行到非静态的`synchronized`方法上时，会获得与正在执行代码类的当前实例`this`有关的锁；当运行到同步代码块时，获得与`synchronized(object)`声明的对象`object`的锁。
 
-释放锁是指持锁线程退出了`synchronized`方法或代码块，当程序运行到`synchronized`同步方法或代码块内时对象锁才起作用。
+释放锁是指持锁线程退出了`synchronized`方法或代码块。
 
-每个对象的监视器Monitor，即对象内置锁，在某个时刻，只能被一个线程拥有，该线程就是`Active Thread`，而其它线程都是`Waiting Thread`，分别在两个队列`Entry Set`和`Wait Set`里面等候，如下图所示。
+每个对象的`Monitor Lock`，即对象内置锁，在某个时刻，只能被一个线程拥有，该线程就是`Active Thread`，而其它线程都是`Waiting Thread`，分别在两个队列`Entry Set`和`Wait Set`里面等候，如下图所示。
 
 ![threads-using-object-monitor]({{ site.baseurl }}/img/java/threads-using-object-monitor.png)
 
-1. 在`Entry Set`里面的线程都等待拿到对象的监视器Monitor，但这里面的线程却一直没有拿到过Monitor，一旦拿到了对象的Monitor，该线程就成为了`RUNNABLE`线程，否则就会一直处于处于`waiting for monitor entry`，如下示例代码中的`B`线程。
-2. 在`Wait Set`里面的线程也都等待拿到对象的监视器Monitor，但与`Entry Set`中的`BLOCKED`的线程不同，这些线程原来都拿到过Monitor，却因为其他一些资源或者条件不满足，调用同步锁对象的`wait()`方法，放弃了Monitor，它就进入到了`Wait Set`队列。只有当其他线程通过`notify()`或者`notifyAll()`，释放了同步锁后，这个线程才会有机会重新去竞争Monitor。
+1. 在`Entry Set`里面的线程都等待拿到`对象锁`(object's monitor)，但这里面的线程却一直没有拿到过`对象锁`，一旦拿到了`对象锁`，该线程就成为了`RUNNABLE`线程，否则就会一直处于处于`waiting for monitor entry`，如下示例代码中的`B`线程。
+2. 在`Wait Set`里面的线程也都等待拿到`对象锁`，但与`Entry Set`中的`BLOCKED`的线程不同，这些线程原来都拿到过`对象锁`，却因为其他一些资源或者条件不满足，调用同步锁对象的`wait()`方法，放弃了`对象锁`，它就进入到了`Wait Set`队列。只有当其他线程通过`notify()`或者`notifyAll()`，释放了同步锁后，这个线程才会有机会重新去竞争`对象锁`。
 
 {% highlight java %}
 public class SynchronizedMonitorDump implements Runnable {

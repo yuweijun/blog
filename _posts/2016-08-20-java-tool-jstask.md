@@ -290,7 +290,7 @@ JNI global references: 6
 java线程的状态说明
 -----
 
-简单说一下线程状态说明，以及一些java方法运行后会导致线程状态发生变化，参考下图，图中Thread.sleep()应该会进入`TIMED_WAITING`状态，更加详细的线程状态的定义可以参考`Thread.State`中的javadoc：
+简单说一下线程状态说明以及线程状态之间的转换，参考下图，更加详细的线程状态的定义可以参考`Thread.State`中的javadoc：
 
 ![thread-life-cycle]({{ site.baseurl }}/img/java/thread-life-cycle.png)
 
@@ -373,7 +373,7 @@ java线程的状态说明
 
 #### 死亡状态（DEAD）
 
-当线程执行完毕，或者抛出了未捕获的异常之后，会进入`DEAD`状态，该线程结束，也就是`Thread.Status.TERMINATED`状态。
+当线程执行完毕，或者抛出了未捕获的异常之后，会进入`DEAD`状态，也就是`Thread.Status.TERMINATED`状态，该线程结束。
 
 线程状态举例说明
 -----

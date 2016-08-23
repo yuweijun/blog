@@ -586,31 +586,28 @@ Java stack information for the threads listed above:
 Found 1 deadlock.
 
 Heap
- PSYoungGen      total 38400K, used 4659K [0x0000000795580000, 0x0000000798000000, 0x00000007c0000000)
-  eden space 33280K, 14% used [0x0000000795580000,0x0000000795a0cff0,0x0000000797600000)
-  from space 5120K, 0% used [0x0000000797b00000,0x0000000797b00000,0x0000000798000000)
-  to   space 5120K, 0% used [0x0000000797600000,0x0000000797600000,0x0000000797b00000)
- ParOldGen       total 87552K, used 0K [0x0000000740000000, 0x0000000745580000, 0x0000000795580000)
-  object space 87552K, 0% used [0x0000000740000000,0x0000000740000000,0x0000000745580000)
+ PSYoungGen      total 38400K, used 4659K [0x0000000795580000, 0x0000000798000000, 0x00000007c0000000]
+  eden space 33280K, 14% used [0x0000000795580000,0x0000000795a0cff0,0x0000000797600000]
+  from space 5120K, 0% used [0x0000000797b00000,0x0000000797b00000,0x0000000798000000]
+  to   space 5120K, 0% used [0x0000000797600000,0x0000000797600000,0x0000000797b00000]
+ ParOldGen       total 87552K, used 0K [0x0000000740000000, 0x0000000745580000, 0x0000000795580000]
+  object space 87552K, 0% used [0x0000000740000000,0x0000000740000000,0x0000000745580000]
  Metaspace       used 2993K, capacity 4494K, committed 4864K, reserved 1056768K
   class space    used 326K, capacity 386K, committed 512K, reserved 1048576K
 {% endhighlight %}
 
 从上面的信息中可以发现一个死锁：`Found 1 deadlock.`，并且`A`线程和`B`线程都已经获得过`left`和`right`这2个对象锁。
 
-其他java工具和命令示例
+其他java工具和命令
 -----
 
 {% highlight bash %}
 $> jinfo
 $> jconsole
 $> jvisualvm
-$> jstat -gcutil $pid
-$> jstat -gc $pid 250 10
-$> jmap -dump:file=dump.map $pid
-$> jmap -histo[:live] $pid
+$> jstat
+$> jmap
 $> jps
-$> jps -v
 $> jhat
 {% endhighlight %}
 

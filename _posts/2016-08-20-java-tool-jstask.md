@@ -46,7 +46,7 @@ $> kill -QUIT $pid
 $> tail -n 300 $CATALINA_HOME/logs/catalina.out
 {% endhighlight %}
 
-通过上述操作导出的线程栈信息，和java原生提供的工具`jstack`导出的线程栈基本上一样，接下来主要分析`jstask`这个工具。
+通过上述操作导出的线程栈信息，和java原生提供的工具`jstack`导出的线程栈基本上一样，接下来主要分析`jstack`这个工具。
 
 java tool - jstack
 -----
@@ -598,18 +598,17 @@ Heap
 
 从上面的信息中可以发现一个死锁：`Found 1 deadlock.`，并且`A`线程和`B`线程都已经获得过`left`和`right`这2个对象锁。
 
-其他java工具和命令
+java工具和命令doc
 -----
 
-{% highlight bash %}
-$> jinfo
-$> jconsole
-$> jvisualvm
-$> jstat
-$> jmap
-$> jps
-$> jhat
-{% endhighlight %}
+1. [jinfo](http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jinfo.html)
+2. [jconsole](http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jconsole.html)
+3. [jvisualvm](http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jvisualvm.html)
+4. [jstat](http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstat.html)
+5. [jmap](http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jmap.html)
+6. [jps](http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jps.html)
+7. [jhat](http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jhat.html)
+7. [jstack](http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstack.html)
 
 References
 -----

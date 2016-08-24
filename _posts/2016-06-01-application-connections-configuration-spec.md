@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "应用的连接配置说明"
+title: "application connections configuration using hosts"
 date: "Wed, 01 Jun 2016 10:08:34 +0800"
 categories: linux
 ---

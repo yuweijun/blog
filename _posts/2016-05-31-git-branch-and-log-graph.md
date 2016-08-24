@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "通过git log查看版本合并历史"
+title: "git log查看版本历史"
 date: "Tue, 31 May 2016 22:56:54 +0800"
 categories: linux
 ---
@@ -133,10 +133,34 @@ sourceTree中的显示结果：
 
 ![git log source tree graph]({{ site.baseurl }}/img/linux/git/git-log-source-tree.png)
 
+![git log date order graph]({{ site.baseurl }}/img/linux/git/git-log-date-order.png)
+
 如果想按照提交时间顺序查看分支历史，可以使用以下命令：
 
 {% highlight bash %}
 $> git log --oneline --decorate --graph --all --date-order
 {% endhighlight %}
 
-![git log date order graph]({{ site.baseurl }}/img/linux/git/git-log-date-order.png)
+使用`git log`查看单个文件的提交历史并显示diff：
+
+{% highlight bash %}
+$> git log -p filename
+{% endhighlight %}
+
+或者使用下面这个命令：
+
+{% highlight bash %}
+$> git log --follow -p -- filename
+{% endhighlight %}
+
+#### 说明
+
+1. `--follow`可以跟踪文件的重命名。
+2. `-p`可以跟踪文件内容变化。
+
+`git log`命令手册：
+
+{% highlight bash %}
+$> git help log
+{% endhighlight %}
+

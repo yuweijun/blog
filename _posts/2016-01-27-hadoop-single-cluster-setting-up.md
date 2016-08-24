@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "hadoop-2.7.1 single cluster settings on Mac OS"
+title: "hadoop-2.7.1 single cluster settings on mac os"
 date: "Wed, 27 Jan 2016 17:58:58 +0800"
 categories: java
 ---

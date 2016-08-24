@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "unable to load native-hadoop library on Mac OS"
+title: "unable to load native-hadoop library on mac os"
 date: "Tue, 26 Jan 2016 15:08:20 +0800"
 categories: java
 ---

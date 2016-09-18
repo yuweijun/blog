@@ -59,7 +59,7 @@ void run() {
     try {
         sleep(delay);
     } catch (InterruptedException e) {
-        Thread.currentThread().isInterrupted();
+        Thread.currentThread().interrupt(); // reset mark
     }
     ...
 }

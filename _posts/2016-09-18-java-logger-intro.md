@@ -83,7 +83,7 @@ Should logger object static or not
 -----
 
 1. 建议使用`private static final`形式，每个类所有对象共用一个日志对象即可，KISS。
-2. `non-static`有一个继承后`getClass()`方法被`覆写`的优势，只要在父类里声明一个`protected`的日志对象，子类就可以直接使用，但是每个子类对象创建都会生成一个日志对象。
+2. `non-static`被子类继承后，有一个`getClass()`方法`运行时绑定`的优势，只要在父类里声明一个`protected`的日志对象，子类就可以直接使用，但是每个子类对象创建都会生成一个日志对象。
 3. `non-static`的在面向`IOC`的应用中使用也是很不错的，因为`spring`的`bean`一般都是单例的。
 
 #### STATIC

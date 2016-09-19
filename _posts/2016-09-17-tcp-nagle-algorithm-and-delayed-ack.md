@@ -5,7 +5,7 @@ date: Sat, 17 Sep 2016 21:09:09 +0800
 categories: linux
 ---
 
-本文内容主要是为了理解`socket`对象中一个方法的作用：`socket.setTcpNoDelay(boolean)`。
+本文内容主要是为了帮助理解`socket`对象中的一个方法：`socket.setTcpNoDelay(boolean)`。
 
 其中相关的主要内容如下：
 

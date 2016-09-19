@@ -81,7 +81,7 @@ The user-level solution is to avoid write-write-read sequences on sockets. write
 
 `延迟ACK`最终目标是通过`捎带技术`或者`多个segment共用一个ACK确认`等技术来减少用于`ACK确认`的TCP segment的数量，这样可以减少通信量，提高吞吐率。
 
-#### 关于`ACK定时器`超时说明
+#### 关于ACK定时器超时说明
 
 TCP标准推荐最多延迟500ms，微软指定的延迟为200ms，Linux上延迟40ms。
 
@@ -96,7 +96,7 @@ Write the desired minimum value, in microseconds, to /proc/sys/net/ipv4/tcp_dela
 当纳格算法遇到延迟确认
 -----
 
-在`write-write-read`模式的应用程序中，发送端启用纳格算法，接收端启用延迟ACK确认时，就会对程序性能产生影响，简单说明如下：
+在`write-write-read`模式的应用程序中，发送端启用纳格算法，接收端启用`延迟ACK`时，就会对程序产生性能影响，简单说明如下：
 
 #### 发送端伪代码示例
 
@@ -114,17 +114,17 @@ process(request);
 write(response);
 {% endhighlight %}
 
-假设这里head和body都比较小，当默认启用nagle算法，并且是第一次发送的时候：
+假设这里head和body都比较小，并默认启用纳格算法，并且是第一次发送的时候：
 
 1. 根据nagle算法，第一个段head可以立即发送，因为没有等待确认的段；
-2. 接收端收到head，但是包不完整，继续等待body达到并延迟ACK；
+2. 接收端收到head，但是包不完整，继续等待body达到并`延迟ACK`；
 3. 发送端继续写入body，这时候nagle算法起作用了，因为head还没有被ACK，所以body要延迟发送，这就造成了发送端和接收端都在等待对方发送数据的现象：
 4. 发送端等待接收端对head进行ACK确认，以便继续发送body；
-5. 接收端在等待发送方发送body并延迟ACK。
+5. 接收端在等待发送方发送body并`延迟ACK`。
 
-这种时候只有等待一端超时并发送数据，应用程序才能继续往下执行，一般接收端的延迟ACK确认40ms超时先触发，因此在程序中就产生了40ms的响应延时。
+这种时候只有等待一端超时并发送数据，应用程序才能继续往下执行，一般接收端的`延迟ACK`40ms超时先触发，此而在程序中就产生了40ms的响应延时。
 
-纳格算法java代码示例
+java代码示例
 -----
 
 #### 接收端server
@@ -221,7 +221,8 @@ public class SocketTcpNoDelayClient {
 
 ![tcp-nagle-algorithm]({{ site.baseurl }}/img/linux/tcp/tcp-nagle-algorithm.png)
 
-上图标黑的前2条是在禁用纳格算法时，客户端连续发送head和body给服务端，图中序号为2057和2058这2条。而在启用纳格算法（socket默认就是启用的）时，在发送head和body之间，有收到接收端的一个`ACK确认`消息，即2104到2016这三条，因为这个代码是在Mac OS上测试的，并没有`延迟ACK`，如果接收端有设置`延迟ACK`，则客户端程序中输出的RTT值应该大于40ms。
+1. 上图标黑的前2条是在禁用纳格算法时，客户端连续发送head和body给服务端，图中序号为2057和2058这2条。
+2. 启用纳格算法时（socket默认就是启用的），在发送head和body之间，有收到接收端的一个`ACK确认`消息，即2104到2016这三条，因为这个代码是在Mac OS上测试的，并没有`延迟ACK`，如果接收端有设置`延迟ACK`，则客户端程序中输出的RTT值应该大于40ms。
 
 References
 -----

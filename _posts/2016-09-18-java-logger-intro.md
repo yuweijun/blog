@@ -37,7 +37,7 @@ Logger LEVEL
 3. INFO
 4. DEBUG
 
-另外还有一个比`DEBUG`还详细的`TRACE`，主要是用来跟踪一些非常复杂的算法中，在每一步计算结果中输出详细的结果，用于跟踪分析，并且代码完成后应该将之移除，不要上传到代码库，因此下面就不做说明了。
+另外还有一个比`DEBUG`还详细的`TRACE`，主要是用来跟踪一些非常复杂的算法中，在每一步计算过程中输出详细的结果，用于跟踪分析，并且代码完成后应该将之移除，不要上传到代码库，因此下面就不做说明了。
 
 日志级别使用场景
 -----
@@ -83,8 +83,8 @@ Should logger object static or not
 -----
 
 1. 建议使用`private static final`形式，每个类所有对象共用一个日志对象即可，KISS。
-2. `non-static`被子类继承后，有一个`getClass()`方法`运行时绑定`的优势，只要在父类里声明一个`protected`的日志对象，子类就可以直接使用，但是每个子类对象创建都会生成一个日志对象。
-3. `non-static`的在面向`IOC`的应用中使用也是很不错的，因为`IOC`中的`BEAN`一般都是单例的。
+2. `non-static`被子类继承的优势，只要在父类里声明一个`protected`的日志对象，子类就可以直接使用，缺点是每个子类对象创建都会生成一个日志对象。
+3. `non-static`是`IOC`友好的，因为`IOC`中的`BEAN`一般都是单例的。
 
 #### STATIC
 
@@ -101,7 +101,7 @@ private final Logger logger = LoggerFactory.getLogger(this.getClass());
 日志查询RequstID
 -----
 
-如果应用是分布式的，或者是用户会访问多个子系统的，当访问者第一次进入系统时，可以为其生成一个统一的`RequestID`，并使用`MDC`(Mapped Diagnostic Context，映射调试上下文)写入日志文件中，可以跟踪用户完整的操作过程，在问题分析和数据分析会很有用。
+如果应用是分布式的，或者是用户会访问多个子系统的，当访问者第一次进入系统时，可以为其生成一个统一的`RequestID`，并使用`MDC`(Mapped Diagnostic Context，映射调试上下文)写入日志文件中，可以跟踪用户完整的操作过程，对问题分析和数据分析会很有用。
 
 比如使用如下这些信息通过一个可逆算法生成这个`RequestID`。
 
@@ -112,7 +112,7 @@ private final Logger logger = LoggerFactory.getLogger(this.getClass());
 使用结构化或者半结构化的日志消息
 -----
 
-日志格式设计的比较好的日志消息，对于查找问题会很有利，也便于使用`logstash`导入到`elasticsearch`中进行分析。
+日志格式设计比较好的日志消息，对于查找问题会很有利，也便于使用`logstash`导入到`elasticsearch`中进行分析，或者是`kibana`查看。
 
 日志命名格式以及日志文件名
 -----

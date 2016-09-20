@@ -54,11 +54,10 @@ end if
 
 纳格算法维基百科原文有段说明如下：
 
-{% highlight text %}
-A solution recommended by Nagle is to avoid the algorithm sending premature packets by buffering up application writes and then flushing the buffer:
+> A solution recommended by Nagle is to avoid the algorithm sending premature packets by buffering up application writes and then flushing the buffer:
+>
+> The user-level solution is to avoid write-write-read sequences on sockets. write-read-write-read is fine. write-write-write is fine. But write-write-read is a killer. So, if you can, buffer up your little writes to TCP and send them all at once. Using the standard UNIX I/O package and flushing write before each read usually works.
 
-The user-level solution is to avoid write-write-read sequences on sockets. write-read-write-read is fine. write-write-write is fine. But write-write-read is a killer. So, if you can, buffer up your little writes to TCP and send them all at once. Using the standard UNIX I/O package and flushing write before each read usually works.
-{% endhighlight %}
 
 也就是说纳格算法对于`write-read-write-read`和`write-write-write`模式的应用能有效的优化网络，但对于使用`write-write-read`模式的应用，在启用纳格算法时，却反而可能会带来程序运行性能的问题，纳格算法的维基百科页面上提到了`尽量编写好的代码而不要依赖TCP内置的所谓的算法`来优化TCP的行为。
 
@@ -87,11 +86,9 @@ TCP标准推荐最多延迟500ms，微软指定的延迟为200ms，Linux上延�
 
 [Reducing the TCP delayed ack timeout](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_MRG/1.3/html/Realtime_Tuning_Guide/sect-Realtime_Tuning_Guide-General_System_Tuning-Reducing_the_TCP_delayed_ack_timeout.html)中说明如下：
 
-{% highlight text %}
-Some applications that send small network packets can experience latencies due to the TCP delayed acknowledgement timeout. This value defaults to 40ms. To avoid this problem, try reducing the tcp_delack_min timeout value. This changes the minimum time to delay before sending an acknowledgement systemwide.
-
-Write the desired minimum value, in microseconds, to /proc/sys/net/ipv4/tcp_delack_min
-{% endhighlight %}
+> Some applications that send small network packets can experience latencies due to the TCP delayed acknowledgement timeout. This value defaults to 40ms. To avoid this problem, try reducing the tcp_delack_min timeout value. This changes the minimum time to delay before sending an acknowledgement systemwide.
+>
+> Write the desired minimum value, in microseconds, to `/proc/sys/net/ipv4/tcp_delack_min`
 
 当纳格算法遇到延迟确认
 -----

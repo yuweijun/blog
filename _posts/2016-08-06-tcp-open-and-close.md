@@ -44,7 +44,7 @@ TCP连接建立
 
 TCP用三次握手`three-way handshake`过程建立一个连接，三次握手过程示意图如下：
 
-![tcp-states-connect]({{ site.baseurl }}/img/linux/tcp/tcp-states-connect.jpg)
+![tcp-open.png]({{ site.baseurl }}/img/linux/tcp/tcp-open.png)
 
 TCP连接建立一般是由服务器端打开一个套接字`socket`，然后监听来自客户端的连接，所以服务器端表示为被动打开`passive open`，客户端表示为主动打开`active open`，建立连接过程：
 
@@ -63,7 +63,7 @@ TCP连接关闭
 
 TCP连接关闭使用了四次挥手过程`four-way handshake`，四次挥手过程示意图如下：
 
-![tcp-states-terminate]({{ site.baseurl }}/img/linux/tcp/tcp-states-terminate.jpg)
+![tcp-close.png]({{ site.baseurl }}/img/linux/tcp/tcp-close.png)
 
 1. 主动关闭方发送一个`FIN`并进入`FIN_WAIT_1`状态，并包括一个序号`X`；
 2. 被动关闭方接收到主动关闭方发送的`FIN`，然后回复`ACK`确认号`X+1`和已方的序号`Y`给主动关闭方，此时被动关闭方进入`CLOSE_WAIT`状态；主动关闭方收到被动关闭方的`ACK`后，进入`FIN_WAIT_2`状态；
@@ -237,11 +237,9 @@ TCP/IP headers format
 TCP三次握手和四次挥手的示意图
 -----
 
-1. [tcp-open.png]({{ site.baseurl }}/img/linux/tcp/tcp-open.png)
-2. [tcp-close.png]({{ site.baseurl }}/img/linux/tcp/tcp-close.png)
-3. [tcp-simultaneous-open.png]({{ site.baseurl }}/img/linux/tcp/tcp-simultaneous-open.png)
-4. [tcp-simultaneous-close.png]({{ site.baseurl }}/img/linux/tcp/tcp-simultaneous-close.png)
-5. [tcp-open-close.jpg]({{ site.baseurl }}/img/linux/tcp/tcp-open-close.jpg)
+1. [tcp-simultaneous-open.png]({{ site.baseurl }}/img/linux/tcp/tcp-simultaneous-open.png)
+2. [tcp-simultaneous-close.png]({{ site.baseurl }}/img/linux/tcp/tcp-simultaneous-close.png)
+3. [tcp-open-close.jpg]({{ site.baseurl }}/img/linux/tcp/tcp-open-close.jpg)
 
 文中配图主要来源于以下参考链接。
 
@@ -251,6 +249,5 @@ References
 1. [Transmission Control Protocol](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
 2. [传输控制协议](https://zh.wikipedia.org/wiki/%E4%BC%A0%E8%BE%93%E6%8E%A7%E5%88%B6%E5%8D%8F%E8%AE%AE)
 3. [TCP/IP Reference](https://nmap.org/book/tcpip-ref.html)
-4. [TCP connection states](https://blog.confirm.ch/tcp-connection-states/)
-5. [wireshark-filter - Wireshark filter syntax and reference](https://www.wireshark.org/docs/man-pages/wireshark-filter.html)
+4. [wireshark-filter - Wireshark filter syntax and reference](https://www.wireshark.org/docs/man-pages/wireshark-filter.html)
 

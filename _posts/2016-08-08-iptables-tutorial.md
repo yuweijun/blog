@@ -254,8 +254,9 @@ iptables -t nat -A POSTROUTING -o eth1 -s 192.168.0.0/24 -j SNAT --to-source 200
 iptables -I FORWARD -p tcp --syn -i ppp+ -j TCPMSS --set-mss 1356
 
 iptables -A INPUT -j REJECT --reject-with icmp-host-prohibited
-iptables -A FORWARD -j REJECT --reject-with icmp-host-prohibited
 {% endhighlight %}
+
+上面`FORWARD`接口设备`ppp+`(如ppp0)指令后面不能`REJECT FORWARD`，否则这个转发就不生效了。
 
 /etc/sysconfit/iptables示例
 -----

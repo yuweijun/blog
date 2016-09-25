@@ -21,7 +21,7 @@ git中则提供了两种`patch`方案：
 git diff/apply 与 git format-patch/am 测试脚本
 -----
 
-以下脚本命名并保存为`git-patch-commands.sh`：
+以下脚本保存为`git-patch-commands.sh`：
 
 {% highlight bash %}
 #! /bin/bash
@@ -75,7 +75,6 @@ git diff and git apply example
 -----
 
 {% highlight bash %}
-cd ..
 ./git-patch-commands.sh
 cd git-patch-logs
 echo "git diff HEAD~1 HEAD"

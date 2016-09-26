@@ -24,7 +24,9 @@ layout: default
         {% endif %}
 
         {% for page in (1..paginator.total_pages) %}
-            {% if page == paginator.page %}
+            {% if page >= 10 %}
+                <!-- {{ page }} -->
+            {% elsif page == paginator.page %}
                 <span>{{ page }}</span>
             {% elsif page == 1 %}
                 <a href="{{ site.baseurl }}/">1</a>

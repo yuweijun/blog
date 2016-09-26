@@ -259,7 +259,7 @@ $> git am *.patch
 >
 > To restore the original branch and stop patching, run "git am --abort".
 
-#### 解决方法一：git apply --reject
+#### 解决方法一：`git apply --reject`
 
 默认情况下`git am`失败之后，是不会应用补丁文件的，可以使用`git apply --reject patchfile`强制执行补丁文件，并留下`.rej`后缀的冲突文件。
 

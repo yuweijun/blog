@@ -8,14 +8,14 @@ categories: linux
 sed正则替换内容时，碰到在Linux上正常执行的命令在MacOSX执行失败的问题，如：
 
 {% highlight bash %}
-$ sed -i 's/text/replaced/g' filename
+$> sed -i 's/text/replaced/g' filename
 sed: 1: "filename": invalid command code -
 {% endhighlight %}
 
 google之后发现有别人碰到类似的[问题](http://www.markhneedham.com/blog/2011/01/14/sed-sed-1-invalid-command-code-r-on-mac-os-x/)，在MacOSX上需要加个空字符串在`-i`参数后面：
 
 {% highlight bash %}
-$ sed -i "" 's/text/relpaced/g' filename
+$> sed -i "" 's/text/relpaced/g' filename
 {% endhighlight %}
 
 > What I hadn’t realised is that on the Mac version of sed the `-i` flag has a mandatory suffix, as described in this post.

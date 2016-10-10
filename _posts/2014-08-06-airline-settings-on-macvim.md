@@ -8,8 +8,8 @@ categories: vim
 使用`brew`安装`macvim`，并下载`powerline-fonts`安装：
 
 {% highlight bash %}
-$ brew install macvim
-$ git clone https://github.com/powerline/fonts.git
+$> brew install macvim
+$> git clone https://github.com/powerline/fonts.git
 {% endhighlight %}
 
 运行`powerline-fonts`目录的`install.sh`即可，或者是双击下载后Meslo文件夹中的这个字体: `Meslo LG S Regular for Powerline.otf`，然后在 `~/.vimrc` 中配置如下内容，此处使用bundle管理vim插件:

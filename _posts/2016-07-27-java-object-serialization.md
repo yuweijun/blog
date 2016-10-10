@@ -5,24 +5,6 @@ date: Wed, 27 Jul 2016 21:22:50 +0800
 categories: java
 ---
 
-目录
------
-
-* [Java 序列化简介](#java-)
-* [相关接口及类](#section)
-* [如何对Java对象进行序列化与反序列化](#java)
-* [当对象没有实现java.io.Serializable接口时](#javaioserializable)
-* [SerializableObject实现java.io.Serializable接口](#serializableobjectjavaioserializable)
-* [为SerializableObject声明serialVersionUID](#serializableobjectserialversionuid)
-* [当SerializableObject中有其他对象引用时](#serializableobject)
-* [手动将UnSerializableReference对象序列化和反序列化](#unserializablereference)
-* [如果父类是可序列化的，那么子类都是可序列化的](#section-1)
-* [如果父类是不可序列化的，而子类实现了java.io.Serializable接口](#javaioserializable-1)
-* [不能序列化static属性](#static)
-* [序列化对单例的破坏](#section-2)
-* [java.io.Externalizable](#javaioexternalizable)
-* [序列化的数据可以被签名和密封](#section-5)
-
 Java 序列化简介
 -----
 

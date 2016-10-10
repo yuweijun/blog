@@ -5,22 +5,6 @@ date: Sun, 17 Jul 2016 12:36:33 +0800
 categories: vim
 ---
 
-Index
------
-
-* [What's surround.vim](#whats-surroundvim)
-* [Install surround.vim](#install-surroundvim)
-* [Help manual](#help-manual)
-* [Normal mode](#normal-mode)
-* [Visual mode](#visual-mode)
-* [Insert mode](#insert-mode)
-* [Action repeat](#action-repeat)
-* [Structure of an editing command](#structure-of-an-editing-command)
-* [Text objects commands](#text-objects-commands)
-* [命令说明](#section-1)
-* [基于text-object的常用命令](#text-object)
-* [References](#references)
-
 What's surround.vim
 -----
 

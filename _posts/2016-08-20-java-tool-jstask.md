@@ -5,18 +5,6 @@ date: Sat, 20 Aug 2016 19:02:44 +0800
 categories: java
 ---
 
-* [java thread dump](#java-thread-dump)
-* [java tool - jstack](#java-tool---jstack)
-* [利用jstack查找占用CPU资源最多的那个线程](#jstackcpu)
-* [bash脚本检测最占CPU的java线程](#bashcpujava)
-* [jstack测试代码](#jstack)
-* [dump出来的线程说明](#dump)
-* [java线程的状态说明](#java)
-* [线程状态举例说明](#section-1)
-* [死锁测试代码](#section-2)
-* [其他工具和命令示例](#section-3)
-* [References](#references)
-
 本文介绍一些java原生提供的工具，分析java线程的死锁情况，定位特别占用系统资源的java线程。
 
 java thread dump

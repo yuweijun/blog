@@ -10,7 +10,8 @@ categories: java
 [英文地址](https://github.com/LMAX-Exchange/disruptor/wiki/Getting-Started)
 [中文地址](http://ifeve.com/disruptor-getting-started/)
 
-获得Disruptor
+## 获得Disruptor
+
 可以通过Maven来安装Disruptor。
 
 {% highlight xml %}
@@ -21,7 +22,8 @@ categories: java
 </dependency>
 {% endhighlight %}
 
-基本的事件生产和消费
+## 基本的事件生产和消费
+
 我们从一个简单的例子开始学习Disruptor：生产者传递一个long类型的值给消费者，而消费者消费这个数据的方式仅仅是把它打印出来。首先声明一个Event来包含需要传递的数据：
 
 {% highlight java %}

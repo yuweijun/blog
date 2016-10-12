@@ -11,13 +11,13 @@ Internet Explorer 5 and later support the XMLHTTP object and Mozilla-based brows
 Properties and Methods of the XMLHTTP Object
 -----
 
-`readyState` Integer indicating the state of the request, either ` 0 (uninitialized), 1 (loading), 2 (response headers received), 3 (some response body received), or 4 (request complete).
+`readyState` Integer indicating the state of the request, either `0` (uninitialized), `1` (loading), `2` (response headers received), `3` (some response body received), or `4` (request complete).
 
 `Onreadystatechange` Function to call whenever the readyState changes.
 
-`status` HTTP status code returned by the server (e.g., “200”).
+`status` HTTP status code returned by the server (e.g., `200`).
 
-`statusText` Full status HTTP status line returned by the server (e.g., “200 OK”).
+`statusText` Full status HTTP status line returned by the server (e.g., `200 OK`).
 
 `responseText` Full response from the server as a string.
 

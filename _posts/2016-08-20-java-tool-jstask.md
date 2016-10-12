@@ -255,7 +255,7 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.77-b03 mixed mode):
 "Reference Handler" #2 daemon prio=10 os_prio=31 tid=0x00007ff4b380e000 nid=0x2b03 in Object.wait() [0x0000000121814000] java.lang.Thread.State: WAITING (on object monitor)
 {% endhighlight %}
 
-从上面可以看到有一个`Finalizer`守护线程正在运行。`Finalizer`线程是个单一职责的线程。这个线程会不停的循环等待`java.lang.ref.Finalizer.ReferenceQueue`中的新增对象。一旦`Finalizer`线程发现队列中出现了新的对象，它会弹出该对象，调用它的`finalize()`方法，将该引用从`Finalizer`类中移除，因此下次`GC`再执行的时候，这个`Finalizer`实例以及它引用的那个对象就可以回垃圾回收掉了。
+从上面可以看到有一个`Finalizer`守护线程正在运行。`Finalizer`线程是个单一职责的线程。这个线程会不停的循环等待`java.lang.ref.Finalizer.ReferenceQueue`中的新增对象。一旦`Finalizer`线程发现队列中出现了新的对象，它会弹出该对象，调用它的`finalize()`方法，将该引用从`Finalizer`类中移除，因此下次`GC`再执行的时候，这个`Finalizer`实例以及它引用的那个对象就可以被垃圾回收掉了。
 
 需要注意这个线程的优先级低于主线程的优先级，如果主线程生成对象的速度远远大于对象回收的速度，则会造成`java.lang.OutOfMemoryError`错误。
 

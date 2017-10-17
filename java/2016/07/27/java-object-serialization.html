@@ -1,0 +1,746 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Java 序列化简介Java对象序列化是JDK 1.1中引入的一组开创性特性之一，是Java语言内建的一种对象持久化方式，用于作为一种将Java对象的状态转换为字节数组，以便存储或传输的机制，以后仍可以将字节数组转换回Java对象原有的状态。 实际上，序列化的思想是冻结对象状态，传输对象状态，如写到磁盘或者通过网络使用RMI远程方法调用等，然后解冻对象状态，重新获得可用的Java对象。 相关接口及">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java object serialization">
+<meta property="og:url" content="https://www.4e00.com/java/2016/07/27/java-object-serialization.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="Java 序列化简介Java对象序列化是JDK 1.1中引入的一组开创性特性之一，是Java语言内建的一种对象持久化方式，用于作为一种将Java对象的状态转换为字节数组，以便存储或传输的机制，以后仍可以将字节数组转换回Java对象原有的状态。 实际上，序列化的思想是冻结对象状态，传输对象状态，如写到磁盘或者通过网络使用RMI远程方法调用等，然后解冻对象状态，重新获得可用的Java对象。 相关接口及">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java object serialization">
+<meta name="twitter:description" content="Java 序列化简介Java对象序列化是JDK 1.1中引入的一组开创性特性之一，是Java语言内建的一种对象持久化方式，用于作为一种将Java对象的状态转换为字节数组，以便存储或传输的机制，以后仍可以将字节数组转换回Java对象原有的状态。 实际上，序列化的思想是冻结对象状态，传输对象状态，如写到磁盘或者通过网络使用RMI远程方法调用等，然后解冻对象状态，重新获得可用的Java对象。 相关接口及">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/07/27/java-object-serialization.html"/>
+
+  <title> java object serialization | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java object serialization
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-07-27T21:22:50+08:00" content="2016-07-27">
+              2016-07-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Java-序列化简介"><a href="#Java-序列化简介" class="headerlink" title="Java 序列化简介"></a>Java 序列化简介</h2><p><code>Java对象序列化</code>是<code>JDK 1.1</code>中引入的一组开创性特性之一，是Java语言内建的一种对象持久化方式，用于作为一种将Java对象的状态转换为字节数组，以便存储或传输的机制，以后仍可以将字节数组转换回Java对象原有的状态。</p>
+<p>实际上，序列化的思想是<code>冻结</code>对象状态，<code>传输</code>对象状态，如写到磁盘或者通过网络使用RMI远程方法调用等，然后<code>解冻</code>对象状态，重新获得可用的Java对象。</p>
+<h2 id="相关接口及类"><a href="#相关接口及类" class="headerlink" title="相关接口及类"></a>相关接口及类</h2><p>Java为了方便开发人员将Java对象进行序列化及反序列化提供了一套方便的API来支持，其中包括以下接口和类：</p>
+<ol>
+<li>java.io.Serializable</li>
+<li>java.io.Externalizable</li>
+<li>java.io.ObjectOutput</li>
+<li>java.io.ObjectInput</li>
+<li>java.io.ObjectOutputStream</li>
+<li>java.io.ObjectInputStream</li>
+<li>javax.crypto.SealedObject</li>
+<li>java.security.SignedObject</li>
+</ol>
+<h2 id="如何对Java对象进行序列化与反序列化"><a href="#如何对Java对象进行序列化与反序列化" class="headerlink" title="如何对Java对象进行序列化与反序列化"></a>如何对Java对象进行序列化与反序列化</h2><p>在Java中，只要一个类实现了<code>java.io.Serializable</code>接口，那么它就可以被序列化，这个接口属于标记接口，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment"> * @see java.io.ObjectOutputStream</span></div><div class="line"><span class="comment"> * @see java.io.ObjectInputStream</span></div><div class="line"><span class="comment"> * @see java.io.ObjectOutput</span></div><div class="line"><span class="comment"> * @see java.io.ObjectInput</span></div><div class="line"><span class="comment"> * @see java.io.Externalizable</span></div><div class="line"><span class="comment"> * @since   JDK1.1</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="一、当对象没有实现java-io-Serializable接口时"><a href="#一、当对象没有实现java-io-Serializable接口时" class="headerlink" title="一、当对象没有实现java.io.Serializable接口时"></a>一、当对象没有实现java.io.Serializable接口时</h2><p>如下所示的<code>SerializableObject</code>类在没在实现<code>java.io.Serializable</code>接口时，运行下面<code>SerializeDeserializeExample.main</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializableObject</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"SerializableObject&#123;"</span> +</div><div class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="SerializeDeserializeExample-java"><a href="#SerializeDeserializeExample-java" class="headerlink" title="SerializeDeserializeExample.java"></a>SerializeDeserializeExample.java</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializeDeserializeExample</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(SerializeDeserializeExample.class);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(SerializableObject serializableObject)</span> <span class="keyword">throws</span> FileNotFoundException, IOException </span>&#123;</div><div class="line">        File file = <span class="keyword">new</span> File(System.getProperty(<span class="string">"java.io.tmpdir"</span>) + <span class="string">"serializableObject.ser"</span>);</div><div class="line">        ObjectOutputStream objectOutputStream = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            objectOutputStream = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(file));</div><div class="line">            objectOutputStream.writeObject(serializableObject);</div><div class="line">            objectOutputStream.flush();</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (objectOutputStream != <span class="keyword">null</span>) &#123;</div><div class="line">                objectOutputStream.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SerializableObject <span class="title">deSerialize</span><span class="params">()</span> <span class="keyword">throws</span> FileNotFoundException, IOException, ClassNotFoundException </span>&#123;</div><div class="line">        ObjectInputStream objectInputStream = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            File file = <span class="keyword">new</span> File(System.getProperty(<span class="string">"java.io.tmpdir"</span>) + <span class="string">"serializableObject.ser"</span>);</div><div class="line">            objectInputStream = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(file));</div><div class="line">            Object object = objectInputStream.readObject();</div><div class="line">            SerializableObject deserializedObject = (SerializableObject) object;</div><div class="line">            LOGGER.info(deserializedObject .getName());</div><div class="line">            <span class="keyword">return</span> deserializedObject;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (objectInputStream != <span class="keyword">null</span>) &#123;</div><div class="line">                objectInputStream.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> FileNotFoundException, ClassNotFoundException, IOException </span>&#123;</div><div class="line">        SerializableObject serializableObject = <span class="keyword">new</span> SerializableObject();</div><div class="line">        serializableObject.setName(<span class="string">"test java.io.Serializable"</span>);</div><div class="line">        serialize(serializableObject);</div><div class="line"></div><div class="line">        SerializableObject deSerializedObject = deSerialize();</div><div class="line">        LOGGER.info(<span class="string">"&#123;&#125;"</span>, deSerializedObject);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序会抛出如下异常<code>NotSerializableException</code>：</p>
+<blockquote>
+<p>Exception in thread &quot;main&quot; java.io.NotSerializableException: com.example.test.io.SerializableObject</p>
+<p>  at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1184)</p>
+<p>  at java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:348)</p>
+<p>  at com.example.test.io.SerializeDeserializeExample.serialize(SerializeDeserializeExample.java:40)</p>
+<p>  at com.example.test.io.SerializeDeserializeExample.main(SerializeDeserializeExample.java:67)</p>
+</blockquote>
+<p><code>SerializeDeserializeExample</code>这个类中使用了对象序列化和反序列化操作时最重要的2个类：<code>ObjectInputStream</code>和<code>ObjectOutputStream</code>，其中<code>ObjectInputStream</code>类中最重要的方法为：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(Object obj)</span> <span class="keyword">throws</span> IOException </span>&#123;&#125;</div></pre></td></tr></table></figure>
+<p><code>ObjectInputStream</code>对应的方法为：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">readObject</span><span class="params">()</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;&#125;</div></pre></td></tr></table></figure>
+<h2 id="二、SerializableObject实现java-io-Serializable接口"><a href="#二、SerializableObject实现java-io-Serializable接口" class="headerlink" title="二、SerializableObject实现java.io.Serializable接口"></a>二、SerializableObject实现java.io.Serializable接口</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.Serializable;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializableObject</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"SerializableObject&#123;"</span> +</div><div class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>再次运行<code>SerializeDeserializeExample.main</code>方法后输出如下内容：</p>
+<blockquote>
+<p>2016-07-27 21:41:12.266 - INFO --- [           main] c.e.test.io.SerializeDeserializeExample  [   56] : test java.io.Serializable</p>
+<p>2016-07-27 21:41:12.267 - INFO --- [           main] c.e.test.io.SerializeDeserializeExample  [   73] : SerializableObject{name=&#39;test java.io.Serializable&#39;}</p>
+</blockquote>
+<p><code>SerializableObject</code>对象被正确的序列化保存到文件，并从文件中重新加载为一个<code>SerializableObject</code>实例。</p>
+<h2 id="三、为SerializableObject声明serialVersionUID"><a href="#三、为SerializableObject声明serialVersionUID" class="headerlink" title="三、为SerializableObject声明serialVersionUID"></a>三、为SerializableObject声明serialVersionUID</h2><p>上面<code>SerializableObject</code>虽然实现了<code>java.io.Serializable</code>接口，但并没有设置<code>serialVersionUID</code>，jvm会为当前类自动添加一个<code>serialVersionUID</code>。</p>
+<p>Eclipse中会出现<code>The serializable class SerializableObject does not declare a static final serialVersionUID field of type long</code>这样的警告信息，java doc中建议实现<code>java.io.Serializable</code>接口的类添加一个固定的<code>serialVersionUID</code>，避免不同的JDK实现因为<code>serialVersionUID</code>算法不同导致反序列化出现问题。</p>
+<p><code>serialVersionUID</code>必须使用<code>static</code>和<code>final</code>修饰，并且为<code>long</code>型的任意一个数字，并且java doc中也明确提到尽可能的将它声明为<code>private</code>。</p>
+<p>如果在上述<code>SerializeDeserializeExample.main</code>运行成功后，再为<code>SerializableObject</code>设置一个<code>serialVersionUID</code>，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.Serializable;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializableObject</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"SerializableObject&#123;"</span> +</div><div class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>前面<code>SerializeDeserializeExample.main</code>方法运行生成的<code>serializableObject.ser</code>文件还在，执行下面的代码进行反序列化：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OnlyDeserializeExample</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(OnlyDeserializeExample.class);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SerializableObject <span class="title">deSerialize</span><span class="params">()</span> <span class="keyword">throws</span> FileNotFoundException, IOException, ClassNotFoundException </span>&#123;</div><div class="line">        ObjectInputStream objectInputStream = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            File file = <span class="keyword">new</span> File(System.getProperty(<span class="string">"java.io.tmpdir"</span>) + <span class="string">"serializableObject.ser"</span>);</div><div class="line">            objectInputStream = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(file));</div><div class="line">            Object object = objectInputStream.readObject();</div><div class="line">            SerializableObject deserializedObject = (SerializableObject) object;</div><div class="line">            LOGGER.info(deserializedObject .getName());</div><div class="line">            <span class="keyword">return</span> deserializedObject;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (objectInputStream != <span class="keyword">null</span>) &#123;</div><div class="line">                objectInputStream.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> FileNotFoundException, ClassNotFoundException, IOException </span>&#123;</div><div class="line">        SerializableObject deSerializedObject = deSerialize();</div><div class="line">        LOGGER.info(<span class="string">"&#123;&#125;"</span>, deSerializedObject);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行后会抛出<code>InvalidClassException</code>异常如下：</p>
+<blockquote>
+<p>Exception in thread &quot;main&quot; java.io.InvalidClassException: com.example.test.io.SerializableObject; local class incompatible: stream classdesc serialVersionUID = 8024319097192047636, local class serialVersionUID = 1</p>
+<p>  at java.io.ObjectStreamClass.initNonProxy(ObjectStreamClass.java:616)</p>
+<p>  at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1623)</p>
+<p>  at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1518)</p>
+<p>  at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1774)</p>
+<p>  at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1351)</p>
+<p>  at java.io.ObjectInputStream.readObject(ObjectInputStream.java:371)</p>
+<p>  at com.example.test.io.OnlyDeserializeExample.deSerialize(OnlyDeserializeExample.java:20)</p>
+<p>  at com.example.test.io.OnlyDeserializeExample.main(OnlyDeserializeExample.java:32)</p>
+</blockquote>
+<p><code>serialVersionUID</code>就是用来保证对象序列化和反序列化时使用的是相同的class文件。</p>
+<h2 id="四、当SerializableObject中有其他对象引用时"><a href="#四、当SerializableObject中有其他对象引用时" class="headerlink" title="四、当SerializableObject中有其他对象引用时"></a>四、当SerializableObject中有其他对象引用时</h2><p>以下<code>UnSerializableReference</code>类没有实现<code>java.io.Serializable</code>接口：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnSerializableReference</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"UnSerializableReference&#123;"</span> +</div><div class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>而<code>SerializableObject</code>引用了此对象，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.Serializable;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializableObject</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> UnSerializableReference unSerializableReference;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> UnSerializableReference <span class="title">getUnSerializableReference</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> unSerializableReference;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUnSerializableReference</span><span class="params">(UnSerializableReference unSerializableReference)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.unSerializableReference = unSerializableReference;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"SerializableObject&#123;"</span> +</div><div class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">", unSerializableReference="</span> + unSerializableReference +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行以下<code>SerializeDeserializeExample.main</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializeDeserializeExample</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(SerializeDeserializeExample.class);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(SerializableObject serializableObject)</span> <span class="keyword">throws</span> FileNotFoundException, IOException </span>&#123;</div><div class="line">        File file = <span class="keyword">new</span> File(System.getProperty(<span class="string">"java.io.tmpdir"</span>) + <span class="string">"serializableObject.ser"</span>);</div><div class="line">        ObjectOutputStream objectOutputStream = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            objectOutputStream = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(file));</div><div class="line">            objectOutputStream.writeObject(serializableObject);</div><div class="line">            objectOutputStream.flush();</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (objectOutputStream != <span class="keyword">null</span>) &#123;</div><div class="line">                objectOutputStream.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SerializableObject <span class="title">deSerialize</span><span class="params">()</span> <span class="keyword">throws</span> FileNotFoundException, IOException, ClassNotFoundException </span>&#123;</div><div class="line">        ObjectInputStream objectInputStream = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            File file = <span class="keyword">new</span> File(System.getProperty(<span class="string">"java.io.tmpdir"</span>) + <span class="string">"serializableObject.ser"</span>);</div><div class="line">            objectInputStream = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(file));</div><div class="line">            Object object = objectInputStream.readObject();</div><div class="line">            SerializableObject deserializedObject = (SerializableObject) object;</div><div class="line">            LOGGER.info(deserializedObject .getName());</div><div class="line">            <span class="keyword">return</span> deserializedObject;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (objectInputStream != <span class="keyword">null</span>) &#123;</div><div class="line">                objectInputStream.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> FileNotFoundException, ClassNotFoundException, IOException </span>&#123;</div><div class="line">        SerializableObject serializableObject = <span class="keyword">new</span> SerializableObject();</div><div class="line">        serializableObject.setName(<span class="string">"test java.io.Serializable"</span>);</div><div class="line">        UnSerializableReference unSerializableReference = <span class="keyword">new</span> UnSerializableReference();</div><div class="line">        unSerializableReference.setName(<span class="string">"unSerializableReference"</span>);</div><div class="line">        serializableObject.setUnSerializableReference(unSerializableReference);</div><div class="line">        serialize(serializableObject);</div><div class="line"></div><div class="line">        SerializableObject deSerializedObject = deSerialize();</div><div class="line">        LOGGER.info(<span class="string">"&#123;&#125;"</span>, deSerializedObject);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行抛出<code>NotSerializableException</code>异常如下：</p>
+<blockquote>
+<p>Exception in thread &quot;main&quot; java.io.NotSerializableException: com.example.test.io.UnSerializableReference</p>
+<p>  at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1184)</p>
+<p>  at java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:1548)</p>
+<p>  at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1509)</p>
+<p>  at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1432)</p>
+<p>  at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1178)</p>
+<p>  at java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:348)</p>
+<p>  at com.example.test.io.SerializeDeserializeExample.serialize(SerializeDeserializeExample.java:40)</p>
+<p>  at com.example.test.io.SerializeDeserializeExample.main(SerializeDeserializeExample.java:71)</p>
+</blockquote>
+<p>也就是说<code>SerializableObject</code>要正确的序列化，则要求其属性字段都是可序列化的，除非用<code>transient</code>修饰符明确指出当前属性不需要被一起序列化，将<code>SerializableObject</code>修改一下，在<code>UnSerializableReference</code>属性前加上<code>transient</code>修饰符：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">transient</span> UnSerializableReference unSerializableReference;</div></pre></td></tr></table></figure>
+<p>再运行以上<code>SerializeDeserializeExample.main</code>方法，输出结果如下：</p>
+<blockquote>
+<p>2016-07-27 23:14:23.078 - INFO --- [           main] c.e.test.io.SerializeDeserializeExample  [   56] : test java.io.Serializable</p>
+<p>2016-07-27 23:14:23.078 - INFO --- [           main] c.e.test.io.SerializeDeserializeExample  [   76] : SerializableObject{name=&#39;test java.io.Serializable&#39;, unSerializableReference=null}</p>
+</blockquote>
+<h2 id="五、手动将UnSerializableReference对象序列化和反序列化"><a href="#五、手动将UnSerializableReference对象序列化和反序列化" class="headerlink" title="五、手动将UnSerializableReference对象序列化和反序列化"></a>五、手动将UnSerializableReference对象序列化和反序列化</h2><p>上面通过<code>transient</code>修饰符指定<code>UnSerializableReference</code>属性不需要序列化，从而避免<code>SerializableObject</code>序列化失败，但如果一定也要求将<code>UnSerializableReference</code>对象序列化，但又不能改源码的情况下，要用到以下2个重要方法，这2个方法在对象序列化和反序列化时会通过java反射来执行：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(ObjectOutputStream os)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readObject</span><span class="params">(ObjectInputStream is)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;&#125;</div></pre></td></tr></table></figure>
+<p>修改<code>SerializableObject</code>实现上述2个方法，注意2个方法写入和读取属性数据时保持顺序一致：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializableObject</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> UnSerializableReference unSerializableReference;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> UnSerializableReference <span class="title">getUnSerializableReference</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> unSerializableReference;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUnSerializableReference</span><span class="params">(UnSerializableReference unSerializableReference)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.unSerializableReference = unSerializableReference;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(ObjectOutputStream os)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            os.defaultWriteObject();</div><div class="line">            os.writeObject(unSerializableReference.getName());</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readObject</span><span class="params">(ObjectInputStream is)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            is.defaultReadObject();</div><div class="line">            String unSerializableReferenceName = (String) is.readObject();</div><div class="line">            unSerializableReference = <span class="keyword">new</span> UnSerializableReference();</div><div class="line">            unSerializableReference.setName(unSerializableReferenceName);</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"SerializableObject&#123;"</span> +</div><div class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">", unSerializableReference="</span> + unSerializableReference +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>再运行以上<code>SerializeDeserializeExample.main</code>方法，输出结果如下，<code>UnSerializableReference</code>已经正确序列化和反序列化：</p>
+<blockquote>
+<p>2016-07-27 23:33:15.543 - INFO --- [           main] c.e.test.io.SerializeDeserializeExample  [   56] : test java.io.Serializable</p>
+<p>2016-07-27 23:33:15.547 - INFO --- [           main] c.e.test.io.SerializeDeserializeExample  [   74] : SerializableObject{name=&#39;test java.io.Serializable&#39;, unSerializableReference=UnSerializableReference{name=&#39;unSerializableReference&#39;}}</p>
+</blockquote>
+<p>对象序列化时，writeObject方法的调用栈：</p>
+<ol>
+<li>ObjectOutputStream.writeObject</li>
+<li>ObjectOutputStream.writeObject0</li>
+<li>ObjectOutputStream.writeOrdinaryObject</li>
+<li>ObjectOutputStream.writeSerialData</li>
+<li>ObjectStreamClass.invokeWriteObject: Invokes the writeObject method of the represented serializable class.</li>
+<li>Method.invoke: private void com.example.test.io.SerializableObject.writeObject(java.io.ObjectOutputStream) throws java.io.IOException,java.lang.ClassNotFoundException</li>
+</ol>
+<p>对象反序列化时，readObject方法的调用栈：</p>
+<ol>
+<li>ObjectInputStream.readObject</li>
+<li>ObjectInputStream.readObject0</li>
+<li>ObjectInputStream.readOrdinaryObject</li>
+<li>ObjectInputStream.readSerialData</li>
+<li>ObjectStreamClass.invokeReadObject: Invokes the readObject method of the represented serializable class.</li>
+<li>Method.invoke: private void com.example.test.io.SerializableObject.readObject(java.io.ObjectInputStream) throws java.io.IOException,java.lang.ClassNotFoundException</li>
+</ol>
+<h2 id="六、如果父类是可序列化的，那么子类都是可序列化的"><a href="#六、如果父类是可序列化的，那么子类都是可序列化的" class="headerlink" title="六、如果父类是可序列化的，那么子类都是可序列化的"></a>六、如果父类是可序列化的，那么子类都是可序列化的</h2><p>但如果父类是可序列化的，却不想子类是可序列化的，则需要重写<code>writeObject</code>和<code>readObject</code>这2个方法，在方法体内抛出<code>NotSerializableException</code>异常即可，参数名为当前<code>class</code>的名字：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">throw</span> <span class="keyword">new</span> NotSerializableException(getClass().getCanonicalName());</div></pre></td></tr></table></figure>
+<h2 id="七、如果父类是不可序列化的，而子类实现了java-io-Serializable接口"><a href="#七、如果父类是不可序列化的，而子类实现了java-io-Serializable接口" class="headerlink" title="七、如果父类是不可序列化的，而子类实现了java.io.Serializable接口"></a>七、如果父类是不可序列化的，而子类实现了java.io.Serializable接口</h2><p>这种情况下，子类只能序列化和反序列化自己定义的属性，而父类中的属性不能被序列化和反序列化。</p>
+<p>如下父类不能序列化：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnSerializableParent</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String parent;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getParent</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> parent;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setParent</span><span class="params">(String parent)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.parent = parent;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"UnSerializableParent&#123;"</span> +</div><div class="line">                <span class="string">"parent='"</span> + parent + <span class="string">'\''</span> +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>而<code>SerializableObject</code>继承了上面的<code>UnSerializableParent</code>类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializableObject</span> <span class="keyword">extends</span> <span class="title">UnSerializableParent</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> UnSerializableReference unSerializableReference;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> UnSerializableReference <span class="title">getUnSerializableReference</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> unSerializableReference;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUnSerializableReference</span><span class="params">(UnSerializableReference unSerializableReference)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.unSerializableReference = unSerializableReference;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(ObjectOutputStream os)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            os.defaultWriteObject();</div><div class="line">            os.writeObject(unSerializableReference.getName());</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readObject</span><span class="params">(ObjectInputStream is)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            is.defaultReadObject();</div><div class="line">            String unSerializableReferenceName = (String) is.readObject();</div><div class="line">            unSerializableReference = <span class="keyword">new</span> UnSerializableReference();</div><div class="line">            unSerializableReference.setName(unSerializableReferenceName);</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"SerializableObject&#123;"</span> +</div><div class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">", parent='"</span> + getParent() + <span class="string">'\''</span> +</div><div class="line">                <span class="string">", unSerializableReference="</span> + unSerializableReference +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>修改<code>SerializeDeserializeExample</code>类如下，并运行main方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializeDeserializeExample</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(SerializeDeserializeExample.class);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(SerializableObject serializableObject)</span> <span class="keyword">throws</span> FileNotFoundException, IOException </span>&#123;</div><div class="line">        File file = <span class="keyword">new</span> File(System.getProperty(<span class="string">"java.io.tmpdir"</span>) + <span class="string">"serializableObject.ser"</span>);</div><div class="line">        ObjectOutputStream objectOutputStream = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            objectOutputStream = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(file));</div><div class="line">            objectOutputStream.writeObject(serializableObject);</div><div class="line">            objectOutputStream.flush();</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (objectOutputStream != <span class="keyword">null</span>) &#123;</div><div class="line">                objectOutputStream.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SerializableObject <span class="title">deSerialize</span><span class="params">()</span> <span class="keyword">throws</span> FileNotFoundException, IOException, ClassNotFoundException </span>&#123;</div><div class="line">        ObjectInputStream objectInputStream = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            File file = <span class="keyword">new</span> File(System.getProperty(<span class="string">"java.io.tmpdir"</span>) + <span class="string">"serializableObject.ser"</span>);</div><div class="line">            objectInputStream = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(file));</div><div class="line">            Object object = objectInputStream.readObject();</div><div class="line">            SerializableObject deserializedObject = (SerializableObject) object;</div><div class="line">            LOGGER.info(deserializedObject .getName());</div><div class="line">            <span class="keyword">return</span> deserializedObject;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (objectInputStream != <span class="keyword">null</span>) &#123;</div><div class="line">                objectInputStream.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> FileNotFoundException, ClassNotFoundException, IOException </span>&#123;</div><div class="line">        SerializableObject serializableObject = <span class="keyword">new</span> SerializableObject();</div><div class="line">        serializableObject.setName(<span class="string">"test java.io.Serializable"</span>);</div><div class="line">        serializableObject.setParent(<span class="string">"parent is not serializable"</span>);</div><div class="line">        UnSerializableReference unSerializableReference = <span class="keyword">new</span> UnSerializableReference();</div><div class="line">        unSerializableReference.setName(<span class="string">"unSerializableReference"</span>);</div><div class="line">        serializableObject.setUnSerializableReference(unSerializableReference);</div><div class="line">        serialize(serializableObject);</div><div class="line"></div><div class="line">        SerializableObject deSerializedObject = deSerialize();</div><div class="line">        LOGGER.info(<span class="string">"&#123;&#125;"</span>, deSerializedObject);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果如下，父类属性<code>parent</code>并不能被子类一起序列化和反序列化，输出结果中为<code>null</code>。</p>
+<blockquote>
+<p>2016-07-28 00:12:56.640 - INFO --- [           main] c.e.test.io.SerializeDeserializeExample  [   56] : test java.io.Serializable</p>
+<p>2016-07-28 00:12:56.643 - INFO --- [           main] c.e.test.io.SerializeDeserializeExample  [   75] : SerializableObject{name=&#39;test java.io.Serializable&#39;, parent=&#39;null&#39;, unSerializableReference=UnSerializableReference{name=&#39;unSerializableReference&#39;}}</p>
+</blockquote>
+<p>如果需要将父类这个属性序列化，那还是要借助<code>writeObject</code>和<code>readObject</code>这2个方法，修改<code>SerializableObject</code>类如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializableObject</span> <span class="keyword">extends</span> <span class="title">UnSerializableParent</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> UnSerializableReference unSerializableReference;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> UnSerializableReference <span class="title">getUnSerializableReference</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> unSerializableReference;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUnSerializableReference</span><span class="params">(UnSerializableReference unSerializableReference)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.unSerializableReference = unSerializableReference;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(ObjectOutputStream os)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            os.defaultWriteObject();</div><div class="line">            os.writeObject(unSerializableReference.getName());</div><div class="line">            os.writeObject(getParent());</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readObject</span><span class="params">(ObjectInputStream is)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            is.defaultReadObject();</div><div class="line">            String unSerializableReferenceName = (String) is.readObject();</div><div class="line">            unSerializableReference = <span class="keyword">new</span> UnSerializableReference();</div><div class="line">            unSerializableReference.setName(unSerializableReferenceName);</div><div class="line">            String parent = (String) is.readObject();</div><div class="line">            setParent(parent);</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"SerializableObject&#123;"</span> +</div><div class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">", parent='"</span> + getParent() + <span class="string">'\''</span> +</div><div class="line">                <span class="string">", unSerializableReference="</span> + unSerializableReference +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果如下，<code>parent</code>属性被序列化和反序列化了：</p>
+<blockquote>
+<p>2016-07-28 00:15:25.678 - INFO --- [           main] c.e.test.io.SerializeDeserializeExample  [   56] : test java.io.Serializable</p>
+<p>2016-07-28 00:15:25.682 - INFO --- [           main] c.e.test.io.SerializeDeserializeExample  [   75] : SerializableObject{name=&#39;test java.io.Serializable&#39;, parent=&#39;parent is not serializable&#39;, unSerializableReference=UnSerializableReference{name=&#39;unSerializableReference&#39;}}</p>
+</blockquote>
+<h2 id="八、不能序列化static属性"><a href="#八、不能序列化static属性" class="headerlink" title="八、不能序列化static属性"></a>八、不能序列化static属性</h2><p>这个属于<code>class</code>级别，而不是对象级别的，因此不在对象序列化管理范围内。</p>
+<h2 id="九、序列化对单例的破坏"><a href="#九、序列化对单例的破坏" class="headerlink" title="九、序列化对单例的破坏"></a>九、序列化对单例的破坏</h2><p>运行以下<code>SerializableSingleton.main</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializableSingleton</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(SerializableSingleton.class);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> SerializableSingleton singleton;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SerializableSingleton</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SerializableSingleton <span class="title">getSingleton</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">synchronized</span> (SerializableSingleton.class) &#123;</div><div class="line">                <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;</div><div class="line">                    singleton = <span class="keyword">new</span> SerializableSingleton();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> singleton;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</div><div class="line">        ObjectOutputStream oos = <span class="keyword">null</span>;</div><div class="line">        ObjectInputStream ois = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            File file = <span class="keyword">new</span> File(System.getProperty(<span class="string">"java.io.tmpdir"</span>) + <span class="string">"serializableSingleton.ser"</span>);</div><div class="line">            oos = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(file));</div><div class="line">            <span class="comment">//Write Obj to file</span></div><div class="line">            oos.writeObject(SerializableSingleton.getSingleton());</div><div class="line"></div><div class="line">            <span class="comment">//Read Obj from file</span></div><div class="line">            ois = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(file));</div><div class="line">            SerializableSingleton newInstance = (SerializableSingleton) ois.readObject();</div><div class="line"></div><div class="line">            <span class="comment">//判断是否是同一个对象</span></div><div class="line">            LOGGER.info(<span class="string">"is the same object : &#123;&#125;"</span>, newInstance == SerializableSingleton.getSingleton());</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (oos != <span class="keyword">null</span>) &#123;</div><div class="line">                oos.close();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (ois != <span class="keyword">null</span>) &#123;</div><div class="line">                ois.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果输出为：</p>
+<blockquote>
+<p>2016-07-28 00:46:29.377 - INFO --- [           main] c.example.test.io.SerializableSingleton  [   47] : is the same object : false</p>
+</blockquote>
+<p>也就是通过对<code>SerializableSingleton</code>的序列化与反序列化操作得到的对象是一个新的对象，这就破坏了<code>SerializableSingleton</code>的单例性。</p>
+<p><code>ObjectInputStream.readOrdinaryObject()</code>方法如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> Object <span class="title">readOrdinaryObject</span><span class="params">(<span class="keyword">boolean</span> unshared)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">    <span class="comment">//此处省略部分代码</span></div><div class="line"></div><div class="line">    Object obj;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        obj = desc.isInstantiable() ? desc.newInstance() : <span class="keyword">null</span>;</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception ex) &#123;</div><div class="line">        <span class="keyword">throw</span> (IOException) <span class="keyword">new</span> InvalidClassException(</div><div class="line">            desc.forClass().getName(),</div><div class="line">            <span class="string">"unable to create instance"</span>).initCause(ex);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//此处省略部分代码</span></div><div class="line"></div><div class="line">    <span class="keyword">if</span> (obj != <span class="keyword">null</span> &amp;&amp; handles.lookupException(passHandle) == <span class="keyword">null</span> &amp;&amp; desc.hasReadResolveMethod()) &#123;</div><div class="line">        Object rep = desc.invokeReadResolve(obj);</div><div class="line">        <span class="keyword">if</span> (unshared &amp;&amp; rep.getClass().isArray()) &#123;</div><div class="line">            rep = cloneArray(rep);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (rep != obj) &#123;</div><div class="line">            handles.setObject(passHandle, obj = rep);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> obj;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="防止序列化破坏单例模式"><a href="#防止序列化破坏单例模式" class="headerlink" title="防止序列化破坏单例模式"></a>防止序列化破坏单例模式</h3><p>只要在<code>SerializableSingleton</code>类中定义<code>readResolve</code>方法就可以解决该问题：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializableSingleton</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(SerializableSingleton.class);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> SerializableSingleton singleton;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SerializableSingleton</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SerializableSingleton <span class="title">getSingleton</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">synchronized</span> (SerializableSingleton.class) &#123;</div><div class="line">                <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;</div><div class="line">                    singleton = <span class="keyword">new</span> SerializableSingleton();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> singleton;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> Object <span class="title">readResolve</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> singleton;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</div><div class="line">        ObjectOutputStream oos = <span class="keyword">null</span>;</div><div class="line">        ObjectInputStream ois = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            File file = <span class="keyword">new</span> File(System.getProperty(<span class="string">"java.io.tmpdir"</span>) + <span class="string">"serializableSingleton.ser"</span>);</div><div class="line">            oos = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(file));</div><div class="line">            <span class="comment">//Write Obj to file</span></div><div class="line">            oos.writeObject(SerializableSingleton.getSingleton());</div><div class="line"></div><div class="line">            <span class="comment">//Read Obj from file</span></div><div class="line">            ois = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(file));</div><div class="line">            SerializableSingleton newInstance = (SerializableSingleton) ois.readObject();</div><div class="line"></div><div class="line">            <span class="comment">//判断是否是同一个对象</span></div><div class="line">            LOGGER.info(<span class="string">"is the same object : &#123;&#125;"</span>, newInstance == SerializableSingleton.getSingleton());</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (oos != <span class="keyword">null</span>) &#123;</div><div class="line">                oos.close();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (ois != <span class="keyword">null</span>) &#123;</div><div class="line">                ois.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>readResolve</code>方法调用栈：</p>
+<ol>
+<li>ObjectInputStream.readObject</li>
+<li>ObjectInputStream.readObject0</li>
+<li>ObjectInputStream.readOrdinaryObject</li>
+<li>ObjectStreamClass.invokeReadResolve</li>
+<li>Method.invoke: private java.lang.Object com.example.test.io.SerializableSingleton.readResolve()</li>
+</ol>
+<p>以上代码运行结果：</p>
+<blockquote>
+<p>2016-07-28 01:01:52.198 - INFO --- [           main] c.example.test.io.SerializableSingleton  [   51] : is the same object : true</p>
+</blockquote>
+<h2 id="十、java-io-Externalizable"><a href="#十、java-io-Externalizable" class="headerlink" title="十、java.io.Externalizable"></a>十、java.io.Externalizable</h2><p><code>java.io.Externalizable</code>继承自<code>java.io.Serializable</code>接口，源码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Externalizable</span> <span class="keyword">extends</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">writeExternal</span><span class="params">(ObjectOutput out)</span> <span class="keyword">throws</span> IOException</span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">readExternal</span><span class="params">(ObjectInput in)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>正如接口名字所提示的，对象序列化和反序列化由外部代码指定才会执行，<code>ExternalizableObject</code>如下代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExternalizableObject</span> <span class="keyword">implements</span> <span class="title">Externalizable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(ExternalizableObject.class);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeExternal</span><span class="params">(ObjectOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"begin serialize object."</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readExternal</span><span class="params">(ObjectInput in)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"begin deserialize object."</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"ExternalizableObject&#123;"</span> +</div><div class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行<code>ExternalizableSerializeExample.main</code>方法如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExternalizableSerializeExample</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(ExternalizableSerializeExample.class);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(ExternalizableObject externalizableObject)</span> <span class="keyword">throws</span> FileNotFoundException, IOException </span>&#123;</div><div class="line">        File file = <span class="keyword">new</span> File(System.getProperty(<span class="string">"java.io.tmpdir"</span>) + <span class="string">"externalizableObject.ser"</span>);</div><div class="line">        ObjectOutputStream objectOutputStream = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            objectOutputStream = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(file));</div><div class="line">            objectOutputStream.writeObject(externalizableObject);</div><div class="line">            objectOutputStream.flush();</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (objectOutputStream != <span class="keyword">null</span>) &#123;</div><div class="line">                objectOutputStream.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExternalizableObject <span class="title">deSerialize</span><span class="params">()</span> <span class="keyword">throws</span> FileNotFoundException, IOException, ClassNotFoundException </span>&#123;</div><div class="line">        ObjectInputStream objectInputStream = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            File file = <span class="keyword">new</span> File(System.getProperty(<span class="string">"java.io.tmpdir"</span>) + <span class="string">"externalizableObject.ser"</span>);</div><div class="line">            objectInputStream = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(file));</div><div class="line">            Object object = objectInputStream.readObject();</div><div class="line">            ExternalizableObject deserializedObject = (ExternalizableObject) object;</div><div class="line">            LOGGER.info(deserializedObject.getName());</div><div class="line">            <span class="keyword">return</span> deserializedObject;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (objectInputStream != <span class="keyword">null</span>) &#123;</div><div class="line">                objectInputStream.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</div><div class="line">        ExternalizableObject externalizableObject = <span class="keyword">new</span> ExternalizableObject();</div><div class="line">        externalizableObject.setName(<span class="string">"externalizableObject"</span>);</div><div class="line"></div><div class="line">        serialize(externalizableObject);</div><div class="line"></div><div class="line">        ExternalizableObject deSerializedObject = deSerialize();</div><div class="line">        LOGGER.info(<span class="string">"&#123;&#125;"</span>, deSerializedObject);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果如下，发现对象并没有被序列化：</p>
+<blockquote>
+<p>2016-07-28 22:14:53.932 - INFO --- [           main] c.example.test.io.ExternalizableObject   [   30] : begin serialize object.</p>
+<p>2016-07-28 22:14:53.937 - INFO --- [           main] c.example.test.io.ExternalizableObject   [   35] : begin deserialize object.</p>
+<p>2016-07-28 22:14:53.938 - INFO --- [           main] c.e.t.io.ExternalizableSerializeExample  [   36] : null</p>
+<p>2016-07-28 22:14:53.939 - INFO --- [           main] c.e.t.io.ExternalizableSerializeExample  [   51] : ExternalizableObject{name=&#39;null&#39;}</p>
+</blockquote>
+<p>JVM在序列化对象时，发现类实现了接口<code>Externalizable</code>，那么它会调用此对象的<code>writeExternal</code>方法，在反序列化时，则会调用readExternal方法，并不会像前面实现<code>Serializable</code>接口那样通过<code>ObjectOutputStream</code>和<code>ObjectInputStream</code>那样进行对象序列化和反序列化。</p>
+<p>还有一点值得注意：在使用<code>Externalizable</code>进行序列化的时候，在读取对象时，会调用被序列化类的无参构造器去创建一个新的对象，然后再将被保存对象的字段的值分别填充到新对象中。所以，实现<code>Externalizable</code>接口的类必须要提供一个<code>public</code>的无参的构造器，否则会有类似以下错误提示：</p>
+<blockquote>
+<p>Exception in thread &quot;main&quot; java.io.InvalidClassException: com.example.test.io.ExternalizableObject; no valid constructor</p>
+</blockquote>
+<p>修改<code>ExternalizableObject</code>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExternalizableObject</span> <span class="keyword">implements</span> <span class="title">Externalizable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(ExternalizableObject.class);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeExternal</span><span class="params">(ObjectOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"begin serialize object."</span>);</div><div class="line">        out.writeObject(name);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * The readExternal method must read the values in the same sequence</span></div><div class="line"><span class="comment">     * and with the same types as were written by writeExternal.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readExternal</span><span class="params">(ObjectInput in)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"begin deserialize object."</span>);</div><div class="line">        name = (String) in.readObject();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"ExternalizableObject&#123;"</span> +</div><div class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>再次运行<code>ExternalizableSerializeExample.main</code>方法后，输出如下：</p>
+<blockquote>
+<p>2016-07-28 22:31:56.044 - INFO --- [           main] c.example.test.io.ExternalizableObject   [   30] : begin serialize object.</p>
+<p>2016-07-28 22:31:56.055 - INFO --- [           main] c.example.test.io.ExternalizableObject   [   36] : begin deserialize object.</p>
+<p>2016-07-28 22:31:56.057 - INFO --- [           main] c.e.t.io.ExternalizableSerializeExample  [   36] : externalizableObject</p>
+<p>2016-07-28 22:31:56.058 - INFO --- [           main] c.e.t.io.ExternalizableSerializeExample  [   52] : ExternalizableObject{name=&#39;externalizableObject&#39;}</p>
+</blockquote>
+<p>之所以提供<code>Externalizable</code>这个接口，主要是为了定制对象的序列化和反序列化，另外也有性能方面的提升，毕竟<code>Serializable</code>会通过java反射来执行序列化和反序列化，并且会将所有引用对象都进行序列化操作。</p>
+<p>十一、父类没有实现Externalizable</p>
+<p>只要在<code>writeExternal</code>和<code>readExternal</code>方法里以相同的顺序写入和读取父类属性即可：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExternalizableObject</span> <span class="keyword">extends</span> <span class="title">UnSerializableParent</span> <span class="keyword">implements</span> <span class="title">Externalizable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(ExternalizableObject.class);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeExternal</span><span class="params">(ObjectOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"begin serialize object."</span>);</div><div class="line">        out.writeObject(name);</div><div class="line">        out.writeObject(getParent());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readExternal</span><span class="params">(ObjectInput in)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"begin deserialize object."</span>);</div><div class="line">        name = (String) in.readObject();</div><div class="line">        String parent = (String) in.readObject();</div><div class="line">        setParent(parent);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"ExternalizableObject&#123;"</span> +</div><div class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">", parent='"</span> + getParent() + <span class="string">'\''</span> +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果父类也实现了<code>Externalizable</code>接口，则子类的2个实现方法中通过<code>super.writeExternal(out)</code>和<code>super.readExternal(in)</code>调用父类的方法实现即可。</p>
+<h2 id="十一、序列化的数据可以被签名和密封"><a href="#十一、序列化的数据可以被签名和密封" class="headerlink" title="十一、序列化的数据可以被签名和密封"></a>十一、序列化的数据可以被签名和密封</h2><p>如果需要对整个对象进行加密和签名，可以通过使用<code>writeObject</code>和<code>readObject</code>可以实现密码加密和签名管理，但最简单的是将它放在一个<code>javax.crypto.SealedObject</code>和<code>java.security.SignedObject</code>包装器中。两者都是可序列化的，所以将对象包装在<code>SealedObject</code>中，可以围绕原对象创建一个<code>Wrapper</code>，必须有对称密钥才能解密，而且密钥必须单独管理。同样，也可以将<code>SignedObject</code>用于数据验证，并且对称密钥也必须单独管理。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.java2blog.com/2013/03/serialization-in-java.html" target="_blank" rel="external">Serialization in java</a></li>
+<li><a href="http://www.hollischuang.com/archives/1144" target="_blank" rel="external">单例与序列化的那些事儿</a></li>
+<li><a href="http://www.hollischuang.com/archives/1150" target="_blank" rel="external">Java对象的序列化与反序列化</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2016/07/24/ansible-simple-tutorial.html" rel="next" title="ansible simple tutorial">
+                上一篇：ansible simple tutorial
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2016/08/06/tcp-open-and-close.html" rel="prev" title="tcp connection open and close">
+                下一篇：tcp connection open and close
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-序列化简介"><span class="nav-number">1.</span> <span class="nav-text">Java 序列化简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关接口及类"><span class="nav-number">2.</span> <span class="nav-text">相关接口及类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何对Java对象进行序列化与反序列化"><span class="nav-number">3.</span> <span class="nav-text">如何对Java对象进行序列化与反序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、当对象没有实现java-io-Serializable接口时"><span class="nav-number">4.</span> <span class="nav-text">一、当对象没有实现java.io.Serializable接口时</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SerializeDeserializeExample-java"><span class="nav-number">4.1.</span> <span class="nav-text">SerializeDeserializeExample.java</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、SerializableObject实现java-io-Serializable接口"><span class="nav-number">5.</span> <span class="nav-text">二、SerializableObject实现java.io.Serializable接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、为SerializableObject声明serialVersionUID"><span class="nav-number">6.</span> <span class="nav-text">三、为SerializableObject声明serialVersionUID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、当SerializableObject中有其他对象引用时"><span class="nav-number">7.</span> <span class="nav-text">四、当SerializableObject中有其他对象引用时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、手动将UnSerializableReference对象序列化和反序列化"><span class="nav-number">8.</span> <span class="nav-text">五、手动将UnSerializableReference对象序列化和反序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、如果父类是可序列化的，那么子类都是可序列化的"><span class="nav-number">9.</span> <span class="nav-text">六、如果父类是可序列化的，那么子类都是可序列化的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、如果父类是不可序列化的，而子类实现了java-io-Serializable接口"><span class="nav-number">10.</span> <span class="nav-text">七、如果父类是不可序列化的，而子类实现了java.io.Serializable接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、不能序列化static属性"><span class="nav-number">11.</span> <span class="nav-text">八、不能序列化static属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#九、序列化对单例的破坏"><span class="nav-number">12.</span> <span class="nav-text">九、序列化对单例的破坏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#防止序列化破坏单例模式"><span class="nav-number">12.1.</span> <span class="nav-text">防止序列化破坏单例模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十、java-io-Externalizable"><span class="nav-number">13.</span> <span class="nav-text">十、java.io.Externalizable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十一、序列化的数据可以被签名和密封"><span class="nav-number">14.</span> <span class="nav-text">十一、序列化的数据可以被签名和密封</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">15.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

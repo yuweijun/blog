@@ -1,0 +1,575 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="关于1.5中新引进来的jQuery.Deferred方法，在官方文档中的说明摘录部分如下，这个方法实现是基于CommonJS Promises/A的设计模式，这个设计模式主要用于异步编程。其中一种处理模式称为promise，它代表了一种可能会长时间运行而且不一定必须完整的操作的结果。这种模式不会阻塞和等待长时间的操作完成，而是返回一个代表了承诺的（promised）结果的对象。  One patt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jquery-1.5 deferred部分源码分析">
+<meta property="og:url" content="https://www.4e00.com/jquery/2014/07/31/jquery-src-deferred.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="关于1.5中新引进来的jQuery.Deferred方法，在官方文档中的说明摘录部分如下，这个方法实现是基于CommonJS Promises/A的设计模式，这个设计模式主要用于异步编程。其中一种处理模式称为promise，它代表了一种可能会长时间运行而且不一定必须完整的操作的结果。这种模式不会阻塞和等待长时间的操作完成，而是返回一个代表了承诺的（promised）结果的对象。  One patt">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.145Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jquery-1.5 deferred部分源码分析">
+<meta name="twitter:description" content="关于1.5中新引进来的jQuery.Deferred方法，在官方文档中的说明摘录部分如下，这个方法实现是基于CommonJS Promises/A的设计模式，这个设计模式主要用于异步编程。其中一种处理模式称为promise，它代表了一种可能会长时间运行而且不一定必须完整的操作的结果。这种模式不会阻塞和等待长时间的操作完成，而是返回一个代表了承诺的（promised）结果的对象。  One patt">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/jquery/2014/07/31/jquery-src-deferred.html"/>
+
+  <title> jquery-1.5 deferred部分源码分析 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jquery-1.5 deferred部分源码分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2014-07-31T21:35:36+08:00" content="2014-07-31">
+              2014-07-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/jquery/" itemprop="url" rel="index">
+                    <span itemprop="name">jquery</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>关于1.5中新引进来的jQuery.Deferred方法，在官方文档中的说明摘录部分如下，这个方法实现是基于CommonJS Promises/A的设计模式，这个设计模式主要用于异步编程。其中一种处理模式称为promise，它代表了一种可能会长时间运行而且不一定必须完整的操作的结果。这种模式不会阻塞和等待长时间的操作完成，而是返回一个代表了承诺的（promised）结果的对象。</p>
+<blockquote>
+<p>One pattern is a promise, which represents the result of a potentially long running and not necessarily complete operation. Instead of blocking and waiting for the long-running computation to complete, the pattern returns an object which represents the promised result.</p>
+</blockquote>
+<p>关于Deferred/Promise的一些外部资源：</p>
+<ol>
+<li><a href="http://api.jquery.com/category/deferred-object/" target="_blank" rel="external">Deferred Object of jQuery</a></li>
+<li><a href="http://dojotoolkit.org/reference-guide/dojo/Deferred.html" target="_blank" rel="external">dojo.Deferred</a></li>
+<li><a href="http://www.infoq.com/cn/news/2011/09/js-promise" target="_blank" rel="external">JavaScript异步编程的Promise模式</a></li>
+<li><a href="http://blogs.msdn.com/b/ie/archive/2011/09/11/asynchronous-programming-in-javascript-with-promises.aspx" target="_blank" rel="external">Asynchronous Programming in JavaScript with “Promises”</a></li>
+<li><a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="external">CommonJS Promise/A</a></li>
+<li><a href="http://javascript.ruanyifeng.com/jquery/deferred.html" target="_blank" rel="external">jQuery.Deferred对象 -- JavaScript 标准参考教程（alpha）</a>，这份说明是后来网上看到补上的，写得很好。</li>
+</ol>
+<p>jQuery的Deferred实现代码量不多，但要看懂源代码还是相当的费神，回调非常多:</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="comment">// Promise methods</span></div><div class="line">promiseMethods = <span class="string">"done fail isResolved isRejected promise then always pipe"</span>.split( <span class="string">" "</span> ),</div><div class="line"><span class="comment">// Static reference to slice</span></div><div class="line">sliceDeferred = [].slice;</div><div class="line"></div><div class="line">jQuery.extend(&#123;</div><div class="line"><span class="comment">// Create a simple deferred (one callbacks list)</span></div><div class="line">_Deferred: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> <span class="comment">// callbacks list</span></div><div class="line">        callbacks = [],</div><div class="line">        <span class="comment">// stored [ context , args ]</span></div><div class="line">        fired,</div><div class="line">        <span class="comment">// to avoid firing when already doing so</span></div><div class="line">        firing,</div><div class="line">        <span class="comment">// flag to know if the deferred has been cancelled</span></div><div class="line">        cancelled,</div><div class="line">        <span class="comment">// the deferred itself</span></div><div class="line">        deferred  = &#123;</div><div class="line"></div><div class="line">            <span class="comment">// done( f1, f2, ...)</span></div><div class="line">            done: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">if</span> ( !cancelled ) &#123;</div><div class="line">                    <span class="keyword">var</span> args = <span class="built_in">arguments</span>,</div><div class="line">                        i,</div><div class="line">                        length,</div><div class="line">                        elem,</div><div class="line">                        type,</div><div class="line">                        _fired;</div><div class="line">                    <span class="keyword">if</span> ( fired ) &#123;</div><div class="line">                        _fired = fired;</div><div class="line">                        fired = <span class="number">0</span>;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">for</span> ( i = <span class="number">0</span>, length = args.length; i &lt; length; i++ ) &#123;</div><div class="line">                        elem = args[ i ];</div><div class="line">                        type = jQuery.type( elem );</div><div class="line">                        <span class="keyword">if</span> ( type === <span class="string">"array"</span> ) &#123;</div><div class="line">                            deferred.done.apply( deferred, elem );</div><div class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( type === <span class="string">"function"</span> ) &#123;</div><div class="line">                            callbacks.push( elem );</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">if</span> ( _fired ) &#123;</div><div class="line">                        deferred.resolveWith( _fired[ <span class="number">0</span> ], _fired[ <span class="number">1</span> ] );</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">            &#125;,</div><div class="line"></div><div class="line">            <span class="comment">// resolve with given context and args</span></div><div class="line">            resolveWith: <span class="function"><span class="keyword">function</span>(<span class="params"> context, args </span>) </span>&#123;</div><div class="line">                <span class="keyword">if</span> ( !cancelled &amp;&amp; !fired &amp;&amp; !firing ) &#123;</div><div class="line">                    <span class="comment">// make sure args are available (#8421)</span></div><div class="line">                    args = args || [];</div><div class="line">                    firing = <span class="number">1</span>;</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        <span class="keyword">while</span>( callbacks[ <span class="number">0</span> ] ) &#123;</div><div class="line">                            callbacks.shift().apply( context, args );</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">finally</span> &#123;</div><div class="line">                        fired = [ context, args ];</div><div class="line">                        firing = <span class="number">0</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">            &#125;,</div><div class="line"></div><div class="line">            <span class="comment">// resolve方法将deferred对象的状态从pending改为resolved，reject方法则将状态从pending改为rejected。</span></div><div class="line">            <span class="comment">// resolve with this as context and given arguments</span></div><div class="line">            resolve: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                deferred.resolveWith( <span class="keyword">this</span>, <span class="built_in">arguments</span> );</div><div class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">            &#125;,</div><div class="line"></div><div class="line">            <span class="comment">// Has this deferred been resolved?</span></div><div class="line">            isResolved: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">return</span> !!( firing || fired );</div><div class="line">            &#125;,</div><div class="line"></div><div class="line">            <span class="comment">// Cancel</span></div><div class="line">            cancel: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                cancelled = <span class="number">1</span>;</div><div class="line">                callbacks = [];</div><div class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> deferred;</div><div class="line">&#125;,</div><div class="line"></div><div class="line"><span class="comment">// Full fledged deferred (two callbacks list)</span></div><div class="line">Deferred: <span class="function"><span class="keyword">function</span>(<span class="params"> func </span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> deferred = jQuery._Deferred(),</div><div class="line">        failDeferred = jQuery._Deferred(),</div><div class="line">        promise;</div><div class="line"></div><div class="line">    <span class="comment">// deferred对象在状态改变时，会触发回调函数。</span></div><div class="line">    <span class="comment">// done方法指定状态变为resolved（操作成功）时的回调函数；</span></div><div class="line">    <span class="comment">// fail方法指定状态变为rejected（操作失败）时的回调函数；</span></div><div class="line">    <span class="comment">// always方法指定，不管状态变为resolved或rejected，都会触发的方法。</span></div><div class="line">    <span class="comment">// Add errorDeferred methods, then and promise</span></div><div class="line">    jQuery.extend( deferred, &#123;</div><div class="line">        then: <span class="function"><span class="keyword">function</span>(<span class="params"> doneCallbacks, failCallbacks </span>) </span>&#123;</div><div class="line">            deferred.done( doneCallbacks ).fail( failCallbacks );</div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;,</div><div class="line">        always: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> deferred.done.apply( deferred, <span class="built_in">arguments</span> ).fail.apply( <span class="keyword">this</span>, <span class="built_in">arguments</span> );</div><div class="line">        &#125;,</div><div class="line">        fail: failDeferred.done,</div><div class="line">        rejectWith: failDeferred.resolveWith,</div><div class="line">        reject: failDeferred.resolve,</div><div class="line">        isRejected: failDeferred.isResolved,</div><div class="line">        pipe: <span class="function"><span class="keyword">function</span>(<span class="params"> fnDone, fnFail </span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> jQuery.Deferred(<span class="function"><span class="keyword">function</span>(<span class="params"> newDefer </span>) </span>&#123;</div><div class="line">                jQuery.each( &#123;</div><div class="line">                    done: [ fnDone, <span class="string">"resolve"</span> ],</div><div class="line">                    fail: [ fnFail, <span class="string">"reject"</span> ]</div><div class="line">                &#125;, <span class="function"><span class="keyword">function</span>(<span class="params"> handler, data </span>) </span>&#123;</div><div class="line">                    <span class="keyword">var</span> fn = data[ <span class="number">0</span> ],</div><div class="line">                        action = data[ <span class="number">1</span> ],</div><div class="line">                        returned;</div><div class="line">                    <span class="keyword">if</span> ( jQuery.isFunction( fn ) ) &#123;</div><div class="line">                        deferred[ handler ](<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                            returned = fn.apply( <span class="keyword">this</span>, <span class="built_in">arguments</span> );</div><div class="line">                            <span class="keyword">if</span> ( returned &amp;&amp; jQuery.isFunction( returned.promise ) ) &#123;</div><div class="line">                                returned.promise().then( newDefer.resolve, newDefer.reject );</div><div class="line">                            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                                newDefer[ action + <span class="string">"With"</span> ]( <span class="keyword">this</span> === deferred ? newDefer : <span class="keyword">this</span>, [ returned ] );</div><div class="line">                            &#125;</div><div class="line">                        &#125;);</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        deferred[ handler ]( newDefer[ action ] );</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">            &#125;).promise();</div><div class="line">        &#125;,</div><div class="line">        <span class="comment">// Get a promise for this deferred</span></div><div class="line">        <span class="comment">// If obj is provided, the promise aspect is added to the object</span></div><div class="line">        promise: <span class="function"><span class="keyword">function</span>(<span class="params"> obj </span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> ( obj == <span class="literal">null</span> ) &#123;</div><div class="line">                <span class="keyword">if</span> ( promise ) &#123;</div><div class="line">                    <span class="keyword">return</span> promise;</div><div class="line">                &#125;</div><div class="line">                promise = obj = &#123;&#125;;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">var</span> i = promiseMethods.length;</div><div class="line">            <span class="keyword">while</span>( i-- ) &#123;</div><div class="line">                obj[ promiseMethods[i] ] = deferred[ promiseMethods[i] ];</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> obj;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    <span class="comment">// Make sure only one callback list will be used</span></div><div class="line">    deferred.done( failDeferred.cancel ).fail( deferred.cancel );</div><div class="line">    <span class="comment">// Unexpose cancel</span></div><div class="line">    <span class="keyword">delete</span> deferred.cancel;</div><div class="line">    <span class="comment">// Call given func if any</span></div><div class="line">    <span class="keyword">if</span> ( func ) &#123;</div><div class="line">        func.call( deferred, deferred );</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> deferred;</div><div class="line">&#125;,</div><div class="line"></div><div class="line"><span class="comment">// Deferred helper</span></div><div class="line">when: <span class="function"><span class="keyword">function</span>(<span class="params"> firstParam </span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> args = <span class="built_in">arguments</span>,</div><div class="line">        i = <span class="number">0</span>,</div><div class="line">        length = args.length,</div><div class="line">        count = length,</div><div class="line">        deferred = length &lt;= <span class="number">1</span> &amp;&amp; firstParam &amp;&amp; jQuery.isFunction( firstParam.promise ) ?</div><div class="line">            firstParam :</div><div class="line">            jQuery.Deferred();</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">resolveFunc</span>(<span class="params"> i </span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"> value </span>) </span>&#123;</div><div class="line">            args[ i ] = <span class="built_in">arguments</span>.length &gt; <span class="number">1</span> ? sliceDeferred.call( <span class="built_in">arguments</span>, <span class="number">0</span> ) : value;</div><div class="line">            <span class="keyword">if</span> ( !( --count ) ) &#123;</div><div class="line">                <span class="comment">// Strange bug in FF4:</span></div><div class="line">                <span class="comment">// Values changed onto the arguments object sometimes end up as undefined values</span></div><div class="line">                <span class="comment">// outside the $.when method. Cloning the object into a fresh array solves the issue</span></div><div class="line">                deferred.resolveWith( deferred, sliceDeferred.call( args, <span class="number">0</span> ) );</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> ( length &gt; <span class="number">1</span> ) &#123;</div><div class="line">        <span class="keyword">for</span>( ; i &lt; length; i++ ) &#123;</div><div class="line">            <span class="keyword">if</span> ( args[ i ] &amp;&amp; jQuery.isFunction( args[ i ].promise ) ) &#123;</div><div class="line">                args[ i ].promise().then( resolveFunc(i), deferred.reject );</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                --count;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ( !count ) &#123;</div><div class="line">            deferred.resolveWith( deferred, args );</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( deferred !== firstParam ) &#123;</div><div class="line">        deferred.resolveWith( deferred, length ? [ firstParam ] : [] );</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> deferred.promise();</div><div class="line">&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在jQuery中Promise对象不是通过构造函数来产生的，一般是通过jQuery.prototype.promise()方法和deferred.promise(obj)方法来产生的，对象的实例方法是Deferred对象的方法子集，这些方法不能修改promise对象的状态，但可以添加新的回调，官方说明摘录如下：</p>
+<blockquote>
+<p>The Promise exposes only the Deferred methods needed to attach additional handlers or determine the state (then, done, fail, isResolved, and isRejected), but not ones that change the state (resolve, reject, resolveWith, and rejectWith). As of jQuery 1.6, the Promise also exposes the always and pipe Deferred methods.</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 一般情况下，从外部改变第三方完成的异步操作（比如Ajax）的状态是毫无意义的。为了防止用户这样做，可以在deferred对象的基础上，返回一个针对它的promise对象。</span></div><div class="line"><span class="comment">// 简单说，promise对象就是不能改变状态的deferred对象，也就是deferred的只读版。或者更通俗地理解成，promise是一个对将要完成的任务的承诺，排除了其他人破坏这个承诺的可能性，只能等待承诺方给出结果。</span></div><div class="line"><span class="comment">// 你可以通过promise对象，为原始的deferred对象添加回调函数，查询它的状态，但是无法改变它的状态，也就是说promise对象不允许你调用resolve和reject方法。</span></div><div class="line"><span class="keyword">var</span> <span class="comment">// Promise methods</span></div><div class="line">promiseMethods = <span class="string">"done fail isResolved isRejected promise then always pipe"</span>.split( <span class="string">" "</span> ),</div><div class="line"><span class="comment">// Static reference to slice</span></div><div class="line">sliceDeferred = [].slice;</div><div class="line"></div><div class="line">jQuery.extend(&#123;</div><div class="line"><span class="comment">// 其实这个方法只是一个简单的回调对象的队列，加入了队列元素添加移除控制和状态控制，队列有状态标记：canceled, fired, firing</span></div><div class="line"><span class="comment">// 要理解下面Deferred对象二个队列(done和fail)是怎么添加回调对象的，其关键是在_Deferred的一些方法里引用了其定义时的变量deferred，比如在done, resole方法中，而非使用this来指向deferred这个对象，因为在Deferred这个方法里有2个deferred的实例对象(failDeferred和deferred)，其中failDeferred对象的done方法被另外deferred对象作为fail方法引用了，如果在done方法中使用this，这个时候，this是指向deferred的，而不是failDeferred，那就不能将fail使用的回调对象放到failDeferred的队列中了</span></div><div class="line"><span class="comment">// Create a simple deferred (one callbacks list)</span></div><div class="line">_Deferred: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;...&#125;,</div><div class="line"></div><div class="line"><span class="comment">// 这个方法调用返回jQuery.Deferred对象，这个对象中通过2个_Deferred对象，维护了2个回调对象的队列，一个是Deferred运行成功时执行的回调对象队列，另外一个则是在Deferred运行失败后执行的回调对象队列，另外为第1个deferred对象，添加了一些新方法，如： fail: failDeferred.done, rejectWith: failDeferred.resolveWith, reject: failDeferred.resolve</span></div><div class="line"><span class="comment">// Full fledged deferred (two callbacks list)</span></div><div class="line">Deferred: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;...&#125;,</div><div class="line"></div><div class="line"><span class="comment">// jQuery.when()方法执行后返回一个Promise对象实例，传给when的参数如果是回调对象列表，当回调全部执行完成并且成功之后，会调用promise.done()方法，否则调用promise.fail()方法</span></div><div class="line"><span class="comment">// Deferred helper</span></div><div class="line">when: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;...&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>1.6中新添加的pipe方法:<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">pipe: <span class="function"><span class="keyword">function</span>(<span class="params"> fnDone, fnFail </span>) </span>&#123;</div><div class="line">    <span class="comment">// 根据上面的代码说明，可以明白pipe方法中那个newDefer参数，就是其jQuery.Deferred()方法调用生成的deferred对象</span></div><div class="line">    <span class="keyword">return</span> jQuery.Deferred(<span class="function"><span class="keyword">function</span>(<span class="params"> newDefer </span>) </span>&#123;</div><div class="line">        jQuery.each( &#123;</div><div class="line">            done: [ fnDone, <span class="string">"resolve"</span> ],</div><div class="line">            fail: [ fnFail, <span class="string">"reject"</span> ]</div><div class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params"> handler, data </span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> fn = data[ <span class="number">0</span> ],</div><div class="line">                action = data[ <span class="number">1</span> ],</div><div class="line">                returned;</div><div class="line">            <span class="keyword">if</span> ( jQuery.isFunction( fn ) ) &#123;</div><div class="line">                <span class="comment">// 即deferred.done(fn), deferred.fail(fn)，为deferred添加done/fail回调对象</span></div><div class="line">                deferred[ handler ](<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                    <span class="comment">// 此处fnDone会收到deferred.resolve(arguments)传过来的参数，fnFail类似收到deferred.reject(arguments)的参数</span></div><div class="line">                    returned = fn.apply( <span class="keyword">this</span>, <span class="built_in">arguments</span> );</div><div class="line">                    <span class="keyword">if</span> ( returned &amp;&amp; jQuery.isFunction( returned.promise ) ) &#123;</div><div class="line">                        returned.promise().then( newDefer.resolve, newDefer.reject );</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        <span class="comment">// 返回不是回调对象，则触发新的newDefer对象的resolveWith/rejectWith方法，进而触发newDefer上绑定的done/fail回调对象队列执行</span></div><div class="line">                        newDefer[ action + <span class="string">"With"</span> ]( <span class="keyword">this</span> === deferred ? newDefer : <span class="keyword">this</span>, [ returned ] );</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                deferred[ handler ]( newDefer[ action ] );</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;).promise();</div><div class="line">&#125;,</div></pre></td></tr></table></figure></p>
+<p>$.Deferred()的用例，可以查看jQuery-1.5.js版本中的ajax方法，在什么时机调用resolveWith：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">done</span>(<span class="params"> status, statusText, responses, headers</span>) </span>&#123;</div><div class="line">    <span class="comment">// ... 省略部分源码</span></div><div class="line">    <span class="comment">// Success/Error</span></div><div class="line">    <span class="keyword">if</span> ( isSuccess ) &#123;</div><div class="line">        <span class="comment">// ajax完成之后触发deferred.resolveWith</span></div><div class="line">        deferred.resolveWith( callbackContext, [ success, statusText, jXHR ] );</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        deferred.rejectWith( callbackContext, [ jXHR, statusText, error ] );</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Status-dependent callbacks</span></div><div class="line">    jXHR.statusCode( statusCode );</div><div class="line">    statusCode = <span class="literal">undefined</span>;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( s.global ) &#123;</div><div class="line">        globalEventContext.trigger( <span class="string">"ajax"</span> + ( isSuccess ? <span class="string">"Success"</span> : <span class="string">"Error"</span> ),</div><div class="line">                [ jXHR, s, isSuccess ? success : error ] );</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Complete</span></div><div class="line">    completeDeferred.resolveWith( callbackContext, [ jXHR, statusText ] );</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( s.global ) &#123;</div><div class="line">        globalEventContext.trigger( <span class="string">"ajaxComplete"</span>, [ jXHR, s] );</div><div class="line">        <span class="comment">// Handle the global AJAX counter</span></div><div class="line">        <span class="keyword">if</span> ( !( --jQuery.active ) ) &#123;</div><div class="line">            jQuery.event.trigger( <span class="string">"ajaxStop"</span> );</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Attach deferreds</span></div><div class="line">deferred.promise( jXHR );</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/jquery/2014/07/31/jquery-src-data.html" rel="next" title="jquery-1.4.2 data部分源码分析">
+                上一篇：jquery-1.4.2 data部分源码分析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/jquery/2014/07/31/jquery-src-dimensions.html" rel="prev" title="jquery-1.4.2 dimensions部分源码分析">
+                下一篇：jquery-1.4.2 dimensions部分源码分析
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

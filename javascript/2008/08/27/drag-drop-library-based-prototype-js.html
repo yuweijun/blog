@@ -1,0 +1,555 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="drag and drop - based Prototype and imitate script.aculo.us dragdrop.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="drag and drop javascript library based prototype.js">
+<meta property="og:url" content="https://www.4e00.com/javascript/2008/08/27/drag-drop-library-based-prototype-js.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="drag and drop - based Prototype and imitate script.aculo.us dragdrop.js">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.137Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="drag and drop javascript library based prototype.js">
+<meta name="twitter:description" content="drag and drop - based Prototype and imitate script.aculo.us dragdrop.js">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2008/08/27/drag-drop-library-based-prototype-js.html"/>
+
+  <title> drag and drop javascript library based prototype.js | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                drag and drop javascript library based prototype.js
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2008-08-27T00:50:00+08:00" content="2008-08-27">
+              2008-08-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>drag and drop - based Prototype and imitate script.aculo.us dragdrop.js</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">DragController = &#123;</div><div class="line">    drags: [],</div><div class="line">    dragging: <span class="literal">false</span>,</div><div class="line">    currentDrag: <span class="literal">null</span>,</div><div class="line">    register: <span class="function"><span class="keyword">function</span>(<span class="params">drag</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.drags.length == <span class="number">0</span>) &#123;</div><div class="line">            Event.observe(<span class="built_in">document</span>, <span class="string">"mouseup"</span>, <span class="keyword">this</span>.endDrag.bindAsEventListener(<span class="keyword">this</span>));</div><div class="line">            Event.observe(<span class="built_in">document</span>, <span class="string">"mousemove"</span>, <span class="keyword">this</span>.updateDrag.bindAsEventListener(<span class="keyword">this</span>));</div><div class="line">            Event.observe(<span class="built_in">document</span>, <span class="string">"keypress"</span>, <span class="keyword">this</span>.keyPress.bindAsEventListener(<span class="keyword">this</span>));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">this</span>.drags.push(drag);</div><div class="line">    &#125;,</div><div class="line">    updateDrag: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">        <span class="keyword">this</span>.currentDrag &amp;&amp; <span class="keyword">this</span>.currentDrag.updateDrag(event);</div><div class="line">    &#125;,</div><div class="line">    endDrag: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">        <span class="keyword">this</span>.currentDrag &amp;&amp; <span class="keyword">this</span>.currentDrag.endDrag(event, <span class="literal">true</span>);</div><div class="line">    &#125;,</div><div class="line">    keyPress: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">        <span class="keyword">this</span>.currentDrag &amp;&amp; <span class="keyword">this</span>.currentDrag.keyPress(event);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Drag = Class.create(&#123;</div><div class="line">    initialize: <span class="function"><span class="keyword">function</span>(<span class="params">element</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> defaults = &#123;</div><div class="line">            handle: <span class="literal">false</span>,</div><div class="line">            zindex: <span class="number">1000</span>,</div><div class="line">            revert: <span class="literal">false</span>,</div><div class="line">            ghosting: <span class="literal">false</span>,</div><div class="line">            opacity: <span class="number">0.0</span></div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">this</span>.element = $(element);</div><div class="line">        <span class="keyword">this</span>.options = <span class="built_in">Object</span>.extend(defaults, <span class="built_in">arguments</span>[<span class="number">1</span>] || &#123;&#125;);</div><div class="line">        DragController.register(element);</div><div class="line">        <span class="comment">// fix IE position problem.</span></div><div class="line">        <span class="keyword">if</span> (Prototype.Browser.IE) &#123;</div><div class="line">            <span class="keyword">var</span> position = <span class="keyword">this</span>.element.style.position;</div><div class="line">            <span class="keyword">if</span> (position == <span class="string">'static'</span> || !position) <span class="keyword">this</span>.element.style.position = <span class="string">'relative'</span>;</div><div class="line">        &#125;</div><div class="line">        Event.observe(element, <span class="string">"mousedown"</span>, <span class="keyword">this</span>.startDrag.bindAsEventListener(<span class="keyword">this</span>));</div><div class="line">    &#125;,</div><div class="line">    startDrag: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (Event.isLeftClick(event)) &#123;</div><div class="line">            <span class="keyword">this</span>.relativePosition = [<span class="keyword">this</span>.element.style.left, <span class="keyword">this</span>.element.style.top];</div><div class="line">            <span class="keyword">this</span>.clone = <span class="keyword">this</span>.element.cloneNode(<span class="literal">true</span>);</div><div class="line">            <span class="keyword">this</span>.positionAbsolutize();</div><div class="line">            <span class="keyword">this</span>.element.parentNode.insertBefore(<span class="keyword">this</span>.clone, <span class="keyword">this</span>.element);</div><div class="line">            <span class="keyword">this</span>.originalOpacity = <span class="keyword">this</span>.element.getOpacity();</div><div class="line">            <span class="keyword">this</span>.element.setOpacity(<span class="number">0.7</span>);</div><div class="line">            <span class="keyword">if</span> (!<span class="keyword">this</span>.options.ghosting) &#123;</div><div class="line">                <span class="keyword">this</span>.clone.setOpacity(<span class="keyword">this</span>.options.opacity);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">this</span>.element.style.zIndex = <span class="keyword">this</span>.options.zindex;</div><div class="line">            <span class="keyword">this</span>.element.style.cursor = <span class="string">"move"</span>;</div><div class="line">            <span class="comment">// hack safari inline element shadow problem.</span></div><div class="line">            <span class="comment">// this negative effect is block-level element display inline</span></div><div class="line">            <span class="keyword">if</span> (Prototype.Browser.WebKit &amp;&amp; <span class="keyword">this</span>.element.style.display != <span class="string">"block"</span> &amp;&amp; [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"i"</span>, <span class="string">"q"</span>, <span class="string">"s"</span>, <span class="string">"em"</span>, <span class="string">"big"</span>, <span class="string">"sup"</span>, <span class="string">"sub"</span>, <span class="string">"abbr"</span>, <span class="string">"code"</span>, <span class="string">"cite"</span>, <span class="string">"span"</span>, <span class="string">"quote"</span>, <span class="string">"small"</span>, <span class="string">"strike"</span>, <span class="string">"strong"</span>].include(<span class="keyword">this</span>.element.tagName.toLowerCase()))</div><div class="line">                <span class="keyword">this</span>.element.style.display = <span class="string">"inline-block"</span>;</div><div class="line">            <span class="keyword">this</span>.startPointer = [Event.pointerX(event), Event.pointerY(event)];</div><div class="line">            <span class="keyword">this</span>.positionedOffset = [<span class="keyword">this</span>.element.offsetLeft, <span class="keyword">this</span>.element.offsetTop];</div><div class="line">            DragController.dragging = <span class="literal">true</span>;</div><div class="line">            DragController.currentDrag = <span class="keyword">this</span>;</div><div class="line">        &#125;</div><div class="line">        Event.stop(event);</div><div class="line">    &#125;,</div><div class="line">    updateDrag: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (DragController.dragging) &#123;</div><div class="line">            <span class="keyword">var</span> currentPointer = [Event.pointerX(event), Event.pointerY(event)];</div><div class="line">            <span class="keyword">this</span>.element.style.left = (currentPointer[<span class="number">0</span>] - <span class="keyword">this</span>.startPointer[<span class="number">0</span>] + <span class="keyword">this</span>.positionedOffset[<span class="number">0</span>] - <span class="built_in">parseInt</span>(<span class="keyword">this</span>.element.style.marginLeft || <span class="number">0</span>)) + <span class="string">"px"</span>;</div><div class="line">            <span class="keyword">this</span>.element.style.top = (currentPointer[<span class="number">1</span>] - <span class="keyword">this</span>.startPointer[<span class="number">1</span>] + <span class="keyword">this</span>.positionedOffset[<span class="number">1</span>] - <span class="built_in">parseInt</span>(<span class="keyword">this</span>.element.style.marginTop || <span class="number">0</span>)) + <span class="string">"px"</span>;</div><div class="line">            Drop.show(currentPointer, <span class="keyword">this</span>.element);</div><div class="line">        &#125;</div><div class="line">        Event.stop(event);</div><div class="line">    &#125;,</div><div class="line">    endDrag: <span class="function"><span class="keyword">function</span>(<span class="params">event, success</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (DragController.dragging) &#123;</div><div class="line">            DragController.dragging = <span class="literal">false</span>;</div><div class="line">            DragController.currentDrag = <span class="literal">null</span>;</div><div class="line">            <span class="keyword">this</span>.element.setOpacity(<span class="keyword">this</span>.originalOpacity);</div><div class="line">            <span class="keyword">var</span> currentPointer = [Event.pointerX(event), Event.pointerY(event)];</div><div class="line">            <span class="keyword">this</span>.element.style.position = <span class="string">"relative"</span>;</div><div class="line">            <span class="keyword">this</span>.element.style.left = (currentPointer[<span class="number">0</span>] - <span class="keyword">this</span>.startPointer[<span class="number">0</span>] + <span class="built_in">parseInt</span>(<span class="keyword">this</span>.relativePosition[<span class="number">0</span>] || <span class="number">0</span>)) + <span class="string">"px"</span>;</div><div class="line">            <span class="keyword">this</span>.element.style.top = (currentPointer[<span class="number">1</span>] - <span class="keyword">this</span>.startPointer[<span class="number">1</span>] + <span class="built_in">parseInt</span>(<span class="keyword">this</span>.relativePosition[<span class="number">1</span>] || <span class="number">0</span>)) + <span class="string">"px"</span>;</div><div class="line">            <span class="keyword">this</span>.clone.remove(); <span class="comment">// clone remove must before Drop event fire because clone will hold position</span></div><div class="line">            <span class="keyword">this</span>.clone = <span class="literal">null</span>;</div><div class="line">            <span class="keyword">if</span> (!success) &#123;</div><div class="line">                <span class="keyword">this</span>.revertDrag(event);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">var</span> dropped;</div><div class="line">                <span class="keyword">if</span> (Drop.lastDrop) &#123;</div><div class="line">                    Drop.removeHoverClass();</div><div class="line">                    dropped = Drop.fire(event, <span class="keyword">this</span>.element, Drop.lastDrop);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (!dropped &amp;&amp; <span class="keyword">this</span>.options.revert)</div><div class="line">                    <span class="keyword">this</span>.revertDrag(event);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        Event.stop(event);</div><div class="line">    &#125;,</div><div class="line">    keyPress: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (event.keyCode != Event.KEY_ESC) <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">this</span>.endDrag(event, <span class="literal">false</span>);</div><div class="line">        Event.stop(event);</div><div class="line">    &#125;,</div><div class="line">    revertDrag: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">        <span class="keyword">this</span>.element.style.left = <span class="keyword">this</span>.relativePosition[<span class="number">0</span>];</div><div class="line">        <span class="keyword">this</span>.element.style.top = <span class="keyword">this</span>.relativePosition[<span class="number">1</span>];</div><div class="line">    &#125;,</div><div class="line">    positionAbsolutize: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.element.getStyle(<span class="string">'position'</span>) == <span class="string">'absolute'</span>) <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">var</span> offsets = [<span class="keyword">this</span>.element.offsetLeft, <span class="keyword">this</span>.element.offsetTop];</div><div class="line">        <span class="comment">// offsetLeft include this element's marginLeft value.</span></div><div class="line">        <span class="keyword">var</span> left = offsets[<span class="number">0</span>] - <span class="built_in">parseInt</span>(<span class="keyword">this</span>.element.style.marginLeft || <span class="number">0</span>);</div><div class="line">        <span class="keyword">var</span> top = offsets[<span class="number">1</span>] - <span class="built_in">parseInt</span>(<span class="keyword">this</span>.element.style.marginTop || <span class="number">0</span>);</div><div class="line">        <span class="keyword">this</span>.element.style.position = <span class="string">'absolute'</span>;</div><div class="line">        <span class="keyword">this</span>.element.style.top = top + <span class="string">'px'</span>;</div><div class="line">        <span class="keyword">this</span>.element.style.left = left + <span class="string">'px'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> Drop = &#123;</div><div class="line">    drops: [],</div><div class="line">    lastDrop: <span class="literal">null</span>,</div><div class="line">    add: <span class="function"><span class="keyword">function</span>(<span class="params">element</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> drop = <span class="built_in">Object</span>.extend(&#123;</div><div class="line">            hoverClass: <span class="literal">null</span></div><div class="line">        &#125;, <span class="built_in">arguments</span>[<span class="number">1</span>] || &#123;&#125;);</div><div class="line">        drop.element = $(element);</div><div class="line">        <span class="keyword">this</span>.drops.push(drop);</div><div class="line">    &#125;,</div><div class="line">    isContained: <span class="function"><span class="keyword">function</span>(<span class="params">drag, drop</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> container = drag.parentNode;</div><div class="line">        <span class="keyword">return</span> drop.containers.detect(<span class="function"><span class="keyword">function</span>(<span class="params">c</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> $(c) == container</div><div class="line">        &#125;);</div><div class="line">    &#125;,</div><div class="line">    dragHovered: <span class="function"><span class="keyword">function</span>(<span class="params">pointer, drag, drop</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> ((drop.element != drag) &amp;&amp; ((!drop.containers) || <span class="keyword">this</span>.isContained(drag, drop)) &amp;&amp;</div><div class="line">            Position.within(drop.element, pointer[<span class="number">0</span>], pointer[<span class="number">1</span>]));</div><div class="line">    &#125;,</div><div class="line">    removeHoverClass: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        Element.removeClassName(Drop.lastDrop.element, Drop.lastDrop.hoverclass);</div><div class="line">    &#125;,</div><div class="line">    show: <span class="function"><span class="keyword">function</span>(<span class="params">pointer, drag</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>.drops.length) <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">var</span> hovered = <span class="literal">false</span>;</div><div class="line">        <span class="keyword">this</span>.drops.each(<span class="function"><span class="keyword">function</span>(<span class="params">drop</span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (Drop.dragHovered(pointer, drag, drop)) &#123;</div><div class="line">                hovered = <span class="literal">true</span>;</div><div class="line">                Drop.lastDrop = drop;</div><div class="line">                Element.addClassName(drop.element, drop.hoverclass);</div><div class="line">                <span class="keyword">if</span> (drop.onHover) drop.onHover(drag, drop.element);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        <span class="keyword">if</span> (Drop.lastDrop &amp;&amp; !hovered)</div><div class="line">            <span class="keyword">this</span>.removeHoverClass();</div><div class="line">    &#125;,</div><div class="line">    fire: <span class="function"><span class="keyword">function</span>(<span class="params">event, drag, drop</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (drop &amp;&amp; <span class="keyword">this</span>.dragHovered([Event.pointerX(event), Event.pointerY(event)], drag, drop)) &#123;</div><div class="line">            <span class="keyword">if</span> (drop.onDrop) drop.onDrop(drag, drop.element, event);</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/css/2008/08/27/img-is-an-inline-element.html" rel="next" title="img is an inline element">
+                上一篇：img is an inline element
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/mysql/2008/08/30/mysql-charset-problems.html" rel="prev" title="mysql 数据库字符集问题">
+                下一篇：mysql 数据库字符集问题
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

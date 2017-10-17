@@ -1,0 +1,600 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="java语言中的异常是一个Throwable对象，其下又分二个子类：Error，Exception，Exception又可以分为受检异常和运行时异常(非受检异常)，CheckedException/UncheckedException。 一般Error都是系统级别的错误，一般自定义异常都是继承自Exception，而不要去继承Error。 程序如果抛出Error，不用管它，让JVM去处理吧，如Ou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于java的受检异常">
+<meta property="og:url" content="https://www.4e00.com/java/2012/09/25/about-java-checked-unchecked-exception.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="java语言中的异常是一个Throwable对象，其下又分二个子类：Error，Exception，Exception又可以分为受检异常和运行时异常(非受检异常)，CheckedException/UncheckedException。 一般Error都是系统级别的错误，一般自定义异常都是继承自Exception，而不要去继承Error。 程序如果抛出Error，不用管它，让JVM去处理吧，如Ou">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于java的受检异常">
+<meta name="twitter:description" content="java语言中的异常是一个Throwable对象，其下又分二个子类：Error，Exception，Exception又可以分为受检异常和运行时异常(非受检异常)，CheckedException/UncheckedException。 一般Error都是系统级别的错误，一般自定义异常都是继承自Exception，而不要去继承Error。 程序如果抛出Error，不用管它，让JVM去处理吧，如Ou">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2012/09/25/about-java-checked-unchecked-exception.html"/>
+
+  <title> 关于java的受检异常 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                关于java的受检异常
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2012-09-25T11:32:52+08:00" content="2012-09-25">
+              2012-09-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>java语言中的异常是一个Throwable对象，其下又分二个子类：Error，Exception，Exception又可以分为受检异常和运行时异常(非受检异常)，CheckedException/UncheckedException。</p>
+<p>一般Error都是系统级别的错误，一般自定义异常都是继承自Exception，而不要去继承Error。</p>
+<p>程序如果抛出Error，不用管它，让JVM去处理吧，如OutOfMemoryError。因此代码中不要出现catch Throwable的写法。</p>
+<p>对于受检异常和非受检异常，java有不同的处理规则，如果调用方法签名中使用的是非受检异常，调用者可以不必在代码中捕获它，也不需要在方法签名中声明它。如果调用方法签名里使用了throws子句声明了受检异常，那调用者就被迫对此异常要进行捕获或者在自已的方法签名中声明它们。</p>
+<p>编译器也会自动告诉你，调用方法中是否有抛出受检异常。</p>
+<h2 id="Effective-Java作者Joshua-Bloch的观点"><a href="#Effective-Java作者Joshua-Bloch的观点" class="headerlink" title="Effective Java作者Joshua Bloch的观点"></a>Effective Java作者Joshua Bloch的观点</h2><ol>
+<li>只有在需要捕获异常的情况下才使用异常，不应该用于正常的控制流，优先使用标准的，易理解的模式，如下代码示例一。</li>
+<li>设计良好的API可以通过提供状态检测方法，来避免强迫客户端程序员为了正常的控制流而使用异常，如下代码示例二。</li>
+<li>对可恢复的情况使用受检异常，对编程错误使用运行时异常。(这个说法是正确的，而问题是在于有多少抛出来的受检异常可恢复？又恢复了多少？因此Bloch马上又提到了下面这条准则)。</li>
+<li>避免不必要地使用受检异常。这个在语言设计而言，是一个很好的特性，能强迫程序员处理异常，增强了可靠性，但会使API使用起来非常不方便，给程序员增添了不可忽视的负担。</li>
+<li>在使用到异常的地方，优先使用标准异常而不是自定义异常，这样会使你的代码更具可读性（因为标准异常大家都熟悉），同时也减少了异常类。</li>
+<li>每个抛出异常的方法都要有文档说明，说明抛出异常的条件，对于会抛出运行时异常的方法，可以在文档中描述方法被成功执行的前提条件和代码调用示例。</li>
+<li>提供足够多的异常信息，不要吞掉异常。</li>
+<li>保持异常的原子性，将对象恢复到调用之前的状态。</li>
+<li>不要忽略异常。</li>
+</ol>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 代码示例一</span></div><div class="line"><span class="comment">// Horrible abuse of exceptions. Don't ever do this!</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(<span class="keyword">true</span>)</div><div class="line">    a[i++].f();</div><div class="line">&#125; <span class="keyword">catch</span>(ArrayIndexOutOfBoundsException e) &#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Normal</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123;</div><div class="line">    a[i].f();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 代码示例二</span></div><div class="line"><span class="comment">// standard idiom for iterating over a collection:</span></div><div class="line"><span class="keyword">for</span> (Iterator i = collection.iterator(); i.hasNext(); ) &#123;</div><div class="line">    Foo foo = (Foo) i.next();</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"><span class="comment">// If Iterator lacked the hasNext method, the client would be forced to do the following, instead:</span></div><div class="line"><span class="comment">// Do not use this hideous idiom for iteration over a collection!</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    Iterator i = collection.iterator();</div><div class="line">    <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</div><div class="line">        Foo foo = (Foo) i.next();</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125; <span class="keyword">catch</span> (NoSuchElementException e) &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="常见的标准异常有"><a href="#常见的标准异常有" class="headerlink" title="常见的标准异常有"></a>常见的标准异常有</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">IllegalArgumentException，这个异常表示调用者传递了不合适的参数。一般在检测到参数不正确的时候我们可以抛出这个异常，或者是返回null值或false，结束方法。</div><div class="line">NullPointerException，这个是我们最熟悉的异常了。如果调用者在某个不允许null值的参数中传递了null值，习惯的做法就是抛出NullPointerException异常。</div><div class="line">IndexOutOfBoundsException，如果调用者在某个序列下标的参数中传递了越界的值，应该抛出的就是IndexOutOfBoundsException异常。比如访问超过数组下标的数组元素。</div><div class="line">ConcurrentModificationException，这个异常被设计在java.util包中，用来表示一个单线程的对象正在被并发的修改。</div><div class="line">UnsupportedOperationException，这个异常表示当前对象不支持所请求的操作。比如在实现类中没有实现接口定义的方法，就会抛出这个异常。</div><div class="line">NumberFormatException，这个异常表示数据格式有误，还有一个ArithmeticException异常，表示算术异常，比如在除法运算中传递了0作为除数。</div></pre></td></tr></table></figure>
+<p>Joshua Bloch这其实也是委婉的提出不要太自作聪明的写一堆的BusinessException，java现有提供的异常类型已经非常丰富，先全部熟悉后看是否已经有合适的现有异常类，而不要盲目去定义自已的异常类型。</p>
+<h2 id="think-in-java-作者Bruce-Eckel的观点"><a href="#think-in-java-作者Bruce-Eckel的观点" class="headerlink" title="think in java 作者Bruce Eckel的观点"></a>think in java 作者Bruce Eckel的观点</h2><ol>
+<li>首先java无谓的发明了&quot;受检异常&quot;</li>
+<li>在示例性质的代码和小程序来看，受检异常很不错，但是程序代码变多之后，就会在代码中添加大量的此类无用代码，增加了代码的维护难度。</li>
+<li>有些异常就算抛给程序员，他们也无法提供处理程序，强迫他们处理是不现实的，比如MD5算法生成的异常，Thread.sleep()方法，除了转化为RuntimeException或者捕获扔掉，没什么特别的办法。</li>
+<li>不在于让编译器强制程序员去处理这些受检异常，而是提供一致的错误报告。</li>
+<li>减少编译时施加的约束能显著提高程序员的编程效率。</li>
+<li>强调自动构建和单元测试，以保证程序的健壮性。</li>
+<li>要让java把受检异常从语言中去除，可能性看来很渺茫。</li>
+<li>异常通常被认为是一个工具，使得你可以在运行时报告错误并从错误中恢复，但是怀疑到底有多少这种&quot;恢复&quot;真正得以实现了，这种恢复概率极少。</li>
+<li>java的受检异常会要求程序员把异常处理程序的代码文本附接到会引发异常的调用上，当一个代码块中大量出现try-catch时，这会降低程序的可读性，也使得程序的正常思路被异常处理给破坏了。</li>
+</ol>
+<h2 id="Martin-Fowler的观点"><a href="#Martin-Fowler的观点" class="headerlink" title="Martin Fowler的观点"></a>Martin Fowler的观点</h2><ol>
+<li>总体来说，异常机制很不错，但是java中的&quot;受检异常&quot;带来的麻烦比好处要多。</li>
+</ol>
+<h2 id="Spring作者Rod-Johnson的观点"><a href="#Spring作者Rod-Johnson的观点" class="headerlink" title="Spring作者Rod Johnson的观点"></a>Spring作者Rod Johnson的观点</h2><ol>
+<li>可以通过spring中的代码文档来实际说明：<code>org.springframework.dao.DataAccessException</code>这个异常目的是为了让使用者更好的找到并处理所遇到的错误，而不需要了解特定的底层数据访问API细节，如JDBC。因为这是一个运行时异常，所以用户一般是不需要在方法中写代码来捕获这个异常，因为多数情况下抛出了这个异常都是极严重的问题，应中止代码执行。</li>
+</ol>
+<h2 id="综上关于受检异常的观点"><a href="#综上关于受检异常的观点" class="headerlink" title="综上关于受检异常的观点"></a>综上关于受检异常的观点</h2><ol>
+<li>除了在做框架程序，尽量不要在业务逻辑的代码中，再自定义受检异常，而使用JAVA已经提供的原生异常，提高代码可读性和维护性，不要让别的程序员在调用API时，还要理解并处理陌生的异常，或者是在调用者的方法签名上再抛出异常，严重影响代码可读性。</li>
+<li>对于像Thread.sleep()之类的尽量封装一下工具类，并通过&quot;异常转换&quot;，包装进RuntimeException，通过异常链抛出，保证你不会丢失任何的异常信息，如下异常捕获示例一。</li>
+<li>作为API设计者，只有明白API抛出来的异常，开发程序员能理解并提供处理程序，才合适抛出来，不然只会增加调用程序的负担，增加代码复杂性。可以直接在接口内部使用运行时异常抛出，如下异常捕获示例二。</li>
+<li>作为API调用者，只有在你知道如何处理异常的时候才捕获异常，不然请继续抛出，不要&quot;吞&quot;掉异常。而java的受检异常则会异致这个问题的复杂化，在程序员还没有准备处理错误的时候，被迫加上catch子句，并异致不应该的&quot;异常吞食&quot;。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 异常捕获示例一</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    <span class="comment">// ... to do something useful</span></div><div class="line">&#125; <span class="keyword">catch</span> (IDontKnowWhatToDoWithThisCheckedException e) &#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 异常捕获示例二</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    <span class="comment">// ... to do something useful</span></div><div class="line">&#125; <span class="keyword">catch</span>(ObligatoryException e) &#123;&#125; <span class="comment">// Gulp!</span></div></pre></td></tr></table></figure>
+<h2 id="对比java和ruby文件操作的代码"><a href="#对比java和ruby文件操作的代码" class="headerlink" title="对比java和ruby文件操作的代码"></a>对比java和ruby文件操作的代码</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InputFile</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> BufferedReader in ;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">InputFile</span><span class="params">(String fname)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123; in = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(fname));</div><div class="line">            <span class="comment">// Other code that might throw exceptions</span></div><div class="line">        &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</div><div class="line">            System.out.println(<span class="string">"Could not open "</span> + fname);</div><div class="line">            <span class="comment">// Wasn’t open, so don’t close it</span></div><div class="line">            <span class="keyword">throw</span> e;</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            <span class="comment">// All other exceptions must close it</span></div><div class="line">            <span class="keyword">try</span> &#123; in.close();</div><div class="line">            &#125; <span class="keyword">catch</span> (IOException e2) &#123;</div><div class="line">                System.out.println(<span class="string">"in.close() unsuccessful"</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">throw</span> e; <span class="comment">// Rethrow</span></div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="comment">// Don’t close it here!!!</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getLine</span><span class="params">()</span> </span>&#123;</div><div class="line">        String s;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            s = in.readLine();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"readLine() failed"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> s;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dispose</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123; in.close();</div><div class="line">            System.out.println(<span class="string">"dispose() successful"</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e2) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"in.close() failed"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125; <span class="comment">///:~</span></div></pre></td></tr></table></figure>
+<h2 id="ruby版本读取文件"><a href="#ruby版本读取文件" class="headerlink" title="ruby版本读取文件"></a>ruby版本读取文件</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">File.foreach(<span class="string">"test.html"</span>) &#123; <span class="params">|line|</span></div><div class="line">    puts line</div><div class="line">&#125; <span class="keyword">if</span> File.exist? <span class="string">"test.html"</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/javascript/2012/09/21/introduction-to-xmlhttprequest-level-2.html" rel="next" title="introduction to xmlhttprequest level 2">
+                上一篇：introduction to xmlhttprequest level 2
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2012/09/26/java-jps-process-ps-command.html" rel="prev" title="java的jps命令">
+                下一篇：java的jps命令
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Effective-Java作者Joshua-Bloch的观点"><span class="nav-number">1.</span> <span class="nav-text">Effective Java作者Joshua Bloch的观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的标准异常有"><span class="nav-number">2.</span> <span class="nav-text">常见的标准异常有</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#think-in-java-作者Bruce-Eckel的观点"><span class="nav-number">3.</span> <span class="nav-text">think in java 作者Bruce Eckel的观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Martin-Fowler的观点"><span class="nav-number">4.</span> <span class="nav-text">Martin Fowler的观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring作者Rod-Johnson的观点"><span class="nav-number">5.</span> <span class="nav-text">Spring作者Rod Johnson的观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#综上关于受检异常的观点"><span class="nav-number">6.</span> <span class="nav-text">综上关于受检异常的观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对比java和ruby文件操作的代码"><span class="nav-number">7.</span> <span class="nav-text">对比java和ruby文件操作的代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ruby版本读取文件"><span class="nav-number">8.</span> <span class="nav-text">ruby版本读取文件</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

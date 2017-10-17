@@ -1,0 +1,630 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="本文是关于TCP Keepalive的一些基本知识点和系统设置方式说明，原文TCP Keepalive HOWTO，作者Fabio Busatto &amp;#x66;&amp;#x61;&amp;#98;&amp;#105;&amp;#x6f;&amp;#46;&amp;#x62;&amp;#x75;&amp;#115;&amp;#97;&amp;#116;&amp;#x74;&amp;#x6f;&amp;#64;&amp;#115;&amp;#x69;&amp;#107;&amp;#117;&amp;#114;&amp;#101;&amp;#122;&amp;#12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="howto tcp keep-alive">
+<meta property="og:url" content="https://www.4e00.com/linux/2016/06/19/howto-tcp-keep-alive.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="本文是关于TCP Keepalive的一些基本知识点和系统设置方式说明，原文TCP Keepalive HOWTO，作者Fabio Busatto &amp;#x66;&amp;#x61;&amp;#98;&amp;#105;&amp;#x6f;&amp;#46;&amp;#x62;&amp;#x75;&amp;#115;&amp;#97;&amp;#116;&amp;#x74;&amp;#x6f;&amp;#64;&amp;#115;&amp;#x69;&amp;#107;&amp;#117;&amp;#114;&amp;#101;&amp;#122;&amp;#12">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.4e00.com/blog/img/linux/tcp/tcp-keep-alive-packets.png">
+<meta property="og:updated_time" content="2017-10-16T01:54:04.726Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="howto tcp keep-alive">
+<meta name="twitter:description" content="本文是关于TCP Keepalive的一些基本知识点和系统设置方式说明，原文TCP Keepalive HOWTO，作者Fabio Busatto &amp;#x66;&amp;#x61;&amp;#98;&amp;#105;&amp;#x6f;&amp;#46;&amp;#x62;&amp;#x75;&amp;#115;&amp;#97;&amp;#116;&amp;#x74;&amp;#x6f;&amp;#64;&amp;#115;&amp;#x69;&amp;#107;&amp;#117;&amp;#114;&amp;#101;&amp;#122;&amp;#12">
+<meta name="twitter:image" content="https://www.4e00.com/blog/img/linux/tcp/tcp-keep-alive-packets.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/linux/2016/06/19/howto-tcp-keep-alive.html"/>
+
+  <title> howto tcp keep-alive | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                howto tcp keep-alive
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-06-19T20:02:35+08:00" content="2016-06-19">
+              2016-06-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是关于<code>TCP Keepalive</code>的一些基本知识点和系统设置方式说明，原文<a href="http://www.tldp.org/HOWTO/html_single/TCP-Keepalive-HOWTO/" target="_blank" rel="external">TCP Keepalive HOWTO</a>，作者Fabio Busatto <a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x66;&#x61;&#98;&#105;&#x6f;&#46;&#x62;&#x75;&#115;&#97;&#116;&#x74;&#x6f;&#64;&#115;&#x69;&#107;&#117;&#114;&#101;&#122;&#122;&#x61;&#46;&#x6f;&#x72;&#x67;">&#x66;&#x61;&#98;&#105;&#x6f;&#46;&#x62;&#x75;&#115;&#97;&#116;&#x74;&#x6f;&#64;&#115;&#x69;&#107;&#117;&#114;&#101;&#122;&#122;&#x61;&#46;&#x6f;&#x72;&#x67;</a></p>
+<p>This document describes the TCP keepalive implementation in the linux kernel, introduces the overall concept and points to both system configuration and software development.</p>
+<h2 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h2><ul>
+<li><a href="#introduction">1. Introduction</a></li>
+<li><a href="#tcp-keepalive-overview">2. TCP keepalive overview</a></li>
+<li><a href="#what-is-tcp-keepalive">2.1. What is TCP keepalive?</a></li>
+<li><a href="#why-use-tcp-keepalive">2.2. Why use TCP keepalive?</a></li>
+<li><a href="#checking-for-dead-peers">2.3. Checking for dead peers</a></li>
+<li><a href="#preventing-disconnection-due-to-network-inactivity">2.4. Preventing disconnection due to network inactivity</a></li>
+<li><a href="#using-tcp-keepalive-under-linux">3. Using TCP keepalive under Linux</a></li>
+<li><a href="#configuring-the-kernel">3.1. Configuring the kernel</a></li>
+<li><a href="#making-changes-persistent-to-reboot">3.2. Making changes persistent to reboot</a></li>
+<li><a href="#tcp-keep-alive-packets-dump-example">4.1. tcp keep alive packets dump example</a></li>
+</ul>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>Understanding TCP keepalive is not necessary in most cases, but it&#39;s a subject that can be very useful under particular circumstances. You will need to know basic TCP/IP networking concepts, and the C programming language to understand all sections of this document.</p>
+<p>The main purpose of this HOWTO is to describe TCP keepalive in detail and demonstrate various application situations. After some initial theory, the discussion focuses on the Linux implementation of TCP keepalive routines in the modern Linux kernel releases (2.4.x, 2.6.x), and how system administrators can take advantage of these routines, with specific configuration examples and tricks.</p>
+<h2 id="2-TCP-keepalive-overview"><a href="#2-TCP-keepalive-overview" class="headerlink" title="2. TCP keepalive overview"></a>2. TCP keepalive overview</h2><p>In order to understand what TCP keepalive (which we will just call keepalive) does, you need do nothing more than read the name: keep TCP alive. This means that you will be able to check your connected socket (also known as TCP sockets), and determine whether the connection is still up and running or if it has broken.</p>
+<h2 id="2-1-What-is-TCP-keepalive"><a href="#2-1-What-is-TCP-keepalive" class="headerlink" title="2.1. What is TCP keepalive?"></a>2.1. What is TCP keepalive?</h2><p>The keepalive concept is very simple: when you set up a TCP connection, you associate a set of timers. Some of these timers deal with the keepalive procedure. When the keepalive timer reaches zero, you send your peer a keepalive probe packet with no data in it and the ACK flag turned on. You can do this because of the TCP/IP specifications, as a sort of duplicate ACK, and the remote endpoint will have no arguments, as TCP is a stream-oriented protocol. On the other hand, you will receive a reply from the remote host (which doesn&#39;t need to support keepalive at all, just TCP/IP), with no data and the ACK set.</p>
+<p>If you receive a reply to your keepalive probe, you can assert that the connection is still up and running without worrying about the user-level implementation. In fact, TCP permits you to handle a stream, not packets, and so a zero-length data packet is not dangerous for the user program.</p>
+<p>This procedure is useful because if the other peers lose their connection (for example by rebooting) you will notice that the connection is broken, even if you don&#39;t have traffic on it. If the keepalive probes are not replied to by your peer, you can assert that the connection cannot be considered valid and then take the correct action.</p>
+<h2 id="2-2-Why-use-TCP-keepalive"><a href="#2-2-Why-use-TCP-keepalive" class="headerlink" title="2.2. Why use TCP keepalive?"></a>2.2. Why use TCP keepalive?</h2><p>You can live quite happily without keepalive, so if you&#39;re reading this, you may be trying to understand if keepalive is a possible solution for your problems. Either that or you&#39;ve really got nothing more interesting to do instead, and that&#39;s okay too. :)</p>
+<p>Keepalive is non-invasive, and in most cases, if you&#39;re in doubt, you can turn it on without the risk of doing something wrong. But do remember that it generates extra network traffic, which can have an impact on routers and firewalls.</p>
+<p>In short, use your brain and be careful.</p>
+<p>In the next section we will distinguish between the two target tasks for keepalive: Checking for dead peers</p>
+<p>Preventing disconnection due to network inactivity</p>
+<h2 id="2-3-Checking-for-dead-peers"><a href="#2-3-Checking-for-dead-peers" class="headerlink" title="2.3. Checking for dead peers"></a>2.3. Checking for dead peers</h2><p>Keepalive can be used to advise you when your peer dies before it is able to notify you. This could happen for several reasons, like kernel panic or a brutal termination of the process handling that peer. Another scenario that illustrates when you need keepalive to detect peer death is when the peer is still alive but the network channel between it and you has gone down. In this scenario, if the network doesn&#39;t become operational again, you have the equivalent of peer death. This is one of those situations where normal TCP operations aren&#39;t useful to check the connection status.</p>
+<p>Think of a simple TCP connection between Peer A and Peer B: there is the initial three-way handshake, with one SYN segment from A to B, the SYN/ACK back from B to A, and the final ACK from A to B. At this time, we&#39;re in a stable status: connection is established, and now we would normally wait for someone to send data over the channel. And here comes the problem: unplug the power supply from B and instantaneously it will go down, without sending anything over the network to notify A that the connection is going to be broken. A, from its side, is ready to receive data, and has no idea that B has crashed. Now restore the power supply to B and wait for the system to restart. A and B are now back again, but while A knows about a connection still active with B, B has no idea. The situation resolves itself when A tries to send data to B over the dead connection, and B replies with an RST packet, causing A to finally to close the connection.</p>
+<p>Keepalive can tell you when another peer becomes unreachable without the risk of false-positives. In fact, if the problem is in the network between two peers, the keepalive action is to wait some time and then retry, sending the keepalive packet before marking the connection as broken.</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"> _____                                                     _____</div><div class="line">|     |                                                   |     |</div><div class="line">|  A  |                                                   |  B  |</div><div class="line">|_____|                                                   |_____|</div><div class="line">   ^                                                         ^</div><div class="line">   |---&gt;---&gt;---&gt;-------------- SYN --------------&gt;---&gt;---&gt;---|</div><div class="line">   |---&lt;---&lt;---&lt;------------ SYN/ACK ------------&lt;---&lt;---&lt;---|</div><div class="line">   |---&gt;---&gt;---&gt;-------------- ACK --------------&gt;---&gt;---&gt;---|</div><div class="line">   |                                                         |</div><div class="line">   |                                       system crash ---&gt; X</div><div class="line">   |</div><div class="line">   |                                     system restart ---&gt; ^</div><div class="line">   |                                                         |</div><div class="line">   |---&gt;---&gt;---&gt;-------------- PSH --------------&gt;---&gt;---&gt;---|</div><div class="line">   |---&lt;---&lt;---&lt;-------------- RST --------------&lt;---&lt;---&lt;---|</div><div class="line">   |                                                         |</div></pre></td></tr></table></figure>
+<h2 id="2-4-Preventing-disconnection-due-to-network-inactivity"><a href="#2-4-Preventing-disconnection-due-to-network-inactivity" class="headerlink" title="2.4. Preventing disconnection due to network inactivity"></a>2.4. Preventing disconnection due to network inactivity</h2><p>The other useful goal of keepalive is to prevent inactivity from disconnecting the channel. It&#39;s a very common issue, when you are behind a NAT proxy or a firewall, to be disconnected without a reason. This behavior is caused by the connection tracking procedures implemented in proxies and firewalls, which keep track of all connections that pass through them. Because of the physical limits of these machines, they can only keep a finite number of connections in their memory. The most common and logical policy is to keep newest connections and to discard old and inactive connections first.</p>
+<p>Returning to Peers A and B, reconnect them. Once the channel is open, wait until an event occurs and then communicate this to the other peer. What if the event verifies after a long period of time? Our connection has its scope, but it&#39;s unknown to the proxy. So when we finally send data, the proxy isn&#39;t able to correctly handle it, and the connection breaks up.</p>
+<p>Because the normal implementation puts the connection at the top of the list when one of its packets arrives and selects the last connection in the queue when it needs to eliminate an entry, periodically sending packets over the network is a good way to always be in a polar position with a minor risk of deletion.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"> _____           _____                                     _____</div><div class="line">|     |         |     |                                   |     |</div><div class="line">|  A  |         | NAT |                                   |  B  |</div><div class="line">|_____|         |_____|                                   |_____|</div><div class="line">   ^               ^                                         ^</div><div class="line">   |---&gt;---&gt;---&gt;---|----------- SYN -------------&gt;---&gt;---&gt;---|</div><div class="line">   |---&lt;---&lt;---&lt;---|--------- SYN/ACK -----------&lt;---&lt;---&lt;---|</div><div class="line">   |---&gt;---&gt;---&gt;---|----------- ACK -------------&gt;---&gt;---&gt;---|</div><div class="line">   |               |                                         |</div><div class="line">   |               | &lt;--- connection deleted from table      |</div><div class="line">   |               |                                         |</div><div class="line">   |---&gt;- PSH -&gt;---| &lt;--- invalid connection                 |</div><div class="line">   |               |                                         |</div></pre></td></tr></table></figure>
+<h2 id="3-Using-TCP-keepalive-under-Linux"><a href="#3-Using-TCP-keepalive-under-Linux" class="headerlink" title="3. Using TCP keepalive under Linux"></a>3. Using TCP keepalive under Linux</h2><p>Linux has built-in support for keepalive. You need to enable TCP/IP networking in order to use it. You also need procfs support and <code>sysctl</code> support to be able to configure the kernel parameters at runtime.</p>
+<p>The procedures involving keepalive use three user-driven variables:</p>
+<h3 id="tcp-keepalive-time"><a href="#tcp-keepalive-time" class="headerlink" title="tcp_keepalive_time"></a>tcp_keepalive_time</h3><p>the interval between the last data packet sent (simple ACKs are not considered data) and the first keepalive probe; after the connection is marked to need keepalive, this counter is not used any further</p>
+<h3 id="tcp-keepalive-intvl"><a href="#tcp-keepalive-intvl" class="headerlink" title="tcp_keepalive_intvl"></a>tcp_keepalive_intvl</h3><p>the interval between subsequential keepalive probes, regardless of what the connection has exchanged in the meantime</p>
+<h3 id="tcp-keepalive-probes"><a href="#tcp-keepalive-probes" class="headerlink" title="tcp_keepalive_probes"></a>tcp_keepalive_probes</h3><p>the number of unacknowledged probes to send before considering the connection dead and notifying the application layer</p>
+<p>Remember that keepalive support, even if configured in the kernel, is not the default behavior in Linux. Programs must request keepalive control for their sockets using the setsockopt interface. There are relatively few programs implementing keepalive, but you can easily add keepalive support for most of them following the instructions explained later in this document.</p>
+<h2 id="3-1-Configuring-the-kernel"><a href="#3-1-Configuring-the-kernel" class="headerlink" title="3.1. Configuring the kernel"></a>3.1. Configuring the kernel</h2><p>There are two ways to configure keepalive parameters inside the kernel via userspace commands:</p>
+<ol>
+<li>procfs interface</li>
+<li>sysctl interface</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sysctl</span> net.inet.tcp | grep -E <span class="string">"keepidle|keepintvl|keepcnt"</span></div></pre></td></tr></table></figure>
+<p>We mainly discuss how this is accomplished on the procfs interface because it&#39;s the most used, recommended and the easiest to understand. The <code>sysctl</code> interface, particularly regarding the<br><code>sysctl(2)</code> syscall and not the</p>
+<p><code>sysctl(8)</code> tool, is only here for the purpose of background knowledge.</p>
+<h2 id="3-1-1-The-procfs-interface"><a href="#3-1-1-The-procfs-interface" class="headerlink" title="3.1.1. The procfs interface"></a>3.1.1. The procfs interface</h2><p>This interface requires both <code>sysctl</code> and <code>procfs</code> to be built into the kernel, and <code>procfs</code> mounted somewhere in the filesystem (usually on <code>/proc</code>, as in the examples below). You can read the values for the actual parameters by &quot;catting&quot; files in <code>/proc/sys/net/ipv4/</code> directory:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cat</span> /proc/sys/net/ipv4/tcp_keepalive_time</div><div class="line output">7200</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cat</span> /proc/sys/net/ipv4/tcp_keepalive_intvl</div><div class="line output">75</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cat</span> /proc/sys/net/ipv4/tcp_keepalive_probes</div><div class="line output">9</div></pre></td></tr></table></figure>
+<p>The first two parameters are expressed in seconds, and the last is the pure number. This means that the keepalive routines wait for two hours (7200 secs) before sending the first keepalive probe, and then resend it every 75 seconds. If no ACK response is received for nine consecutive times, the connection is marked as broken.</p>
+<p>Modifying this value is straightforward: you need to write new values into the files. Suppose you decide to configure the host so that keepalive starts after ten minutes of channel inactivity, and then send probes in intervals of one minute. Because of the high instability of our network trunk and the low value of the interval, suppose you also want to increase the number of probes to 20.</p>
+<p>Here&#39;s how we would change the settings:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">echo</span> 600 &gt; /proc/sys/net/ipv4/tcp_keepalive_time</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">echo</span> 60 &gt; /proc/sys/net/ipv4/tcp_keepalive_intvl</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">echo</span> 20 &gt; /proc/sys/net/ipv4/tcp_keepalive_probes</div></pre></td></tr></table></figure>
+<p>To be sure that all succeeds, recheck the files and confirm these new values are showing in place of the old ones.</p>
+<p>Remember that procfs handles special files, and you cannot perform any sort of operation on them because they&#39;re just an interface within the kernel space, not real files, so try your scripts before using them, and try to use simple access methods as in the examples shown earlier.</p>
+<p>You can access the interface through the <code>sysctl(8)</code> tool, specifying what you want to read or write.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sysctl</span> net.ipv4.tcp_keepalive_time net.ipv4.tcp_keepalive_intvl net.ipv4.tcp_keepalive_probes</div><div class="line"></div><div class="line output">net.ipv4.tcp_keepalive_time = 7200</div><div class="line output">net.ipv4.tcp_keepalive_intvl = 75</div><div class="line output">net.ipv4.tcp_keepalive_probes = 9</div></pre></td></tr></table></figure>
+<p>Note that <code>sysctl</code> names are very close to<br>procfs paths. Write is performed using the -w switch of <code>sysctl(8)</code>:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sysctl</span> -w net.ipv4.tcp_keepalive_time=600 net.ipv4.tcp_keepalive_intvl=60 net.ipv4.tcp_keepalive_probes=20</div><div class="line"></div><div class="line output">net.ipv4.tcp_keepalive_time = 600</div><div class="line output">net.ipv4.tcp_keepalive_intvl = 60</div><div class="line output">net.ipv4.tcp_keepalive_probes = 20</div></pre></td></tr></table></figure>
+<p>Note that <code>sysctl(8)</code> doesn&#39;t use <code>sysctl(2)</code> syscall, but reads and writes directly in the procfs subtree, so you will need procfs enabled in the kernel and mounted in the filesystem, just as you would if you directly accessed the files within the procfs interface.</p>
+<p><code>sysctl(8)</code> is just a different way to do the same thing.</p>
+<h2 id="3-1-2-The-sysctl-interface"><a href="#3-1-2-The-sysctl-interface" class="headerlink" title="3.1.2. The sysctl interface"></a>3.1.2. The <code>sysctl</code> interface</h2><p>There is another way to access kernel variables: <code>sysctl(2)</code> syscall. It can be useful when you don&#39;t have procfs available because the communication with the kernel is performed directly via syscall and not through the procfs subtree. There is currently no program that wraps this syscall (remember that <code>sysctl(8)</code> doesn&#39;t use it).</p>
+<p>For more details about using <code>sysctl(2)</code> refer to the manpage.</p>
+<h2 id="3-2-Making-changes-persistent-to-reboot"><a href="#3-2-Making-changes-persistent-to-reboot" class="headerlink" title="3.2. Making changes persistent to reboot"></a>3.2. Making changes persistent to reboot</h2><p>There are several ways to reconfigure your system every time it boots up. First, remember that every Linux distribution has its own set of init scripts called by init (8). The most common configurations include the /etc/rc.d/ directory, or the alternative, /etc/init.d/. In any case, you can set the parameters in any of the startup scripts, because keepalive rereads the values every time its procedures need them. So if you change the value of tcp_keepalive_intvl when the connection is still up, the kernel will use the new value going forward.</p>
+<p>There are three spots where the initialization commands should logically be placed: the first is where your network is configured, the second is the rc.local script, usually included in all distributions, which is known as the place where user configuration setups are done. The third place may already exist in your system. Referring back to the <code>sysctl</code> (8) tool, you can see that the -p switch loads settings from the <code>/etc/sysctl</code>.conf configuration file. In many cases your init script already performs the <code>sysctl -p</code> (you can &quot;grep&quot; it in the configuration directory for confirmation), and so you just have to add the lines in <code>/etc/sysctl</code>.conf to make them load at every boot. For more information about the syntax of <code>sysctl.conf</code>(5), refer to the manpage.</p>
+<p>For more information, visit the libkeepalive project homepage: <a href="http://libkeepalive.sourceforge.net/" target="_blank" rel="external">http://libkeepalive.sourceforge.net/</a></p>
+<h2 id="4-1-tcp-keep-alive-packets-dump-example"><a href="#4-1-tcp-keep-alive-packets-dump-example" class="headerlink" title="4.1. tcp keep-alive packets dump example"></a>4.1. tcp keep-alive packets dump example</h2><img src="/blog/img/linux/tcp/tcp-keep-alive-packets.png" title="[tcp-keep-alive-dump]">
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.tldp.org/HOWTO/html_single/TCP-Keepalive-HOWTO/" target="_blank" rel="external">TCP Keepalive HOWTO</a></li>
+<li><a href="https://github.com/flonatel/libdontdie" target="_blank" rel="external">a library that can be pre-loaded and that sets the TCP KEEP-ALIVE flag whenever socket(2) is called</a></li>
+<li><a href="https://www.w3.org/People/Frystyk/thesis/TcpIp.html" target="_blank" rel="external">The Internet Protocol Stack</a></li>
+<li><a href="http://www.potaroo.net/ispcol/2004-07-isp.htm" target="_blank" rel="external">TCP - How it works</a></li>
+<li><a href="http://www.masterraghu.com/subjects/np/introduction/unix_network_programming_v1.3/ch02lev1sec6.html" target="_blank" rel="external">2.6 TCP Connection Establishment and Termination</a></li>
+<li><a href="http://www.blogjava.net/yongboy/archive/2015/04/14/424413.html" target="_blank" rel="external">随手记之TCP Keepalive笔记</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2016/06/19/bash-scripting-manipulating-variables.html" rel="next" title="advanced bash scripting guide: manipulating variables">
+                上一篇：advanced bash scripting guide: manipulating variables
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/macos/2016/06/21/git-environment-on-mac-os.html" rel="prev" title="git environment on mac os x">
+                下一篇：git environment on mac os x
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Table-of-Contents"><span class="nav-number">1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Introduction"><span class="nav-number">2.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-TCP-keepalive-overview"><span class="nav-number">3.</span> <span class="nav-text">2. TCP keepalive overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-What-is-TCP-keepalive"><span class="nav-number">4.</span> <span class="nav-text">2.1. What is TCP keepalive?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Why-use-TCP-keepalive"><span class="nav-number">5.</span> <span class="nav-text">2.2. Why use TCP keepalive?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Checking-for-dead-peers"><span class="nav-number">6.</span> <span class="nav-text">2.3. Checking for dead peers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-Preventing-disconnection-due-to-network-inactivity"><span class="nav-number">7.</span> <span class="nav-text">2.4. Preventing disconnection due to network inactivity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Using-TCP-keepalive-under-Linux"><span class="nav-number">8.</span> <span class="nav-text">3. Using TCP keepalive under Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-keepalive-time"><span class="nav-number">8.1.</span> <span class="nav-text">tcp_keepalive_time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-keepalive-intvl"><span class="nav-number">8.2.</span> <span class="nav-text">tcp_keepalive_intvl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-keepalive-probes"><span class="nav-number">8.3.</span> <span class="nav-text">tcp_keepalive_probes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-Configuring-the-kernel"><span class="nav-number">9.</span> <span class="nav-text">3.1. Configuring the kernel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-1-The-procfs-interface"><span class="nav-number">10.</span> <span class="nav-text">3.1.1. The procfs interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-2-The-sysctl-interface"><span class="nav-number">11.</span> <span class="nav-text">3.1.2. The sysctl interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-Making-changes-persistent-to-reboot"><span class="nav-number">12.</span> <span class="nav-text">3.2. Making changes persistent to reboot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-tcp-keep-alive-packets-dump-example"><span class="nav-number">13.</span> <span class="nav-text">4.1. tcp keep-alive packets dump example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">14.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

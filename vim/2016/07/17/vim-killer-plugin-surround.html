@@ -1,0 +1,741 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="What&amp;#39;s surround.vim这个插件主要可以用来处理一些标点和标签配对相关的删除(Delete)、修改(Change)和复制(Yank)操作，如&amp;grave;&amp;grave;，&amp;quot;&amp;quot;，&amp;#39;&amp;#39;，&amp;lt;&amp;gt;，()，{}，[]，&amp;lt;p&amp;gt;&amp;lt;/p&amp;gt;和&amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;，所以在HTML、XML的配对标签编辑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim killer plugin surround.vim">
+<meta property="og:url" content="https://www.4e00.com/vim/2016/07/17/vim-killer-plugin-surround.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="What&amp;#39;s surround.vim这个插件主要可以用来处理一些标点和标签配对相关的删除(Delete)、修改(Change)和复制(Yank)操作，如&amp;grave;&amp;grave;，&amp;quot;&amp;quot;，&amp;#39;&amp;#39;，&amp;lt;&amp;gt;，()，{}，[]，&amp;lt;p&amp;gt;&amp;lt;/p&amp;gt;和&amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;，所以在HTML、XML的配对标签编辑">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vim killer plugin surround.vim">
+<meta name="twitter:description" content="What&amp;#39;s surround.vim这个插件主要可以用来处理一些标点和标签配对相关的删除(Delete)、修改(Change)和复制(Yank)操作，如&amp;grave;&amp;grave;，&amp;quot;&amp;quot;，&amp;#39;&amp;#39;，&amp;lt;&amp;gt;，()，{}，[]，&amp;lt;p&amp;gt;&amp;lt;/p&amp;gt;和&amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;，所以在HTML、XML的配对标签编辑">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/vim/2016/07/17/vim-killer-plugin-surround.html"/>
+
+  <title> vim killer plugin surround.vim | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                vim killer plugin surround.vim
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-07-17T12:36:33+08:00" content="2016-07-17">
+              2016-07-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="What-39-s-surround-vim"><a href="#What-39-s-surround-vim" class="headerlink" title="What&#39;s surround.vim"></a>What&#39;s surround.vim</h2><p>这个插件主要可以用来处理一些标点和标签配对相关的删除(Delete)、修改(Change)和复制(Yank)操作，如<code>&grave;&grave;</code>，<code>&quot;&quot;</code>，<code>&#39;&#39;</code>，<code>&lt;&gt;</code>，<code>()</code>，<code>{}</code>，<code>[]</code>，<code>&lt;p&gt;&lt;/p&gt;</code>和<code>&lt;div&gt;&lt;/div&gt;</code>，所以在HTML、XML的配对标签编辑处理时尤其方便。</p>
+<h2 id="Install-surround-vim"><a href="#Install-surround-vim" class="headerlink" title="Install surround.vim"></a>Install surround.vim</h2><p>建议使用<a href="https://github.com/tpope/vim-pathogen" target="_blank" rel="external">pathogen.vim</a>或者是<a href="https://github.com/VundleVim/Vundle.vim" target="_blank" rel="external">vundle.vim</a>来管理vim插件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> ~/.vim/bundle</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">clone</span> git://github.com/tpope/vim-surround.git</div></pre></td></tr></table></figure>
+<h2 id="Help-manual"><a href="#Help-manual" class="headerlink" title="Help manual"></a>Help manual</h2><p>可以通过<code>:h surround</code>命令查看帮助手册，其中有在普通模式中命令操作举例说明，<code>*</code>是指光标所在字母上：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Old text</th>
+<th style="text-align:left">Command</th>
+<th style="text-align:left">New text</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&quot;Hello *world!&quot;</td>
+<td style="text-align:left">ds&quot;</td>
+<td style="text-align:left">Hello world!</td>
+</tr>
+<tr>
+<td style="text-align:left">[123+4*56]/2</td>
+<td style="text-align:left">cs])</td>
+<td style="text-align:left">(123+456)/2</td>
+</tr>
+<tr>
+<td style="text-align:left">&quot;Look ma, I&#39;m *HTML!&quot;</td>
+<td style="text-align:left">cs&quot;<q></q></td>
+<td style="text-align:left"><q>Look ma, I&#39;m HTML!</q></td>
+</tr>
+<tr>
+<td style="text-align:left">if *x&gt;3 {</td>
+<td style="text-align:left">ysW(</td>
+<td style="text-align:left">if ( x&gt;3 ) {</td>
+</tr>
+<tr>
+<td style="text-align:left">my $str = *whee!;</td>
+<td style="text-align:left">vllllS&#39;</td>
+<td style="text-align:left">my $str = &#39;whee!&#39;;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Normal-mode"><a href="#Normal-mode" class="headerlink" title="Normal mode"></a>Normal mode</h2><p>当光标位于<code>Hello world!</code>的Hello这个单词字母上时，按组合命令<code>ysiw]</code>或者是<code>ysiw[</code>，<code>iw</code>是一个<code>text-object</code>，下面另详细说明。结果分别如下，用<code>[</code>生成的配对标点带有空格：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Hello] world!</div><div class="line"></div><div class="line">[ Hello ] world!</div></pre></td></tr></table></figure>
+<p>在如上结果上执行命令<code>cs]}</code>或者是<code>cs]{</code>，<code>cs</code>命令可以理解为<code>Change Surround</code>，结果如下，用<code>{</code>生成的配对标点带有空格：</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&#123;Hello&#125; world!</div><div class="line"></div><div class="line">&#123; Hello &#125; world!</div></pre></td></tr></table></figure>
+<p>使用<code>yssb</code>或者是<code>yss)</code>命令将整行记录用小括号包起来：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">(&#123; Hello &#125; world!)</div></pre></td></tr></table></figure>
+<p>上面命令<code>yssb</code>中的<code>b</code>是指右半边小括号<code>)</code>，另外还有字母<code>B</code>，<code>r</code>，<code>a</code>分别是指符号<code>}</code>，<code>]</code>，<code>&gt;</code>。</p>
+<p>使用命令<code>ds{ds)</code>还原为原来的文本内容<code>Hello world!</code>。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Hello world!</div></pre></td></tr></table></figure>
+<p>光标在单词<code>Hello</code>的任意一个字母上时，用命令<code>ysiw&lt;em&gt;</code>：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">em</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">em</span>&gt;</span> world!</div></pre></td></tr></table></figure>
+<p>光标在<code>&lt;em&gt;Hello&lt;/em&gt;</code>任意字母上时，执行命令<code>dst</code>还原这个单词，<code>t</code>代表<code>tag</code>的意思。</p>
+<h3 id="普通模式中多行操作"><a href="#普通模式中多行操作" class="headerlink" title="普通模式中多行操作"></a>普通模式中多行操作</h3><p>当光标位于<code>line1</code>这行时，按下命令<code>5ySS&lt;ul&gt;</code>，</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">line1</div><div class="line">line2</div><div class="line">line3</div><div class="line">line4</div><div class="line">line5</div></pre></td></tr></table></figure>
+<p>产生如下输出，会生成一个配对的<code>ul</code>标签包住这5行：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">line1</div><div class="line">line2</div><div class="line">line3</div><div class="line">line4</div><div class="line">line5</div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>再将光标移到<code>line1</code>所在行上，执行命令<code>:.,+4norm yss&lt;li&gt;</code>后回车：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>line1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>line2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>line3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>line4<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>line5<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="Visual-mode"><a href="#Visual-mode" class="headerlink" title="Visual mode"></a>Visual mode</h2><p>按<code>Shift+V</code>进入<code>linewise visual mode</code>，光标从第一行<code>line6</code>上移到第五行<code>line10</code>，选中这5行记录，然后按命令<code>gS&lt;ul&gt;</code>。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">line6</div><div class="line">line7</div><div class="line">line8</div><div class="line">line9</div><div class="line">line10</div></pre></td></tr></table></figure>
+<p>得到的结果如下，与<code>5ySS&lt;ul&gt;</code>效果相同：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">line6</div><div class="line">line7</div><div class="line">line8</div><div class="line">line9</div><div class="line">line10</div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>In visual mode, a simple <code>S</code> with an argument wraps the selection.</p>
+</blockquote>
+<p>按<code>v</code>进入<code>characterwise visual mode</code>，选中<code>line6</code>到<code>line10</code>所有行，然后按命令<code>S&lt;li&gt;</code>或者<code>gS&lt;li&gt;</code>，输出结果：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></div><div class="line">line6</div><div class="line">line7</div><div class="line">line8</div><div class="line">line9</div><div class="line">line10</div><div class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>在<code>characterwise visual mode</code>，选中<code>line6</code>这5个字母，然后按命令<code>S&lt;span&gt;</code>，输出结果：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span>line6<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">line7</div><div class="line">line8</div><div class="line">line9</div><div class="line">line10</div><div class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这个操作是最易记忆和使用的，如果上述<code>S&lt;span&gt;</code>操作不成功，需要查看一下<kbd>S</kbd>键的最后绑定情况：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><div class="line">:<span class="keyword">verbose</span> <span class="keyword">vmap</span> S</div></pre></td></tr></table></figure>
+<h2 id="Insert-mode"><a href="#Insert-mode" class="headerlink" title="Insert mode"></a>Insert mode</h2><p>在vim的<code>insert mode</code>时，按一次<code>&lt;CTRL-s&gt;</code>组合键，然后输入<code>&lt;div&gt;</code>，得到结果为一行div配对标签：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>如果是按<code>&lt;CTRL-s&gt;&lt;CTRL-s&gt;</code>组合键，即二次<code>&lt;CTRL-s&gt;</code>组合键，然后输入<code>&lt;div&gt;</code>，输出3行代码，一个div配对标签，和一个光标定位的空行：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="Action-repeat"><a href="#Action-repeat" class="headerlink" title="Action repeat"></a>Action repeat</h2><p>如果想让<code>.</code>操作对以上提到的<code>ds</code>，<code>cs</code>，<code>yss</code>，<code>ySS</code>命令生效，需要安装另一个插件：<a href="https://github.com/tpope/vim-repeat" target="_blank" rel="external">repeat.vim</a>.</p>
+<h2 id="Structure-of-an-editing-command"><a href="#Structure-of-an-editing-command" class="headerlink" title="Structure of an editing command"></a>Structure of an editing command</h2><p>vim中编辑命令的格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;number&gt;&lt;command&gt;&lt;text object or motion&gt;</div></pre></td></tr></table></figure>
+<p>一般的操作都是基于字母<code>characters</code>进行移动和编辑的，除了<code>characters</code>之外，vim还可以基于<code>words</code>，<code>sentences</code>，<code>paragraphs</code>这些单位进行移动和编辑，这些统称为<code>text-object</code>。</p>
+<h2 id="Text-objects-commands"><a href="#Text-objects-commands" class="headerlink" title="Text objects commands"></a>Text objects commands</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">Type</th>
+<th style="text-align:center">Command</th>
+<th style="text-align:center">Operation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Words</td>
+<td style="text-align:center">aw</td>
+<td style="text-align:center">a word (includes surrounding white space)</td>
+</tr>
+<tr>
+<td style="text-align:center">Words</td>
+<td style="text-align:center">iw</td>
+<td style="text-align:center">inner word (does not include surrounding white space)</td>
+</tr>
+<tr>
+<td style="text-align:center">Sentences</td>
+<td style="text-align:center">as</td>
+<td style="text-align:center">a sentence</td>
+</tr>
+<tr>
+<td style="text-align:center">Sentences</td>
+<td style="text-align:center">is</td>
+<td style="text-align:center">inner sentence</td>
+</tr>
+<tr>
+<td style="text-align:center">Paragraphs</td>
+<td style="text-align:center">ap</td>
+<td style="text-align:center">a paragraph</td>
+</tr>
+<tr>
+<td style="text-align:center">Paragraphs</td>
+<td style="text-align:center">ip</td>
+<td style="text-align:center">inner paragraph</td>
+</tr>
+</tbody>
+</table>
+<h2 id="命令说明"><a href="#命令说明" class="headerlink" title="命令说明"></a>命令说明</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cit = Change Inner Tag</div><div class="line">cip = Change Inner Paragraph</div><div class="line">daw = Delete A Word</div><div class="line">yaw = Yank A Word</div></pre></td></tr></table></figure>
+<h2 id="基于text-object的常用命令"><a href="#基于text-object的常用命令" class="headerlink" title="基于text-object的常用命令"></a>基于text-object的常用命令</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th style="text-align:left">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ci[</td>
+<td style="text-align:left">删除一对[]中的所有字符并进入插入模式</td>
+</tr>
+<tr>
+<td style="text-align:center">ci(</td>
+<td style="text-align:left">删除一对()中的所有字符并进入插入模式</td>
+</tr>
+<tr>
+<td style="text-align:center">ci&lt;</td>
+<td style="text-align:left">删除一对&lt;&gt;中的所有字符并进入插入模式</td>
+</tr>
+<tr>
+<td style="text-align:center">ci{</td>
+<td style="text-align:left">删除一对{}中的所有字符并进入插入模式</td>
+</tr>
+<tr>
+<td style="text-align:center">ci&quot;</td>
+<td style="text-align:left">删除一对引号字符 &quot; 中所有字符并进入插入模式</td>
+</tr>
+<tr>
+<td style="text-align:center">ci&#39;</td>
+<td style="text-align:left">删除一对引号字符 &#39; 中所有字符并进入插入模式</td>
+</tr>
+<tr>
+<td style="text-align:center">cit</td>
+<td style="text-align:left">删除一对 HTML/XML 的标签内部的所有字符并进入插入模式</td>
+</tr>
+<tr>
+<td style="text-align:center">ci</td>
+<td style="text-align:left">修改配对标点或者标签之间的文本</td>
+</tr>
+<tr>
+<td style="text-align:center">di</td>
+<td style="text-align:left">剪切配对标点或者标签之间的文本</td>
+</tr>
+<tr>
+<td style="text-align:center">yi</td>
+<td style="text-align:left">复制配对标点或者标签之间的文本</td>
+</tr>
+<tr>
+<td style="text-align:center">ca</td>
+<td style="text-align:left">同ci，但修改内容包括配对符号本身</td>
+</tr>
+<tr>
+<td style="text-align:center">da</td>
+<td style="text-align:left">同di，但剪切内容包括配对符号本身</td>
+</tr>
+<tr>
+<td style="text-align:center">ya</td>
+<td style="text-align:left">同yi，但复制内容包括配对符号本身</td>
+</tr>
+</tbody>
+</table>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://github.com/tpope/vim-surround" target="_blank" rel="external">surround.vim</a></li>
+<li><a href="http://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guide/" target="_blank" rel="external">Vim Text Objects: The Definitive Guide</a></li>
+<li><a href="http://www.catonmat.net/blog/vim-plugins-surround-vim/" target="_blank" rel="external">Vim Plugins You Should Know About, Part I: surround.vim</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/macos/2016/07/10/zsh-config-on-mac-os.html" rel="next" title="zsh config on mac os">
+                上一篇：zsh config on mac os
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2016/07/23/serve-current-directory-from-command-line.html" rel="prev" title="serve current directory from command line">
+                下一篇：serve current directory from command line
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-39-s-surround-vim"><span class="nav-number">1.</span> <span class="nav-text">What's surround.vim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-surround-vim"><span class="nav-number">2.</span> <span class="nav-text">Install surround.vim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Help-manual"><span class="nav-number">3.</span> <span class="nav-text">Help manual</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Normal-mode"><span class="nav-number">4.</span> <span class="nav-text">Normal mode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通模式中多行操作"><span class="nav-number">4.1.</span> <span class="nav-text">普通模式中多行操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Visual-mode"><span class="nav-number">5.</span> <span class="nav-text">Visual mode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Insert-mode"><span class="nav-number">6.</span> <span class="nav-text">Insert mode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Action-repeat"><span class="nav-number">7.</span> <span class="nav-text">Action repeat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Structure-of-an-editing-command"><span class="nav-number">8.</span> <span class="nav-text">Structure of an editing command</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Text-objects-commands"><span class="nav-number">9.</span> <span class="nav-text">Text objects commands</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令说明"><span class="nav-number">10.</span> <span class="nav-text">命令说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于text-object的常用命令"><span class="nav-number">11.</span> <span class="nav-text">基于text-object的常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">12.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

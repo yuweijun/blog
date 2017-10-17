@@ -1,0 +1,560 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Event detection without browser sniffing Two more events are left to be handled: submit and change. Before jQuery applies fix for these two events, jQuery needs a way to detect if a browser allows sub">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jquery-1.4.2 support部分源码分析">
+<meta property="og:url" content="https://www.4e00.com/jquery/2014/08/01/jquery-src-support.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="Event detection without browser sniffing Two more events are left to be handled: submit and change. Before jQuery applies fix for these two events, jQuery needs a way to detect if a browser allows sub">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.145Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jquery-1.4.2 support部分源码分析">
+<meta name="twitter:description" content="Event detection without browser sniffing Two more events are left to be handled: submit and change. Before jQuery applies fix for these two events, jQuery needs a way to detect if a browser allows sub">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/jquery/2014/08/01/jquery-src-support.html"/>
+
+  <title> jquery-1.4.2 support部分源码分析 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jquery-1.4.2 support部分源码分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2014-08-01T22:49:32+08:00" content="2014-08-01">
+              2014-08-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/jquery/" itemprop="url" rel="index">
+                    <span itemprop="name">jquery</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Event-detection-without-browser-sniffing"><a href="#Event-detection-without-browser-sniffing" class="headerlink" title="Event detection without browser sniffing"></a>Event detection without browser sniffing</h2><blockquote>
+<p>Two more events are left to be handled: submit and change. Before jQuery applies fix for these two events, jQuery needs a way to detect if a browser allows submit and change events to bubble or not. jQuery team does not favor browser sniffing. So how to go about detecting event support without browser sniffing.</p>
+<p>Juriy Zaytsev posted an excellent blog titled Detecting event support without browser sniffing . Here is the a short and concise way he proposes to find out if an event is supported by a browser.</p>
+</blockquote>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// http://perfectionkills.com/detecting-event-support-without-browser-sniffing/</span></div><div class="line"><span class="comment">// 此文作者只是用下面这个方法来检查浏览器是否支持指定的事件类型，如input.onchange/form.onsubmit等，并不是用于事件是否支持冒泡的检查</span></div><div class="line"><span class="comment">// 不过jQuery利用这个方法，来检查浏览器中的change和submit这2个事件类型是否支持事件冒泡，因为在IE中会return false，而firefox却是返回true</span></div><div class="line"><span class="comment">// 但需要注意不能用这个方法检查其他的事件类型，如blur/focus，这些事件不支持事件冒泡</span></div><div class="line"><span class="keyword">var</span> isEventSupported = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> TAGNAMES = &#123;</div><div class="line">        <span class="string">'select'</span>:<span class="string">'input'</span>,<span class="string">'change'</span>:<span class="string">'input'</span>,</div><div class="line">        <span class="string">'submit'</span>:<span class="string">'form'</span>,<span class="string">'reset'</span>:<span class="string">'form'</span>,</div><div class="line">        <span class="string">'error'</span>:<span class="string">'img'</span>,<span class="string">'load'</span>:<span class="string">'img'</span>,<span class="string">'abort'</span>:<span class="string">'img'</span></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">isEventSupported</span>(<span class="params">eventName</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> el = <span class="built_in">document</span>.createElement(TAGNAMES[eventName] || <span class="string">'div'</span>);</div><div class="line">        eventName = <span class="string">'on'</span> + eventName;</div><div class="line">        <span class="keyword">var</span> isSupported = (eventName <span class="keyword">in</span> el);</div><div class="line">        <span class="keyword">if</span> (!isSupported) &#123;</div><div class="line">            el.setAttribute(eventName, <span class="string">'return;'</span>);</div><div class="line">            isSupported = <span class="keyword">typeof</span> el[eventName] == <span class="string">'function'</span>;</div><div class="line">        &#125;</div><div class="line">        el = <span class="literal">null</span>;</div><div class="line">        <span class="keyword">return</span> isSupported;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> isEventSupported;</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<p>jQuery.support的源码，jQuery代码中不是根据嗅探浏览器，实现功能的兼容性和解决浏览器的兼容性问题，而是检查浏览器的功能特征，来实现功能兼容性。这种做法更加具有适应性，尽量减少因为浏览器的升级，功能改进而需要代码调整。比如到IE9时，IE也会按W3C的标准实现CSS的盒子模型，选择器，ECMAScript规范，那么IE9也会执行jQuery中通用部分的代码，而避免执行和维护那些专门为IE写的代码块，减少代码的维护：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">    jQuery.support = &#123;&#125;;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> root = <span class="built_in">document</span>.documentElement,</div><div class="line">        script = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>),</div><div class="line">        div = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>),</div><div class="line">        id = <span class="string">"script"</span> + now();</div><div class="line"></div><div class="line">    div.style.display = <span class="string">"none"</span>;</div><div class="line">    div.innerHTML = <span class="string">"   &lt;link/&gt;&lt;table&gt;&lt;/table&gt;&lt;a href='/a' style='color:red;float:left;opacity:.55;'&gt;a&lt;/a&gt;&lt;input type='checkbox'/&gt;"</span>;</div><div class="line"></div><div class="line">    <span class="comment">// all应该为[link, table, a /a, input]</span></div><div class="line">    <span class="keyword">var</span> all = div.getElementsByTagName(<span class="string">"*"</span>),</div><div class="line">        a = div.getElementsByTagName(<span class="string">"a"</span>)[<span class="number">0</span>];</div><div class="line"></div><div class="line">    <span class="comment">// 最基础的测试，过不了的话，jQuery.support即为空对象</span></div><div class="line">    <span class="comment">// Can't get basic test support</span></div><div class="line">    <span class="keyword">if</span> ( !all || !all.length || !a ) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    jQuery.support = &#123;</div><div class="line">        <span class="comment">// 在IE中，在使用.innerHTML时，会将字符串头尾空格删除</span></div><div class="line">        <span class="comment">// 如果头尾空格不会被删除，则jQuery.support.leadingWhitespace为true</span></div><div class="line">        <span class="comment">// IE strips leading whitespace when .innerHTML is used</span></div><div class="line">        leadingWhitespace: div.firstChild.nodeType === <span class="number">3</span>,</div><div class="line"></div><div class="line">        <span class="comment">// IE中会为空table自动插入一个tbody</span></div><div class="line">        <span class="comment">// 如果tbody不会自动被插入，则jQuery.support.tbody为true</span></div><div class="line">        <span class="comment">// Make sure that tbody elements aren't automatically inserted</span></div><div class="line">        <span class="comment">// IE will insert them into empty tables</span></div><div class="line">        tbody: !div.getElementsByTagName(<span class="string">"tbody"</span>).length,</div><div class="line"></div><div class="line">        <span class="comment">// 确保在innerHTML后，link元素被正确创建</span></div><div class="line">        <span class="comment">// 如果link元素创建成功，则jQuery.support.htmlSerialize为true</span></div><div class="line">        <span class="comment">// Make sure that link elements get serialized correctly by innerHTML</span></div><div class="line">        <span class="comment">// This requires a wrapper element in IE</span></div><div class="line">        htmlSerialize: !!div.getElementsByTagName(<span class="string">"link"</span>).length,</div><div class="line"></div><div class="line">        <span class="comment">// 获取元素的style属性值，在IE中需要用.cssText()方法获取元素的style属性值</span></div><div class="line">        <span class="comment">// 如果可以获取元素的style属性值，则jQuery.support.style为true</span></div><div class="line">        <span class="comment">// Get the style information from getAttribute</span></div><div class="line">        <span class="comment">// (IE uses .cssText insted)</span></div><div class="line">        style: <span class="regexp">/red/</span>.test( a.getAttribute(<span class="string">"style"</span>) ),</div><div class="line"></div><div class="line">        <span class="comment">// 确保url没有被浏览器重写，可获取url原始值，IE中会修改url值</span></div><div class="line">        <span class="comment">// 如果可以返回url原始值，则jQuery.support.hrefNormalized为true</span></div><div class="line">        <span class="comment">// Make sure that URLs aren't manipulated</span></div><div class="line">        <span class="comment">// (IE normalizes it by default)</span></div><div class="line">        hrefNormalized: a.getAttribute(<span class="string">"href"</span>) === <span class="string">"/a"</span>,</div><div class="line"></div><div class="line">        <span class="comment">// 检查是否支持opacity，在IE中是通过filter来控制opacity的</span></div><div class="line">        <span class="comment">// 如果支持opacity，则jQuery.support.opacity为true</span></div><div class="line">        <span class="comment">// Make sure that element opacity exists</span></div><div class="line">        <span class="comment">// (IE uses filter instead)</span></div><div class="line">        <span class="comment">// Use a regex to work around a WebKit issue. See #5145</span></div><div class="line">        opacity: <span class="regexp">/^0.55$/</span>.test( a.style.opacity ),</div><div class="line"></div><div class="line">        <span class="comment">// CSS中的float属性，在javascript中对应的属性名为cssFloat，而IE使用styleFloat代替cssFloat</span></div><div class="line">        <span class="comment">// 如查是使用cssFloat，则jQuery.support.cssFloat为true</span></div><div class="line">        <span class="comment">// Verify style float existence</span></div><div class="line">        <span class="comment">// (IE uses styleFloat instead of cssFloat)</span></div><div class="line">        cssFloat: !!a.style.cssFloat,</div><div class="line"></div><div class="line">        <span class="comment">// 检查checkbox的默认值是否为"on"</span></div><div class="line">        <span class="comment">// 如果默认值为"on"，则jQuery.support.checkOn为true</span></div><div class="line">        <span class="comment">// Make sure that if no value is specified for a checkbox</span></div><div class="line">        <span class="comment">// that it defaults to "on".</span></div><div class="line">        <span class="comment">// (WebKit defaults to "" instead)</span></div><div class="line">        checkOn: div.getElementsByTagName(<span class="string">"input"</span>)[<span class="number">0</span>].value === <span class="string">"on"</span>,</div><div class="line"></div><div class="line">        <span class="comment">// 对于单选select组件，总有一个option被默认选中</span></div><div class="line">        <span class="comment">// 如果有option被选中，则jQuery.support.optSelected为true</span></div><div class="line">        <span class="comment">// Make sure that a selected-by-default option has a working selected property.</span></div><div class="line">        <span class="comment">// (WebKit defaults to false instead of true, IE too, if it's in an optgroup)</span></div><div class="line">        optSelected: <span class="built_in">document</span>.createElement(<span class="string">"select"</span>).appendChild( <span class="built_in">document</span>.createElement(<span class="string">"option"</span>) ).selected,</div><div class="line"></div><div class="line">        <span class="comment">// .removeChild()方法返回被删除的元素，并且元素的parentNode为null</span></div><div class="line">        parentNode: div.removeChild( div.appendChild( <span class="built_in">document</span>.createElement(<span class="string">"div"</span>) ) ).parentNode === <span class="literal">null</span>,</div><div class="line"></div><div class="line">        <span class="comment">// Will be defined later</span></div><div class="line">        deleteExpando: <span class="literal">true</span>,</div><div class="line">        checkClone: <span class="literal">false</span>,</div><div class="line">        scriptEval: <span class="literal">false</span>,</div><div class="line">        <span class="comment">// 在IE中，clone一个元素会将元素上的事件监听器，也一起复制到新clone出来的元素上，所以在IE上，jQuery.support.noCloneEvent为false</span></div><div class="line">        noCloneEvent: <span class="literal">true</span>,</div><div class="line">        boxModel: <span class="literal">null</span></div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    script.type = <span class="string">"text/javascript"</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        script.appendChild( <span class="built_in">document</span>.createTextNode( <span class="string">"window."</span> + id + <span class="string">"=1;"</span> ) );</div><div class="line">    &#125; <span class="keyword">catch</span>(e) &#123;&#125;</div><div class="line"></div><div class="line">    root.insertBefore( script, root.firstChild );</div><div class="line"></div><div class="line">    <span class="comment">// 通过为script元素appendChild/createTextNode，可以插入脚本内容，并且被浏览器解析执行，在IE中使用.text()方法达到此目的</span></div><div class="line">    <span class="comment">// 如果浏览器支持appendChild/createTextNode为script元素添加脚本，则jQuery.support.scriptEval为true</span></div><div class="line">    <span class="comment">// Make sure that the execution of code works by injecting a script</span></div><div class="line">    <span class="comment">// tag with appendChild/createTextNode</span></div><div class="line">    <span class="comment">// (IE doesn't support this, fails, and uses .text instead)</span></div><div class="line">    <span class="keyword">if</span> ( <span class="built_in">window</span>[ id ] ) &#123;</div><div class="line">        jQuery.support.scriptEval = <span class="literal">true</span>;</div><div class="line">        <span class="keyword">delete</span> <span class="built_in">window</span>[ id ];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Test to see if it's possible to delete an expando from an element</span></div><div class="line">    <span class="comment">// Fails in Internet Explorer</span></div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="comment">// 可以删除对象上的一个不存在的属性名，firefox返回true，IE会抛出异常</span></div><div class="line">        <span class="keyword">delete</span> script.test;</div><div class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</div><div class="line">        <span class="comment">// 有异常抛出，说明不支持delete对象一个不存在的属性</span></div><div class="line">        jQuery.support.deleteExpando = <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    root.removeChild( script );</div><div class="line"></div><div class="line">    <span class="comment">// IE的.cloneNode()方法会复制对象上的事件，如果将clone出的对象删除之后，原来的被clone的元素上的事件监听器也被删除了，所以以下代码可以在chrome/firefox中运行，却不能在IE中运行</span></div><div class="line">    <span class="comment">// 参见jQuery源码manipulation部分中的jQuery.fn.clone()方法的说明：</span></div><div class="line">    <span class="comment">// IE copies events bound via attachEvent when using cloneNode. Calling detachEvent on the clone will also remove the events from the orignal, In order to get around this, we use innerHTML.  Unfortunately, this means some modifications to attributes in IE that are actually only stored as properties will not be copied (such as the the name attribute on an input).</span></div><div class="line">    <span class="keyword">if</span> ( div.attachEvent &amp;&amp; div.fireEvent ) &#123;</div><div class="line">        div.attachEvent(<span class="string">"onclick"</span>, <span class="function"><span class="keyword">function</span> <span class="title">click</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="comment">// Cloning a node shouldn't copy over any</span></div><div class="line">            <span class="comment">// bound event handlers (IE does this)</span></div><div class="line">            jQuery.support.noCloneEvent = <span class="literal">false</span>;</div><div class="line">            div.detachEvent(<span class="string">"onclick"</span>, click);</div><div class="line">        &#125;);</div><div class="line">        div.cloneNode(<span class="literal">true</span>).fireEvent(<span class="string">"onclick"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    div = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</div><div class="line">    div.innerHTML = <span class="string">"&lt;input type='radio' name='radiotest' checked='checked'/&gt;"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> fragment = <span class="built_in">document</span>.createDocumentFragment();</div><div class="line">    fragment.appendChild( div.firstChild );</div><div class="line"></div><div class="line">    <span class="comment">// Node.cloneNode(deep): The cloneNode() method makes and returns a copy of the node on which it is called. If passed the argument true, it recursively clones all descendants of the node as well. Otherwise, it clones only the node and none of its children. The returned node is not part of the document tree, and its parentNode property is null. When an Element node is cloned, all of its attributes are also cloned. Note, however, that event-listener functions registered on a node are not cloned.</span></div><div class="line"></div><div class="line">    <span class="comment">// 检查.cloneNode是否将radio的状态也复制下来，如果状态也被复制下来，则jQuery.support.checkClone为true</span></div><div class="line">    <span class="comment">// WebKit doesn't clone checked state correctly in fragments</span></div><div class="line">    jQuery.support.checkClone = fragment.cloneNode(<span class="literal">true</span>).cloneNode(<span class="literal">true</span>).lastChild.checked;</div><div class="line"></div><div class="line">    <span class="comment">// Figure out if the W3C box model works as expected</span></div><div class="line">    <span class="comment">// document.body must exist before we can do this</span></div><div class="line">    jQuery(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> div = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</div><div class="line">        div.style.width = div.style.paddingLeft = <span class="string">"1px"</span>;</div><div class="line"></div><div class="line">        <span class="built_in">document</span>.body.appendChild( div );</div><div class="line">        <span class="comment">// 标准的盒子模型中，width是padding box里content的宽度，offsetWidth为paddingLeft + width + paddingRight的像素值</span></div><div class="line">        <span class="comment">// 如果div.offsetWidth为2，则说明浏览器默认盒子模型是使用w3c的标准盒子模型</span></div><div class="line">        jQuery.boxModel = jQuery.support.boxModel = div.offsetWidth === <span class="number">2</span>;</div><div class="line">        <span class="comment">// 将div从document.body中移除，并将其隐藏，最后将div置为null，释放内存</span></div><div class="line">        <span class="built_in">document</span>.body.removeChild( div ).style.display = <span class="string">'none'</span>;</div><div class="line"></div><div class="line">        div = <span class="literal">null</span>;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    <span class="comment">// Technique from Juriy Zaytsev</span></div><div class="line">    <span class="comment">// http://thinkweb2.com/projects/prototype/detecting-event-support-without-browser-sniffing/</span></div><div class="line">    <span class="keyword">var</span> eventSupported = <span class="function"><span class="keyword">function</span>(<span class="params"> eventName </span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> el = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</div><div class="line">        eventName = <span class="string">"on"</span> + eventName;</div><div class="line"></div><div class="line">        <span class="comment">// 在safari/chrome中直接通过eventName in el获得isSupported为true</span></div><div class="line">        <span class="keyword">var</span> isSupported = (eventName <span class="keyword">in</span> el);</div><div class="line">        <span class="keyword">if</span> ( !isSupported ) &#123;</div><div class="line">            <span class="comment">// 在firefox中通过el.setAttribute()设置eventName属性之后判断出isSupported为true</span></div><div class="line">            el.setAttribute(eventName, <span class="string">"return;"</span>);</div><div class="line">            isSupported = <span class="keyword">typeof</span> el[eventName] === <span class="string">"function"</span>;</div><div class="line">        &#125;</div><div class="line">        el = <span class="literal">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> isSupported;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// eventSupported 方法只用于测试submit/change二个事件类型，不要用于blur/focus/load/unload这四个不支持冒泡的事件类型</span></div><div class="line">    jQuery.support.submitBubbles = eventSupported(<span class="string">"submit"</span>);</div><div class="line">    jQuery.support.changeBubbles = eventSupported(<span class="string">"change"</span>);</div><div class="line"></div><div class="line">    <span class="comment">// release memory in IE</span></div><div class="line">    root = script = div = all = a = <span class="literal">null</span>;</div><div class="line">&#125;)();</div><div class="line"></div><div class="line"><span class="comment">// 用于jQuery.attr(elem, name, value, pass)方法，用于修正html属性名与javascript中的属性名对应关系</span></div><div class="line"><span class="comment">// 参考jQuery.attr的说明</span></div><div class="line">jQuery.props = &#123;</div><div class="line">    <span class="string">"for"</span>: <span class="string">"htmlFor"</span>,</div><div class="line">    <span class="string">"class"</span>: <span class="string">"className"</span>,</div><div class="line">    readonly: <span class="string">"readOnly"</span>,</div><div class="line">    maxlength: <span class="string">"maxLength"</span>,</div><div class="line">    cellspacing: <span class="string">"cellSpacing"</span>,</div><div class="line">    rowspan: <span class="string">"rowSpan"</span>,</div><div class="line">    colspan: <span class="string">"colSpan"</span>,</div><div class="line">    tabindex: <span class="string">"tabIndex"</span>,</div><div class="line">    usemap: <span class="string">"useMap"</span>,</div><div class="line">    frameborder: <span class="string">"frameBorder"</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/jquery/2014/08/01/jquery-src-sizzle.html" rel="next" title="jquery-1.4.2 sizzle部分源码分析">
+                上一篇：jquery-1.4.2 sizzle部分源码分析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/jquery/2014/08/01/jquery-src-utilities.html" rel="prev" title="jquery-1.4.2 utilities部分源码分析">
+                下一篇：jquery-1.4.2 utilities部分源码分析
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Event-detection-without-browser-sniffing"><span class="nav-number">1.</span> <span class="nav-text">Event detection without browser sniffing</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

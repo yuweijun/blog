@@ -1,0 +1,564 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="wget指定下载文件名">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wget常用命令">
+<meta property="og:url" content="https://www.4e00.com/linux/2012/04/06/linux-wget-usage.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="wget指定下载文件名">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="wget常用命令">
+<meta name="twitter:description" content="wget指定下载文件名">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/linux/2012/04/06/linux-wget-usage.html"/>
+
+  <title> wget常用命令 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                wget常用命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2012-04-06T12:32:42+08:00" content="2012-04-06">
+              2012-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="wget指定下载文件名"><a href="#wget指定下载文件名" class="headerlink" title="wget指定下载文件名"></a>wget指定下载文件名</h2><a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">wget</span> -O wordpress.zip https://wordpress.org/latest.zip</div></pre></td></tr></table></figure>
+<h2 id="wget断点续传"><a href="#wget断点续传" class="headerlink" title="wget断点续传"></a>wget断点续传</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-c --continue</div><div class="line">    Continue getting a partially-downloaded file.  This is useful when you want to finish up a download started by a previous instance of Wget, or by another program.</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">wget</span> -c ftp://sunsite.doc.ic.ac.uk/ls-lR.Z</div></pre></td></tr></table></figure>
+<h2 id="wget整个目录"><a href="#wget整个目录" class="headerlink" title="wget整个目录"></a>wget整个目录</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">wget</span> \</div><div class="line">     --recursive \</div><div class="line">     --no-clobber \</div><div class="line">     --page-requisites \</div><div class="line">     --html-extension \</div><div class="line">     --convert-links \</div><div class="line">     --restrict-file-names=windows \</div><div class="line">     --domains www.4e00.com \</div><div class="line">     --no-parent \</div><div class="line">     http://www.4e00.com/blog/</div></pre></td></tr></table></figure>
+<h2 id="wget整个目录参数说明"><a href="#wget整个目录参数说明" class="headerlink" title="wget整个目录参数说明"></a>wget整个目录参数说明</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">--recursive: download the entire Web site.</div><div class="line">--domains www.4e00.com: don&apos;t follow links outside www.4e00.com.</div><div class="line">--no-parent: don&apos;t follow links outside the directory /blog/.</div><div class="line">--page-requisites: get all the elements that compose the page (images, CSS and so on).</div><div class="line">--html-extension: save files with the .html extension.</div><div class="line">--convert-links: convert links so that they work locally, off-line.</div><div class="line">--restrict-file-names=windows: modify filenames so that they will work in Windows as well.</div><div class="line">--no-clobber: don&apos;t overwrite any existing files (used in case the download is interrupted and</div><div class="line">resumed).</div></pre></td></tr></table></figure>
+<h2 id="wget选项详细说明"><a href="#wget选项详细说明" class="headerlink" title="wget选项详细说明"></a>wget选项详细说明</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">wget [参数列表] [目标软件、网页的网址]</div><div class="line"></div><div class="line">-V, -–version 显示软件版本号然后退出；</div><div class="line">-h, -–help 显示软件帮助信息；</div><div class="line">-e, -–execute=COMMAND 执行一个&quot;.wgetrc&quot;命令</div><div class="line">-o, -–output-file=FILE 将软件输出信息保存到文件；</div><div class="line">-a, -–append-output=FILE 将软件输出信息追加到文件；</div><div class="line">-d, -–debug 显示输出信息；</div><div class="line">-q, -–quiet 不显示输出信息；</div><div class="line">-i, -–input-file=FILE 从文件中取得URL；</div><div class="line">-t, -–tries=NUMBER 是否下载次数（0表示无穷次）</div><div class="line">-O, -–output-document=FILE 下载文件保存为别的文件名</div><div class="line">-nc, -–no-clobber 不要覆盖已经存在的文件</div><div class="line">-N, -–timestamping 只下载比本地新的文件</div><div class="line">-T, -–timeout=SECONDS 设置超时时间</div><div class="line">-Y, -–proxy=on/off 关闭代理</div><div class="line">-nd, -–no-directories 不建立目录</div><div class="line">-x, -–force-directories 强制建立目录</div><div class="line">-–http-user=USER 设置HTTP用户</div><div class="line">-–http-passwd=PASS 设置HTTP密码</div><div class="line">-–proxy-user=USER 设置代理用户</div><div class="line">-–proxy-passwd=PASS 设置代理密码</div><div class="line">-r, -–recursive 下载整个网站、目录</div><div class="line">-l, -–level=NUMBER 下载层次</div><div class="line">-A, -–accept=LIST 可以接受的文件类型</div><div class="line">-R, -–reject=LIST 拒绝接受的文件类型</div><div class="line">-D, -–domains=LIST 可以接受的域名</div><div class="line">-–exclude-domains=LIST 拒绝的域名</div><div class="line">-L, -–relative 下载关联链接</div><div class="line">-–follow-ftp 只下载FTP链接</div><div class="line">-H, -–span-hosts 可以下载外面的主机</div><div class="line">-I, -–include-directories=LIST 允许的目录</div><div class="line">-X, -–exclude-directories=LIST 拒绝的目录</div></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.cyberciti.biz/tips/linux-wget-your-ultimate-command-line-downloader.html" target="_blank" rel="external">Linux wget: Your Ultimate Command Line Downloader</a></li>
+<li><a href="http://www.thegeekstuff.com/2012/07/wget-curl/" target="_blank" rel="external">wget vs curl: How to Download Files Using wget and curl</a></li>
+<li><a href="http://www.cnblogs.com/analyzer/archive/2010/05/04/1727438.html" target="_blank" rel="external">wget 命令用法详解</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/css/2012/03/20/css-word-break-wrod-wrap.html" rel="next" title="word-break:break-all和word-wrap:break-word的区别">
+                上一篇：word-break:break-all和word-wrap:break-word的区别
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2012/04/10/linux-clip-board-paste.html" rel="prev" title="linux剪贴板管理工具收集">
+                下一篇：linux剪贴板管理工具收集
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#wget指定下载文件名"><span class="nav-number">1.</span> <span class="nav-text">wget指定下载文件名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wget断点续传"><span class="nav-number">2.</span> <span class="nav-text">wget断点续传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wget整个目录"><span class="nav-number">3.</span> <span class="nav-text">wget整个目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wget整个目录参数说明"><span class="nav-number">4.</span> <span class="nav-text">wget整个目录参数说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wget选项详细说明"><span class="nav-number">5.</span> <span class="nav-text">wget选项详细说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

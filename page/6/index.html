@@ -1,0 +1,1091 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="一">
+<meta property="og:url" content="https://www.4e00.com/page/6/index.html">
+<meta property="og:site_name" content="一">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/page/6/"/>
+
+  <title> 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/java/2016/10/13/java-jvm-and-gc.html" itemprop="url">
+                  java jvm and gc
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-10-13T22:18:20+08:00" content="2016-10-13">
+              2016-10-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="jvisualvm截图"><a href="#jvisualvm截图" class="headerlink" title="jvisualvm截图"></a>jvisualvm截图</h2><img src="/blog/img/java/jvisualvm.png" class="image-lg" title="[jvisualvm]">
+<h2 id="Heap-and-Non-Heap-Memory"><a href="#Heap-and-Non-Heap-Memory" class="headerlink" title="Heap and Non-Heap Memory"></a>Heap and Non-Heap Memory</h2><img src="/blog/img/java/java-jvm/jvm-architecture.png" title="[jvm-architecture]">
+<p>The JVM memory consists of the following segments:</p>
+<ol>
+<li>Heap Memory, which is the storage for Java objects</li>
+<li>Non-Heap Memory, which is used by Java to store loaded classes and other meta-data</li>
+<li>JVM code itself, JVM internal structures, loaded profiler agent code and data, etc.</li>
+</ol>
+<h3 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h3><p>The JVM has a heap that is the runtime data area from which memory for all class instances and arrays are allocated. It is created at the JVM start-up.</p>
+<p>Used heap memory consists of live and dead objects.</p>
+<ol>
+<li>Live objects are accessible by the application and will not be a subject of garbage collection.</li>
+<li>Dead objects are those which will never be accessible by the application but have not been collected yet by the garbage collector. Such objects occupy the heap memory space until they are eventually collected by the garbage collector.</li>
+</ol>
+<p>The heap size may be configured with the following VM options:</p>
+<ol>
+<li><code>-Xmx&lt;size&gt;</code> - to set the maximum Java heap size</li>
+<li><code>-Xms&lt;size&gt;</code> - to set the initial Java heap size</li>
+</ol>
+<p>By default, the maximum heap size is <code>64 Mb</code>.</p>
+<p>Heap memory for objects is reclaimed by an automatic memory management system which is known as a garbage collector. The heap may be of a fixed size or may be expanded and shrunk, depending on the garbage collector&#39;s strategy.</p>
+<h3 id="Non-Heap"><a href="#Non-Heap" class="headerlink" title="Non-Heap"></a>Non-Heap</h3><p>Also, the JVM has memory other than the heap, referred to as non-heap memory. It is created at the JVM startup and stores per-class structures such as runtime constant pool, field and method data, and the code for methods and constructors, as well as interned Strings.</p>
+<p>Unfortunately, the only information JVM provides on non-heap memory is its overall size. No detailed information on non-heap memory content is available.</p>
+<p>The abnormal growth of non-heap memory size may indicate a potential problem, in this case you may check up the following:</p>
+<ol>
+<li>If there are class loading issues such as leaked loaders. In this case, the problem may be solved with the help of Class loaders view.</li>
+<li>If there are strings being massively interned. For detection of such problem, Object allocation recording may be used.</li>
+</ol>
+<p>If the application indeed needs that much of non-heap memory and the default maximum size of <code>64 Mb</code> is not enough, you may enlarge the maximum size with the help of <code>-XX:MaxPermSize</code> VM option. For example, <code>-XX:MaxPermSize=128m</code> sets the size of <code>128 Mb</code>.</p>
+<h3 id="Heap组成部分说明"><a href="#Heap组成部分说明" class="headerlink" title="Heap组成部分说明"></a>Heap组成部分说明</h3><img src="/blog/img/java/java-jvm/jvm-memory-architecture.gif" title="[jvm-memory-architecture]">
+<ol>
+<li>Heap区分两大块，一块是young generation，另一块是old generation。上图中的permanent generation不属于Heap。</li>
+<li>在young generation中，有一个叫eden的空间，主要是用来存放新生的对象，还有两个survivor spaces(from, to)，即部分示例图中的s0和s1，它们的大小总是一样，它们用来存放每次垃圾回收后存活下来的对象。</li>
+<li>在old generation中，主要存放应用程序中生命周期长的内存对象。</li>
+<li>在young generation块中，垃圾回收一般用copying的算法，速度快。每次gc的时候，存活下来的对象首先由eden拷贝到某个survivor space，当survivor space空间满了后，剩下的live对象就被直接拷贝到old generation中去。因此，每次gc后，eden内存块会被清空。</li>
+<li>在old generation块中，垃圾回收一般用mark-compact的算法，速度慢些，但减少内存要求。</li>
+<li>垃圾回收分多级，0级为全部(full)的垃圾回收，会回收old段中的垃圾，1级或以上为部分垃圾回收，只会回收new中的垃圾，内存溢出通常发生于old段或perm段垃圾回收后，仍然无内存空间容纳新的java对象的情况。</li>
+</ol>
+<h2 id="JVM内存申请过程"><a href="#JVM内存申请过程" class="headerlink" title="JVM内存申请过程"></a>JVM内存申请过程</h2><ol>
+<li>jvm会试图为相关java对象在eden中初始化一块内存区域。</li>
+<li>当eden空间足够时，内存申请结束；否则到下一步。</li>
+<li>JVM试图释放在eden中所有不活跃的对象（这属于1或更高级的垃圾回收），释放后若eden空间仍然不足以放入新对象，则试图将部分eden中活跃对象放入survivor区。</li>
+<li>survivor区被用来作为eden及old的中间交换区域，当old区空间足够时，survivor区的对象会被移到old区，否则会被保留在survivor区。</li>
+<li>当old区空间不够时，jvm 会在old区进行完全的垃圾收集（0级）。</li>
+<li>完全垃圾收集后，若survivor及old区仍然无法存放从eden复制过来的部分对象，导致jvm无法在eden区为新对象创建内存区域，则出现<code>out of memory</code>错误。</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/java/2016/10/13/java-jvm-and-gc.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/java/2016/10/13/java-memory-model.html" itemprop="url">
+                  java memory model
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-10-13T21:07:19+08:00" content="2016-10-13">
+              2016-10-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h2><p>下面这篇关于<a href="http://tutorials.jenkov.com/java-concurrency/java-memory-model.html" target="_blank" rel="external">java内存模型</a>的文章写得简洁易懂，配图也非常的好，让人更容易理解java内存模型，对应有篇<a href="http://ifeve.com/java-memory-model-6/" target="_blank" rel="external">中文翻译</a>也很不错，英文原文如下：</p>
+<p>The Java memory model specifies how the Java virtual machine works with the computer&#39;s memory (RAM). The Java virtual machine is a model of a whole computer so this model naturally includes a memory model - AKA the <code>Java Memory Model</code>.</p>
+<p>It is very important to understand the Java memory model if you want to design correctly behaving concurrent programs. The Java memory model specifies how and when different threads can see values written to shared variables by other threads, and how to synchronize access to shared variables when necessary.</p>
+<p>The original Java memory model was insufficient, so the Java memory model was revised in Java 1.5. This version of the Java memory model is still in use in Java 8.</p>
+<h3 id="The-Internal-Java-Memory-Model"><a href="#The-Internal-Java-Memory-Model" class="headerlink" title="The Internal Java Memory Model"></a>The Internal Java Memory Model</h3><p>The Java memory model used internally in the JVM divides memory between thread stacks and the heap. This diagram illustrates the Java memory model from a logic perspective:</p>
+<img src="/blog/img/java/java-concurrency/java-memory-model-1.png" title="[java-memory-model-1]">
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/java/2016/10/13/java-memory-model.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/linux/2016/10/01/hello-world.html" itemprop="url">
+                  Hello World
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-10-01T23:48:11+08:00" content="2016-10-01">
+              2016-10-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$&gt; hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$&gt; hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$&gt; hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/linux/2016/10/01/hello-world.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/java/2016/10/01/java-database-connection-pools-benchmark.html" itemprop="url">
+                  java database connection pools benchmark
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-10-01T22:19:26+08:00" content="2016-10-01">
+              2016-10-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>不同的数据库连接池<code>100000</code>条记录插入性能测试，以下结果基于mysql的jdbc驱动，代码参考<code>druid</code>项目的benchmark测试代码。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p><code>PROXOOL</code>出现大量异常造成插入数据不成功，所以没有计算结果。</p>
+<p>从测试结果数据来看，<code>DBCP</code>和<code>DBCP2</code>的结果是最好的，其次是<code>DRUID</code>和<code>C3P0</code>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">POOL</th>
+<th style="text-align:right">MILLIS</th>
+<th style="text-align:right">BLOCKED</th>
+<th style="text-align:right">WAITED</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">DRUID</td>
+<td style="text-align:right">27545</td>
+<td style="text-align:right">27</td>
+<td style="text-align:right">2480</td>
+</tr>
+<tr>
+<td style="text-align:center">DBCP</td>
+<td style="text-align:right">26121</td>
+<td style="text-align:right">4438</td>
+<td style="text-align:right">990</td>
+</tr>
+<tr>
+<td style="text-align:center">DBCP2</td>
+<td style="text-align:right">26935</td>
+<td style="text-align:right">115</td>
+<td style="text-align:right">1078</td>
+</tr>
+<tr>
+<td style="text-align:center">BONECP</td>
+<td style="text-align:right">29327</td>
+<td style="text-align:right">73</td>
+<td style="text-align:right">1568</td>
+</tr>
+<tr>
+<td style="text-align:center">TOMCATJDBC</td>
+<td style="text-align:right">39000</td>
+<td style="text-align:right">356</td>
+<td style="text-align:right">2061</td>
+</tr>
+<tr>
+<td style="text-align:center">C3P0</td>
+<td style="text-align:right">28883</td>
+<td style="text-align:right">121141</td>
+<td style="text-align:right">81196</td>
+</tr>
+</tbody>
+</table>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/java/2016/10/01/java-database-connection-pools-benchmark.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/linux/2016/09/21/git-format-patch-and-git-diff.html" itemprop="url">
+                  git format-patch and git diff
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-09-21T22:28:22+08:00" content="2016-09-21">
+              2016-09-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>linux下有个补丁工具：<code>patch</code>，它会根据<code>diff</code>命令生成的文件更新代码。</p>
+<p>git中则提供了两种<code>patch</code>方案：</p>
+<ol>
+<li>用<code>git diff</code>生成的标准patch，可以提供上述的<code>patch</code>命令使用。</li>
+<li>用<code>git format-patch</code>生成的git专用patch。</li>
+</ol>
+<p>两种patch的比较：</p>
+<ol>
+<li>兼容性：很明显，<code>git diff</code>生成的patch兼容性强。如果你在修改的代码的官方版本库不是git管理的版本库，那么你必须使用<code>git diff</code>生成的patch才能让你的代码被项目的维护人接受。</li>
+<li>除错功能：对于<code>git diff</code>生成的patch，你可以用<code>git apply --check</code>查看补丁是否能够干净顺利地应用到当前分支中；如果<code>git format-patch</code>生成的补丁不能打到当前分支，<code>git am</code>会给出提示，并协助你完成打补丁工作，你也可以使用<code>git am -3</code>进行三方合并，详细的做法可以参考git手册或者<code>《Progit》</code>。从这一点上看，两者除错功能都很强。</li>
+<li>提交信息：由于<code>git format-patch</code>生成的补丁中含有这个补丁开发者的名字，因此在应用补丁时，这个名字会被记录进版本库，显然，这样做是恰当的。因此，目前使用git的开源社区往往建议大家使用<code>git format-patch</code>生成补丁。</li>
+</ol>
+<h2 id="git-diff-apply-与-git-format-patch-am-测试脚本"><a href="#git-diff-apply-与-git-format-patch-am-测试脚本" class="headerlink" title="git diff/apply 与 git format-patch/am 测试脚本"></a>git diff/apply 与 git format-patch/am 测试脚本</h2><p>以下脚本保存为<code>git-patch-commands.sh</code>：</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/linux/2016/09/21/git-format-patch-and-git-diff.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/blog/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/blog/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/89/">89</a><a class="extend next" rel="next" href="/blog/page/7/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

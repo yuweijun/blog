@@ -1,0 +1,555 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="使用hpricot测试不同的css选择器的解析速度。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hpricot css selector speed test">
+<meta property="og:url" content="https://www.4e00.com/ruby/2007/08/13/hpricot-css-selector-speed-test.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="使用hpricot测试不同的css选择器的解析速度。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hpricot css selector speed test">
+<meta name="twitter:description" content="使用hpricot测试不同的css选择器的解析速度。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/ruby/2007/08/13/hpricot-css-selector-speed-test.html"/>
+
+  <title> hpricot css selector speed test | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                hpricot css selector speed test
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2007-08-13T23:11:00+08:00" content="2007-08-13">
+              2007-08-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/ruby/" itemprop="url" rel="index">
+                    <span itemprop="name">ruby</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>使用hpricot测试不同的css选择器的解析速度。</p>
+<a id="more"></a>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">'rubygems'</span></div><div class="line"><span class="keyword">require</span> <span class="string">'scrubyt'</span> <span class="comment"># mechanize hpricot open-uri rubyinline parse-tree ...</span></div><div class="line"></div><div class="line">doc = Hpricot(open(<span class="string">'http://extjs.com/playpen/slickspeed/system/template.php?include=prototype.js&amp;function=$$&amp;modifier=&amp;nocache=1187009411'</span>))</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">step</span><span class="params">(doc, selector)</span></span></div><div class="line">  print selector + <span class="string">"\t\t"</span></div><div class="line">  start_time = Time.now.to_f</div><div class="line">  rs = doc/selector</div><div class="line">  end_time = Time.now.to_f</div><div class="line">  print rs.length.to_s + <span class="string">"\t\t"</span></div><div class="line">  puts  ((end_time - start_time) * <span class="number">1000</span>).round <span class="comment"># !&gt; (...) interpreted as grouped expression</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">step(doc, <span class="string">"*"</span>)</div><div class="line">step(doc, <span class="string">"div:only-child"</span>)</div><div class="line">step(doc, <span class="string">"div:contains(CELIA)"</span>)</div><div class="line">step(doc, <span class="string">"div:nth-child(even)"</span>)</div><div class="line">step(doc, <span class="string">"div:nth-child(2n)"</span>)</div><div class="line">step(doc, <span class="string">"div:nth-child(odd)"</span>)</div><div class="line">step(doc, <span class="string">"div:nth-child(2n+1)"</span>)</div><div class="line">step(doc, <span class="string">"div:nth-child(n)"</span>)</div><div class="line">step(doc, <span class="string">"div:last-child"</span>)</div><div class="line">step(doc, <span class="string">"div:first-child"</span>)</div><div class="line">step(doc, <span class="string">"div:not(:first-child)"</span>)</div><div class="line">step(doc, <span class="string">"div:not(.dialog)"</span>)</div><div class="line">step(doc, <span class="string">"div &gt; div"</span>)</div><div class="line">step(doc, <span class="string">"div + div"</span>)</div><div class="line">step(doc, <span class="string">"div ~ div"</span>)</div><div class="line">step(doc, <span class="string">"body"</span>)</div><div class="line">step(doc, <span class="string">"body div"</span>)</div><div class="line">step(doc, <span class="string">"div"</span>)</div><div class="line">step(doc, <span class="string">"div div"</span>)</div><div class="line">step(doc, <span class="string">"div div div"</span>)</div><div class="line">step(doc, <span class="string">"div, div, div"</span>)</div><div class="line">step(doc, <span class="string">"div, a, span"</span>)</div><div class="line">step(doc, <span class="string">".dialog"</span>)</div><div class="line">step(doc, <span class="string">"div.dialog"</span>)</div><div class="line">step(doc, <span class="string">"div.dialog.emphatic"</span>)</div><div class="line">step(doc, <span class="string">"div .dialog"</span>)</div><div class="line">step(doc, <span class="string">"div.character, div.dialog"</span>)</div><div class="line">step(doc, <span class="string">"#speech5"</span>)</div><div class="line">step(doc, <span class="string">"div#speech5"</span>)</div><div class="line">step(doc, <span class="string">"div #speech5"</span>)</div><div class="line">step(doc, <span class="string">"div.scene div.dialog"</span>)</div><div class="line">step(doc, <span class="string">"div#scene1 div.dialog div"</span>)</div><div class="line">step(doc, <span class="string">"#scene1 #speech1"</span>)</div><div class="line">step(doc, <span class="string">"div[@class]"</span>)</div><div class="line">step(doc, <span class="string">"div[@class='dialog']"</span>)</div><div class="line">step(doc, <span class="string">"div[@class^='dia']"</span>)</div><div class="line">step(doc, <span class="string">"div[@class$='log']"</span>)</div><div class="line">step(doc, <span class="string">"div[@class*='sce']"</span>)</div><div class="line">step(doc, <span class="string">"div[@class|='dialog']"</span>)</div><div class="line">step(doc, <span class="string">"div[@class!='madeup']"</span>)</div><div class="line">step(doc, <span class="string">"div[@class~='dialog']"</span>)</div><div class="line"></div><div class="line"><span class="comment"># &gt;&gt; selector founded time</span></div><div class="line"><span class="comment"># &gt;&gt; * 755 24</span></div><div class="line"><span class="comment"># &gt;&gt; div:only-child 22 223</span></div><div class="line"><span class="comment"># &gt;&gt; div:contains(CELIA) 26 130</span></div><div class="line"><span class="comment"># &gt;&gt; div:nth-child(even) 106 70</span></div><div class="line"><span class="comment"># &gt;&gt; div:nth-child(2n) 14 65</span></div><div class="line"><span class="comment"># &gt;&gt; div:nth-child(odd) 137 116</span></div><div class="line"><span class="comment"># &gt;&gt; div:nth-child(2n+1) 14 191</span></div><div class="line"><span class="comment"># &gt;&gt; div:nth-child(n) 31 65</span></div><div class="line"><span class="comment"># &gt;&gt; div:last-child 53 101</span></div><div class="line"><span class="comment"># &gt;&gt; div:first-child 51 89</span></div><div class="line"><span class="comment"># &gt;&gt; div:not(:first-child) 192 100</span></div><div class="line"><span class="comment"># &gt;&gt; div:not(.dialog) 192 49</span></div><div class="line"><span class="comment"># &gt;&gt; div &gt; div 242 171</span></div><div class="line"><span class="comment"># &gt;&gt; div + div 0 35</span></div><div class="line"><span class="comment"># &gt;&gt; div ~ div 240 6882</span></div><div class="line"><span class="comment"># &gt;&gt; body 1 20</span></div><div class="line"><span class="comment"># &gt;&gt; body div 243 37</span></div><div class="line"><span class="comment"># &gt;&gt; div 243 26</span></div><div class="line"><span class="comment"># &gt;&gt; div div 242 287</span></div><div class="line"><span class="comment"># &gt;&gt; div div div 241 525</span></div><div class="line"><span class="comment"># &gt;&gt; div, div, div 729 72</span></div><div class="line"><span class="comment"># &gt;&gt; div, a, span 243 184</span></div><div class="line"><span class="comment"># &gt;&gt; .dialog 51 41</span></div><div class="line"><span class="comment"># &gt;&gt; div.dialog 51 48</span></div><div class="line"><span class="comment"># &gt;&gt; div.dialog.emphatic 5 52</span></div><div class="line"><span class="comment"># &gt;&gt; div .dialog 51 318</span></div><div class="line"><span class="comment"># &gt;&gt; div.character, div.dialog 99 104</span></div><div class="line"><span class="comment"># &gt;&gt; #speech5 1 3</span></div><div class="line"><span class="comment"># &gt;&gt; div#speech5 1 165</span></div><div class="line"><span class="comment"># &gt;&gt; div #speech5 1 26</span></div><div class="line"><span class="comment"># &gt;&gt; div.scene div.dialog 49 101</span></div><div class="line"><span class="comment"># &gt;&gt; div#scene1 div.dialog div 142 240</span></div><div class="line"><span class="comment"># &gt;&gt; #scene1 #speech1 1 3</span></div><div class="line"><span class="comment"># &gt;&gt; div[<span class="doctag">@class</span>] 103 40</span></div><div class="line"><span class="comment"># &gt;&gt; div[<span class="doctag">@class</span>='dialog'] 45 50</span></div><div class="line"><span class="comment"># &gt;&gt; div[<span class="doctag">@class</span>^='dia'] 51 47</span></div><div class="line"><span class="comment"># &gt;&gt; div[<span class="doctag">@class</span>$='log'] 45 57</span></div><div class="line"><span class="comment"># &gt;&gt; div[<span class="doctag">@class</span>*='sce'] 1 201</span></div><div class="line"><span class="comment"># &gt;&gt; div[<span class="doctag">@class</span>|='dialog'] 45 62</span></div><div class="line"><span class="comment"># &gt;&gt; div[<span class="doctag">@class</span>!='madeup'] 243 46</span></div><div class="line"><span class="comment"># &gt;&gt; div[<span class="doctag">@class</span>~='dialog'] 51 51</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/javascript/2007/08/10/classical-inheritance-in-javascript.html" rel="next" title="classical inheritance in javascript">
+                上一篇：classical inheritance in javascript
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/javascript/2007/08/16/scriptaculous-auto-complete-example.html" rel="prev" title="scriptaculous auto complete example">
+                下一篇：scriptaculous auto complete example
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

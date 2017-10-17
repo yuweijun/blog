@@ -1,0 +1,612 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="依赖反转原则 - Dependency Inversion Principlewiki上对依赖反转原则说明如下：  In object-oriented design, the dependency inversion principle refers to a specific form of decoupling software modules. When following this pr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="依赖反转原则与IoC&#x2F;DI的关系">
+<meta property="og:url" content="https://www.4e00.com/java/2017/07/29/dependence-inversion-principle-relation-with-ioc-and-di.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="依赖反转原则 - Dependency Inversion Principlewiki上对依赖反转原则说明如下：  In object-oriented design, the dependency inversion principle refers to a specific form of decoupling software modules. When following this pr">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.4e00.com/blog/img/java/dependency-inversion-principle.png">
+<meta property="og:image" content="https://www.4e00.com/blog/img/java/ioc-di.png">
+<meta property="og:updated_time" content="2017-09-12T00:57:49.214Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="依赖反转原则与IoC&#x2F;DI的关系">
+<meta name="twitter:description" content="依赖反转原则 - Dependency Inversion Principlewiki上对依赖反转原则说明如下：  In object-oriented design, the dependency inversion principle refers to a specific form of decoupling software modules. When following this pr">
+<meta name="twitter:image" content="https://www.4e00.com/blog/img/java/dependency-inversion-principle.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2017/07/29/dependence-inversion-principle-relation-with-ioc-and-di.html"/>
+
+  <title> 依赖反转原则与IoC/DI的关系 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                依赖反转原则与IoC/DI的关系
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-07-29T13:00:45+08:00" content="2017-07-29">
+              2017-07-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="依赖反转原则-Dependency-Inversion-Principle"><a href="#依赖反转原则-Dependency-Inversion-Principle" class="headerlink" title="依赖反转原则 - Dependency Inversion Principle"></a>依赖反转原则 - Dependency Inversion Principle</h2><p>wiki上对<a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle" target="_blank" rel="external">依赖反转原则</a>说明如下：</p>
+<blockquote>
+<p>In object-oriented design, the <code>dependency inversion principle</code> refers to a specific form of decoupling software modules. When following this principle, the conventional dependency relationships established from high-level, policy-setting modules to low-level, dependency modules are reversed, thus rendering high-level modules independent of the low-level module implementation details.</p>
+</blockquote>
+<p>该原则规定：</p>
+<ol>
+<li>高层次的模块不应该依赖于低层次的模块，两者都应该依赖于抽象接口。</li>
+<li>抽象接口不应该依赖于具体实现。而具体实现则应该依赖于抽象接口。</li>
+</ol>
+<p>通常的抽象都来源于细节，来源于具体对象，通过对这些具体对象进行分析思考，从而形成高层的抽象对象或者是接口，所以直观的来看一般都是抽象依赖于细节，而DIP原则正好是将之倒置，要求细节依赖于抽象。</p>
+<img src="/blog/img/java/dependency-inversion-principle.png" title="[dependency-inversion-principle]">
+<p>上图高层模块1中对象A依赖于具体对象B，图中模块1重构后，对象A依赖于低层模块中对象B的抽象接口InferfaceB，而在低层模块2中的对象B实现了此接口，一般通过IoC/DI完成对象调用，从而达到细节依赖抽象，而不是抽象依赖细节，这就是依赖反转。</p>
+<p>面向对象编程中，最根本的一个原则就是<code>分离变化与不变化的部分</code>，面向对象的三大特性(封装、继承和多态)，六大原则(SOLID)，若干设计模式，本质都是体现这个原则，即分离对象中变化和不变化的部分，分离模块中变化与不变化的部分，依赖反转原则中抽象的部分就是相对不变的部分，变化的部分即具体的细节的低层对象。</p>
+<h2 id="控制反转-Inversion-of-Control"><a href="#控制反转-Inversion-of-Control" class="headerlink" title="控制反转 - Inversion of Control"></a>控制反转 - Inversion of Control</h2><p>wiki上对<a href="https://en.wikipedia.org/wiki/Dependency_injection" target="_blank" rel="external">控制反转</a>的说明如下：</p>
+<blockquote>
+<p>控制反转（Inversion of Control，缩写为IoC），是面向对象编程中的一种设计原则，可以用来减低计算机代码之间的耦合度。其中最常见的实现方式叫做<code>依赖注入</code>（Dependency Injection，简称DI），还有一种方式叫<code>依赖查找</code>（Dependency Lookup）。通过控制反转，对象在被创建的时候，由一个调控系统内所有对象的外界实体，将其所依赖的对象的引用传递给它。也可以说，依赖被注入到对象中。</p>
+<p>in software engineering, <code>inversion of control</code> (IoC) is a design principle in which custom-written portions of a computer program receive the flow of control from a generic framework. a software architecture with this design inverts control as compared to traditional procedural programming: in traditional programming, the custom code that expresses the purpose of the program calls into reusable libraries to take care of generic tasks, but with inversion of control, it is the framework that calls into the custom, or task-specific, code.</p>
+<p><code>inversion of control</code> is used to increase modularity of the program and make it extensible, and has applications in object-oriented programming and other programming paradigms. the term was popularized by Robert C. Martin and Martin Fowler.</p>
+<p>the term is related to, but different from, the <code>dependency inversion principle</code>, which concerns itself with decoupling dependencies between high-level and low-level layers  through shared abstractions. the general concept is also related to <code>event-driven programming</code> in that it is often implemented using ioc, so that the custom code is commonly only concerned with handling of events, whereas the event loop and dispatch of <code>events/messages</code> is handled by the framework or the runtime environment.</p>
+</blockquote>
+<h3 id="依赖注入-Dependency-Injection"><a href="#依赖注入-Dependency-Injection" class="headerlink" title="依赖注入 - Dependency Injection"></a>依赖注入 - Dependency Injection</h3><p>一般说到控制反转，都会和依赖注入一起提到，从上面的定义也可以知道，IoC是一个设计原则，而依赖注入是它的实现方式之一，依赖注入这个概念的提出可以参考 Martin Fowler 的这篇<a href="https://martinfowler.com/articles/injection.html" target="_blank" rel="external">文章</a>，对应的<a href="http://insights.thoughtworkers.org/injection/" target="_blank" rel="external">中文版本</a>。</p>
+<a id="more"></a>
+<p>关于IoC/DI的的一些实现方式可以参考上面 Martin Fowler 的文章，接下来说一下DIP和IoC这2个设计原则的关系。</p>
+<p>DIP是更抽象的编程原则，在java编程中，用一句话来表示就是<code>面向接口编程</code>，具体表现如下：</p>
+<ol>
+<li>不同的模块之间通过接口发生依赖。</li>
+<li>接口或者抽象类依赖于其他的接口或者抽象类，而不依赖于具体的实现类。</li>
+<li>低层次的具体实现类则依赖于接口或者抽象类。</li>
+</ol>
+<p>IoC中的反转是针对谁来控制对象的创建而言，由原来调用者直接创建对象反转为由IoC容器创建对象并注入到调用者中，进而实现代码之间的松耦合，IoC中对象之间的依赖可能是依赖于低层次的具体实现类，也可能是依赖于接口或者抽象类。如果低层次的对象是依赖于接口的，而依赖注入的就是这个接口的具体实现类，那么这就是依赖反转的直接体现了。</p>
+<img src="/blog/img/java/ioc-di.png" title="[ioc-di]">
+<p>上图中原来对象A直接依赖于对象B，直接反映到代码里就是在对象A中直接<code>new</code>出对象B，这样对象A和对象B就紧耦合了，为了将二者达到松耦合，引入了一个中间对象，这就是IoC容器，通过IoC容器创建对象B，再将对象B注入到对象A中，这样对象A就避免了创建对象B。</p>
+<p>这时IoC/DI的任务其实已经完成了，容器负责创建对象并完成依赖注入，代码在谁创建对象这件事情上做了解耦，但是如果对象A是依赖于具体细节实现的对象B，那么设计仍然没有遵循依赖反转原则，高层的模块中，对象A直接依赖于低层的具体对象B，即依赖于细节，细节发生变化，那么高层模块必须也需要跟着相应发生变化。</p>
+<p>这也说明了依赖反转原则DIP是更高级的一个抽象原则，一般通过IoC/DI实现，如果对象A依赖于抽象，比如是依赖于接口，而对象B实现此接口，那也就达到了依赖反转的效果，如果发生变化，只要通过IoC/DI注入接口的另一个实现即可，高层模块的代码就不用变化。</p>
+<p>通过上面的说明，可以看出依赖反转后，分离变化与不变化的部分，低层模块中的对象B发生变化时，高层模块相对来说是不变的，并不需要调整代码。</p>
+<h2 id="解耦与分层"><a href="#解耦与分层" class="headerlink" title="解耦与分层"></a>解耦与分层</h2><p>java开发中大部分设计模式本质上就是为了对象之间的解耦，通过在原本紧耦合的对象中间加入一个中间对象，以达到解耦的目的。</p>
+<p>为什么需要解耦，就是为了分离变化与不变化的部分，如果代码不会变化，代码内部写得耦合度高，也是可以的，只要逻辑清楚，代码可读性维护性好就可以，解耦也只是为了提高代码稳定性和模块的重用，不要为了解耦而解耦，很多模式为了解耦，也是引入了一定的复杂性的。</p>
+<p>现在的web项目中MVC模式是用得最多的，原来在view层直接注入model层的话，代码耦合度太高，view和model各自都绑定对方，很难代码重用，加入了中间controller一层作解耦之后，代码和逻辑都更加清晰，并且职责更加明确，model重用性也更好，而view中很多组件中变化的部分都被分离出去，从而达到非常高的复用性，但作为中间胶水的controller则一般难以重用。</p>
+<p>在简单工厂中，为避免暴露对象创建的细节给客户端，并且客户端根据DIP原则，只要依赖所需对象的接口即可，对象的创建由作为中间层的工厂来创建，简单工厂其实很接近IoC容器的实现了。</p>
+<p>中介者模式就更加明显，在二个原来相互依赖的对象之间，加入一个中介者(mediator)进行解耦。</p>
+<p>适配器在target和adaptee之间加入了一个中间对象adapter，通过这个adapter将目标接口的请求委托到原来存在的adaptee对象上。</p>
+<p>门面模式也是在细碎复杂的接口和客户端之间加入一个facade对象，为复杂的接口提供一个常用的简单接口。</p>
+<p>命令模式中，为了避免请求request直接发给接收者receiver，在中间加入了一个命令command的角色，将具体的接收者绑定到某个具体命令中，请求只是简单的调用命令的接口即可，不需要知道接收者的情况，从而达到二者之间的解耦。</p>
+<p>观察者模式中，在subject对象(JDK实现为Observable)和众多观察者之间加入了中间对象(JDK实现中的Vector)，通过这个中间对象解耦subject和observers，并且管理所有观察者，subject发生变化时，由这个中间对象通知所有观察者。</p>
+<p>代理模式中，在real对象和客户端之间加入了一个proxy对象，由这个代理对象控制客户端对真实对象的访问。</p>
+<p>访问者模式中，因为对象行为是变化不确定的，为解耦对象的内部状态和行为，引入了一个访问者visitor，每个访问者定义了一个行为或者操作，将这个visitor传到对象中再执行这个操作。</p>
+<p>迭代器模式中，则是在数组或者集合前加入一个迭代器iterator，客户端只要操作这个迭代器就可以遍历集合内的所有元素，而不用关注具体是什么集合，以及如何遍历这个集合。</p>
+<p>生成器模式中加入了builder，由builder创建产品的不同部分，再由director负责产品整体组装，多数情况下客户端调用者直接扮演了director的角色，也就是在具体产品和客户端中加入了一个中间对象builder。</p>
+<p>享元模式的核心思想就是分离变化与不变化，将不变的部分作为享元对象的内部状态，将变化的部分状态分离出去，从而避免生成大量的对象，以参数的形式传入给享元对象，一般享元模式中会搭配一个简单工厂用来创建和管理享元对象，所有生成的享元对象会缓存在这个工厂对象中，外部通过工厂获取享元对象，因此这个享元对象的管理工厂可以认为是一个中间对象。</p>
+<p>模板方法和工厂方法主要是分离对象中变化和不变化部分，相对不变的部分放在抽象基类中，变化部分由子类去实现，所以这2个模式目的不是为解耦对象关联，也没有引入中间对象，这里的工厂方法(Factory Method)里生产的对象一般来说是工厂内部使用的，如果生成的对象是给客户端调用的，那这个工厂就是一个中间对象。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle" target="_blank" rel="external">依赖反转原则</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Inversion_of_control" target="_blank" rel="external">Inversion of control</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Dependency_injection" target="_blank" rel="external">Dependency injection</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC" target="_blank" rel="external">控制反转</a></li>
+<li><a href="https://martinfowler.com/articles/injection.html" target="_blank" rel="external">控制反转与依赖注入</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2017/02/26/tomcat-startup-blocked-because-stackoverflow-error.html" rel="next" title="tomcat startup blocked because stackoverflow error">
+                上一篇：tomcat startup blocked because stackoverflow error
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2017/08/07/java-inner-class-and-jvm-implements.html" rel="prev" title="java inner class and jvm implements">
+                下一篇：java inner class and jvm implements
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖反转原则-Dependency-Inversion-Principle"><span class="nav-number">1.</span> <span class="nav-text">依赖反转原则 - Dependency Inversion Principle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制反转-Inversion-of-Control"><span class="nav-number">2.</span> <span class="nav-text">控制反转 - Inversion of Control</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖注入-Dependency-Injection"><span class="nav-number">2.1.</span> <span class="nav-text">依赖注入 - Dependency Injection</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解耦与分层"><span class="nav-number">3.</span> <span class="nav-text">解耦与分层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,574 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="POSIX规范常见的正则表达式记法，其实都源于Perl，实际上，正则表达式从Perl衍生出一个显赫的流派，叫做PCRE（Perl Compatible Regular Expression），\d、\w、\s 之类的记法，就是这个流派的特征。但是在PCRE之外，正则表达式还有其它流派，比如下面要介绍的POSIX规范的正则表达式。 POSIX的全称是Portable Operating System">
+<meta property="og:type" content="article">
+<meta property="og:title" content="POSIX正则表达式规范BRE和ERE简介">
+<meta property="og:url" content="https://www.4e00.com/linux/2016/01/21/posix-bre-and-ere-regular-expression.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="POSIX规范常见的正则表达式记法，其实都源于Perl，实际上，正则表达式从Perl衍生出一个显赫的流派，叫做PCRE（Perl Compatible Regular Expression），\d、\w、\s 之类的记法，就是这个流派的特征。但是在PCRE之外，正则表达式还有其它流派，比如下面要介绍的POSIX规范的正则表达式。 POSIX的全称是Portable Operating System">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="POSIX正则表达式规范BRE和ERE简介">
+<meta name="twitter:description" content="POSIX规范常见的正则表达式记法，其实都源于Perl，实际上，正则表达式从Perl衍生出一个显赫的流派，叫做PCRE（Perl Compatible Regular Expression），\d、\w、\s 之类的记法，就是这个流派的特征。但是在PCRE之外，正则表达式还有其它流派，比如下面要介绍的POSIX规范的正则表达式。 POSIX的全称是Portable Operating System">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/linux/2016/01/21/posix-bre-and-ere-regular-expression.html"/>
+
+  <title> POSIX正则表达式规范BRE和ERE简介 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                POSIX正则表达式规范BRE和ERE简介
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-01-21T15:25:55+08:00" content="2016-01-21">
+              2016-01-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="POSIX规范"><a href="#POSIX规范" class="headerlink" title="POSIX规范"></a>POSIX规范</h2><p>常见的正则表达式记法，其实都源于Perl，实际上，正则表达式从Perl衍生出一个显赫的流派，叫做PCRE（Perl Compatible Regular Expression），<code>\d</code>、<code>\w</code>、<code>\s</code> 之类的记法，就是这个流派的特征。但是在PCRE之外，正则表达式还有其它流派，比如下面要介绍的<code>POSIX规范</code>的正则表达式。</p>
+<p>POSIX的全称是<code>Portable Operating System Interface for uniX</code>，它由一系列规范构成，定义了UNIX操作系统应当支持的功能，所以“POSIX规范的正则表达式”其实只是“关于正则表达式的POSIX规范”，它定义了BRE（Basic Regular Expression，基本型正则表达式）和ERE（Extended Regular Express，扩展型正则表达式）两大流派。在兼容POSIX的UNIX系统上，grep和egrep之类的工具都遵循POSIX规范，一些数据库系统中的正则表达式也符合POSIX规范。</p>
+<p>BRE和ERE二者的区别，简单的说就在于<code>(</code>、<code>)</code>、<code>{</code>、<code>}</code>、<code>+</code>、<code>?</code>、<code>|</code>这7个特殊字符的使用方法上：</p>
+<ol>
+<li>在BRE中如果想要这些字符表示特殊的含义，就需要把它们转义。</li>
+<li>反之，在ERE中如果要这些字符不表示特殊的含义，就需要把它们转义。</li>
+<li>BRE中的特殊字符：<code>.</code>、<code>\</code>、<code>[</code>、<code>^</code>、<code>$</code>、<code>*</code>。</li>
+<li>ERE中的特殊字符多了7个，即：<code>.</code>、<code>\</code>、<code>[</code>、<code>^</code>、<code>$</code>、<code>*</code>、<code>(</code>、<code>)</code>、<code>{</code>、<code>}</code>、<code>+</code>、<code>?</code>、<code>|</code>。</li>
+</ol>
+<a id="more"></a>
+<h2 id="BRE"><a href="#BRE" class="headerlink" title="BRE"></a>BRE</h2><p>在Linux/Unix常用工具中，grep、vi、sed都属于BRE这一派，它的语法看起来比较奇怪，元字符 <code>(</code>、<code>)</code>、<code>{</code>、<code>}</code>、<code>+</code>、<code>?</code>、<code>|</code> 必须转义之后才具有特殊含义，如<code>\+</code>、<code>\?</code>、<code>\|</code>，而且也支持<code>\1</code>、<code>\2</code>之类反向引用。</p>
+<h2 id="ERE"><a href="#ERE" class="headerlink" title="ERE"></a>ERE</h2><p>在Linux/Unix常用工具中，egrep、awk则属于ERE这一派。虽然BRE名为“基本”而ERE名为“扩展”，但ERE并不要求兼容BRE的语法，而是自成一体。</p>
+<p>注：PCRE中常用<code>\b</code>来表示“单词的起始或结束位置”，但Linux/Unix的工具中，通常用<code>\&lt;</code>来匹配“单词的起始位置”，用<code>\&gt;</code>来匹配“单词的结束位置”，sed中的<code>\y</code>可以同时匹配这两个位置。</p>
+<h2 id="POSIX字符组"><a href="#POSIX字符组" class="headerlink" title="POSIX字符组"></a>POSIX字符组</h2><p>在某些文档中，你还会发现类似<code>[:digit:]</code>、<code>[:lower:]</code>之类的表示法，它们看起来不难理解（digit就是“数字”，lower就是“小写”），但又很奇怪，这就是POSIX字符组。</p>
+<p>在POSIX规范中，<code>[a-z]</code>、<code>[aeiou]</code>之类的记法仍然是合法的，其意义与PCRE中的字符组也没有区别，只是这类记法的准确名称是POSIX方括号表达式（bracket expression），它主要用在Unix/Linux系统中。</p>
+<h2 id="POSIX与PCRE方括号表示法的区别"><a href="#POSIX与PCRE方括号表示法的区别" class="headerlink" title="POSIX与PCRE方括号表示法的区别"></a>POSIX与PCRE方括号表示法的区别</h2><p>POSIX与PCRE方括号表示法的最主要差别在于：POSIX字符组中，反斜线<code>\</code>不是用来转义的。所以POSIX方括号表示法<code>[\d]</code>只能匹配<code>\</code>和<code>d</code>两个字符，而不是<code>[0-9]</code>对应的数字字符。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.infoq.com/cn/news/2011/07/regular-expressions-6-POSIX" target="_blank" rel="external">Linux/Unix工具与正则表达式的POSIX规范</a></li>
+<li><a href="http://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap09.html" target="_blank" rel="external">9. Regular Expressions</a></li>
+<li><a href="http://blog.chinaunix.net/uid-23045379-id-2562051.html" target="_blank" rel="external">BRE与ERE的差异</a></li>
+<li><a href="http://www.caiyiting.com/blog/2013/expressions.html" target="_blank" rel="external">sed正则表达式和12个实例</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2016/01/20/ssh-copy-id.html" rel="next" title="ssh-copy-id命令详解">
+                上一篇：ssh-copy-id命令详解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2016/01/21/how-to-install-java8-on-ubuntu-14-04.html" rel="prev" title="howto install java8 on ubuntu-14.04">
+                下一篇：howto install java8 on ubuntu-14.04
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#POSIX规范"><span class="nav-number">1.</span> <span class="nav-text">POSIX规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BRE"><span class="nav-number">2.</span> <span class="nav-text">BRE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ERE"><span class="nav-number">3.</span> <span class="nav-text">ERE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POSIX字符组"><span class="nav-number">4.</span> <span class="nav-text">POSIX字符组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POSIX与PCRE方括号表示法的区别"><span class="nav-number">5.</span> <span class="nav-text">POSIX与PCRE方括号表示法的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

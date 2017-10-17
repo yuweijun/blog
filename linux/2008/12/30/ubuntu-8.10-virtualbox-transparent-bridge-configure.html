@@ -1,0 +1,568 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="替换下面所有的username为实际的ubuntu用户名">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu-8.10 virtualbox transparent bridge configure">
+<meta property="og:url" content="https://www.4e00.com/linux/2008/12/30/ubuntu-8.10-virtualbox-transparent-bridge-configure.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="替换下面所有的username为实际的ubuntu用户名">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.137Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ubuntu-8.10 virtualbox transparent bridge configure">
+<meta name="twitter:description" content="替换下面所有的username为实际的ubuntu用户名">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/linux/2008/12/30/ubuntu-8.10-virtualbox-transparent-bridge-configure.html"/>
+
+  <title> ubuntu-8.10 virtualbox transparent bridge configure | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ubuntu-8.10 virtualbox transparent bridge configure
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2008-12-30T13:59:00+08:00" content="2008-12-30">
+              2008-12-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="替换下面所有的username为实际的ubuntu用户名"><a href="#替换下面所有的username为实际的ubuntu用户名" class="headerlink" title="替换下面所有的username为实际的ubuntu用户名"></a>替换下面所有的username为实际的ubuntu用户名</h2><a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt-get install uml-utilities</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> gpasswd -a username uml-net</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt-get install bridge-utils</div><div class="line"><span class="comment"># 重启ubuntu</span></div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> chmod 0666 /dev/net/tun <span class="comment">#设置访问权限</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> tunctl -t tap0 -u username <span class="comment">#建立一个tap设备，名字为tap0，所有者为username</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> ifconfig eth0 0.0.0.0 promisc <span class="comment">#使eth0进入promiscuous模式</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> ifconfig tap0 0.0.0.0 promisc <span class="comment">#使tap0进入promiscuous模式</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> brctl addbr br0 <span class="comment">#增加一个网桥</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> brctl addif br0 eth0 <span class="comment">#将eth0加入网桥</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> ifconfig eth0 up <span class="comment">#激活eth0</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> dhclient br0 <span class="comment">#为br0设置IP地址</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> brctl addif br0 tap0 <span class="comment">#将tap0加入网桥</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> ifconfig tap0 up <span class="comment">#激活tap0</span></div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> /etc/init.d/networking restart</div></pre></td></tr></table></figure>
+<p>这个操作之后<code>br0</code>就应该会从局域网分配到ip地址，<code>eth0</code>和<code>tap0</code>则经由<code>br0</code>链到网络，不过这样机器重启之后这些配置就没有了，所以可以把这些信息写到<code>/etc/network/interfaces</code>中。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">more</span> /etc/network/interfaces</div><div class="line"></div><div class="line">auto lo</div><div class="line">iface lo inet loopback</div><div class="line"></div><div class="line">auto eth0</div><div class="line">iface eth0 inet manual</div><div class="line"></div><div class="line">auto tap0</div><div class="line">iface tap0 inet manual</div><div class="line">tunctl_user username</div><div class="line"></div><div class="line"><span class="comment"># The primary network interface - use DHCP to find our address</span></div><div class="line">auto br0</div><div class="line">iface br0 inet dhcp</div><div class="line">bridge_ports eth0 tap0</div><div class="line"></div><div class="line">up ifconfig tap0 0.0.0.0 up</div><div class="line">up ifconfig eth0 0.0.0.0 up</div></pre></td></tr></table></figure>
+<p>然后</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> /etc/init.d/networking restart</div></pre></td></tr></table></figure>
+<p>就可以，并且下次重启之后br0和tap0会自动被激活，ifconfig命令可以看到如下类似信息。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">ifconfig</span></div><div class="line">br0 Link encap:Ethernet HWaddr 00:21:97:12:e5:9c</div><div class="line">inet addr:192.168.1.226 Bcast:192.168.1.255 Mask:255.255.255.0</div><div class="line">inet6 addr: fe80::221:97ff:fe12:e59c/64 Scope:Link</div><div class="line">UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1</div><div class="line">RX packets:145 errors:0 dropped:0 overruns:0 frame:0</div><div class="line">TX packets:33 errors:0 dropped:0 overruns:0 carrier:0</div><div class="line">collisions:0 txqueuelen:0</div><div class="line">RX bytes:28802 (28.8 KB) TX bytes:4858 (4.8 KB)</div><div class="line"></div><div class="line">eth0 Link encap:Ethernet HWaddr 00:21:97:12:e5:9c</div><div class="line">inet6 addr: fe80::221:97ff:fe12:e59c/64 Scope:Link</div><div class="line">UP BROADCAST RUNNING PROMISC MULTICAST MTU:1500 Metric:1</div><div class="line">RX packets:3205 errors:0 dropped:0 overruns:0 frame:0</div><div class="line">TX packets:965 errors:0 dropped:0 overruns:0 carrier:0</div><div class="line">collisions:0 txqueuelen:1000</div><div class="line">RX bytes:478611 (478.6 KB) TX bytes:146887 (146.8 KB)</div><div class="line">Interrupt:17</div><div class="line"></div><div class="line">lo Link encap:Local Loopback</div><div class="line">inet addr:127.0.0.1 Mask:255.0.0.0</div><div class="line">inet6 addr: ::1/128 Scope:Host</div><div class="line">UP LOOPBACK RUNNING MTU:16436 Metric:1</div><div class="line">RX packets:183 errors:0 dropped:0 overruns:0 frame:0</div><div class="line">TX packets:183 errors:0 dropped:0 overruns:0 carrier:0</div><div class="line">collisions:0 txqueuelen:0</div><div class="line">RX bytes:15553 (15.5 KB) TX bytes:15553 (15.5 KB)</div><div class="line"></div><div class="line">tap0 Link encap:Ethernet HWaddr 22:7c:6a:b3:1d:b8</div><div class="line">inet6 addr: fe80::207c:6aff:feb3:1db8/64 Scope:Link</div><div class="line">UP BROADCAST RUNNING PROMISC MULTICAST MTU:1500 Metric:1</div><div class="line">RX packets:0 errors:0 dropped:0 overruns:0 frame:0</div><div class="line">TX packets:0 errors:0 dropped:2294 overruns:0 carrier:0</div><div class="line">collisions:0 txqueuelen:500</div><div class="line">RX bytes:0 (0.0 B) TX bytes:0 (0.0 B)</div></pre></td></tr></table></figure>
+<p>这个配置在机器重起后，虽然已经可以上网，但是<code>eth0</code>其实没有分配ip，所以进入ubuntu桌面后，会看到右上角的network disabling的网络链接。</p>
+<p>以上是基于virtualbox-2.0.4设置的，新版的2.1.0设置应该更简单，不需要设置<code>tap0</code>。</p>
+<h2 id="最后设置virtualbox"><a href="#最后设置virtualbox" class="headerlink" title="最后设置virtualbox"></a>最后设置virtualbox</h2><p>启动virtualbox，在主界面上选中要使用刚才建立的虚拟网络接口tap0的虚拟机，点“设置”，在弹出的窗口中选“网络”，选中其中一块网卡（通常为“网络适配器 0”），选中“启用网络适配器”，“连接到”后面选“Host Interface”，选中“接入网线”，然后在“主机网络界面名称”中填入刚才建立的虚拟网络接口的名字<code>tap0</code>，确定。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://download.virtualbox.org/virtualbox/2.0.4/UserManual.pdf" target="_blank" rel="external">http://download.virtualbox.org/virtualbox/2.0.4/UserManual.pdf</a></li>
+<li><a href="http://forum.ubuntu.org.cn/viewtopic.php?t=63120" target="_blank" rel="external">http://forum.ubuntu.org.cn/viewtopic.php?t=63120</a></li>
+<li><a href="http://linux.chinaunix.net/bbs/thread-1029090-1-1.html" target="_blank" rel="external">http://linux.chinaunix.net/bbs/thread-1029090-1-1.html</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2008/12/27/clear-history-command-when-logout-linux.html" rel="next" title="clear history command when logout linux">
+                上一篇：clear history command when logout linux
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/php/2009/01/03/trap-of-in-array-in-php.html" rel="prev" title="trap of in_array in php">
+                下一篇：trap of in_array in php
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#替换下面所有的username为实际的ubuntu用户名"><span class="nav-number">1.</span> <span class="nav-text">替换下面所有的username为实际的ubuntu用户名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后设置virtualbox"><span class="nav-number">2.</span> <span class="nav-text">最后设置virtualbox</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

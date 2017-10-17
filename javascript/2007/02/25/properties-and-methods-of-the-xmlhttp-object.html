@@ -1,0 +1,576 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="The techniques we’ve covered so far use standard browser features for purposes other than that for which they were intended. As such, they lack many features you might want out of RPC-over-HTTP, such">
+<meta property="og:type" content="article">
+<meta property="og:title" content="properties and methods of the xmlhttp object">
+<meta property="og:url" content="https://www.4e00.com/javascript/2007/02/25/properties-and-methods-of-the-xmlhttp-object.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="The techniques we’ve covered so far use standard browser features for purposes other than that for which they were intended. As such, they lack many features you might want out of RPC-over-HTTP, such">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="properties and methods of the xmlhttp object">
+<meta name="twitter:description" content="The techniques we’ve covered so far use standard browser features for purposes other than that for which they were intended. As such, they lack many features you might want out of RPC-over-HTTP, such">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2007/02/25/properties-and-methods-of-the-xmlhttp-object.html"/>
+
+  <title> properties and methods of the xmlhttp object | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                properties and methods of the xmlhttp object
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2007-02-25T13:54:00+08:00" content="2007-02-25">
+              2007-02-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>The techniques we’ve covered so far use standard browser features for purposes other than that for which they were intended. As such, they lack many features you might want out of RPC-over-HTTP, such as the ability to check HTTP return codes and to specify username/password authentication information for requests. Modern browsers let you do JavaScript RPCs in a much cleaner, more elegant fashion with a flexible interface supporting the needed features missing from the previously discussed hacks.<br>Internet Explorer 5 and later support the XMLHTTP object and Mozilla-based browsers provide an XMLHTTPRequest object. These objects allow you to create arbitrary HTTP requests (including POSTs), send them to a server, and read the full response, including headers. Table 19-1 shows the properties and methods of the XMLHTTP object.</p>
+<h2 id="Properties-and-Methods-of-the-XMLHTTP-Object"><a href="#Properties-and-Methods-of-the-XMLHTTP-Object" class="headerlink" title="Properties and Methods of the XMLHTTP Object"></a>Properties and Methods of the XMLHTTP Object</h2><p><code>readyState</code> Integer indicating the state of the request, either <code>0</code> (uninitialized), <code>1</code> (loading), <code>2</code> (response headers received), <code>3</code> (some response body received), or <code>4</code> (request complete).</p>
+<p><code>Onreadystatechange</code> Function to call whenever the readyState changes.</p>
+<p><code>status</code> HTTP status code returned by the server (e.g., <code>200</code>).</p>
+<p><code>statusText</code> Full status HTTP status line returned by the server (e.g., <code>200 OK</code>).</p>
+<p><code>responseText</code> Full response from the server as a string.</p>
+<p><code>responseXML</code> A Document object representing the server&#39;s response parsed as an XML document.</p>
+<p><code>abort()</code> Cancels an asynchronous HTTP request.</p>
+<p><code>getAllResponseHeaders()</code> Returns a string containing all the HTTP headers the server sent in its response. Each header is a name/value pair separated by a colon, and header lines are separated by a carriage return/linefeed pair.</p>
+<p><code>getResponseHeader(headerName)</code> Returns a string corresponding to the value of the headerName header returned by the server (e.g., request.getResponseHeader(&quot;Set-cookie&quot;)).</p>
+<p><code>open(method, url [, asynchronous[, user, password]])</code> Initializes the request in preparation for sending to the server. The method parameter is the HTTP method to use, for example, GET or POST. The url is the URL the request will be sent to. The optional asynchronous parameter indicates whether send() returns immediately or after the request is complete (default is true, meaning it returns immediately). The optional user and password arguments are to be used if the URL requires HTTP authentication. If no parameters are specified by the URL requiring authentication, the user will be prompted to enter it.</p>
+<p><code>setRequestHeader(name, value)</code> Adds the HTTP header given by the name (without the colon) and value parameters.</p>
+<p><code>send(body)</code> Initiates the request to the server. The body parameter should contain the body of the request, i.e., a string containing fieldname=value&amp;fieldname2=value2… for POSTs or the empty string (&quot;&quot;) for GETs.</p>
+<h2 id="Creating-and-Sending-Requests"><a href="#Creating-and-Sending-Requests" class="headerlink" title="Creating and Sending Requests"></a>Creating and Sending Requests</h2><p>XMLHTTP requests can be either synchronous or asynchronous, as specified by the optional third parameter to open(). The send() method of a synchronous request will return only once the request is complete, that is, the request completes “while you wait.” The send() method of an asynchronous request returns immediately, and the download happens in the background. In order to see if an asynchronous request has completed, you need to check its readyState. The advantage of an asynchronous request is that your script can go on to other things while it is made and the response received, for example, you could download a bunch of requests in parallel.</p>
+<p>To create an XMLHTTP object in Mozilla-based browsers, you use the XMLHttpRequest constructor:</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> xmlhttp = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line"><span class="comment">// In IE, you instantiate a new MSXML XHMLHTTP ActiveX object:</span></div><div class="line"><span class="keyword">var</span> xmlhttp = <span class="keyword">new</span> ActiveXObject(<span class="string">"Msxml2.XMLHTTP"</span>);</div></pre></td></tr></table></figure>
+<p>Once you have an XMLHTTP object, the basic usage for synchronous requests is<br>Parameterize the request with open().<br>Set any custom headers you wish to send with setRequestHeader().<br>Send the request with send().<br>Read the response from one of the response-related properties.<br>The following example illustrates the concept:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="built_in">document</span>.all)</div><div class="line">    <span class="keyword">var</span> xmlhttp = <span class="keyword">new</span> ActiveXObject(<span class="string">"Msxml2.XMLHTTP"</span>);</div><div class="line"><span class="keyword">else</span></div><div class="line">    <span class="keyword">var</span> xmlhttp = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line"></div><div class="line">xmlhttp.open(<span class="string">"GET"</span>, <span class="string">"http://www.example.com/somefile.html"</span>, <span class="literal">false</span>);</div><div class="line">xmlhttp.send(<span class="string">""</span>);</div><div class="line">alert(<span class="string">"Response code was: "</span> + xmlhttp.status)</div></pre></td></tr></table></figure>
+<p>The sequence of steps for an asynchronous request is similar:<br>Parameterize the request with open().<br>Set any custom headers you wish to send with setRequestHeader().<br>Set the onreadystatechange property to a function to be called when the request is complete.<br>Send the request with send().<br>The following example illustrates an asynchronous request:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="built_in">document</span>.all)</div><div class="line">    <span class="keyword">var</span> xmlhttp = <span class="keyword">new</span> ActiveXObject(<span class="string">"Msxml2.XMLHTTP"</span>);</div><div class="line"><span class="keyword">else</span></div><div class="line">    <span class="keyword">var</span> xmlhttp = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line"></div><div class="line">xmlhttp.open(<span class="string">"GET"</span>, <span class="built_in">window</span>.location);</div><div class="line">xmlhttp.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (xmlhttp.readyState == <span class="number">4</span>)</div><div class="line">    alert(<span class="string">"The text of this page is: "</span> + xmlhttp.responseText);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">xmlhttp.setRequestHeader(<span class="string">"Cookie"</span>, <span class="string">"FakeValue=yes"</span>);</div><div class="line">xmlhttp.send(<span class="string">""</span>);</div></pre></td></tr></table></figure>
+<p>When working with asynchronous requests, you don’t have to use the onreadystatechange handler. Instead, you could periodically check the request’s readyState for completion.</p>
+<h2 id="POSTs"><a href="#POSTs" class="headerlink" title="POSTs"></a>POSTs</h2><p>You can POST form data to a server in much the same way as issuing a GET. The only differences are using the POST method and setting the content type of the request appropriately (i.e., to “application/x-www-form-urlencoded”).</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> formData = <span class="string">"username=billybob&amp;password=angelina5"</span>;</div><div class="line"><span class="keyword">var</span> xmlhttp = <span class="literal">null</span>;</div><div class="line"><span class="keyword">if</span> (<span class="built_in">document</span>.all)</div><div class="line">    xmlhttp = <span class="keyword">new</span> ActiveXObject(<span class="string">"Msxml2.XMLHTTP"</span>);</div><div class="line"><span class="keyword">else</span> <span class="keyword">if</span> (XMLHttpRequest)</div><div class="line">    xmlhttp = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line"></div><div class="line"><span class="keyword">if</span> (xmlhttp) &#123;</div><div class="line">    xmlhttp.open(<span class="string">"POST"</span>, <span class="string">"http://demos.javascriptref.com/xmlecho.php"</span>, <span class="literal">false</span>);</div><div class="line">    xmlhttp.setRequestHeader(<span class="string">"Content-Type"</span>, <span class="string">"application/x-www-form-urlencoded"</span>);</div><div class="line">    xmlhttp.send(formData);</div><div class="line">    <span class="built_in">document</span>.write(<span class="string">"&lt;hr&gt;"</span> + xmlhttp.responseText + <span class="string">"&lt;hr&gt;"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/macos/2007/02/11/macosx-10.4.8-shortcuts.html" rel="next" title="mac os x 10.4.8 快捷命令">
+                上一篇：mac os x 10.4.8 快捷命令
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2007/03/02/apache2-configure.html" rel="prev" title="apache2 configure">
+                下一篇：apache2 configure
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Properties-and-Methods-of-the-XMLHTTP-Object"><span class="nav-number">1.</span> <span class="nav-text">Properties and Methods of the XMLHTTP Object</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-and-Sending-Requests"><span class="nav-number">2.</span> <span class="nav-text">Creating and Sending Requests</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POSTs"><span class="nav-number">3.</span> <span class="nav-text">POSTs</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

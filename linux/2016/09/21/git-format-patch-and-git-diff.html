@@ -1,0 +1,758 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="linux下有个补丁工具：patch，它会根据diff命令生成的文件更新代码。 git中则提供了两种patch方案：  用git diff生成的标准patch，可以提供上述的patch命令使用。 用git format-patch生成的git专用patch。  两种patch的比较：  兼容性：很明显，git diff生成的patch兼容性强。如果你在修改的代码的官方版本库不是git管理的版本库，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git format-patch and git diff">
+<meta property="og:url" content="https://www.4e00.com/linux/2016/09/21/git-format-patch-and-git-diff.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="linux下有个补丁工具：patch，它会根据diff命令生成的文件更新代码。 git中则提供了两种patch方案：  用git diff生成的标准patch，可以提供上述的patch命令使用。 用git format-patch生成的git专用patch。  两种patch的比较：  兼容性：很明显，git diff生成的patch兼容性强。如果你在修改的代码的官方版本库不是git管理的版本库，">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.153Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git format-patch and git diff">
+<meta name="twitter:description" content="linux下有个补丁工具：patch，它会根据diff命令生成的文件更新代码。 git中则提供了两种patch方案：  用git diff生成的标准patch，可以提供上述的patch命令使用。 用git format-patch生成的git专用patch。  两种patch的比较：  兼容性：很明显，git diff生成的patch兼容性强。如果你在修改的代码的官方版本库不是git管理的版本库，">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/linux/2016/09/21/git-format-patch-and-git-diff.html"/>
+
+  <title> git format-patch and git diff | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                git format-patch and git diff
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-09-21T22:28:22+08:00" content="2016-09-21">
+              2016-09-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>linux下有个补丁工具：<code>patch</code>，它会根据<code>diff</code>命令生成的文件更新代码。</p>
+<p>git中则提供了两种<code>patch</code>方案：</p>
+<ol>
+<li>用<code>git diff</code>生成的标准patch，可以提供上述的<code>patch</code>命令使用。</li>
+<li>用<code>git format-patch</code>生成的git专用patch。</li>
+</ol>
+<p>两种patch的比较：</p>
+<ol>
+<li>兼容性：很明显，<code>git diff</code>生成的patch兼容性强。如果你在修改的代码的官方版本库不是git管理的版本库，那么你必须使用<code>git diff</code>生成的patch才能让你的代码被项目的维护人接受。</li>
+<li>除错功能：对于<code>git diff</code>生成的patch，你可以用<code>git apply --check</code>查看补丁是否能够干净顺利地应用到当前分支中；如果<code>git format-patch</code>生成的补丁不能打到当前分支，<code>git am</code>会给出提示，并协助你完成打补丁工作，你也可以使用<code>git am -3</code>进行三方合并，详细的做法可以参考git手册或者<code>《Progit》</code>。从这一点上看，两者除错功能都很强。</li>
+<li>提交信息：由于<code>git format-patch</code>生成的补丁中含有这个补丁开发者的名字，因此在应用补丁时，这个名字会被记录进版本库，显然，这样做是恰当的。因此，目前使用git的开源社区往往建议大家使用<code>git format-patch</code>生成补丁。</li>
+</ol>
+<h2 id="git-diff-apply-与-git-format-patch-am-测试脚本"><a href="#git-diff-apply-与-git-format-patch-am-测试脚本" class="headerlink" title="git diff/apply 与 git format-patch/am 测试脚本"></a>git diff/apply 与 git format-patch/am 测试脚本</h2><p>以下脚本保存为<code>git-patch-commands.sh</code>：</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#! /bin/bash</span></div><div class="line"></div><div class="line">[ -a git-patch-test.git ] &amp;&amp; rm -rf git-patch-test.git</div><div class="line">[ -a git-patch-logs ] &amp;&amp; rm -rf git-patch-logs</div><div class="line"></div><div class="line">git --bare init git-patch-test.git</div><div class="line">git <span class="built_in">clone</span> git-patch-test.git git-patch-logs</div><div class="line"></div><div class="line"><span class="built_in">cd</span> git-patch-logs/</div><div class="line"><span class="built_in">echo</span> <span class="string">"v1@master"</span> &gt; v01-master.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v01-master"</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"v2@master"</span> &gt; v02-master.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v02-master"</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"v3@master"</span> &gt; v03-master.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v03-master"</span></div><div class="line">git push origin master</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"change to branch feature1"</span></div><div class="line">git checkout -b feature1</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"v4有中文内容"</span> &gt;&gt; v01-master.txt</div><div class="line"><span class="built_in">echo</span> <span class="string">"v4@feature1"</span> &gt; v04-feature1.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v04-feature1"</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"v5追加内容到v02-master.txt"</span> &gt;&gt; v02-master.txt</div><div class="line"><span class="built_in">echo</span> <span class="string">"v5@feature1"</span> &gt; v05-feature1.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v05-feature1"</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"v6 append to v03-master.txt"</span> &gt;&gt; v03-master.txt</div><div class="line"><span class="built_in">echo</span> <span class="string">"v6@feature1"</span> &gt; v06-feature1.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v06-feature1"</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"change to branch feature2"</span></div><div class="line">git checkout master</div><div class="line">git checkout -b feature2</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"v7 append to v01-master.txt"</span> &gt;&gt; v01-master.txt</div><div class="line"><span class="built_in">echo</span> <span class="string">"v7@feature2"</span> &gt; v07-feature2.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v07-feature2"</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"v8追加内容到v02-master.txt"</span> &gt;&gt; v02-master.txt</div><div class="line"><span class="built_in">echo</span> <span class="string">"v8@feature2"</span> &gt; v08-feature2.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v08-feature2"</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"v9追加内容到v03-master.txt"</span> &gt;&gt; v03-master.txt</div><div class="line"><span class="built_in">echo</span> <span class="string">"v9@feature2"</span> &gt; v09-feature2.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v09-feature2"</span></div><div class="line"></div><div class="line">git checkout master</div></pre></td></tr></table></figure>
+<h2 id="git-diff-and-git-apply-example"><a href="#git-diff-and-git-apply-example" class="headerlink" title="git diff and git apply example"></a>git diff and git apply example</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">./git-patch-commands.sh</div><div class="line"><span class="built_in">cd</span> git-patch-logs</div><div class="line"><span class="built_in">echo</span> <span class="string">"git diff HEAD~1 HEAD"</span></div><div class="line">git diff HEAD~1 HEAD &gt; diff1.patch</div><div class="line">git reset --hard HEAD~1</div><div class="line"><span class="built_in">echo</span> <span class="string">"git apply diff1"</span></div><div class="line">git apply diff1.patch</div><div class="line">git add v03-master.txt</div><div class="line">git commit -am <span class="string">"apply diff1.patch"</span></div><div class="line">git status | more</div><div class="line">git <span class="built_in">log</span> --<span class="built_in">stat</span> | more</div></pre></td></tr></table></figure>
+<p>从上述的命令操作结果可以看到，<code>git apply</code>打补丁后，文件在工作区内被修改了，与直接<code>patch -p1 &lt; diff1.patch</code>的效果一样，所以还需要再次提交修改，这样之后补丁作者，时间，补丁提交包含的版本和提交注释都丢失了。</p>
+<h3 id="patch-命令简单说明"><a href="#patch-命令简单说明" class="headerlink" title="patch 命令简单说明"></a>patch 命令简单说明</h3><p>一般<code>patch</code>命令使用方法为：<code>patch -pnum &lt; patchfile</code>，<code>-pnum</code>参数说明如下，常用一般是<code>-p1</code>和<code>-p0</code>，用于指定patchfile中的路径名前面的<code>/</code>要移除几个。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-pnum  or  --strip=num</div><div class="line">      Strip  the  smallest  prefix  containing num leading slashes from each file name found in the patch file.  A sequence of one or more adjacent slashes is</div><div class="line">      counted as a single slash.  This controls how file names found in the patch file are treated, in case you keep your files in a different directory  than</div><div class="line">      the person who sent out the patch.  For example, supposing the file name in the patch file was</div><div class="line"></div><div class="line">         /u/howard/src/blurfl/blurfl.c</div><div class="line"></div><div class="line">      setting -p0 gives the entire file name unmodified, -p1 gives</div><div class="line"></div><div class="line">         u/howard/src/blurfl/blurfl.c</div><div class="line"></div><div class="line">      without the leading slash, -p4 gives</div><div class="line"></div><div class="line">         blurfl/blurfl.c</div></pre></td></tr></table></figure>
+<p>前面用<code>git diff</code>命令生成的补丁文件<code>diff1.patch</code>内容如下，其文件名形式为<code>a/v03-master.txt</code>和<code>b/v030-master.txt</code>，在当前目录中打补丁，需要把前缀<code>a/</code>删除，所以补丁提交给非git项目后，可以使用<code>patch -p1 &lt; diff1.patch</code>来应用补丁。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cat</span> diff1.patch</div></pre></td></tr></table></figure>
+<blockquote>
+<p>diff --git a/v03-master.txt b/v03-master.txt</p>
+<p>new file mode 100644</p>
+<p>index 0000000..09c74b0</p>
+<p>--- /dev/null</p>
+<p>+++ b/v03-master.txt</p>
+<p>@@ -0,0 +1 @@</p>
+<p>+v3@master</p>
+</blockquote>
+<h2 id="git-format-patch-and-git-am-example"><a href="#git-format-patch-and-git-am-example" class="headerlink" title="git format-patch and git am example"></a>git format-patch and git am example</h2><p>如果是为非git项目提供补丁，可以使用上述的<code>git diff</code>命令产生补丁文件，如果是为git项目提供补丁，则推荐使用git方式生成补丁文件和应用补丁文件。</p>
+<h3 id="git-format-patch-简单示例一"><a href="#git-format-patch-简单示例一" class="headerlink" title="git format-patch 简单示例一"></a>git format-patch 简单示例一</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">cd</span> ..</div><div class="line">./git-patch-commands.sh</div><div class="line"><span class="built_in">cd</span> git-patch-logs</div><div class="line">git <span class="built_in">log</span> --<span class="built_in">stat</span> | more</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"git format-patch -1"</span></div><div class="line">git format-patch -1</div><div class="line">git reset --hard HEAD~1</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"git am patchfile"</span></div><div class="line">git am 0001-v03-master.patch</div><div class="line">git <span class="built_in">log</span> --<span class="built_in">stat</span> | more</div></pre></td></tr></table></figure>
+<p>补丁应用完成后，可以看到二次<code>git log --stat</code>生成的信息是一致的。</p>
+<h3 id="git-format-patch-简单示例二"><a href="#git-format-patch-简单示例二" class="headerlink" title="git format-patch 简单示例二"></a>git format-patch 简单示例二</h3><p>在上面<code>git-patch-commands.sh</code>脚本中，从<code>master</code>分支切出去2个特性分支，并且文件更新有重合冲突之处，现在开始使用补丁方式合并2个特性分支到主分支上。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">cd</span> ..</div><div class="line">./git-patch-commands.sh</div><div class="line"><span class="built_in">cd</span> git-patch-logs</div><div class="line">git <span class="built_in">log</span> feature1</div><div class="line">git format-patch -3 feature1</div><div class="line">git am *.patch</div><div class="line">rm -f *.patch</div></pre></td></tr></table></figure>
+<p>通过<code>git log</code>可以知道<code>feature1</code>分支上有3次提交，导出feature1上的3次提交，或者是切到特性分支上导出：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">cd</span> ..</div><div class="line">./git-patch-commands.sh</div><div class="line"><span class="built_in">cd</span> git-patch-logs</div><div class="line">git checkout feature1</div><div class="line">git format-patch master</div><div class="line">git checkout master</div><div class="line">git am *.patch</div><div class="line">rm -f *.patch</div></pre></td></tr></table></figure>
+<p>导出的结果如下，每次提交都会生成一个patch文件，并且根据提交时间，由先到后按序号生成，应用补丁时就会按序号从小到大应用。</p>
+<blockquote>
+<p>0001-v04-feature1.patch</p>
+<p>0002-v05-feature1.patch</p>
+<p>0003-v06-feature1.patch</p>
+</blockquote>
+<h3 id="输出patch文件的diffstat"><a href="#输出patch文件的diffstat" class="headerlink" title="输出patch文件的diffstat"></a>输出patch文件的diffstat</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> apply --<span class="built_in">stat</span> *.patch</div></pre></td></tr></table></figure>
+<h3 id="测试patch文件应用是否可以成功"><a href="#测试patch文件应用是否可以成功" class="headerlink" title="测试patch文件应用是否可以成功"></a>测试patch文件应用是否可以成功</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> apply --check *.patch</div></pre></td></tr></table></figure>
+<p>如果失败，会输出如下提示：</p>
+<blockquote>
+<p>error: patch failed:</p>
+</blockquote>
+<h3 id="应用patch文件"><a href="#应用patch文件" class="headerlink" title="应用patch文件"></a>应用patch文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> am *.patch</div></pre></td></tr></table></figure>
+<p>输出如下表示补丁应用成功：</p>
+<blockquote>
+<p>Applying: v04-feature1</p>
+<p>Applying: v05-feature1</p>
+<p>Applying: v06-feature1</p>
+</blockquote>
+<h2 id="git-am-patch-失败处理"><a href="#git-am-patch-失败处理" class="headerlink" title="git am patch 失败处理"></a>git am patch 失败处理</h2><p>前面的例子都是很顺利的执行正确了，实际项目中却经常会发生合并冲突，或者补丁应用失败。</p>
+<p>在前面<code>feature1</code>分支顺利合并的主分支之后，再应用<code>feature2</code>分支的补丁时，就会冲突，<code>git merge feature2</code>也会提示合并冲突。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> format-patch -3 feature2</div></pre></td></tr></table></figure>
+<blockquote>
+<p>0001-v07-feature2.patch</p>
+<p>0002-v08-feature2.patch</p>
+<p>0003-v09-feature2.patch</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> am *.patch</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Applying: v07-feature2</p>
+<p>error: patch failed: v01-master.txt:1</p>
+<p>error: v01-master.txt: patch does not apply</p>
+<p>Patch failed at 0001 v07-feature2</p>
+<p>The copy of the patch that failed is found in:</p>
+<p>   /data/git-patch-logs/.git/rebase-apply/patch</p>
+<p>When you have resolved this problem, run &quot;git am --continue&quot;.</p>
+<p>If you prefer to skip this patch, run &quot;git am --skip&quot; instead.</p>
+<p>To restore the original branch and stop patching, run &quot;git am --abort&quot;.</p>
+</blockquote>
+<h3 id="解决方法一：git-apply-reject"><a href="#解决方法一：git-apply-reject" class="headerlink" title="解决方法一：git apply --reject"></a>解决方法一：<code>git apply --reject</code></h3><p>默认情况下<code>git am</code>失败之后，是不会应用补丁文件的，可以使用<code>git apply --reject patchfile</code>强制执行补丁文件，并留下<code>.rej</code>后缀的冲突文件。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">--reject</div><div class="line">    For atomicity, git apply by default fails the whole patch and does not touch the working tree when some of the hunks do not apply. This option makes it apply the parts of the patch that are applicable, and leave the rejected hunks in corresponding *.rej files.</div></pre></td></tr></table></figure>
+<p>在<code>git am</code>失败之后，不要<code>git am --abort</code>放弃应用补丁，而是手工修复冲突的部分代码。</p>
+<p>按顺序应用<code>0001-v07-feature2.patch</code>补丁：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> apply --reject 0001-v07-feature2.patch</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Checking patch v01-master.txt...</p>
+<p>error: while searching for:</p>
+<p>v1@master</p>
+<p>&nbsp;</p>
+<p>error: patch failed: v01-master.txt:1</p>
+<p>Checking patch v07-feature2.txt...</p>
+<p>Applying patch v01-master.txt with 1 reject...</p>
+<p>Rejected hunk #1.</p>
+<p>Applied patch v07-feature2.txt cleanly.</p>
+</blockquote>
+<p>第一个补丁文件<code>0001-v07-feature2.patch</code>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">From 81edb3924de8459d3c55a27c90ee748c537a7ed0 Mon Sep 17 00:00:00 2001</div><div class="line">From: yuweijun &lt;yuweijun@live.com&gt;</div><div class="line">Date: Sat, 24 Sep 2016 15:06:12 +0800</div><div class="line">Subject: [PATCH 1/3] v07-feature2</div><div class="line"></div><div class="line">---</div><div class="line"> v01-master.txt   | 1 +</div><div class="line"> v07-feature2.txt | 1 +</div><div class="line"> 2 files changed, 2 insertions(+)</div><div class="line"> create mode 100644 v07-feature2.txt</div><div class="line"></div><div class="line">diff --git a/v01-master.txt b/v01-master.txt</div><div class="line">index c1112b6..807121d 100644</div><div class="line">--- a/v01-master.txt</div><div class="line">+++ b/v01-master.txt</div><div class="line">@@ -1 +1,2 @@</div><div class="line"> v1@master</div><div class="line">+v7 append to v01-master.txt</div><div class="line">diff --git a/v07-feature2.txt b/v07-feature2.txt</div><div class="line">new file mode 100644</div><div class="line">index 0000000..7efd0e3</div><div class="line">--- /dev/null</div><div class="line">+++ b/v07-feature2.txt</div><div class="line">@@ -0,0 +1 @@</div><div class="line">+v7@feature2</div><div class="line">--</div><div class="line">2.3.5</div></pre></td></tr></table></figure>
+<p>而补丁失败部分生成的<code>v01-master.txt.rej</code>文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">diff a/v01-master.txt b/v01-master.txt  (rejected hunks)</div><div class="line">@@ -1 +1,2 @@</div><div class="line"> v1@master</div><div class="line">+v7 append to v01-master.txt</div></pre></td></tr></table></figure>
+<p>对比上面完整的补丁内容，可以发现，补丁中不冲突的部分代码，已经被应用成功，也就是<code>v07-feature2.txt</code>这个文件被添加了，失败的就需要手工修改了，根据<code>.rej</code>文件提示编辑原文件<code>v01-master.txt</code>，然后加入暂存区，删除<code>.rej</code>文件。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> add v01-master.txt</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> add v07-feature2.txt</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">rm</span> -f v01-master.txt.rej</div></pre></td></tr></table></figure>
+<p>继续应用下一个补丁：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> apply --reject 0002-v08-feature2.patch</div></pre></td></tr></table></figure>
+<p>同样将生成的<code>.rej</code>内容，手工加入到<code>v02-master.txt</code>文件中。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> add v02-master.txt</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> add v08-feature2.txt</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">rm</span> -f v02-master.txt.rej</div></pre></td></tr></table></figure>
+<p>同样处理下一个补丁：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> apply --reject 0003-v09-feature2.patch</div></pre></td></tr></table></figure>
+<p>修改完成后，添加相应新建文件和修改的文件，然后提交版本。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> add v03-master.txt</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> add v09-feature2.txt</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">rm</span> -f v02-master.txt.rej</div></pre></td></tr></table></figure>
+<p>按<code>.rej</code>文件修改原文件之后，使用如下命令解决<code>git am</code>冲突：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> am --resolved</div></pre></td></tr></table></figure>
+<p>如上述操作成功，会提示相应的<code>Applying</code>信息，如果有补丁文件手动修复的内容和<code>.rej</code>文件中的不一样，则在执行<code>git am --resolved</code>命令之后，会提示如下错误信息：</p>
+<blockquote>
+<p>Applying: v08-feature2</p>
+<p>Applying: v09-feature2</p>
+<p>error: patch failed: v03-master.txt:1</p>
+<p>error: v03-master.txt: patch does not apply</p>
+<p>error: v09-feature2.txt: already exists in index</p>
+<p>Patch failed at 0003 v09-feature2</p>
+<p>The copy of the patch that failed is found in:</p>
+<p>   /data/git-patch-logs/.git/rebase-apply/patch</p>
+<p>When you have resolved this problem, run &quot;git am --continue&quot;.</p>
+<p>If you prefer to skip this patch, run &quot;git am --skip&quot; instead.</p>
+<p>To restore the original branch and stop patching, run &quot;git am --abort&quot;.</p>
+</blockquote>
+<p>在<code>git am --resolved</code>执行成功后，<code>feature2</code>的3次提交的所有内容都正确应用到主分支上，可以使用<code>git log --stat</code>查看原来在<code>feature2</code>分支上的<code>git commit</code>的信息。</p>
+<p>解决方法二：<code>git am -3</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">cd</span> ..</div><div class="line">./git-patch-commands.sh</div><div class="line"><span class="built_in">cd</span> git-patch-logs</div><div class="line">git merge feature1</div><div class="line">git format-patch -3 feature2</div><div class="line">git am --3way *.patch</div></pre></td></tr></table></figure>
+<p>三方合并冲突，提示错误信息如下，与前面<code>git apply --reject</code>的很相似，只是在原文件中加入了与<code>git merge</code>相同的版本冲突的内容：</p>
+<blockquote>
+<p>Applying: v07-feature2</p>
+<p>Using index info to reconstruct a base tree...</p>
+<p>M       v01-master.txt</p>
+<p>Falling back to patching base and 3-way merge...</p>
+<p>Auto-merging v01-master.txt</p>
+<p>CONFLICT (content): Merge conflict in v01-master.txt</p>
+<p>Failed to merge in the changes.</p>
+<p>Patch failed at 0001 v07-feature2</p>
+<p>The copy of the patch that failed is found in:</p>
+<p>   /data/git-patch-logs/.git/rebase-apply/patch</p>
+<p>When you have resolved this problem, run &quot;git am --continue&quot;.</p>
+<p>If you prefer to skip this patch, run &quot;git am --skip&quot; instead.</p>
+<p>To restore the original branch and stop patching, run &quot;git am --abort&quot;.</p>
+</blockquote>
+<p>查看<code>v01-master.txt</code>中的内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">v1@master</div><div class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</div><div class="line">v4有中文内容</div><div class="line">=======</div><div class="line">v7 append to v01-master.txt</div><div class="line output">&gt;&gt;&gt;&gt;&gt;&gt; v07-feature2</div></pre></td></tr></table></figure>
+<p>与<code>git merge</code>一样，手动解决冲突后，加入暂存区后，按照git提示，执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> add v01-master.txt</div></pre></td></tr></table></figure>
+<p>必须先将修改完成的用<code>git add</code>加入暂存区，然后才能<code>--continue</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> am --<span class="built_in">continue</span></div></pre></td></tr></table></figure>
+<p>同样，按上述相同方式解决冲突并加入暂存区，并继续<code>git am --continue</code>，直到第3个补丁应用成功，并提示：</p>
+<blockquote>
+<p>Applying: v09-feature2</p>
+</blockquote>
+<p>表示<code>git am</code>应用补丁成功，并且根据补丁进行了相应的提交，然后删除3个patch文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">rm</span> -f *.patch</div></pre></td></tr></table></figure>
+<p>另外如果是使用三方合并的方式打补丁，当补丁被重复应用时，它会更友好的提示补丁已经应用过：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">rm</span> -f *.patch</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> format-patch -1</div></pre></td></tr></table></figure>
+<blockquote>
+<p>0001-v09-feature2.patch</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> am -3 0001-v09-feature2.patch</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Applying: v09-feature2</p>
+<p>Using index info to reconstruct a base tree...</p>
+<p>M       v03-master.txt</p>
+<p>Falling back to patching base and 3-way merge...</p>
+<p>No changes -- Patch already applied.</p>
+</blockquote>
+<p>如果去掉三方合并的参数<code>-3</code>，则认为补丁应用失败，需要<code>git am --abort</code>放弃应用补丁，相比第一种方法，第二种解决方法会更简单一些。</p>
+<h2 id="git-format-patch-手册中的例子"><a href="#git-format-patch-手册中的例子" class="headerlink" title="git format-patch 手册中的例子"></a>git format-patch 手册中的例子</h2><p>Extract commits between revisions R1 and R2, and apply them on top of the current branch using git am to cherry-pick them:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> format-patch -k --stdout R1..R2 | git am -3 -k</div></pre></td></tr></table></figure>
+<p>Extract all commits which are in the current branch but not in the origin branch:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> format-patch origin</div></pre></td></tr></table></figure>
+<p>For each commit a separate file is created in the current directory.</p>
+<p>Extract all commits that lead to origin since the inception of the project:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> format-patch --root origin</div></pre></td></tr></table></figure>
+<p>The same as the previous one:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> format-patch -M -B origin</div></pre></td></tr></table></figure>
+<p>Additionally, it detects and handles renames and complete rewrites intelligently to produce a renaming patch. A renaming patch reduces the amount of text output, and generally makes it easier to review. Note that non-Git &quot;patch&quot; programs won’t understand renaming patches, so use it only when you know the recipient uses Git to apply your patch.</p>
+<p>Extract three topmost commits from the current branch and format them as e-mailable patches:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> format-patch -3</div></pre></td></tr></table></figure>
+<p>If you want to format only <code>commit</code> itself, you can do this with:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> format-patch -1 &lt;commit&gt;</div></pre></td></tr></table></figure>
+<h2 id="git-format-patch-命令示例"><a href="#git-format-patch-命令示例" class="headerlink" title="git format-patch 命令示例"></a>git format-patch 命令示例</h2><p>通过<code>-1</code>提定提交的版本号，只导出该提交的补丁，也可以用<code>HEAD~n</code>指定前n个版本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> format-patch -1 HEAD~3</div></pre></td></tr></table></figure>
+<blockquote>
+<p>0001-v06-feature1.patch</p>
+</blockquote>
+<p>没有<code>-1</code>参数，则导出从<code>HEAD~3</code>开始的所有补丁：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> format-patch HEAD~3</div></pre></td></tr></table></figure>
+<blockquote>
+<p>0001-v07-feature2.patch</p>
+<p>0002-v08-feature2.patch</p>
+<p>0003-v09-feature2.patch</p>
+</blockquote>
+<p>导出最近2个提交版本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">log</span> --oneline | more</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> format-patch 8da4587...eb27d80</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> format-patch HEAD~2...HEAD</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> format-patch HEAD~2..HEAD</div></pre></td></tr></table></figure>
+<blockquote>
+<p>0001-v08-feature2.patch</p>
+<p>0002-v09-feature2.patch</p>
+</blockquote>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://git-scm.com/docs/git-format-patch" target="_blank" rel="external">git-format-patch</a></li>
+<li><a href="http://www.cnblogs.com/y041039/articles/2411600.html" target="_blank" rel="external">Git的Patch功能</a></li>
+<li><a href="http://www.jianshu.com/p/814fb6606734" target="_blank" rel="external">使用Git生成patch和应用patch</a></li>
+<li><a href="http://blog.sina.com.cn/s/blog_5372b1a301015y0n.html" target="_blank" rel="external">Deal with git am failures</a></li>
+<li><a href="http://m.blog.csdn.net/article/details?id=9425739" target="_blank" rel="external">git format-patch 用法</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2016/09/18/java-logger-intro.html" rel="next" title="java日志框架简介">
+                上一篇：java日志框架简介
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2016/10/01/java-database-connection-pools-benchmark.html" rel="prev" title="java database connection pools benchmark">
+                下一篇：java database connection pools benchmark
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-diff-apply-与-git-format-patch-am-测试脚本"><span class="nav-number">1.</span> <span class="nav-text">git diff/apply 与 git format-patch/am 测试脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-diff-and-git-apply-example"><span class="nav-number">2.</span> <span class="nav-text">git diff and git apply example</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#patch-命令简单说明"><span class="nav-number">2.1.</span> <span class="nav-text">patch 命令简单说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-format-patch-and-git-am-example"><span class="nav-number">3.</span> <span class="nav-text">git format-patch and git am example</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git-format-patch-简单示例一"><span class="nav-number">3.1.</span> <span class="nav-text">git format-patch 简单示例一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-format-patch-简单示例二"><span class="nav-number">3.2.</span> <span class="nav-text">git format-patch 简单示例二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出patch文件的diffstat"><span class="nav-number">3.3.</span> <span class="nav-text">输出patch文件的diffstat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试patch文件应用是否可以成功"><span class="nav-number">3.4.</span> <span class="nav-text">测试patch文件应用是否可以成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用patch文件"><span class="nav-number">3.5.</span> <span class="nav-text">应用patch文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-am-patch-失败处理"><span class="nav-number">4.</span> <span class="nav-text">git am patch 失败处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法一：git-apply-reject"><span class="nav-number">4.1.</span> <span class="nav-text">解决方法一：git apply --reject</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-format-patch-手册中的例子"><span class="nav-number">5.</span> <span class="nav-text">git format-patch 手册中的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-format-patch-命令示例"><span class="nav-number">6.</span> <span class="nav-text">git format-patch 命令示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

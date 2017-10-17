@@ -1,0 +1,561 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="json_enode是在php-5.2.0才作为标准扩展加入的，之前的版本需要自己实现这个功能。 json_encode实现版本一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php函数json_encode兼容低版本">
+<meta property="og:url" content="https://www.4e00.com/php/2012/09/14/php-json-encode.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="json_enode是在php-5.2.0才作为标准扩展加入的，之前的版本需要自己实现这个功能。 json_encode实现版本一">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php函数json_encode兼容低版本">
+<meta name="twitter:description" content="json_enode是在php-5.2.0才作为标准扩展加入的，之前的版本需要自己实现这个功能。 json_encode实现版本一">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/php/2012/09/14/php-json-encode.html"/>
+
+  <title> php函数json_encode兼容低版本 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                php函数json_encode兼容低版本
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2012-09-14T15:39:20+08:00" content="2012-09-14">
+              2012-09-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/php/" itemprop="url" rel="index">
+                    <span itemprop="name">php</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>json_enode</code>是在php-5.2.0才作为标准扩展加入的，之前的版本需要自己实现这个功能。</p>
+<h2 id="json-encode实现版本一"><a href="#json-encode实现版本一" class="headerlink" title="json_encode实现版本一"></a>json_encode实现版本一</h2><a id="more"></a>
+<figure class="highlight php"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="keyword">if</span>(!function_exists(<span class="string">'json_encode'</span>)) &#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">json_encode</span><span class="params">($arg)</span> </span>&#123;</div><div class="line">        $returnValue = <span class="string">''</span>;</div><div class="line">        $c = <span class="string">''</span>;</div><div class="line">        $i = <span class="string">''</span>;</div><div class="line">        $l = <span class="string">''</span>;</div><div class="line">        $s = <span class="string">''</span>;</div><div class="line">        $v = <span class="string">''</span>;</div><div class="line">        $numeric = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">        <span class="keyword">switch</span> (gettype($arg)) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">'array'</span>:</div><div class="line">            <span class="keyword">foreach</span> ($arg <span class="keyword">AS</span> $i =&gt; $v) &#123;</div><div class="line">                <span class="keyword">if</span> (!is_numeric($i)) &#123;</div><div class="line">                    $numeric = <span class="keyword">false</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> ($numeric) &#123;</div><div class="line">                <span class="keyword">foreach</span> ($arg <span class="keyword">AS</span> $i =&gt; $v) &#123;</div><div class="line">                    <span class="keyword">if</span> (strlen($s) &gt; <span class="number">0</span>) &#123;</div><div class="line">                        $s .= <span class="string">','</span>;</div><div class="line">                    &#125;</div><div class="line">                    $s .= json_encode($arg[$i]);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                $returnValue = <span class="string">'['</span> . $s . <span class="string">']'</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">foreach</span> ($arg <span class="keyword">AS</span> $i =&gt; $v) &#123;</div><div class="line">                    <span class="keyword">if</span> (strlen($s) &gt; <span class="number">0</span>) &#123;</div><div class="line">                        $s .= <span class="string">','</span>;</div><div class="line">                    &#125;</div><div class="line">                    $s .= json_encode($i) . <span class="string">':'</span> . json_encode($arg[$i]);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                $returnValue = <span class="string">'&#123;'</span> . $s . <span class="string">'&#125;'</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line"></div><div class="line">        <span class="keyword">case</span> <span class="string">'object'</span>:</div><div class="line">            <span class="keyword">foreach</span> (get_object_vars($arg) <span class="keyword">AS</span> $i =&gt; $v) &#123;</div><div class="line">                $v = json_encode($v);</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (strlen($s) &gt; <span class="number">0</span>) &#123;</div><div class="line">                    $s .= <span class="string">','</span>;</div><div class="line">                &#125;</div><div class="line">                $s .= json_encode($i) . <span class="string">':'</span> . $v;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            $returnValue = <span class="string">'&#123;'</span> . $s . <span class="string">'&#125;'</span>;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line"></div><div class="line">        <span class="keyword">case</span> <span class="string">'integer'</span>:</div><div class="line">        <span class="keyword">case</span> <span class="string">'double'</span>:</div><div class="line">            $returnValue = is_numeric($arg) ? (string) $arg : <span class="string">'null'</span>;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line"></div><div class="line">        <span class="keyword">case</span> <span class="string">'string'</span>:</div><div class="line">            $returnValue = <span class="string">'"'</span> . strtr($arg, <span class="keyword">array</span>(</div><div class="line">                <span class="string">"\r"</span> =&gt; <span class="string">'\\r'</span>,</div><div class="line">                <span class="string">"\n"</span> =&gt; <span class="string">'\\n'</span>,</div><div class="line">                <span class="string">"\t"</span> =&gt; <span class="string">'\\t'</span>,</div><div class="line">                <span class="string">"\b"</span> =&gt; <span class="string">'\\b'</span>,</div><div class="line">                <span class="string">"\f"</span> =&gt; <span class="string">'\\f'</span>,</div><div class="line">                <span class="string">'\\'</span> =&gt; <span class="string">'\\\\'</span>,</div><div class="line">                <span class="string">'"'</span> =&gt; <span class="string">'\"'</span>,</div><div class="line">                <span class="string">"\x00"</span> =&gt; <span class="string">'\u0000'</span>,</div><div class="line">                <span class="string">"\x01"</span> =&gt; <span class="string">'\u0001'</span>,</div><div class="line">                <span class="string">"\x02"</span> =&gt; <span class="string">'\u0002'</span>,</div><div class="line">                <span class="string">"\x03"</span> =&gt; <span class="string">'\u0003'</span>,</div><div class="line">                <span class="string">"\x04"</span> =&gt; <span class="string">'\u0004'</span>,</div><div class="line">                <span class="string">"\x05"</span> =&gt; <span class="string">'\u0005'</span>,</div><div class="line">                <span class="string">"\x06"</span> =&gt; <span class="string">'\u0006'</span>,</div><div class="line">                <span class="string">"\x07"</span> =&gt; <span class="string">'\u0007'</span>,</div><div class="line">                <span class="string">"\x08"</span> =&gt; <span class="string">'\b'</span>,</div><div class="line">                <span class="string">"\x0b"</span> =&gt; <span class="string">'\u000b'</span>,</div><div class="line">                <span class="string">"\x0c"</span> =&gt; <span class="string">'\f'</span>,</div><div class="line">                <span class="string">"\x0e"</span> =&gt; <span class="string">'\u000e'</span>,</div><div class="line">                <span class="string">"\x0f"</span> =&gt; <span class="string">'\u000f'</span>,</div><div class="line">                <span class="string">"\x10"</span> =&gt; <span class="string">'\u0010'</span>,</div><div class="line">                <span class="string">"\x11"</span> =&gt; <span class="string">'\u0011'</span>,</div><div class="line">                <span class="string">"\x12"</span> =&gt; <span class="string">'\u0012'</span>,</div><div class="line">                <span class="string">"\x13"</span> =&gt; <span class="string">'\u0013'</span>,</div><div class="line">                <span class="string">"\x14"</span> =&gt; <span class="string">'\u0014'</span>,</div><div class="line">                <span class="string">"\x15"</span> =&gt; <span class="string">'\u0015'</span>,</div><div class="line">                <span class="string">"\x16"</span> =&gt; <span class="string">'\u0016'</span>,</div><div class="line">                <span class="string">"\x17"</span> =&gt; <span class="string">'\u0017'</span>,</div><div class="line">                <span class="string">"\x18"</span> =&gt; <span class="string">'\u0018'</span>,</div><div class="line">                <span class="string">"\x19"</span> =&gt; <span class="string">'\u0019'</span>,</div><div class="line">                <span class="string">"\x1a"</span> =&gt; <span class="string">'\u001a'</span>,</div><div class="line">                <span class="string">"\x1b"</span> =&gt; <span class="string">'\u001b'</span>,</div><div class="line">                <span class="string">"\x1c"</span> =&gt; <span class="string">'\u001c'</span>,</div><div class="line">                <span class="string">"\x1d"</span> =&gt; <span class="string">'\u001d'</span>,</div><div class="line">                <span class="string">"\x1e"</span> =&gt; <span class="string">'\u001e'</span>,</div><div class="line">                <span class="string">"\x1f"</span> =&gt; <span class="string">'\u001f'</span></div><div class="line">            )) . <span class="string">'"'</span>;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line"></div><div class="line">        <span class="keyword">case</span> <span class="string">'boolean'</span>:</div><div class="line">            $returnValue = $arg?<span class="string">'true'</span>:<span class="string">'false'</span>;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line"></div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            $returnValue = <span class="string">'null'</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> $returnValue;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="json-endcode实现版本二"><a href="#json-endcode实现版本二" class="headerlink" title="json_endcode实现版本二"></a>json_endcode实现版本二</h2><figure class="highlight php"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="keyword">if</span> (!function_exists(<span class="string">'json_encode'</span>)) &#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">json_encode</span><span class="params">($data)</span> </span>&#123;</div><div class="line">        <span class="keyword">switch</span> ($type = gettype($data)) &#123;</div><div class="line">            <span class="keyword">case</span> <span class="string">'NULL'</span>:</div><div class="line">                <span class="keyword">return</span> <span class="string">'null'</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'boolean'</span>:</div><div class="line">                <span class="keyword">return</span> ($data ? <span class="string">'true'</span> : <span class="string">'false'</span>);</div><div class="line">            <span class="keyword">case</span> <span class="string">'integer'</span>:</div><div class="line">            <span class="keyword">case</span> <span class="string">'double'</span>:</div><div class="line">            <span class="keyword">case</span> <span class="string">'float'</span>:</div><div class="line">                <span class="keyword">return</span> $data;</div><div class="line">            <span class="keyword">case</span> <span class="string">'string'</span>:</div><div class="line">                <span class="keyword">return</span> <span class="string">'"'</span> . addslashes($data) . <span class="string">'"'</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'object'</span>:</div><div class="line">                $data = get_object_vars($data);</div><div class="line">            <span class="keyword">case</span> <span class="string">'array'</span>:</div><div class="line">                $output_index_count = <span class="number">0</span>;</div><div class="line">                $output_indexed = <span class="keyword">array</span>();</div><div class="line">                $output_associative = <span class="keyword">array</span>();</div><div class="line">                <span class="keyword">foreach</span> ($data <span class="keyword">as</span> $key =&gt; $value) &#123;</div><div class="line">                    $output_indexed[] = json_encode($value);</div><div class="line">                    $output_associative[] = json_encode($key) . <span class="string">':'</span> . json_encode($value);</div><div class="line">                    <span class="keyword">if</span> ($output_index_count !== <span class="keyword">NULL</span> &amp;&amp; $output_index_count++ !== $key) &#123;</div><div class="line">                        $output_index_count = <span class="keyword">NULL</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> ($output_index_count !== <span class="keyword">NULL</span>) &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="string">'['</span> . implode(<span class="string">','</span>, $output_indexed) . <span class="string">']'</span>;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="string">'&#123;'</span> . implode(<span class="string">','</span>, $output_associative) . <span class="string">'&#125;'</span>;</div><div class="line">                &#125;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="keyword">return</span> <span class="string">''</span>; <span class="comment">// Not supported</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="实现版本三"><a href="#实现版本三" class="headerlink" title="实现版本三"></a>实现版本三</h2><figure class="highlight php"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">__json_encode</span><span class="params">( $data )</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>( is_array($data) || is_object($data) ) &#123;</div><div class="line">        $islist = is_array($data) &amp;&amp; ( <span class="keyword">empty</span>($data) || array_keys($data) === range(<span class="number">0</span>,count($data)<span class="number">-1</span>) );</div><div class="line"></div><div class="line">        <span class="keyword">if</span>( $islist ) &#123;</div><div class="line">            $json = <span class="string">'['</span> . implode(<span class="string">','</span>, array_map(<span class="string">'__json_encode'</span>, $data) ) . <span class="string">']'</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            $items = <span class="keyword">Array</span>();</div><div class="line">            <span class="keyword">foreach</span>( $data <span class="keyword">as</span> $key =&gt; $value ) &#123;</div><div class="line">                $items[] = __json_encode(<span class="string">"$key"</span>) . <span class="string">':'</span> . __json_encode($value);</div><div class="line">            &#125;</div><div class="line">            $json = <span class="string">'&#123;'</span> . implode(<span class="string">','</span>, $items) . <span class="string">'&#125;'</span>;</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">elseif</span>( is_string($data) ) &#123;</div><div class="line">        <span class="comment"># Escape non-printable or Non-ASCII characters.</span></div><div class="line">        <span class="comment"># I also put the \\ character first, as suggested in comments on the 'addclashes' page.</span></div><div class="line">        $string = <span class="string">'"'</span> . addcslashes($data, <span class="string">"\\\"\n\r\t/"</span> . chr(<span class="number">8</span>) . chr(<span class="number">12</span>)) . <span class="string">'"'</span>;</div><div class="line">        $json    = <span class="string">''</span>;</div><div class="line">        $len    = strlen($string);</div><div class="line">        <span class="comment"># Convert UTF-8 to Hexadecimal Codepoints.</span></div><div class="line">        <span class="keyword">for</span>( $i = <span class="number">0</span>; $i &lt; $len; $i++ ) &#123;</div><div class="line"></div><div class="line">            $char = $string[$i];</div><div class="line">            $c1 = ord($char);</div><div class="line"></div><div class="line">            <span class="comment"># Single byte;</span></div><div class="line">            <span class="keyword">if</span>( $c1 &lt;<span class="number">128</span> ) &#123;</div><div class="line">                $json .= ($c1 &gt; <span class="number">31</span>) ? $char : sprintf(<span class="string">"\\u%04x"</span>, $c1);</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment"># Double byte</span></div><div class="line">            $c2 = ord($string[++$i]);</div><div class="line">            <span class="keyword">if</span> ( ($c1 &amp; <span class="number">32</span>) === <span class="number">0</span> ) &#123;</div><div class="line">                $json .= sprintf(<span class="string">"\\u%04x"</span>, ($c1 - <span class="number">192</span>) * <span class="number">64</span> + $c2 - <span class="number">128</span>);</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment"># Triple</span></div><div class="line">            $c3 = ord($string[++$i]);</div><div class="line">            <span class="keyword">if</span>( ($c1 &amp; <span class="number">16</span>) === <span class="number">0</span> ) &#123;</div><div class="line">                $json .= sprintf(<span class="string">"\\u%04x"</span>, (($c1 - <span class="number">224</span>) &lt;&lt;<span class="number">12</span>) + (($c2 - <span class="number">128</span>) &lt;&lt; <span class="number">6</span>) + ($c3 - <span class="number">128</span>));</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment"># Quadruple</span></div><div class="line">            $c4 = ord($string[++$i]);</div><div class="line">            <span class="keyword">if</span>( ($c1 &amp; <span class="number">8</span> ) === <span class="number">0</span> ) &#123;</div><div class="line">                $u = (($c1 &amp; <span class="number">15</span>) &lt;&lt; <span class="number">2</span>) + (($c2&gt;&gt;<span class="number">4</span>) &amp; <span class="number">3</span>) - <span class="number">1</span>;</div><div class="line"></div><div class="line">                $w1 = (<span class="number">54</span>&lt;&lt;<span class="number">10</span>) + ($u&lt;&lt;<span class="number">6</span>) + (($c2 &amp; <span class="number">15</span>) &lt;&lt; <span class="number">2</span>) + (($c3&gt;&gt;<span class="number">4</span>) &amp; <span class="number">3</span>);</div><div class="line">                $w2 = (<span class="number">55</span>&lt;&lt;<span class="number">10</span>) + (($c3 &amp; <span class="number">15</span>)&lt;&lt;<span class="number">6</span>) + ($c4<span class="number">-128</span>);</div><div class="line">                $json .= sprintf(<span class="string">"\\u%04x\\u%04x"</span>, $w1, $w2);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment"># int, floats, bools, null</span></div><div class="line">        $json = strtolower(var_export( $data, <span class="keyword">true</span> ));</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $json;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://yaronspace.cn/blog/archives/1128" target="_blank" rel="external">json_encode的php实现</a></li>
+<li><a href="http://php.net/manual/en/function.json-encode.php" target="_blank" rel="external">json_encode</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/javascript/2012/09/12/p3p-javascript-tracking-code.html" rel="next" title="javascript p3p tracking code">
+                上一篇：javascript p3p tracking code
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/php/2012/09/14/php-json-decode.html" rel="prev" title="php json decode implement">
+                下一篇：php json decode implement
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#json-encode实现版本一"><span class="nav-number">1.</span> <span class="nav-text">json_encode实现版本一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#json-endcode实现版本二"><span class="nav-number">2.</span> <span class="nav-text">json_endcode实现版本二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现版本三"><span class="nav-number">3.</span> <span class="nav-text">实现版本三</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

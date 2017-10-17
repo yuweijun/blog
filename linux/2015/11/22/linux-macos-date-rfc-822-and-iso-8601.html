@@ -1,0 +1,566 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="linux$&amp;gt; date -R# Sun, 22 Nov 2015 12:27:31 +0800$&amp;gt; date &quot;+%a, %d %b %Y %H:%M:%S %z&quot;# Sun, 22 Nov 2015 12:27:31 +0800$&amp;gt; date +&quot;%a, %d %b %Y %H:%M:%S %z&quot;# Sun, 22 Nov 2015 12:36:13 +0800 linux中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="date输出rfc822格式的字符串">
+<meta property="og:url" content="https://www.4e00.com/linux/2015/11/22/linux-macos-date-rfc-822-and-iso-8601.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="linux$&amp;gt; date -R# Sun, 22 Nov 2015 12:27:31 +0800$&amp;gt; date &quot;+%a, %d %b %Y %H:%M:%S %z&quot;# Sun, 22 Nov 2015 12:27:31 +0800$&amp;gt; date +&quot;%a, %d %b %Y %H:%M:%S %z&quot;# Sun, 22 Nov 2015 12:36:13 +0800 linux中">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="date输出rfc822格式的字符串">
+<meta name="twitter:description" content="linux$&amp;gt; date -R# Sun, 22 Nov 2015 12:27:31 +0800$&amp;gt; date &quot;+%a, %d %b %Y %H:%M:%S %z&quot;# Sun, 22 Nov 2015 12:27:31 +0800$&amp;gt; date +&quot;%a, %d %b %Y %H:%M:%S %z&quot;# Sun, 22 Nov 2015 12:36:13 +0800 linux中">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/linux/2015/11/22/linux-macos-date-rfc-822-and-iso-8601.html"/>
+
+  <title> date输出rfc822格式的字符串 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                date输出rfc822格式的字符串
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2015-11-22T11:59:37+08:00" content="2015-11-22">
+              2015-11-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">date</span> -R</div><div class="line"><span class="comment"># Sun, 22 Nov 2015 12:27:31 +0800</span></div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">date</span> <span class="string">"+%a, %d %b %Y %H:%M:%S %z"</span></div><div class="line"><span class="comment"># Sun, 22 Nov 2015 12:27:31 +0800</span></div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">date</span> +<span class="string">"%a, %d %b %Y %H:%M:%S %z"</span></div><div class="line"><span class="comment"># Sun, 22 Nov 2015 12:36:13 +0800</span></div></pre></td></tr></table></figure>
+<p>linux中date还有个<code>-I</code>的参数，可以很方便得到<code>ISO-8601</code>格式，也就是常用的<code>yyyy-MM-dd</code>形式的字符串。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">date</span> -I</div><div class="line"><span class="comment"># 2015-11-22</span></div></pre></td></tr></table></figure>
+<h2 id="mac-os-x"><a href="#mac-os-x" class="headerlink" title="mac os x"></a>mac os x</h2><p>Mac OS中date命令与linux版本的参数不同，要得到<code>rfc822</code>格式，需要格式化日期对象。</p>
+<p>格式化字符串前面需要有个<code>+</code>号，可以在双引号里面，也可以在外面，linux手册提示为<code>date [OPTION]... [+FORMAT]</code>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">date</span> <span class="string">"+%a, %d %b %Y %H:%M:%S %z"</span></div><div class="line"><span class="comment"># Sun, 22 Nov 2015 12:27:31 +0800</span></div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">date</span> +<span class="string">"%a, %d %b %Y %H:%M:%S %z"</span></div><div class="line"><span class="comment"># Sun, 22 Nov 2015 12:27:31 +0800</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="perl"><a href="#perl" class="headerlink" title="perl"></a>perl</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">perl</span> -v</div><div class="line"><span class="comment"># This is perl 5, version 16, subversion 2 (v5.16.2) built for darwin-thread-multi-2level</span></div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">perl</span> -e <span class="string">'use POSIX qw(strftime); print strftime("%a, %d %b %Y %H:%M:%S %z", localtime(time())) . "\n";'</span></div><div class="line"><span class="comment"># Sun, 22 Nov 2015 12:01:11 +0800</span></div></pre></td></tr></table></figure>
+<h2 id="附linux-date命令参数详细说明"><a href="#附linux-date命令参数详细说明" class="headerlink" title="附linux date命令参数详细说明"></a>附linux date命令参数详细说明</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">date</div><div class="line"></div><div class="line">date [options] [+format] [date]</div><div class="line"></div><div class="line">Print the current date and time. You may specify a display format. format can consist of literal text strings (blanks must be quoted) as well as field descriptors, whose values will appear as described in the following entries (the listing shows some logical groupings). A privileged user can change the system&apos;s date and time.</div><div class="line"></div><div class="line">Options</div><div class="line"></div><div class="line">+format</div><div class="line">Display current date in a nonstandard format. For example:</div><div class="line"></div><div class="line">$date +&quot;%A %j %n%k %p&quot; Tuesday 248 15 PM</div><div class="line"></div><div class="line">The default is %a %b %e %T %Z %Y (e.g., Tue Sep 5 14:59:37 EDT 2005).</div><div class="line"></div><div class="line">-d date, --date date</div><div class="line">Display date, which should be in quotes and may be in the format d days or m months d days, to print a date in the future. Specify ago to print a date in the past. You may include formatting (see the following section).</div><div class="line"></div><div class="line">-f datefile, --file=datefile</div><div class="line">Like -d, but printed once for each line of datefile.</div><div class="line"></div><div class="line">-I [timespec] , --iso-8601[=timespec]</div><div class="line">Display in ISO-8601 format. If specified, timespec can have one of the following values: date (for date only), hours, minutes, or seconds to get the indicated precision.</div><div class="line"></div><div class="line">-r file, --reference=file</div><div class="line">Display the time file was last modified.</div><div class="line"></div><div class="line">-R, --rfc-822</div><div class="line">Display the date in RFC 822 format.</div><div class="line"></div><div class="line">--help</div><div class="line">Print help message and exit.</div><div class="line"></div><div class="line">--version</div><div class="line">Print version information and exit.</div><div class="line"></div><div class="line">-s date, --set date</div><div class="line">Set the date.</div><div class="line"></div><div class="line">-u, --universal</div><div class="line">Set the date to Greenwich Mean Time, not local time.</div><div class="line"></div><div class="line">Format</div><div class="line"></div><div class="line">The exact result of many of these codes is locale-specific and depends upon your language setting, particularly the LANG environment variable. See locale.</div><div class="line"></div><div class="line">%</div><div class="line">Literal %.</div><div class="line"></div><div class="line">- (hyphen)</div><div class="line">Do not pad fields (default: pad fields with zeros).</div><div class="line"></div><div class="line">_ (underscore)</div><div class="line">Pad fields with space (default: zeros).</div><div class="line"></div><div class="line">%a</div><div class="line">Abbreviated weekday.</div><div class="line"></div><div class="line">%b</div><div class="line">Abbreviated month name.</div><div class="line"></div><div class="line">%c</div><div class="line">Country-specific date and time format.</div><div class="line"></div><div class="line">%d</div><div class="line">Day of month (01-31).</div><div class="line"></div><div class="line">%h</div><div class="line">Same as %b.</div><div class="line"></div><div class="line">%j</div><div class="line">Julian day of year (001-366).</div><div class="line"></div><div class="line">%k</div><div class="line">Hour in 24-hour format, without leading zeros (0-23).</div><div class="line"></div><div class="line">%l</div><div class="line">Hour in 12-hour format, without leading zeros (1-12).</div><div class="line"></div><div class="line">%m</div><div class="line">Month of year (01-12).</div><div class="line"></div><div class="line">%n</div><div class="line">Insert a new line.</div><div class="line"></div><div class="line">%p</div><div class="line">String to indicate a.m. or p.m.</div><div class="line"></div><div class="line">%r</div><div class="line">Time in %I:%M:%S %p (12-hour) format.</div><div class="line"></div><div class="line">%s</div><div class="line">Seconds since &quot;the Epoch,&quot; which is 1970-01-01 00:00:00 UTC (a nonstandard extension).</div><div class="line"></div><div class="line">%t</div><div class="line">Insert a tab.</div><div class="line"></div><div class="line">%w</div><div class="line">Day of week (Sunday = 0).</div><div class="line"></div><div class="line">%x</div><div class="line">Country-specific date format based on locale.</div><div class="line"></div><div class="line">%y</div><div class="line">Last two digits of year (00-99).</div><div class="line"></div><div class="line">%z</div><div class="line">RFC 822-style numeric time zone.</div><div class="line"></div><div class="line">%A</div><div class="line">Full weekday.</div><div class="line"></div><div class="line">%B</div><div class="line">Full month name.</div><div class="line"></div><div class="line">%D</div><div class="line">Date in %m/%d/%y format.</div><div class="line"></div><div class="line">%H</div><div class="line">Hour in 24-hour format (00-23).</div><div class="line"></div><div class="line">%I</div><div class="line">Hour in 12-hour format (01-12).</div><div class="line"></div><div class="line">%M</div><div class="line">Minutes (00-59).</div><div class="line"></div><div class="line">%S</div><div class="line">Seconds (00-59).</div><div class="line"></div><div class="line">%T</div><div class="line">Time in %H:%M:%S format.</div><div class="line"></div><div class="line">%U</div><div class="line">Week number in year (00-53); start week on Sunday.</div><div class="line"></div><div class="line">%V</div><div class="line">Week number in year (01-52); start week on Monday.</div><div class="line"></div><div class="line">%W</div><div class="line">Week number in year (00-53); start week on Monday.</div><div class="line"></div><div class="line">%X</div><div class="line">Country-specific time format based on locale.</div><div class="line"></div><div class="line">%Y</div><div class="line">Four-digit year (e.g., 2006).</div><div class="line"></div><div class="line">%Z</div><div class="line">Time-zone name.</div><div class="line"></div><div class="line">Strings for setting date</div><div class="line"></div><div class="line">Strings for setting the date may be numeric or nonnumeric. Numeric strings consist of time, day, and year in the format MMDDhhmm[[CC] YY] [.ss] . Nonnumeric strings may include month strings, time zones, a.m., and p.m.</div><div class="line"></div><div class="line">time</div><div class="line">A two-digit hour and two-digit minute (hhmm); hh uses 24-hour format.</div><div class="line"></div><div class="line">day</div><div class="line">A two-digit month and two-digit day of month (MMDD); default is current day and month.</div><div class="line"></div><div class="line">year</div><div class="line">The year specified as either the full four-digit century and year or just the two-digit year; the default is the current year.</div><div class="line"></div><div class="line">Examples</div><div class="line"></div><div class="line">Set the date to July 1 (0701), 4 a.m. (0400), 2005 (05):</div><div class="line"></div><div class="line">date 0701040095</div><div class="line"></div><div class="line">The command:</div><div class="line"></div><div class="line">date +&quot;Hello%t Date is %D %n%t Time is %T&quot;</div><div class="line"></div><div class="line">produces a formatted date as follows:</div><div class="line"></div><div class="line">Hello Date is 05/09/05 Time is 17:53:39</div></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://stackoverflow.com/questions/172110/how-do-i-elegantly-print-the-date-in-rfc822-format-in-perl" target="_blank" rel="external">How do I elegantly print the date in RFC822 format in Perl?</a></li>
+<li><a href="http://archive.oreilly.com/linux/cmd/cmd.csp?path=d/date" target="_blank" rel="external">Linux in a Nutshell, 5th Edition.</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toUTCString" target="_blank" rel="external">Date.prototype.toUTCString()</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/web/2015/11/22/html-canonical-link-element-for-search-engine.html" rel="next" title="html canonical link element">
+                上一篇：html canonical link element
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/ruby/2015/11/22/ruby-code-highlighter-rouge.html" rel="prev" title="rouge - syntax highlighter">
+                下一篇：rouge - syntax highlighter
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux"><span class="nav-number">1.</span> <span class="nav-text">linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mac-os-x"><span class="nav-number">2.</span> <span class="nav-text">mac os x</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#perl"><span class="nav-number">3.</span> <span class="nav-text">perl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附linux-date命令参数详细说明"><span class="nav-number">4.</span> <span class="nav-text">附linux date命令参数详细说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

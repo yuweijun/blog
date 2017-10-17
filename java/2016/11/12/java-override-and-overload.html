@@ -1,0 +1,708 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="方法的重写Overriding和重载Overloading是java多态性的不同表现，重写是父类与子类之间的多态性的一种表现，而重载则是主要是在同一个类中表现出多态性。 相关术语说明 多态：polymorphism，在面向对象的程序设计语言中，多态是继数据封装和继承之后的第三个基本特征。多态是分离做什么和怎么做，从另一个角度将接口和实现分离开来，将改变的事物与未变的事物分离开来。多态也称作动态绑定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java override and overload">
+<meta property="og:url" content="https://www.4e00.com/java/2016/11/12/java-override-and-overload.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="方法的重写Overriding和重载Overloading是java多态性的不同表现，重写是父类与子类之间的多态性的一种表现，而重载则是主要是在同一个类中表现出多态性。 相关术语说明 多态：polymorphism，在面向对象的程序设计语言中，多态是继数据封装和继承之后的第三个基本特征。多态是分离做什么和怎么做，从另一个角度将接口和实现分离开来，将改变的事物与未变的事物分离开来。多态也称作动态绑定">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-10-12T00:51:26.423Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java override and overload">
+<meta name="twitter:description" content="方法的重写Overriding和重载Overloading是java多态性的不同表现，重写是父类与子类之间的多态性的一种表现，而重载则是主要是在同一个类中表现出多态性。 相关术语说明 多态：polymorphism，在面向对象的程序设计语言中，多态是继数据封装和继承之后的第三个基本特征。多态是分离做什么和怎么做，从另一个角度将接口和实现分离开来，将改变的事物与未变的事物分离开来。多态也称作动态绑定">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/11/12/java-override-and-overload.html"/>
+
+  <title> java override and overload | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java override and overload
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-11-12T19:00:09+08:00" content="2016-11-12">
+              2016-11-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>方法的重写<code>Overriding</code>和重载<code>Overloading</code>是java多态性的不同表现，<code>重写</code>是父类与子类之间的多态性的一种表现，而<code>重载</code>则是主要是在同一个类中表现出多态性。</p>
+<h2 id="相关术语说明"><a href="#相关术语说明" class="headerlink" title="相关术语说明"></a>相关术语说明</h2><ol>
+<li>多态：<code>polymorphism</code>，在面向对象的程序设计语言中，多态是继数据封装和继承之后的第三个基本特征。多态是分离做什么和怎么做，从另一个角度将接口和实现分离开来，将改变的事物与未变的事物分离开来。多态也称作动态绑定、后期绑定或者运行时绑定。将一个方法调用和一个方法体连接起来就称为绑定，C语言在编译期就连接了实际运行的方法体，所以就是前期绑定。</li>
+<li>方法重写：<code>Override</code>，在子类中重写覆盖父类中对于子类可见的方法，方法重写也被称为运行时多态。</li>
+<li>方法重载：<code>Overload</code>，重载是在一个类里面，方法名字相同而参数不同，返回类型可以相同也可以不同的方法，可以是静态方法，也可以是实例方法，最常用的地方就是构造器的重载，方法重载也被称为编译时多态。</li>
+<li>方法调用：方法调用不等同于方法执行，方法调用阶段唯一的任务就是确定被调用方法的版本，即调用哪个签名的方法，不涉及方法运行的内部细节，在编译期就已经确定。</li>
+<li>方法执行：方法执行是在运行期，根据方法的接收者的实际类型，连接方法到JVM方法区的直接引用，执行引用指向的方法体。</li>
+<li>方法签名：方法签名包括方法名称和参数的数量和类型，返回类型和抛出异常并不认为是一个方法签名的一部分。另外在JVM中还有一个字节码的特征签名，特征签名中还包括了方法返回值和受检异常表，从而在字节码中形成一个真正独一无二的方法ID。</li>
+<li>方法体：运行期执行的实际类型的方法所包括的代码。</li>
+<li>方法接收者：<code>Receiver</code>，即运行期被执行方法的所有者，方法所在的实例对象。</li>
+<li>静态方法：即类方法，而对象实例调用的方法则称为实例方法。</li>
+<li>静态类型：方法签名中参数变量声明的类型称为静态类型(<code>static type</code>)或者是外观类型(<code>apparent type</code>)，而参数传入对象的实际类型(<code>actual type</code>)可以是静态类型的子类或者实现类。</li>
+<li>实际类型：方法执行的接收者的实际类型，方法参数传入的实际类型，参数通过方法暴露出来的可能是接口名或者基类名，实际传入的是其子类或者实现类的实例。</li>
+<li>符号引用：一个类文件，它会包含它引用的其他类的全名和描述符，并跟他们建立符号引用，符号引用是一种虚拟的，非物理连接的方式。java在编译期间已经将方法调用的完整符号引用生成出来，作为方法调用指令的参数存储到class文件中。这个符号引用包含了此方法定义在哪个具体类型中，方法的名字和参数顺序，参数类型和方法返回值等信息。反编译class文件可以看到，字节码的方法调用就以class常量池中指向方法的符号引用作为参数，这些符号引用一部分如static方法调用，在类加载解析阶段或者第一次使用时就被转化为直接引用，这部分称为静态解析，而虚方法的符号引用到运行期才会转化为直接引用，这部分称为动态连接。</li>
+<li>直接引用：当程序第一次执行到符号引用的位置时，JVM会检查这个符号链接的正确性，然后建立真正的物理引用，即直接引用，使用直接引用指向一个类、字段或方法的指针或偏移量。虚拟机会记住这个直接引用，这样当它以后再次遇到同样的引用时，就可以直接使用，而不需要重新解析该符号引用了。</li>
+<li>编译期：通过javac这样的编译器将java源文件编译生成class文件。</li>
+<li>运行期：在JVM中把class文件翻译成机器语言后运行，<code>HotSpot</code>中默认是编译器加解释器混合模式协作完成字节码的运行。</li>
+<li>虚方法：除<code>final</code>方法(<code>private</code>方法也是<code>final</code>方法)之外的所有实例方法就是虚方法，也就是<code>public</code>、<code>protected</code>、<code>default</code>的三种实例方法都是虚方法，虚方法对应的虚拟机指令是invokevirtual。</li>
+<li>非虚方法：java中除了<code>static</code>方法和<code>final</code>方法(<code>private</code>方法实际上是<code>final</code>方法)之外，其他所有方法都是虚方法，是后期绑定的，之所以将定义方法为<code>final</code>，为了避免被子类继承外，这样也可以有效的“关闭”动态绑定，告诉编译器不需要动态绑定，在类加载的解析阶段就会连接方法的直接引用。<code>static</code>方法和<code>private</code>方法与之对应的虚拟机指令是<code>invokestatic</code>和<code>invokespecial</code>，<code>final</code>方法的虚拟机指令是<code>invokevirtual</code>。构造方法是invokespecial指令执行的，不是<code>static</code>方法，因为默认传入了新new的对象，并在其中操作实例属性和方法，更多类似于实例方法，但却不是虚方法，即没有后期绑定的。</li>
+<li>类加载：虚拟机通过类加载器对某个类进行加载操作，类加载会经过加载、验证、准备、解析、初始化、使用、卸载这些阶段，非虚方法的符号引用在解析阶段就会被连接到JVM方法区的目标方法的直接引用。</li>
+</ol>
+<h2 id="重写-Override"><a href="#重写-Override" class="headerlink" title="重写 - Override"></a>重写 - Override</h2><p>在子类中重写覆盖父类中对于子类可见的方法，实现子类的特定功能，如需执行父类被覆盖的方法，可以通过<code>super</code>进行引用。</p>
+<h3 id="Override规则"><a href="#Override规则" class="headerlink" title="Override规则"></a>Override规则</h3><ol>
+<li>参数列表必须完全与被重写方法的相同；</li>
+<li>返回类型必须完全与被重写方法的返回类型相同；</li>
+<li>访问权限不能比父类中被重写的方法的访问权限更高。例如：如果父类的一个方法被声明为<code>public</code>，那么在子类中重写该方法就不能声明为<code>protected</code>。</li>
+<li>父类的成员方法只能被它的子类重写。</li>
+<li>声明为<code>final</code>的方法不能被重写。</li>
+<li>声明为<code>static</code>的方法不能被重写，但是能够被再次声明。</li>
+<li>子类和父类在同一个包中，那么子类可以重写父类所有方法，除了声明为<code>private</code>和<code>final</code>的方法。</li>
+<li>子类和父类不在同一个包中，那么子类只能够重写父类的声明为<code>public</code>和<code>protected</code>的非<code>final</code>方法。</li>
+<li>重写的方法能够抛出任何非受检异常，无论被重写的方法是否抛出异常。但是，重写的方法不能抛出新的受检异常，或者比被重写方法声明的更广泛的受检异常，反之则可以。</li>
+<li>重写的方法能够抛出更少或更有限的异常，也就是说，被重写的方法声明了异常，但重写的方法可以什么也不声明。</li>
+<li>构造方法不能被重写。</li>
+<li>如果不能继承一个方法，则不能重写这个方法。</li>
+</ol>
+<h3 id="Override示例"><a href="#Override示例" class="headerlink" title="Override示例"></a>Override示例</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OverrideExample</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">OverrideParent</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Number number)</span> </span>&#123;</div><div class="line">            System.out.println(number);</div><div class="line">            System.out.println(<span class="string">"Parent#print(Number) method print : "</span> + <span class="keyword">this</span>.getClass().getSimpleName());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 这个方法不但重载了 print(Number) 方法，而且被子类重写了</span></div><div class="line">        <span class="comment">// 父类的被重写的方法抛出的异常要宽于子类抛出的异常</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Integer integer)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">            System.out.println(integer);</div><div class="line">            System.out.println(<span class="string">"Parent#print(Integer) method print : "</span> + <span class="keyword">this</span>.getClass().getSimpleName());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">OverrideChild</span> <span class="keyword">extends</span> <span class="title">OverrideParent</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Integer integer)</span> <span class="keyword">throws</span> EOFException </span>&#123;</div><div class="line">            System.out.println(integer);</div><div class="line">            System.out.println(<span class="string">"Child#print(Number) method print : "</span> + <span class="keyword">this</span>.getClass().getSimpleName());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">        OverrideParent parent = <span class="keyword">new</span> OverrideParent();</div><div class="line">        OverrideParent child = <span class="keyword">new</span> OverrideChild();</div><div class="line"></div><div class="line">        Number number = <span class="keyword">new</span> Long(<span class="string">"1"</span>);</div><div class="line">        Integer integer = <span class="keyword">new</span> Integer(<span class="string">"2"</span>);</div><div class="line"></div><div class="line">        parent.print(number);</div><div class="line">        parent.print(integer);</div><div class="line"></div><div class="line">        child.print(number);</div><div class="line">        child.print(integer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>子类重写父类的方法时，可以不抛出异常，或者是更小的异常，比如示例中的<code>IOException</code>的子类<code>EOFException</code>，但不能抛出更广的异常，如<code>Exception</code>。</p>
+<p>程序运行后输出：</p>
+<blockquote>
+<p>1</p>
+<p>Parent#print(Number) method print : OverrideParent</p>
+<p>2</p>
+<p>Parent#print(Integer) method print : OverrideParent</p>
+<p>1</p>
+<p>Parent#print(Number) method print : OverrideChild</p>
+<p>2</p>
+<p>Child#print(Number) method print : OverrideChild</p>
+</blockquote>
+<h3 id="Override示例运行结果详解"><a href="#Override示例运行结果详解" class="headerlink" title="Override示例运行结果详解"></a>Override示例运行结果详解</h3><p>为了更好的说明方法重写，将上述代码生成的class文件反编译，查看class中生成的java字节码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">javap</span> -c com.example.test.lang.OverrideExample</div></pre></td></tr></table></figure>
+<blockquote>
+<p>-c   Prints out disassembled code, that is, the instructions that comprise the Java bytecodes, for each of the methods in the class. These  are documented in the Java Virtual Machine Specification.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Compiled from &quot;OverrideExample.java&quot;</div><div class="line">public class com.example.test.lang.OverrideExample &#123;</div><div class="line">  public com.example.test.lang.OverrideExample();</div><div class="line">    Code:</div><div class="line">       0: aload_0</div><div class="line">       1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">       4: return</div><div class="line"></div><div class="line">  public static void main(java.lang.String[]) throws java.io.IOException;</div><div class="line">    Code:</div><div class="line">       0: new           #2                  // class com/example/test/lang/OverrideExample$OverrideParent</div><div class="line">       3: dup</div><div class="line">       4: invokespecial #3                  // Method com/example/test/lang/OverrideExample$OverrideParent.&quot;&lt;init&gt;&quot;:()V</div><div class="line">       7: astore_1</div><div class="line">       8: new           #4                  // class com/example/test/lang/OverrideExample$OverrideChild</div><div class="line">      11: dup</div><div class="line">      12: invokespecial #5                  // Method com/example/test/lang/OverrideExample$OverrideChild.&quot;&lt;init&gt;&quot;:()V</div><div class="line">      15: astore_2</div><div class="line">      16: new           #6                  // class java/lang/Long</div><div class="line">      19: dup</div><div class="line">      20: ldc           #7                  // String 1</div><div class="line">      22: invokespecial #8                  // Method java/lang/Long.&quot;&lt;init&gt;&quot;:(Ljava/lang/String;)V</div><div class="line">      25: astore_3</div><div class="line">      26: new           #9                  // class java/lang/Integer</div><div class="line">      29: dup</div><div class="line">      30: ldc           #10                 // String 2</div><div class="line">      32: invokespecial #11                 // Method java/lang/Integer.&quot;&lt;init&gt;&quot;:(Ljava/lang/String;)V</div><div class="line">      35: astore        4</div><div class="line">      37: aload_1</div><div class="line">      38: aload_3</div><div class="line">      39: invokevirtual #12                 // Method com/example/test/lang/OverrideExample$OverrideParent.print:(Ljava/lang/Number;)V</div><div class="line">      42: aload_1</div><div class="line">      43: aload         4</div><div class="line">      45: invokevirtual #13                 // Method com/example/test/lang/OverrideExample$OverrideParent.print:(Ljava/lang/Integer;)V</div><div class="line">      48: aload_2</div><div class="line">      49: aload_3</div><div class="line">      50: invokevirtual #12                 // Method com/example/test/lang/OverrideExample$OverrideParent.print:(Ljava/lang/Number;)V</div><div class="line">      53: aload_2</div><div class="line">      54: aload         4</div><div class="line">      56: invokevirtual #13                 // Method com/example/test/lang/OverrideExample$OverrideParent.print:(Ljava/lang/Integer;)V</div><div class="line">      59: return</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="关于符号引用"><a href="#关于符号引用" class="headerlink" title="关于符号引用"></a>关于符号引用</h4><p>javap反编译时加上<code>-verbose</code>参数可以看到更详细的信息，如主次版本，常量池中的类、方法、变量的符号引用，每个方法的栈深和局部变量数量等信息。</p>
+<p>常量池主要用于存放两大类常量：字面量(Literal)和符号引用量(Symbolic References)，字面量相当于Java语言层面常量的概念，如文本字符串，声明为final的常量值等，符号引用则属于编译原理方面的概念，包括了如下三种类型的常量：</p>
+<ol>
+<li>类和接口的全限定名</li>
+<li>字段名称和描述符</li>
+<li>方法名称和描述符</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">javap</span> -c -verbose com.example.test.lang.OverrideExample</div></pre></td></tr></table></figure>
+<p>命令输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Classfile /Users/david/github.com/learning-programming/java/target/test-classes/com/example/test/lang/OverrideExample.class</div><div class="line">  Last modified Nov 15, 2016; size 1117 bytes</div><div class="line">  MD5 checksum bc597130acffb600f30c658477471ad3</div><div class="line">  Compiled from &quot;OverrideExample.java&quot;</div><div class="line">public class com.example.test.lang.OverrideExample</div><div class="line">  minor version: 0</div><div class="line">  major version: 52</div><div class="line">  flags: ACC_PUBLIC, ACC_SUPER</div><div class="line">Constant pool:</div><div class="line">   #1 = Methodref          #15.#41        // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">   #2 = Class              #42            // com/example/test/lang/OverrideExample$OverrideParent</div><div class="line">   #3 = Methodref          #2.#41         // com/example/test/lang/OverrideExample$OverrideParent.&quot;&lt;init&gt;&quot;:()V</div><div class="line">   #4 = Class              #43            // com/example/test/lang/OverrideExample$OverrideChild</div><div class="line">   #5 = Methodref          #4.#41         // com/example/test/lang/OverrideExample$OverrideChild.&quot;&lt;init&gt;&quot;:()V</div><div class="line">   #6 = Class              #44            // java/lang/Long</div><div class="line">   #7 = String             #45            // 1</div><div class="line">   #8 = Methodref          #6.#46         // java/lang/Long.&quot;&lt;init&gt;&quot;:(Ljava/lang/String;)V</div><div class="line">   #9 = Class              #47            // java/lang/Integer</div><div class="line">  #10 = String             #48            // 2</div><div class="line">  #11 = Methodref          #9.#46         // java/lang/Integer.&quot;&lt;init&gt;&quot;:(Ljava/lang/String;)V</div><div class="line">  #12 = Methodref          #2.#49         // com/example/test/lang/OverrideExample$OverrideParent.print:(Ljava/lang/Number;)V</div><div class="line">  #13 = Methodref          #2.#50         // com/example/test/lang/OverrideExample$OverrideParent.print:(Ljava/lang/Integer;)V</div><div class="line">  #14 = Class              #51            // com/example/test/lang/OverrideExample</div><div class="line">  #15 = Class              #52            // java/lang/Object</div><div class="line">  #16 = Utf8               OverrideChild</div><div class="line">  #17 = Utf8               InnerClasses</div><div class="line">  #18 = Utf8               OverrideParent</div><div class="line">  #19 = Utf8               &lt;init&gt;</div><div class="line">  #20 = Utf8               ()V</div><div class="line">  #21 = Utf8               Code</div><div class="line">  #22 = Utf8               LineNumberTable</div><div class="line">  #23 = Utf8               LocalVariableTable</div><div class="line">  #24 = Utf8               this</div><div class="line">  #25 = Utf8               Lcom/example/test/lang/OverrideExample;</div><div class="line">  #26 = Utf8               main</div><div class="line">  #27 = Utf8               ([Ljava/lang/String;)V</div><div class="line">  #28 = Utf8               args</div><div class="line">  #29 = Utf8               [Ljava/lang/String;</div><div class="line">  #30 = Utf8               parent</div><div class="line">  #31 = Utf8               Lcom/example/test/lang/OverrideExample$OverrideParent;</div><div class="line">  #32 = Utf8               child</div><div class="line">  #33 = Utf8               number</div><div class="line">  #34 = Utf8               Ljava/lang/Number;</div><div class="line">  #35 = Utf8               integer</div><div class="line">  #36 = Utf8               Ljava/lang/Integer;</div><div class="line">  #37 = Utf8               Exceptions</div><div class="line">  #38 = Class              #53            // java/io/IOException</div><div class="line">  #39 = Utf8               SourceFile</div><div class="line">  #40 = Utf8               OverrideExample.java</div><div class="line">  #41 = NameAndType        #19:#20        // &quot;&lt;init&gt;&quot;:()V</div><div class="line">  #42 = Utf8               com/example/test/lang/OverrideExample$OverrideParent</div><div class="line">  #43 = Utf8               com/example/test/lang/OverrideExample$OverrideChild</div><div class="line">  #44 = Utf8               java/lang/Long</div><div class="line">  #45 = Utf8               1</div><div class="line">  #46 = NameAndType        #19:#54        // &quot;&lt;init&gt;&quot;:(Ljava/lang/String;)V</div><div class="line">  #47 = Utf8               java/lang/Integer</div><div class="line">  #48 = Utf8               2</div><div class="line">  #49 = NameAndType        #55:#56        // print:(Ljava/lang/Number;)V</div><div class="line">  #50 = NameAndType        #55:#57        // print:(Ljava/lang/Integer;)V</div><div class="line">  #51 = Utf8               com/example/test/lang/OverrideExample</div><div class="line">  #52 = Utf8               java/lang/Object</div><div class="line">  #53 = Utf8               java/io/IOException</div><div class="line">  #54 = Utf8               (Ljava/lang/String;)V</div><div class="line">  #55 = Utf8               print</div><div class="line">  #56 = Utf8               (Ljava/lang/Number;)V</div><div class="line">  #57 = Utf8               (Ljava/lang/Integer;)V</div><div class="line">&#123;</div><div class="line">  public com.example.test.lang.OverrideExample();</div><div class="line">    descriptor: ()V</div><div class="line">    flags: ACC_PUBLIC</div><div class="line">    Code:</div><div class="line">      stack=1, locals=1, args_size=1</div><div class="line">         0: aload_0</div><div class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">         4: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 9: 0</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0       5     0  this   Lcom/example/test/lang/OverrideExample;</div><div class="line"></div><div class="line">  public static void main(java.lang.String[]) throws java.io.IOException;</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC, ACC_STATIC</div><div class="line">    Code:</div><div class="line">      stack=3, locals=5, args_size=1</div><div class="line">         0: new           #2                  // class com/example/test/lang/OverrideExample$OverrideParent</div><div class="line">         3: dup</div><div class="line">         4: invokespecial #3                  // Method com/example/test/lang/OverrideExample$OverrideParent.&quot;&lt;init&gt;&quot;:()V</div><div class="line">         7: astore_1</div><div class="line">         8: new           #4                  // class com/example/test/lang/OverrideExample$OverrideChild</div><div class="line">        11: dup</div><div class="line">        12: invokespecial #5                  // Method com/example/test/lang/OverrideExample$OverrideChild.&quot;&lt;init&gt;&quot;:()V</div><div class="line">        15: astore_2</div><div class="line">        16: new           #6                  // class java/lang/Long</div><div class="line">        19: dup</div><div class="line">        20: ldc           #7                  // String 1</div><div class="line">        22: invokespecial #8                  // Method java/lang/Long.&quot;&lt;init&gt;&quot;:(Ljava/lang/String;)V</div><div class="line">        25: astore_3</div><div class="line">        26: new           #9                  // class java/lang/Integer</div><div class="line">        29: dup</div><div class="line">        30: ldc           #10                 // String 2</div><div class="line">        32: invokespecial #11                 // Method java/lang/Integer.&quot;&lt;init&gt;&quot;:(Ljava/lang/String;)V</div><div class="line">        35: astore        4</div><div class="line">        37: aload_1</div><div class="line">        38: aload_3</div><div class="line">        39: invokevirtual #12                 // Method com/example/test/lang/OverrideExample$OverrideParent.print:(Ljava/lang/Number;)V</div><div class="line">        42: aload_1</div><div class="line">        43: aload         4</div><div class="line">        45: invokevirtual #13                 // Method com/example/test/lang/OverrideExample$OverrideParent.print:(Ljava/lang/Integer;)V</div><div class="line">        48: aload_2</div><div class="line">        49: aload_3</div><div class="line">        50: invokevirtual #12                 // Method com/example/test/lang/OverrideExample$OverrideParent.print:(Ljava/lang/Number;)V</div><div class="line">        53: aload_2</div><div class="line">        54: aload         4</div><div class="line">        56: invokevirtual #13                 // Method com/example/test/lang/OverrideExample$OverrideParent.print:(Ljava/lang/Integer;)V</div><div class="line">        59: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 38: 0</div><div class="line">        line 39: 8</div><div class="line">        line 41: 16</div><div class="line">        line 42: 26</div><div class="line">        line 44: 37</div><div class="line">        line 45: 42</div><div class="line">        line 47: 48</div><div class="line">        line 48: 53</div><div class="line">        line 49: 59</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0      60     0  args   [Ljava/lang/String;</div><div class="line">            8      52     1 parent   Lcom/example/test/lang/OverrideExample$OverrideParent;</div><div class="line">           16      44     2 child   Lcom/example/test/lang/OverrideExample$OverrideParent;</div><div class="line">           26      34     3 number   Ljava/lang/Number;</div><div class="line">           37      23     4 integer   Ljava/lang/Integer;</div><div class="line">    Exceptions:</div><div class="line">      throws java.io.IOException</div><div class="line">&#125;</div><div class="line">SourceFile: &quot;OverrideExample.java&quot;</div><div class="line">InnerClasses:</div><div class="line">     static #16= #4 of #14; //OverrideChild=class com/example/test/lang/OverrideExample$OverrideChild of class com/example/test/lang/OverrideExample</div><div class="line">     static #18= #2 of #14; //OverrideParent=class com/example/test/lang/OverrideExample$OverrideParent of class com/example/test/lang/OverrideExample</div></pre></td></tr></table></figure>
+<p>上面第56行虚拟机指令<code>invokevirtual</code>的参数是一个符号引用<code>#13</code>，而<code>#13</code>在常量池中是由<code>#2.#50</code>组合形成的，再从常量池里找到<code>#2</code>和<code>#50</code>的符号引用，组合之后就看到了调用方法中符号引用的完整信息。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#2  = Class              #42            // com/example/test/lang/OverrideExample$OverrideParent</div><div class="line">#50 = NameAndType        #55:#57        // print:(Ljava/lang/Integer;)V</div></pre></td></tr></table></figure>
+<p>由反编译生成的class文件可以看到其中第39、45、50、56行的<code>invokevirtual</code>指令指向的符号引用都是<code>OverrideExample$OverrideParent.print()V</code>方法，尤其是注意第56行，其符号引用还是指向父类的方法。编译期只知道接收者的声明时的静态类型和方法参数的静态类型，并且根据这些静态类型，确定了要执行哪个方法。</p>
+<p>静态方法也可以有方法重载，因为静态方法与<code>final</code>的实例方法无须对方法接收者进行多态选择，所以在类加载的解析阶段就会把涉及的符号引用直接转变为实际要执行方法的直接引用。</p>
+<p>编译期只是确定了<code>做什么</code>(调用哪个签名的方法)，而<code>怎么做</code>却是在运行期决定的(执行哪个实例对象的方法体)。编译期并不知道这个方法要在哪个对象上执行，其执行的方法体是什么，这需要到运行期才会绑定，所以从多态这个概念是运行期绑定的角度来说，只有方法重写才是java多态的表现形式。</p>
+<p>java代码运行中大致会经历以下这些步骤：</p>
+<ol>
+<li>在JVM执行之前，需要先将java源码进行编译。</li>
+<li>在编译期根据方法参数的静态类型就已经决定了需要调用哪个签名的重载方法版本。方法调用不等同于方法执行，编译器此时知道参数的静态类型，并以此为依据将对应的这个方法的符号引用写到方法的<code>invokevirtual</code>指令的参数中，但编译器此时是不知道方法是在哪个对象上执行的，这需要到在JVM中的运行期才会绑定，方法调用在class文件中存储的都只是方法的符号引用，而不是方法实际运行的JVM方法区内存中的直接引用。</li>
+<li>JVM会加载执行<code>main()</code>方法所在的类，及方法运行中使用<code>new</code>指令引入的相关类。</li>
+<li>类加载会经过加载、验证、准备、解析、初始化、使用、卸载这些阶段，非虚方法的符号引用在解析阶段就会被连接到JVM方法区的目标方法的直接引用。</li>
+<li>编译期确定了方法调用的符号引用，在实例方法运行时，再根据方法的接收者(即当前实例)，真正绑定目标方法在内存中的直接引用，这就是java的动态绑定，或者叫运行时绑定，这个过程也就是java方法重写的本质，因此方法重写是在运行期才体现出作用。</li>
+</ol>
+<p>上面示例程序中前面2个输出结果属于方法重载，方法接收者是同一个对象，根据重载方法的参数静态类型不同，执行相应方法。</p>
+<p>程序第3个输出<code>child.print(number)</code>的结果，因为子类并没有重写父类的对应方法，所以子类运行的就是父类继承的方法。</p>
+<p>最后一行代码<code>child.print(integer)</code>输出体现了方法重写的作用，在编译期确定了方法调用的版本，在运行期时确定接收者的实际类型为child对象，然后在child对象中检查是否有此签名的方法，因为child对象中正好重写了父类的此方法，此时连接方法的符号引用到子类重写方法的直接引用上，调用子类重写的方法，这就是java中的运行时绑定，也叫延迟绑定，是java多态的主要表现方式。</p>
+<a id="more"></a>
+<h2 id="重载-Overload"><a href="#重载-Overload" class="headerlink" title="重载 - Overload"></a>重载 - Overload</h2><p>方法重载是在一个类里面，方法名字相同，而参数不同，返回类型可以相同也可以不同。每个重载的方法都必须有一个独一无二的参数类型列表。</p>
+<p>方法重载在类编译时就已经确定了方法调用的版本。</p>
+<h3 id="Overload规则"><a href="#Overload规则" class="headerlink" title="Overload规则"></a>Overload规则</h3><ol>
+<li>被重载的方法必须改变参数列表。</li>
+<li>被重载的方法可以改变返回类型 。</li>
+<li>被重载的方法可以改变访问修饰符。</li>
+<li>被重载的方法可以声明新的或更广的受检异常。</li>
+<li>方法能够在同一个类中或者在一个子类中被重载。</li>
+</ol>
+<h3 id="Overload示例"><a href="#Overload示例" class="headerlink" title="Overload示例"></a>Overload示例</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OverloadExample</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">OverloadParent</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Number number)</span> </span>&#123;</div><div class="line">            System.out.println(number);</div><div class="line">            System.out.println(<span class="string">"Parent#print(Number) method print : "</span> + <span class="keyword">this</span>.getClass().getSimpleName());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">print</span><span class="params">(Long number)</span> </span>&#123;</div><div class="line">            System.out.println(number);</div><div class="line">            System.out.println(<span class="string">"Parent#print(Long) method print : "</span> + <span class="keyword">this</span>.getClass().getSimpleName());</div><div class="line">            <span class="comment">// 重载方法可以修改返回类型</span></div><div class="line">            <span class="keyword">return</span> number.longValue();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// public void print(Integer integer) throws IOException &#123;</span></div><div class="line">        <span class="comment">//     System.out.println(integer);</span></div><div class="line">        <span class="comment">//     System.out.println("Parent#print(Number) method print : " + this.getClass().getSimpleName());</span></div><div class="line">        <span class="comment">// &#125;</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">OverloadChild</span> <span class="keyword">extends</span> <span class="title">OverloadParent</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">// @Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Integer integer)</span> <span class="keyword">throws</span> EOFException </span>&#123;</div><div class="line">            System.out.println(integer);</div><div class="line">            System.out.println(<span class="string">"Child#print(Integer) method print : "</span> + <span class="keyword">this</span>.getClass().getSimpleName());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        OverloadParent parent = <span class="keyword">new</span> OverloadParent();</div><div class="line">        OverloadParent child = <span class="keyword">new</span> OverloadChild();</div><div class="line"></div><div class="line">        Number number = <span class="keyword">new</span> Long(<span class="string">"1"</span>);</div><div class="line">        Integer integer = <span class="keyword">new</span> Integer(<span class="string">"2"</span>);</div><div class="line"></div><div class="line">        parent.print(number);</div><div class="line">        parent.print((Long) number); <span class="comment">// downcast Number to Long</span></div><div class="line"></div><div class="line">        child.print(number);</div><div class="line">        child.print(integer); <span class="comment">// upcast Integer to Number</span></div><div class="line">        ((OverloadChild) child).print(integer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上例程序运行输出：</p>
+<blockquote>
+<p>1</p>
+<p>Parent#print(Number) method print : OverloadParent</p>
+<p>1</p>
+<p>Parent#print(Long) method print : OverloadParent</p>
+<p>1</p>
+<p>Parent#print(Number) method print : OverloadChild</p>
+<p>2</p>
+<p>Parent#print(Number) method print : OverloadChild</p>
+<p>2</p>
+<p>Child#print(Integer) method print : OverloadChild</p>
+</blockquote>
+<h3 id="Overload示例运行结果详解"><a href="#Overload示例运行结果详解" class="headerlink" title="Overload示例运行结果详解"></a>Overload示例运行结果详解</h3><p>反编译OverloadExample代码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">javap</span> -c com.example.test.lang.OverloadExample</div></pre></td></tr></table></figure>
+<p>命令输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Compiled from &quot;OverloadExample.java&quot;</div><div class="line">public class com.example.test.lang.OverloadExample &#123;</div><div class="line">  public com.example.test.lang.OverloadExample();</div><div class="line">    Code:</div><div class="line">       0: aload_0</div><div class="line">       1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">       4: return</div><div class="line"></div><div class="line">  public static void main(java.lang.String[]) throws java.lang.Exception;</div><div class="line">    Code:</div><div class="line">       0: new           #2                  // class com/example/test/lang/OverloadExample$OverloadParent</div><div class="line">       3: dup</div><div class="line">       4: invokespecial #3                  // Method com/example/test/lang/OverloadExample$OverloadParent.&quot;&lt;init&gt;&quot;:()V</div><div class="line">       7: astore_1</div><div class="line">       8: new           #4                  // class com/example/test/lang/OverloadExample$OverloadChild</div><div class="line">      11: dup</div><div class="line">      12: invokespecial #5                  // Method com/example/test/lang/OverloadExample$OverloadChild.&quot;&lt;init&gt;&quot;:()V</div><div class="line">      15: astore_2</div><div class="line">      16: new           #6                  // class java/lang/Long</div><div class="line">      19: dup</div><div class="line">      20: ldc           #7                  // String 1</div><div class="line">      22: invokespecial #8                  // Method java/lang/Long.&quot;&lt;init&gt;&quot;:(Ljava/lang/String;)V</div><div class="line">      25: astore_3</div><div class="line">      26: new           #9                  // class java/lang/Integer</div><div class="line">      29: dup</div><div class="line">      30: ldc           #10                 // String 2</div><div class="line">      32: invokespecial #11                 // Method java/lang/Integer.&quot;&lt;init&gt;&quot;:(Ljava/lang/String;)V</div><div class="line">      35: astore        4</div><div class="line">      37: aload_1</div><div class="line">      38: aload_3</div><div class="line">      39: invokevirtual #12                 // Method com/example/test/lang/OverloadExample$OverloadParent.print:(Ljava/lang/Number;)V</div><div class="line">      42: aload_1</div><div class="line">      43: aload_3</div><div class="line">      44: checkcast     #6                  // class java/lang/Long</div><div class="line">      47: invokevirtual #13                 // Method com/example/test/lang/OverloadExample$OverloadParent.print:(Ljava/lang/Long;)J</div><div class="line">      50: pop2</div><div class="line">      51: aload_2</div><div class="line">      52: aload_3</div><div class="line">      53: invokevirtual #12                 // Method com/example/test/lang/OverloadExample$OverloadParent.print:(Ljava/lang/Number;)V</div><div class="line">      56: aload_2</div><div class="line">      57: aload         4</div><div class="line">      59: invokevirtual #12                 // Method com/example/test/lang/OverloadExample$OverloadParent.print:(Ljava/lang/Number;)V</div><div class="line">      62: aload_2</div><div class="line">      63: checkcast     #4                  // class com/example/test/lang/OverloadExample$OverloadChild</div><div class="line">      66: aload         4</div><div class="line">      68: invokevirtual #14                 // Method com/example/test/lang/OverloadExample$OverloadChild.print:(Ljava/lang/Integer;)V</div><div class="line">      71: return</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从反编译的第39、47行可以看到，编译期根据重载方法签名中的参数静态类型就确定了方法调用的版本，其中第44行中<code>checkcast</code>将<code>Number</code>对象向下强转为<code>Long</code>对象，从而编译期就能匹配到重载的方法<code>OverloadParent.print:(Ljava/lang/Long;)J</code>。</p>
+<p><code>child.print(number)</code>位于反编译的第53行，child对象在编译期的静态类型为<code>OverloadParent</code>，编译期就根据方法签名匹配到<code>OverloadParent.print:(Ljava/lang/Number;)V</code>，并且这个方法后面没有被子类重写，运行期就直接绑定到父类的<code>OverloadParent.print:(Ljava/lang/Number;)V</code>这个方法上。</p>
+<p><code>child.print(integer)</code>对应于反编译的第59行，因为编译期child对象的静态类型为<code>OverloadParent</code>，而<code>OverloadParent</code>中并没有<code>OverloadParent.print:(Ljava/lang/Integer;)V</code>签名的重载方法，这时编译器自动将<code>Integer</code>向上转型为<code>Number</code>类型的，并匹配到签名为<code>OverloadParent.print:(Ljava/lang/Number;)V</code>的方法，因为向上转型是安全的，所以在反编译的字节码中并没有<code>checkcast</code>指令。</p>
+<p>从反编译的字节码中可以看到第63行中，将对象强制向下转型为<code>OverloadChild</code>，因为向下转型并不是安全的，所以有个<code>checkcast</code>指令判断，之后编译器就在第68行连接到<code>OverloadChild.print:(Ljava/lang/Integer;)V</code>方法。</p>
+<h3 id="Difference-of-Overloaded-and-Overridden-Methods"><a href="#Difference-of-Overloaded-and-Overridden-Methods" class="headerlink" title="Difference of Overloaded and Overridden Methods"></a>Difference of Overloaded and Overridden Methods</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">Difference</th>
+<th style="text-align:left">Overloaded</th>
+<th style="text-align:left">Overrided</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">argument list</td>
+<td style="text-align:left">Must change</td>
+<td style="text-align:left">Must not change</td>
+</tr>
+<tr>
+<td style="text-align:center">return type</td>
+<td style="text-align:left">Can change</td>
+<td style="text-align:left">Must not change</td>
+</tr>
+<tr>
+<td style="text-align:center">exceptions</td>
+<td style="text-align:left">Can change</td>
+<td style="text-align:left">Can reduce or eliminate. Must not throw new or broader checked exceptions</td>
+</tr>
+<tr>
+<td style="text-align:center">access</td>
+<td style="text-align:left">Can change</td>
+<td style="text-align:left">Must not make more restrictive (can be less restrictive)</td>
+</tr>
+<tr>
+<td style="text-align:center">invocation</td>
+<td style="text-align:left">Reference type determines which overloaded version (based on declared argument types) is selected. Happens at compile time. The actual method that&#39;s invoked is still a virtual method invocation that happens at runtime, but the compiler will already know the signature of the method to be invoked. So at runtime. the argument match will already have been nailed down. just not the actual class in which the method lives.</td>
+<td style="text-align:left">Object type (in other words. the type of the actual instance on the heap) determines which method is selected. Happens at runtime.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.runoob.com/java/java-override-overload.html" target="_blank" rel="external">Java 重写(Override)与重载(Overload)</a></li>
+<li><a href="http://www.cnblogs.com/0201zcr/p/4853283.html" target="_blank" rel="external">java 重载、重写、构造函数详解</a></li>
+<li><a href="http://www.java-forums.org/ocpjp/67176-tutorial-review-java-class-design-java-programming-exam-i.html" target="_blank" rel="external">Polymorphism in Overloaded and Overridden Methods</a></li>
+<li><a href="http://www.jianshu.com/p/c7f47de2ee80" target="_blank" rel="external">Java常量池理解与总结</a></li>
+<li><a href="http://www.cnblogs.com/BangQ/p/4045937.html" target="_blank" rel="external">Java基础</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2016/10/26/java-threadlocal.html" rel="next" title="java threadlocal">
+                上一篇：java threadlocal
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/macos/2016/11/19/using-7zip-and-unarchiver-on-Mac-OS.html" rel="prev" title="using 7zip and unarchiver on Mac OS">
+                下一篇：using 7zip and unarchiver on Mac OS
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#相关术语说明"><span class="nav-number">1.</span> <span class="nav-text">相关术语说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重写-Override"><span class="nav-number">2.</span> <span class="nav-text">重写 - Override</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Override规则"><span class="nav-number">2.1.</span> <span class="nav-text">Override规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Override示例"><span class="nav-number">2.2.</span> <span class="nav-text">Override示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Override示例运行结果详解"><span class="nav-number">2.3.</span> <span class="nav-text">Override示例运行结果详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关于符号引用"><span class="nav-number">2.3.1.</span> <span class="nav-text">关于符号引用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重载-Overload"><span class="nav-number">3.</span> <span class="nav-text">重载 - Overload</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Overload规则"><span class="nav-number">3.1.</span> <span class="nav-text">Overload规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Overload示例"><span class="nav-number">3.2.</span> <span class="nav-text">Overload示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Overload示例运行结果详解"><span class="nav-number">3.3.</span> <span class="nav-text">Overload示例运行结果详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Difference-of-Overloaded-and-Overridden-Methods"><span class="nav-number">3.4.</span> <span class="nav-text">Difference of Overloaded and Overridden Methods</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="以下http client 4.5版本实现https请求的例子，实际运行过程中会碰到一些问题。 package org.apache.http.examples.client;import java.io.File;import javax.net.ssl.SSLContext;import org.apache.http.HttpEntity;import org.apache.http.cli">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java tool - keytool">
+<meta property="og:url" content="https://www.4e00.com/java/2016/05/31/java-keytool-usage.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="以下http client 4.5版本实现https请求的例子，实际运行过程中会碰到一些问题。 package org.apache.http.examples.client;import java.io.File;import javax.net.ssl.SSLContext;import org.apache.http.HttpEntity;import org.apache.http.cli">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java tool - keytool">
+<meta name="twitter:description" content="以下http client 4.5版本实现https请求的例子，实际运行过程中会碰到一些问题。 package org.apache.http.examples.client;import java.io.File;import javax.net.ssl.SSLContext;import org.apache.http.HttpEntity;import org.apache.http.cli">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/05/31/java-keytool-usage.html"/>
+
+  <title> java tool - keytool | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java tool - keytool
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-05-31T12:51:40+08:00" content="2016-05-31">
+              2016-05-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>以下http client 4.5版本实现https请求的<a href="https://hc.apache.org/httpcomponents-client-ga/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java" target="_blank" rel="external">例子</a>，实际运行过程中会碰到一些问题。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> org.apache.http.examples.client;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.net.ssl.SSLContext;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.http.HttpEntity;</div><div class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</div><div class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</div><div class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.SSLConnectionSocketFactory;</div><div class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.TrustSelfSignedStrategy;</div><div class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</div><div class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</div><div class="line"><span class="keyword">import</span> org.apache.http.ssl.SSLContexts;</div><div class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * This example demonstrates how to create secure connections with a custom SSL context.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientCustomSSL</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">// Trust own CA and all self-signed certs</span></div><div class="line">        SSLContext sslcontext = SSLContexts.custom().loadTrustMaterial(<span class="keyword">new</span> File(<span class="string">"my.keystore"</span>), <span class="string">"changeit"</span>.toCharArray(), <span class="keyword">new</span> TrustSelfSignedStrategy()).build();</div><div class="line">        <span class="comment">// Allow TLSv1 protocol only</span></div><div class="line">        SSLConnectionSocketFactory sslsf = <span class="keyword">new</span> SSLConnectionSocketFactory(sslcontext, <span class="keyword">new</span> String[] &#123; <span class="string">"TLSv1"</span> &#125;, <span class="keyword">null</span>, SSLConnectionSocketFactory.getDefaultHostnameVerifier());</div><div class="line">        CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line"></div><div class="line">            HttpGet httpget = <span class="keyword">new</span> HttpGet(<span class="string">"https://httpbin.org/"</span>);</div><div class="line">            System.out.println(<span class="string">"Executing request "</span> + httpget.getRequestLine());</div><div class="line">            CloseableHttpResponse response = httpclient.execute(httpget);</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                HttpEntity entity = response.getEntity();</div><div class="line"></div><div class="line">                System.out.println(<span class="string">"----------------------------------------"</span>);</div><div class="line">                System.out.println(response.getStatusLine());</div><div class="line">                EntityUtils.consume(entity);</div><div class="line">            &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                response.close();</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            httpclient.close();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码中的<code>my.keystore</code>文件是使用java自带的工具<code>keytool</code>生成的，下面介绍一下这个工具其及使用方法。</p>
+<a id="more"></a>
+<h2 id="keytool"><a href="#keytool" class="headerlink" title="keytool"></a>keytool</h2><p><code>keytool</code>是java密钥和证书管理工具，可以用来创建包含公钥和密钥的的<code>keystore</code>(database)文件，并且利用<code>keystore</code>文件来创建只包含公钥的<code>truststore</code>文件，并发布这个<code>truststore</code>给客户端使用，<code>keystore</code>里包含两种数据：</p>
+<ol>
+<li>密钥实体<code>key entity</code>: 密钥<code>secret key</code>又或者是私钥和配对公钥，采用非对称加密。</li>
+<li>可信任的证书实体<code>trusted certificate entries</code>: 只包含公钥。</li>
+<li>别名<code>alias</code>: 每个<code>keystore</code>都关联这一个独一无二的<code>alias</code>，这个<code>alias</code>通常不区分大小写。</li>
+</ol>
+<h2 id="用keytool创建keystore文件"><a href="#用keytool创建keystore文件" class="headerlink" title="用keytool创建keystore文件"></a>用keytool创建keystore文件</h2><p>创建<code>keystore.jks</code>和密钥对，密码为<code>changeit</code>，<code>keytool</code>工具的参数详细说明，参考<a href="http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html" target="_blank" rel="external">官方文档</a>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">keytool</span> -genkey -<span class="built_in">alias</span> server-alias -keyalg RSA -keypass changeit -storepass changeit -keystore keystore.jks</div></pre></td></tr></table></figure>
+<p>生成了<code>keystore.jks</code>文件之后，根据需求不同分二种证书做法，一种是CA认证的证书，一种是自签名认证的证书，先说CA证书制作：</p>
+<ol>
+<li>为上面的<code>keystore.jks</code>生成证书请求文件(certificate signing request)，即<code>CSR</code>文件。</li>
+<li>提交<code>CSR</code>给第三方权威<code>CA</code>机构认证，并获得有效的<code>CRT</code>证书文件。</li>
+<li>将<code>CRT</code>证书配置到tomcat，或者是nginx和apache服务器中。</li>
+</ol>
+<h2 id="CSR文件生成"><a href="#CSR文件生成" class="headerlink" title="CSR文件生成"></a>CSR文件生成</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">keytool</span> -certreq -<span class="built_in">alias</span> server-alias -keystore keystore.jks -keypass changeit -storepass changeit -file server.csr</div></pre></td></tr></table></figure>
+<p>提交此<code>server.csr</code>给第三方CA机构认证，并得到<code>server.crt</code>文件，使用下面的指令导入<code>truststore.jks</code>文件中，或者是直接配置到web服务器中。</p>
+<h2 id="CA证书导入"><a href="#CA证书导入" class="headerlink" title="CA证书导入"></a>CA证书导入</h2><p>导入<code>CRT</code>证书到客户端使用的<code>truststore.jks</code>公钥文件中：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">keytool</span> -import -v -trustcacerts -<span class="built_in">alias</span> server-alias -file server.crt -keystore truststore.jks -keypass changeit -storepass changeit</div></pre></td></tr></table></figure>
+<p>以上httpclient-4.5 https request例子运行时，访问<code>https://httpbin.org/</code>后抛出如下错误：</p>
+<blockquote>
+<p>javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target</p>
+</blockquote>
+<p>则需要在浏览器中将对应的<code>https://httpbin.org/</code>请求域名的CA证书从浏览器里导出另存为<code>httpbin.org.cer</code>，然后用<code>keytool</code>命令导入到上述java代码指定的<code>my.keystore</code>文件中，<code>my.keystore</code>文件是一个包含公钥的<code>truststore</code>文件。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">keytool</span> -import -trustcacerts -<span class="built_in">alias</span> httpbin.org -file httpbin.org.cer -keystore my.keystore -storepass changeit</div></pre></td></tr></table></figure>
+<h2 id="自签名证书的导出"><a href="#自签名证书的导出" class="headerlink" title="自签名证书的导出"></a>自签名证书的导出</h2><p>有些开发环境中使用的SSL证书不需要第三方CA权威机构认证，或者不是提供给浏览器使用的，只是提供给java内部进行服务器和客户端之间相互验证，那么可以使用自签名认证的方式生成<code>server.crt</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">keytool</span> -<span class="built_in">export</span> -<span class="built_in">alias</span> server-alias -storepass changeit -keystore keystore.jks -file server.crt</div></pre></td></tr></table></figure>
+<h2 id="自签名证书导入到truststore文件"><a href="#自签名证书导入到truststore文件" class="headerlink" title="自签名证书导入到truststore文件"></a>自签名证书导入到truststore文件</h2><p>将上面生成的<code>server.crt</code>文件导入到<code>cacerts.jks</code>文件中，这是提供给客户端使用的<code>truststore</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">keytool</span> -import -v -trustcacerts -<span class="built_in">alias</span> server-alias -file server.crt -keystore cacerts.jks -keypass changeit -storepass changeit</div></pre></td></tr></table></figure>
+<h2 id="keytool其他命令示例"><a href="#keytool其他命令示例" class="headerlink" title="keytool其他命令示例"></a>keytool其他命令示例</h2><h3 id="查看单个证书-Check-a-stand-alone-certificate"><a href="#查看单个证书-Check-a-stand-alone-certificate" class="headerlink" title="查看单个证书 Check a stand-alone certificate"></a>查看单个证书 Check a stand-alone certificate</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">keytool</span> -printcert -v -file server.crt</div></pre></td></tr></table></figure>
+<h3 id="列出keystore存在的所有证书"><a href="#列出keystore存在的所有证书" class="headerlink" title="列出keystore存在的所有证书"></a>列出keystore存在的所有证书</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">keytool</span> -list -v -keystore keystore.jks -storepass changeit</div></pre></td></tr></table></figure>
+<h3 id="使用别名查看keystore特定条目"><a href="#使用别名查看keystore特定条目" class="headerlink" title="使用别名查看keystore特定条目"></a>使用别名查看keystore特定条目</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">keytool</span> -list -v -keystore keystore.jks -<span class="built_in">alias</span> server-alias -storepass changeit</div></pre></td></tr></table></figure>
+<h3 id="删除keystore里面指定证书"><a href="#删除keystore里面指定证书" class="headerlink" title="删除keystore里面指定证书"></a>删除keystore里面指定证书</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">keytool</span> -delete -<span class="built_in">alias</span> server-alias -keystore keystore.jks -storepass changeit</div></pre></td></tr></table></figure>
+<h3 id="更改keysore密码"><a href="#更改keysore密码" class="headerlink" title="更改keysore密码"></a>更改keysore密码</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">keytool</span> -storepasswd -new new_storepassword -keystore keystore.jks</div></pre></td></tr></table></figure>
+<h3 id="列出信任的CA证书"><a href="#列出信任的CA证书" class="headerlink" title="列出信任的CA证书"></a>列出信任的CA证书</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># for Mac OS</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">export</span> JAVA_HOME=$(/usr/libexec/java_home -v 1.8)</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">keytool</span> -list -v -keystore <span class="variable">$JAVA_HOME</span>/jre/lib/security/cacerts</div></pre></td></tr></table></figure>
+<h3 id="导入新的CA证书到信任证书"><a href="#导入新的CA证书到信任证书" class="headerlink" title="导入新的CA证书到信任证书"></a>导入新的CA证书到信任证书</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">keytool</span> -import -trustcacerts -file /path/to/ca.crt -<span class="built_in">alias</span> CA_ALIAS -keystore <span class="variable">$JAVA_HOME</span>/jre/lib/security/cacerts</div></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html" target="_blank" rel="external">keytool - Key and Certificate Management Tool</a></li>
+<li><a href="https://docs.oracle.com/cd/E19798-01/821-1841/gjrgy/index.html" target="_blank" rel="external">To Use keytool to Create a Server Certificate</a></li>
+<li><a href="https://hc.apache.org/httpcomponents-client-ga/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java" target="_blank" rel="external">httpclient-4.5 custom ssl request</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2016/04/14/git-receive-deny-current-branch-error.html" rel="next" title="git remote error receive.denycurrentbranch">
+                上一篇：git remote error receive.denycurrentbranch
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2016/05/31/git-branch-and-log-graph.html" rel="prev" title="git log查看版本历史">
+                下一篇：git log查看版本历史
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#keytool"><span class="nav-number">1.</span> <span class="nav-text">keytool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用keytool创建keystore文件"><span class="nav-number">2.</span> <span class="nav-text">用keytool创建keystore文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSR文件生成"><span class="nav-number">3.</span> <span class="nav-text">CSR文件生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CA证书导入"><span class="nav-number">4.</span> <span class="nav-text">CA证书导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自签名证书的导出"><span class="nav-number">5.</span> <span class="nav-text">自签名证书的导出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自签名证书导入到truststore文件"><span class="nav-number">6.</span> <span class="nav-text">自签名证书导入到truststore文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keytool其他命令示例"><span class="nav-number">7.</span> <span class="nav-text">keytool其他命令示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看单个证书-Check-a-stand-alone-certificate"><span class="nav-number">7.1.</span> <span class="nav-text">查看单个证书 Check a stand-alone certificate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列出keystore存在的所有证书"><span class="nav-number">7.2.</span> <span class="nav-text">列出keystore存在的所有证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用别名查看keystore特定条目"><span class="nav-number">7.3.</span> <span class="nav-text">使用别名查看keystore特定条目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除keystore里面指定证书"><span class="nav-number">7.4.</span> <span class="nav-text">删除keystore里面指定证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改keysore密码"><span class="nav-number">7.5.</span> <span class="nav-text">更改keysore密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列出信任的CA证书"><span class="nav-number">7.6.</span> <span class="nav-text">列出信任的CA证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入新的CA证书到信任证书"><span class="nav-number">7.7.</span> <span class="nav-text">导入新的CA证书到信任证书</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

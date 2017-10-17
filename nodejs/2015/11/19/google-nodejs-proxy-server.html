@@ -1,0 +1,560 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="以nodejs和request为基础写的一个google网页搜索结果的代理服务器。 package.json">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nodejs implements spider proxy server for google">
+<meta property="og:url" content="https://www.4e00.com/nodejs/2015/11/19/google-nodejs-proxy-server.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="以nodejs和request为基础写的一个google网页搜索结果的代理服务器。 package.json">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nodejs implements spider proxy server for google">
+<meta name="twitter:description" content="以nodejs和request为基础写的一个google网页搜索结果的代理服务器。 package.json">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/nodejs/2015/11/19/google-nodejs-proxy-server.html"/>
+
+  <title> nodejs implements spider proxy server for google | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                nodejs implements spider proxy server for google
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2015-11-19T22:49:54+08:00" content="2015-11-19">
+              2015-11-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>以nodejs和request为基础写的一个google网页搜索结果的代理服务器。</p>
+<h2 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h2><a id="more"></a>
+<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"google-hk"</span>,</div><div class="line">    <span class="attr">"version"</span>: <span class="string">"0.2.1"</span>,</div><div class="line">    <span class="attr">"private"</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">"scripts"</span>: &#123;</div><div class="line">        <span class="attr">"start"</span>: <span class="string">"node ./google-hk"</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"dependencies"</span>: &#123;</div><div class="line">        <span class="attr">"pm2"</span>: <span class="string">"~0.12.16"</span>,</div><div class="line">        <span class="attr">"request"</span>: <span class="string">"~2.67.0"</span>,</div><div class="line">        <span class="attr">"iconv-lite"</span>: <span class="string">"~0.4.13"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="pm2-google-json"><a href="#pm2-google-json" class="headerlink" title="pm2-google.json"></a>pm2-google.json</h2><figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"apps"</span>: [&#123;</div><div class="line">        <span class="attr">"name"</span>: <span class="string">"google-hk"</span>,</div><div class="line">        <span class="attr">"script"</span>: <span class="string">"google-hk"</span>,</div><div class="line">        <span class="attr">"log_date_format"</span>: <span class="string">"YYYY-MM-DD HH:mm Z"</span>,</div><div class="line">        <span class="attr">"ignore_watch"</span>: [<span class="string">"[\\/\\\\]\\./"</span>, <span class="string">"node_modules"</span>],</div><div class="line">        <span class="attr">"watch"</span>: <span class="literal">false</span>,</div><div class="line">        <span class="attr">"vizion"</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">"autorestart"</span>: <span class="literal">true</span></div><div class="line">    &#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="spider-proxy-to-www-google-com-hk"><a href="#spider-proxy-to-www-google-com-hk" class="headerlink" title="spider proxy to www.google.com.hk"></a>spider proxy to www.google.com.hk</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env node</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</div><div class="line"><span class="keyword">var</span> proxy = <span class="built_in">require</span>(<span class="string">"request"</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">request, response</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(request.url);</div><div class="line">    request.headers.host = <span class="string">"www.google.com.hk"</span>;</div><div class="line">    <span class="keyword">var</span> url = <span class="string">"https://www.google.com.hk"</span> + request.url;</div><div class="line">    request.pipe(proxy(url)).pipe(response);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">server.listen(<span class="number">8000</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"google search page spider server is listening on 8000"</span>);</div><div class="line"></div></pre></td></tr></table></figure>
+<h2 id="运行server"><a href="#运行server" class="headerlink" title="运行server"></a>运行server</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">node_modules</span>/pm2/bin/pm2 start pm2-google.json</div></pre></td></tr></table></figure>
+<p>另外写了个手动抓取到内容，再返回给客户端的版本：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env node</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</div><div class="line"><span class="keyword">var</span> httpClient = <span class="built_in">require</span>(<span class="string">"request"</span>);</div><div class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">"url"</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">request, response</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> google = <span class="string">"https://www.google.com.hk"</span>;</div><div class="line">    <span class="keyword">var</span> u = url.parse(request.url, <span class="literal">true</span>);</div><div class="line">    <span class="keyword">var</span> pathname = u.pathname;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="regexp">/^\/url/</span>.test(pathname)) &#123;</div><div class="line">        response.writeHead(<span class="number">302</span>, &#123;</div><div class="line">            <span class="string">"location"</span>: u.query.q</div><div class="line">        &#125;);</div><div class="line">        response.end();</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(request.url);</div><div class="line">        <span class="keyword">var</span> headers = &#123;</div><div class="line">            <span class="string">"user-agent"</span>: request.headers[<span class="string">"user-agent"</span>]</div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">var</span> options = &#123;</div><div class="line">            url: google + request.url,</div><div class="line">            encoding: <span class="literal">null</span>,</div><div class="line">            headers: headers</div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">var</span> handler = <span class="function"><span class="keyword">function</span>(<span class="params">err, res, body</span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (err) &#123;</div><div class="line">                response.write(<span class="string">"http client error: "</span> + err.message);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                response.writeHead(res.statusCode, res.headers);</div><div class="line">                response.write(body);</div><div class="line">            &#125;</div><div class="line">            response.end();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        httpClient(options, handler);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">server.listen(<span class="number">8000</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"google search page spider server is listening on 8000"</span>);</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/web/2015/11/17/ie6-text-3px-offset-bug.html" rel="next" title="ie6下3px文本偏移bug">
+                上一篇：ie6下3px文本偏移bug
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/nodejs/2015/11/19/nodejs-google-spider.html" rel="prev" title="nodejs实现google网页抓取">
+                下一篇：nodejs实现google网页抓取
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#package-json"><span class="nav-number">1.</span> <span class="nav-text">package.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pm2-google-json"><span class="nav-number">2.</span> <span class="nav-text">pm2-google.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spider-proxy-to-www-google-com-hk"><span class="nav-number">3.</span> <span class="nav-text">spider proxy to www.google.com.hk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行server"><span class="nav-number">4.</span> <span class="nav-text">运行server</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

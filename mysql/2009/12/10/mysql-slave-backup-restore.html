@@ -1,0 +1,580 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="第一种最简单的方法适用于数据库文件比较小，能在停止主数据库服务后几分钟内打完tar包的情况，这种情况与第一次做slave同步的方法一样：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql-5.0.37同步备份恢复的三种方法">
+<meta property="og:url" content="https://www.4e00.com/mysql/2009/12/10/mysql-slave-backup-restore.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="第一种最简单的方法适用于数据库文件比较小，能在停止主数据库服务后几分钟内打完tar包的情况，这种情况与第一次做slave同步的方法一样：">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql-5.0.37同步备份恢复的三种方法">
+<meta name="twitter:description" content="第一种最简单的方法适用于数据库文件比较小，能在停止主数据库服务后几分钟内打完tar包的情况，这种情况与第一次做slave同步的方法一样：">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/mysql/2009/12/10/mysql-slave-backup-restore.html"/>
+
+  <title> mysql-5.0.37同步备份恢复的三种方法 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                mysql-5.0.37同步备份恢复的三种方法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2009-12-10T12:39:00+08:00" content="2009-12-10">
+              2009-12-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="第一种"><a href="#第一种" class="headerlink" title="第一种"></a>第一种</h2><p>最简单的方法适用于数据库文件比较小，能在停止主数据库服务后几分钟内打完tar包的情况，这种情况与第一次做slave同步的方法一样：</p>
+<a id="more"></a>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">mysql&gt; FLUSH TABLES WITH READ LOCK;</div><div class="line">mysql&gt; SHOW MASTER STATUS;</div></pre></td></tr></table></figure>
+<p>记录状态后进入命令行将数据库原生数据文件打个tar包，再</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">mysql&gt; UNLOCK TABLES;</div></pre></td></tr></table></figure>
+<p>将tar包重布署到mysql slave上即可，注意将tar包中的日志文件，master.info，relay-log.info要删除之后再change master to。</p>
+<h2 id="第二种"><a href="#第二种" class="headerlink" title="第二种"></a>第二种</h2><p>此方法是利用mysql的二进制日志文件。</p>
+<p>首先重启一次主数据库。</p>
+<p>然后在slave上用以下命令查看二进制日志文件执行的最后SQL语句，其中start-datetime时间为此二进制日志文件最后的修改时间，或者提前30秒方便查看最后执行完成的SQL语句：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mysqlbinlog</span> -S /tmp/mysql.sock hostname-relay-bin.000002 --start-datetime=<span class="string">'2009-12-11 11:12:00'</span></div></pre></td></tr></table></figure>
+<p>然后在主数据库上用命令筛选出符合时间范围的日志：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mysqlbinlog</span> --start-datetime=<span class="string">'2009-12-11 11:12:00'</span> -S /tmp/mysql.sock mysql-bin.000007 &gt; /home/username/bin-log.sql</div></pre></td></tr></table></figure>
+<p>再用grep命令，查找到bin-log.sql中与之前在slave上查到的sql行号，并用sed命令删除1到此行号的全部行(举例查到行号为1234)：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">grep</span> -n <span class="string">"last executed sql statement"</span> /home/username/bin-log.sql</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sed</span> <span class="string">'1,1234d'</span> /home/username/bin-log.sql &gt; /home/username/bin-log-sed.sql</div></pre></td></tr></table></figure>
+<p>将生成的bin-log-sed.sql文件传到slave数据库上用mysql命令行工具导入数据。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mysql</span> -uroot -p &lt; bin-log-sed.sql</div></pre></td></tr></table></figure>
+<p>如果碰到报错，用sed再删除sql文件的前几行导入。<br>导入完成后，进行mysql控制台，下面的master_log_file是同步中断的主数据库日志文件mysql-bin.000007的后继日志文件名mysql-bin.000008：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">mysql&gt; stop slave;</div><div class="line">mysql&gt; change master to master_log_file='mysql-bin.000008', master_log_pos=98;</div><div class="line">mysql&gt; start slave;</div><div class="line">mysql&gt; show slave status\G</div></pre></td></tr></table></figure>
+<h2 id="第三种"><a href="#第三种" class="headerlink" title="第三种"></a>第三种</h2><p>此方法也是利用二进制日志文件恢复。</p>
+<p>与第二种方法类似，只是在grep查到行号之后，用awk命令找到日志中断的位置，重新调整slave上的<code>master_log_pos</code>即可。<br>举例查到行号为1234：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cat</span> /home/username/bin-log.sql |awk <span class="string">'NR &gt;= 1234 &#123;print $0&#125;'</span> |more</div></pre></td></tr></table></figure>
+<p>可以找到最后执行完的那个SQL之后，服务器的二进制日志文件位置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">last executed sql statuement;</div></pre></td></tr></table></figure>
+<p>之后会看到类似：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># at 1023411738</div></pre></td></tr></table></figure>
+<p>这样的内容，用这个值更新slave上的master信息：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">mysql&gt; stop slave;</div><div class="line">mysql&gt; change master to master_log_file='mysql-bin.000007', master_log_pos=1023411738;</div><div class="line">mysql&gt; start slave;</div><div class="line">mysql&gt; show slave status\G</div></pre></td></tr></table></figure>
+<p>在slave的二进制日志或者是hostname-relay-log.info，hostname.err中也会有master上的end_log_pos，可以先尝试用一下，一般因为master/slave异常才导致同步失败，在slave上的这些信息已经不正确，所以需要用awk找到服务器上的二进制日志位置。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/mysql/2009/12/10/mysql-5.0.37-replication-fails-with-log-event-entry-exceeded-max-allowed-packet.html" rel="next" title="mysql-5.0.37 replication fails with log event entry exceeded max_allowed_packet">
+                上一篇：mysql-5.0.37 replication fails with log event entry exceeded max_allowed_packet
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/mysql/2010/01/28/mysql-useful-client-commands.html" rel="prev" title="mysql客户端中比较有用的几个命令">
+                下一篇：mysql客户端中比较有用的几个命令
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一种"><span class="nav-number">1.</span> <span class="nav-text">第一种</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二种"><span class="nav-number">2.</span> <span class="nav-text">第二种</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三种"><span class="nav-number">3.</span> <span class="nav-text">第三种</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

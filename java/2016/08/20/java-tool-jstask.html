@@ -1,0 +1,694 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="本文介绍一些java原生提供的工具，分析java线程的死锁情况，定位特别占用系统资源的java线程。 java thread dump以tomcat进程为例，当tomcat运行出现一些异常情况，比如长时间高CPU消耗，此时可以使用java thread dump，分析java的各线程状态，进行问题定位。 step 1: find tomcat $pid$&amp;gt; ps -ef | grep tom">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java tool - jstack">
+<meta property="og:url" content="https://www.4e00.com/java/2016/08/20/java-tool-jstask.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="本文介绍一些java原生提供的工具，分析java线程的死锁情况，定位特别占用系统资源的java线程。 java thread dump以tomcat进程为例，当tomcat运行出现一些异常情况，比如长时间高CPU消耗，此时可以使用java thread dump，分析java的各线程状态，进行问题定位。 step 1: find tomcat $pid$&amp;gt; ps -ef | grep tom">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.4e00.com/blog/img/java/thread-life-cycle.png">
+<meta property="og:image" content="https://www.4e00.com/blog/img/java/threads-using-object-monitor.png">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java tool - jstack">
+<meta name="twitter:description" content="本文介绍一些java原生提供的工具，分析java线程的死锁情况，定位特别占用系统资源的java线程。 java thread dump以tomcat进程为例，当tomcat运行出现一些异常情况，比如长时间高CPU消耗，此时可以使用java thread dump，分析java的各线程状态，进行问题定位。 step 1: find tomcat $pid$&amp;gt; ps -ef | grep tom">
+<meta name="twitter:image" content="https://www.4e00.com/blog/img/java/thread-life-cycle.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/08/20/java-tool-jstask.html"/>
+
+  <title> java tool - jstack | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java tool - jstack
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-08-20T19:02:44+08:00" content="2016-08-20">
+              2016-08-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文介绍一些java原生提供的工具，分析java线程的死锁情况，定位特别占用系统资源的java线程。</p>
+<h2 id="java-thread-dump"><a href="#java-thread-dump" class="headerlink" title="java thread dump"></a>java thread dump</h2><p>以<code>tomcat</code>进程为例，当<code>tomcat</code>运行出现一些异常情况，比如长时间高CPU消耗，此时可以使用<code>java thread dump</code>，分析java的各线程状态，进行问题定位。</p>
+<h3 id="step-1-find-tomcat-pid"><a href="#step-1-find-tomcat-pid" class="headerlink" title="step 1: find tomcat $pid"></a>step 1: find tomcat $pid</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -ef | grep tomcat</div><div class="line"><span class="comment"># or</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">jps</span> -v</div></pre></td></tr></table></figure>
+<h3 id="step-2-send-quit-signal-to-tomcat-and-tomcat-will-dump-thread-into-catalina-out"><a href="#step-2-send-quit-signal-to-tomcat-and-tomcat-will-dump-thread-into-catalina-out" class="headerlink" title="step 2: send quit signal to tomcat and tomcat will dump thread into catalina.out"></a>step 2: send quit signal to tomcat and tomcat will dump thread into catalina.out</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">kill</span> -3 <span class="variable">$pid</span></div><div class="line"><span class="comment"># or</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">kill</span> -QUIT <span class="variable">$pid</span></div></pre></td></tr></table></figure>
+<h3 id="step-3-analyse-catalina-out"><a href="#step-3-analyse-catalina-out" class="headerlink" title="step 3: analyse catalina.out"></a>step 3: analyse catalina.out</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tail</span> -n 300 <span class="variable">$CATALINA_HOME</span>/logs/catalina.out</div></pre></td></tr></table></figure>
+<p>通过上述操作导出的线程栈信息，和java原生提供的工具<code>jstack</code>导出的线程栈基本上一样，接下来主要分析<code>jstack</code>这个工具。</p>
+<a id="more"></a>
+<h2 id="java-tool-jstack"><a href="#java-tool-jstack" class="headerlink" title="java tool - jstack"></a>java tool - jstack</h2><p><code>jstack</code>可以在java应用程序运行时，通过<code>Thread.getAllStackTraces()</code>或<code>Thread.dumpStack()</code>完整转储当前所有线程栈，用于分析线程和定位问题，<code>jstack</code>命令的实现其实是一个叫做<code>sun.tools.jstack.JStack.java</code>的类。</p>
+<p>命令行参数选项说明如下：</p>
+<ol>
+<li><code>-l</code>: long listings，会打印出额外的锁信息，在发生死锁时可以用<code>jstack -l $pid</code>来观察锁持有情况。</li>
+<li><code>-m</code>: mixed mode，不仅会输出Java堆栈信息，还会输出C/C++堆栈信息（比如Native方法）。</li>
+</ol>
+<h2 id="利用jstack查找占用CPU资源最多的那个线程"><a href="#利用jstack查找占用CPU资源最多的那个线程" class="headerlink" title="利用jstack查找占用CPU资源最多的那个线程"></a>利用jstack查找占用CPU资源最多的那个线程</h2><p>一个应用占用CPU很高，极有可能是出现了死循环，linux环境下，当发现java进程占用CPU资源很高，按照以下步骤查找最占CPU资源的线程：</p>
+<h3 id="step-1-find-tomcat-pid-1"><a href="#step-1-find-tomcat-pid-1" class="headerlink" title="step 1: find tomcat $pid"></a>step 1: find tomcat $pid</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -ef|grep tomcat</div></pre></td></tr></table></figure>
+<h3 id="step-2-find-java-thread-tid-which-cause-high-CPU-usage"><a href="#step-2-find-java-thread-tid-which-cause-high-CPU-usage" class="headerlink" title="step 2: find java thread $tid which cause high CPU usage"></a>step 2: find java thread $tid which cause high CPU usage</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">top</span> -Hp <span class="variable">$pid</span></div><div class="line"><span class="comment"># or</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -mp <span class="variable">$pid</span> -o THREAD,tid,time</div></pre></td></tr></table></figure>
+<h3 id="step-3-dump-thread-stack-trace"><a href="#step-3-dump-thread-stack-trace" class="headerlink" title="step 3: dump thread stack trace"></a>step 3: dump thread stack trace</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">jstack</span> <span class="variable">$pid</span> &gt; jstack.log</div><div class="line"><span class="comment"># or</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">jstack</span> -m <span class="variable">$pid</span> &gt; jstack.log</div></pre></td></tr></table></figure>
+<h3 id="step-4-change-tid-to-nid"><a href="#step-4-change-tid-to-nid" class="headerlink" title="step 4: change $tid to $nid"></a>step 4: change $tid to $nid</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">printf</span> <span class="string">"%x\n"</span> <span class="variable">$tid</span></div></pre></td></tr></table></figure>
+<h3 id="step-5-find-nid-in-jstack-log"><a href="#step-5-find-nid-in-jstack-log" class="headerlink" title="step 5: find $nid in jstack.log"></a>step 5: find $nid in jstack.log</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">grep</span> -A 30 -i <span class="variable">$tid</span> jstack.log</div></pre></td></tr></table></figure>
+<h2 id="bash脚本检测最占CPU的java线程"><a href="#bash脚本检测最占CPU的java线程" class="headerlink" title="bash脚本检测最占CPU的java线程"></a>bash脚本检测最占CPU的java线程</h2><p>把java进程的id直接传给下面这个bash脚本，可以直接找出java进程中哪个线程占用CPU资源最多：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#! /bin/bash</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> -eq 0 ];<span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"please enter java <span class="variable">$pid</span>"</span></div><div class="line">    <span class="built_in">exit</span> -1</div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line">pid=<span class="variable">$1</span></div><div class="line">jstack_cmd=<span class="string">"jstack"</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> [[ <span class="variable">$JAVA_HOME</span> != <span class="string">""</span> ]]; <span class="keyword">then</span></div><div class="line">    jstack_cmd=<span class="string">"<span class="variable">$JAVA_HOME</span>/bin/jstack"</span></div><div class="line"><span class="keyword">else</span></div><div class="line">    r=`<span class="built_in">which</span> jstack 2&gt; /dev/null`</div><div class="line">    <span class="keyword">if</span> [[ <span class="variable">$r</span> != <span class="string">""</span> ]]; <span class="keyword">then</span></div><div class="line">        jstack_cmd=<span class="variable">$r</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">"can not find jstack"</span></div><div class="line">        <span class="built_in">exit</span> -2</div><div class="line">    <span class="keyword">fi</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"><span class="comment"># line=`top -H  -o %CPU -b -n 1  -p $pid | sed '1,/^$/d' | grep -v $pid | awk 'NR==2'`</span></div><div class="line"></div><div class="line">line=`top -H -b -n 1 -p <span class="variable">$pid</span> | sed <span class="string">'1,/^$/d'</span> | sed <span class="string">'1d;/^$/d'</span> | grep -v <span class="variable">$pid</span> | sort -nrk9 | head -1`</div><div class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$line</span>"</span> | awk <span class="string">'&#123;print "tid: "$1," cpu: %"$9&#125;'</span></div><div class="line">tid_0x=`<span class="built_in">printf</span> <span class="string">"%0x"</span> $(<span class="built_in">echo</span> <span class="string">"<span class="variable">$line</span>"</span> | awk <span class="string">'&#123;print $1&#125;'</span>)`</div><div class="line"><span class="variable">$jstack_cmd</span> <span class="variable">$pid</span> | grep <span class="variable">$tid_0x</span> -A20 | sed -n <span class="string">'1,/^$/p'</span></div></pre></td></tr></table></figure>
+<h2 id="jstack测试代码一"><a href="#jstack测试代码一" class="headerlink" title="jstack测试代码一"></a>jstack测试代码一</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WhileTrueDump</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述代码运行后，使用<code>jstack</code>导出的线程栈如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">2016-08-17 23:06:05</div><div class="line">Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.77-b03 mixed mode):</div><div class="line"></div><div class="line">&quot;Attach Listener&quot; #9 daemon prio=9 os_prio=31 tid=0x00007ff4b3060800 nid=0x310b waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;Service Thread&quot; #8 daemon prio=9 os_prio=31 tid=0x00007ff4b3857800 nid=0x4303 runnable [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C1 CompilerThread2&quot; #7 daemon prio=9 os_prio=31 tid=0x00007ff4b482b800 nid=0x4103 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C2 CompilerThread1&quot; #6 daemon prio=9 os_prio=31 tid=0x00007ff4b383c800 nid=0x3f03 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C2 CompilerThread0&quot; #5 daemon prio=9 os_prio=31 tid=0x00007ff4b381a800 nid=0x3d03 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;Signal Dispatcher&quot; #4 daemon prio=9 os_prio=31 tid=0x00007ff4b381a000 nid=0x330f runnable [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;Finalizer&quot; #3 daemon prio=8 os_prio=31 tid=0x00007ff4b3811000 nid=0x2d03 in Object.wait() [0x0000000121917000]</div><div class="line">   java.lang.Thread.State: WAITING (on object monitor)</div><div class="line">        at java.lang.Object.wait(Native Method)</div><div class="line">        - waiting on &lt;0x0000000795588ee0&gt; (a java.lang.ref.ReferenceQueue$Lock)</div><div class="line">        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:143)</div><div class="line">        - locked &lt;0x0000000795588ee0&gt; (a java.lang.ref.ReferenceQueue$Lock)</div><div class="line">        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:164)</div><div class="line">        at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:209)</div><div class="line"></div><div class="line">&quot;Reference Handler&quot; #2 daemon prio=10 os_prio=31 tid=0x00007ff4b380e000 nid=0x2b03 in Object.wait() [0x0000000121814000]</div><div class="line">   java.lang.Thread.State: WAITING (on object monitor)</div><div class="line">        at java.lang.Object.wait(Native Method)</div><div class="line">        - waiting on &lt;0x0000000795586b50&gt; (a java.lang.ref.Reference$Lock)</div><div class="line">        at java.lang.Object.wait(Object.java:502)</div><div class="line">        at java.lang.ref.Reference.tryHandlePending(Reference.java:191)</div><div class="line">        - locked &lt;0x0000000795586b50&gt; (a java.lang.ref.Reference$Lock)</div><div class="line">        at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)</div><div class="line"></div><div class="line">&quot;main&quot; #1 prio=5 os_prio=31 tid=0x00007ff4b4002800 nid=0xb07 runnable [0x000000010b88f000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line">        at com.example.test.threads.jstack.WhileTrueDump.main(WhileTrueDump.java:11)</div><div class="line"></div><div class="line">&quot;VM Thread&quot; os_prio=31 tid=0x00007ff4b3809800 nid=0x2903 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#0 (ParallelGC)&quot; os_prio=31 tid=0x00007ff4b300d000 nid=0x2103 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#1 (ParallelGC)&quot; os_prio=31 tid=0x00007ff4b3010800 nid=0x2303 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#2 (ParallelGC)&quot; os_prio=31 tid=0x00007ff4b3011000 nid=0x2503 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#3 (ParallelGC)&quot; os_prio=31 tid=0x00007ff4b3011800 nid=0x2703 runnable</div><div class="line"></div><div class="line">&quot;VM Periodic Task Thread&quot; os_prio=31 tid=0x00007ff4b3060000 nid=0x4503 waiting on condition</div><div class="line"></div><div class="line">JNI global references: 6</div></pre></td></tr></table></figure>
+<h2 id="dump出来的线程说明"><a href="#dump出来的线程说明" class="headerlink" title="dump出来的线程说明"></a>dump出来的线程说明</h2><p>对以上导出的线程栈中的线程简单介绍一下。</p>
+<h3 id="dump时间和虚拟机的信息"><a href="#dump时间和虚拟机的信息" class="headerlink" title="dump时间和虚拟机的信息"></a>dump时间和虚拟机的信息</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">2016-08-17 23:06:05</div><div class="line">Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.77-b03 mixed mode):</div></pre></td></tr></table></figure>
+<h3 id="主线程及字段说明"><a href="#主线程及字段说明" class="headerlink" title="主线程及字段说明"></a>主线程及字段说明</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&quot;main&quot; #1 prio=5 os_prio=31 tid=0x00007ff4b4002800 nid=0xb07 runnable [0x000000010b88f000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line">        at com.example.test.threads.jstack.WhileTrueDump.main(WhileTrueDump.java:11)</div></pre></td></tr></table></figure>
+<p>以上示例线程栈中各字段具体含义是：</p>
+<ol>
+<li>Thread name: <code>main</code>。</li>
+<li>线程优先级：<code>prio=5</code>，默认是<code>Thread.NORM_PRIORITY</code>，即5，一般不要人为操作线程的优先级。</li>
+<li>thread id：<code>tid=0x00007ff4b4002800</code>。</li>
+<li>native id： <code>nid=0xb07</code>，和<code>top</code>命令查看的线程<code>$pid</code>对应，不过<code>$nid</code>是<code>10进制</code>，<code>$pid</code>是<code>16进制</code>，通过命令：<code>top -Hp $pid</code>，可以查看该进程的所有线程信息。</li>
+<li>线程的状态：<code>java.lang.Thread.State: RUNNABLE</code>。</li>
+<li>线程栈地址：<code>[0x000000010b88f000]</code>。</li>
+<li>Java thread statck trace：这是最重要的信息，Java stack trace提供了大部分信息来精确定位问题根源。</li>
+</ol>
+<h3 id="HotSpot-VM-Thread-and-Compiler-Threads"><a href="#HotSpot-VM-Thread-and-Compiler-Threads" class="headerlink" title="HotSpot VM Thread and Compiler Threads"></a>HotSpot VM Thread and Compiler Threads</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&quot;C1 CompilerThread2&quot; #7 daemon prio=9 os_prio=31 tid=0x00007ff4b482b800 nid=0x4103 waiting on condition [0x0000000000000000] java.lang.Thread.State: RUNNABLE</div><div class="line">&quot;C2 CompilerThread1&quot; #6 daemon prio=9 os_prio=31 tid=0x00007ff4b383c800 nid=0x3f03 waiting on condition [0x0000000000000000] java.lang.Thread.State: RUNNABLE</div><div class="line">&quot;C2 CompilerThread0&quot; #5 daemon prio=9 os_prio=31 tid=0x00007ff4b381a800 nid=0x3d03 waiting on condition [0x0000000000000000] java.lang.Thread.State: RUNNABLE</div><div class="line">&quot;CompilerThread0&quot; daemon prio=10 tid=0x097e9000 nid=0xa9e waiting on condition [0x00000000] java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;VM Thread&quot; os_prio=31 tid=0x00007ff4b3809800 nid=0x2903 runnable</div><div class="line">&quot;VM Periodic Task Thread&quot; os_prio=31 tid=0x00007ff4b3060000 nid=0x4503 waiting on condition</div></pre></td></tr></table></figure>
+<h3 id="HotSpot-GC-Threads"><a href="#HotSpot-GC-Threads" class="headerlink" title="HotSpot GC Threads"></a>HotSpot GC Threads</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&quot;GC task thread#0 (ParallelGC)&quot; os_prio=31 tid=0x00007ff4b300d000 nid=0x2103 runnable</div><div class="line">&quot;GC task thread#1 (ParallelGC)&quot; os_prio=31 tid=0x00007ff4b3010800 nid=0x2303 runnable</div><div class="line">&quot;GC task thread#2 (ParallelGC)&quot; os_prio=31 tid=0x00007ff4b3011000 nid=0x2503 runnable</div><div class="line">&quot;GC task thread#3 (ParallelGC)&quot; os_prio=31 tid=0x00007ff4b3011800 nid=0x2703 runnable</div></pre></td></tr></table></figure>
+<h3 id="Finalizer-daemon"><a href="#Finalizer-daemon" class="headerlink" title="Finalizer daemon"></a>Finalizer daemon</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&quot;Finalizer&quot; #3 daemon prio=8 os_prio=31 tid=0x00007ff4b3811000 nid=0x2d03 in Object.wait() [0x0000000121917000] java.lang.Thread.State: WAITING (on object monitor)</div><div class="line">&quot;Reference Handler&quot; #2 daemon prio=10 os_prio=31 tid=0x00007ff4b380e000 nid=0x2b03 in Object.wait() [0x0000000121814000] java.lang.Thread.State: WAITING (on object monitor)</div></pre></td></tr></table></figure>
+<p>从上面可以看到有一个<code>Finalizer</code>守护线程正在运行。<code>Finalizer</code>线程是个单一职责的线程。这个线程会不停的循环等待<code>java.lang.ref.Finalizer.ReferenceQueue</code>中的新增对象。一旦<code>Finalizer</code>线程发现队列中出现了新的对象，它会弹出该对象，调用它的<code>finalize()</code>方法，将该引用从<code>Finalizer</code>类中移除，因此下次<code>GC</code>再执行的时候，这个<code>Finalizer</code>实例以及它引用的那个对象就可以被垃圾回收掉了。</p>
+<p>需要注意这个线程的优先级低于主线程的优先级，如果主线程生成对象的速度远远大于对象回收的速度，则会造成<code>java.lang.OutOfMemoryError</code>错误。</p>
+<h3 id="Signal-Dispatcher-and-Attach-Listener-daemons"><a href="#Signal-Dispatcher-and-Attach-Listener-daemons" class="headerlink" title="Signal Dispatcher and Attach Listener daemons"></a>Signal Dispatcher and Attach Listener daemons</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&quot;Attach Listener&quot; #9 daemon prio=9 os_prio=31 tid=0x00007ff4b3060800 nid=0x310b waiting on condition [0x0000000000000000] java.lang.Thread.State: RUNNABLE</div><div class="line">&quot;Service Thread&quot; #8 daemon prio=9 os_prio=31 tid=0x00007ff4b3857800 nid=0x4303 runnable [0x0000000000000000] java.lang.Thread.State: RUNNABLE</div><div class="line">&quot;Signal Dispatcher&quot; #4 daemon prio=9 os_prio=31 tid=0x00007ff4b381a000 nid=0x330f runnable [0x0000000000000000] java.lang.Thread.State: RUNNABLE</div></pre></td></tr></table></figure>
+<p><code>Signal Dispatcher</code>是随jvm一起启动的，是jvm处理操作系统信号的线程。而在jvm启动时并不启动<code>Attach Listener</code>这个线程，这是<code>jstack</code>命令运行时启动的线程。</p>
+<h3 id="JNI-global-references-count"><a href="#JNI-global-references-count" class="headerlink" title="JNI global references count"></a>JNI global references count</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">JNI global references: 6</div></pre></td></tr></table></figure>
+<h2 id="java线程的状态说明"><a href="#java线程的状态说明" class="headerlink" title="java线程的状态说明"></a>java线程的状态说明</h2><p>简单说一下线程状态说明以及线程状态之间的转换，参考下图，更加详细的线程状态的定义可以参考<code>Thread.State</code>中的javadoc：</p>
+<img src="/blog/img/java/thread-life-cycle.png" title="[thread-life-cycle]">
+<h3 id="新建状态（NEW）"><a href="#新建状态（NEW）" class="headerlink" title="新建状态（NEW）"></a>新建状态（NEW）</h3><p>用new语句创建的线程处于新建状态，这个状态不会出现在导出的线程栈中。</p>
+<blockquote>
+<p>Thread state for a thread which has not yet started.</p>
+</blockquote>
+<h3 id="就绪状态（RUNNABLE）"><a href="#就绪状态（RUNNABLE）" class="headerlink" title="就绪状态（RUNNABLE）"></a>就绪状态（RUNNABLE）</h3><p>当一个线程对象创建后，其他线程调用它的start()方法，该线程就进入就绪状态，Java虚拟机会为它创建方法调用栈和程序计数器，处于这个状态的线程位于可运行池中，等待获得CPU的使用权。</p>
+<blockquote>
+<p>Thread state for a runnable thread.  A thread in the runnable</p>
+<p>state is executing in the Java virtual machine but it may</p>
+<p>be waiting for other resources from the operating system</p>
+<p>such as processor.</p>
+</blockquote>
+<h3 id="阻塞状态（BLOCKED）"><a href="#阻塞状态（BLOCKED）" class="headerlink" title="阻塞状态（BLOCKED）"></a>阻塞状态（BLOCKED）</h3><p>它不是一般意义上的阻塞，而是特指被<code>synchronized</code>块阻塞，即是跟线程同步有关的一个状态。</p>
+<blockquote>
+<p>Thread state for a thread blocked waiting for a monitor lock.</p>
+<p>A thread in the blocked state is waiting for a monitor lock</p>
+<p>to enter a synchronized block/method or</p>
+<p>reenter a synchronized block/method after calling</p>
+<p>{@link Object#wait() Object.wait}.</p>
+</blockquote>
+<h3 id="运行状态（RUNNING）"><a href="#运行状态（RUNNING）" class="headerlink" title="运行状态（RUNNING）"></a>运行状态（RUNNING）</h3><p>处于这个状态的线程占用CPU，执行程序代码，只有处于就绪状态的线程才有机会转到运行状态，<code>RUNNING</code>状态中的线程最为复杂，可能会进入<code>RUNNABLE</code>、<code>WAITING</code>、<code>TIMED_WAITING</code>、<code>BLOCKED</code>、<code>DEAD</code>状态：</p>
+<ol>
+<li>如果CPU调度给了别的线程，或者执行了<code>Thread.yield()</code>方法，则进入<code>RUNNABLE</code>状态，但是也有可能立刻又进入<code>RUNNING</code>状态。</li>
+<li>如果执行了<code>Thread.sleep(long)</code>，或者<code>thread.join(long)</code>，或者在锁对象上调用<code>object.wait(long)</code>方法，则会进入<code>TIMED_WAITING</code>状态。</li>
+<li>如果执行了<code>thread.join()</code>，或者在锁对象上调用了<code>object.wait()</code>方法，则会进入<code>WAITING</code>状态。</li>
+<li>如果进入了同步方法或者同步代码块，没有获取锁对象的话，则会进入<code>BLOCKED</code>状态。</li>
+</ol>
+<h3 id="等待状态（WAITING）"><a href="#等待状态（WAITING）" class="headerlink" title="等待状态（WAITING）"></a>等待状态（WAITING）</h3><p>处于<code>WAITING</code>状态中的线程，如果是因为<code>thread.join()</code>方法进入等待的话，在目标thread执行完毕之后，会回到<code>RUNNABLE</code>状态；如果是因为<code>object.wait()</code>方法进入等待的话，在锁对象执行<code>object.notify()</code>或者<code>object.notifyAll()</code>之后会回到<code>RUNNABLE</code>状态，这时线程没有拥有锁，等别的线程释放之后，才有机会获得锁，结束等待状态。</p>
+<blockquote>
+<p>Thread state for a waiting thread.</p>
+<p>A thread is in the waiting state due to calling one of the</p>
+<p>following methods:</p>
+<ol>
+<li><p>{@link Object#wait() Object.wait} with no timeout</p>
+</li>
+<li><p>{@link #join() Thread.join} with no timeout</p>
+</li>
+<li><p>{@link LockSupport#park() LockSupport.park}</p>
+</li>
+</ol>
+</blockquote>
+<h3 id="等待状态（TIMED-WAITING）"><a href="#等待状态（TIMED-WAITING）" class="headerlink" title="等待状态（TIMED_WAITING）"></a>等待状态（TIMED_WAITING）</h3><p>线程<code>sleeping</code>或者<code>parking</code>时，会进入此状态，线程此时仍然拥有锁，等待时间结束，自动结果等待状态。</p>
+<blockquote>
+<p>Thread state for a waiting thread with a specified waiting time.</p>
+<p>A thread is in the timed waiting state due to calling one of</p>
+<p>the following methods with a specified positive waiting time:</p>
+<ol>
+<li><p>{@link #sleep Thread.sleep}</p>
+</li>
+<li><p>{@link Object#wait(long) Object.wait} with timeout</p>
+</li>
+<li><p>{@link #join(long) Thread.join} with timeout</p>
+</li>
+<li><p>{@link LockSupport#parkNanos LockSupport.parkNanos}</p>
+</li>
+<li><p>{@link LockSupport#parkUntil LockSupport.parkUntil}</p>
+</li>
+</ol>
+</blockquote>
+<h3 id="死亡状态（DEAD）"><a href="#死亡状态（DEAD）" class="headerlink" title="死亡状态（DEAD）"></a>死亡状态（DEAD）</h3><p>当线程执行完毕，或者抛出了未捕获的异常之后，会进入<code>DEAD</code>状态，也就是<code>Thread.Status.TERMINATED</code>状态，该线程结束。</p>
+<h2 id="线程状态举例说明"><a href="#线程状态举例说明" class="headerlink" title="线程状态举例说明"></a>线程状态举例说明</h2><p>Java中每个对象都有一个<code>内置锁</code>(object&#39;s monitor)，当程序运行到非静态的<code>synchronized</code>方法上时，会获得与正在执行代码类的当前实例<code>this</code>有关的锁；当运行到同步代码块时，获得与<code>synchronized(object)</code>声明的对象<code>object</code>的锁。</p>
+<p>释放锁是指持锁线程退出了<code>synchronized</code>方法或代码块。</p>
+<p>每个对象的<code>Monitor Lock</code>，即对象内置锁，在某个时刻，只能被一个线程拥有，该线程就是<code>Active Thread</code>，而其它线程都是<code>Waiting Thread</code>，分别在两个队列<code>Entry Set</code>和<code>Wait Set</code>里面等候，如下图所示。</p>
+<img src="/blog/img/java/threads-using-object-monitor.png" title="[threads-using-object-monitor]">
+<ol>
+<li>在<code>Entry Set</code>里面的线程都等待拿到<code>对象锁</code>(object&#39;s monitor)，但这里面的线程却一直没有拿到过<code>对象锁</code>，一旦拿到了<code>对象锁</code>，该线程就成为了<code>RUNNABLE</code>线程，否则就会一直处于处于<code>waiting for monitor entry</code>，如下示例代码中的<code>B</code>线程。</li>
+<li>在<code>Wait Set</code>里面的线程也都等待拿到<code>对象锁</code>，但与<code>Entry Set</code>中的<code>BLOCKED</code>的线程不同，这些线程原来都拿到过<code>对象锁</code>，却因为其他一些资源或者条件不满足，调用同步锁对象的<code>wait()</code>方法，放弃了<code>对象锁</code>，它就进入到了<code>Wait Set</code>队列。只有当其他线程通过<code>notify()</code>或者<code>notifyAll()</code>，释放了同步锁后，这个线程才会有机会重新去竞争<code>对象锁</code>。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SynchronizedMonitorDump</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1</span>; i--) &#123;</div><div class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">" synchronized loop "</span> + i);</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    TimeUnit.SECONDS.sleep(<span class="number">2</span>);</div><div class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                    Thread.currentThread().interrupt();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        SynchronizedMonitorDump t1 = <span class="keyword">new</span> SynchronizedMonitorDump();</div><div class="line">        Thread ta = <span class="keyword">new</span> Thread(t1, <span class="string">"A"</span>);</div><div class="line">        Thread tb = <span class="keyword">new</span> Thread(t1, <span class="string">"B"</span>);</div><div class="line">        ta.start();</div><div class="line">        tb.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述代码对应导出的相关线程栈内容如下，其中<code>B</code>线程一直就在<code>Entry Set</code>中等待获得对象锁，然而一直不会得到这个锁，所以要重点关注<code>waiting for monitor entry</code>状态的线程：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&quot;B&quot; #10 prio=5 os_prio=31 tid=0x00007f93ca02b800 nid=0x4903 waiting for monitor entry [0x0000000127831000]</div><div class="line">   java.lang.Thread.State: BLOCKED (on object monitor)</div><div class="line">        at com.example.test.threads.jstack.SynchronizedMonitorDump.run(SynchronizedMonitorDump.java:12)</div><div class="line">        - waiting to lock &lt;0x00000007955f3968&gt; (a com.example.test.threads.jstack.SynchronizedMonitorDump)</div><div class="line">        at java.lang.Thread.run(Thread.java:745)</div><div class="line"></div><div class="line">&quot;A&quot; #9 prio=5 os_prio=31 tid=0x00007f93ca02b000 nid=0x4703 waiting on condition [0x000000012772e000]</div><div class="line">   java.lang.Thread.State: TIMED_WAITING (sleeping)</div><div class="line">        at java.lang.Thread.sleep(Native Method)</div><div class="line">        at java.lang.Thread.sleep(Thread.java:340)</div><div class="line">        at java.util.concurrent.TimeUnit.sleep(TimeUnit.java:386)</div><div class="line">        at com.example.test.threads.jstack.SynchronizedMonitorDump.run(SynchronizedMonitorDump.java:15)</div><div class="line">        - locked &lt;0x00000007955f3968&gt; (a com.example.test.threads.jstack.SynchronizedMonitorDump)</div><div class="line">        at java.lang.Thread.run(Thread.java:745)</div></pre></td></tr></table></figure>
+<h2 id="死锁测试代码"><a href="#死锁测试代码" class="headerlink" title="死锁测试代码"></a>死锁测试代码</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LeftRightDeadLock</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Object left = <span class="keyword">new</span> Object();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Object right = <span class="keyword">new</span> Object();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">left</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (left) &#123;</div><div class="line">            <span class="keyword">synchronized</span> (right) &#123;</div><div class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">" invoke method left"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">right</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (right) &#123;</div><div class="line">            <span class="keyword">synchronized</span> (left) &#123;</div><div class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">" invoke method right"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1</span>; i--) &#123;</div><div class="line">            left();</div><div class="line">            right();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        LeftRightDeadLock t1 = <span class="keyword">new</span> LeftRightDeadLock();</div><div class="line">        Thread a = <span class="keyword">new</span> Thread(t1, <span class="string">"A"</span>);</div><div class="line">        Thread b = <span class="keyword">new</span> Thread(t1, <span class="string">"B"</span>);</div><div class="line"></div><div class="line">        a.start();</div><div class="line">        b.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码运行之后，通过<code>kill -3 $pid</code>将thread dump出来，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">2016-08-20 19:02:44</div><div class="line">Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.77-b03 mixed mode):</div><div class="line"></div><div class="line">&quot;DestroyJavaVM&quot; #12 prio=5 os_prio=31 tid=0x00007ff9cb802800 nid=0x1303 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;B&quot; #11 prio=5 os_prio=31 tid=0x00007ff9cc054000 nid=0x4e03 waiting for monitor entry [0x0000000125ca3000]</div><div class="line">   java.lang.Thread.State: BLOCKED (on object monitor)</div><div class="line">    at com.example.test.threads.jstack.LeftRightDeadLock.left(LeftRightDeadLock.java:14)</div><div class="line">    - waiting to lock &lt;0x000000079570dfe0&gt; (a java.lang.Object)</div><div class="line">    - locked &lt;0x000000079570dfd0&gt; (a java.lang.Object)</div><div class="line">    at com.example.test.threads.jstack.LeftRightDeadLock.run(LeftRightDeadLock.java:29)</div><div class="line">    at java.lang.Thread.run(Thread.java:745)</div><div class="line"></div><div class="line">&quot;A&quot; #10 prio=5 os_prio=31 tid=0x00007ff9cc053800 nid=0x4c03 waiting for monitor entry [0x0000000125ba0000]</div><div class="line">   java.lang.Thread.State: BLOCKED (on object monitor)</div><div class="line">    at com.example.test.threads.jstack.LeftRightDeadLock.right(LeftRightDeadLock.java:22)</div><div class="line">    - waiting to lock &lt;0x000000079570dfd0&gt; (a java.lang.Object)</div><div class="line">    - locked &lt;0x000000079570dfe0&gt; (a java.lang.Object)</div><div class="line">    at com.example.test.threads.jstack.LeftRightDeadLock.run(LeftRightDeadLock.java:30)</div><div class="line">    at java.lang.Thread.run(Thread.java:745)</div><div class="line"></div><div class="line">&quot;Monitor Ctrl-Break&quot; #9 daemon prio=5 os_prio=31 tid=0x00007ff9cb005800 nid=0x4a03 runnable [0x0000000125a9d000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line">    at java.net.PlainSocketImpl.socketAccept(Native Method)</div><div class="line">    at java.net.AbstractPlainSocketImpl.accept(AbstractPlainSocketImpl.java:409)</div><div class="line">    at java.net.ServerSocket.implAccept(ServerSocket.java:545)</div><div class="line">    at java.net.ServerSocket.accept(ServerSocket.java:513)</div><div class="line">    at com.intellij.rt.execution.application.AppMain$1.run(AppMain.java:79)</div><div class="line">    at java.lang.Thread.run(Thread.java:745)</div><div class="line"></div><div class="line">&quot;Service Thread&quot; #8 daemon prio=9 os_prio=31 tid=0x00007ff9cb824000 nid=0x4603 runnable [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C1 CompilerThread2&quot; #7 daemon prio=9 os_prio=31 tid=0x00007ff9cc03a000 nid=0x4403 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C2 CompilerThread1&quot; #6 daemon prio=9 os_prio=31 tid=0x00007ff9cc039000 nid=0x4203 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C2 CompilerThread0&quot; #5 daemon prio=9 os_prio=31 tid=0x00007ff9ca81a800 nid=0x4003 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;Signal Dispatcher&quot; #4 daemon prio=9 os_prio=31 tid=0x00007ff9ca80e800 nid=0x3013 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;Finalizer&quot; #3 daemon prio=8 os_prio=31 tid=0x00007ff9ca80a800 nid=0x2d03 in Object.wait() [0x0000000123a38000]</div><div class="line">   java.lang.Thread.State: WAITING (on object monitor)</div><div class="line">    at java.lang.Object.wait(Native Method)</div><div class="line">    - waiting on &lt;0x0000000795588ee0&gt; (a java.lang.ref.ReferenceQueue$Lock)</div><div class="line">    at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:143)</div><div class="line">    - locked &lt;0x0000000795588ee0&gt; (a java.lang.ref.ReferenceQueue$Lock)</div><div class="line">    at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:164)</div><div class="line">    at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:209)</div><div class="line"></div><div class="line">&quot;Reference Handler&quot; #2 daemon prio=10 os_prio=31 tid=0x00007ff9cb81d800 nid=0x2b03 in Object.wait() [0x0000000123935000]</div><div class="line">   java.lang.Thread.State: WAITING (on object monitor)</div><div class="line">    at java.lang.Object.wait(Native Method)</div><div class="line">    - waiting on &lt;0x0000000795586b50&gt; (a java.lang.ref.Reference$Lock)</div><div class="line">    at java.lang.Object.wait(Object.java:502)</div><div class="line">    at java.lang.ref.Reference.tryHandlePending(Reference.java:191)</div><div class="line">    - locked &lt;0x0000000795586b50&gt; (a java.lang.ref.Reference$Lock)</div><div class="line">    at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)</div><div class="line"></div><div class="line">&quot;VM Thread&quot; os_prio=31 tid=0x00007ff9cc009000 nid=0x2903 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#0 (ParallelGC)&quot; os_prio=31 tid=0x00007ff9cb00b800 nid=0x2103 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#1 (ParallelGC)&quot; os_prio=31 tid=0x00007ff9cb00c000 nid=0x2303 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#2 (ParallelGC)&quot; os_prio=31 tid=0x00007ff9cb00d000 nid=0x2503 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#3 (ParallelGC)&quot; os_prio=31 tid=0x00007ff9cb00d800 nid=0x2703 runnable</div><div class="line"></div><div class="line">&quot;VM Periodic Task Thread&quot; os_prio=31 tid=0x00007ff9cb802000 nid=0x4803 waiting on condition</div><div class="line"></div><div class="line">JNI global references: 21</div><div class="line"></div><div class="line"></div><div class="line">Found one Java-level deadlock:</div><div class="line">=============================</div><div class="line">&quot;B&quot;:</div><div class="line">  waiting to lock monitor 0x00007ff9cc00e0b8 (object 0x000000079570dfe0, a java.lang.Object),</div><div class="line">  which is held by &quot;A&quot;</div><div class="line">&quot;A&quot;:</div><div class="line">  waiting to lock monitor 0x00007ff9cc00f6b8 (object 0x000000079570dfd0, a java.lang.Object),</div><div class="line">  which is held by &quot;B&quot;</div><div class="line"></div><div class="line">Java stack information for the threads listed above:</div><div class="line">===================================================</div><div class="line">&quot;B&quot;:</div><div class="line">    at com.example.test.threads.jstack.LeftRightDeadLock.left(LeftRightDeadLock.java:14)</div><div class="line">    - waiting to lock &lt;0x000000079570dfe0&gt; (a java.lang.Object)</div><div class="line">    - locked &lt;0x000000079570dfd0&gt; (a java.lang.Object)</div><div class="line">    at com.example.test.threads.jstack.LeftRightDeadLock.run(LeftRightDeadLock.java:29)</div><div class="line">    at java.lang.Thread.run(Thread.java:745)</div><div class="line">&quot;A&quot;:</div><div class="line">    at com.example.test.threads.jstack.LeftRightDeadLock.right(LeftRightDeadLock.java:22)</div><div class="line">    - waiting to lock &lt;0x000000079570dfd0&gt; (a java.lang.Object)</div><div class="line">    - locked &lt;0x000000079570dfe0&gt; (a java.lang.Object)</div><div class="line">    at com.example.test.threads.jstack.LeftRightDeadLock.run(LeftRightDeadLock.java:30)</div><div class="line">    at java.lang.Thread.run(Thread.java:745)</div><div class="line"></div><div class="line">Found 1 deadlock.</div><div class="line"></div><div class="line">Heap</div><div class="line"> PSYoungGen      total 38400K, used 4659K [0x0000000795580000, 0x0000000798000000, 0x00000007c0000000]</div><div class="line">  eden space 33280K, 14% used [0x0000000795580000,0x0000000795a0cff0,0x0000000797600000]</div><div class="line">  from space 5120K, 0% used [0x0000000797b00000,0x0000000797b00000,0x0000000798000000]</div><div class="line">  to   space 5120K, 0% used [0x0000000797600000,0x0000000797600000,0x0000000797b00000]</div><div class="line"> ParOldGen       total 87552K, used 0K [0x0000000740000000, 0x0000000745580000, 0x0000000795580000]</div><div class="line">  object space 87552K, 0% used [0x0000000740000000,0x0000000740000000,0x0000000745580000]</div><div class="line"> Metaspace       used 2993K, capacity 4494K, committed 4864K, reserved 1056768K</div><div class="line">  class space    used 326K, capacity 386K, committed 512K, reserved 1048576K</div></pre></td></tr></table></figure>
+<p>从上面的信息中可以发现一个死锁：<code>Found 1 deadlock.</code>，并且<code>A</code>线程和<code>B</code>线程都已经获得过<code>left</code>和<code>right</code>这2个对象锁。</p>
+<h2 id="java工具和命令doc"><a href="#java工具和命令doc" class="headerlink" title="java工具和命令doc"></a>java工具和命令doc</h2><ol>
+<li><a href="http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jinfo.html" target="_blank" rel="external">jinfo</a></li>
+<li><a href="http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jconsole.html" target="_blank" rel="external">jconsole</a></li>
+<li><a href="http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jvisualvm.html" target="_blank" rel="external">jvisualvm</a></li>
+<li><a href="http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstat.html" target="_blank" rel="external">jstat</a></li>
+<li><a href="http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jmap.html" target="_blank" rel="external">jmap</a></li>
+<li><a href="http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jps.html" target="_blank" rel="external">jps</a></li>
+<li><a href="http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jhat.html" target="_blank" rel="external">jhat</a></li>
+<li><a href="http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstack.html" target="_blank" rel="external">jstack</a></li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-5things8.html" target="_blank" rel="external">Java性能监控</a></li>
+<li><a href="http://go-on.iteye.com/blog/1673894" target="_blank" rel="external">虚拟机stack全分析</a></li>
+<li><a href="http://hongjiang.info/find-busiest-thread-of-java/" target="_blank" rel="external">检测最耗cpu的java线程的脚本</a></li>
+<li><a href="http://it.deepinmind.com/gc/2014/05/13/debugging-to-understand-finalizer.html" target="_blank" rel="external">Java的Finalizer引发的内存溢出</a></li>
+<li><a href="http://lovestblog.cn/blog/2014/06/18/jvm-attach/" target="_blank" rel="external">JVM Attach机制实现</a></li>
+<li><a href="https://java.net/projects/tda/downloads/directory/visualvm" target="_blank" rel="external">tda</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2016/08/08/iptables-tutorial.html" rel="next" title="iptables tutorial">
+                上一篇：iptables tutorial
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2016/09/17/tcp-nagle-algorithm-and-delayed-ack.html" rel="prev" title="tcp nagle's algorithm and delayed ack">
+                下一篇：tcp nagle's algorithm and delayed ack
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java-thread-dump"><span class="nav-number">1.</span> <span class="nav-text">java thread dump</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#step-1-find-tomcat-pid"><span class="nav-number">1.1.</span> <span class="nav-text">step 1: find tomcat $pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step-2-send-quit-signal-to-tomcat-and-tomcat-will-dump-thread-into-catalina-out"><span class="nav-number">1.2.</span> <span class="nav-text">step 2: send quit signal to tomcat and tomcat will dump thread into catalina.out</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step-3-analyse-catalina-out"><span class="nav-number">1.3.</span> <span class="nav-text">step 3: analyse catalina.out</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java-tool-jstack"><span class="nav-number">2.</span> <span class="nav-text">java tool - jstack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用jstack查找占用CPU资源最多的那个线程"><span class="nav-number">3.</span> <span class="nav-text">利用jstack查找占用CPU资源最多的那个线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#step-1-find-tomcat-pid-1"><span class="nav-number">3.1.</span> <span class="nav-text">step 1: find tomcat $pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step-2-find-java-thread-tid-which-cause-high-CPU-usage"><span class="nav-number">3.2.</span> <span class="nav-text">step 2: find java thread $tid which cause high CPU usage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step-3-dump-thread-stack-trace"><span class="nav-number">3.3.</span> <span class="nav-text">step 3: dump thread stack trace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step-4-change-tid-to-nid"><span class="nav-number">3.4.</span> <span class="nav-text">step 4: change $tid to $nid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step-5-find-nid-in-jstack-log"><span class="nav-number">3.5.</span> <span class="nav-text">step 5: find $nid in jstack.log</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bash脚本检测最占CPU的java线程"><span class="nav-number">4.</span> <span class="nav-text">bash脚本检测最占CPU的java线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jstack测试代码一"><span class="nav-number">5.</span> <span class="nav-text">jstack测试代码一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dump出来的线程说明"><span class="nav-number">6.</span> <span class="nav-text">dump出来的线程说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dump时间和虚拟机的信息"><span class="nav-number">6.1.</span> <span class="nav-text">dump时间和虚拟机的信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主线程及字段说明"><span class="nav-number">6.2.</span> <span class="nav-text">主线程及字段说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HotSpot-VM-Thread-and-Compiler-Threads"><span class="nav-number">6.3.</span> <span class="nav-text">HotSpot VM Thread and Compiler Threads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HotSpot-GC-Threads"><span class="nav-number">6.4.</span> <span class="nav-text">HotSpot GC Threads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Finalizer-daemon"><span class="nav-number">6.5.</span> <span class="nav-text">Finalizer daemon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Signal-Dispatcher-and-Attach-Listener-daemons"><span class="nav-number">6.6.</span> <span class="nav-text">Signal Dispatcher and Attach Listener daemons</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JNI-global-references-count"><span class="nav-number">6.7.</span> <span class="nav-text">JNI global references count</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java线程的状态说明"><span class="nav-number">7.</span> <span class="nav-text">java线程的状态说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建状态（NEW）"><span class="nav-number">7.1.</span> <span class="nav-text">新建状态（NEW）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#就绪状态（RUNNABLE）"><span class="nav-number">7.2.</span> <span class="nav-text">就绪状态（RUNNABLE）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阻塞状态（BLOCKED）"><span class="nav-number">7.3.</span> <span class="nav-text">阻塞状态（BLOCKED）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行状态（RUNNING）"><span class="nav-number">7.4.</span> <span class="nav-text">运行状态（RUNNING）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#等待状态（WAITING）"><span class="nav-number">7.5.</span> <span class="nav-text">等待状态（WAITING）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#等待状态（TIMED-WAITING）"><span class="nav-number">7.6.</span> <span class="nav-text">等待状态（TIMED_WAITING）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死亡状态（DEAD）"><span class="nav-number">7.7.</span> <span class="nav-text">死亡状态（DEAD）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程状态举例说明"><span class="nav-number">8.</span> <span class="nav-text">线程状态举例说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁测试代码"><span class="nav-number">9.</span> <span class="nav-text">死锁测试代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java工具和命令doc"><span class="nav-number">10.</span> <span class="nav-text">java工具和命令doc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">11.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

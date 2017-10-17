@@ -1,0 +1,669 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Mac OS 10.9下运行官网直接下载的hadoop-2.7.1包中的start-dfs.sh命令后，出现如下提示信息：  16/01/26 15:00:41 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where">
+<meta property="og:type" content="article">
+<meta property="og:title" content="unable to load native-hadoop library on mac os">
+<meta property="og:url" content="https://www.4e00.com/java/2016/01/26/unable-to-load-native-hadoop-library.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="Mac OS 10.9下运行官网直接下载的hadoop-2.7.1包中的start-dfs.sh命令后，出现如下提示信息：  16/01/26 15:00:41 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="unable to load native-hadoop library on mac os">
+<meta name="twitter:description" content="Mac OS 10.9下运行官网直接下载的hadoop-2.7.1包中的start-dfs.sh命令后，出现如下提示信息：  16/01/26 15:00:41 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/01/26/unable-to-load-native-hadoop-library.html"/>
+
+  <title> unable to load native-hadoop library on mac os | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                unable to load native-hadoop library on mac os
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-01-26T15:08:20+08:00" content="2016-01-26">
+              2016-01-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Mac OS 10.9下运行官网直接下载的hadoop-2.7.1包中的<code>start-dfs.sh</code>命令后，出现如下提示信息：</p>
+<blockquote>
+<p>16/01/26 15:00:41 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</p>
+</blockquote>
+<p>官方文档说明<code>native hadoop library</code>不支持Mac OS X平台，不过可以通过homebrew安装环境后支持，如下：</p>
+<blockquote>
+<p>The native hadoop library is supported on *nix platforms only. The library does not to work with Cygwin or the Mac OS X platform.</p>
+</blockquote>
+<h3 id="安装hadoop-2-7-1编译环境"><a href="#安装hadoop-2-7-1编译环境" class="headerlink" title="安装hadoop-2.7.1编译环境"></a>安装hadoop-2.7.1编译环境</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> update</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> install homebrew/dupes/zlib</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> install cmake</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> install bzip2</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> install lz4</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> install snappy</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> install openssl</div></pre></td></tr></table></figure>
+<p>安装hadoop-2.7.1对应的protobuf-2.5.0版本。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> install https://raw.githubusercontent.com/Homebrew/homebrew-versions/master/protobuf250.rb</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">protoc</span> --version</div><div class="line"></div><div class="line">libprotoc 2.5.0</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="下载git源码并切出hadoop-2-7-1版本"><a href="#下载git源码并切出hadoop-2-7-1版本" class="headerlink" title="下载git源码并切出hadoop-2.7.1版本"></a>下载git源码并切出hadoop-2.7.1版本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">clone</span> git@github.com:apache/hadoop.git</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> checkout -b v-2.7.1 release-2.7.1</div></pre></td></tr></table></figure>
+<h3 id="maven编译源码"><a href="#maven编译源码" class="headerlink" title="maven编译源码"></a>maven编译源码</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> package -Pdist,native -DskipTests -Dtar</div></pre></td></tr></table></figure>
+<p>编译了30分钟左右才完成。</p>
+<blockquote>
+<p>[INFO] ------------------------------------------------------------------------</p>
+<p>[INFO] Reactor Summary:</p>
+<p>[INFO]</p>
+<p>[INFO] Apache Hadoop Main ................................. SUCCESS [ 18.768 s]</p>
+<p>[INFO] Apache Hadoop Project POM .......................... SUCCESS [ 18.085 s]</p>
+<p>[INFO] Apache Hadoop Annotations .......................... SUCCESS [ 24.687 s]</p>
+<p>[INFO] Apache Hadoop Assemblies ........................... SUCCESS [  0.768 s]</p>
+<p>[INFO] Apache Hadoop Project Dist POM ..................... SUCCESS [ 10.420 s]</p>
+<p>[INFO] Apache Hadoop Maven Plugins ........................ SUCCESS [01:01 min]</p>
+<p>[INFO] Apache Hadoop MiniKDC .............................. SUCCESS [ 58.732 s]</p>
+<p>[INFO] Apache Hadoop Auth ................................. SUCCESS [ 18.533 s]</p>
+<p>[INFO] Apache Hadoop Auth Examples ........................ SUCCESS [ 12.126 s]</p>
+<p>[INFO] Apache Hadoop Common ............................... SUCCESS [05:53 min]</p>
+<p>[INFO] Apache Hadoop NFS .................................. SUCCESS [ 14.946 s]</p>
+<p>[INFO] Apache Hadoop KMS .................................. SUCCESS [ 45.090 s]</p>
+<p>[INFO] Apache Hadoop Common Project ....................... SUCCESS [  0.224 s]</p>
+<p>[INFO] Apache Hadoop HDFS ................................. SUCCESS [07:21 min]</p>
+<p>[INFO] Apache Hadoop HttpFS ............................... SUCCESS [01:14 min]</p>
+<p>[INFO] Apache Hadoop HDFS BookKeeper Journal .............. SUCCESS [ 29.207 s]</p>
+<p>[INFO] Apache Hadoop HDFS-NFS ............................. SUCCESS [ 11.920 s]</p>
+<p>[INFO] Apache Hadoop HDFS Project ......................... SUCCESS [  0.068 s]</p>
+<p>[INFO] hadoop-yarn ........................................ SUCCESS [  0.099 s]</p>
+<p>[INFO] hadoop-yarn-api .................................... SUCCESS [ 51.454 s]</p>
+<p>[INFO] hadoop-yarn-common ................................. SUCCESS [01:28 min]</p>
+<p>[INFO] hadoop-yarn-server ................................. SUCCESS [  0.194 s]</p>
+<p>[INFO] hadoop-yarn-server-common .......................... SUCCESS [ 16.224 s]</p>
+<p>[INFO] hadoop-yarn-server-nodemanager ..................... SUCCESS [ 28.020 s]</p>
+<p>[INFO] hadoop-yarn-server-web-proxy ....................... SUCCESS [  4.838 s]</p>
+<p>[INFO] hadoop-yarn-server-applicationhistoryservice ....... SUCCESS [ 11.069 s]</p>
+<p>[INFO] hadoop-yarn-server-resourcemanager ................. SUCCESS [ 31.600 s]</p>
+<p>[INFO] hadoop-yarn-server-tests ........................... SUCCESS [  8.712 s]</p>
+<p>[INFO] hadoop-yarn-client ................................. SUCCESS [  9.745 s]</p>
+<p>[INFO] hadoop-yarn-server-sharedcachemanager .............. SUCCESS [  3.970 s]</p>
+<p>[INFO] hadoop-yarn-applications ........................... SUCCESS [  0.066 s]</p>
+<p>[INFO] hadoop-yarn-applications-distributedshell .......... SUCCESS [  3.557 s]</p>
+<p>[INFO] hadoop-yarn-applications-unmanaged-am-launcher ..... SUCCESS [  2.378 s]</p>
+<p>[INFO] hadoop-yarn-site ................................... SUCCESS [  0.075 s]</p>
+<p>[INFO] hadoop-yarn-registry ............................... SUCCESS [  6.924 s]</p>
+<p>[INFO] hadoop-yarn-project ................................ SUCCESS [ 10.061 s]</p>
+<p>[INFO] hadoop-mapreduce-client ............................ SUCCESS [  0.229 s]</p>
+<p>[INFO] hadoop-mapreduce-client-core ....................... SUCCESS [ 29.888 s]</p>
+<p>[INFO] hadoop-mapreduce-client-common ..................... SUCCESS [ 37.864 s]</p>
+<p>[INFO] hadoop-mapreduce-client-shuffle .................... SUCCESS [  7.038 s]</p>
+<p>[INFO] hadoop-mapreduce-client-app ........................ SUCCESS [ 13.625 s]</p>
+<p>[INFO] hadoop-mapreduce-client-hs ......................... SUCCESS [  7.790 s]</p>
+<p>[INFO] hadoop-mapreduce-client-jobclient .................. SUCCESS [ 19.295 s]</p>
+<p>[INFO] hadoop-mapreduce-client-hs-plugins ................. SUCCESS [  2.261 s]</p>
+<p>[INFO] Apache Hadoop MapReduce Examples ................... SUCCESS [  6.444 s]</p>
+<p>[INFO] hadoop-mapreduce ................................... SUCCESS [ 10.324 s]</p>
+<p>[INFO] Apache Hadoop MapReduce Streaming .................. SUCCESS [  6.257 s]</p>
+<p>[INFO] Apache Hadoop Distributed Copy ..................... SUCCESS [02:37 min]</p>
+<p>[INFO] Apache Hadoop Archives ............................. SUCCESS [  3.625 s]</p>
+<p>[INFO] Apache Hadoop Rumen ................................ SUCCESS [  6.757 s]</p>
+<p>[INFO] Apache Hadoop Gridmix .............................. SUCCESS [  6.773 s]</p>
+<p>[INFO] Apache Hadoop Data Join ............................ SUCCESS [  4.355 s]</p>
+<p>[INFO] Apache Hadoop Ant Tasks ............................ SUCCESS [  3.538 s]</p>
+<p>[INFO] Apache Hadoop Extras ............................... SUCCESS [  4.413 s]</p>
+<p>[INFO] Apache Hadoop Pipes ................................ SUCCESS [01:20 min]</p>
+<p>[INFO] Apache Hadoop OpenStack support .................... SUCCESS [  6.422 s]</p>
+<p>[INFO] Apache Hadoop Amazon Web Services support .......... SUCCESS [ 30.433 s]</p>
+<p>[INFO] Apache Hadoop Azure support ........................ SUCCESS [ 15.044 s]</p>
+<p>[INFO] Apache Hadoop Client ............................... SUCCESS [ 19.818 s]</p>
+<p>[INFO] Apache Hadoop Mini-Cluster ......................... SUCCESS [  0.176 s]</p>
+<p>[INFO] Apache Hadoop Scheduler Load Simulator ............. SUCCESS [  8.057 s]</p>
+<p>[INFO] Apache Hadoop Tools Dist ........................... SUCCESS [ 17.948 s]</p>
+<p>[INFO] Apache Hadoop Tools ................................ SUCCESS [  0.159 s]</p>
+<p>[INFO] Apache Hadoop Distribution ......................... SUCCESS [01:11 min]</p>
+<p>[INFO] ------------------------------------------------------------------------</p>
+<p>[INFO] BUILD SUCCESS</p>
+<p>[INFO] ------------------------------------------------------------------------</p>
+<p>[INFO] Total time: 34:18 min</p>
+<p>[INFO] Finished at: 2016-01-26T16:19:07+08:00</p>
+<p>[INFO] Final Memory: 174M/522M</p>
+<p>[INFO] ------------------------------------------------------------------------</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mkdir</span> -p ~/Applications</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cp</span> -r hadoop-dist/target/hadoop-2.7.1 ~/Applications/hadoop</div></pre></td></tr></table></figure>
+<h3 id="设置hadoop本机运行环境"><a href="#设置hadoop本机运行环境" class="headerlink" title="设置hadoop本机运行环境"></a>设置hadoop本机运行环境</h3><blockquote>
+<p>The bin/hadoop script ensures that the native hadoop library is on the library path via the system property: <code>-Djava.library.path=&lt;path&gt;</code></p>
+</blockquote>
+<p>编译完成之后，添加以下内容到<code>~/.bash_profile</code>文件如下，尤其注意最后一句，设置<code>-Djava.library.path=&lt;path&gt;</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">export</span> JAVA_HOME=$(/usr/libexec/java_home -v 1.8)</div><div class="line"><span class="built_in">export</span> HADOOP_HOME=~/Applications/hadoop</div><div class="line"><span class="built_in">export</span> HADOOP_PREFIX=<span class="variable">$HADOOP_HOME</span></div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$HADOOP_HOME</span>/bin</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$HADOOP_HOME</span>/sbin</div><div class="line"><span class="built_in">export</span> HADOOP_MAPRED_HOME=<span class="variable">$HADOOP_HOME</span></div><div class="line"><span class="built_in">export</span> HADOOP_COMMON_HOME=<span class="variable">$HADOOP_HOME</span></div><div class="line"><span class="built_in">export</span> HADOOP_HDFS_HOME=<span class="variable">$HADOOP_HOME</span></div><div class="line"><span class="built_in">export</span> YARN_HOME=<span class="variable">$HADOOP_HOME</span></div><div class="line"><span class="built_in">export</span> HADOOP_COMMON_LIB_NATIVE_DIR=<span class="variable">$HADOOP_HOME</span>/lib/native</div><div class="line"><span class="built_in">export</span> HADOOP_OPTS=<span class="string">"-Djava.library.path=<span class="variable">$HADOOP_COMMON_LIB_NATIVE_DIR</span>"</span></div></pre></td></tr></table></figure>
+<p>加载<code>~/.bash_profile</code>，通过<code>NativeLibraryChecker</code>检查本地类库加载情况：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">source</span> ~/.bash_profile</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">hadoop</span> checknative -a</div></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<blockquote>
+<p>16/01/26 18:00:41 WARN bzip2.Bzip2Factory: Failed to load/initialize native-bzip2 library system-native, will use pure-Java version</p>
+<p>16/01/26 18:00:41 INFO zlib.ZlibFactory: Successfully loaded &amp; initialized native-zlib library</p>
+<p>Native library checking:</p>
+<p>hadoop:  true /Users/david/Applications/hadoop/lib/native/libhadoop.dylib</p>
+<p>zlib:    true /usr/lib/libz.1.dylib</p>
+<p>snappy:  true /usr/lib/libsnappy.so.1</p>
+<p>lz4:     true revision:99</p>
+<p>bzip2:   false</p>
+<p>openssl: false build does not support openssl.</p>
+<p>16/01/26 18:00:41 INFO util.ExitUtil: Exiting with status 1</p>
+</blockquote>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/NativeLibraries.html" target="_blank" rel="external">Native Libraries Guide</a></li>
+<li><a href="http://rockyfeng.me/hadoop_native_library_mac.html" target="_blank" rel="external">Mac OSX 下 Hadoop 使用本地库提高效率</a></li>
+<li><a href="http://my.oschina.net/allman90/blog/486768" target="_blank" rel="external">CentOS7中编译Hadoop2.x</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2016/01/24/java-8-tutorial.html" rel="next" title="java 8 tutorial">
+                上一篇：java 8 tutorial
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2016/01/27/hadoop-single-cluster-setting-up.html" rel="prev" title="hadoop-2.7.1 single cluster settings on mac os">
+                下一篇：hadoop-2.7.1 single cluster settings on mac os
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装hadoop-2-7-1编译环境"><span class="nav-number">1.</span> <span class="nav-text">安装hadoop-2.7.1编译环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载git源码并切出hadoop-2-7-1版本"><span class="nav-number">2.</span> <span class="nav-text">下载git源码并切出hadoop-2.7.1版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#maven编译源码"><span class="nav-number">3.</span> <span class="nav-text">maven编译源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置hadoop本机运行环境"><span class="nav-number">4.</span> <span class="nav-text">设置hadoop本机运行环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number"></span> <span class="nav-text">References</span></a></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="不同的数据库连接池100000条记录插入性能测试，以下结果基于mysql的jdbc驱动，代码参考druid项目的benchmark测试代码。 结论PROXOOL出现大量异常造成插入数据不成功，所以没有计算结果。 从测试结果数据来看，DBCP和DBCP2的结果是最好的，其次是DRUID和C3P0。    POOL MILLIS BLOCKED WAITED     DRUID 27545 27 24">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java database connection pools benchmark">
+<meta property="og:url" content="https://www.4e00.com/java/2016/10/01/java-database-connection-pools-benchmark.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="不同的数据库连接池100000条记录插入性能测试，以下结果基于mysql的jdbc驱动，代码参考druid项目的benchmark测试代码。 结论PROXOOL出现大量异常造成插入数据不成功，所以没有计算结果。 从测试结果数据来看，DBCP和DBCP2的结果是最好的，其次是DRUID和C3P0。    POOL MILLIS BLOCKED WAITED     DRUID 27545 27 24">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.153Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java database connection pools benchmark">
+<meta name="twitter:description" content="不同的数据库连接池100000条记录插入性能测试，以下结果基于mysql的jdbc驱动，代码参考druid项目的benchmark测试代码。 结论PROXOOL出现大量异常造成插入数据不成功，所以没有计算结果。 从测试结果数据来看，DBCP和DBCP2的结果是最好的，其次是DRUID和C3P0。    POOL MILLIS BLOCKED WAITED     DRUID 27545 27 24">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/10/01/java-database-connection-pools-benchmark.html"/>
+
+  <title> java database connection pools benchmark | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java database connection pools benchmark
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-10-01T22:19:26+08:00" content="2016-10-01">
+              2016-10-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>不同的数据库连接池<code>100000</code>条记录插入性能测试，以下结果基于mysql的jdbc驱动，代码参考<code>druid</code>项目的benchmark测试代码。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p><code>PROXOOL</code>出现大量异常造成插入数据不成功，所以没有计算结果。</p>
+<p>从测试结果数据来看，<code>DBCP</code>和<code>DBCP2</code>的结果是最好的，其次是<code>DRUID</code>和<code>C3P0</code>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">POOL</th>
+<th style="text-align:right">MILLIS</th>
+<th style="text-align:right">BLOCKED</th>
+<th style="text-align:right">WAITED</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">DRUID</td>
+<td style="text-align:right">27545</td>
+<td style="text-align:right">27</td>
+<td style="text-align:right">2480</td>
+</tr>
+<tr>
+<td style="text-align:center">DBCP</td>
+<td style="text-align:right">26121</td>
+<td style="text-align:right">4438</td>
+<td style="text-align:right">990</td>
+</tr>
+<tr>
+<td style="text-align:center">DBCP2</td>
+<td style="text-align:right">26935</td>
+<td style="text-align:right">115</td>
+<td style="text-align:right">1078</td>
+</tr>
+<tr>
+<td style="text-align:center">BONECP</td>
+<td style="text-align:right">29327</td>
+<td style="text-align:right">73</td>
+<td style="text-align:right">1568</td>
+</tr>
+<tr>
+<td style="text-align:center">TOMCATJDBC</td>
+<td style="text-align:right">39000</td>
+<td style="text-align:right">356</td>
+<td style="text-align:right">2061</td>
+</tr>
+<tr>
+<td style="text-align:center">C3P0</td>
+<td style="text-align:right">28883</td>
+<td style="text-align:right">121141</td>
+<td style="text-align:right">81196</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> com.alibaba.druid.pool.DruidDataSource;</div><div class="line"><span class="keyword">import</span> com.jolbox.bonecp.BoneCPDataSource;</div><div class="line"><span class="keyword">import</span> com.mchange.v2.c3p0.ComboPooledDataSource;</div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">import</span> org.logicalcobwebs.proxool.ProxoolDataSource;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.sql.DataSource;</div><div class="line"><span class="keyword">import</span> java.lang.management.ManagementFactory;</div><div class="line"><span class="keyword">import</span> java.lang.management.ThreadInfo;</div><div class="line"><span class="keyword">import</span> java.sql.Connection;</div><div class="line"><span class="keyword">import</span> java.sql.Statement;</div><div class="line"><span class="keyword">import</span> java.text.NumberFormat;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.CountDownLatch;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * &lt;pre&gt;</span></div><div class="line"><span class="comment"> * CREATE TABLE `insert_test` (</span></div><div class="line"><span class="comment"> * `id` int(11) NOT NULL AUTO_INCREMENT,</span></div><div class="line"><span class="comment"> * `type` varchar(25) NOT NULL,</span></div><div class="line"><span class="comment"> * PRIMARY KEY (`id`)</span></div><div class="line"><span class="comment"> * ) ENGINE=InnoDB DEFAULT CHARSET=utf8;</span></div><div class="line"><span class="comment"> * &lt;/pre&gt;</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@author</span> yuweijun 2016-09-29</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourcePoolBenchmark</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String jdbcUrl = <span class="string">"jdbc:mysql://localhost/jdbc"</span>;</div><div class="line">    <span class="keyword">private</span> String user = <span class="string">"dbuser"</span>;</div><div class="line">    <span class="keyword">private</span> String password = <span class="string">"dbpass"</span>;</div><div class="line">    <span class="keyword">private</span> String driverClass = <span class="string">"com.mysql.jdbc.Driver"</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> initialSize = <span class="number">10</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> minPoolSize = <span class="number">10</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> maxPoolSize = <span class="number">50</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> maxActive = <span class="number">50</span>;</div><div class="line">    <span class="keyword">private</span> String validationQuery = <span class="string">"SELECT 1"</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> threadCount = <span class="number">50</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> loopCount = <span class="number">10</span>;</div><div class="line"></div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> LOOP_COUNT = <span class="number">10000</span> * <span class="number">1</span> * <span class="number">1</span> / threadCount;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">druid</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        System.out.println(<span class="string">"## DRUID\n"</span>);</div><div class="line">        DruidDataSource dataSource = <span class="keyword">new</span> DruidDataSource();</div><div class="line"></div><div class="line">        dataSource.setInitialSize(initialSize);</div><div class="line">        dataSource.setMaxActive(maxActive);</div><div class="line">        dataSource.setMinIdle(minPoolSize);</div><div class="line">        dataSource.setPoolPreparedStatements(<span class="keyword">true</span>);</div><div class="line">        dataSource.setDriverClassName(driverClass);</div><div class="line">        dataSource.setUrl(jdbcUrl);</div><div class="line">        dataSource.setPoolPreparedStatements(<span class="keyword">true</span>);</div><div class="line">        dataSource.setUsername(user);</div><div class="line">        dataSource.setPassword(password);</div><div class="line">        dataSource.setValidationQuery(validationQuery);</div><div class="line">        dataSource.setTestOnBorrow(<span class="keyword">false</span>);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; loopCount; ++i) &#123;</div><div class="line">            run(dataSource, <span class="string">"druid"</span>, threadCount);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dbcp</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        System.out.println(<span class="string">"## DBCP\n"</span>);</div><div class="line">        <span class="keyword">final</span> org.apache.commons.dbcp.BasicDataSource dataSource = <span class="keyword">new</span> org.apache.commons.dbcp.BasicDataSource();</div><div class="line"></div><div class="line">        dataSource.setInitialSize(initialSize);</div><div class="line">        dataSource.setMaxActive(maxActive);</div><div class="line">        dataSource.setMinIdle(minPoolSize);</div><div class="line">        dataSource.setMaxIdle(maxPoolSize);</div><div class="line">        dataSource.setPoolPreparedStatements(<span class="keyword">true</span>);</div><div class="line">        dataSource.setDriverClassName(driverClass);</div><div class="line">        dataSource.setUrl(jdbcUrl);</div><div class="line">        dataSource.setPoolPreparedStatements(<span class="keyword">true</span>);</div><div class="line">        dataSource.setUsername(user);</div><div class="line">        dataSource.setPassword(password);</div><div class="line">        dataSource.setValidationQuery(<span class="string">"SELECT 1"</span>);</div><div class="line">        dataSource.setTestOnBorrow(<span class="keyword">false</span>);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; loopCount; ++i) &#123;</div><div class="line">            run(dataSource, <span class="string">"dbcp"</span>, threadCount);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dbcp2</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        System.out.println(<span class="string">"## DBCP2\n"</span>);</div><div class="line">        <span class="keyword">final</span> org.apache.commons.dbcp2.BasicDataSource dataSource = <span class="keyword">new</span> org.apache.commons.dbcp2.BasicDataSource();</div><div class="line"></div><div class="line">        dataSource.setInitialSize(initialSize);</div><div class="line">        dataSource.setMaxTotal(maxActive);</div><div class="line">        dataSource.setMinIdle(minPoolSize);</div><div class="line">        dataSource.setMaxIdle(maxPoolSize);</div><div class="line">        dataSource.setPoolPreparedStatements(<span class="keyword">true</span>);</div><div class="line">        dataSource.setDriverClassName(driverClass);</div><div class="line">        dataSource.setUrl(jdbcUrl);</div><div class="line">        dataSource.setPoolPreparedStatements(<span class="keyword">true</span>);</div><div class="line">        dataSource.setUsername(user);</div><div class="line">        dataSource.setPassword(password);</div><div class="line">        dataSource.setValidationQuery(<span class="string">"SELECT 1"</span>);</div><div class="line">        dataSource.setTestOnBorrow(<span class="keyword">false</span>);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; loopCount; ++i) &#123;</div><div class="line">            run(dataSource, <span class="string">"dbcp2"</span>, threadCount);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bonecp</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">// Exception throws:</span></div><div class="line">        <span class="comment">// com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: No operations allowed after connection closed.</span></div><div class="line">        System.out.println(<span class="string">"## BONECP\n"</span>);</div><div class="line"></div><div class="line">        BoneCPDataSource dataSource = <span class="keyword">new</span> BoneCPDataSource();</div><div class="line">        dataSource.setMinConnectionsPerPartition(minPoolSize);</div><div class="line">        dataSource.setMaxConnectionsPerPartition(maxPoolSize);</div><div class="line"></div><div class="line">        dataSource.setDriverClass(driverClass);</div><div class="line">        dataSource.setJdbcUrl(jdbcUrl);</div><div class="line">        dataSource.setStatementsCacheSize(<span class="number">100</span>);</div><div class="line">        dataSource.setServiceOrder(<span class="string">"LIFO"</span>);</div><div class="line">        dataSource.setUsername(user);</div><div class="line">        dataSource.setPassword(password);</div><div class="line">        dataSource.setConnectionTestStatement(<span class="string">"SELECT 1"</span>);</div><div class="line">        dataSource.setPartitionCount(<span class="number">1</span>);</div><div class="line">        dataSource.setAcquireIncrement(<span class="number">5</span>);</div><div class="line">        dataSource.setIdleConnectionTestPeriodInMinutes(<span class="number">0L</span>);</div><div class="line">        dataSource.setDisableConnectionTracking(<span class="keyword">true</span>);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; loopCount; ++i) &#123;</div><div class="line">            run(dataSource, <span class="string">"boneCP"</span>, threadCount);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">c3p0</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        System.out.println(<span class="string">"## C3P0\n"</span>);</div><div class="line"></div><div class="line">        ComboPooledDataSource dataSource = <span class="keyword">new</span> ComboPooledDataSource();</div><div class="line">        dataSource.setMinPoolSize(minPoolSize);</div><div class="line">        dataSource.setMaxPoolSize(maxPoolSize);</div><div class="line"></div><div class="line">        dataSource.setDriverClass(driverClass);</div><div class="line">        dataSource.setJdbcUrl(jdbcUrl);</div><div class="line">        dataSource.setUser(user);</div><div class="line">        dataSource.setPassword(password);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; loopCount; ++i) &#123;</div><div class="line">            run(dataSource, <span class="string">"c3p0"</span>, threadCount);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">proxool</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">// Exception throws</span></div><div class="line">        <span class="comment">// java.sql.SQLException: We are already in the process of making 50 connections and the number of simultaneous builds has been throttled to 10</span></div><div class="line">        System.out.println(<span class="string">"## PROXOOL\n"</span>);</div><div class="line"></div><div class="line">        ProxoolDataSource dataSource = <span class="keyword">new</span> ProxoolDataSource();</div><div class="line">        <span class="comment">// 这个值默认为10，高并发一直抛异常，调到50还是抛异常</span></div><div class="line">        dataSource.setSimultaneousBuildThrottle(<span class="number">50</span>);</div><div class="line"></div><div class="line">        dataSource.setMinimumConnectionCount(minPoolSize);</div><div class="line">        dataSource.setMaximumConnectionCount(maxPoolSize);</div><div class="line"></div><div class="line">        dataSource.setDriver(driverClass);</div><div class="line">        dataSource.setDriverUrl(jdbcUrl);</div><div class="line">        dataSource.setUser(user);</div><div class="line">        dataSource.setPassword(password);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; loopCount; ++i) &#123;</div><div class="line">            run(dataSource, <span class="string">"proxool"</span>, threadCount);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">tomcat_jdbc</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        System.out.println(<span class="string">"## TOMCAT JDBC\n"</span>);</div><div class="line"></div><div class="line">        org.apache.tomcat.jdbc.pool.DataSource dataSource = <span class="keyword">new</span> org.apache.tomcat.jdbc.pool.DataSource();</div><div class="line">        dataSource.setMaxIdle(maxPoolSize);</div><div class="line">        dataSource.setMinIdle(minPoolSize);</div><div class="line">        dataSource.setMaxActive(maxPoolSize);</div><div class="line"></div><div class="line">        dataSource.setDriverClassName(driverClass);</div><div class="line">        dataSource.setUrl(jdbcUrl);</div><div class="line">        dataSource.setUsername(user);</div><div class="line">        dataSource.setPassword(password);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; loopCount; ++i) &#123;</div><div class="line">            run(dataSource, <span class="string">"tomcat-jdbc"</span>, threadCount);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(<span class="keyword">final</span> DataSource dataSource, <span class="keyword">final</span> String name, <span class="keyword">int</span> threadCount)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">final</span> CountDownLatch startLatch = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);</div><div class="line">        <span class="keyword">final</span> CountDownLatch endLatch = <span class="keyword">new</span> CountDownLatch(threadCount);</div><div class="line">        <span class="keyword">final</span> CountDownLatch dumpLatch = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);</div><div class="line"></div><div class="line">        Thread[] threads = <span class="keyword">new</span> Thread[threadCount];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; threadCount; ++i) &#123;</div><div class="line">            Thread thread = <span class="keyword">new</span> Thread() &#123;</div><div class="line"></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        startLatch.await();</div><div class="line">                        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; LOOP_COUNT; ++i) &#123;</div><div class="line">                            Connection conn = dataSource.getConnection();</div><div class="line">                            <span class="comment">// 并发插入数据测试，压入完可改成SELECT测试</span></div><div class="line">                            Statement statement = conn.createStatement();</div><div class="line">                            statement.executeUpdate(<span class="string">"INSERT INTO insert_test(`type`) VALUES ('"</span> + name + <span class="string">"')"</span>);</div><div class="line">                            statement.close();</div><div class="line">                            conn.close();</div><div class="line">                        &#125;</div><div class="line">                    &#125; <span class="keyword">catch</span> (Exception ex) &#123;</div><div class="line">                        ex.printStackTrace();</div><div class="line">                    &#125;</div><div class="line">                    endLatch.countDown();</div><div class="line"></div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        dumpLatch.await();</div><div class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;;</div><div class="line">            threads[i] = thread;</div><div class="line">            thread.start();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">long</span> startMillis = System.currentTimeMillis();</div><div class="line">        startLatch.countDown();</div><div class="line">        endLatch.await();</div><div class="line"></div><div class="line">        <span class="keyword">long</span>[] threadIdArray = <span class="keyword">new</span> <span class="keyword">long</span>[threads.length];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; threads.length; ++i) &#123;</div><div class="line">            threadIdArray[i] = threads[i].getId();</div><div class="line">        &#125;</div><div class="line">        ThreadInfo[] threadInfoArray = ManagementFactory.getThreadMXBean().getThreadInfo(threadIdArray);</div><div class="line"></div><div class="line">        dumpLatch.countDown();</div><div class="line"></div><div class="line">        <span class="keyword">long</span> blockedCount = <span class="number">0</span>;</div><div class="line">        <span class="keyword">long</span> waitedCount = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; threadInfoArray.length; ++i) &#123;</div><div class="line">            ThreadInfo threadInfo = threadInfoArray[i];</div><div class="line">            blockedCount += threadInfo.getBlockedCount();</div><div class="line">            waitedCount += threadInfo.getWaitedCount();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">long</span> millis = System.currentTimeMillis() - startMillis;</div><div class="line"></div><div class="line">        StringBuilder stringBuilder = <span class="keyword">new</span> StringBuilder().append(<span class="string">"thread "</span>).append(threadCount)</div><div class="line">                .append(<span class="string">" "</span>).append(name).append(<span class="string">" millis "</span>).append(NumberFormat.getInstance().format(millis))</div><div class="line">                .append(<span class="string">" blockedCount "</span>).append(NumberFormat.getInstance().format(blockedCount))</div><div class="line">                .append(<span class="string">" waitedCount "</span>).append(NumberFormat.getInstance().format(waitedCount));</div><div class="line"></div><div class="line">        System.out.println(stringBuilder.toString());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://github.com/alibaba/druid/blob/master/src/test/java/com/alibaba/druid/benckmark/pool/Case1.java" target="_blank" rel="external">durid benchmark</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2016/09/21/git-format-patch-and-git-diff.html" rel="next" title="git format-patch and git diff">
+                上一篇：git format-patch and git diff
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2016/10/01/hello-world.html" rel="prev" title="Hello World">
+                下一篇：Hello World
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#结论"><span class="nav-number">1.</span> <span class="nav-text">结论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.1.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

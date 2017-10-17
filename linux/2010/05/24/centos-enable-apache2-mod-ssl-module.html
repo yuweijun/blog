@@ -1,0 +1,565 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="在配置完/etc/httpd/conf.d/ssl.conf文件之后，进行配置文件语法正确性测试时，报语法错误如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在centos5中开启apache2的mod_ssl模块">
+<meta property="og:url" content="https://www.4e00.com/linux/2010/05/24/centos-enable-apache2-mod-ssl-module.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="在配置完/etc/httpd/conf.d/ssl.conf文件之后，进行配置文件语法正确性测试时，报语法错误如下：">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在centos5中开启apache2的mod_ssl模块">
+<meta name="twitter:description" content="在配置完/etc/httpd/conf.d/ssl.conf文件之后，进行配置文件语法正确性测试时，报语法错误如下：">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/linux/2010/05/24/centos-enable-apache2-mod-ssl-module.html"/>
+
+  <title> 在centos5中开启apache2的mod_ssl模块 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                在centos5中开启apache2的mod_ssl模块
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2010-05-24T10:51:00+08:00" content="2010-05-24">
+              2010-05-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在配置完<code>/etc/httpd/conf.d/ssl.conf</code>文件之后，进行配置文件语法正确性测试时，报语法错误如下：</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">httpd</span> -t</div><div class="line">Syntax error on line 5 of /etc/httpd/conf.d/ssl.conf:</div><div class="line">Invalid <span class="built_in">command</span> <span class="string">'SSLPassPhraseDialog'</span>, perhaps misspelled or defined by a module not included <span class="keyword">in</span> the server configuration</div></pre></td></tr></table></figure>
+<p>移除<code>ssl.conf</code>文件之后，语法检查正确，列出<code>httpd</code>的模块检查：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">httpd</span> -M</div><div class="line">Loaded Modules:</div><div class="line">core_module (static)</div><div class="line">mpm_prefork_module (static)</div><div class="line">http_module (static)</div><div class="line">so_module (static)</div><div class="line">auth_basic_module (shared)</div><div class="line">auth_digest_module (shared)</div><div class="line">authn_file_module (shared)</div><div class="line">authn_alias_module (shared)</div><div class="line">authn_anon_module (shared)</div><div class="line">authn_dbm_module (shared)</div><div class="line">authn_default_module (shared)</div><div class="line">authz_host_module (shared)</div><div class="line">authz_user_module (shared)</div><div class="line">authz_owner_module (shared)</div><div class="line">authz_groupfile_module (shared)</div><div class="line">authz_dbm_module (shared)</div><div class="line">authz_default_module (shared)</div><div class="line">ldap_module (shared)</div><div class="line">authnz_ldap_module (shared)</div><div class="line">include_module (shared)</div><div class="line">log_config_module (shared)</div><div class="line">logio_module (shared)</div><div class="line">env_module (shared)</div><div class="line">ext_filter_module (shared)</div><div class="line">mime_magic_module (shared)</div><div class="line">expires_module (shared)</div><div class="line">deflate_module (shared)</div><div class="line">headers_module (shared)</div><div class="line">usertrack_module (shared)</div><div class="line">setenvif_module (shared)</div><div class="line">mime_module (shared)</div><div class="line">dav_module (shared)</div><div class="line">status_module (shared)</div><div class="line">autoindex_module (shared)</div><div class="line">info_module (shared)</div><div class="line">dav_fs_module (shared)</div><div class="line">vhost_alias_module (shared)</div><div class="line">negotiation_module (shared)</div><div class="line">dir_module (shared)</div><div class="line">actions_module (shared)</div><div class="line">speling_module (shared)</div><div class="line">userdir_module (shared)</div><div class="line">alias_module (shared)</div><div class="line">rewrite_module (shared)</div><div class="line">proxy_module (shared)</div><div class="line">proxy_balancer_module (shared)</div><div class="line">proxy_ftp_module (shared)</div><div class="line">proxy_http_module (shared)</div><div class="line">proxy_connect_module (shared)</div><div class="line">cache_module (shared)</div><div class="line">suexec_module (shared)</div><div class="line">disk_cache_module (shared)</div><div class="line">file_cache_module (shared)</div><div class="line">mem_cache_module (shared)</div><div class="line">cgi_module (shared)</div><div class="line">version_module (shared)</div><div class="line">proxy_ajp_module (shared)</div><div class="line">Syntax OK</div></pre></td></tr></table></figure>
+<p>发现apache2没有加载<code>ssl_module</code>，并且<code>/etc/httpd/modules</code>目录中无<code>mod_ssl.so</code>文件，需要在线安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">yum</span> search mod_ssl</div><div class="line">mod_ssl.x86_64 : SSL/TLS module <span class="keyword">for</span> the Apache HTTP server</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">yum</span> install mod_ssl</div><div class="line">Installed: mod_ssl.x86_64 1:2.2.3-43.el5.centos</div><div class="line">Dependency Installed: distcache.x86_64 0:1.4.5-14.1</div><div class="line">Updated: httpd.x86_64 0:2.2.3-43.el5.centos</div><div class="line">Complete!</div></pre></td></tr></table></figure>
+<p>安装<code>mod_ssl</code>会增加一个用户类型，所以会修改<code>/etc/passwd</code>文件。</p>
+<p>安装完成之后，修改<code>ssl.conf</code>文件，在文件顶部添加以下一行代码，加载<code>ssl_module</code>:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line">LoadModule ssl_module modules/mod_ssl.so</div><div class="line">Listen 443</div><div class="line">AddType application/x-x509-ca-cert .crt</div><div class="line">AddType application/x-pkcs7-crl    .crl</div><div class="line">SSLPassPhraseDialog  builtin</div><div class="line">SSLSessionCache         shmcb:/var/cache/mod_ssl/scache(512000)</div><div class="line">SSLSessionCacheTimeout  300</div><div class="line">SSLMutex  default</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">VirtualHost</span> <span class="attr">_default_:443</span>&gt;</span></div><div class="line">    DocumentRoot "/path/to/wwwroot"</div><div class="line">    ServerName www.test.com:443</div><div class="line">    ServerAdmin test@gmail.com</div><div class="line"></div><div class="line">    SSLEngine on</div><div class="line">    SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW</div><div class="line">    SSLCertificateFile /usr/local/apache2/conf/ssl.crt/server.crt</div><div class="line">    SSLCertificateKeyFile /usr/local/apache2/conf/ssl.key/server.key</div><div class="line">    SSLCACertificateFile /usr/local/apache2/conf/ssl.crt/cacertificate.crt</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">FilesMatch</span> "\<span class="attr">.</span>(<span class="attr">cgi</span>|<span class="attr">shtml</span>|<span class="attr">phtml</span>|<span class="attr">php</span>)$"&gt;</span></div><div class="line">        SSLOptions +StdEnvVars</div><div class="line">    <span class="tag">&lt;/<span class="name">FilesMatch</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">Directory</span> "/<span class="attr">usr</span>/<span class="attr">local</span>/<span class="attr">apache2</span>/<span class="attr">cgi-bin</span>"&gt;</span></div><div class="line">        SSLOptions +StdEnvVars</div><div class="line">    <span class="tag">&lt;/<span class="name">Directory</span>&gt;</span></div><div class="line"></div><div class="line">    SetEnvIf User-Agent ".*MSIE.*" \</div><div class="line">    nokeepalive ssl-unclean-shutdown \</div><div class="line">    downgrade-1.0 force-response-1.0</div><div class="line"><span class="tag">&lt;/<span class="name">VirtualHost</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>再测试httpd配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">httpd</span> -t</div><div class="line">Syntax OK</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/mysql/2010/05/24/mysql-many-tables-or-many-databases.html" rel="next" title="mysql: many tables or many databases?">
+                上一篇：mysql: many tables or many databases?
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/vim/2010/05/24/regexp-magic-in-vim.html" rel="prev" title="regexp magic in vim">
+                下一篇：regexp magic in vim
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,626 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="java中嵌套类型(nested type)，也就是所谓的内部类(inner class)，主要有四种：  静态内部类型，在类内部定义为static成员类型，如static class，静态内部类需要注意以下几点： 不管有没有static关键字，interface/annotation/enum都是静态类型； 静态内部类不能定义在任何非静态内部类中； 静态内部类的程序可以访问它所在的外部类的所有静">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java inner class and jvm implements">
+<meta property="og:url" content="https://www.4e00.com/java/2017/08/07/java-inner-class-and-jvm-implements.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="java中嵌套类型(nested type)，也就是所谓的内部类(inner class)，主要有四种：  静态内部类型，在类内部定义为static成员类型，如static class，静态内部类需要注意以下几点： 不管有没有static关键字，interface/annotation/enum都是静态类型； 静态内部类不能定义在任何非静态内部类中； 静态内部类的程序可以访问它所在的外部类的所有静">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-08-09T04:54:21.659Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java inner class and jvm implements">
+<meta name="twitter:description" content="java中嵌套类型(nested type)，也就是所谓的内部类(inner class)，主要有四种：  静态内部类型，在类内部定义为static成员类型，如static class，静态内部类需要注意以下几点： 不管有没有static关键字，interface/annotation/enum都是静态类型； 静态内部类不能定义在任何非静态内部类中； 静态内部类的程序可以访问它所在的外部类的所有静">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2017/08/07/java-inner-class-and-jvm-implements.html"/>
+
+  <title> java inner class and jvm implements | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java inner class and jvm implements
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-08-07T20:35:24+08:00" content="2017-08-07">
+              2017-08-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>java中<code>嵌套类型</code>(nested type)，也就是所谓的<code>内部类</code>(inner class)，主要有四种：</p>
+<ol>
+<li>静态内部类型，在类内部定义为static成员类型，如<code>static class</code>，静态内部类需要注意以下几点：<ol>
+<li>不管有没有static关键字，interface/annotation/enum都是静态类型；</li>
+<li>静态内部类不能定义在任何非静态内部类中；</li>
+<li>静态内部类的程序可以访问它所在的外部类的所有静态属性和方法，包括私有的静态属性和方法；</li>
+<li>静态内部类其实就是顶层类，它不与任何对象关联；</li>
+<li>静态内部类可以被声明为private的，但是interface里定义的方法仍然只能是public的。</li>
+</ol>
+</li>
+<li>非静态内部类，只能是class，注意：<ol>
+<li>一个非静态内部类的实例总是与外部类的实例<code>outerClassInstance</code>相关联；</li>
+<li>非静态内部类的程序可以访问它所在的外部类的所有属性和方法，包括私有的方法；</li>
+<li>不可以包含任何static属性，方法；</li>
+<li>java为非静态内部类设计了一些特殊语法，使用<code>OuterClassName.this</code>形式引用外部类的实例对象，其相关用法举例如下：<ol>
+<li>OuterClassName.this.fieldName</li>
+<li>OuterClassName.this.anyMethod()</li>
+<li>OuterClassName.this.new InnerClassName()</li>
+<li>outerClassInstance.new InnerClassName()</li>
+</ol>
+</li>
+<li>内部类与外部类属性名相同时，访问外部类的实例属性，只能以<code>OuterClassName.this.fieldName</code>方式访问；</li>
+<li>使用<code>OuterClassName.super</code>形式来访问外部类的超类。</li>
+</ol>
+</li>
+<li>局部类(local class)，是定义在java代码块里的类，特点：<ol>
+<li>interface/annotation/enum不能定义为局部类；</li>
+<li>局部类可以访问代码块内可见范围内的所有final局部变量，java 8中变量可以不显式声明为final的，但实际是不能修改变量的引用；</li>
+<li>局部类不能声明为private/protected/public/static，这些修饰符针对类成员，不能声明局部变量和局部类。</li>
+</ol>
+</li>
+<li>匿名类(annonymous class)，是没有名称的局部类。<ol>
+<li>匿名类没有名称，所以在匿名类内是不能为它定义构造函数的，这是匿名类最大的限制；</li>
+<li>可以使用初始化块来代替构造函数；</li>
+<li>匿名类语法：<ol>
+<li>new class-name ( [ argument-list ] ) { class-body }</li>
+<li>new interface-name () { class-body }</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>上面提到java为非静态内部类设计了一些特殊语法，应该尽量少用。</p>
+<h2 id="jvm中非静态内部类的实现说明"><a href="#jvm中非静态内部类的实现说明" class="headerlink" title="jvm中非静态内部类的实现说明"></a>jvm中非静态内部类的实现说明</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> com.example.test.javap;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OuterClass</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span> </span>&#123;</div><div class="line">        <span class="keyword">private</span> <span class="keyword">int</span> var = <span class="number">3</span>;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> var;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        OuterClass example = <span class="keyword">new</span> OuterClass();</div><div class="line">        InnerClass innerClass = example.new InnerClass();</div><div class="line">        System.out.println(innerClass.test());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>非静态内部类实际上只是java在语法上表现出来的代码组织形式而已，jvm中并不存在内部类，编译器会为内部类编译成一个独立的顶层类文件，并且为了实现java语法上的语义，编译器会在生成class文件时合成(ACC_SYNTHETIC)某些特殊的方法。</p>
+<h3 id="外部类反编译"><a href="#外部类反编译" class="headerlink" title="外部类反编译"></a>外部类反编译</h3><p>先看一下外部类的字节码反编译后的内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">javap</span> -private -v com.example.test.javap.OuterClass</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">  Last modified Aug 7, 2017; size 937 bytes</div><div class="line">  MD5 checksum 1c58b97ef43cffed94844c5317b405c0</div><div class="line">  Compiled from &quot;OuterClass.java&quot;</div><div class="line">public class com.example.test.javap.OuterClass</div><div class="line">  minor version: 0</div><div class="line">  major version: 52</div><div class="line">  flags: ACC_PUBLIC, ACC_SUPER</div><div class="line">Constant pool:</div><div class="line">   #1 = Methodref          #10.#29        // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">   #2 = Class              #30            // com/example/test/javap/OuterClass</div><div class="line">   #3 = Methodref          #2.#29         // com/example/test/javap/OuterClass.&quot;&lt;init&gt;&quot;:()V</div><div class="line">   #4 = Class              #31            // com/example/test/javap/OuterClass$InnerClass</div><div class="line">   #5 = Methodref          #10.#32        // java/lang/Object.getClass:()Ljava/lang/Class;</div><div class="line">   #6 = Methodref          #4.#33         // com/example/test/javap/OuterClass$InnerClass.&quot;&lt;init&gt;&quot;:(Lcom/example/test/javap/OuterClass;)V</div><div class="line">   #7 = Fieldref           #34.#35        // java/lang/System.out:Ljava/io/PrintStream;</div><div class="line">   #8 = Methodref          #4.#36         // com/example/test/javap/OuterClass$InnerClass.access$000:(Lcom/example/test/javap/OuterClass$InnerClass;)I</div><div class="line">   #9 = Methodref          #37.#38        // java/io/PrintStream.println:(I)V</div><div class="line">  #10 = Class              #39            // java/lang/Object</div><div class="line">  #11 = Utf8               InnerClass</div><div class="line">  #12...</div><div class="line">  #48 = Utf8               java/io/PrintStream</div><div class="line">  #49 = Utf8               println</div><div class="line">  #50 = Utf8               (I)V</div><div class="line">&#123;</div><div class="line">  public com.example.test.javap.OuterClass();</div><div class="line">    descriptor: ()V</div><div class="line">    flags: ACC_PUBLIC</div><div class="line">    Code:</div><div class="line">      stack=1, locals=1, args_size=1</div><div class="line">         0: aload_0</div><div class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">         4: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 3: 0</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0       5     0  this   Lcom/example/test/javap/OuterClass;</div><div class="line"></div><div class="line">  public static void main(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC, ACC_STATIC</div><div class="line">    Code:</div><div class="line">      stack=4, locals=3, args_size=1</div><div class="line">         0: new           #2                  // class com/example/test/javap/OuterClass</div><div class="line">         3: dup</div><div class="line">         4: invokespecial #3                  // Method &quot;&lt;init&gt;&quot;:()V</div><div class="line">         7: astore_1</div><div class="line">         8: new           #4                  // class com/example/test/javap/OuterClass$InnerClass</div><div class="line">        11: dup</div><div class="line">        12: aload_1</div><div class="line">        13: dup</div><div class="line">        14: invokevirtual #5                  // Method java/lang/Object.getClass:()Ljava/lang/Class;</div><div class="line">        17: pop</div><div class="line">        18: invokespecial #6                  // Method com/example/test/javap/OuterClass$InnerClass.&quot;&lt;init&gt;&quot;:(Lcom/example/test/javap/OuterClass;)V</div><div class="line">        21: astore_2</div><div class="line">        22: getstatic     #7                  // Field java/lang/System.out:Ljava/io/PrintStream;</div><div class="line">        25: aload_2</div><div class="line">        26: invokestatic  #8                  // Method com/example/test/javap/OuterClass$InnerClass.access$000:(Lcom/example/test/javap/OuterClass$InnerClass;)I</div><div class="line">        29: invokevirtual #9                  // Method java/io/PrintStream.println:(I)V</div><div class="line">        32: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 15: 0</div><div class="line">        line 16: 8</div><div class="line">        line 17: 22</div><div class="line">        line 18: 32</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0      33     0  args   [Ljava/lang/String;</div><div class="line">            8      25     1 example   Lcom/example/test/javap/OuterClass;</div><div class="line">           22      11     2 innerClass   Lcom/example/test/javap/OuterClass$InnerClass;</div><div class="line">&#125;</div><div class="line">SourceFile: &quot;OuterClass.java&quot;</div><div class="line">InnerClasses:</div><div class="line">     #11= #4 of #2; //InnerClass=class com/example/test/javap/OuterClass$InnerClass of class com/example/test/javap/OuterClass</div></pre></td></tr></table></figure>
+<p>上面反编译的代码中需要注意这个方法调用：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">invokestatic  #8                  // Method com/example/test/javap/OuterClass$InnerClass.access$000:(Lcom/example/test/javap/OuterClass$InnerClass;)I</div></pre></td></tr></table></figure>
+<p>外部类会调用内部类的一个静态方法，方法为<code>access$000(OuterClass$InnerClass)</code>，这是编译器为了使外部类实例可以访问内部类的私有方法而添加的桥接方法。</p>
+<h3 id="内部类反编译"><a href="#内部类反编译" class="headerlink" title="内部类反编译"></a>内部类反编译</h3><p>下面看一下内部类的字节码反编译后的内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">javap</span> -private -v OuterClass\<span class="variable">$InnerClass</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Classfile /Users/david/github.com/learning-programming/java/target/classes/com/example/test/javap/OuterClass$InnerClass.class</div><div class="line">  Last modified Aug 7, 2017; size 779 bytes</div><div class="line">  MD5 checksum f46d7e051891da67a5a7152ae11635bf</div><div class="line">  Compiled from &quot;OuterClass.java&quot;</div><div class="line">class com.example.test.javap.OuterClass$InnerClass</div><div class="line">  minor version: 0</div><div class="line">  major version: 52</div><div class="line">  flags: ACC_SUPER</div><div class="line">Constant pool:</div><div class="line">   #1 = Methodref          #5.#27         // com/example/test/javap/OuterClass$InnerClass.test:()I</div><div class="line">   #2 = Fieldref           #5.#28         // com/example/test/javap/OuterClass$InnerClass.this$0:Lcom/example/test/javap/OuterClass;</div><div class="line">   #3 = Methodref          #6.#29         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">   #4 = Fieldref           #5.#30         // com/example/test/javap/OuterClass$InnerClass.var:I</div><div class="line">   #5 = Class              #32            // com/example/test/javap/OuterClass$InnerClass</div><div class="line">   #6 = Class              #33            // java/lang/Object</div><div class="line">   #7 = Utf8               var</div><div class="line">   #8 = Utf8               I</div><div class="line">   #9 = Utf8               this$0</div><div class="line">  #10...</div><div class="line">  #33 = Utf8               java/lang/Object</div><div class="line">  #34 = Utf8               ()V</div><div class="line">  #35 = Utf8               com/example/test/javap/OuterClass</div><div class="line">&#123;</div><div class="line">  private int var;</div><div class="line">    descriptor: I</div><div class="line">    flags: ACC_PRIVATE</div><div class="line"></div><div class="line">  # 这个final属性是编译器合成的SYNTHETIC属性，用来指向外部类实例</div><div class="line">  final com.example.test.javap.OuterClass this$0;</div><div class="line">    descriptor: Lcom/example/test/javap/OuterClass;</div><div class="line">    flags: ACC_FINAL, ACC_SYNTHETIC</div><div class="line"></div><div class="line">  # 编译器生成的构造方法，通过这个构造方法，将外部类的实例对象传进来，并赋值给this$0属性</div><div class="line">  com.example.test.javap.OuterClass$InnerClass(com.example.test.javap.OuterClass);</div><div class="line">    descriptor: (Lcom/example/test/javap/OuterClass;)V</div><div class="line">    flags:</div><div class="line">    Code:</div><div class="line">      stack=2, locals=2, args_size=2</div><div class="line">         0: aload_0</div><div class="line">         1: aload_1</div><div class="line">         2: putfield      #2                  // Field this$0:Lcom/example/test/javap/OuterClass;</div><div class="line">         5: aload_0</div><div class="line">         6: invokespecial #3                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">         9: aload_0</div><div class="line">        10: iconst_3</div><div class="line">        11: putfield      #4                  // Field var:I</div><div class="line">        14: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 6: 0</div><div class="line">        line 7: 9</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0      15     0  this   Lcom/example/test/javap/OuterClass$InnerClass;</div><div class="line">            0      15     1 this$0   Lcom/example/test/javap/OuterClass;</div><div class="line"></div><div class="line">  private int test();</div><div class="line">    descriptor: ()I</div><div class="line">    flags: ACC_PRIVATE</div><div class="line">    Code:</div><div class="line">      stack=1, locals=1, args_size=1</div><div class="line">         0: aload_0</div><div class="line">         1: getfield      #4                  // Field var:I</div><div class="line">         4: ireturn</div><div class="line">      LineNumberTable:</div><div class="line">        line 10: 0</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0       5     0  this   Lcom/example/test/javap/OuterClass$InnerClass;</div><div class="line"></div><div class="line">  # 这个也是编译器合成的包级别的方法，用来委托请求到私有的test方法上，没有这个桥接的方法，是没办法访问对象的私有方法的</div><div class="line">  # 对应可以看外部类的字节码，外部类实例实际上调用的就是这个静态方法</div><div class="line">  static int access$000(com.example.test.javap.OuterClass$InnerClass);</div><div class="line">    descriptor: (Lcom/example/test/javap/OuterClass$InnerClass;)I</div><div class="line">    flags: ACC_STATIC, ACC_SYNTHETIC</div><div class="line">    Code:</div><div class="line">      stack=1, locals=1, args_size=1</div><div class="line">         0: aload_0</div><div class="line">         1: invokespecial #1                  // Method test:()I</div><div class="line">         4: ireturn</div><div class="line">      LineNumberTable:</div><div class="line">        line 6: 0</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0       5     0    x0   Lcom/example/test/javap/OuterClass$InnerClass;</div><div class="line">&#125;</div><div class="line">SourceFile: &quot;OuterClass.java&quot;</div><div class="line">InnerClasses:</div><div class="line">     #17= #5 of #31; //InnerClass=class com/example/test/javap/OuterClass$InnerClass of class com/example/test/javap/OuterClass</div></pre></td></tr></table></figure>
+<p>上面字节码反编译之后内容中，最重要的几行前面加了中文注释，将上面的代码翻译成java代码，大致内容如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> com.example.test.javap;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">OuterClass</span>$<span class="title">InnerClass</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> var;</div><div class="line"></div><div class="line">    <span class="comment">// 这个final属性是编译器合成的SYNTHETIC属性，用来指向外部类实例</span></div><div class="line">    <span class="keyword">final</span> OuterClass <span class="keyword">this</span>$<span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 编译器生成的构造方法，通过这个构造方法，将外部类的实例对象传进来，并赋值给this$0属性</span></div><div class="line">    OuterClass$InnerClass(OuterClass <span class="keyword">this</span>$<span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">this</span>.<span class="keyword">this</span>$<span class="number">0</span> = <span class="keyword">this</span>$<span class="number">0</span>;</div><div class="line">        <span class="keyword">this</span>.var = <span class="number">3</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.var;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 这个也是编译器合成的包级别的方法，用来委托请求到私有的test方法上，没有这个桥接的方法，是没办法访问对象的私有方法的</span></div><div class="line">    <span class="comment">// 对应可以看外部类的字节码，外部类实例实际上调用的就是这个静态方法</span></div><div class="line">    <span class="keyword">static</span> <span class="keyword">int</span> access$<span class="number">000</span>(com.example.test.javap.OuterClass$InnerClass innerClassInstance) &#123;</div><div class="line">        <span class="keyword">return</span> innerClassInstance.test();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面这个例子可以看到，非静态内部类最后也是编译成为顶层类。java的顶层类实际上只能是public或者是包级别可见的，所以protected和public的内部类都会被编译成public的顶级类，而包级别和private class则会编译成为包级别可见的顶级类。</p>
+<h2 id="java反射查看内部类"><a href="#java反射查看内部类" class="headerlink" title="java反射查看内部类"></a>java反射查看内部类</h2><p>利用java反射来查看一下内部类的这几个方法和属性：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> com.example.test.javap;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Field;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectInnerClass</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException </span>&#123;</div><div class="line">        Class&lt;?&gt; innerClass = Class.forName(<span class="string">"com.example.test.javap.OuterClass$InnerClass"</span>);</div><div class="line">        Constructor&lt;?&gt;[] declaredConstructors = innerClass.getDeclaredConstructors();</div><div class="line">        <span class="keyword">for</span> (Constructor&lt;?&gt; declaredConstructor : declaredConstructors) &#123;</div><div class="line">            System.out.printf(<span class="string">"%14s\t%s\n"</span>, <span class="string">"constructor : "</span>, declaredConstructor);</div><div class="line">        &#125;</div><div class="line">        Method[] declaredMethods = innerClass.getDeclaredMethods();</div><div class="line">        <span class="keyword">for</span> (Method declaredMethod : declaredMethods) &#123;</div><div class="line">            System.out.printf(<span class="string">"%14s\t%s\n"</span>, <span class="string">"method : "</span>, declaredMethod);</div><div class="line">        &#125;</div><div class="line">        Field[] declaredFields = innerClass.getDeclaredFields();</div><div class="line">        <span class="keyword">for</span> (Field declaredField : declaredFields) &#123;</div><div class="line">            System.out.printf(<span class="string">"%14s\t%s\n"</span>, <span class="string">"field : "</span>, declaredField);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"\n"</span>);</div><div class="line">        System.out.println(<span class="string">"get OuterClass$InnerClass instance using reflect:"</span>);</div><div class="line">        OuterClass outerClassInstance = <span class="keyword">new</span> OuterClass();</div><div class="line">        Constructor&lt;?&gt; syntheticConstructor = declaredConstructors[<span class="number">0</span>];</div><div class="line">        Object innerClassInstance = syntheticConstructor.newInstance(outerClassInstance);</div><div class="line">        System.out.println(<span class="string">"innerClassInstance class is : "</span> + innerClassInstance.getClass());</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"\n"</span>);</div><div class="line">        System.out.println(<span class="string">"get field OuterClass$InnerClass.this$0 of OuterClass$InnerClass:"</span>);</div><div class="line">        Field field_1 = declaredFields[<span class="number">1</span>];</div><div class="line">        Object this_0 = field_1.get(innerClassInstance);</div><div class="line">        System.out.println(<span class="string">"this$0 is instance of OuterClass : "</span> + (this_0 == outerClassInstance));</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"\n"</span>);</div><div class="line">        System.out.println(<span class="string">"run method static int com.example.test.javap.OuterClass$InnerClass.access$000 :"</span>);</div><div class="line">        Method access_000 = declaredMethods[<span class="number">1</span>];</div><div class="line">        <span class="comment">// 这里必须设置为true，不然反射抛出访问异常如下，虽然这个合成方法在字节码里看到是默认的包访问级别，但是反射不能执行：</span></div><div class="line">        <span class="comment">// java.lang.IllegalAccessException:</span></div><div class="line">        <span class="comment">// Class com.example.test.javap.ReflectInnerClass can not access a member of class</span></div><div class="line">        <span class="comment">// com.example.test.javap.OuterClass$InnerClass with modifiers "private"</span></div><div class="line">        access_000.setAccessible(<span class="keyword">true</span>);</div><div class="line">        Object invoked = access_000.invoke(innerClassInstance);</div><div class="line">        System.out.println(invoked);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行输出内容如下：</p>
+<blockquote>
+<p>constructor :   protected com.example.test.javap.OuterClass$InnerClass(com.example.test.javap.OuterClass)<br>     method :   static int com.example.test.javap.OuterClass$InnerClass.access$000(com.example.test.javap.OuterClass$InnerClass)<br>     method :   private int com.example.test.javap.OuterClass$InnerClass.test()<br>      field :   private int com.example.test.javap.OuterClass$InnerClass.var<br>      field :   final com.example.test.javap.OuterClass com.example.test.javap.OuterClass$InnerClass.this$0</p>
+<p>get OuterClass$InnerClass instance using reflect:<br>innerClassInstance class is : class com.example.test.javap.OuterClass$InnerClass</p>
+<p>get field OuterClass$InnerClass.this$0 of OuterClass$InnerClass:<br>this$0 is instance of OuterClass : true</p>
+<p>run method static int com.example.test.javap.OuterClass$InnerClass.access$000 :</p>
+<p>3</p>
+</blockquote>
+<p>通过java反射也可以看到内部类中的属性<code>this$0</code>，合成的桥接方法<code>access$0000</code>，还有带参数的构造函数<code>InnerClass(OuterClass this$0)</code>。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://cs.au.dk/~mis/dOvs/jvmspec/ref-Java.html" target="_blank" rel="external">Java Virtual Machine Online Instruction Reference</a></li>
+<li><a href="https://cs.au.dk/~mis/dOvs/jvmspec/ref--33.html" target="_blank" rel="external">invokespecial - invoke method belonging to a specific class</a></li>
+<li><a href="http://shop.oreilly.com/product/0636920030775.do" target="_blank" rel="external">java in a nutshell</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2017/07/29/dependence-inversion-principle-relation-with-ioc-and-di.html" rel="next" title="依赖反转原则与IoC/DI的关系">
+                上一篇：依赖反转原则与IoC/DI的关系
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2017/08/08/git-useful-commands.html" rel="prev" title="git一些有用但不常用的命令">
+                下一篇：git一些有用但不常用的命令
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#jvm中非静态内部类的实现说明"><span class="nav-number">1.</span> <span class="nav-text">jvm中非静态内部类的实现说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#外部类反编译"><span class="nav-number">1.1.</span> <span class="nav-text">外部类反编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部类反编译"><span class="nav-number">1.2.</span> <span class="nav-text">内部类反编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java反射查看内部类"><span class="nav-number">2.</span> <span class="nav-text">java反射查看内部类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

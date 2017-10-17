@@ -1,0 +1,685 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="wireshark install and usage下面示例中会用到wireshark抓包工具，安装wireshark并且通过一个http访问来查看TCP连接打开关闭请求的过程。 $&amp;gt; brew install wireshark --with-qt$&amp;gt; sudo wireshark-qt wireshark过滤规则简单示例，更多使用说明可查阅参考链接： host 10.1.2.3i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tcp connection open and close">
+<meta property="og:url" content="https://www.4e00.com/linux/2016/08/06/tcp-open-and-close.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="wireshark install and usage下面示例中会用到wireshark抓包工具，安装wireshark并且通过一个http访问来查看TCP连接打开关闭请求的过程。 $&amp;gt; brew install wireshark --with-qt$&amp;gt; sudo wireshark-qt wireshark过滤规则简单示例，更多使用说明可查阅参考链接： host 10.1.2.3i">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.4e00.com/blog/img/linux/tcp/tcp-open.png">
+<meta property="og:image" content="https://www.4e00.com/blog/img/linux/tcp/tcp-open-in-wireshark.png">
+<meta property="og:image" content="https://www.4e00.com/blog/img/linux/tcp/tcp-close.png">
+<meta property="og:image" content="https://www.4e00.com/blog/img/linux/tcp/tcp-close-in-wireshark.png">
+<meta property="og:image" content="https://www.4e00.com/blog/img/linux/tcp/tcp-seq-ack-number.png">
+<meta property="og:image" content="https://www.4e00.com/blog/img/linux/tcp/tcp-state-diagram.png">
+<meta property="og:image" content="https://www.4e00.com/blog/img/linux/tcp/tcpip-state-transition-diagram.png">
+<meta property="og:image" content="https://www.4e00.com/blog/img/linux/tcp/tcp-header-format.png">
+<meta property="og:image" content="https://www.4e00.com/blog/img/linux/tcp/ip4-header-format.png">
+<meta property="og:updated_time" content="2017-10-09T01:09:21.281Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tcp connection open and close">
+<meta name="twitter:description" content="wireshark install and usage下面示例中会用到wireshark抓包工具，安装wireshark并且通过一个http访问来查看TCP连接打开关闭请求的过程。 $&amp;gt; brew install wireshark --with-qt$&amp;gt; sudo wireshark-qt wireshark过滤规则简单示例，更多使用说明可查阅参考链接： host 10.1.2.3i">
+<meta name="twitter:image" content="https://www.4e00.com/blog/img/linux/tcp/tcp-open.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/linux/2016/08/06/tcp-open-and-close.html"/>
+
+  <title> tcp connection open and close | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                tcp connection open and close
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-08-06T23:36:55+08:00" content="2016-08-06">
+              2016-08-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="wireshark-install-and-usage"><a href="#wireshark-install-and-usage" class="headerlink" title="wireshark install and usage"></a>wireshark install and usage</h2><p>下面示例中会用到<code>wireshark</code>抓包工具，安装<code>wireshark</code>并且通过一个http访问来查看TCP连接打开关闭请求的过程。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> install wireshark --with-qt</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> wireshark-qt</div></pre></td></tr></table></figure>
+<p><code>wireshark</code>过滤规则简单示例，更多使用说明可查阅<a href="https://www.wireshark.org/docs/man-pages/wireshark-filter.html" target="_blank" rel="external">参考链接</a>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">host 10.1.2.3</div><div class="line">ip src host 10.1.1.1</div><div class="line">ip.addr == 10.1.1.1</div><div class="line">ip.addr eq 10.1.1.1</div><div class="line">ip.src != 10.1.2.3 and ip.dst != 10.4.5.6</div><div class="line">src host 10.7.2.12 and not dst net 10.200.0.0/16</div><div class="line">tcp.port == 25</div><div class="line">tcp.dstport == 25</div><div class="line">tcp dst port 3128</div><div class="line">http.request.method == <span class="string">"POST"</span></div><div class="line">http.host == <span class="string">"www.google.com"</span></div></pre></td></tr></table></figure>
+<p>在<code>wireshark</code>中打开有数据流量的那个网络设备，并打开新的<code>Terminal</code>输入以下命令，发起一个http请求：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">curl</span> -o index.html http://www.baidu.com</div></pre></td></tr></table></figure>
+<p>请求完成将<code>wireshark</code>监控暂停，并保存结果到文件，方便重新分析使用。</p>
+<a id="more"></a>
+<h2 id="TCP连接建立"><a href="#TCP连接建立" class="headerlink" title="TCP连接建立"></a>TCP连接建立</h2><p>TCP用三次握手<code>three-way handshake</code>过程建立一个连接，三次握手过程示意图如下：</p>
+<img src="/blog/img/linux/tcp/tcp-open.png" class="image-md" title="[tcp-open.png]">
+<p>TCP连接建立一般是由服务器端打开一个套接字<code>socket</code>，然后监听来自客户端的连接，所以服务器端表示为被动打开<code>passive open</code>，客户端表示为主动打开<code>active open</code>，建立连接过程：</p>
+<ol>
+<li>SYN: 客户端通过向服务器端发送一个<code>SYN</code>来建立一个主动打开，作为三次握手的一部分。客户端把这段连接的初始序号设定为随机数<code>A</code>。</li>
+<li>SYN-ACK: 服务器端应当为一个合法的<code>SYN</code>回送一个<code>SYN/ACK</code>，<code>ACK</code>确认号在接收的序号上加<code>1</code>，也就是<code>A+1</code>，<code>SYN/ACK</code>包本身又有一个随机序号<code>B</code>。</li>
+<li>ACK: 最后，客户端再发送一个<code>ACK</code>，当服务端受到这个<code>ACK</code>的时候，就完成了三次握手，并进入了连接建立状态，此时包序号被设定为收到的确认号<code>A+1</code>，而响应则为<code>B+1</code>。</li>
+</ol>
+<p>wireshark抓包截图如下：</p>
+<img src="/blog/img/linux/tcp/tcp-open-in-wireshark.png" title="[tcp-open-in-wireshark]">
+<p>如上图所示，前面3条记录是TCP建立连接的3次握手，图中的显示的初始序号为<code>0</code>，是为了方便查看而显示的序号相对值。</p>
+<h2 id="TCP连接关闭"><a href="#TCP连接关闭" class="headerlink" title="TCP连接关闭"></a>TCP连接关闭</h2><p>TCP连接关闭使用了四次挥手过程<code>four-way handshake</code>，四次挥手过程示意图如下：</p>
+<img src="/blog/img/linux/tcp/tcp-close.png" class="image-md" title="[tcp-close.png]">
+<ol>
+<li>主动关闭方发送一个<code>FIN</code>并进入<code>FIN_WAIT_1</code>状态，并包括一个序号<code>X</code>；</li>
+<li>被动关闭方接收到主动关闭方发送的<code>FIN</code>，然后回复<code>ACK</code>确认号<code>X+1</code>和已方的序号<code>Y</code>给主动关闭方，此时被动关闭方进入<code>CLOSE_WAIT</code>状态；主动关闭方收到被动关闭方的<code>ACK</code>后，进入<code>FIN_WAIT_2</code>状态；</li>
+<li>被动关闭方发送一个<code>FIN</code>给主动关闭方，包括<code>ACK</code>确认号<code>X+1</code>和已方的一个序号<code>Y</code>，并进入<code>LAST_ACK</code>状态；</li>
+<li>主动关闭方收到被动关闭方发送的<code>FIN</code>，然后回复<code>ACK</code>确认号<code>Y+1</code>和已方的序号<code>X+1</code>给被动关闭方，此时主动关闭方进入<code>TIME_WAIT</code>状态，经过<code>2*MSL</code>时间后关闭连接；被动关闭方收到主动关闭方的<code>ACK</code>后，关闭连接。</li>
+</ol>
+<p>wireshark抓包截图如下：</p>
+<img src="/blog/img/linux/tcp/tcp-close-in-wireshark.png" title="[tcp-close-in-wireshark]">
+<p>如上图所示，最后面4条是关闭连接的4次挥手，红字那条的<code>Ack</code>确认号不正确，所以忽略掉，最后本机又向服务器重发了一条正确的<code>Ack</code>确认号。</p>
+<h2 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h2><p>在TCP的数据传输过程中，很多重要的机制保证了TCP的可靠性和强壮性，它们包括：</p>
+<ol>
+<li>使用序号，对收到的TCP报文段进行排序以及检测重复的数据。</li>
+<li>使用校验和来检测报文段的错误。</li>
+<li>使用确认号和重传计时器来检测和纠正丢包或延时。</li>
+</ol>
+<h2 id="序号Seq和确认号Ack"><a href="#序号Seq和确认号Ack" class="headerlink" title="序号Seq和确认号Ack"></a>序号Seq和确认号Ack</h2><ol>
+<li>在TCP的连接建立状态，两个主机的TCP层间要交换初始序号ISN: <code>initial sequence number</code>。</li>
+<li>这些序号用于标识字节流中的数据，并且还是对应用层的数据字节进行记数的整数。</li>
+<li>通常在每个TCP报文段中都有一对序号和确认号。</li>
+<li>TCP报文发送者将自己的字节编号做为序号，而将接收者的字节编号做为确认号。</li>
+<li>TCP报文的接收者为了确保可靠性，在接收到一定数量的连续字节流后才发送确认。</li>
+<li><code>Seq</code>和<code>Ack</code>是以字节数为单位，所以<code>Ack</code>的时候，不能跳着确认，只能确认连续收到的<code>Seq</code>最大的包。</li>
+<li>这是对TCP的一种扩展，通常称为选择确认<code>Selective Acknowledgment</code>。</li>
+<li>选择确认使得TCP接收者可以对乱序到达的数据块进行确认，每一组字节传输过后，<code>ISN</code>号都会递增<code>1</code>。</li>
+</ol>
+<p>通过使用序号和确认号，TCP层可以把收到的报文段中的字节按正确的顺序交付给应用层。序号是32位的无符号数，在它增大到<code>2^32-1</code>时，便会回绕到0。对于ISN的选择是TCP中关键的一个操作，它可以确保强壮性和安全性。</p>
+<p>序号和确认号及TCP报文中数据长度的关系如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Sequence Number In + Bytes of Data Received = Acknowledgment Number Out</div></pre></td></tr></table></figure>
+<p>当前发送的报文序号和下一个报文序号之间的关系：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Sequence Number Out + Bytes of Data Sent = Acknowledgment Number IN = Next Sequence Number Out</div></pre></td></tr></table></figure>
+<p>举例客户端发出的TCP报文的序号<code>Sequence Number</code>为1，报文总长度<code>Total Length</code>为<code>1480bytes</code>，减去IP头长度<code>20bytes</code>，再减去TCP头长度<code>20bytes</code>，实际数据的长度为<code>1440bytes</code>，服务器正确收到报文后应该返回一个数据长度为0的<code>ACK</code>报文，其中<code>Acknowledgment Number</code>应该为<code>1441</code>，并且客户端下一个TCP报文的序号也是<code>1441</code>，计算公式如下:</p>
+<blockquote>
+<p>1 + 1440 = 1441</p>
+</blockquote>
+<h2 id="TCP数据传输过程举例"><a href="#TCP数据传输过程举例" class="headerlink" title="TCP数据传输过程举例"></a>TCP数据传输过程举例</h2><img src="/blog/img/linux/tcp/tcp-seq-ack-number.png" title="[tcp-seq-ack-number]">
+<ol>
+<li>上图所示的最上面三条报文说明了TCP连接建立的3次握手过程。</li>
+<li>上图所示的第32条记录，服务器发送第1个包含序号为1(相对值)和1440字节数据的TCP报文段给客户端。</li>
+<li>上图所示的第33条记录，服务器发送第2个包含序号为1441(1+1440)和1440字节数据的TCP报文段给客户端。</li>
+<li>上图所示的第34条记录，服务器发送第3个包含序号为2881(1441+1440)和1440字节数据的TCP报文段给客户端。</li>
+<li>上图所示的第35条记录，服务器发送第4个包含序号为4321(2881+1440)和930字节数据的TCP报文段给客户端。</li>
+<li>上图所示的第36条记录，客户端返回第1个包含序号为87，确认号为2881(1441+1440)和0字节数据的TCP报文段给服务器，通知服务器已经正确收到服务器发过来的前2个报文段。说明：数据包都是连续的情况下，接收方没有必要每一次都回应，比如，他收到第1到2条TCP报文段，只需回应第2条就行了。</li>
+<li>上图所示的第37条记录，客户端返回第2个包含序号为87，确认号为4321(2881+1440)和0字节数据的TCP报文段给服务器，通知服务器已经正确收到服务器发过来的前3个报文段。</li>
+<li>上图所示的第38条记录，客户端返回第3个包含序号为87，确认号为5251(4321+930)和0字节数据的TCP报文段给服务器，通知服务器已经正确收到服务器发过来的全部4个报文段。</li>
+<li>第39条记录中客户端发起TCP连接关闭<code>FIN</code>请求，第40条服务器返回一个<code>FIN</code>请求，在<code>FIN</code>消息前缺少一条服务器给客户端的<code>ACK</code>报文，最后客户端回复服务器一个<code>ACK</code>报文，TCP连接关闭。</li>
+<li>假如在上述例子中服务器发出的第2条TCP报文段被丢失了，所以尽管客户端收到了后面的第3条和第4条，然而他只能回应第1条<code>ACK</code>报文，确认号为<code>1441</code>。</li>
+<li>服务器在发送了第2条以后，没能收到回应，会在重传计时器超时后，重发第2条。当第2条被成功接收，接收方可以直接确认第4条，因为第3条和第4条已收到。</li>
+</ol>
+<p>决定报文是否有必要重传的主要机制是重传计时器<code>Retransmission Timer</code>，它的主要功能是维护重传超时<code>RTO</code>值。当报文使用TCP传输时，重传计时器启动，收到<code>ACK</code>时计时器停止。</p>
+<p>报文发送至接收到<code>ACK</code>的时间称为往返时间<code>Round Trip Time - RTT</code>。</p>
+<p>对若干次时间取平均值，该值用于确定最终<code>RTO</code>值。在最终<code>RTO</code>值确定之前，确定每一次报文传输是否有丢包发生。当报文发送之后，但接收方尚未发送<code>ACK</code>报文，发送方假设源报文丢失并将其重传。重传之后，<code>RTO</code>值加倍；如果在2倍<code>RTO</code>值到达之前还是没有收到<code>ACK</code>报文，就再次重传。如果仍然没有收到<code>ACK</code>，那么<code>RTO</code>值再次加倍。如此持续下去，每次重传<code>RTO</code>都翻倍，直到收到<code>ACK</code>报文或发送方达到配置的最大重传次数。</p>
+<p>最大重传次数取决于发送操作系统的配置值，默认情况下，Windows主机默认重传<code>5</code>次，大多数Linux系统默认最大<code>15</code>次，两种操作系统都可配置。</p>
+<h2 id="TCP状态机"><a href="#TCP状态机" class="headerlink" title="TCP状态机"></a>TCP状态机</h2><p>下表为<code>TCP</code>状态码列表：</p>
+<ol>
+<li>LISTEN: 服务启动后首先处于侦听<code>LISTENING</code>状态。</li>
+<li>SYN_SENT: 在发送连接请求后等待匹配的连接请求。通过connect()函数向服务器发出一个同步<code>SYNC</code>信号后进入此状态。</li>
+<li>SYN_RECEIVED: 已经收到并发送同步<code>SYNC</code>信号之后等待确认<code>ACK</code>请求。</li>
+<li>ESTABLISHED : 连接已经建立，表示2台机器可以相互通信，此时连接两端是平等的。</li>
+<li>FIN_WAIT_1 : 主动关闭端调用<code>close()</code>函数发出FIN请求包，表示本方的数据发送全部结束，等待TCP连接另一端的确认包或FIN请求包。</li>
+<li>FIN_WAIT_2 : 主动关闭端在<code>FIN_WAIT_1</code>状态下收到确认包，进入等待远程TCP的连接终止请求的半关闭状态，这时可以接收数据，但不再发送数据。</li>
+<li>CLOSE_WAIT : 被动关闭端接到<code>FIN</code>后，就发出<code>ACK</code>以回应<code>FIN</code>请求，并进入等待本地用户的连接终止请求的半关闭状态，这时可以发送数据，但不再接收数据。</li>
+<li>CLOSING : 在发出<code>FIN</code>后，又收到对方发来的<code>FIN</code>后，进入等待对方对连接终止<code>FIN</code>的确认<code>ACK</code>的状态，少见。</li>
+<li>LAST_ACK : 被动关闭端全部数据发送完成之后，向主动关闭端发送<code>FIN</code>，进入等待确认包的状态。</li>
+<li>TIME_WAIT : 主动关闭端接收到<code>FIN</code>后，就发送<code>ACK</code>包，等待足够时间(2倍<code>MSL</code>时间)以确保被动关闭端收到了终止请求的确认包。</li>
+<li>CLOSED : 连接关闭，代表双方无任何连接状态。</li>
+</ol>
+<h3 id="状态机示意图一"><a href="#状态机示意图一" class="headerlink" title="状态机示意图一"></a>状态机示意图一</h3><img src="/blog/img/linux/tcp/tcp-state-diagram.png" class="image-lg" title="[tcp-state-diagram]">
+<h3 id="状态机示意图二"><a href="#状态机示意图二" class="headerlink" title="状态机示意图二"></a>状态机示意图二</h3><img src="/blog/img/linux/tcp/tcpip-state-transition-diagram.png" title="[tcpip-state-transition-diagram.png]">
+<h2 id="TIME-WAIT-and-MSL"><a href="#TIME-WAIT-and-MSL" class="headerlink" title="TIME_WAIT and MSL"></a>TIME_WAIT and MSL</h2><ol>
+<li><code>MSL</code>就是最大分节生命期<code>maximum segment lifetime</code>，这是一个IP数据包能在互联网上生存的最长时间，超过这个时间IP数据包将在网络中消失。</li>
+<li><code>MSL</code>在RFC 1122上建议是<code>2分钟</code>，而源自berkeley的TCP实现传统上使用<code>30秒</code>。</li>
+<li><code>TIME_WAIT</code>状态维持时间是两个<code>MSL</code>时间长度，也就是在<code>1-4分钟</code>，<code>Windows</code>操作系统就是4分钟。</li>
+<li>进入<code>TIME_WAIT</code>状态的一般情况下是客户端，如果并发20个线程，每个线程打开并关闭<code>socket</code>超过3000次，就会产生太多<code>TIME_WAIT</code>状态的连接，并产生连接异常。</li>
+<li>服务器端更多应该是<code>CLOSE_WAIT</code>状态。</li>
+</ol>
+<h2 id="统计TCP连接状态"><a href="#统计TCP连接状态" class="headerlink" title="统计TCP连接状态"></a>统计TCP连接状态</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">netstat</span> -n | awk <span class="string">'/^tcp/ &#123;++S[$NF]&#125; END &#123;for(a in S) print a, S[a]&#125;'</span></div><div class="line output">TIME_WAIT 25</div><div class="line output">ESTABLISHED 100</div><div class="line output">LAST_ACK 12</div></pre></td></tr></table></figure>
+<h2 id="服务器上的监听服务列表"><a href="#服务器上的监听服务列表" class="headerlink" title="服务器上的监听服务列表"></a>服务器上的监听服务列表</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># The word tulpen means tulips(郁金香) in german</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">netstat</span> -tulpen</div></pre></td></tr></table></figure>
+<p>上述命令输出如下：</p>
+<blockquote>
+<p>Active Internet connections (only servers)<br>Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode       PID/Program name<br>tcp        0      0 0.0.0.0:3000            0.0.0.0:<em>               LISTEN      0          11481       1497/node<br>tcp        0      0 0.0.0.0:1723            0.0.0.0:</em>               LISTEN      0          9773        1010/pptpd<br>tcp        0      0 0.0.0.0:8000            0.0.0.0:<em>               LISTEN      0          10994       1376/node<br>tcp        0      0 203.88.168.146:8388     0.0.0.0:</em>               LISTEN      0          9811        1018/ss-server<br>tcp        0      0 127.0.0.1:5000          0.0.0.0:<em>               LISTEN      0          4732265     30298/python<br>tcp        0      0 0.0.0.0:80              0.0.0.0:</em>               LISTEN      0          9225        862/nginx<br>tcp        0      0 0.0.0.0:22              0.0.0.0:<em>               LISTEN      0          8997        777/sshd<br>tcp6       0      0 :::80                   :::</em>                    LISTEN      0          9226        862/nginx<br>udp        0      0 127.0.0.1:123           0.0.0.0:<em>                           0          10618       1330/ntpd<br>udp        0      0 203.88.168.146:8388     0.0.0.0:</em>                           0          9816        1018/ss-server<br>udp6       0      0 :::123                  :::*                                0          10612       1330/ntpd</p>
+</blockquote>
+<h2 id="TCP-IP-headers-format"><a href="#TCP-IP-headers-format" class="headerlink" title="TCP/IP headers format"></a>TCP/IP headers format</h2><img src="/blog/img/linux/tcp/tcp-header-format.png" title="[tcp-header-format]">
+<img src="/blog/img/linux/tcp/ip4-header-format.png" title="[ip4-header-format]">
+<h2 id="常见网络协议的头格式"><a href="#常见网络协议的头格式" class="headerlink" title="常见网络协议的头格式"></a>常见网络协议的头格式</h2><ol>
+<li><a href="/blog/img/linux/tcp/tcp-header.png">tcp-header-format.png</a></li>
+<li><a href="/blog/img/linux/tcp/ip-header.png">ip-header-format.png</a></li>
+<li><a href="/blog/img/linux/tcp/udp-header.png">udp-header-format.png</a></li>
+<li><a href="/blog/img/linux/tcp/icmp-header.png">icmp-header-format.png</a></li>
+</ol>
+<h2 id="TCP三次握手和四次挥手的示意图"><a href="#TCP三次握手和四次挥手的示意图" class="headerlink" title="TCP三次握手和四次挥手的示意图"></a>TCP三次握手和四次挥手的示意图</h2><ol>
+<li><a href="/blog/img/linux/tcp/tcp-simultaneous-open.png">tcp-simultaneous-open.png</a></li>
+<li><a href="/blog/img/linux/tcp/tcp-simultaneous-close.png">tcp-simultaneous-close.png</a></li>
+<li><a href="/blog/img/linux/tcp/tcp-open-close.jpg">tcp-open-close.jpg</a></li>
+</ol>
+<p>文中配图主要来源于以下参考链接。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li>Unix Network Programming, Volume 1 (3rd Edition)</li>
+<li><a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol" target="_blank" rel="external">Transmission Control Protocol</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E4%BC%A0%E8%BE%93%E6%8E%A7%E5%88%B6%E5%8D%8F%E8%AE%AE" target="_blank" rel="external">传输控制协议</a></li>
+<li><a href="https://nmap.org/book/tcpip-ref.html" target="_blank" rel="external">TCP/IP Reference</a></li>
+<li><a href="https://www.wireshark.org/docs/man-pages/wireshark-filter.html" target="_blank" rel="external">wireshark-filter - Wireshark filter syntax and reference</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2016/07/27/java-object-serialization.html" rel="next" title="java object serialization">
+                上一篇：java object serialization
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2016/08/07/tcpdump-and-tshark-simple-tutorial.html" rel="prev" title="tcpdump and tshark simple tutorial">
+                下一篇：tcpdump and tshark simple tutorial
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#wireshark-install-and-usage"><span class="nav-number">1.</span> <span class="nav-text">wireshark install and usage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP连接建立"><span class="nav-number">2.</span> <span class="nav-text">TCP连接建立</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP连接关闭"><span class="nav-number">3.</span> <span class="nav-text">TCP连接关闭</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据传输"><span class="nav-number">4.</span> <span class="nav-text">数据传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序号Seq和确认号Ack"><span class="nav-number">5.</span> <span class="nav-text">序号Seq和确认号Ack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP数据传输过程举例"><span class="nav-number">6.</span> <span class="nav-text">TCP数据传输过程举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP状态机"><span class="nav-number">7.</span> <span class="nav-text">TCP状态机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#状态机示意图一"><span class="nav-number">7.1.</span> <span class="nav-text">状态机示意图一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态机示意图二"><span class="nav-number">7.2.</span> <span class="nav-text">状态机示意图二</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIME-WAIT-and-MSL"><span class="nav-number">8.</span> <span class="nav-text">TIME_WAIT and MSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计TCP连接状态"><span class="nav-number">9.</span> <span class="nav-text">统计TCP连接状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务器上的监听服务列表"><span class="nav-number">10.</span> <span class="nav-text">服务器上的监听服务列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-IP-headers-format"><span class="nav-number">11.</span> <span class="nav-text">TCP/IP headers format</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见网络协议的头格式"><span class="nav-number">12.</span> <span class="nav-text">常见网络协议的头格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP三次握手和四次挥手的示意图"><span class="nav-number">13.</span> <span class="nav-text">TCP三次握手和四次挥手的示意图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">14.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,758 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="网上java8新特性详解这篇翻译翻得很好，可以结合以下英文原文内容学习java8新特性。 Modern Java - A Guide to Java 8 “Java is still not dead and people are starting to figure that out.”  Welcome to @winterbe&amp;#39;s introduction to Java 8. Th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java 8 tutorial">
+<meta property="og:url" content="https://www.4e00.com/java/2016/01/24/java-8-tutorial.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="网上java8新特性详解这篇翻译翻得很好，可以结合以下英文原文内容学习java8新特性。 Modern Java - A Guide to Java 8 “Java is still not dead and people are starting to figure that out.”  Welcome to @winterbe&amp;#39;s introduction to Java 8. Th">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-08-01T01:47:39.785Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java 8 tutorial">
+<meta name="twitter:description" content="网上java8新特性详解这篇翻译翻得很好，可以结合以下英文原文内容学习java8新特性。 Modern Java - A Guide to Java 8 “Java is still not dead and people are starting to figure that out.”  Welcome to @winterbe&amp;#39;s introduction to Java 8. Th">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/01/24/java-8-tutorial.html"/>
+
+  <title> java 8 tutorial | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java 8 tutorial
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-01-24T11:21:18+08:00" content="2016-01-24">
+              2016-01-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>网上<a href="https://blog.chou.it/2014/03/java-8-new-features/" target="_blank" rel="external">java8新特性详解</a>这篇翻译翻得很好，可以结合以下<a href="http://winterbe.com/posts/2014/03/16/java-8-tutorial/" target="_blank" rel="external">英文原文</a>内容学习java8新特性。</p>
+<h2 id="Modern-Java-A-Guide-to-Java-8"><a href="#Modern-Java-A-Guide-to-Java-8" class="headerlink" title="Modern Java - A Guide to Java 8"></a>Modern Java - A Guide to Java 8</h2><blockquote>
+<p><a href="http://winterbe.com/posts/2014/03/16/java-8-tutorial/" target="_blank" rel="external">“Java is still not dead and people are starting to figure that out.”</a></p>
+</blockquote>
+<p>Welcome to @winterbe&#39;s introduction to <a href="https://jdk8.java.net/" target="_blank" rel="external">Java 8</a>. This tutorial guides you step by step through all new language features. Backed by short and simple code samples you&#39;ll learn how to use default interface methods, lambda expressions, method references and repeatable annotations. At the end of the article you&#39;ll be familiar with the most recent <a href="http://download.java.net/jdk8/docs/api/" target="_blank" rel="external">API</a> changes like streams, functional interfaces, map extensions and the new Date API. <strong>No walls of text, just a bunch of commented code snippets. Enjoy!</strong></p>
+<h2 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h2><ul>
+<li><a href="#default-methods-for-interfaces">Default Methods for Interfaces</a></li>
+<li><a href="#lambda-expressions">Lambda expressions</a></li>
+<li><a href="#functional-interfaces">Functional Interfaces</a></li>
+<li><a href="#method-and-constructor-references">Method and Constructor References</a></li>
+<li><a href="#lambda-scopes">Lambda Scopes</a><ul>
+<li><a href="#accessing-local-variables">Accessing local variables</a></li>
+<li><a href="#accessing-fields-and-static-variables">Accessing fields and static variables</a></li>
+<li><a href="#accessing-default-interface-methods">Accessing Default Interface Methods</a></li>
+</ul>
+</li>
+<li><a href="#built-in-functional-interfaces">Built-in Functional Interfaces</a><ul>
+<li><a href="#predicates">Predicates</a></li>
+<li><a href="#functions">Functions</a></li>
+<li><a href="#suppliers">Suppliers</a></li>
+<li><a href="#consumers">Consumers</a></li>
+<li><a href="#comparators">Comparators</a></li>
+</ul>
+</li>
+<li><a href="#optionals">Optionals</a></li>
+<li><a href="#streams">Streams</a><ul>
+<li><a href="#filter">Filter</a></li>
+<li><a href="#sorted">Sorted</a></li>
+<li><a href="#map">Map</a></li>
+<li><a href="#match">Match</a></li>
+<li><a href="#count">Count</a></li>
+<li><a href="#reduce">Reduce</a></li>
+</ul>
+</li>
+<li><a href="#parallel-streams">Parallel Streams</a><ul>
+<li><a href="#sequential-sort">Sequential Sort</a></li>
+<li><a href="#parallel-sort">Parallel Sort</a></li>
+</ul>
+</li>
+<li><a href="#maps">Maps</a></li>
+<li><a href="#date-api">Date API</a><ul>
+<li><a href="#clock">Clock</a></li>
+<li><a href="#timezones">Timezones</a></li>
+<li><a href="#localtime">LocalTime</a></li>
+<li><a href="#localdate">LocalDate</a></li>
+<li><a href="#localdatetime">LocalDateTime</a></li>
+</ul>
+</li>
+<li><a href="#annotations">Annotations</a></li>
+<li><a href="#where-to-go-from-here">Where to go from here?</a></li>
+</ul>
+<h2 id="Default-Methods-for-Interfaces"><a href="#Default-Methods-for-Interfaces" class="headerlink" title="Default Methods for Interfaces"></a>Default Methods for Interfaces</h2><p>Java 8 enables us to add non-abstract method implementations to interfaces by utilizing the <code>default</code> keyword. This feature is also known as <a href="http://stackoverflow.com/a/24102730" target="_blank" rel="external">virtual extension methods</a>.</p>
+<p>Here is our first example:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Formula</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">double</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> a)</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">double</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> Math.sqrt(a);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Besides the abstract method <code>calculate</code> the interface <code>Formula</code> also defines the default method <code>sqrt</code>. Concrete classes only have to implement the abstract method <code>calculate</code>. The default method <code>sqrt</code> can be used out of the box.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Formula formula = <span class="keyword">new</span> Formula() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> sqrt(a * <span class="number">100</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">formula.calculate(<span class="number">100</span>);     <span class="comment">// 100.0</span></div><div class="line">formula.sqrt(<span class="number">16</span>);           <span class="comment">// 4.0</span></div></pre></td></tr></table></figure>
+<p>The formula is implemented as an anonymous object. The code is quite verbose: 6 lines of code for such a simple calculation of <code>sqrt(a * 100)</code>. As we&#39;ll see in the next section, there&#39;s a much nicer way of implementing single method objects in Java 8.</p>
+<a id="more"></a>
+<h2 id="Lambda-expressions"><a href="#Lambda-expressions" class="headerlink" title="Lambda expressions"></a>Lambda expressions</h2><p>Let&#39;s start with a simple example of how to sort a list of strings in prior versions of Java:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">List&lt;String&gt; names = Arrays.asList(<span class="string">"peter"</span>, <span class="string">"anna"</span>, <span class="string">"mike"</span>, <span class="string">"xenia"</span>);</div><div class="line"></div><div class="line">Collections.sort(names, <span class="keyword">new</span> Comparator&lt;String&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(String a, String b)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> b.compareTo(a);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>The static utility method <code>Collections.sort</code> accepts a list and a comparator in order to sort the elements of the given list. You often find yourself creating anonymous comparators and pass them to the sort method.</p>
+<p>Instead of creating anonymous objects all day long, Java 8 comes with a much shorter syntax, <strong>lambda expressions</strong>:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Collections.sort(names, (String a, String b) -&gt; &#123;</div><div class="line">    <span class="keyword">return</span> b.compareTo(a);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>As you can see the code is much shorter and easier to read. But it gets even shorter:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Collections.sort(names, (String a, String b) -&gt; b.compareTo(a));</div></pre></td></tr></table></figure>
+<p>For one line method bodies you can skip both the braces <code>{}</code> and the <code>return</code> keyword. But it gets even shorter:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">names.sort((a, b) -&gt; b.compareTo(a));</div></pre></td></tr></table></figure>
+<p>List now has a <code>sort</code> method. Also the java compiler is aware of the parameter types so you can skip them as well. Let&#39;s dive deeper into how lambda expressions can be used in the wild.</p>
+<h2 id="Functional-Interfaces"><a href="#Functional-Interfaces" class="headerlink" title="Functional Interfaces"></a>Functional Interfaces</h2><p>How does lambda expressions fit into Java&#39;s type system? Each lambda corresponds to a given type, specified by an interface. A so called <em>functional interface</em> must contain <strong>exactly one abstract method</strong> declaration. Each lambda expression of that type will be matched to this abstract method. Since default methods are not abstract you&#39;re free to add default methods to your functional interface.</p>
+<p>We can use arbitrary interfaces as lambda expressions as long as the interface only contains one abstract method. To ensure that your interface meet the requirements, you should add the <code>@FunctionalInterface</code> annotation. The compiler is aware of this annotation and throws a compiler error as soon as you try to add a second abstract method declaration to the interface.</p>
+<p>Example:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@FunctionalInterface</span></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Converter</span>&lt;<span class="title">F</span>, <span class="title">T</span>&gt; </span>&#123;</div><div class="line">    <span class="function">T <span class="title">convert</span><span class="params">(F from)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Converter&lt;String, Integer&gt; converter = (from) -&gt; Integer.valueOf(from);</div><div class="line">Integer converted = converter.convert(<span class="string">"123"</span>);</div><div class="line">System.out.println(converted);    <span class="comment">// 123</span></div></pre></td></tr></table></figure>
+<p>Keep in mind that the code is also valid if the <code>@FunctionalInterface</code> annotation would be omitted.</p>
+<h2 id="Method-and-Constructor-References"><a href="#Method-and-Constructor-References" class="headerlink" title="Method and Constructor References"></a>Method and Constructor References</h2><p>The above example code can be further simplified by utilizing static method references:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Converter&lt;String, Integer&gt; converter = Integer::valueOf;</div><div class="line">Integer converted = converter.convert(<span class="string">"123"</span>);</div><div class="line">System.out.println(converted);   <span class="comment">// 123</span></div></pre></td></tr></table></figure>
+<p>Java 8 enables you to pass references of methods or constructors via the <code>::</code> keyword. The above example shows how to reference a static method. But we can also reference object methods:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Something</span> </span>&#123;</div><div class="line">    <span class="function">String <span class="title">startsWith</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> String.valueOf(s.charAt(<span class="number">0</span>));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Something something = <span class="keyword">new</span> Something();</div><div class="line">Converter&lt;String, String&gt; converter = something::startsWith;</div><div class="line">String converted = converter.convert(<span class="string">"Java"</span>);</div><div class="line">System.out.println(converted);    <span class="comment">// "J"</span></div></pre></td></tr></table></figure>
+<p>Let&#39;s see how the <code>::</code> keyword works for constructors. First we define an example bean with different constructors:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    String firstName;</div><div class="line">    String lastName;</div><div class="line"></div><div class="line">    Person() &#123;&#125;</div><div class="line"></div><div class="line">    Person(String firstName, String lastName) &#123;</div><div class="line">        <span class="keyword">this</span>.firstName = firstName;</div><div class="line">        <span class="keyword">this</span>.lastName = lastName;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Next we specify a person factory interface to be used for creating new persons:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">PersonFactory</span>&lt;<span class="title">P</span> <span class="keyword">extends</span> <span class="title">Person</span>&gt; </span>&#123;</div><div class="line">    <span class="function">P <span class="title">create</span><span class="params">(String firstName, String lastName)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Instead of implementing the factory manually, we glue everything together via constructor references:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">PersonFactory&lt;Person&gt; personFactory = Person::<span class="keyword">new</span>;</div><div class="line">Person person = personFactory.create(<span class="string">"Peter"</span>, <span class="string">"Parker"</span>);</div></pre></td></tr></table></figure>
+<p>We create a reference to the Person constructor via <code>Person::new</code>. The Java compiler automatically chooses the right constructor by matching the signature of <code>PersonFactory.create</code>.</p>
+<h2 id="Lambda-Scopes"><a href="#Lambda-Scopes" class="headerlink" title="Lambda Scopes"></a>Lambda Scopes</h2><p>Accessing outer scope variables from lambda expressions is very similar to anonymous objects. You can access final variables from the local outer scope as well as instance fields and static variables.</p>
+<h3 id="Accessing-local-variables"><a href="#Accessing-local-variables" class="headerlink" title="Accessing local variables"></a>Accessing local variables</h3><p>We can read final local variables from the outer scope of lambda expressions:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">final</span> <span class="keyword">int</span> num = <span class="number">1</span>;</div><div class="line">Converter&lt;Integer, String&gt; stringConverter =</div><div class="line">        (from) -&gt; String.valueOf(from + num);</div><div class="line"></div><div class="line">stringConverter.convert(<span class="number">2</span>);     <span class="comment">// 3</span></div></pre></td></tr></table></figure>
+<p>But different to anonymous objects the variable <code>num</code> does not have to be declared final. This code is also valid:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">int</span> num = <span class="number">1</span>;</div><div class="line">Converter&lt;Integer, String&gt; stringConverter =</div><div class="line">        (from) -&gt; String.valueOf(from + num);</div><div class="line"></div><div class="line">stringConverter.convert(<span class="number">2</span>);     <span class="comment">// 3</span></div></pre></td></tr></table></figure>
+<p>However <code>num</code> must be implicitly final for the code to compile. The following code does <strong>not</strong> compile:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">int</span> num = <span class="number">1</span>;</div><div class="line">Converter&lt;Integer, String&gt; stringConverter =</div><div class="line">        (from) -&gt; String.valueOf(from + num);</div><div class="line">num = <span class="number">3</span>;</div></pre></td></tr></table></figure>
+<p>Writing to <code>num</code> from within the lambda expression is also prohibited.</p>
+<h3 id="Accessing-fields-and-static-variables"><a href="#Accessing-fields-and-static-variables" class="headerlink" title="Accessing fields and static variables"></a>Accessing fields and static variables</h3><p>In contrast to local variables, we have both read and write access to instance fields and static variables from within lambda expressions. This behaviour is well known from anonymous objects.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lambda4</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">int</span> outerStaticNum;</div><div class="line">    <span class="keyword">int</span> outerNum;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">testScopes</span><span class="params">()</span> </span>&#123;</div><div class="line">        Converter&lt;Integer, String&gt; stringConverter1 = (from) -&gt; &#123;</div><div class="line">            outerNum = <span class="number">23</span>;</div><div class="line">            <span class="keyword">return</span> String.valueOf(from);</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        Converter&lt;Integer, String&gt; stringConverter2 = (from) -&gt; &#123;</div><div class="line">            outerStaticNum = <span class="number">72</span>;</div><div class="line">            <span class="keyword">return</span> String.valueOf(from);</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Accessing-Default-Interface-Methods"><a href="#Accessing-Default-Interface-Methods" class="headerlink" title="Accessing Default Interface Methods"></a>Accessing Default Interface Methods</h3><p>Remember the formula example from the first section? Interface <code>Formula</code> defines a default method <code>sqrt</code> which can be accessed from each formula instance including anonymous objects. This does not work with lambda expressions.</p>
+<p>Default methods <strong>cannot</strong> be accessed from within lambda expressions. The following code does not compile:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Formula formula = (a) -&gt; sqrt(a * <span class="number">100</span>);</div></pre></td></tr></table></figure>
+<h2 id="Built-in-Functional-Interfaces"><a href="#Built-in-Functional-Interfaces" class="headerlink" title="Built-in Functional Interfaces"></a>Built-in Functional Interfaces</h2><p>The JDK 1.8 API contains many built-in functional interfaces. Some of them are well known from older versions of Java like <code>Comparator</code> or <code>Runnable</code>. Those existing interfaces are extended to enable Lambda support via the <code>@FunctionalInterface</code> annotation.</p>
+<p>But the Java 8 API is also full of new functional interfaces to make your life easier. Some of those new interfaces are well known from the <a href="https://code.google.com/p/guava-libraries/" target="_blank" rel="external">Google Guava</a> library. Even if you&#39;re familiar with this library you should keep a close eye on how those interfaces are extended by some useful method extensions.</p>
+<h3 id="Predicates"><a href="#Predicates" class="headerlink" title="Predicates"></a>Predicates</h3><p>Predicates are boolean-valued functions of one argument. The interface contains various default methods for composing predicates to complex logical terms (and, or, negate)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Predicate&lt;String&gt; predicate = (s) -&gt; s.length() &gt; <span class="number">0</span>;</div><div class="line"></div><div class="line">predicate.test(<span class="string">"foo"</span>);              <span class="comment">// true</span></div><div class="line">predicate.negate().test(<span class="string">"foo"</span>);     <span class="comment">// false</span></div><div class="line"></div><div class="line">Predicate&lt;Boolean&gt; nonNull = Objects::nonNull;</div><div class="line">Predicate&lt;Boolean&gt; isNull = Objects::isNull;</div><div class="line"></div><div class="line">Predicate&lt;String&gt; isEmpty = String::isEmpty;</div><div class="line">Predicate&lt;String&gt; isNotEmpty = isEmpty.negate();</div></pre></td></tr></table></figure>
+<h3 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h3><p>Functions accept one argument and produce a result. Default methods can be used to chain multiple functions together (compose, andThen).</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Function&lt;String, Integer&gt; toInteger = Integer::valueOf;</div><div class="line">Function&lt;String, String&gt; backToString = toInteger.andThen(String::valueOf);</div><div class="line"></div><div class="line">backToString.apply(<span class="string">"123"</span>);     <span class="comment">// "123"</span></div></pre></td></tr></table></figure>
+<h3 id="Suppliers"><a href="#Suppliers" class="headerlink" title="Suppliers"></a>Suppliers</h3><p>Suppliers produce a result of a given generic type. Unlike Functions, Suppliers don&#39;t accept arguments.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Supplier&lt;Person&gt; personSupplier = Person::<span class="keyword">new</span>;</div><div class="line">personSupplier.get();   <span class="comment">// new Person</span></div></pre></td></tr></table></figure>
+<h3 id="Consumers"><a href="#Consumers" class="headerlink" title="Consumers"></a>Consumers</h3><p>Consumers represent operations to be performed on a single input argument.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Consumer&lt;Person&gt; greeter = (p) -&gt; System.out.println(<span class="string">"Hello, "</span> + p.firstName);</div><div class="line">greeter.accept(<span class="keyword">new</span> Person(<span class="string">"Luke"</span>, <span class="string">"Skywalker"</span>));</div></pre></td></tr></table></figure>
+<h3 id="Comparators"><a href="#Comparators" class="headerlink" title="Comparators"></a>Comparators</h3><p>Comparators are well known from older versions of Java. Java 8 adds various default methods to the interface.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Comparator&lt;Person&gt; comparator = (p1, p2) -&gt; p1.firstName.compareTo(p2.firstName);</div><div class="line"></div><div class="line">Person p1 = <span class="keyword">new</span> Person(<span class="string">"John"</span>, <span class="string">"Doe"</span>);</div><div class="line">Person p2 = <span class="keyword">new</span> Person(<span class="string">"Alice"</span>, <span class="string">"Wonderland"</span>);</div><div class="line"></div><div class="line">comparator.compare(p1, p2);             <span class="comment">// &gt; 0</span></div><div class="line">comparator.reversed().compare(p1, p2);  <span class="comment">// &lt; 0</span></div></pre></td></tr></table></figure>
+<h2 id="Optionals"><a href="#Optionals" class="headerlink" title="Optionals"></a>Optionals</h2><p>Optionals are not functional interfaces, but nifty utilities to prevent <code>NullPointerException</code>. It&#39;s an important concept for the next section, so let&#39;s have a quick look at how Optionals work.</p>
+<p>Optional is a simple container for a value which may be null or non-null. Think of a method which may return a non-null result but sometimes return nothing. Instead of returning <code>null</code> you return an <code>Optional</code> in Java 8.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Optional&lt;String&gt; optional = Optional.of(<span class="string">"bam"</span>);</div><div class="line"></div><div class="line">optional.isPresent();           <span class="comment">// true</span></div><div class="line">optional.get();                 <span class="comment">// "bam"</span></div><div class="line">optional.orElse(<span class="string">"fallback"</span>);    <span class="comment">// "bam"</span></div><div class="line"></div><div class="line">optional.ifPresent((s) -&gt; System.out.println(s.charAt(<span class="number">0</span>)));     <span class="comment">// "b"</span></div></pre></td></tr></table></figure>
+<h2 id="Streams"><a href="#Streams" class="headerlink" title="Streams"></a>Streams</h2><p>A <code>java.util.Stream</code> represents a sequence of elements on which one or more operations can be performed. Stream operations are either <em>intermediate</em> or <em>terminal</em>. While terminal operations return a result of a certain type, intermediate operations return the stream itself so you can chain multiple method calls in a row. Streams are created on a source, e.g. a <code>java.util.Collection</code> like lists or sets (maps are not supported). Stream operations can either be executed sequentially or parallely.</p>
+<blockquote>
+<p>You should also check out <a href="https://github.com/winterbe/streamjs" target="_blank" rel="external">Stream.js</a>, a JavaScript port of the Java 8 Streams API.</p>
+</blockquote>
+<p>Let&#39;s first look how sequential streams work. First we create a sample source in form of a list of strings:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">List&lt;String&gt; stringCollection = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">stringCollection.add(<span class="string">"ddd2"</span>);</div><div class="line">stringCollection.add(<span class="string">"aaa2"</span>);</div><div class="line">stringCollection.add(<span class="string">"bbb1"</span>);</div><div class="line">stringCollection.add(<span class="string">"aaa1"</span>);</div><div class="line">stringCollection.add(<span class="string">"bbb3"</span>);</div><div class="line">stringCollection.add(<span class="string">"ccc"</span>);</div><div class="line">stringCollection.add(<span class="string">"bbb2"</span>);</div><div class="line">stringCollection.add(<span class="string">"ddd1"</span>);</div></pre></td></tr></table></figure>
+<p>Collections in Java 8 are extended so you can simply create streams either by calling <code>Collection.stream()</code> or <code>Collection.parallelStream()</code>. The following sections explain the most common stream operations.</p>
+<h3 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h3><p>Filter accepts a predicate to filter all elements of the stream. This operation is <em>intermediate</em> which enables us to call another stream operation (<code>forEach</code>) on the result. ForEach accepts a consumer to be executed for each element in the filtered stream. ForEach is a terminal operation. It&#39;s <code>void</code>, so we cannot call another stream operation.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">stringCollection</div><div class="line">    .stream()</div><div class="line">    .filter((s) -&gt; s.startsWith(<span class="string">"a"</span>))</div><div class="line">    .forEach(System.out::println);</div><div class="line"></div><div class="line"><span class="comment">// "aaa2", "aaa1"</span></div></pre></td></tr></table></figure>
+<h3 id="Sorted"><a href="#Sorted" class="headerlink" title="Sorted"></a>Sorted</h3><p>Sorted is an <em>intermediate</em> operation which returns a sorted view of the stream. The elements are sorted in natural order unless you pass a custom <code>Comparator</code>.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">stringCollection</div><div class="line">    .stream()</div><div class="line">    .sorted()</div><div class="line">    .filter((s) -&gt; s.startsWith(<span class="string">"a"</span>))</div><div class="line">    .forEach(System.out::println);</div><div class="line"></div><div class="line"><span class="comment">// "aaa1", "aaa2"</span></div></pre></td></tr></table></figure>
+<p>Keep in mind that <code>sorted</code> does only create a sorted view of the stream without manipulating the ordering of the backed collection. The ordering of <code>stringCollection</code> is untouched:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">System.out.println(stringCollection);</div><div class="line"><span class="comment">// ddd2, aaa2, bbb1, aaa1, bbb3, ccc, bbb2, ddd1</span></div></pre></td></tr></table></figure>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>The <em>intermediate</em> operation <code>map</code> converts each element into another object via the given function. The following example converts each string into an upper-cased string. But you can also use <code>map</code> to transform each object into another type. The generic type of the resulting stream depends on the generic type of the function you pass to <code>map</code>.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">stringCollection</div><div class="line">    .stream()</div><div class="line">    .map(String::toUpperCase)</div><div class="line">    .sorted((a, b) -&gt; b.compareTo(a))</div><div class="line">    .forEach(System.out::println);</div><div class="line"></div><div class="line"><span class="comment">// "DDD2", "DDD1", "CCC", "BBB3", "BBB2", "AAA2", "AAA1"</span></div></pre></td></tr></table></figure>
+<h3 id="Match"><a href="#Match" class="headerlink" title="Match"></a>Match</h3><p>Various matching operations can be used to check whether a certain predicate matches the stream. All of those operations are <em>terminal</em> and return a boolean result.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">boolean</span> anyStartsWithA =</div><div class="line">    stringCollection</div><div class="line">        .stream()</div><div class="line">        .anyMatch((s) -&gt; s.startsWith(<span class="string">"a"</span>));</div><div class="line"></div><div class="line">System.out.println(anyStartsWithA);      <span class="comment">// true</span></div><div class="line"></div><div class="line"><span class="keyword">boolean</span> allStartsWithA =</div><div class="line">    stringCollection</div><div class="line">        .stream()</div><div class="line">        .allMatch((s) -&gt; s.startsWith(<span class="string">"a"</span>));</div><div class="line"></div><div class="line">System.out.println(allStartsWithA);      <span class="comment">// false</span></div><div class="line"></div><div class="line"><span class="keyword">boolean</span> noneStartsWithZ =</div><div class="line">    stringCollection</div><div class="line">        .stream()</div><div class="line">        .noneMatch((s) -&gt; s.startsWith(<span class="string">"z"</span>));</div><div class="line"></div><div class="line">System.out.println(noneStartsWithZ);      <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<h3 id="Count"><a href="#Count" class="headerlink" title="Count"></a>Count</h3><p>Count is a <em>terminal</em> operation returning the number of elements in the stream as a <code>long</code>.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">long</span> startsWithB =</div><div class="line">    stringCollection</div><div class="line">        .stream()</div><div class="line">        .filter((s) -&gt; s.startsWith(<span class="string">"b"</span>))</div><div class="line">        .count();</div><div class="line"></div><div class="line">System.out.println(startsWithB);    <span class="comment">// 3</span></div></pre></td></tr></table></figure>
+<h3 id="Reduce"><a href="#Reduce" class="headerlink" title="Reduce"></a>Reduce</h3><p>This <em>terminal</em> operation performs a reduction on the elements of the stream with the given function. The result is an <code>Optional</code> holding the reduced value.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Optional&lt;String&gt; reduced =</div><div class="line">    stringCollection</div><div class="line">        .stream()</div><div class="line">        .sorted()</div><div class="line">        .reduce((s1, s2) -&gt; s1 + <span class="string">"#"</span> + s2);</div><div class="line"></div><div class="line">reduced.ifPresent(System.out::println);</div><div class="line"><span class="comment">// "aaa1#aaa2#bbb1#bbb2#bbb3#ccc#ddd1#ddd2"</span></div></pre></td></tr></table></figure>
+<h2 id="Parallel-Streams"><a href="#Parallel-Streams" class="headerlink" title="Parallel Streams"></a>Parallel Streams</h2><p>As mentioned above streams can be either sequential or parallel. Operations on sequential streams are performed on a single thread while operations on parallel streams are performed concurrently on multiple threads.</p>
+<p>The following example demonstrates how easy it is to increase the performance by using parallel streams.</p>
+<p>First we create a large list of unique elements:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">int</span> max = <span class="number">1000000</span>;</div><div class="line">List&lt;String&gt; values = <span class="keyword">new</span> ArrayList&lt;&gt;(max);</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; max; i++) &#123;</div><div class="line">    UUID uuid = UUID.randomUUID();</div><div class="line">    values.add(uuid.toString());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Now we measure the time it takes to sort a stream of this collection.</p>
+<h3 id="Sequential-Sort"><a href="#Sequential-Sort" class="headerlink" title="Sequential Sort"></a>Sequential Sort</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">long</span> t0 = System.nanoTime();</div><div class="line"></div><div class="line"><span class="keyword">long</span> count = values.stream().sorted().count();</div><div class="line">System.out.println(count);</div><div class="line"></div><div class="line"><span class="keyword">long</span> t1 = System.nanoTime();</div><div class="line"></div><div class="line"><span class="keyword">long</span> millis = TimeUnit.NANOSECONDS.toMillis(t1 - t0);</div><div class="line">System.out.println(String.format(<span class="string">"sequential sort took: %d ms"</span>, millis));</div><div class="line"></div><div class="line"><span class="comment">// sequential sort took: 899 ms</span></div></pre></td></tr></table></figure>
+<h3 id="Parallel-Sort"><a href="#Parallel-Sort" class="headerlink" title="Parallel Sort"></a>Parallel Sort</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">long</span> t0 = System.nanoTime();</div><div class="line"></div><div class="line"><span class="keyword">long</span> count = values.parallelStream().sorted().count();</div><div class="line">System.out.println(count);</div><div class="line"></div><div class="line"><span class="keyword">long</span> t1 = System.nanoTime();</div><div class="line"></div><div class="line"><span class="keyword">long</span> millis = TimeUnit.NANOSECONDS.toMillis(t1 - t0);</div><div class="line">System.out.println(String.format(<span class="string">"parallel sort took: %d ms"</span>, millis));</div><div class="line"></div><div class="line"><span class="comment">// parallel sort took: 472 ms</span></div></pre></td></tr></table></figure>
+<p>As you can see both code snippets are almost identical but the parallel sort is roughly 50% faster. All you have to do is change <code>stream()</code> to <code>parallelStream()</code>.</p>
+<h2 id="Maps"><a href="#Maps" class="headerlink" title="Maps"></a>Maps</h2><p>As already mentioned maps do not directly support streams. There&#39;s no <code>stream()</code> method available on the <code>Map</code> interface itself, however you can create specialized streams upon the keys, values or entries of a map via <code>map.keySet().stream()</code>, <code>map.values().stream()</code> and <code>map.entrySet().stream()</code>.</p>
+<p>Furthermore maps support various new and useful methods for doing common tasks.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Map&lt;Integer, String&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line">    map.putIfAbsent(i, <span class="string">"val"</span> + i);</div><div class="line">&#125;</div><div class="line"></div><div class="line">map.forEach((id, val) -&gt; System.out.println(val));</div></pre></td></tr></table></figure>
+<p>The above code should be self-explaining: <code>putIfAbsent</code> prevents us from writing additional if null checks; <code>forEach</code> accepts a consumer to perform operations for each value of the map.</p>
+<p>This example shows how to compute code on the map by utilizing functions:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">map.computeIfPresent(<span class="number">3</span>, (num, val) -&gt; val + num);</div><div class="line">map.get(<span class="number">3</span>);             <span class="comment">// val33</span></div><div class="line"></div><div class="line">map.computeIfPresent(<span class="number">9</span>, (num, val) -&gt; <span class="keyword">null</span>);</div><div class="line">map.containsKey(<span class="number">9</span>);     <span class="comment">// false</span></div><div class="line"></div><div class="line">map.computeIfAbsent(<span class="number">23</span>, num -&gt; <span class="string">"val"</span> + num);</div><div class="line">map.containsKey(<span class="number">23</span>);    <span class="comment">// true</span></div><div class="line"></div><div class="line">map.computeIfAbsent(<span class="number">3</span>, num -&gt; <span class="string">"bam"</span>);</div><div class="line">map.get(<span class="number">3</span>);             <span class="comment">// val33</span></div></pre></td></tr></table></figure>
+<p>Next, we learn how to remove entries for a given key, only if it&#39;s currently mapped to a given value:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">map.remove(<span class="number">3</span>, <span class="string">"val3"</span>);</div><div class="line">map.get(<span class="number">3</span>);             <span class="comment">// val33</span></div><div class="line"></div><div class="line">map.remove(<span class="number">3</span>, <span class="string">"val33"</span>);</div><div class="line">map.get(<span class="number">3</span>);             <span class="comment">// null</span></div></pre></td></tr></table></figure>
+<p>Another helpful method:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">map.getOrDefault(<span class="number">42</span>, <span class="string">"not found"</span>);  <span class="comment">// not found</span></div></pre></td></tr></table></figure>
+<p>Merging entries of a map is quite easy:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">map.merge(<span class="number">9</span>, <span class="string">"val9"</span>, (value, newValue) -&gt; value.concat(newValue));</div><div class="line">map.get(<span class="number">9</span>);             <span class="comment">// val9</span></div><div class="line"></div><div class="line">map.merge(<span class="number">9</span>, <span class="string">"concat"</span>, (value, newValue) -&gt; value.concat(newValue));</div><div class="line">map.get(<span class="number">9</span>);             <span class="comment">// val9concat</span></div></pre></td></tr></table></figure>
+<p>Merge either put the key/value into the map if no entry for the key exists, or the merging function will be called to change the existing value.</p>
+<h2 id="Date-API"><a href="#Date-API" class="headerlink" title="Date API"></a>Date API</h2><p>Java 8 contains a brand new date and time API under the package <code>java.time</code>. The new Date API is comparable with the <a href="http://www.joda.org/joda-time/" target="_blank" rel="external">Joda-Time</a> library, however it&#39;s <a href="http://blog.joda.org/2009/11/why-jsr-310-isn-joda-time_4941.html" target="_blank" rel="external">not the same</a>. The following examples cover the most important parts of this new API.</p>
+<h3 id="Clock"><a href="#Clock" class="headerlink" title="Clock"></a>Clock</h3><p>Clock provides access to the current date and time. Clocks are aware of a timezone and may be used instead of <code>System.currentTimeMillis()</code> to retrieve the current time in milliseconds since Unix EPOCH. Such an instantaneous point on the time-line is also represented by the class <code>Instant</code>. Instants can be used to create legacy <code>java.util.Date</code> objects.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Clock clock = Clock.systemDefaultZone();</div><div class="line"><span class="keyword">long</span> millis = clock.millis();</div><div class="line"></div><div class="line">Instant instant = clock.instant();</div><div class="line">Date legacyDate = Date.from(instant);   <span class="comment">// legacy java.util.Date</span></div></pre></td></tr></table></figure>
+<h3 id="Timezones"><a href="#Timezones" class="headerlink" title="Timezones"></a>Timezones</h3><p>Timezones are represented by a <code>ZoneId</code>. They can easily be accessed via static factory methods. Timezones define the offsets which are important to convert between instants and local dates and times.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">System.out.println(ZoneId.getAvailableZoneIds());</div><div class="line"><span class="comment">// prints all available timezone ids</span></div><div class="line"></div><div class="line">ZoneId zone1 = ZoneId.of(<span class="string">"Europe/Berlin"</span>);</div><div class="line">ZoneId zone2 = ZoneId.of(<span class="string">"Brazil/East"</span>);</div><div class="line">System.out.println(zone1.getRules());</div><div class="line">System.out.println(zone2.getRules());</div><div class="line"></div><div class="line"><span class="comment">// ZoneRules[currentStandardOffset=+01:00]</span></div><div class="line"><span class="comment">// ZoneRules[currentStandardOffset=-03:00]</span></div></pre></td></tr></table></figure>
+<h3 id="LocalTime"><a href="#LocalTime" class="headerlink" title="LocalTime"></a>LocalTime</h3><p>LocalTime represents a time without a timezone, e.g. 10pm or 17:30:15. The following example creates two local times for the timezones defined above. Then we compare both times and calculate the difference in hours and minutes between both times.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">LocalTime now1 = LocalTime.now(zone1);</div><div class="line">LocalTime now2 = LocalTime.now(zone2);</div><div class="line"></div><div class="line">System.out.println(now1.isBefore(now2));  <span class="comment">// false</span></div><div class="line"></div><div class="line"><span class="keyword">long</span> hoursBetween = ChronoUnit.HOURS.between(now1, now2);</div><div class="line"><span class="keyword">long</span> minutesBetween = ChronoUnit.MINUTES.between(now1, now2);</div><div class="line"></div><div class="line">System.out.println(hoursBetween);       <span class="comment">// -3</span></div><div class="line">System.out.println(minutesBetween);     <span class="comment">// -239</span></div></pre></td></tr></table></figure>
+<p>LocalTime comes with various factory methods to simplify the creation of new instances, including parsing of time strings.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">LocalTime late = LocalTime.of(<span class="number">23</span>, <span class="number">59</span>, <span class="number">59</span>);</div><div class="line">System.out.println(late);       <span class="comment">// 23:59:59</span></div><div class="line"></div><div class="line">DateTimeFormatter germanFormatter =</div><div class="line">    DateTimeFormatter</div><div class="line">        .ofLocalizedTime(FormatStyle.SHORT)</div><div class="line">        .withLocale(Locale.GERMAN);</div><div class="line"></div><div class="line">LocalTime leetTime = LocalTime.parse(<span class="string">"13:37"</span>, germanFormatter);</div><div class="line">System.out.println(leetTime);   <span class="comment">// 13:37</span></div></pre></td></tr></table></figure>
+<h3 id="LocalDate"><a href="#LocalDate" class="headerlink" title="LocalDate"></a>LocalDate</h3><p>LocalDate represents a distinct date, e.g. 2014-03-11. It&#39;s immutable and works exactly analog to LocalTime. The sample demonstrates how to calculate new dates by adding or subtracting days, months or years. Keep in mind that each manipulation returns a new instance.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">LocalDate today = LocalDate.now();</div><div class="line">LocalDate tomorrow = today.plus(<span class="number">1</span>, ChronoUnit.DAYS);</div><div class="line">LocalDate yesterday = tomorrow.minusDays(<span class="number">2</span>);</div><div class="line"></div><div class="line">LocalDate independenceDay = LocalDate.of(<span class="number">2014</span>, Month.JULY, <span class="number">4</span>);</div><div class="line">DayOfWeek dayOfWeek = independenceDay.getDayOfWeek();</div><div class="line">System.out.println(dayOfWeek);    <span class="comment">// FRIDAY</span></div></pre></td></tr></table></figure>
+<p>Parsing a LocalDate from a string is just as simple as parsing a LocalTime:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">DateTimeFormatter germanFormatter =</div><div class="line">    DateTimeFormatter</div><div class="line">        .ofLocalizedDate(FormatStyle.MEDIUM)</div><div class="line">        .withLocale(Locale.GERMAN);</div><div class="line"></div><div class="line">LocalDate xmas = LocalDate.parse(<span class="string">"24.12.2014"</span>, germanFormatter);</div><div class="line">System.out.println(xmas);   <span class="comment">// 2014-12-24</span></div></pre></td></tr></table></figure>
+<h3 id="LocalDateTime"><a href="#LocalDateTime" class="headerlink" title="LocalDateTime"></a>LocalDateTime</h3><p>LocalDateTime represents a date-time. It combines date and time as seen in the above sections into one instance. <code>LocalDateTime</code> is immutable and works similar to LocalTime and LocalDate. We can utilize methods for retrieving certain fields from a date-time:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">LocalDateTime sylvester = LocalDateTime.of(<span class="number">2014</span>, Month.DECEMBER, <span class="number">31</span>, <span class="number">23</span>, <span class="number">59</span>, <span class="number">59</span>);</div><div class="line"></div><div class="line">DayOfWeek dayOfWeek = sylvester.getDayOfWeek();</div><div class="line">System.out.println(dayOfWeek);      <span class="comment">// WEDNESDAY</span></div><div class="line"></div><div class="line">Month month = sylvester.getMonth();</div><div class="line">System.out.println(month);          <span class="comment">// DECEMBER</span></div><div class="line"></div><div class="line"><span class="keyword">long</span> minuteOfDay = sylvester.getLong(ChronoField.MINUTE_OF_DAY);</div><div class="line">System.out.println(minuteOfDay);    <span class="comment">// 1439</span></div></pre></td></tr></table></figure>
+<p>With the additional information of a timezone it can be converted to an instant. Instants can easily be converted to legacy dates of type <code>java.util.Date</code>.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Instant instant = sylvester</div><div class="line">        .atZone(ZoneId.systemDefault())</div><div class="line">        .toInstant();</div><div class="line"></div><div class="line">Date legacyDate = Date.from(instant);</div><div class="line">System.out.println(legacyDate);     <span class="comment">// Wed Dec 31 23:59:59 CET 2014</span></div></pre></td></tr></table></figure>
+<p>Formatting date-times works just like formatting dates or times. Instead of using pre-defined formats we can create formatters from custom patterns.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">DateTimeFormatter formatter =</div><div class="line">    DateTimeFormatter</div><div class="line">        .ofPattern(<span class="string">"MMM dd, yyyy - HH:mm"</span>);</div><div class="line"></div><div class="line">LocalDateTime parsed = LocalDateTime.parse(<span class="string">"Nov 03, 2014 - 07:13"</span>, formatter);</div><div class="line">String string = formatter.format(parsed);</div><div class="line">System.out.println(string);     <span class="comment">// Nov 03, 2014 - 07:13</span></div></pre></td></tr></table></figure>
+<p>Unlike <code>java.text.NumberFormat</code> the new <code>DateTimeFormatter</code> is immutable and <strong>thread-safe</strong>.</p>
+<p>For details on the pattern syntax read <a href="https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html" target="_blank" rel="external">here</a>.</p>
+<h2 id="Annotations"><a href="#Annotations" class="headerlink" title="Annotations"></a>Annotations</h2><p>Annotations in Java 8 are repeatable. Let&#39;s dive directly into an example to figure that out.</p>
+<p>First, we define a wrapper annotation which holds an array of the actual annotations:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@interface</span> Hints &#123;</div><div class="line">    Hint[] value();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Repeatable</span>(Hints.class)</div><div class="line"><span class="meta">@interface</span> Hint &#123;</div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Java 8 enables us to use multiple annotations of the same type by declaring the annotation <code>@Repeatable</code>.</p>
+<h3 id="Variant-1-Using-the-container-annotation-old-school"><a href="#Variant-1-Using-the-container-annotation-old-school" class="headerlink" title="Variant 1: Using the container annotation (old school)"></a>Variant 1: Using the container annotation (old school)</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Hints</span>(&#123;<span class="meta">@Hint</span>(<span class="string">"hint1"</span>), <span class="meta">@Hint</span>(<span class="string">"hint2"</span>)&#125;)</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;&#125;</div></pre></td></tr></table></figure>
+<h3 id="Variant-2-Using-repeatable-annotations-new-school"><a href="#Variant-2-Using-repeatable-annotations-new-school" class="headerlink" title="Variant 2: Using repeatable annotations (new school)"></a>Variant 2: Using repeatable annotations (new school)</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Hint</span>(<span class="string">"hint1"</span>)</div><div class="line"><span class="meta">@Hint</span>(<span class="string">"hint2"</span>)</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;&#125;</div></pre></td></tr></table></figure>
+<p>Using variant 2 the java compiler implicitly sets up the <code>@Hints</code> annotation under the hood. That&#39;s important for reading annotation information via reflection.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Hint hint = Person.class.getAnnotation(Hint.class);</div><div class="line">System.out.println(hint);                   <span class="comment">// null</span></div><div class="line"></div><div class="line">Hints hints1 = Person.class.getAnnotation(Hints.class);</div><div class="line">System.out.println(hints1.value().length);  <span class="comment">// 2</span></div><div class="line"></div><div class="line">Hint[] hints2 = Person.class.getAnnotationsByType(Hint.class);</div><div class="line">System.out.println(hints2.length);          <span class="comment">// 2</span></div></pre></td></tr></table></figure>
+<p>Although we never declared the <code>@Hints</code> annotation on the <code>Person</code> class, it&#39;s still readable via <code>getAnnotation(Hints.class)</code>. However, the more convenient method is <code>getAnnotationsByType</code> which grants direct access to all annotated <code>@Hint</code> annotations.</p>
+<p>Furthermore the usage of annotations in Java 8 is expanded to two new targets:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE_PARAMETER, ElementType.TYPE_USE&#125;)</div><div class="line"><span class="meta">@interface</span> MyAnnotation &#123;&#125;</div></pre></td></tr></table></figure>
+<h2 id="Where-to-go-from-here"><a href="#Where-to-go-from-here" class="headerlink" title="Where to go from here?"></a>Where to go from here?</h2><p>If you want to learn more about all the new classes and features of the JDK 8 API, check out @winterbe&#39;s <a href="http://winterbe.com/projects/java8-explorer/" target="_blank" rel="external">JDK8 API Explorer</a>. It helps you figuring out all the new classes and hidden gems of JDK 8, like <code>Arrays.parallelSort</code>, <code>StampedLock</code> and <code>CompletableFuture</code> - just to name a few.</p>
+<p>@winterbe has also published a bunch of follow-up articles on @winterbe&#39;s <a href="http://winterbe.com" target="_blank" rel="external">blog</a> that might be interesting to you:</p>
+<ul>
+<li><a href="http://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/" target="_blank" rel="external">Java 8 Stream Tutorial</a></li>
+<li><a href="http://winterbe.com/posts/2014/04/05/java8-nashorn-tutorial/" target="_blank" rel="external">Java 8 Nashorn Tutorial</a></li>
+<li><a href="http://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/" target="_blank" rel="external">Java 8 Concurrency Tutorial: Threads and Executors</a></li>
+<li><a href="http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/" target="_blank" rel="external">Java 8 Concurrency Tutorial: Synchronization and Locks</a></li>
+<li><a href="http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/" target="_blank" rel="external">Java 8 Concurrency Tutorial: Atomic Variables and ConcurrentMap</a></li>
+<li><a href="http://winterbe.com/posts/2015/03/25/java8-examples-string-number-math-files/" target="_blank" rel="external">Java 8 API by Example: Strings, Numbers, Math and Files</a></li>
+<li><a href="http://winterbe.com/posts/2015/03/15/avoid-null-checks-in-java/" target="_blank" rel="external">Avoid Null Checks in Java 8</a></li>
+<li><a href="http://winterbe.com/posts/2015/03/05/fixing-java-8-stream-gotchas-with-intellij-idea/" target="_blank" rel="external">Fixing Java 8 Stream Gotchas with IntelliJ IDEA</a></li>
+<li><a href="http://winterbe.com/posts/2014/04/07/using-backbonejs-with-nashorn/" target="_blank" rel="external">Using Backbone.js with Java 8 Nashorn</a></li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://winterbe.com/posts/2014/03/16/java-8-tutorial/" target="_blank" rel="external">Java 8 Tutorial</a></li>
+<li><a href="https://blog.chou.it/2014/03/java-8-new-features/" target="_blank" rel="external">JAVA 8 新特性详解</a></li>
+<li><a href="https://github.com/winterbe/java8-tutorial" target="_blank" rel="external">modern java - a guide to java 8</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2016/01/21/how-to-install-java8-on-ubuntu-14-04.html" rel="next" title="howto install java8 on ubuntu-14.04">
+                上一篇：howto install java8 on ubuntu-14.04
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2016/01/26/unable-to-load-native-hadoop-library.html" rel="prev" title="unable to load native-hadoop library on mac os">
+                下一篇：unable to load native-hadoop library on mac os
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Modern-Java-A-Guide-to-Java-8"><span class="nav-number">1.</span> <span class="nav-text">Modern Java - A Guide to Java 8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Table-of-Contents"><span class="nav-number">2.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Default-Methods-for-Interfaces"><span class="nav-number">3.</span> <span class="nav-text">Default Methods for Interfaces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lambda-expressions"><span class="nav-number">4.</span> <span class="nav-text">Lambda expressions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Functional-Interfaces"><span class="nav-number">5.</span> <span class="nav-text">Functional Interfaces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Method-and-Constructor-References"><span class="nav-number">6.</span> <span class="nav-text">Method and Constructor References</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lambda-Scopes"><span class="nav-number">7.</span> <span class="nav-text">Lambda Scopes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Accessing-local-variables"><span class="nav-number">7.1.</span> <span class="nav-text">Accessing local variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Accessing-fields-and-static-variables"><span class="nav-number">7.2.</span> <span class="nav-text">Accessing fields and static variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Accessing-Default-Interface-Methods"><span class="nav-number">7.3.</span> <span class="nav-text">Accessing Default Interface Methods</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Built-in-Functional-Interfaces"><span class="nav-number">8.</span> <span class="nav-text">Built-in Functional Interfaces</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Predicates"><span class="nav-number">8.1.</span> <span class="nav-text">Predicates</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Functions"><span class="nav-number">8.2.</span> <span class="nav-text">Functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Suppliers"><span class="nav-number">8.3.</span> <span class="nav-text">Suppliers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Consumers"><span class="nav-number">8.4.</span> <span class="nav-text">Consumers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Comparators"><span class="nav-number">8.5.</span> <span class="nav-text">Comparators</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Optionals"><span class="nav-number">9.</span> <span class="nav-text">Optionals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Streams"><span class="nav-number">10.</span> <span class="nav-text">Streams</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Filter"><span class="nav-number">10.1.</span> <span class="nav-text">Filter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sorted"><span class="nav-number">10.2.</span> <span class="nav-text">Sorted</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">10.3.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Match"><span class="nav-number">10.4.</span> <span class="nav-text">Match</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Count"><span class="nav-number">10.5.</span> <span class="nav-text">Count</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reduce"><span class="nav-number">10.6.</span> <span class="nav-text">Reduce</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parallel-Streams"><span class="nav-number">11.</span> <span class="nav-text">Parallel Streams</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sequential-Sort"><span class="nav-number">11.1.</span> <span class="nav-text">Sequential Sort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parallel-Sort"><span class="nav-number">11.2.</span> <span class="nav-text">Parallel Sort</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maps"><span class="nav-number">12.</span> <span class="nav-text">Maps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Date-API"><span class="nav-number">13.</span> <span class="nav-text">Date API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Clock"><span class="nav-number">13.1.</span> <span class="nav-text">Clock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Timezones"><span class="nav-number">13.2.</span> <span class="nav-text">Timezones</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LocalTime"><span class="nav-number">13.3.</span> <span class="nav-text">LocalTime</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LocalDate"><span class="nav-number">13.4.</span> <span class="nav-text">LocalDate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LocalDateTime"><span class="nav-number">13.5.</span> <span class="nav-text">LocalDateTime</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Annotations"><span class="nav-number">14.</span> <span class="nav-text">Annotations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Variant-1-Using-the-container-annotation-old-school"><span class="nav-number">14.1.</span> <span class="nav-text">Variant 1: Using the container annotation (old school)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Variant-2-Using-repeatable-annotations-new-school"><span class="nav-number">14.2.</span> <span class="nav-text">Variant 2: Using repeatable annotations (new school)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Where-to-go-from-here"><span class="nav-number">15.</span> <span class="nav-text">Where to go from here?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">16.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

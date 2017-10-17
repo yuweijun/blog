@@ -1,0 +1,729 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="java四种引用类型在《深入理解Java虚拟机》中的简单描述：  强引用（StrongReference）：就是在代码中普遍存在的，类似Object object = new Object()这类的引用，只要强引用还存在，GC永远不会回收掉被引用的对象。 软引用（SoftReference）：用来描述一些还有用但非必须的对象。对于软引用关联着的对象，在系统将要发生内存溢出异常时，将会把这些对象列入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java weak references">
+<meta property="og:url" content="https://www.4e00.com/java/2016/10/18/java-weak-references.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="java四种引用类型在《深入理解Java虚拟机》中的简单描述：  强引用（StrongReference）：就是在代码中普遍存在的，类似Object object = new Object()这类的引用，只要强引用还存在，GC永远不会回收掉被引用的对象。 软引用（SoftReference）：用来描述一些还有用但非必须的对象。对于软引用关联着的对象，在系统将要发生内存溢出异常时，将会把这些对象列入">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.153Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java weak references">
+<meta name="twitter:description" content="java四种引用类型在《深入理解Java虚拟机》中的简单描述：  强引用（StrongReference）：就是在代码中普遍存在的，类似Object object = new Object()这类的引用，只要强引用还存在，GC永远不会回收掉被引用的对象。 软引用（SoftReference）：用来描述一些还有用但非必须的对象。对于软引用关联着的对象，在系统将要发生内存溢出异常时，将会把这些对象列入">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/10/18/java-weak-references.html"/>
+
+  <title> java weak references | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java weak references
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-10-18T19:59:58+08:00" content="2016-10-18">
+              2016-10-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="java四种引用类型"><a href="#java四种引用类型" class="headerlink" title="java四种引用类型"></a>java四种引用类型</h2><p>在《深入理解Java虚拟机》中的简单描述：</p>
+<ol>
+<li>强引用（StrongReference）：就是在代码中普遍存在的，类似<code>Object object = new Object()</code>这类的引用，只要强引用还存在，GC永远不会回收掉被引用的对象。</li>
+<li>软引用（SoftReference）：用来描述一些还有用但非必须的对象。对于软引用关联着的对象，在系统将要发生内存溢出异常时，将会把这些对象列入回收范围之中进行回收，如果这次回收还没有足够的内存，才会抛出内存溢出异常。</li>
+<li>弱引用（WeakReference）：也是用来描述非必须对象的，但是它的强度比软引用更弱一些，被弱引用关联的对象只能生存到了下一次GC发生之前。当GC工作时，无论当时内存是否足够，都会回收只被弱引用关联的对象。</li>
+<li>虚引用（PhantomReference）：虚引用也称幽灵引用或者幻影引用，它是最弱的一种引用关系，也无法通过虚引用来取得一个对象实例，为一个对象设置虚引用的唯一目的就是在这个对象被GC回收是收到一个系统通知。</li>
+</ol>
+<h3 id="对象在内存中的状态"><a href="#对象在内存中的状态" class="headerlink" title="对象在内存中的状态"></a>对象在内存中的状态</h3><p>java对象在堆内存有向图中的状态分成3种：</p>
+<ol>
+<li>可达状态：当一个对象被创建后，有一个以上的引用指向它，在有向图中可以从起始顶点导航到该对象，那么它就处于可达状态。</li>
+<li>可恢复状态：对于一个处于可达状态的对象，如果不再有任何引用指向它，在有向图中从起始顶点不能导航到该对象，那么它进入可恢复状态。在这个状态下，JVM的垃圾回收器准备回收该对象占用的内存。但在回收该对象之前，JVM会调用该对象的<code>finalize()</code>进行资源清理。如果在调用<code>finalize()</code>期间重新让一个以上引用指向该对象，则该对象会再次进入可达状态；否则，该对象将进入不可达状态。</li>
+<li>不可达状态：当一个对象进入不可达状态后，JVM的垃圾回收器才会真正回收该对象所占用的内存。</li>
+</ol>
+<p>针对上面四种引用方式，对象还有以下这几个状态：</p>
+<ol>
+<li>软可及状态：对象不是强可及的，但是可以从根节点开始通过一个或者多个未被清除的软引用对象触及。当垃圾收集器清除一个和引用队列有关联的软引用对象时，它把该软引用对象加入队列。</li>
+<li>弱可及状态：对象即不是强可及的也是不是软可及的，但是从根节点开始可以通过一个或多个未被清除的弱引用对象时触及。垃圾收集器必须归还弱可及对象所占据的内存。在发生GC时，GC会清除所有到此弱可及对象的弱引用。当GC清除一个和引用队列有关联的弱引用对象时，它把该引用对象加入队列。</li>
+<li>虚可及状态：对象不是强可及、软可及，也不是弱可及，并已经被断定不会被任何<code>finalize()</code>方法复活，如果它自己定义了终结方法，那它的<code>finalize()</code>方法之前也已经运行过一次了，并且它可以从根节点开始通过一个或者多个虚引用对象触及。一个虚引用的引用目标变为虚可及状态，GC会立即将此引用对象加入引用队列。GC从不会清除一个虚引用，即不会执行虚引用的<code>Reference#clear()</code>方法，所有的虚引用都必须由程序明确的清除。</li>
+</ol>
+<h3 id="四种引用类型比较"><a href="#四种引用类型比较" class="headerlink" title="四种引用类型比较"></a>四种引用类型比较</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">引用类型</th>
+<th style="text-align:center">取得目标对象方式</th>
+<th style="text-align:center">垃圾回收条件</th>
+<th style="text-align:center">是否可能内存泄漏</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">强引用</td>
+<td style="text-align:center">直接调用</td>
+<td style="text-align:center">不回收</td>
+<td style="text-align:center">可能</td>
+</tr>
+<tr>
+<td style="text-align:center">软引用</td>
+<td style="text-align:center">通过 get() 方法</td>
+<td style="text-align:center">视内存情况回收</td>
+<td style="text-align:center">不可能</td>
+</tr>
+<tr>
+<td style="text-align:center">弱引用</td>
+<td style="text-align:center">通过 get() 方法</td>
+<td style="text-align:center">永远回收</td>
+<td style="text-align:center">不可能</td>
+</tr>
+<tr>
+<td style="text-align:center">虚引用</td>
+<td style="text-align:center">无法取得</td>
+<td style="text-align:center">不回收</td>
+<td style="text-align:center">可能</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h2 id="Strong-references"><a href="#Strong-references" class="headerlink" title="Strong references"></a>Strong references</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StrongReferenceTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="comment">// object 为强引用</span></div><div class="line">        Object object = <span class="keyword">new</span> Object() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">"Test StrongReference Object"</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"finalize : "</span> + <span class="keyword">this</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        <span class="comment">// 对象只要是可达的，就算内存溢出也不会被GC回收</span></div><div class="line">        System.gc(); <span class="comment">// 无效</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="FinalReference-以及-Finalizer"><a href="#FinalReference-以及-Finalizer" class="headerlink" title="FinalReference 以及 Finalizer"></a>FinalReference 以及 Finalizer</h3><p><code>FinalReference</code>作为<code>java.lang.ref</code>里的一个不能被公开访问的类，又起到了一个什么样的作用呢？作为他的子类，<code>Finalizer</code>又在垃圾回收机制里扮演了怎么样的角色呢？</p>
+<p>实际上，<code>FinalReference</code>代表的正是Java中的强引用，如这样的代码 :</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">StringBuffer buffer = <span class="keyword">new</span> StringBuffer();</div></pre></td></tr></table></figure>
+<p>在虚拟机的实现过程中，实际采用了<code>FinalReference</code>类对其进行引用。而<code>Finalizer</code>除了作为一个实现类外，更是在虚拟机中实现一个<code>FinalizerThread</code>，以使虚拟机能够在所有的强引用被解除后实现内存清理。</p>
+<h3 id="显式GC回收不可达对象"><a href="#显式GC回收不可达对象" class="headerlink" title="显式GC回收不可达对象"></a>显式GC回收不可达对象</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExplicitGarbageRetrieve</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">        Object object = <span class="keyword">new</span> Object() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">"Test Object"</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"finalize : "</span> + <span class="keyword">this</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        object = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        System.gc();</div><div class="line">        TimeUnit.SECONDS.sleep(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行程序输出如下：</p>
+<blockquote>
+<p>finalize : Test Object</p>
+</blockquote>
+<p>在<code>GC</code>的过程中，当一个强引用被释放，由系统垃圾收集器标记后的对象，会被加入<code>Finalizer</code>对象中的<code>ReferenceQueue</code>中去，并调用<code>Finalizer.runFinalizer()</code>来执行对象的<code>finalize()</code>方法。</p>
+<h2 id="Soft-references"><a href="#Soft-references" class="headerlink" title="Soft references"></a>Soft references</h2><h3 id="SoftReference-javadoc"><a href="#SoftReference-javadoc" class="headerlink" title="SoftReference javadoc"></a>SoftReference javadoc</h3><blockquote>
+<p>Soft reference objects, which are cleared at the discretion of the garbage collector in response to memory demand. Soft references are most often used to implement memory-sensitive caches.</p>
+<p>Suppose that the garbage collector determines at a certain point in time that an object is softly reachable. At that time it may choose to clear atomically all soft references to that object and all soft references to any other softly-reachable objects from which that object is reachable through a chain of strong references. At the same time or at some later time it will enqueue those newly-cleared soft references that are registered with reference queues.</p>
+<p>All soft references to softly-reachable objects are guaranteed to have been cleared before the virtual machine throws an OutOfMemoryError. Otherwise no constraints are placed upon the time at which a soft reference will be cleared or the order in which a set of such references to different objects will be cleared. Virtual machine implementations are, however, encouraged to bias against clearing recently-created or recently-used soft references.</p>
+<p>Direct instances of this class may be used to implement simple caches; this class or derived subclasses may also be used in larger data structures to implement more sophisticated caches. As long as the referent of a soft reference is strongly reachable, that is, is actually in use, the soft reference will not be cleared. Thus a sophisticated cache can, for example, prevent its most recently used entries from being discarded by keeping strong referents to those entries, leaving the remaining entries to be discarded at the discretion of the garbage collector.</p>
+</blockquote>
+<p>当JVM中的对象没有强引用，但是还有软引用时，则表示此对象对GC而言为软可及对象。</p>
+<p>软引用是主要用于内存敏感的高速缓存。在JVM报告内存不足之前会清除所有的软引用，这样以来GC就有可能收集软可及的对象，可能解决内存吃紧问题，避免内存溢出。什么时候会被收集取决于GC的算法和GC运行时可用内存的大小。</p>
+<h3 id="Avoid-Soft-References-for-Caching"><a href="#Avoid-Soft-References-for-Caching" class="headerlink" title="Avoid Soft References for Caching"></a>Avoid Soft References for Caching</h3><blockquote>
+<p>In practice, soft references are inefficient for caching. The runtime doesn&#39;t have enough information on which references to clear and which to keep. Most fatally, it doesn&#39;t know what to do when given the choice between clearing a soft reference and growing the heap.</p>
+<p>The lack of information on the value to your application of each reference limits the usefulness of soft references. References that are cleared too early cause unnecessary work; those that are cleared too late waste memory.</p>
+</blockquote>
+<p>下面测试代码是在JVM的新开的线程中，使用一个map对象将内存耗尽，从而触发GC，回收软可及对象。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReferenceTestUtil</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 消耗大量内存</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">drainMemory</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">new</span> Thread() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                Map&lt;String, String&gt; map = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; ; i++) &#123;</div><div class="line">                    map.put(<span class="string">"key: "</span> + i, <span class="string">"value: "</span> + i);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="SoftReference-测试程序"><a href="#SoftReference-测试程序" class="headerlink" title="SoftReference 测试程序"></a>SoftReference 测试程序</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SoftReferenceTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(SoftReferenceTest.class);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">        Object object = <span class="keyword">new</span> Object() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">"Test SoftReferenced Object"</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> </span>&#123;</div><div class="line">                LOGGER.info(<span class="string">"finalize &#123;&#125;"</span>, <span class="keyword">this</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        SoftReference reference = <span class="keyword">new</span> SoftReference(object);</div><div class="line"></div><div class="line">        <span class="comment">// 只要内存还足够，soft reference指向的对象并不会被GC回收object对象</span></div><div class="line">        <span class="comment">// 只有在内存溢出前，内存不够时，才会触发GC回收这这些软可及对象</span></div><div class="line">        System.gc();</div><div class="line">        TimeUnit.SECONDS.sleep(<span class="number">1</span>); <span class="comment">// GC不会回收</span></div><div class="line"></div><div class="line">        LOGGER.info(<span class="string">"object is : &#123;&#125;"</span>, reference.get());</div><div class="line">        LOGGER.info(<span class="string">"begin drain memory and trigger GC"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// 耗尽内存以触发GC</span></div><div class="line">        ReferenceTestUtil.drainMemory();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行程序输出如下：</p>
+<blockquote>
+<p>[           main] object is : Test SoftReferenced Object</p>
+<p>[           main] begin drain memory and trigger GC</p>
+<p>[      Finalizer] finalize Test SoftReferenced Object</p>
+</blockquote>
+<p>从上述运行可以看到：第一次GC之后，并不会回收软可及对象，接下来在另一个线程中内存被耗尽，GC再次触发，并回收软可及对象。</p>
+<p>软可及对象在GC时并不一定会被回收，具体要根据实际内存使用情况决定。当GC决定要回收软可及对象时，执行以下过程：</p>
+<ol>
+<li>首先将object的<code>referent</code>设置为<code>null</code>，不再引用heap中的object对象。</li>
+<li>将heap中的object对象设置为可结束的<code>finalizable</code>。</li>
+<li>运行object对象的<code>finalize()</code>方法。</li>
+<li>最后软引用的引用目标会被GC直接clear掉，object进入不可及状态，并添加软引用到其<code>ReferenceQueue</code>中，释放对象占用的内存空间。</li>
+</ol>
+<h2 id="Weak-references"><a href="#Weak-references" class="headerlink" title="Weak references"></a>Weak references</h2><h3 id="WeakReference-javadoc"><a href="#WeakReference-javadoc" class="headerlink" title="WeakReference javadoc"></a>WeakReference javadoc</h3><blockquote>
+<p>Weak reference objects, which do not prevent their referents from being made finalizable, finalized, and then reclaimed. Weak references are most often used to implement canonicalizing mappings.</p>
+<p>Suppose that the garbage collector determines at a certain point in time that an object is weakly reachable. At that time it will atomically clear all weak references to that object and all weak references to any other weakly-reachable objects from which that object is reachable through a chain of strong and soft references. At the same time it will declare all of the formerly weakly-reachable objects to be finalizable. At the same time or at some later time it will enqueue those newly-cleared weak references that are registered with reference queues.</p>
+</blockquote>
+<p>当JVM中的对象没有强引用、软引用，只有弱引用时，则表示此对象对GC而言为软可及对象。</p>
+<p>由于JVM总会回收弱引用指向的对象，所以弱引用不会造成内存泄漏。</p>
+<h3 id="ReferenceQueue-监听线程"><a href="#ReferenceQueue-监听线程" class="headerlink" title="ReferenceQueue 监听线程"></a>ReferenceQueue 监听线程</h3><p>以下程序用以监听对象在执行<code>finalize()</code>之后，被添加到<code>ReferenceQueue</code>时，输出不同引用类型的信息，也可以从这个线程中看到，<code>WeakReference</code>指向的对象被添加到引用队列时，<code>referent</code>对象已经被置为<code>null</code>了，即弱引用的引用目标已经被GC直接clear了，这里GC并不是调用<code>Reference#clear()</code>方法，是JVM底层直接清理的，而<code>PhantomReference</code>指向的对象被添加到引用队列时，<code>referent</code>对象并没有被置为<code>null</code>，仍然可以访问到Heap中的这个对象。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReferenceQueueMonitor</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(ReferenceQueueMonitor.class);</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> isRun = <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">private</span> ReferenceQueue&lt;Reference&gt; queue;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ReferenceQueueMonitor</span><span class="params">(ReferenceQueue&lt;Reference&gt; queue)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.queue = queue;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">while</span> (isRun) &#123;</div><div class="line">            Reference reference = queue.poll();</div><div class="line">            <span class="keyword">if</span> (reference != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    LOGGER.info(<span class="string">"reference is : &#123;&#125;"</span>, reference);</div><div class="line">                    Field referent = Reference.class.getDeclaredField(<span class="string">"referent"</span>);</div><div class="line">                    referent.setAccessible(<span class="keyword">true</span>);</div><div class="line">                    Object result = referent.get(reference);</div><div class="line">                    <span class="keyword">if</span> (result == <span class="keyword">null</span>) &#123;</div><div class="line">                        LOGGER.info(<span class="string">"object enqueued and removed from heap ..."</span>);</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        LOGGER.info(<span class="string">"object enqueued and object is still in heap : &#123;&#125;"</span>, result);</div><div class="line">                        LOGGER.info(<span class="string">"GC will collect: &#123;&#125;@&#123;&#125;"</span>, result.getClass(), result.hashCode());</div><div class="line">                        <span class="keyword">if</span> (reference <span class="keyword">instanceof</span> PhantomReference) &#123;</div><div class="line">                            LOGGER.info(<span class="string">"clear reference of phantom manually."</span>);</div><div class="line">                            reference.clear();</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    isRun = <span class="keyword">false</span>;</div><div class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>GC收集弱可及对象的执行过程和软可及一样，只是GC不会根据内存情况来决定是不是收集该对象，而是立即回收。</p>
+<ol>
+<li>首先将object的<code>referent</code>设置为<code>null</code>，不再引用heap中的object对象。</li>
+<li>将heap中的object对象设置为可结束的<code>finalizable</code>。</li>
+<li>运行object对象的<code>finalize()</code>方法。</li>
+<li>最后弱引用的引用目标被GC直接clear掉，object进入不可及状态，并添加弱引用到其<code>ReferenceQueue</code>中，释放对象占用的内存空间。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeakReferenceTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(WeakReferenceTest.class);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Object object = <span class="keyword">new</span> Object() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">"Referenced Object In WeakReference Test"</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> </span>&#123;</div><div class="line">                LOGGER.info(<span class="string">"finalize &#123;&#125;"</span>, <span class="keyword">this</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        LOGGER.info(<span class="string">"object is : &#123;&#125;@&#123;&#125;"</span>, object.getClass(), object.hashCode());</div><div class="line">        <span class="keyword">final</span> ReferenceQueue queue = <span class="keyword">new</span> ReferenceQueue&lt;Object&gt;();</div><div class="line"></div><div class="line">        ReferenceQueueMonitor monitor = <span class="keyword">new</span> ReferenceQueueMonitor(queue);</div><div class="line">        <span class="keyword">new</span> Thread(monitor).start();</div><div class="line"></div><div class="line">        Reference&lt;Object&gt; reference = <span class="keyword">new</span> WeakReference&lt;Object&gt;(object, queue);</div><div class="line"></div><div class="line">        LOGGER.info(<span class="string">"reference.get() is &#123;&#125;"</span>, reference.get());</div><div class="line">        object = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">3</span>; i++) &#123;</div><div class="line">            System.gc();</div><div class="line">            <span class="comment">// 第1次GC发生时，就触发了对象的 finalize() 方法</span></div><div class="line">            <span class="comment">// 并且对象直接从heap上被删除掉，并加入weak refrence引用队列</span></div><div class="line">            TimeUnit.SECONDS.sleep(<span class="number">1</span>); <span class="comment">// 等待GC线程运行1秒钟</span></div><div class="line">            LOGGER.info(<span class="string">"GC &#123;&#125; END ..........."</span>, i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述程序中在运行GC时，都做了1秒钟的延时，因为JVM的垃圾回收是在GC的线程中运行的。程序运行后输出如下，注意其中的<code>Finalizer</code>线程的输出：</p>
+<blockquote>
+<p>[           main] object is : class com.example.test.lang.ref.WeakReferenceTest$1@1711574013</p>
+<p>[           main] reference.get() is Referenced Object In WeakReference Test</p>
+<p>[       Thread-0] object enqueued and removed from heap ...</p>
+<p>[      Finalizer] finalize Referenced Object In WeakReference Test</p>
+<p>[           main] GC 1 END ...........</p>
+<p>[           main] GC 2 END ...........</p>
+</blockquote>
+<p>上述<code>Thread-0</code>线程中的输出，可以看出，弱可及对象在加入引用队列之后，弱引用的<code>referent</code>被设置为<code>null</code>。如果在对象的<code>finalize()</code>方法中不再有强引用复活此object，就会被GC回收内存。</p>
+<h2 id="Phantom-references"><a href="#Phantom-references" class="headerlink" title="Phantom references"></a>Phantom references</h2><h3 id="PhantomReference-javadoc"><a href="#PhantomReference-javadoc" class="headerlink" title="PhantomReference javadoc"></a>PhantomReference javadoc</h3><blockquote>
+<p>Phantom reference objects, which are enqueued after the collector determines that their referents may otherwise be reclaimed.</p>
+<p>Phantom references are most often used for scheduling pre-mortem cleanup actions in a more flexible way than is possible with the Java finalization mechanism.</p>
+<p>If the garbage collector determines at a certain point in time that the referent of a phantom reference is phantom reachable, then at that time or at some later time it will enqueue the reference.</p>
+<p>In order to ensure that a reclaimable object remains so, the referent of a phantom reference may not be retrieved:</p>
+<p>The get method of a phantom reference always returns null.</p>
+<p>Unlike soft and weak references, phantom references are not automatically cleared by the garbage collector as they are enqueued. An object that is reachable via phantom references will remain so until all such references are cleared or themselves become unreachable.</p>
+</blockquote>
+<p>如果GC发现某个虚引用指向的对象已经没有其他引用时，即为虚可及对象，并在之后会将虚引用加入引用队列。</p>
+<p>虚引用会把引用指向的对象写进<code>referent</code>，但是<code>get()</code>方法返回结果永远为<code>null</code>。</p>
+<h3 id="PhantomReference-测试程序一"><a href="#PhantomReference-测试程序一" class="headerlink" title="PhantomReference 测试程序一"></a>PhantomReference 测试程序一</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PhantomReferenceTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(PhantomReferenceTest.class);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Object object = <span class="keyword">new</span> Object() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">"Referenced Object In PhantomReference Test"</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">                LOGGER.info(<span class="string">"finalize &#123;&#125;"</span>, <span class="keyword">this</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        LOGGER.info(<span class="string">"object is : &#123;&#125;@&#123;&#125;"</span>, object.getClass(), object.hashCode());</div><div class="line">        <span class="keyword">final</span> ReferenceQueue queue = <span class="keyword">new</span> ReferenceQueue&lt;String&gt;();</div><div class="line"></div><div class="line">        ReferenceQueueMonitor monitor = <span class="keyword">new</span> ReferenceQueueMonitor(queue);</div><div class="line">        <span class="keyword">new</span> Thread(monitor).start();</div><div class="line"></div><div class="line">        Reference&lt;Object&gt; reference = <span class="keyword">new</span> PhantomReference&lt;Object&gt;(object, queue);</div><div class="line"></div><div class="line">        LOGGER.info(<span class="string">"reference.get() is &#123;&#125;"</span>, reference.get());</div><div class="line">        object = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">3</span>; i++) &#123;</div><div class="line">            System.gc();</div><div class="line">            <span class="comment">// 第1次GC发生时，就触发了对象的 finalize() 方法</span></div><div class="line">            <span class="comment">// 但是对象仍然存在于heap上，下一次GC才会被回收</span></div><div class="line">            TimeUnit.SECONDS.sleep(<span class="number">1</span>); <span class="comment">// 等待GC线程运行1秒钟</span></div><div class="line">            LOGGER.info(<span class="string">"GC &#123;&#125; END ..........."</span>, i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行以上程序，输出结果如下：</p>
+<blockquote>
+<p>[           main] object is : class com.example.test.lang.ref.PhantomReferenceTest$1@1711574013</p>
+<p>[           main] reference.get() is null</p>
+<p>[      Finalizer] finalize Referenced Object In PhantomReference Test</p>
+<p>[           main] GC 1 END ...........</p>
+<p>[       Thread-0] object enqueued and object is still in heap : Referenced Object In PhantomReference Test</p>
+<p>[       Thread-0] GC will collect: class com.example.test.lang.ref.PhantomReferenceTest$1@1711574013</p>
+<p>[           main] GC 2 END ...........</p>
+</blockquote>
+<p>从以上输出可以看到：</p>
+<ol>
+<li><code>PhantomReference</code>的<code>get()</code>方法永远返回的是<code>null</code>，即虚引用不能获得实际对象。</li>
+<li>因为object对象覆写了<code>Object#finalize()</code>方法，第1次GC时并不会直接回收对象，标记对象为<code>finalizable</code>，并且在Finalizer线程执行<code>finalize()</code>方法。</li>
+<li>第2次GC时，将对象加入到引用队列中，并且等待GC回收object对象。</li>
+</ol>
+<p>从上面的执行结果可以看到，<code>PhantomReference</code>与<code>WeakReference</code>最大的区别主要有以下几点：</p>
+<ol>
+<li>虚引用指向的对象不能通过<code>reference.get()</code>方法获取。</li>
+<li><code>PhantomReference</code>中的<code>referent</code>对象不会被置为<code>null</code>，在引用队列中仍然可以访问到虚引用指向的对象，所以虚引用仍然会造成内存溢出，而弱引用是肯定要被GC回收的，因而不会产生内存溢出。</li>
+<li>GC不会直接将<code>PhantomReference</code>对象的引用目标clear掉，但是GC会不用调用<code>Reference.clear()</code>方法而直接将软引用和弱引用的引用目标clear掉。</li>
+</ol>
+<h3 id="PhantomReference-测试程序二"><a href="#PhantomReference-测试程序二" class="headerlink" title="PhantomReference 测试程序二"></a>PhantomReference 测试程序二</h3><p>如上例所示，一个覆写了<code>finalize()</code>方法的对象如果想要被回收掉，需要经历二个单独的垃圾回收周期。</p>
+<p>如果上述示例中的<code>object</code>对象没有覆盖<code>finalize()</code>方法，则1次GC之后对象就被回收。</p>
+<p>将上述程序中的<code>finalize()</code>中的代码注释掉，如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PhantomReferenceTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(PhantomReferenceTest.class);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Object object = <span class="keyword">new</span> Object() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">"Referenced Object In PhantomReference Test"</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">                <span class="comment">// LOGGER.info("finalize &#123;&#125;", this);</span></div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        LOGGER.info(<span class="string">"object is : &#123;&#125;@&#123;&#125;"</span>, object.getClass(), object.hashCode());</div><div class="line">        <span class="keyword">final</span> ReferenceQueue queue = <span class="keyword">new</span> ReferenceQueue&lt;String&gt;();</div><div class="line"></div><div class="line">        ReferenceQueueMonitor monitor = <span class="keyword">new</span> ReferenceQueueMonitor(queue);</div><div class="line">        <span class="keyword">new</span> Thread(monitor).start();</div><div class="line"></div><div class="line">        Reference&lt;Object&gt; reference = <span class="keyword">new</span> PhantomReference&lt;Object&gt;(object, queue);</div><div class="line"></div><div class="line">        LOGGER.info(<span class="string">"reference.get() is &#123;&#125;"</span>, reference.get());</div><div class="line">        object = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">3</span>; i++) &#123;</div><div class="line">            System.gc();</div><div class="line">            <span class="comment">// 第1次GC发生时，就触发了对象的 finalize() 方法</span></div><div class="line">            <span class="comment">// 但是对象仍然存在于heap上，下一次GC才会被回收</span></div><div class="line">            TimeUnit.SECONDS.sleep(<span class="number">1</span>); <span class="comment">// 等待GC线程运行1秒钟</span></div><div class="line">            LOGGER.info(<span class="string">"GC &#123;&#125; END ..........."</span>, i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行程序输出如下：</p>
+<blockquote>
+<p>[           main] object is : class com.example.test.lang.ref.PhantomReferenceTest$1@1711574013</p>
+<p>[           main] reference.get() is null</p>
+<p>[       Thread-0] object enqueued and object is still in heap : Referenced Object In PhantomReference Test</p>
+<p>[       Thread-0] GC will collect: class com.example.test.lang.ref.PhantomReferenceTest$1@1711574013</p>
+<p>[           main] GC 1 END ...........</p>
+<p>[           main] GC 2 END ...........</p>
+</blockquote>
+<p>从上述结果可以看到在一个GC周期内，虚引用指向的对象就被GC回收了，所以<code>finalize()</code>方法不建议被重写，去掉<code>finalize()</code>方法可以虚拟机GC变得更加简单。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://community.oracle.com/blogs/enicholas/2006/05/04/understanding-weak-references" target="_blank" rel="external">Understanding Weak References Blog</a></li>
+<li><a href="http://droidyue.com/blog/2014/10/12/understanding-weakreference-in-java/index.html" target="_blank" rel="external">理解Java中的弱引用</a></li>
+<li><a href="http://www.jianshu.com/p/fdd4c16601f9" target="_blank" rel="external">Java中三个引用类SoftReference 、 WeakReference 和 PhantomReference的区别</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-langref/" target="_blank" rel="external">深入探讨 java.lang.ref 包</a></li>
+<li><a href="https://my.oschina.net/tequliapop/blog/549280" target="_blank" rel="external">内存回收</a></li>
+<li><a href="https://www.4e00.com/java/java-garbage-collection.html">Garbage Collection</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2016/10/13/java-jvm-and-gc.html" rel="next" title="java jvm and gc">
+                上一篇：java jvm and gc
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2016/10/25/servlet-request-get-session.html" rel="prev" title="request.getSession()方法说明">
+                下一篇：request.getSession()方法说明
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java四种引用类型"><span class="nav-number">1.</span> <span class="nav-text">java四种引用类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象在内存中的状态"><span class="nav-number">1.1.</span> <span class="nav-text">对象在内存中的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四种引用类型比较"><span class="nav-number">1.2.</span> <span class="nav-text">四种引用类型比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Strong-references"><span class="nav-number">2.</span> <span class="nav-text">Strong references</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FinalReference-以及-Finalizer"><span class="nav-number">2.1.</span> <span class="nav-text">FinalReference 以及 Finalizer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显式GC回收不可达对象"><span class="nav-number">2.2.</span> <span class="nav-text">显式GC回收不可达对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Soft-references"><span class="nav-number">3.</span> <span class="nav-text">Soft references</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SoftReference-javadoc"><span class="nav-number">3.1.</span> <span class="nav-text">SoftReference javadoc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Avoid-Soft-References-for-Caching"><span class="nav-number">3.2.</span> <span class="nav-text">Avoid Soft References for Caching</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SoftReference-测试程序"><span class="nav-number">3.3.</span> <span class="nav-text">SoftReference 测试程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Weak-references"><span class="nav-number">4.</span> <span class="nav-text">Weak references</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#WeakReference-javadoc"><span class="nav-number">4.1.</span> <span class="nav-text">WeakReference javadoc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReferenceQueue-监听线程"><span class="nav-number">4.2.</span> <span class="nav-text">ReferenceQueue 监听线程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phantom-references"><span class="nav-number">5.</span> <span class="nav-text">Phantom references</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PhantomReference-javadoc"><span class="nav-number">5.1.</span> <span class="nav-text">PhantomReference javadoc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PhantomReference-测试程序一"><span class="nav-number">5.2.</span> <span class="nav-text">PhantomReference 测试程序一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PhantomReference-测试程序二"><span class="nav-number">5.3.</span> <span class="nav-text">PhantomReference 测试程序二</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

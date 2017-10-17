@@ -1,0 +1,716 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="INT数据类型整数类型包括：TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT，分别需要8、16、24、32和64位存储空间。 有符号(SIGNED)和无符号数(UNSIGNED)类型占用的存储空间是一样的，性能也是一样的，所以可以根据实际情况采用合适的类型。 MySQL还可以对整数类型定义显示宽度，比如INT(11)。这对于大多数应用程序而言并没有实际意义，它并不是限制值">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql numeric data types">
+<meta property="og:url" content="https://www.4e00.com/mysql/2016/07/10/mysql-numeric-data-types.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="INT数据类型整数类型包括：TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT，分别需要8、16、24、32和64位存储空间。 有符号(SIGNED)和无符号数(UNSIGNED)类型占用的存储空间是一样的，性能也是一样的，所以可以根据实际情况采用合适的类型。 MySQL还可以对整数类型定义显示宽度，比如INT(11)。这对于大多数应用程序而言并没有实际意义，它并不是限制值">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql numeric data types">
+<meta name="twitter:description" content="INT数据类型整数类型包括：TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT，分别需要8、16、24、32和64位存储空间。 有符号(SIGNED)和无符号数(UNSIGNED)类型占用的存储空间是一样的，性能也是一样的，所以可以根据实际情况采用合适的类型。 MySQL还可以对整数类型定义显示宽度，比如INT(11)。这对于大多数应用程序而言并没有实际意义，它并不是限制值">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/mysql/2016/07/10/mysql-numeric-data-types.html"/>
+
+  <title> mysql numeric data types | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                mysql numeric data types
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-07-10T10:00:12+08:00" content="2016-07-10">
+              2016-07-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="INT数据类型"><a href="#INT数据类型" class="headerlink" title="INT数据类型"></a>INT数据类型</h2><p>整数类型包括：<code>TINYINT</code>、<code>SMALLINT</code>、<code>MEDIUMINT</code>、<code>INT</code>、<code>BIGINT</code>，分别需要<code>8</code>、<code>16</code>、<code>24</code>、<code>32</code>和<code>64</code>位存储空间。</p>
+<p>有符号(<code>SIGNED</code>)和无符号数(<code>UNSIGNED</code>)类型占用的存储空间是一样的，性能也是一样的，所以可以根据实际情况采用合适的类型。</p>
+<p>MySQL还可以对整数类型定义显示宽度，比如<code>INT(11)</code>。这对于大多数应用程序而言并没有实际意义，它并不是限制值的范围，只是规定了MySQL的交互工具，如客户端来显示数字的字符数的。对于实际的存储和计算而言，<code>INT(1)</code>和<code>INT(11)</code>是一样的。</p>
+<p>常用的<code>INT</code>类型举例说明一下，像<code>SMALLINT</code>就要慎用，很容易发生数值超过上限而发生存储问题：</p>
+<ol>
+<li>TINYINT能表示从<code>-128</code>到<code>127</code>的整型数据，存储大小为<code>1</code>字节，常用这个类型来表示<code>true/false</code>，虽然实际上<code>-127</code>一共有4个字符，但定义<code>TINYINT</code>字段最常用的形式是<code>TINYINT(1)</code>。</li>
+<li>INT能存储计算<code>-2^31 (-2,147,483,648)</code>到<code>2^31–1 (2,147,483,647)</code>的整型数据，最常使用的字段类型，因为<code>-2147483648</code>字符长度为<code>11</code>，所以INT字段一般定义为<code>INT(11)</code>。</li>
+<li>BIGINT能存储计算<code>-2^63 (-9223372036854775808)</code>到<code>2^63-1 (9223372036854775807)</code>的整型数据，UNSIGNED BIGINT范围为<code>0 ~ 18446744073709551615</code>，所以BIGINT字段一般定义为<code>BIGINT(20)</code>。</li>
+</ol>
+<h2 id="FLOAT-DOUBLE-DECIMAL-NUMERIC类型及区别"><a href="#FLOAT-DOUBLE-DECIMAL-NUMERIC类型及区别" class="headerlink" title="FLOAT/DOUBLE/DECIMAL/NUMERIC类型及区别"></a>FLOAT/DOUBLE/DECIMAL/NUMERIC类型及区别</h2><ol>
+<li>MySQL中存在FLOAT，DOUBLE等非标准数据类型，也有DECIMAL这种标准数据类型。</li>
+<li>单精度FLOAT和双精度DECIMAL类型支持使用标准的浮点运算进行近似计算并保存，DECIMAL类型用于保存精确的小数，实际保存以字符串形式存在。</li>
+<li>MySQL浮点类型可以用<code>type_name(M,D)</code>来表示，<code>M</code>表示该值的最多的所有数字个数（也就是不包括小数点和正负号的数字个数），<code>M</code>的有效范围为<code>1</code>到<code>65</code>，<code>D</code>表示小数点后面的数字长度，<code>D</code>的有效范围为<code>0</code>到<code>30</code>，并且不能大于<code>M</code>，<code>M</code>和<code>D</code>又称为精度<code>precision</code>和标度<code>scale</code>，如<code>FLOAT(7,4)</code>的可显示为<code>-999.9999</code>，MySQL保存值时进行四舍五入，如果插入<code>999.00009</code>，则结果为<code>999.0001</code>。</li>
+<li>FLOAT和DOUBLE在不指定精度时，默认会按照实际的精度来显示，而DECIMAL在不指定精度时，默认整数为10，小数为0。</li>
+<li>这些类型实际上是定义数据的存储类型，在MySQL内部对浮点类型都使用DOUBLE进行计算。</li>
+<li>由于DECIMAL需要额外的空间和计算开销，只有在需要对小数进行精确计算的时候才使用DECIMAL，比如处理金融数据。</li>
+<li>在实际处理金融数据时，可以将数据放大100倍到分或者放大100,000倍到厘进行INT或者BIGINT整数存储和计算，可以避免用FLOAT、DOUBLE计算产生的误差。</li>
+</ol>
+<h3 id="关于NUMERIC-M-D-和DECIMAL-M-D-的说明"><a href="#关于NUMERIC-M-D-和DECIMAL-M-D-的说明" class="headerlink" title="关于NUMERIC(M,D)和DECIMAL(M,D)的说明"></a>关于NUMERIC(M,D)和DECIMAL(M,D)的说明</h3><blockquote>
+<p>The SQL standard requires that the precision of NUMERIC(M,D) be exactly M digits. For DECIMAL(M,D), the standard requires a precision of at least M digits but permits more. In MySQL, DECIMAL(M,D) and NUMERIC(M,D) are the same, and both have a precision of exactly M digits.</p>
+</blockquote>
+<h2 id="实际测试结果及说明"><a href="#实际测试结果及说明" class="headerlink" title="实际测试结果及说明"></a>实际测试结果及说明</h2><p>以下测试代码基于<code>MySQL 5.6.22</code>版本。</p>
+<p>建表语句如下：</p>
+<a id="more"></a>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> real_numeric;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> real_numeric (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">    n1 <span class="built_in">FLOAT</span>(<span class="number">5</span>,<span class="number">2</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</div><div class="line">    n2 <span class="keyword">DOUBLE</span>(<span class="number">5</span>,<span class="number">2</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</div><div class="line">    n3 <span class="built_in">DECIMAL</span>(<span class="number">5</span>,<span class="number">2</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</div><div class="line">    n4 <span class="built_in">NUMERIC</span>(<span class="number">5</span>,<span class="number">2</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</div><div class="line">    n5 <span class="keyword">DOUBLE</span>(<span class="number">9</span>,<span class="number">5</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</div><div class="line">    n6 <span class="built_in">DECIMAL</span>(<span class="number">9</span>,<span class="number">5</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</div><div class="line">    n7 <span class="built_in">REAL</span>(<span class="number">10</span>,<span class="number">5</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</div><div class="line">    n8 <span class="built_in">REAL</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> <span class="keyword">COMMENT</span> <span class="string">'NOT DEFINE PRECISION'</span>,</div><div class="line">    n9 <span class="built_in">DECIMAL</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> <span class="keyword">COMMENT</span> <span class="string">'NOT DEFINE PRECISION'</span>,</div><div class="line">    PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>)</div><div class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>mysql&gt; SHOW CREATE TABLE real_numeric\G</p>
+<p>*************************** 1. row ***************************</p>
+<pre><code>Table: real_numeric
+</code></pre><p>Create Table: CREATE TABLE <code>real_numeric</code> (</p>
+<p>  <code>id</code> int(11) NOT NULL AUTO_INCREMENT,</p>
+<p>  <code>n1</code> float(5,2) NOT NULL DEFAULT &#39;0.00&#39;,</p>
+<p>  <code>n2</code> double(5,2) NOT NULL DEFAULT &#39;0.00&#39;,</p>
+<p>  <code>n3</code> decimal(5,2) NOT NULL DEFAULT &#39;0.00&#39;,</p>
+<p>  <code>n4</code> decimal(5,2) NOT NULL DEFAULT &#39;0.00&#39;,</p>
+<p>  <code>n5</code> double(9,5) NOT NULL DEFAULT &#39;0.00000&#39;,</p>
+<p>  <code>n6</code> decimal(9,5) NOT NULL DEFAULT &#39;0.00000&#39;,</p>
+<p>  <code>n7</code> double(10,5) NOT NULL DEFAULT &#39;0.00000&#39;,</p>
+<p>  <code>n8</code> double NOT NULL DEFAULT &#39;0&#39; COMMENT &#39;NOT DEFINE PRECISION&#39;,</p>
+<p>  <code>n9</code> decimal(10,0) NOT NULL DEFAULT &#39;0&#39; COMMENT &#39;NOT DEFINE PRECISION&#39;,</p>
+<p>  PRIMARY KEY (<code>id</code>)</p>
+<p>) ENGINE=InnoDB DEFAULT CHARSET=utf8</p>
+</blockquote>
+<p>通过<code>SHOW CREATE TABLE</code>可以看到，表定义说一句中<code>n9</code>这个字段已经默认加了小数位长度为0，总长度为10位的精度定义：<code>decimal(10,0)</code>，<code>REAL</code>直接被<code>double</code>所代替。</p>
+<blockquote>
+<p>mysql&gt; INSERT INTO real_numeric(n1, n2, n3, n4, n5, n6, n7, n8, n9) VALUES(123.45, 123.45, 123.45, 123.45, 1234.56789, 1234.56789, 12345.56789, 12345.56789, 1234567890);</p>
+<p>Query OK, 1 row affected (0.00 sec)</p>
+<p>mysql&gt; SELECT * from real_numeric\G</p>
+<p>*************************** 1. row ***************************</p>
+<p>id: 1</p>
+<p>n1: 123.45</p>
+<p>n2: 123.45</p>
+<p>n3: 123.45</p>
+<p>n4: 123.45</p>
+<p>n5: 1234.56789</p>
+<p>n6: 1234.56789</p>
+<p>n7: 12345.56789</p>
+<p>n8: 12345.56789</p>
+<p>n9: 1234567890</p>
+<p>1 row in set (0.00 sec)</p>
+</blockquote>
+<p>可以看到上面的输出结果，<code>n8</code>虽然没有定义字段精度，但是会如实保存数据，但<code>n9</code>则只能保存最多<code>10</code>个数字的整型数值。</p>
+<blockquote>
+<p>mysql&gt; TRUNCATE TABLE real_numeric;</p>
+<p>Query OK, 0 rows affected (0.04 sec)</p>
+<p>-- 注意下面n1, n2, n3, n4这4个值的变化，插入数据库里产生的结果变化。</p>
+<p>mysql&gt; INSERT INTO real_numeric(n1, n2, n3, n4, n5, n6, n7, n8, n9) VALUES(123.456, 1234.56, 1234.56, 1234.5, 1234.56789, 1234.56789, 12345.56789, 12345.56789, 1234567890);</p>
+<p>Query OK, 1 row affected, 3 warnings (0.01 sec)</p>
+<p>mysql&gt; SHOW WARNINGS;</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Code</th>
+<th>Message</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Warning</td>
+<td>1264</td>
+<td>Out of range value for column &#39;n2&#39; at row 1</td>
+</tr>
+<tr>
+<td>Warning</td>
+<td>1264</td>
+<td>Out of range value for column &#39;n3&#39; at row 1</td>
+</tr>
+<tr>
+<td>Warning</td>
+<td>1264</td>
+<td>Out of range value for column &#39;n4&#39; at row 1</td>
+</tr>
+</tbody>
+</table>
+<p>3 rows in set (0.00 sec)</p>
+<p>mysql&gt; SELECT * from real_numeric\G</p>
+<p>*************************** 1. row ***************************</p>
+<p>id: 1</p>
+<p>n1: 123.46</p>
+<p>n2: 999.99</p>
+<p>n3: 999.99</p>
+<p>n4: 999.99</p>
+<p>n5: 1234.56789</p>
+<p>n6: 1234.56789</p>
+<p>n7: 12345.56789</p>
+<p>n8: 12345.56789</p>
+<p>n9: 1234567890</p>
+<p>1 row in set (0.00 sec)</p>
+</blockquote>
+<p>由结果可以看到，<code>n1</code>最后小数位被四舍五入了，<code>n2</code>，<code>n3</code>，<code>n4</code>由于小数点前面的精度已经超过了字段定义的数值范围，最后被保存为字段所允许的最大值<code>999.99</code>。</p>
+<blockquote>
+<p>mysql&gt; TRUNCATE TABLE real_numeric;</p>
+<p>Query OK, 0 rows affected (0.01 sec)</p>
+<p>-- 注意下面n1, n2, n3, n4, n9字段的变化。</p>
+<p>mysql&gt; INSERT INTO real_numeric(n1, n2, n3, n4, n5, n6, n7, n8, n9) VALUES(123.456, 123.456, 123.456, 123.456, 1234.56789, 1234.56789, 12345.56789, 12345.56789, 123456789.6);</p>
+<p>Query OK, 1 row affected, 3 warnings (0.05 sec)</p>
+<p>mysql&gt; SHOW WARNINGS;</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Code</th>
+<th>Message</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Note</td>
+<td>1265</td>
+<td>Data truncated for column &#39;n3&#39; at row 1</td>
+</tr>
+<tr>
+<td>Note</td>
+<td>1265</td>
+<td>Data truncated for column &#39;n4&#39; at row 1</td>
+</tr>
+<tr>
+<td>Note</td>
+<td>1265</td>
+<td>Data truncated for column &#39;n9&#39; at row 1</td>
+</tr>
+</tbody>
+</table>
+<p>3 rows in set (0.00 sec)</p>
+<p>mysql&gt; SELECT * FROM real_numeric\G</p>
+<p>*************************** 1. row ***************************</p>
+<p>id: 1</p>
+<p>n1: 123.46</p>
+<p>n2: 123.46</p>
+<p>n3: 123.46</p>
+<p>n4: 123.46</p>
+<p>n5: 1234.56789</p>
+<p>n6: 1234.56789</p>
+<p>n7: 12345.56789</p>
+<p>n8: 12345.56789</p>
+<p>n9: 123456790</p>
+<p>1 row in set (0.00 sec)</p>
+</blockquote>
+<p>从结果可以看到，<code>n1</code>，<code>n2</code>，<code>n3</code>，<code>n4</code>和<code>n9</code>最后小数位精度都超过了字段定义时的限制，最后数值保存时，小数位被四舍五入了。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/precision-math-decimal-characteristics.html" target="_blank" rel="external">13.21.2 DECIMAL Data Type Characteristics</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/floating-point-types.html" target="_blank" rel="external">12.2.3 Floating-Point Types Approximate Value - FLOAT, DOUBLE</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/mysql/2016/07/09/mysql-date-and-time-representation.html" rel="next" title="mysql-5.6.4 date and time representation">
+                上一篇：mysql-5.6.4 date and time representation
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/macos/2016/07/10/zsh-config-on-mac-os.html" rel="prev" title="zsh config on mac os">
+                下一篇：zsh config on mac os
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#INT数据类型"><span class="nav-number">1.</span> <span class="nav-text">INT数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FLOAT-DOUBLE-DECIMAL-NUMERIC类型及区别"><span class="nav-number">2.</span> <span class="nav-text">FLOAT/DOUBLE/DECIMAL/NUMERIC类型及区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于NUMERIC-M-D-和DECIMAL-M-D-的说明"><span class="nav-number">2.1.</span> <span class="nav-text">关于NUMERIC(M,D)和DECIMAL(M,D)的说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际测试结果及说明"><span class="nav-number">3.</span> <span class="nav-text">实际测试结果及说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

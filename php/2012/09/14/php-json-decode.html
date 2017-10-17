@@ -1,0 +1,561 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="For users of php 5.1.6 or lower. FastJSON.class.php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php json decode implement">
+<meta property="og:url" content="https://www.4e00.com/php/2012/09/14/php-json-decode.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="For users of php 5.1.6 or lower. FastJSON.class.php">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php json decode implement">
+<meta name="twitter:description" content="For users of php 5.1.6 or lower. FastJSON.class.php">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/php/2012/09/14/php-json-decode.html"/>
+
+  <title> php json decode implement | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                php json decode implement
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2012-09-14T15:50:58+08:00" content="2012-09-14">
+              2012-09-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/php/" itemprop="url" rel="index">
+                    <span itemprop="name">php</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>For users of php 5.1.6 or lower.</p>
+<h2 id="FastJSON-class-php"><a href="#FastJSON-class-php" class="headerlink" title="FastJSON.class.php"></a>FastJSON.class.php</h2><a id="more"></a>
+<figure class="highlight php"><table><tr><td class="code"><pre><div class="line"> </div><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment">/**_______________________________________</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *  FastJSON (strict version for PHP 5.2 or greater),</span></div><div class="line"><span class="comment"> *  simple and fast Pear Service_JSON encoder/decoder alternative</span></div><div class="line"><span class="comment"> *  [http://pear.php.net/pepr/pepr-proposal-show.php?id=198]</span></div><div class="line"><span class="comment"> * ---------------------------------------</span></div><div class="line"><span class="comment"> * This class is about two time faster than Pear Service_JSON class.</span></div><div class="line"><span class="comment"> * This class is probably not powerful as Service_JSON but it has</span></div><div class="line"><span class="comment"> * no dependencies and converts correctly ASCII range 0x00 - 0x1F too.</span></div><div class="line"><span class="comment"> * There's any string convertion, just regular RFC specific characters are converted</span></div><div class="line"><span class="comment"> * into \u00XX string.</span></div><div class="line"><span class="comment"> * To don't have problems with other chars try to use utf8_encode($json_encoded_string).</span></div><div class="line"><span class="comment"> * To recieve correctly JSON strings from JavaScript use encodeURIComponent then</span></div><div class="line"><span class="comment"> * use, if is necessary, utef8_decode before JS to PHP convertion.</span></div><div class="line"><span class="comment"> * decode method doesn't returns a standard object class but You can</span></div><div class="line"><span class="comment"> * create the corret class directly with FastJSON::convert method</span></div><div class="line"><span class="comment"> * and with them You can manage JS Date objects too.</span></div><div class="line"><span class="comment"> * ---------------------------------------</span></div><div class="line"><span class="comment"> * Summary of static public methods</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *  convert</span></div><div class="line"><span class="comment"> *          extra, special method</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *  decode</span></div><div class="line"><span class="comment"> *          converts a valid JSON string</span></div><div class="line"><span class="comment"> *          into a native PHP variable</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *  encode</span></div><div class="line"><span class="comment"> *          converts a native php variable</span></div><div class="line"><span class="comment"> *          into a valid JSON string</span></div><div class="line"><span class="comment"> * ---------------------------------------</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * Special FastJSON::convert method Informations</span></div><div class="line"><span class="comment"> * _______________________________________</span></div><div class="line"><span class="comment"> * ---------------------------------------</span></div><div class="line"><span class="comment"> * This method is used by FastJSON::encode method but should be used</span></div><div class="line"><span class="comment"> * to do these convertions too:</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * - JSON string to time() integer:</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *      FastJSON::convert(decodedDate:String):time()</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *  If You recieve a date string rappresentation You</span></div><div class="line"><span class="comment"> *  could convert into respective time() integer.</span></div><div class="line"><span class="comment"> *  Example:</span></div><div class="line"><span class="comment"> *      FastJSON::convert(FastJSON::decode($clienttime));</span></div><div class="line"><span class="comment"> *      // i.e. $clienttime = 2006-11-09T14:42:30</span></div><div class="line"><span class="comment"> *      // returned time will be an integer useful with gmdate or date</span></div><div class="line"><span class="comment"> *      // to create, for example, this string</span></div><div class="line"><span class="comment"> *          // Thu Nov 09 2006 14:42:30 GMT+0100 (Rome, Europe)</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * - time() to JSON string:</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *      FastJSON::convert(time():Int32, true:Boolean):JSON Date String format</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *  You could send server time() informations and send them to clients.</span></div><div class="line"><span class="comment"> *  Example:</span></div><div class="line"><span class="comment"> *      FastJSON::convert(time(), true);</span></div><div class="line"><span class="comment"> *      // i.e. 2006-11-09T14:42:30</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * - associative array to generic class:</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *      FastJSON::convert(array(params=&gt;values), new GenericClass):new Instance of GenericClass</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *  With a decoded JSON object You could convert them</span></div><div class="line"><span class="comment"> *  into a new instance of your Generic Class.</span></div><div class="line"><span class="comment"> *  Example:</span></div><div class="line"><span class="comment"> *      class MyClass &#123;</span></div><div class="line"><span class="comment"> *          var $param = "somevalue";</span></div><div class="line"><span class="comment"> *          function MyClass($somevar) &#123;</span></div><div class="line"><span class="comment"> *              $this-&gt;somevar = $somevar;</span></div><div class="line"><span class="comment"> *          &#125;;</span></div><div class="line"><span class="comment"> *          function getVar = function()&#123;</span></div><div class="line"><span class="comment"> *              return $this-&gt;somevar;</span></div><div class="line"><span class="comment"> *          &#125;;</span></div><div class="line"><span class="comment"> *      &#125;;</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *      $instance = new MyClass("example");</span></div><div class="line"><span class="comment"> *      $encoded = FastJSON::encode($instance);</span></div><div class="line"><span class="comment"> *      // &#123;"param":"somevalue"&#125;</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *      $decoded = FastJSON::decode($encoded);</span></div><div class="line"><span class="comment"> *      // $decoded instanceof Object   =&gt; true</span></div><div class="line"><span class="comment"> *      // $decoded instanceof MyClass  =&gt; false</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *      $decoded = FastJSON::convert($decoded, new MyClass("example"));</span></div><div class="line"><span class="comment"> *      // $decoded instanceof Object   =&gt; true</span></div><div class="line"><span class="comment"> *      // $decoded instanceof MyClass  =&gt; true</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *      $decoded-&gt;getVar(); // example</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * ---------------------------------------</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@author</span>      Andrea Giammarchi</span></div><div class="line"><span class="comment"> * <span class="doctag">@site</span>        http://www.devpro.it/</span></div><div class="line"><span class="comment"> * <span class="doctag">@version</span>     0.4 [fixed string convertion problems, add stdClass optional convertion instead of associative array (used by default)]</span></div><div class="line"><span class="comment"> * <span class="doctag">@requires</span>    anything</span></div><div class="line"><span class="comment"> * <span class="doctag">@compatibility</span>   PHP &gt;= 5</span></div><div class="line"><span class="comment"> * <span class="doctag">@license</span></span></div><div class="line"><span class="comment"> * ---------------------------------------</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * Copyright (c) 2006 - 2007 Andrea Giammarchi</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * Permission is hereby granted, free of charge,</span></div><div class="line"><span class="comment"> * to any person obtaining a copy of this software and associated</span></div><div class="line"><span class="comment"> * documentation files (the "Software"),</span></div><div class="line"><span class="comment"> * to deal in the Software without restriction,</span></div><div class="line"><span class="comment"> * including without limitation the rights to use, copy, modify, merge,</span></div><div class="line"><span class="comment"> * publish, distribute, sublicense, and/or sell copies of the Software,</span></div><div class="line"><span class="comment"> * and to permit persons to whom the Software is furnished to do so,</span></div><div class="line"><span class="comment"> * subject to the following conditions:</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * The above copyright notice and this permission notice shall be included</span></div><div class="line"><span class="comment"> * in all copies or substantial portions of the Software.</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,</span></div><div class="line"><span class="comment"> * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span></div><div class="line"><span class="comment"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.</span></div><div class="line"><span class="comment"> * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,</span></div><div class="line"><span class="comment"> * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span></div><div class="line"><span class="comment"> * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE</span></div><div class="line"><span class="comment"> * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span></div><div class="line"><span class="comment"> * _______________________________________</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FastJSON</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// public methods</span></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * public static method</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     *  FastJSON::convert(params:* [, result:Instance]):*</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span>   *   String or Object</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span>   Instance    optional new generic class instance if first</span></div><div class="line"><span class="comment">     *              parameter is an object.</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span>  *   time() value or new Instance with object parameters.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@note</span>    please read Special FastJSON::convert method Informations</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">convert</span><span class="params">($params, $result = null)</span></span>&#123;</div><div class="line">        <span class="keyword">switch</span>(gettype($params))&#123;</div><div class="line">            <span class="keyword">case</span>    <span class="string">'array'</span>:</div><div class="line">                    $tmp = <span class="keyword">array</span>();</div><div class="line">                    <span class="keyword">foreach</span>($params <span class="keyword">as</span> $key =&gt; $value) &#123;</div><div class="line">                        <span class="keyword">if</span>(($value = FastJSON::encode($value)) !== <span class="string">''</span>)</div><div class="line">                            array_push($tmp, FastJSON::encode(strval($key)).<span class="string">':'</span>.$value);</div><div class="line">                    &#125;;</div><div class="line">                    $result = <span class="string">'&#123;'</span>.implode(<span class="string">','</span>, $tmp).<span class="string">'&#125;'</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span>    <span class="string">'boolean'</span>:</div><div class="line">                    $result = $params ? <span class="string">'true'</span> : <span class="string">'false'</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span>    <span class="string">'double'</span>:</div><div class="line">            <span class="keyword">case</span>    <span class="string">'float'</span>:</div><div class="line">            <span class="keyword">case</span>    <span class="string">'integer'</span>:</div><div class="line">                    $result = $result !== <span class="keyword">null</span> ? strftime(<span class="string">'%Y-%m-%dT%H:%M:%S'</span>, $params) : strval($params);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span>    <span class="string">'NULL'</span>:</div><div class="line">                    $result = <span class="string">'null'</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span>    <span class="string">'string'</span>:</div><div class="line">                    $i = create_function(<span class="string">'&amp;$e, $p, $l'</span>, <span class="string">'return intval(substr($e, $p, $l));'</span>);</div><div class="line">                    <span class="keyword">if</span>(preg_match(<span class="string">'/^[0-9]&#123;4&#125;\-[0-9]&#123;2&#125;\-[0-9]&#123;2&#125;T[0-9]&#123;2&#125;:[0-9]&#123;2&#125;:[0-9]&#123;2&#125;$/'</span>, $params))</div><div class="line">                        $result = mktime($i($params, <span class="number">11</span>, <span class="number">2</span>), $i($params, <span class="number">14</span>, <span class="number">2</span>), $i($params, <span class="number">17</span>, <span class="number">2</span>), $i($params, <span class="number">5</span>, <span class="number">2</span>), $i($params, <span class="number">9</span>, <span class="number">2</span>), $i($params, <span class="number">0</span>, <span class="number">4</span>));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span>    <span class="string">'object'</span>:</div><div class="line">                    $tmp = <span class="keyword">array</span>();</div><div class="line">                    <span class="keyword">if</span>(is_object($result)) &#123;</div><div class="line">                        <span class="keyword">foreach</span>($params <span class="keyword">as</span> $key =&gt; $value)</div><div class="line">                            $result-&gt;$key = $value;</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        $result = get_object_vars($params);</div><div class="line">                        <span class="keyword">foreach</span>($result <span class="keyword">as</span> $key =&gt; $value) &#123;</div><div class="line">                            <span class="keyword">if</span>(($value = FastJSON::encode($value)) !== <span class="string">''</span>)</div><div class="line">                                array_push($tmp, FastJSON::encode($key).<span class="string">':'</span>.$value);</div><div class="line">                        &#125;;</div><div class="line">                        $result = <span class="string">'&#123;'</span>.implode(<span class="string">','</span>, $tmp).<span class="string">'&#125;'</span>;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> $result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * public method</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     *  FastJSON::decode(params:String[, useStdClass:Boolean]):*</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span>   String  valid JSON encoded string</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span>   Bolean  uses stdClass instead of associative array if params contains objects (default false)</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span>  *   converted variable or null</span></div><div class="line"><span class="comment">     *              is params is not a JSON compatible string.</span></div><div class="line"><span class="comment">     * <span class="doctag">@note</span>    This method works in an optimist way. If JSON string is not valid</span></div><div class="line"><span class="comment">     *      the code execution will die using exit.</span></div><div class="line"><span class="comment">     *      This is probably not so good but JSON is often used combined with</span></div><div class="line"><span class="comment">     *      XMLHttpRequest then I suppose that's better more protection than</span></div><div class="line"><span class="comment">     *      just some WARNING.</span></div><div class="line"><span class="comment">     *      With every kind of valid JSON string the old error_reporting level</span></div><div class="line"><span class="comment">     *      and the old error_handler will be restored.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@example</span></span></div><div class="line"><span class="comment">     *      FastJSON::decode('&#123;"param":"value"&#125;'); // associative array</span></div><div class="line"><span class="comment">     *      FastJSON::decode('&#123;"param":"value"&#125;', true); // stdClass</span></div><div class="line"><span class="comment">     *      FastJSON::decode('["one",two,true,false,null,&#123;&#125;,[1,2]]'); // array</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">decode</span><span class="params">($encode, $stdClass = false)</span></span>&#123;</div><div class="line">        $pos = <span class="number">0</span>;</div><div class="line">        $slen = is_string($encode) ? strlen($encode) : <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span>($slen !== <span class="keyword">null</span>) &#123;</div><div class="line">            $error = error_reporting(<span class="number">0</span>);</div><div class="line">            set_error_handler(<span class="keyword">array</span>(<span class="string">'FastJSON'</span>, <span class="string">'__exit'</span>));</div><div class="line">            $result = FastJSON::__decode($encode, $pos, $slen, $stdClass);</div><div class="line">            error_reporting($error);</div><div class="line">            restore_error_handler();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            $result = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">return</span> $result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * public method</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     *  FastJSON::encode(params:*):String</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span>   *       Array, Boolean, Float, Int, Object, String or NULL variable.</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span>  String      JSON genric object rappresentation</span></div><div class="line"><span class="comment">     *              or empty string if param is not compatible.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@example</span></span></div><div class="line"><span class="comment">     *      FastJSON::encode(array(1,"two")); // '[1,"two"]'</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     *      $obj = new MyClass();</span></div><div class="line"><span class="comment">     *      obj-&gt;param = "value";</span></div><div class="line"><span class="comment">     *      obj-&gt;param2 = "value2";</span></div><div class="line"><span class="comment">     *      FastJSON::encode(obj); // '&#123;"param":"value","param2":"value2"&#125;'</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">encode</span><span class="params">($decode)</span></span>&#123;</div><div class="line">        $result = <span class="string">''</span>;</div><div class="line">        <span class="keyword">switch</span>(gettype($decode))&#123;</div><div class="line">            <span class="keyword">case</span>    <span class="string">'array'</span>:</div><div class="line">                    <span class="keyword">if</span>(!count($decode) || array_keys($decode) === range(<span class="number">0</span>, count($decode) - <span class="number">1</span>)) &#123;</div><div class="line">                        $keys = <span class="keyword">array</span>();</div><div class="line">                        <span class="keyword">foreach</span>($decode <span class="keyword">as</span> $value) &#123;</div><div class="line">                            <span class="keyword">if</span>(($value = FastJSON::encode($value)) !== <span class="string">''</span>)</div><div class="line">                                array_push($keys, $value);</div><div class="line">                        &#125;</div><div class="line">                        $result = <span class="string">'['</span>.implode(<span class="string">','</span>, $keys).<span class="string">']'</span>;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        $result = FastJSON::convert($decode);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span>    <span class="string">'string'</span>:</div><div class="line">                    $replacement = FastJSON::__getStaticReplacement();</div><div class="line">                    $result = <span class="string">'"'</span>.str_replace($replacement[<span class="string">'find'</span>], $replacement[<span class="string">'replace'</span>], $decode).<span class="string">'"'</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                    <span class="keyword">if</span>(!is_callable($decode))</div><div class="line">                        $result = FastJSON::convert($decode);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> $result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// private methods, uncommented, sorry</span></div><div class="line">    <span class="keyword">static</span> <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">__getStaticReplacement</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">static</span> $replacement = <span class="keyword">array</span>(<span class="string">'find'</span>=&gt;<span class="keyword">array</span>(), <span class="string">'replace'</span>=&gt;<span class="keyword">array</span>());</div><div class="line">        <span class="keyword">if</span>($replacement[<span class="string">'find'</span>] == <span class="keyword">array</span>()) &#123;</div><div class="line">            <span class="keyword">foreach</span>(array_merge(range(<span class="number">0</span>, <span class="number">7</span>), <span class="keyword">array</span>(<span class="number">11</span>), range(<span class="number">14</span>, <span class="number">31</span>)) <span class="keyword">as</span> $v) &#123;</div><div class="line">                $replacement[<span class="string">'find'</span>][] = chr($v);</div><div class="line">                $replacement[<span class="string">'replace'</span>][] = <span class="string">"\\u00"</span>.sprintf(<span class="string">"%02x"</span>, $v);</div><div class="line">            &#125;</div><div class="line">            $replacement[<span class="string">'find'</span>] = array_merge(<span class="keyword">array</span>(chr(<span class="number">0x5c</span>), chr(<span class="number">0x2F</span>), chr(<span class="number">0x22</span>), chr(<span class="number">0x0d</span>), chr(<span class="number">0x0c</span>), chr(<span class="number">0x0a</span>), chr(<span class="number">0x09</span>), chr(<span class="number">0x08</span>)), $replacement[<span class="string">'find'</span>]);</div><div class="line">            $replacement[<span class="string">'replace'</span>] = array_merge(<span class="keyword">array</span>(<span class="string">'\\\\'</span>, <span class="string">'\\/'</span>, <span class="string">'\\"'</span>, <span class="string">'\r'</span>, <span class="string">'\f'</span>, <span class="string">'\n'</span>, <span class="string">'\t'</span>, <span class="string">'\b'</span>), $replacement[<span class="string">'replace'</span>]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> $replacement;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">__decode</span><span class="params">(&amp;$encode, &amp;$pos, &amp;$slen, &amp;$stdClass)</span></span>&#123;</div><div class="line">        <span class="keyword">switch</span>($encode&#123;$pos&#125;) &#123;</div><div class="line">            <span class="keyword">case</span> <span class="string">'t'</span>:</div><div class="line">                $result = <span class="keyword">true</span>;</div><div class="line">                $pos += <span class="number">4</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'f'</span>:</div><div class="line">                $result = <span class="keyword">false</span>;</div><div class="line">                $pos += <span class="number">5</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'n'</span>:</div><div class="line">                $result = <span class="keyword">null</span>;</div><div class="line">                $pos += <span class="number">4</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'['</span>:</div><div class="line">                $result = <span class="keyword">array</span>();</div><div class="line">                ++$pos;</div><div class="line">                <span class="keyword">while</span>($encode&#123;$pos&#125; !== <span class="string">']'</span>) &#123;</div><div class="line">                    array_push($result, FastJSON::__decode($encode, $pos, $slen, $stdClass));</div><div class="line">                    <span class="keyword">if</span>($encode&#123;$pos&#125; === <span class="string">','</span>)</div><div class="line">                        ++$pos;</div><div class="line">                &#125;</div><div class="line">                ++$pos;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'&#123;'</span>:</div><div class="line">                $result = $stdClass ? <span class="keyword">new</span> stdClass : <span class="keyword">array</span>();</div><div class="line">                ++$pos;</div><div class="line">                <span class="keyword">while</span>($encode&#123;$pos&#125; !== <span class="string">'&#125;'</span>) &#123;</div><div class="line">                    $tmp = FastJSON::__decodeString($encode, $pos);</div><div class="line">                    ++$pos;</div><div class="line">                    <span class="keyword">if</span>($stdClass)</div><div class="line">                        $result-&gt;$tmp = FastJSON::__decode($encode, $pos, $slen, $stdClass);</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        $result[$tmp] = FastJSON::__decode($encode, $pos, $slen, $stdClass);</div><div class="line">                    <span class="keyword">if</span>($encode&#123;$pos&#125; === <span class="string">','</span>)</div><div class="line">                        ++$pos;</div><div class="line">                &#125;</div><div class="line">                ++$pos;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'"'</span>:</div><div class="line">                <span class="keyword">switch</span>($encode&#123;++$pos&#125;) &#123;</div><div class="line">                    <span class="keyword">case</span> <span class="string">'"'</span>:</div><div class="line">                        $result = <span class="string">""</span>;</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    <span class="keyword">default</span>:</div><div class="line">                        $result = FastJSON::__decodeString($encode, $pos);</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">                ++$pos;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                $tmp = <span class="string">''</span>;</div><div class="line">                preg_replace(<span class="string">'/^(\-)?([0-9]+)(\.[0-9]+)?([eE]\+[0-9]+)?/e'</span>, <span class="string">'$tmp = "\\1\\2\\3\\4"'</span>, substr($encode, $pos));</div><div class="line">                <span class="keyword">if</span>($tmp !== <span class="string">''</span>) &#123;</div><div class="line">                    $pos += strlen($tmp);</div><div class="line">                    $nint = intval($tmp);</div><div class="line">                    $nfloat = floatval($tmp);</div><div class="line">                    $result = $nfloat == $nint ? $nint : $nfloat;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> $result;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">__decodeString</span><span class="params">(&amp;$encode, &amp;$pos)</span> </span>&#123;</div><div class="line">        $replacement = FastJSON::__getStaticReplacement();</div><div class="line">        $endString = FastJSON::__endString($encode, $pos, $pos);</div><div class="line">        $result = str_replace($replacement[<span class="string">'replace'</span>], $replacement[<span class="string">'find'</span>], substr($encode, $pos, $endString));</div><div class="line">        $pos += $endString;</div><div class="line">        <span class="keyword">return</span> $result;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">__endString</span><span class="params">(&amp;$encode, $position, &amp;$pos)</span> </span>&#123;</div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            $position = strpos($encode, <span class="string">'"'</span>, $position + <span class="number">1</span>);</div><div class="line">        &#125;<span class="keyword">while</span>($position !== <span class="keyword">false</span> &amp;&amp; FastJSON::__slashedChar($encode, $position - <span class="number">1</span>));</div><div class="line">        <span class="keyword">if</span>($position === <span class="keyword">false</span>)</div><div class="line">            trigger_error(<span class="string">''</span>, E_USER_WARNING);</div><div class="line">        <span class="keyword">return</span> $position - $pos;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">__exit</span><span class="params">($str, $a, $b)</span> </span>&#123;</div><div class="line">        <span class="keyword">exit</span>($a.<span class="string">'FATAL: FastJSON decode method failure [malicious or incorrect JSON string]'</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">__slashedChar</span><span class="params">(&amp;$encode, $position)</span> </span>&#123;</div><div class="line">        $pos = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>($encode&#123;$position--&#125; === <span class="string">'\\'</span>)</div><div class="line">            $pos++;</div><div class="line">        <span class="keyword">return</span> $pos % <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://php.net/manual/pl/function.json-decode.php" target="_blank" rel="external">json_decode</a></li>
+<li><a href="http://pear.php.net/pepr/pepr-proposal-show.php?id=198" target="_blank" rel="external">Services_JSON</a></li>
+<li><a href="http://framework.zend.com/manual/en/zend.json.html" target="_blank" rel="external">Zend_JSON</a></li>
+<li><a href="http://www.phpclasses.org/browse/file/17166.html" target="_blank" rel="external">FastJSON</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/php/2012/09/14/php-json-encode.html" rel="next" title="php函数json_encode兼容低版本">
+                上一篇：php函数json_encode兼容低版本
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2012/09/18/unix-programming-art.html" rel="prev" title="unix编程艺术读书笔记">
+                下一篇：unix编程艺术读书笔记
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#FastJSON-class-php"><span class="nav-number">1.</span> <span class="nav-text">FastJSON.class.php</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">2.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

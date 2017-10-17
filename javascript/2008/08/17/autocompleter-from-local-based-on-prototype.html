@@ -1,0 +1,565 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="autocompleter from local based on prototype">
+<meta property="og:url" content="https://www.4e00.com/javascript/2008/08/17/autocompleter-from-local-based-on-prototype.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="html">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.137Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="autocompleter from local based on prototype">
+<meta name="twitter:description" content="html">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2008/08/17/autocompleter-from-local-based-on-prototype.html"/>
+
+  <title> autocompleter from local based on prototype | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                autocompleter from local based on prototype
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2008-08-17T15:02:00+08:00" content="2008-08-17">
+              2008-08-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="html"><a href="#html" class="headerlink" title="html"></a>html</h2><a id="more"></a>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"content"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">form</span>&gt;</span></div><div class="line">        input "a" for test:</div><div class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"message"</span> <span class="attr">name</span>=<span class="string">"message"</span> <span class="attr">size</span>=<span class="string">"30"</span> <span class="attr">type</span>=<span class="string">"text"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"submit"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/path/to/prototype.js"</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">AutoFieldFromLocal = Class.create(&#123;</div><div class="line">    initialize: <span class="function"><span class="keyword">function</span>(<span class="params">element, items</span>) </span>&#123;</div><div class="line">        <span class="keyword">this</span>.element = $(element);</div><div class="line">        <span class="keyword">this</span>.value = <span class="keyword">this</span>.element.value;</div><div class="line">        <span class="keyword">this</span>.items = items;</div><div class="line">        <span class="keyword">this</span>.timer = <span class="literal">null</span>;</div><div class="line">        <span class="keyword">this</span>.observer = <span class="literal">null</span>;</div><div class="line">        <span class="keyword">this</span>.counter = <span class="number">0</span>;</div><div class="line">        <span class="keyword">this</span>.index = <span class="number">0</span>;</div><div class="line">        <span class="keyword">this</span>.listElements = [];</div><div class="line">        <span class="keyword">this</span>.listsObserved = <span class="literal">false</span>;</div><div class="line">        <span class="keyword">this</span>.maskShowed = <span class="literal">false</span>;</div><div class="line">        <span class="keyword">this</span>.divId = <span class="string">"auto_complete_for_"</span> + <span class="keyword">this</span>.element.id;</div><div class="line">        <span class="keyword">this</span>.listsId = <span class="string">"lists_of_"</span> + <span class="keyword">this</span>.element.id;</div><div class="line">        <span class="keyword">this</span>.maskId = <span class="string">"mask_"</span> + <span class="keyword">this</span>.element.id;</div><div class="line">        <span class="keyword">this</span>.element.setAttribute(<span class="string">'autocomplete'</span>, <span class="string">'off'</span>);</div><div class="line">        <span class="keyword">this</span>.insertAfter();</div><div class="line">        <span class="keyword">this</span>.observerStart();</div><div class="line">    &#125;,</div><div class="line">    insertAfter: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">new</span> Insertion.After(<span class="keyword">this</span>.element,</div><div class="line">            <span class="string">'&lt;div id="'</span> + <span class="keyword">this</span>.divId + <span class="string">'" style="position:absolute;background-color:#fff;border:1px solid #888;margin:0;padding:0;display:none;height:200px;opacity:0.90;overflow:auto;overflow-x:hidden;z-index:1;filter:alpha(opacity=90);"&gt;'</span> +</div><div class="line">            <span class="string">'&lt;ul id="'</span> + <span class="keyword">this</span>.listsId + <span class="string">'" style="margin:0;padding:0;list-style-type: none;width:100%;"&gt;&lt;/ul&gt;&lt;/div&gt;'</span> +</div><div class="line">            <span class="string">'&lt;div id="'</span> + <span class="keyword">this</span>.maskId + <span class="string">'" style="position:absolute;background-color:blue;border:1px solid #888;margin:0;padding:0;display:none;height:0;opacity:0;z-index:2;filter:alpha(opacity=0);"/&gt;'</span></div><div class="line">        );</div><div class="line">        <span class="keyword">this</span>.completerDiv = $(<span class="keyword">this</span>.divId);</div><div class="line">        <span class="keyword">this</span>.list = $(<span class="keyword">this</span>.listsId);</div><div class="line">        <span class="keyword">this</span>.mask = $(<span class="keyword">this</span>.maskId);</div><div class="line">    &#125;,</div><div class="line">    observerStart: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// safari/ie中监听keypress时，arrow keys箭头无法正确激活绑定的事件，改用keydown监听</span></div><div class="line">        <span class="comment">// Arrow keys no longer result in keypress events, now processed in keydown default event handler</span></div><div class="line">        <span class="comment">// Reference: https://lists.webkit.org/pipermail/webkit-dev/2007-December/002992.html</span></div><div class="line">        <span class="comment">// keydown/keypress区别参考ppk的文章: http://www.quirksmode.org/dom/events/keys.html</span></div><div class="line">        <span class="keyword">if</span> (Prototype.Browser.WebKit || Prototype.Browser.IE) Event.observe(<span class="keyword">this</span>.element, <span class="string">'keydown'</span>, <span class="keyword">this</span>.renderLists.bindAsEventListener(<span class="keyword">this</span>));</div><div class="line">        <span class="keyword">else</span> Event.observe(<span class="keyword">this</span>.element, <span class="string">'keypress'</span>, <span class="keyword">this</span>.renderLists.bindAsEventListener(<span class="keyword">this</span>));</div><div class="line">        Event.observe(<span class="keyword">this</span>.element, <span class="string">'blur'</span>, <span class="keyword">this</span>.onBlured.bindAsEventListener(<span class="keyword">this</span>));</div><div class="line">        Event.observe(<span class="built_in">document</span>, <span class="string">'mousemove'</span>, <span class="keyword">this</span>.hideMask.bindAsEventListener(<span class="keyword">this</span>));</div><div class="line">    &#125;,</div><div class="line">    addListsObserver: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</div><div class="line">        <span class="keyword">this</span>.listElements.each(<span class="function"><span class="keyword">function</span>(<span class="params">li</span>) </span>&#123;</div><div class="line">            Event.observe(li, <span class="string">'mouseover'</span>, self.onMouseOverList.bindAsEventListener(self));</div><div class="line">            Event.observe(li, <span class="string">'click'</span>, self.updateField.bindAsEventListener(self));</div><div class="line">        &#125;);</div><div class="line">        <span class="keyword">this</span>.hideMask();</div><div class="line">    &#125;,</div><div class="line">    hideMask: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.maskShowed) &#123;</div><div class="line">            <span class="keyword">this</span>.maskShowed = <span class="literal">false</span>;</div><div class="line">            <span class="keyword">this</span>.mask.style.height = <span class="string">'0px'</span>;</div><div class="line">            <span class="keyword">this</span>.mask.style.display = <span class="string">"none"</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    showMask: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>.maskShowed) &#123;</div><div class="line">            <span class="keyword">this</span>.maskShowed = <span class="literal">true</span>;</div><div class="line">            <span class="keyword">this</span>.mask.style.height = <span class="keyword">this</span>.completerDiv.clientHeight + <span class="string">'px'</span>;</div><div class="line">            <span class="keyword">this</span>.mask.style.display = <span class="string">"block"</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    onBlured: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.timer) clearTimeout(<span class="keyword">this</span>.timer);</div><div class="line">        <span class="keyword">this</span>.timer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            self.hideMask();</div><div class="line">            self.completerDiv.hide();</div><div class="line">        &#125;, <span class="number">100</span>);</div><div class="line">    &#125;,</div><div class="line">    updateField: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">this</span>.element.focus();</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.listElements.length &gt; <span class="number">0</span> &amp;&amp; <span class="keyword">this</span>.index != <span class="number">-1</span>)</div><div class="line">            <span class="keyword">this</span>.element.value = <span class="keyword">this</span>.listElements[<span class="keyword">this</span>.index].innerHTML.replace(<span class="regexp">/&amp;/</span>, <span class="string">"&amp;"</span>);</div><div class="line">        <span class="keyword">this</span>.completerDiv.hide();</div><div class="line">        <span class="keyword">this</span>.hideMask();</div><div class="line">    &#125;,</div><div class="line">    listsShowed: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.completerDiv.style.display.toLowerCase() == <span class="string">'block'</span>;</div><div class="line">    &#125;,</div><div class="line">    onSelectList: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">this</span>.listElements.each(<span class="function"><span class="keyword">function</span>(<span class="params">li</span>) </span>&#123;</div><div class="line">            li.style.backgroundColor = <span class="string">"#fff"</span>;</div><div class="line">        &#125;);</div><div class="line">        <span class="keyword">this</span>.listElements[<span class="keyword">this</span>.index].style.backgroundColor = <span class="string">"#ffb"</span>;</div><div class="line">    &#125;,</div><div class="line">    divScrollTop: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> maxScrollTop = <span class="keyword">this</span>.completerDiv.scrollHeight - <span class="keyword">this</span>.completerDiv.clientHeight;</div><div class="line">        <span class="keyword">var</span> scrollBottom = <span class="keyword">this</span>.completerDiv.clientHeight + <span class="keyword">this</span>.completerDiv.scrollTop;</div><div class="line">        <span class="keyword">var</span> listHeight = <span class="keyword">this</span>.listElements[<span class="number">0</span>] ? <span class="keyword">this</span>.listElements[<span class="number">0</span>].clientHeight : <span class="number">20</span>;</div><div class="line">        <span class="comment">// TODO , get li.clientHeight after insert li element and then remove it if ul list has no li child.</span></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.index == <span class="number">0</span>)</div><div class="line">            <span class="keyword">this</span>.completerDiv.scrollTop = <span class="number">0</span>;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.index == <span class="keyword">this</span>.listElements.length - <span class="number">1</span>)</div><div class="line">            <span class="keyword">this</span>.completerDiv.scrollTop = maxScrollTop;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.index * listHeight &lt; <span class="keyword">this</span>.completerDiv.scrollTop)</div><div class="line">            <span class="keyword">this</span>.completerDiv.scrollTop = <span class="keyword">this</span>.index * listHeight;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.index * listHeight &gt;= scrollBottom)</div><div class="line">            <span class="keyword">this</span>.completerDiv.scrollTop = <span class="keyword">this</span>.completerDiv.scrollTop + listHeight;</div><div class="line">    &#125;,</div><div class="line">    markNextList: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">this</span>.showMask();</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.index &lt; <span class="keyword">this</span>.counter - <span class="number">1</span>) <span class="keyword">this</span>.index++</div><div class="line">        <span class="keyword">else</span> <span class="keyword">this</span>.index = <span class="number">0</span>;</div><div class="line">        <span class="keyword">this</span>.divScrollTop();</div><div class="line">        <span class="keyword">this</span>.onSelectList();</div><div class="line">    &#125;,</div><div class="line">    markPrevList: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">this</span>.showMask();</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.index &gt; <span class="number">0</span>) <span class="keyword">this</span>.index--</div><div class="line">        <span class="keyword">else</span> <span class="keyword">this</span>.index = <span class="keyword">this</span>.counter - <span class="number">1</span>;</div><div class="line">        <span class="keyword">this</span>.divScrollTop();</div><div class="line">        <span class="keyword">this</span>.onSelectList();</div><div class="line">    &#125;,</div><div class="line">    onMouseOverList: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> elementLI = Event.findElement(event, <span class="string">'LI'</span>);</div><div class="line">        <span class="keyword">this</span>.index = <span class="keyword">this</span>.listElements.indexOf(elementLI);</div><div class="line">        <span class="keyword">this</span>.listElements.each(<span class="function"><span class="keyword">function</span>(<span class="params">li</span>) </span>&#123;</div><div class="line">            li.style.backgroundColor = <span class="string">"#fff"</span>;</div><div class="line">        &#125;);</div><div class="line">        elementLI.style.backgroundColor = <span class="string">"#ffb"</span>;</div><div class="line">        <span class="comment">// this.divScrollTop();</span></div><div class="line">    &#125;,</div><div class="line">    renderLists: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">        <span class="keyword">switch</span> (event.keyCode) &#123;</div><div class="line">            <span class="keyword">case</span> Event.KEY_LEFT:</div><div class="line">            <span class="keyword">case</span> Event.KEY_RIGHT:</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            <span class="keyword">case</span> Event.KEY_ESC:</div><div class="line">                <span class="keyword">this</span>.completerDiv.hide();</div><div class="line">                <span class="keyword">this</span>.hideMask();</div><div class="line">                <span class="comment">// esc will also empty input field in ie by default, prevent default event.</span></div><div class="line">                Event.stop(event);</div><div class="line">                <span class="keyword">this</span>.index = <span class="number">-1</span>;</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            <span class="keyword">case</span> Event.KEY_TAB:</div><div class="line">            <span class="keyword">case</span> Event.KEY_RETURN:</div><div class="line">                <span class="keyword">this</span>.updateField();</div><div class="line">                Event.stop(event);</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            <span class="keyword">case</span> Event.KEY_DOWN:</div><div class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.listsShowed()) &#123;</div><div class="line">                    <span class="keyword">this</span>.markNextList();</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line">            <span class="keyword">case</span> Event.KEY_UP:</div><div class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.listsShowed()) &#123;</div><div class="line">                    <span class="keyword">this</span>.markPrevList();</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.observer) clearTimeout(<span class="keyword">this</span>.observer);</div><div class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</div><div class="line">        <span class="keyword">this</span>.observer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            self.onFieldChange(event)</div><div class="line">        &#125;, <span class="number">100</span>);</div><div class="line">    &#125;,</div><div class="line">    onFieldChange: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> value = <span class="keyword">this</span>.element.value.strip();</div><div class="line">        <span class="keyword">var</span> autoWidth = <span class="keyword">this</span>.element.getWidth();</div><div class="line">        <span class="keyword">var</span> find = <span class="literal">false</span>;</div><div class="line">        <span class="keyword">var</span> listItems = <span class="string">""</span>;</div><div class="line">        <span class="keyword">this</span>.counter = <span class="number">0</span>;</div><div class="line">        <span class="keyword">this</span>.index = <span class="number">-1</span>;</div><div class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</div><div class="line">        <span class="keyword">if</span> (Prototype.Browser.IE || <span class="keyword">this</span>.value != value || event.keyCode == Event.KEY_DOWN) &#123;</div><div class="line">            <span class="keyword">this</span>.value = value;</div><div class="line">            <span class="keyword">this</span>.items.each(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>) </span>&#123;</div><div class="line">                <span class="keyword">if</span> (item.include(self.value)) &#123;</div><div class="line">                    self.counter++;</div><div class="line">                    <span class="comment">// li element defaults line-height is different in different browser:</span></div><div class="line">                    <span class="comment">// safari 13px, firefox3 14px</span></div><div class="line">                    <span class="comment">// li width must be set 100% and display block for ie, and ie scrollbar movement has related with li width, sign...</span></div><div class="line">                    <span class="comment">// font size should be little than 14px in ie</span></div><div class="line">                    listItems += <span class="string">"&lt;li style='line-height:14px;padding:3px;margin:0;display:block;width:100%;cursor:default;'&gt;"</span> + item + <span class="string">"&lt;/li&gt;"</span>;</div><div class="line">                    <span class="keyword">if</span> (!find) find = <span class="literal">true</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (find) &#123;</div><div class="line">            <span class="keyword">this</span>.list.innerHTML = listItems;</div><div class="line">            <span class="keyword">var</span> pos = Position.cumulativeOffset(<span class="keyword">this</span>.element);</div><div class="line">            <span class="keyword">this</span>.completerDiv.style.width = <span class="keyword">this</span>.mask.style.width = (autoWidth - <span class="number">2</span>) + <span class="string">"px"</span>;</div><div class="line">            <span class="keyword">this</span>.completerDiv.style.left = <span class="keyword">this</span>.mask.style.left = pos[<span class="number">0</span>] + <span class="string">"px"</span>;</div><div class="line">            <span class="keyword">this</span>.completerDiv.style.top = <span class="keyword">this</span>.mask.style.top = (pos[<span class="number">1</span>] + <span class="keyword">this</span>.element.getHeight() - <span class="number">1</span>) + <span class="string">"px"</span>;</div><div class="line">            <span class="keyword">this</span>.completerDiv.style.display = <span class="string">"block"</span>;</div><div class="line">            <span class="keyword">this</span>.listElements = <span class="keyword">this</span>.list.childElements();</div><div class="line">            <span class="keyword">this</span>.addListsObserver();</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">this</span>.completerDiv.hide();</div><div class="line">            <span class="keyword">this</span>.hideMask();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> contacts = [<span class="string">"aa"</span>, <span class="string">"aaa"</span>, <span class="string">"aaaa"</span>, <span class="string">"abb"</span>, <span class="string">"abbb"</span>, <span class="string">"ac"</span>, <span class="string">"acc"</span>, <span class="string">"accc"</span>, <span class="string">"aac"</span>, <span class="string">"aaac"</span>, <span class="string">"bc"</span>, <span class="string">"ad"</span>, <span class="string">"aad"</span>, <span class="string">"aaad"</span>, <span class="string">"aaaad"</span>, <span class="string">"cdaadc"</span>, <span class="string">"中文字体"</span>, <span class="string">"测试~!@#$%^&amp;*()/?\"\\';"</span>, <span class="string">"北京奥运会"</span>];</div><div class="line"></div><div class="line"><span class="keyword">var</span> af = <span class="keyword">new</span> AutoFieldFromLocal(<span class="string">'message'</span>, contacts);</div></pre></td></tr></table></figure>
+<h2 id="注意几点"><a href="#注意几点" class="headerlink" title="注意几点"></a>注意几点</h2><ol>
+<li>在safari/ie中对于arrow keys事件的处理方式和keydown/keypress二者区别。</li>
+<li>在ie中esc默认行为会将input框中的值一起cancel。</li>
+<li>在firefox中mouseover事件的控制，在用arrow keys移动选项时，用一个蒙板挡住了mouse，以防触发mouseover事件。</li>
+<li>setTimeout()方法中的this需要小心其指向全局的window。</li>
+<li>当y轴出现滚动条时，其实际可以滚动的长度不是element.scrollHeight，而应该是此值减去element.clientHeight。</li>
+<li>IE中控制滚动条用overflow:auto; overflow-x:hidden;</li>
+<li>IE中滚动条和LI元素的宽度有关系，要控制滚动条则需要设置LI宽度为100%。</li>
+<li>对&amp;作特殊处理。</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/javascript/2008/08/14/javascript-date-gettime-shortcuts.html" rel="next" title="javascript gettime() shortcuts">
+                上一篇：javascript gettime() shortcuts
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/javascript/2008/08/22/get-parameters-value-from-url-query-string.html" rel="prev" title="get parameters value from url query string ">
+                下一篇：get parameters value from url query string 
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#html"><span class="nav-number">1.</span> <span class="nav-text">html</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#javascript"><span class="nav-number">2.</span> <span class="nav-text">javascript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意几点"><span class="nav-number">3.</span> <span class="nav-text">注意几点</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

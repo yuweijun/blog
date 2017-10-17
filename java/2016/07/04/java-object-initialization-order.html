@@ -1,0 +1,588 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="存在继承关系的java对象初始化顺序 执行父类静态域和静态初始化块。 执行子类静态域和静态初始化块。 执行父类非静态的实例域和实例初始化块。 执行父类的构造器方法。 执行子类非静态的实例域和实例初始化块。 执行子类的构造器方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java object initialization order">
+<meta property="og:url" content="https://www.4e00.com/java/2016/07/04/java-object-initialization-order.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="存在继承关系的java对象初始化顺序 执行父类静态域和静态初始化块。 执行子类静态域和静态初始化块。 执行父类非静态的实例域和实例初始化块。 执行父类的构造器方法。 执行子类非静态的实例域和实例初始化块。 执行子类的构造器方法。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java object initialization order">
+<meta name="twitter:description" content="存在继承关系的java对象初始化顺序 执行父类静态域和静态初始化块。 执行子类静态域和静态初始化块。 执行父类非静态的实例域和实例初始化块。 执行父类的构造器方法。 执行子类非静态的实例域和实例初始化块。 执行子类的构造器方法。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/07/04/java-object-initialization-order.html"/>
+
+  <title> java object initialization order | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java object initialization order
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-07-04T22:15:18+08:00" content="2016-07-04">
+              2016-07-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="存在继承关系的java对象初始化顺序"><a href="#存在继承关系的java对象初始化顺序" class="headerlink" title="存在继承关系的java对象初始化顺序"></a>存在继承关系的java对象初始化顺序</h2><ol>
+<li>执行父类静态域和静态初始化块。</li>
+<li>执行子类静态域和静态初始化块。</li>
+<li>执行父类非静态的实例域和实例初始化块。</li>
+<li>执行父类的构造器方法。</li>
+<li>执行子类非静态的实例域和实例初始化块。</li>
+<li>执行子类的构造器方法。</li>
+</ol>
+<a id="more"></a>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObjectInitializeOrder</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">new</span> SonClass();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatherClass</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(FatherClass.class.getSimpleName());</div><div class="line"></div><div class="line">    <span class="comment">// 实例属性fatherInstanceVariable和instance block中的instanceBlockInitial()是相同优先级的，看代码顺序</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> fatherInstanceVariable = fatherInstanceVariableInitial();</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> fatherStaticVariable = fatherStaticVariableInitial();</div><div class="line"></div><div class="line">    &#123;</div><div class="line">        instanceBlockInitial();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 这里static的fatherStaticVariable和staticBlockInitial()要看代码顺序，哪个在前就先招待哪个，优先级相同</span></div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        staticBlockInitial();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FatherClass</span><span class="params">()</span> </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"4. FatherClass Constructor invoked by : &#123;&#125;"</span>, <span class="keyword">this</span>.getClass().getSimpleName());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fatherInstanceVariableInitial</span><span class="params">()</span> </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"3. father public instance variable initialized in &#123;&#125; and by : &#123;&#125;"</span>, FatherClass.class.getSimpleName(), <span class="keyword">this</span>.getClass().getSimpleName());</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">fatherStaticVariableInitial</span><span class="params">()</span> </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"1. father public static variable initialized in : &#123;&#125;"</span>, FatherClass.class.getSimpleName());</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">instanceBlockInitial</span><span class="params">()</span> </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"3. father instance block initialized in &#123;&#125; and by : &#123;&#125;"</span>, FatherClass.class.getSimpleName(), <span class="keyword">this</span>.getClass().getSimpleName());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">staticBlockInitial</span><span class="params">()</span> </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"1. father static block initialized in : &#123;&#125;"</span>, FatherClass.class.getSimpleName());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SonClass</span> <span class="keyword">extends</span> <span class="title">FatherClass</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(SonClass.class.getSimpleName());</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> sonInstanceVariable = sonInstanceVariableInitial();</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> sonStaticVariable = sonStaticVariableInitial();</div><div class="line"></div><div class="line">    &#123;</div><div class="line">        sonInstanceBlockInitial();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        sonStaticBlockInitial();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SonClass</span><span class="params">()</span> </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"6. SonClass Constructor invoked by : &#123;&#125;"</span>, <span class="keyword">this</span>.getClass().getSimpleName());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sonInstanceVariableInitial</span><span class="params">()</span> </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"5. son public instance variable initialized in : &#123;&#125;"</span>, <span class="keyword">this</span>.getClass().getSimpleName());</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">sonStaticVariableInitial</span><span class="params">()</span> </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"2. son public static variable initialized in : &#123;&#125;"</span>, SonClass.class.getSimpleName());</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sonInstanceBlockInitial</span><span class="params">()</span> </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"5. son instance block initialized in : &#123;&#125;"</span>, <span class="keyword">this</span>.getClass().getSimpleName());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sonStaticBlockInitial</span><span class="params">()</span> </span>&#123;</div><div class="line">        LOGGER.info(<span class="string">"2. son static block initialized in : &#123;&#125;"</span>, SonClass.class.getSimpleName());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><blockquote>
+<p>1. father public static int  initialized in : FatherClass</p>
+<p>1. father static block initialized in : FatherClass</p>
+<p>2. son public static int  initialized in : SonClass</p>
+<p>2. son static block initialized in : SonClass</p>
+<p>3. father public int  initialized in FatherClass and by : SonClass</p>
+<p>3. father instance block initialized in FatherClass and by : SonClass</p>
+<p>4. FatherClass Constructor invoked by : SonClass</p>
+<p>5. son public int  initialized in : SonClass</p>
+<p>5. son instance block initialized in : SonClass</p>
+<p>6. SonClass Constructor invoked by : SonClass</p>
+</blockquote>
+<h2 id="对象初始化的几点说明"><a href="#对象初始化的几点说明" class="headerlink" title="对象初始化的几点说明"></a>对象初始化的几点说明</h2><ol>
+<li>类的每个基本类型数据成员（包括static成员）都会有一个默认初始值，对象的话为特殊值null。</li>
+<li>无论创建多少个对象，相同类的静态数据都只占用一份存储区域。</li>
+<li>静态域和静态块初始化只在Class对象首次加载的时候进行一次。</li>
+<li>虽然没有显示地使用static关键字，构造器实际上也是静态方法。</li>
+<li>实例初始化块是在构造器之前执行的。</li>
+<li>创建类的第一个对象，或者是类的static域和方法被访问时，会触发类加载。</li>
+<li>如果加载的类有基类，则会加载基类。</li>
+<li>基类的构造器会被自动调用。</li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.javaworld.com/article/2076614/core-java/object-initialization-in-java.html" target="_blank" rel="external">Object initialization in Java</a></li>
+<li><a href="http://docs.oracle.com/javase/specs/jls/se8/html/jls-12.html#jls-12.5" target="_blank" rel="external">Creation of New Class Instances</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2016/07/03/java-thread-interrupt.html" rel="next" title="java thread interrupt mechanism">
+                上一篇：java thread interrupt mechanism
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/mysql/2016/07/09/mysql-date-and-time-representation.html" rel="prev" title="mysql-5.6.4 date and time representation">
+                下一篇：mysql-5.6.4 date and time representation
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#存在继承关系的java对象初始化顺序"><span class="nav-number">1.</span> <span class="nav-text">存在继承关系的java对象初始化顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例"><span class="nav-number">2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行结果"><span class="nav-number">3.</span> <span class="nav-text">运行结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象初始化的几点说明"><span class="nav-number">4.</span> <span class="nav-text">对象初始化的几点说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

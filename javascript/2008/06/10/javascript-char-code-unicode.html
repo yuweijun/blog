@@ -1,0 +1,573 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="unicode实际上是一个编码表，码表中每个字符用一个码点code point表示，unicode目前普遍采用的编码方式是UCS-2，使用2个字节表示有码点的字符，简而言之就是将每一个字符用16位2进制数标识，但是通常都用4位的16进制数标识。javascript语言采用unicode字符集，并使用UCS-2编码方法，例如：  中文字符串&amp;quot;你好&amp;quot;的unicode编码16进制表示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符char code与unicode编码的关系">
+<meta property="og:url" content="https://www.4e00.com/javascript/2008/06/10/javascript-char-code-unicode.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="unicode实际上是一个编码表，码表中每个字符用一个码点code point表示，unicode目前普遍采用的编码方式是UCS-2，使用2个字节表示有码点的字符，简而言之就是将每一个字符用16位2进制数标识，但是通常都用4位的16进制数标识。javascript语言采用unicode字符集，并使用UCS-2编码方法，例如：  中文字符串&amp;quot;你好&amp;quot;的unicode编码16进制表示">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="字符char code与unicode编码的关系">
+<meta name="twitter:description" content="unicode实际上是一个编码表，码表中每个字符用一个码点code point表示，unicode目前普遍采用的编码方式是UCS-2，使用2个字节表示有码点的字符，简而言之就是将每一个字符用16位2进制数标识，但是通常都用4位的16进制数标识。javascript语言采用unicode字符集，并使用UCS-2编码方法，例如：  中文字符串&amp;quot;你好&amp;quot;的unicode编码16进制表示">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2008/06/10/javascript-char-code-unicode.html"/>
+
+  <title> 字符char code与unicode编码的关系 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                字符char code与unicode编码的关系
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2008-06-10T13:30:00+08:00" content="2008-06-10">
+              2008-06-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>unicode实际上是一个编码表，码表中每个字符用一个码点<code>code point</code>表示，unicode目前普遍采用的编码方式是UCS-2，使用2个字节表示有码点的字符，简而言之就是将每一个字符用16位2进制数标识，但是通常都用4位的16进制数标识。javascript语言采用unicode字符集，并使用UCS-2编码方法，例如：</p>
+<ol>
+<li>中文字符串&quot;你好&quot;的unicode编码16进制表示为：\u4f60\u597d;</li>
+<li>中文字符串&quot;你好&quot;的unicode编码2进制表示为：01001111 01100000 01011001 01111101;</li>
+<li>英文字符串&quot;ab&quot;的unicode编码16进制表示为：\u0061\u0062;</li>
+<li>英文字符串&quot;ab&quot;的unicode编码2进制表示为：00000000 1100001 00000000 1100010;</li>
+</ol>
+<p>其中<code>\u</code>是标识unicode码用的，后面的4位16进制数则是对应字符的unicode码点。</p>
+<h2 id="unicode编码规则"><a href="#unicode编码规则" class="headerlink" title="unicode编码规则"></a>unicode编码规则</h2><p>unicode码对每一个字符用4位16进制数表示，具体规则是：将一个字符(char)的高8位与低8位分别取出，转化为16进制数，如果转化的16进制数的长度不足2位，则在其后补0，然后将高、低8位转成的16进制字符串拼接起来并在前面补上<code>\u</code>即可。</p>
+<h2 id="用java代码说明unicode的编码规则"><a href="#用java代码说明unicode的编码规则" class="headerlink" title="用java代码说明unicode的编码规则"></a>用java代码说明unicode的编码规则</h2><a id="more"></a>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Unicode</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">char</span> c = <span class="string">'一'</span>; <span class="comment">// 一(4e00)是unicode中文字符集首字，龥(9fa5)是unicode中文字符集尾字</span></div><div class="line">        <span class="keyword">int</span> i, j;</div><div class="line">        i = c &amp; <span class="number">0xFF</span>;</div><div class="line">        j = c &gt;&gt;&gt; <span class="number">8</span>;</div><div class="line">        System.out.println(<span class="string">"Original character is: "</span> + c);</div><div class="line">        System.out.println(<span class="string">"low 8 bit is: "</span> + i);</div><div class="line">        System.out.println(<span class="string">"high 8 bit is: "</span> + j);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">javac</span> Unicode.java</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">java</span> Unicode</div><div class="line">Original character is: 一</div><div class="line">low 8 bit is: 0</div><div class="line">high 8 bit is: 78</div></pre></td></tr></table></figure>
+<h2 id="javascript版本console示例"><a href="#javascript版本console示例" class="headerlink" title="javascript版本console示例"></a>javascript版本console示例</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">c = <span class="string">'一'</span>.charCodeAt(<span class="number">0</span>)</div><div class="line"><span class="comment">// 19968</span></div><div class="line">i = c &amp; <span class="number">0xFF</span> <span class="comment">// c &amp; 255</span></div><div class="line"><span class="comment">// 0</span></div><div class="line"><span class="comment">// 255的二进制即11111111，高位前8位全为0，那2个数字进行“与”操作之后，高8位就被抹去了</span></div><div class="line">j = c &gt;&gt;&gt; <span class="number">8</span> <span class="comment">// 向右移动8字节，低位的8位就去掉了，只剩下高8位了</span></div><div class="line"><span class="comment">// 78</span></div><div class="line">j.toString(<span class="number">16</span>)</div><div class="line"><span class="comment">// "4e"</span></div><div class="line">i.toString(<span class="number">16</span>)</div><div class="line"><span class="comment">// "0"</span></div></pre></td></tr></table></figure>
+<p>高位<code>78</code>转为16进制为<code>4e</code>，将高、低8位转成的16进制字符串拼接起来即为<code>\u4e00</code>，这就是中文字<code>一</code>的unicode编码。</p>
+<p>在ajax请求返回的responseText或者json数据可以先在服务器端编码为unicode格式传给客户端浏览器，这样客户端的页面无论是什么编码，js都可以很好的处理返回的内容。<br><code>4e00</code>的十进制值为<code>4 * 16 * 16 * 16 + 14 * 16 * 16 + 0 * 16 + 0 = 19968</code></p>
+<p>网页中则可以用<code>&amp;#19968</code>；来表示中文字<code>一</code>，这样不论网页以何种编码，页面始终都可以正常显示，而不会出现乱码。这种方法以前在做wap项目常常将页面上所有中文字都用unicode编码后发布，就是为了避免乱码问题。</p>
+<h2 id="javascript代码，验证字符串中是否包括中文字"><a href="#javascript代码，验证字符串中是否包括中文字" class="headerlink" title="javascript代码，验证字符串中是否包括中文字"></a>javascript代码，验证字符串中是否包括中文字</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">/[\u4e00-\u9fa5]/.test(str)</div></pre></td></tr></table></figure>
+<h2 id="ruby中验证字符串中是否包括中文字"><a href="#ruby中验证字符串中是否包括中文字" class="headerlink" title="ruby中验证字符串中是否包括中文字"></a>ruby中验证字符串中是否包括中文字</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">/[一-龥]/ =~ str</div></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://haoi77.iteye.com/blog/198840" target="_blank" rel="external">http://haoi77.iteye.com/blog/198840</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/javascript/2008/06/10/javascript-number-tosting-method-usage.html" rel="next" title="javascript number tostring方法使用">
+                上一篇：javascript number tostring方法使用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2008/06/13/java-release-versions.html" rel="prev" title="java已发行的版本及版本名称">
+                下一篇：java已发行的版本及版本名称
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#unicode编码规则"><span class="nav-number">1.</span> <span class="nav-text">unicode编码规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用java代码说明unicode的编码规则"><span class="nav-number">2.</span> <span class="nav-text">用java代码说明unicode的编码规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#javascript版本console示例"><span class="nav-number">3.</span> <span class="nav-text">javascript版本console示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#javascript代码，验证字符串中是否包括中文字"><span class="nav-number">4.</span> <span class="nav-text">javascript代码，验证字符串中是否包括中文字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ruby中验证字符串中是否包括中文字"><span class="nav-number">5.</span> <span class="nav-text">ruby中验证字符串中是否包括中文字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,46 +1,1009 @@
----
-layout: default
----
+<!doctype html>
 
-<div class="home">
 
-    <ul class="posts">
-        {% for post in paginator.posts %}
-        <li>
-            <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-            <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
 
-    {% if paginator.total_pages > 1 %}
-    <div class="pagination">
-        {% if paginator.previous_page > 1 %}
-            <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}/">&laquo; Prev</a>
-        {% elsif paginator.previous_page == 1 %}
-            <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&laquo; Prev</a>
-        {% else %}
-            <span>&laquo; Prev</span>
-        {% endif %}
 
-        {% for page in (1..paginator.total_pages) %}
-            {% if page >= 10 %}
-                <!-- {{ page }} -->
-            {% elsif page == paginator.page %}
-                <span>{{ page }}</span>
-            {% elsif page == 1 %}
-                <a href="{{ site.baseurl }}/">1</a>
-            {% else %}
-                <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}/">{{ page }}</a>
-            {% endif %}
-        {% endfor %}
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
-        {% if paginator.next_page %}
-            <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}/">Next &raquo;</a>
-        {% else %}
-            <span>Next &raquo;</span>
-        {% endif %}
-    </div>
-    {% endif %}
 
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="一">
+<meta property="og:url" content="https://www.4e00.com/index.html">
+<meta property="og:site_name" content="一">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/"/>
+
+  <title> 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
 </div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/linux/2017/10/11/byte-order-little-endian-and-big-endian.html" itemprop="url">
+                  byte order - little-endian and big-endian
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-10-11T21:01:42+08:00" content="2017-10-11">
+              2017-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="什么是little-endian和big-endian"><a href="#什么是little-endian和big-endian" class="headerlink" title="什么是little-endian和big-endian"></a>什么是little-endian和big-endian</h2><p><code>字节序</code>(<code>byte order</code>)又称端序或尾序(<code>Endianness</code>)，多字节对象都被存储为连续的字节序列，存储地址内的排列有两个通用规则：</p>
+<ol>
+<li>little-endian: 小端序，就是低位字节放在内存的起始地址，即最低有效位在最高有效位的前面。</li>
+<li>big-endian:    大端序，就是高位字节放在内存的起始地址，即最高有效位在最低有效位的前面。</li>
+</ol>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>比如16进制数字<code>0x12345678</code>(10进制为<code>305419896</code>)在内存中的表示形式为：</p>
+<h4 id="大端模式"><a href="#大端模式" class="headerlink" title="大端模式"></a>大端模式</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">低地址     ------------------------&gt;  高地址</div><div class="line">0x12      |  0x34     |  0x56     |  0x78</div><div class="line">00010010  |  00110100 |  01010110 |  01111000</div></pre></td></tr></table></figure>
+<h4 id="小端模式"><a href="#小端模式" class="headerlink" title="小端模式"></a>小端模式</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">低地址     ------------------------&gt;  高地址</div><div class="line">0x78      |  0x56     |  0x34     |  0x12</div><div class="line">01111000  |  01010110 |  00110100 |  00010010</div></pre></td></tr></table></figure>
+<ol>
+<li>上面2者比较可见，大端模式和直接阅读数字的习惯一致。</li>
+<li>这2个模式中，共同点就是每个字节<code>byte</code>都是由<code>8bit</code>组成，而<code>bit</code>只有2个值，即<code>0</code>和<code>1</code>。</li>
+<li>比如上面<code>0x78</code>在内存中保存在一个字节中，其表现是一样的，其8个bit都是自右向左，和数学数字表示法一样，高位在左边，即<code>01111000</code>。</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/linux/2017/10/11/byte-order-little-endian-and-big-endian.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/java/2017/10/09/last-name-guess-java.html" itemprop="url">
+                  猜姓氏java版
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-10-09T23:14:46+08:00" content="2017-10-09">
+              2017-10-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>猜姓氏一般的都是127个姓之内，以下代码中一共包括400多个姓氏，这个猜姓氏的算法就是将每个姓氏对应一个独一无二的2进制编码。然后按2进制数不同bit位置上是1的进行分组，这样每组开头的数分别是1，2，4，8，16，32，64，128和256，将姓氏出现的那个组的第1个数字加在一起，得到的编号就是对应的姓。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> com.google.common.collect.Lists;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LastNameGuessing</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String[] LAST_NAMES = (<span class="string">"王,李,张,刘,陈,杨,黄,吴,赵,周,徐,孙,马,朱,胡,林,郭,何,高,罗,郑,梁,"</span> +</div><div class="line">            <span class="string">"谢,宋,唐,许,邓,冯,韩,曹,曾,彭,萧,蔡,潘,田,董,袁,于,余,叶,蒋,杜,苏,魏,程,吕,丁,沈,任,姚,卢,傅,钟,姜,"</span> +</div><div class="line">            <span class="string">"崔,谭,廖,范,汪,陆,金,石,戴,贾,韦,夏,邱,方,侯,邹,熊,孟,秦,白,江,阎,薛,尹,段,雷,黎,史,龙,陶,贺,顾,毛,"</span> +</div><div class="line">            <span class="string">"郝,龚,邵,万,钱,严,赖,覃,洪,武,莫,孔,汤,向,常,温,康,施,文,牛,樊,葛,邢,安,齐,易,乔,伍,庞,颜,倪,庄,聂,"</span> +</div><div class="line">            <span class="string">"章,鲁,岳,翟,殷,詹,申,欧,耿,关,兰,焦,俞,左,柳,甘,祝,包,宁,尚,符,舒,阮,柯,纪,梅,童,凌,毕,单,季,裴,霍,"</span> +</div><div class="line">            <span class="string">"涂,成,苗,谷,盛,曲,翁,冉,骆,蓝,路,游,辛,靳,欧阳,管,柴,蒙,鲍,华,喻,祁,蒲,房,滕,屈,饶,解,牟,艾,尤,阳,"</span> +</div><div class="line">            <span class="string">"时,穆,农,司,卓,古,吉,缪,简,车,项,连,芦,麦,褚,娄,窦,戚,岑,景,党,宫,费,卜,冷,晏,席,卫,米,柏,宗,瞿,桂,"</span> +</div><div class="line">            <span class="string">"全,佟,应,臧,闵,苟,邬,边,卞,姬,师,和,仇,栾,隋,商,刁,沙,荣,巫,寇,桑,郎,甄,丛,仲,虞,敖,巩,明,佘,池,查,"</span> +</div><div class="line">            <span class="string">"麻,苑,迟,邝,官,封,谈,匡,鞠,惠,荆,乐,冀,郁,胥,南,班,储,原,栗,燕,楚,鄢,劳,谌,奚,皮,粟,冼,蔺,楼,盘,满,"</span> +</div><div class="line">            <span class="string">"闻,位,厉,仝,区,郜,海,阚,花,权,强,帅,屠,豆,朴,盖,练,廉,禹,井,祖,漆,巴,丰,支,卿,国,狄,平,计,索,宣,晋,"</span> +</div><div class="line">            <span class="string">"相,初,门,雲,容,敬,来,扈,晁,芮,都,普,阙,浦,戈,伏,鹿,薄,邸,雍,辜,羊,阿,乌,母,裘,亓,修,邰,赫,杭,况,那,"</span> +</div><div class="line">            <span class="string">"宿,鲜,印,逯,隆,茹,诸,战,慕,危,玉,银,亢,嵇,公,哈,湛,宾,戎,勾,茅,利,於,呼,居,揭,干,但,尉,冶,斯,元,束,"</span> +</div><div class="line">            <span class="string">"檀,衣,信,展,阴,昝,智,幸,奉,植,衡,富,尧,闭,由,伊,万俟,司马,上官,夏侯,诸葛,东方,赫连,皇甫,尉迟,公羊,"</span> +</div><div class="line">            <span class="string">"澹台,公冶,宗政,濮阳,淳于,单于,太叔,申屠,公孙,仲孙,轩辕,令狐,钟离,宇文,长孙,慕容,鲜于,闾丘,司徒,司空,"</span> +</div><div class="line">            <span class="string">"亓官,司寇,子车,颛孙,端木,巫马,公西,漆雕,乐正,壤驷,公良,拓跋,夹谷,宰父,谷梁,段干,百里,东郭,南门,呼延,"</span> +</div><div class="line">            <span class="string">"羊舌,微生,梁丘,左丘,东门,西门,南宫"</span>).split(<span class="string">","</span>);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> MAX = LAST_NAMES.length; <span class="comment">// 255 or 127，一般的就算127个姓</span></div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> List&lt;List&lt;LastName&gt;&gt; GROUPS = init();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">log</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> base)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>) Math.ceil(Math.log(x) / Math.log(base));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> List&lt;List&lt;LastName&gt;&gt; init() &#123;</div><div class="line">        <span class="keyword">int</span> size = log(MAX + <span class="number">1</span>, <span class="number">2</span>);</div><div class="line">        List&lt;LastName&gt; data = getData();</div><div class="line">        List&lt;LastName&gt; list = data.subList(<span class="number">0</span>, MAX);</div><div class="line">        List&lt;List&lt;LastName&gt;&gt; groups = Lists.newArrayList();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</div><div class="line">            List&lt;LastName&gt; group = Lists.newArrayList();</div><div class="line">            groups.add(group);</div><div class="line">            <span class="keyword">for</span> (LastName t : list) &#123;</div><div class="line">                <span class="keyword">int</span> id = t.getId();</div><div class="line">                <span class="keyword">int</span> b = (id &gt;&gt; i) &amp; <span class="number">0x1</span>; <span class="comment">// 高位取０</span></div><div class="line">                <span class="keyword">if</span> (b == <span class="number">1</span>) &#123;</div><div class="line">                    group.add(t);</div><div class="line">                    String lastName = t.getLastName();</div><div class="line">                    System.out.printf(<span class="string">"%3d\t%s\t"</span>, id, lastName);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            System.out.println(<span class="string">"\n"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> groups;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;LastName&gt; <span class="title">getData</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> length = LAST_NAMES.length;</div><div class="line">        List&lt;LastName&gt; lastNames = Lists.newArrayList();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</div><div class="line">            String s = LAST_NAMES[i];</div><div class="line">            LastName lastName = <span class="keyword">new</span> LastName();</div><div class="line">            lastName.setId(i + <span class="number">1</span>);</div><div class="line">            lastName.setLastName(s);</div><div class="line">            lastNames.add(lastName);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> lastNames;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">query</span><span class="params">(String q)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> size = log(MAX + <span class="number">1</span>, <span class="number">2</span>);</div><div class="line">        String result = <span class="string">""</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</div><div class="line">            List&lt;LastName&gt; group = GROUPS.get(i);</div><div class="line">            <span class="keyword">boolean</span> found = <span class="keyword">false</span>;</div><div class="line">            <span class="keyword">for</span> (LastName g : group) &#123;</div><div class="line">                String lastName = g.getLastName();</div><div class="line">                <span class="keyword">if</span> (lastName.equals(q)) &#123;</div><div class="line">                    found = <span class="keyword">true</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (found) &#123;</div><div class="line">                result = <span class="string">"1"</span> + result;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                result = <span class="string">"0"</span> + result;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        System.out.printf(<span class="string">"%-10s-&gt;%4d:%s%n"</span>, result, Integer.parseInt(result, <span class="number">2</span>), q); <span class="comment">// 10000110 -&gt; 134</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">LastName</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String lastName;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getLastName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> lastName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLastName</span><span class="params">(String lastName)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.lastName = lastName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/java/2017/10/09/last-name-guess-java.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/linux/2017/10/01/linux-performance-tools.html" itemprop="url">
+                  linux performance tools
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-10-01T20:42:46+08:00" content="2017-10-01">
+              2017-10-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <img src="/blog/img/linux/tools/linux-perf-tools.png" title="[linux-perf-tools.png]">
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/linux/2017/10/01/linux-performance-tools.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/linux/2017/09/29/unix-network-programming-charpter-6-io-multiplexing.html" itemprop="url">
+                  Unix network programming charpter 6 - I/O Multiplexing
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-09-29T19:27:23+08:00" content="2017-09-29">
+              2017-09-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Chapter-6-I-O-Multiplexing-The-select-and-poll-Functions"><a href="#Chapter-6-I-O-Multiplexing-The-select-and-poll-Functions" class="headerlink" title="Chapter 6. I/O Multiplexing: The select and poll Functions"></a>Chapter 6. I/O Multiplexing: The select and poll Functions</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>When the TCP client is handling two inputs at the same time: standard input and a TCP socket, we encountered a problem when the client was blocked in a call to <code>fgets</code> (on standard input) and the server process was killed. The server TCP correctly sent a FIN to the client TCP, but since the client process was blocked reading from standard input, it never saw the EOF until it read from the socket (possibly much later).</p>
+<p>We want to be notified if one or more I/O conditions are ready (i.e., input is ready to be read, or the descriptor is capable of taking more output). This capability is called I/O multiplexing and is provided by the <code>select</code> and <code>poll</code> functions, as well as a newer POSIX variation of the former, called <code>pselect</code>.</p>
+<p>I/O multiplexing is typically used in networking applications in the following scenarios:</p>
+<ul>
+<li>When a client is handling multiple descriptors (normally interactive input and a network socket)</li>
+<li>When a client to handle multiple sockets at the same time (this is possible, but rare)</li>
+<li>If a TCP server handles both a listening socket and its connected sockets</li>
+<li>If a server handles both TCP and UDP</li>
+<li>If a server handles multiple services and perhaps multiple protocols</li>
+</ul>
+<p>I/O multiplexing is not limited to network programming. Many nontrivial applications find a need for these techniques.</p>
+<h2 id="I-O-Models"><a href="#I-O-Models" class="headerlink" title="I/O Models"></a>I/O Models</h2><p>We first examine the basic differences in the five I/O models that are available to us under Unix:</p>
+<ul>
+<li>blocking I/O</li>
+<li>nonblocking I/O</li>
+<li>I/O multiplexing (<code>select</code> and <code>poll</code>)</li>
+<li>signal driven I/O (<code>SIGIO</code>)</li>
+<li>asynchronous I/O (the POSIX <code>aio_</code> functions)</li>
+</ul>
+<p>There are normally two distinct phases for an input operation:</p>
+<ol>
+<li>Waiting for the data to be ready. This involves waiting for data to arrive on the network. When the packet arrives, it is copied into a buffer within the kernel.</li>
+<li>Copying the data from the kernel to the process. This means copying the (ready) data from the kernel&#39;s buffer into our application buffer</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/linux/2017/09/29/unix-network-programming-charpter-6-io-multiplexing.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/java/2017/09/23/GoF-relationships-of-23-design-patterns.html" itemprop="url">
+                  GoF - relationships of 23 design patterns
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-09-23T22:11:27+08:00" content="2017-09-23">
+              2017-09-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="设计模式关系图"><a href="#设计模式关系图" class="headerlink" title="设计模式关系图"></a>设计模式关系图</h2><img src="/blog/img/java/design-patterns/gof-23-design-patterns.png" class="image-lg" title="[design-patters-relationships.png]">
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/java/2017/09/23/GoF-relationships-of-23-design-patterns.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/89/">89</a><a class="extend next" rel="next" href="/blog/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

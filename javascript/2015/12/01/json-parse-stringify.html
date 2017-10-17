@@ -1,0 +1,624 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="JSON对象示例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript中json对象及其方法说明">
+<meta property="og:url" content="https://www.4e00.com/javascript/2015/12/01/json-parse-stringify.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="JSON对象示例">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript中json对象及其方法说明">
+<meta name="twitter:description" content="JSON对象示例">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2015/12/01/json-parse-stringify.html"/>
+
+  <title> javascript中json对象及其方法说明 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                javascript中json对象及其方法说明
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2015-12-01T15:25:59+08:00" content="2015-12-01">
+              2015-12-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="JSON对象示例"><a href="#JSON对象示例" class="headerlink" title="JSON对象示例"></a>JSON对象示例</h3><a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> json = &#123;<span class="string">"bindings"</span>: [</div><div class="line">        &#123;<span class="string">"ircEvent"</span>: <span class="string">"PRIVMSG"</span>, <span class="string">"method"</span>: <span class="string">"newURI"</span>, <span class="string">"regex"</span>: <span class="string">"^http://.*"</span>&#125;,</div><div class="line">        &#123;<span class="string">"ircEvent"</span>: <span class="string">"PRIVMSG"</span>, <span class="string">"method"</span>: <span class="string">"deleteURI"</span>, <span class="string">"regex"</span>: <span class="string">"^delete.*"</span>&#125;,</div><div class="line">        &#123;<span class="string">"ircEvent"</span>: <span class="string">"PRIVMSG"</span>, <span class="string">"method"</span>: <span class="string">"randomURI"</span>, <span class="string">"regex"</span>: <span class="string">"^random.*"</span>&#125;</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="JSON文本转对象"><a href="#JSON文本转对象" class="headerlink" title="JSON文本转对象"></a>JSON文本转对象</h3><p>ie6/ie7中不支持<code>JSON.parse()</code>方法，所以使用以下方式将JSON文本转化为对象。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = <span class="built_in">eval</span>(<span class="string">'('</span> + myJSONtext + <span class="string">')'</span>);</div></pre></td></tr></table></figure>
+<h2 id="JSON-stringify-Function"><a href="#JSON-stringify-Function" class="headerlink" title="JSON.stringify Function"></a>JSON.stringify Function</h2><p><code>JSON.stringify()</code>方法可以将任意的javascript值序列化成JSON字符串。语法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">JSON</span>.stringify(value [, replacer] [, space])</div></pre></td></tr></table></figure>
+<h3 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h3><ol>
+<li>value: 将要序列化成 JSON 字符串的值，通常是对象或者数组。<ol>
+<li>非数组对象的属性不能保证以特定的顺序出现在序列化后的字符串中。</li>
+<li>布尔值、数字、字符串的包装对象在序列化过程中会自动转换成对应的原始值。</li>
+<li>undefined、任意的函数以及 symbol 值，在序列化过程中会被忽略（出现在非数组对象的属性值中时）或者被转换成 null（出现在数组中时）。</li>
+<li>所有以 symbol 为属性键的属性都会被完全忽略掉，即便 replacer 参数中强制指定包含了它们。</li>
+<li>不可枚举的属性会被忽略。</li>
+</ol>
+</li>
+<li>replacer: 可选<ol>
+<li>如果该参数是一个函数，则在序列化过程中，对象属性的键和值会作为参数传入此函数，最后返回经过该函数的转换和处理后的值，替代原先传入的值。</li>
+<li>如果返回<code>undefined</code>，则对应的属性键就会被忽略。</li>
+<li>如果是根节点，返回空字符串<code>&quot;&quot;</code>。</li>
+<li>如果该参数是一个数组，则只有包含在这个数组中的属性名才会被序列化到最终的JSON字符串中，并且按此数组中的属性名顺序进行转化。</li>
+</ol>
+</li>
+<li>space: 可选，指定缩进用的空白字符串，用于美化输出（pretty-print）。<ol>
+<li>space为空，则返回字符串不会包括多余的空白字符。</li>
+<li>space是个数字，则返回结果中每层的属性名前会有对应的空格数量，超过10个空格按10个计算。</li>
+<li>space是<code>\t</code>，则返回结果中每层会按<code>tab</code>进行缩进排版。</li>
+<li>space是其他字符，则返回结果中每层的属性名前会显示这些字符，只保留10个字符，多余的被忽略。</li>
+<li>以下字符必须转义，<code>&quot;</code>，<code>\</code>，<code>\b</code>，<code>\f</code>，<code>\n</code>，<code>\r</code>，<code>\t</code>，<code>\uhhhh</code>。</li>
+</ol>
+</li>
+</ol>
+<h3 id="JSON-stringify-示例"><a href="#JSON-stringify-示例" class="headerlink" title="JSON.stringify()示例"></a>JSON.stringify()示例</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">JSON</span>.stringify(&#123;&#125;);                        <span class="comment">// '&#123;&#125;'</span></div><div class="line"><span class="built_in">JSON</span>.stringify(<span class="literal">true</span>);                      <span class="comment">// 'true'</span></div><div class="line"><span class="built_in">JSON</span>.stringify(<span class="string">"foo"</span>);                     <span class="comment">// '"foo"'</span></div><div class="line"><span class="built_in">JSON</span>.stringify([<span class="number">1</span>, <span class="string">"false"</span>, <span class="literal">false</span>]);       <span class="comment">// '[1,"false",false]'</span></div><div class="line"><span class="built_in">JSON</span>.stringify(&#123; <span class="attr">x</span>: <span class="number">5</span> &#125;);                  <span class="comment">// '&#123;"x":5&#125;'</span></div><div class="line"></div><div class="line"><span class="built_in">JSON</span>.stringify(&#123;<span class="attr">x</span>: <span class="number">5</span>, <span class="attr">y</span>: <span class="number">6</span>&#125;);</div><div class="line"><span class="comment">// '&#123;"x":5,"y":6&#125;' 或者 '&#123;"y":6,"x":5&#125;' 都可能</span></div></pre></td></tr></table></figure>
+<p>布尔值、数字、字符串的包装对象在序列化过程中会自动转换成对应的原始值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">JSON</span>.stringify([<span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">1</span>), <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"false"</span>), <span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">false</span>)]);</div><div class="line"><span class="comment">// '[1,"false",false]'</span></div></pre></td></tr></table></figure>
+<p><code>undefined</code>、任意的<code>function</code>以及<code>symbol</code>值，在序列化过程中会被忽略。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">JSON</span>.stringify(&#123;<span class="attr">x</span>: <span class="literal">undefined</span>, <span class="attr">y</span>: <span class="built_in">Object</span>, <span class="attr">z</span>: <span class="built_in">Symbol</span>(<span class="string">""</span>)&#125;);</div><div class="line"><span class="comment">// '&#123;&#125;'</span></div><div class="line"><span class="built_in">JSON</span>.stringify([<span class="literal">undefined</span>, <span class="built_in">Object</span>, <span class="built_in">Symbol</span>(<span class="string">""</span>)]);</div><div class="line"><span class="comment">// '[null,null,null]'</span></div><div class="line"><span class="built_in">JSON</span>.stringify(&#123;[<span class="built_in">Symbol</span>(<span class="string">"foo"</span>)]: <span class="string">"foo"</span>&#125;);</div><div class="line"><span class="comment">// '&#123;&#125;'</span></div><div class="line"><span class="built_in">JSON</span>.stringify(&#123;[<span class="built_in">Symbol</span>.for(<span class="string">"foo"</span>)]: <span class="string">"foo"</span>&#125;, [<span class="built_in">Symbol</span>.for(<span class="string">"foo"</span>)]);</div><div class="line"><span class="comment">// '&#123;&#125;'</span></div><div class="line"><span class="built_in">JSON</span>.stringify(&#123;[<span class="built_in">Symbol</span>.for(<span class="string">"foo"</span>)]: <span class="string">"foo"</span>&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">k, v</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> k === <span class="string">"symbol"</span>)&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"a symbol"</span>;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"><span class="comment">// '&#123;&#125;'</span></div></pre></td></tr></table></figure>
+<p>不可枚举的属性默认会被忽略。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">JSON</span>.stringify( <span class="built_in">Object</span>.create(<span class="literal">null</span>, &#123; <span class="attr">x</span>: &#123; <span class="attr">value</span>: <span class="string">'x'</span>, <span class="attr">enumerable</span>: <span class="literal">false</span> &#125;, <span class="attr">y</span>: &#123; <span class="attr">value</span>: <span class="string">'y'</span>, <span class="attr">enumerable</span>: <span class="literal">true</span> &#125; &#125;) );</div><div class="line"><span class="comment">// '&#123;"y":"y"&#125;'</span></div></pre></td></tr></table></figure>
+<h3 id="toJSON-方法"><a href="#toJSON-方法" class="headerlink" title="toJSON 方法"></a>toJSON 方法</h3><p>如果一个被序列化的对象拥有<code>toJSON</code>方法，那么该<code>toJSON</code>方法就会覆盖该对象默认的序列化行为：不是那个对象被序列化，而是调用<code>toJSON</code>方法后的返回值会被序列化，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    foo: <span class="string">'foo'</span>,</div><div class="line">    toJSON: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">'bar'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="built_in">JSON</span>.stringify(obj);      <span class="comment">// '"bar"'</span></div><div class="line"><span class="built_in">JSON</span>.stringify(&#123;<span class="attr">x</span>: obj&#125;); <span class="comment">// '&#123;"x":"bar"&#125;'</span></div></pre></td></tr></table></figure>
+<p>下面的例子使用制表符<code>\t</code>将对象格式化输出json字符串。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> contact = <span class="keyword">new</span> <span class="built_in">Object</span>();</div><div class="line">contact.firstname = <span class="string">"Jesper"</span>;</div><div class="line">contact.surname = <span class="string">"Aaberg"</span>;</div><div class="line">contact.phone = [<span class="string">"555-0100"</span>, <span class="string">"555-0120"</span>];</div><div class="line"></div><div class="line"><span class="keyword">var</span> memberfilter = <span class="keyword">new</span> <span class="built_in">Array</span>();</div><div class="line">memberfilter[<span class="number">0</span>] = <span class="string">"surname"</span>;</div><div class="line">memberfilter[<span class="number">1</span>] = <span class="string">"phone"</span>;</div><div class="line"><span class="keyword">var</span> jsonText = <span class="built_in">JSON</span>.stringify(contact, memberfilter, <span class="string">"\t"</span>);</div><div class="line"><span class="built_in">console</span>.log(jsonText);</div><div class="line"></div><div class="line"><span class="comment">// Output:</span></div><div class="line"><span class="comment">// &#123; "surname": "Aaberg", "phone": [ "555-0100", "555-0120" ] &#125;</span></div></pre></td></tr></table></figure>
+<p>下面这个例子将对象的属性值全部转成大写形式的。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> continents = <span class="keyword">new</span> <span class="built_in">Array</span>();</div><div class="line">continents[<span class="number">0</span>] = <span class="string">"Europe"</span>;</div><div class="line">continents[<span class="number">1</span>] = <span class="string">"Asia"</span>;</div><div class="line">continents[<span class="number">2</span>] = <span class="string">"Australia"</span>;</div><div class="line">continents[<span class="number">3</span>] = <span class="string">"Antarctica"</span>;</div><div class="line">continents[<span class="number">4</span>] = <span class="string">"North America"</span>;</div><div class="line">continents[<span class="number">5</span>] = <span class="string">"South America"</span>;</div><div class="line">continents[<span class="number">6</span>] = <span class="string">"Africa"</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> jsonText = <span class="built_in">JSON</span>.stringify(continents, replaceToUpper);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">replaceToUpper</span>(<span class="params">key, value</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> value.toString().toUpperCase();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Output:</span></div><div class="line"><span class="comment">// "EUROPE,ASIA,AUSTRALIA,ANTARCTICA,NORTH AMERICA,SOUTH AMERICA,AFRICA"</span></div></pre></td></tr></table></figure>
+<p>以下例子使用<code>toJSON</code>方法实现属性值转大写。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> contact = <span class="keyword">new</span> <span class="built_in">Object</span>();</div><div class="line">contact.firstname = <span class="string">"Jesper"</span>;</div><div class="line">contact.surname = <span class="string">"Aaberg"</span>;</div><div class="line">contact.phone = [<span class="string">"555-0100"</span>, <span class="string">"555-0120"</span>];</div><div class="line"></div><div class="line">contact.toJSON = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> replacement = <span class="keyword">new</span> <span class="built_in">Object</span>();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> val <span class="keyword">in</span> <span class="keyword">this</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> (<span class="keyword">this</span>[val]) === <span class="string">'string'</span>) &#123;</div><div class="line">            replacement[val] = <span class="keyword">this</span>[val].toUpperCase();</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            replacement[val] = <span class="keyword">this</span>[val];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> replacement;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> jsonText = <span class="built_in">JSON</span>.stringify(contact);</div><div class="line"><span class="built_in">console</span>.log(jsonText);</div><div class="line"></div><div class="line"><span class="comment">// Output:</span></div><div class="line"><span class="comment">// &#123;"firstname":"JESPER","surname":"AABERG","phone":["555-0100","555-0120"]&#125;</span></div></pre></td></tr></table></figure>
+<h2 id="JSON-parse-Function"><a href="#JSON-parse-Function" class="headerlink" title="JSON.parse Function"></a>JSON.parse Function</h2><p>JSON.parse() 方法可以将一个 JSON 字符串解析成为一个 javascript 值。在解析过程中，还可以选择性的篡改某些属性的原始解析值。语法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">JSON</span>.parse(text [, reviver])</div></pre></td></tr></table></figure>
+<h3 id="参数说明-1"><a href="#参数说明-1" class="headerlink" title="参数说明"></a>参数说明</h3><ol>
+<li>text: 要解析的JSON字符串。</li>
+<li>reviver: 可选，一个函数，用来转换解析出的属性值。<ol>
+<li>reviver返回合法值，使用此值替换原来的属性值。</li>
+<li>reviver返回<code>null</code>或者<code>undefined</code>，对应属性名被删除。</li>
+</ol>
+</li>
+</ol>
+<h3 id="返回值说明"><a href="#返回值说明" class="headerlink" title="返回值说明"></a>返回值说明</h3><p>从text字符串解析出的一个javascript对象或者数组。</p>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>如果被解析的JSON字符串包含语法错误，则会抛出<code>SyntaxError</code>异常。<code>JSON.parse()</code>不允许逗号结尾，如下例：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">JSON</span>.parse(<span class="string">'[1, 2, 3,]'</span>);</div><div class="line"><span class="comment">// (program):1 Uncaught SyntaxError: Unexpected token ](…)</span></div></pre></td></tr></table></figure>
+<h3 id="示例一，字符串转对象"><a href="#示例一，字符串转对象" class="headerlink" title="示例一，字符串转对象"></a>示例一，字符串转对象</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> jsontext = <span class="string">'&#123;"firstname":"Jesper","surname":"Aaberg","phone":["555-0100","555-0120"]&#125;'</span>;</div><div class="line"><span class="keyword">var</span> contact = <span class="built_in">JSON</span>.parse(jsontext);</div><div class="line"><span class="built_in">console</span>.log(contact.surname + <span class="string">", "</span> + contact.firstname);</div><div class="line"></div><div class="line"><span class="keyword">var</span> arr = [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>];</div><div class="line"><span class="keyword">var</span> str = <span class="built_in">JSON</span>.stringify(arr);</div><div class="line"><span class="built_in">console</span>.log(str);</div><div class="line"></div><div class="line"><span class="keyword">var</span> newArr = <span class="built_in">JSON</span>.parse(str);</div><div class="line"></div><div class="line"><span class="keyword">while</span> (newArr.length &gt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">console</span>.log(newArr.pop() + <span class="string">"&lt;br/&gt;"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="示例二，字符串转成对象"><a href="#示例二，字符串转成对象" class="headerlink" title="示例二，字符串转成对象"></a>示例二，字符串转成对象</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myData = <span class="built_in">JSON</span>.parse(text, <span class="function"><span class="keyword">function</span> (<span class="params">key, value</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> type;</div><div class="line">    <span class="keyword">if</span> (value &amp;&amp; <span class="keyword">typeof</span> value === <span class="string">'object'</span>) &#123;</div><div class="line">        type = value.type;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> type === <span class="string">'string'</span> &amp;&amp; <span class="keyword">typeof</span> <span class="built_in">window</span>[type] === <span class="string">'function'</span>) &#123;</div><div class="line">            <span class="comment">// 可以通过这种方法，将日期字符串转化成js中的Date对象</span></div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> (<span class="built_in">window</span>[type])(value);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> value;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="示例三，ISO日期格式字符串转化成UTC日期对象"><a href="#示例三，ISO日期格式字符串转化成UTC日期对象" class="headerlink" title="示例三，ISO日期格式字符串转化成UTC日期对象"></a>示例三，ISO日期格式字符串转化成UTC日期对象</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> jsontext = <span class="string">'&#123; "hiredate": "2008-01-01T12:00:00Z", "birthdate": "2008-12-25T12:00:00Z" &#125;'</span>;</div><div class="line"><span class="keyword">var</span> dates = <span class="built_in">JSON</span>.parse(jsontext, dateReviver);</div><div class="line"><span class="built_in">console</span>.log(dates.birthdate.toUTCString());</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">dateReviver</span>(<span class="params">key, value</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> a;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> value === <span class="string">'string'</span>) &#123;</div><div class="line">        a = <span class="regexp">/^(\d&#123;4&#125;)-(\d&#123;2&#125;)-(\d&#123;2&#125;)T(\d&#123;2&#125;):(\d&#123;2&#125;):(\d&#123;2&#125;(?:\.\d*)?)Z$/</span>.exec(value);</div><div class="line">        <span class="keyword">if</span> (a) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">Date</span>.UTC(+a[<span class="number">1</span>], +a[<span class="number">2</span>] - <span class="number">1</span>, +a[<span class="number">3</span>], +a[<span class="number">4</span>], +a[<span class="number">5</span>], +a[<span class="number">6</span>]));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> value;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// Output:</span></div><div class="line"><span class="comment">// Thu, 25 Dec 2008 12:00:00 UTC</span></div></pre></td></tr></table></figure>
+<h3 id="示例四，使用reviver函数"><a href="#示例四，使用reviver函数" class="headerlink" title="示例四，使用reviver函数"></a>示例四，使用reviver函数</h3><p>如果指定了<code>reviver</code>函数，则解析出的javascript值（解析值）会经过一次转换后才将被最终返回（返回值）。</p>
+<p>更具体点讲就是：解析值本身以及它所包含的所有属性，会按照一定的顺序（从最最里层的属性开始，一级级往外，最终到达顶层，也就是解析值本身）分别的去调用<code>reviver</code>函数，在调用过程中，当前属性所属的对象会作为<code>this</code>值，当前属性名和属性值会分别作为第一个和第二个参数传入<code>reviver</code>中。如果<code>reviver</code>返回<code>undefined</code>，则当前属性会从所属对象中删除，如果返回了其他值，则返回的值会成为当前属性新的属性值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">JSON</span>.parse(<span class="string">'&#123;"p": 5&#125;'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">k, v</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span>(k === <span class="string">''</span>) <span class="keyword">return</span> v;     <span class="comment">// 如果到了最顶层，则直接返回属性值，</span></div><div class="line">    <span class="keyword">return</span> v * <span class="number">2</span>;              <span class="comment">// 否则将属性值变为原来的 2 倍。</span></div><div class="line">&#125;);                            <span class="comment">// &#123; p: 10 &#125;</span></div><div class="line"></div><div class="line"><span class="built_in">JSON</span>.parse(<span class="string">'&#123;"1": 1, "2": 2,"3": &#123;"4": 4, "5": &#123;"6": 6&#125;&#125;&#125;'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">k, v</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(k); <span class="comment">// 输出当前的属性名，从而得知遍历顺序是从内向外的，</span></div><div class="line">                    <span class="comment">// 最后一个属性名会是个空字符串。</span></div><div class="line">    <span class="keyword">return</span> v;       <span class="comment">// 返回原始属性值，相当于没有传递 reviver 参数。</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.json.org/js.html" target="_blank" rel="external">JSON in javascript</a></li>
+<li><a href="https://msdn.microsoft.com/library/cc836459.aspx" target="_blank" rel="external">JSON.stringify Function</a></li>
+<li><a href="https://msdn.microsoft.com/en-us/library/cc836466.aspx" target="_blank" rel="external">JSON.parse Function</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" target="_blank" rel="external">JSON.stringify</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse" target="_blank" rel="external">JSON.parse</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/web/2015/11/30/gb2312-charset.html" rel="next" title="gb2312简体中文编码表">
+                上一篇：gb2312简体中文编码表
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/nodejs/2015/12/05/node-version-management-n-and-nvm.html" rel="prev" title="nodejs版本管理器n和nvm">
+                下一篇：nodejs版本管理器n和nvm
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON对象示例"><span class="nav-number">1.</span> <span class="nav-text">JSON对象示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON文本转对象"><span class="nav-number">2.</span> <span class="nav-text">JSON文本转对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON-stringify-Function"><span class="nav-number"></span> <span class="nav-text">JSON.stringify Function</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数说明"><span class="nav-number">1.</span> <span class="nav-text">参数说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON-stringify-示例"><span class="nav-number">2.</span> <span class="nav-text">JSON.stringify()示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#toJSON-方法"><span class="nav-number">3.</span> <span class="nav-text">toJSON 方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON-parse-Function"><span class="nav-number"></span> <span class="nav-text">JSON.parse Function</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数说明-1"><span class="nav-number">1.</span> <span class="nav-text">参数说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#返回值说明"><span class="nav-number">2.</span> <span class="nav-text">返回值说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常"><span class="nav-number">3.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例一，字符串转对象"><span class="nav-number">4.</span> <span class="nav-text">示例一，字符串转对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例二，字符串转成对象"><span class="nav-number">5.</span> <span class="nav-text">示例二，字符串转成对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例三，ISO日期格式字符串转化成UTC日期对象"><span class="nav-number">6.</span> <span class="nav-text">示例三，ISO日期格式字符串转化成UTC日期对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例四，使用reviver函数"><span class="nav-number">7.</span> <span class="nav-text">示例四，使用reviver函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number"></span> <span class="nav-text">References</span></a></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

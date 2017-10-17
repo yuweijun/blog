@@ -1,0 +1,590 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="什么是WADLWADL(Web Application Description Language)是为不同的web应用之间提供数据交互的一种协议描述格式，通过WADL协议说明，使得基于HTTP的web应用之间可以进行数据交互。 Web Applicationsweb应用被定义为一种基于HTTP的应用，它们的交互应该能够被计算机处理，然而大多数已经存在的web站点都需要人来识别它们的功能。典型的we">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WADL简介">
+<meta property="og:url" content="https://www.4e00.com/web/2015/12/22/wsdl-wadl-rest-service.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="什么是WADLWADL(Web Application Description Language)是为不同的web应用之间提供数据交互的一种协议描述格式，通过WADL协议说明，使得基于HTTP的web应用之间可以进行数据交互。 Web Applicationsweb应用被定义为一种基于HTTP的应用，它们的交互应该能够被计算机处理，然而大多数已经存在的web站点都需要人来识别它们的功能。典型的we">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WADL简介">
+<meta name="twitter:description" content="什么是WADLWADL(Web Application Description Language)是为不同的web应用之间提供数据交互的一种协议描述格式，通过WADL协议说明，使得基于HTTP的web应用之间可以进行数据交互。 Web Applicationsweb应用被定义为一种基于HTTP的应用，它们的交互应该能够被计算机处理，然而大多数已经存在的web站点都需要人来识别它们的功能。典型的we">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/web/2015/12/22/wsdl-wadl-rest-service.html"/>
+
+  <title> WADL简介 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                WADL简介
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2015-12-22T15:31:35+08:00" content="2015-12-22">
+              2015-12-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是WADL"><a href="#什么是WADL" class="headerlink" title="什么是WADL"></a>什么是WADL</h2><p><code>WADL</code>(Web Application Description Language)是为不同的<code>web应用</code>之间提供数据交互的一种协议描述格式，通过<code>WADL</code>协议说明，使得基于HTTP的<code>web应用</code>之间可以进行数据交互。</p>
+<h3 id="Web-Applications"><a href="#Web-Applications" class="headerlink" title="Web Applications"></a>Web Applications</h3><p><code>web应用</code>被定义为一种基于HTTP的应用，它们的交互应该能够被计算机处理，然而大多数已经存在的web站点都需要人来识别它们的功能。典型的<code>web应用</code>有以下特点：</p>
+<ol>
+<li>基于已经存在的web架构和基础结构</li>
+<li>不依赖于特定的平台和编程语言</li>
+<li>促进了应用的重用（不仅限于浏览器）</li>
+<li>能够和其他的Web应用或桌面应用集成</li>
+<li>使用它们的过程中交换的内容（表象）有明确的语义</li>
+</ol>
+<p>最后一个必须遵守的要求是使用自描述的数据格式，比如<code>XML</code>或<code>JSON</code>。<code>XML</code>尤其适合，因为它允许在特定的应用领域定义特定的模式（complete custom schema）或者利用扩展点把特定的格式片段（custom micro-format）嵌入到一个已经存在的模式。</p>
+<p>鉴于上面<code>web应用</code>的定义，我们能够看出一个应用的下面几个方面能够被机器可处理的格式有效地描述：</p>
+<ol>
+<li>资源的集合：类似在网站站点上提供的资源</li>
+<li>资源之间的关系：描述资源之间的联系，即引用和因果（链接）</li>
+<li>适用于每个资源的方法（Unique Interface）：适用于所有资源的HTTP方法，期望的输入输出以及支持的格式</li>
+<li>资源表象的格式：所支持的MIME类型和数据模式（XMLSchema）的使用</li>
+</ol>
+<h3 id="何时使用WADL"><a href="#何时使用WADL" class="headerlink" title="何时使用WADL"></a>何时使用WADL</h3><p><code>WADL</code>的目的是在web应用之间建立一个<code>契约</code>，此<code>契约</code>说明了应用之间如何来调用对方的数据，有点像是基于XML或JSON的<code>RPC</code>，也在某种程度上实现了类似linux命令行中管道符<code>|</code>的作用。</p>
+<ol>
+<li>如果需要开发的web应用不需要与已有的基于HTTP的应用进行数据交互，那么就用不到<code>WADL</code>。</li>
+<li>如果应用可以很容易集成到已有系统中，并且和开发团队可以密切沟通合作的，也不需要<code>WADL</code>。</li>
+<li>如果需要和很多复杂的，不同部门，甚至不同公司的第三方web应用整合，或者数据交互时，那么此时就需要一份严谨的<code>WADL</code>标准说明。</li>
+<li>如果需要整合一些不再维护的遗留项目，需要找到能与其数据进行交互的合适方式，并提供一份<code>WADL</code>说明供新应用调用。</li>
+</ol>
+<h3 id="WADL和WSDL的区别"><a href="#WADL和WSDL的区别" class="headerlink" title="WADL和WSDL的区别"></a>WADL和WSDL的区别</h3><p><code>WSDL 1.1</code>(Web Services Description Language 1.1)是一个<code>W3C</code>的推荐标准，一般通过<code>SOAP</code>协议提供服务，也可通过<code>SMTP</code>和<code>HTTP</code>协议提供服务，但是除了<code>GET</code>和<code>POST</code>之外，不支持其他HTTP动词。而<code>REST</code>服务提供的请求中需要使用到其他HTTP动词，如<code>PUT</code>，<code>DELETE</code>，所以<code>WSDL 1.1</code>用于提供<code>REST</code>服务，并不是很好的选择。</p>
+<p><code>WSDL 2.0</code>之后，开始支持全部HTTP动词，可以用之于提供<code>REST</code>服务。</p>
+<p><code>WADL</code>是<code>Sun Microsystems</code>提议的一个标准，在提供<code>REST</code>服务时，相比<code>WSDL</code>而言，其更轻量级，更易于理解和编写。</p>
+<h3 id="WADL示例"><a href="#WADL示例" class="headerlink" title="WADL示例"></a>WADL示例</h3><p>以下为一个<code>WADL</code>文档示例，描述了Amazon的<code>Item Search</code>服务：</p>
+<a id="more"></a>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">application</span> <span class="attr">xmlns</span>=<span class="string">"http://wadl.dev.java.net/2009/02"</span></span></div><div class="line"><span class="tag">   <span class="attr">xmlns:aws</span>=<span class="string">"http://webservices.amazon.com/AWSECommerceService/2005-07-26"</span></span></div><div class="line"><span class="tag">   <span class="attr">xmlns:xsd</span>=<span class="string">"http://www.w3.org/2001/XMLSchema"</span></span></div><div class="line"><span class="tag">   <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line"><span class="tag">   <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://wadl.dev.java.net/2009/02 wadl.xsd"</span>&gt;</span></div><div class="line"></div><div class="line">   <span class="tag">&lt;<span class="name">grammars</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">include</span> <span class="attr">href</span>=<span class="string">"AWSECommerceService.xsd"</span>/&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="name">grammars</span>&gt;</span></div><div class="line"></div><div class="line">   <span class="tag">&lt;<span class="name">resources</span> <span class="attr">base</span>=<span class="string">"http://webservices.amazon.com/onca/"</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">resource</span> <span class="attr">path</span>=<span class="string">"xml"</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">method</span> <span class="attr">href</span>=<span class="string">"#ItemSearch"</span>/&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div><div class="line"></div><div class="line">   <span class="tag">&lt;<span class="name">method</span> <span class="attr">name</span>=<span class="string">"GET"</span> <span class="attr">id</span>=<span class="string">"ItemSearch"</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">request</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"Service"</span> <span class="attr">style</span>=<span class="string">"query"</span> <span class="attr">fixed</span>=<span class="string">"AWSECommerceService"</span>/&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"Version"</span> <span class="attr">style</span>=<span class="string">"query"</span> <span class="attr">fixed</span>=<span class="string">"2005-07-26"</span>/&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"Operation"</span> <span class="attr">style</span>=<span class="string">"query"</span> <span class="attr">fixed</span>=<span class="string">"ItemSearch"</span>/&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"SubscriptionId"</span> <span class="attr">style</span>=<span class="string">"query"</span> <span class="attr">type</span>=<span class="string">"xsd:string"</span> <span class="attr">required</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"SearchIndex"</span> <span class="attr">style</span>=<span class="string">"query"</span> <span class="attr">type</span>=<span class="string">"aws:SearchIndexType"</span> <span class="attr">required</span>=<span class="string">"true"</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"Books"</span>/&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"DVD"</span>/&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"Music"</span>/&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">param</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"Keywords"</span> <span class="attr">style</span>=<span class="string">"query"</span> <span class="attr">type</span>=<span class="string">"aws:KeywordList"</span> <span class="attr">required</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"ResponseGroup"</span> <span class="attr">style</span>=<span class="string">"query"</span> <span class="attr">type</span>=<span class="string">"aws:ResponseGroupType"</span> <span class="attr">repeating</span>=<span class="string">"true"</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"Small"</span>/&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"Medium"</span>/&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"Large"</span>/&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"Images"</span>/&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">param</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">request</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">response</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">representation</span> <span class="attr">mediaType</span>=<span class="string">"text/xml"</span> <span class="attr">element</span>=<span class="string">"aws:ItemSearchResponse"</span>/&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">response</span>&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="name">method</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">application</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>如上例所示，这份自描述<code>WADL</code>文档很清楚的说明了功能，调用方式，请求参数及其类型，返回结果的说明，很容易理解和调用。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.w3.org/Submission/wadl/" target="_blank" rel="external">Web Application Description Language</a></li>
+<li><a href="http://rest.elkstein.org/2008/02/documenting-rest-services-wsdl-and-wadl.html" target="_blank" rel="external">Learn REST: A Tutorial</a></li>
+<li><a href="http://blog.chinaunix.net/uid-9789791-id-1997442.html" target="_blank" rel="external">WADL 简介</a></li>
+<li><a href="http://stackoverflow.com/questions/1312087/what-is-the-reason-for-using-wadl" target="_blank" rel="external">What is the reason for using WADL</a></li>
+<li><a href="http://www.w3.org/TR/wsdl" target="_blank" rel="external">Web Services Description Language (WSDL) 1.1</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/ruby/2015/12/19/vim-chinese-document-html-version.html" rel="next" title="vim2html.rb生成vim中文手册html版本">
+                上一篇：vim2html.rb生成vim中文手册html版本
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2015/12/24/linux-man2html.html" rel="prev" title="linux man2html script">
+                下一篇：linux man2html script
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是WADL"><span class="nav-number">1.</span> <span class="nav-text">什么是WADL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-Applications"><span class="nav-number">1.1.</span> <span class="nav-text">Web Applications</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#何时使用WADL"><span class="nav-number">1.2.</span> <span class="nav-text">何时使用WADL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WADL和WSDL的区别"><span class="nav-number">1.3.</span> <span class="nav-text">WADL和WSDL的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WADL示例"><span class="nav-number">1.4.</span> <span class="nav-text">WADL示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">2.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

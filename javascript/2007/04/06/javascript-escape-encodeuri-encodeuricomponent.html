@@ -1,0 +1,559 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="var str = &apos;a=2&amp;amp;test=1&amp;amp;c=&apos; + &apos;&amp;lt;?php echo urlencode(&apos;中文&apos;);?&amp;gt;&apos;;console.log(str);console.log(decodeURI(str));console.log(decodeURIComponent(str));console.log(escape(&apos;a=2&amp;amp;test=1&amp;amp;c=中文&apos;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript escape encodeuri encodeuricomponent">
+<meta property="og:url" content="https://www.4e00.com/javascript/2007/04/06/javascript-escape-encodeuri-encodeuricomponent.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="var str = &apos;a=2&amp;amp;test=1&amp;amp;c=&apos; + &apos;&amp;lt;?php echo urlencode(&apos;中文&apos;);?&amp;gt;&apos;;console.log(str);console.log(decodeURI(str));console.log(decodeURIComponent(str));console.log(escape(&apos;a=2&amp;amp;test=1&amp;amp;c=中文&apos;">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-08-01T01:47:39.781Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript escape encodeuri encodeuricomponent">
+<meta name="twitter:description" content="var str = &apos;a=2&amp;amp;test=1&amp;amp;c=&apos; + &apos;&amp;lt;?php echo urlencode(&apos;中文&apos;);?&amp;gt;&apos;;console.log(str);console.log(decodeURI(str));console.log(decodeURIComponent(str));console.log(escape(&apos;a=2&amp;amp;test=1&amp;amp;c=中文&apos;">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2007/04/06/javascript-escape-encodeuri-encodeuricomponent.html"/>
+
+  <title> javascript escape encodeuri encodeuricomponent | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                javascript escape encodeuri encodeuricomponent
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2007-04-06T17:13:00+08:00" content="2007-04-06">
+              2007-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> str = <span class="string">'a=2&amp;test=1&amp;c='</span> + <span class="string">'&lt;?php echo urlencode('</span>中文<span class="string">');?&gt;'</span>;</div><div class="line"><span class="built_in">console</span>.log(str);</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">decodeURI</span>(str));</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">decodeURIComponent</span>(str));</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">escape</span>(<span class="string">'a=2&amp;test=1&amp;c=中文'</span>));</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">unescape</span>(<span class="built_in">escape</span>(<span class="string">'a=2&amp;test=1&amp;c=中文'</span>)));</div><div class="line"><span class="comment">// 结果不是"a=2&amp;test=1&amp;c=中文"</span></div></pre></td></tr></table></figure>
+<p>Another interesting consideration for Global methods is the escaping of strings<br>provided by escape() and unescape(). Primarily, we see this done on the Web<br>in order to create URL safe strings. You probably have seen this when working with forms.<br>While these methods would be extremely useful, the ECMAScript specification suggests<br>that escape() and unescape() are deprecated in favor of the more aptly named encodeURI(),<br>encodeURIComponent(), decodeURI(), and decodeURIComponent().</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> aURL = <span class="built_in">encodeURI</span>(<span class="string">"http://www.pint.com/cgi-bin/search?term=O''Neill &amp; Sons"</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"encodedURI: "</span> + aURL);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"decodedURI: "</span> + <span class="built_in">decodeURI</span>(aURL));</div><div class="line"><span class="keyword">var</span> aURL = <span class="built_in">encodeURIComponent</span>(<span class="string">"http://www.pint.com/cgi-bin/search?term=O''Neill &amp; Sons"</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"encodeURIComponent: "</span> + aURL);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"decodeURIComponent: "</span> + <span class="built_in">decodeURIComponent</span>(aURL));</div></pre></td></tr></table></figure>
+<p>如果URL里字符串已经被encode过（一般包含<code>%</code>符号）的话，再调<code>decodeURI</code>, <code>decodeURIComponent</code>会报错误misformed error。</p>
+<a id="more"></a>
+<p><code>decodeURIComponent</code>和PHP中的<code>rawurlencode</code>，如果不包括<code>!~*&#39;()</code>这些字符那产生的结果是一致的，二者对<code>-_.</code>这三个字符都不会处理。而PHP中的<code>urlencode</code>则在<code>空格</code>处理上稍有不同，将其替换成了<code>+</code>，如下说明：</p>
+<p>Returns a string in which all non-alphanumeric characters except -_. have been replaced with a percent (%) sign followed by two hex digits and spaces encoded as plus (+) signs. It is encoded the same way that the posted data from a WWW form is encoded, that is the same way as in application/x-www-form-urlencoded media type. This differs from the » RFC 1738 encoding (see rawurlencode()) in that for historical reasons, spaces are encoded as plus (+) signs.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/javascript/2007/03/17/hierarchy-of-javascript-and-java.html" rel="next" title="hierarchy of javascript and java">
+                上一篇：hierarchy of javascript and java
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2007/04/23/cronolog-settings.html" rel="prev" title="cronolog 设置定期轮循日志">
+                下一篇：cronolog 设置定期轮循日志
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

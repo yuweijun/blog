@@ -1,0 +1,619 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一个tomcat应用服务器中只有一个webapp项目名为app，tomcat前面有一个反向代理服务器nginx，nginx将所有访问http://www.example.com/下的请求转发给后台的tomcat应用服务器：http://www.example.com/app/，具体配置如下： location / &amp;#123;    rewrite ^/(.*)$ /app/$1;    brea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tomcat应用中用户session被重置的问题">
+<meta property="og:url" content="https://www.4e00.com/linux/2017/09/20/user-session-reset-in-tomcat-webapp.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="一个tomcat应用服务器中只有一个webapp项目名为app，tomcat前面有一个反向代理服务器nginx，nginx将所有访问http://www.example.com/下的请求转发给后台的tomcat应用服务器：http://www.example.com/app/，具体配置如下： location / &amp;#123;    rewrite ^/(.*)$ /app/$1;    brea">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-09-22T01:36:27.449Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tomcat应用中用户session被重置的问题">
+<meta name="twitter:description" content="一个tomcat应用服务器中只有一个webapp项目名为app，tomcat前面有一个反向代理服务器nginx，nginx将所有访问http://www.example.com/下的请求转发给后台的tomcat应用服务器：http://www.example.com/app/，具体配置如下： location / &amp;#123;    rewrite ^/(.*)$ /app/$1;    brea">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/linux/2017/09/20/user-session-reset-in-tomcat-webapp.html"/>
+
+  <title> tomcat应用中用户session被重置的问题 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                tomcat应用中用户session被重置的问题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-09-20T19:53:06+08:00" content="2017-09-20">
+              2017-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一个tomcat应用服务器中只有一个webapp项目名为app，tomcat前面有一个反向代理服务器nginx，nginx将所有访问<code>http://www.example.com/</code>下的请求转发给后台的tomcat应用服务器：<code>http://www.example.com/app/</code>，具体配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">location / &#123;</div><div class="line">    rewrite ^/(.*)$ /app/$1;</div><div class="line">    break;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当前用户已经在<code>http://www.example.com/app/</code>中登录，客户端cookie写入成功，因为是app写入的cookie，所以其作用路径即<code>path=/app/</code>。</p>
+<p>当用户访问<code>http://www.example.com/app/some/page</code>页面时，当前的用户session就被重置了，而访问其他页面都是正确的。</p>
+<p>检查所在页面的代码，发现页面上有个图片链接因为远程获取用户头像的数据不对，写入的地址变成<code>src=&quot;/0&quot;</code>，正确应该是用户的头像地址，就是因为访问了这个错误的地址<code>http://www.example.com/0</code>导致用户的session被重置了。</p>
+<a id="more"></a>
+<h2 id="问题重现"><a href="#问题重现" class="headerlink" title="问题重现"></a>问题重现</h2><p>用户在请求链接<code>http://www.example.com/app/some/page</code>时的请求头是正常的携带了Cookie信息:</p>
+<h3 id="Request-Headers"><a href="#Request-Headers" class="headerlink" title="Request Headers"></a>Request Headers</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">           Host: www.example.com</div><div class="line">     User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36</div><div class="line">         Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line">Accept-Language: en-US,en;q=0.8,zh;q=0.6,zh-CN;q=0.4,zh-TW;q=0.2,ja;q=0.2,sv;q=0.2,hu;q=0.2</div><div class="line">         Cookie: JSESSIONID=f6fdc154-2bd5-45ad-b363-98226db47baf</div></pre></td></tr></table></figure>
+<p>但是页面里那个图片引发的请求地址<code>http://www.example.com/0</code>是不存在的，其请求是从当前域名根目录开始访问的，域名根目录下是没有cookie的，因为<code>JSESSIONID</code>是写在<code>/app/</code>这个<code>path</code>下的。其请求头如下，相比上面那个请求少了一个<code>Cookie</code>头信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">           Host: www.example.com</div><div class="line">         Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line">Accept-Language: en-US,en;q=0.8,zh;q=0.6,zh-CN;q=0.4,zh-TW;q=0.2,ja;q=0.2,sv;q=0.2,hu;q=0.2</div><div class="line">     User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36</div></pre></td></tr></table></figure>
+<p>因为nginx上url重写的规则如下：</p>
+<blockquote>
+<p>rewrite ^/(.*)$ /app/$1;</p>
+</blockquote>
+<p>根据这个重写规则，nginx直接在服务端转发请求<code>/0</code>给tomcat中的应用，即<code>/app/0</code>，这个操作不会经过浏览器<code>301</code>或者<code>302</code>跳转，tomcat发现请求头里没有Cookie，就会在Response头里加上<code>Set-Cookie</code>字段，这样就导致当前用户的session被重置了，响应头内容如下：</p>
+<h3 id="Response-Headers"><a href="#Response-Headers" class="headerlink" title="Response Headers"></a>Response Headers</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">      Connection: keep-alive</div><div class="line">Content-Language: en</div><div class="line">    Content-Type: text/html;charset=ISO-8859-1</div><div class="line">            Date: Wed, 20 Sep 2017 05:36:11 GMT</div><div class="line">          Server: nginx/1.8.0</div><div class="line">      Set-Cookie: JSESSIONID=92afd578-f3b1-425f-a9d1-72ee4b1bfd7b; Path=/app/; HttpOnly</div></pre></td></tr></table></figure>
+<h2 id="问题修复"><a href="#问题修复" class="headerlink" title="问题修复"></a>问题修复</h2><p>这个问题主要是因为服务器内部转发的请求<code>/app/0</code>并没有将客户端的Cookie信息带过去造成的，因此不能直接在服务器端将url重写后转发给tomcat服务器。</p>
+<p>将nginx的配置部分稍作改动，将请求变成<code>301</code>重定向：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">rewrite ^/(.*)$ /app/$1 permanent;</div><div class="line">break;</div></pre></td></tr></table></figure>
+<p>或者是<code>302</code>重定向：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">rewrite ^/(.*)$ /app/$1 redirect;</div><div class="line">break;</div></pre></td></tr></table></figure>
+<p>使用这个配置，nginx会重定向到客户端浏览器进行一次<code>301</code>或者<code>302</code>跳转操作，这时浏览器再去访问<code>http://www.example.com/app/0</code>时，会携带本地的Cookie发送到服务器端。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">           Host: www.example.com</div><div class="line">     User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36</div><div class="line">         Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line">Accept-Language: en-US,en;q=0.8,zh;q=0.6,zh-CN;q=0.4,zh-TW;q=0.2,ja;q=0.2,sv;q=0.2,hu;q=0.2</div><div class="line">         Cookie: JSESSIONID=92afd578-f3b1-425f-a9d1-72ee4b1bfd7b</div></pre></td></tr></table></figure>
+<p>服务器端tomcat会收到浏览器重定向后的请求，并正确收到Cookie，就不会再重置用户session。</p>
+<blockquote>
+<p>rewrite ^/(.<em>)$ /app/$1;<br>rewrite ^/(.</em>)$ /app/$1 redirect;</p>
+</blockquote>
+<p>以上二者的区别就在于加了redirect指令会让浏览器多发起了一次请求，进行<code>302</code>重定向，不加指令则直接在服务器内部进行了URL重写转发，不会让浏览器重定向。</p>
+<h2 id="rewrite-规则"><a href="#rewrite-规则" class="headerlink" title="rewrite 规则"></a>rewrite 规则</h2><p>rewrite功能就是，使用nginx提供的全局变量或自己设置的变量，结合正则表达式和标志位实现url重写以及重定向，这里要区别重写与重定向的作用是不同的。语法形式如下：</p>
+<blockquote>
+<p>Syntax:   rewrite regex replacement [flag];<br>Default:  —<br>Context:  server, location, if</p>
+</blockquote>
+<p>表面看rewrite和location功能有点像，都能实现跳转，主要区别在于rewrite是在同一域名内更改获取资源的路径，而location是对一类路径做控制访问或反向代理，可以proxy_pass到其他机器。很多情况下rewrite也会写在location里，它们的执行顺序是：</p>
+<ol>
+<li>执行server块的rewrite指令</li>
+<li>执行location匹配</li>
+<li>执行选定的location中的rewrite指令</li>
+</ol>
+<p>如果其中某步URI被重写，则重新循环执行1-3，直到找到真实存在的文件；循环超过10次，则返回<code>500 Internal Server Error</code>错误。</p>
+<h3 id="rewrite-flag-标志位"><a href="#rewrite-flag-标志位" class="headerlink" title="rewrite flag 标志位"></a>rewrite flag 标志位</h3><ol>
+<li>last: 停止处理这次的rewrite指令集，根据修改之后的URI重新查找匹配的location。<ul>
+<li>stops processing the current set of ngx_http_rewrite_module directives and starts a search for a new location matching the changed URI;</li>
+</ul>
+</li>
+<li>break: 停止执行当前虚拟主机的后续rewrite指令集。<ul>
+<li>stops processing the current set of ngx_http_rewrite_module directives as with the break directive;</li>
+</ul>
+</li>
+<li>redirect: 返回302临时重定向，地址栏会显示跳转后的地址。<ul>
+<li>returns a temporary redirect with the 302 code; used if a replacement string does not start with &quot;http://&quot;, &quot;https://&quot;, or &quot;$scheme&quot;;</li>
+</ul>
+</li>
+<li>permanent: 返回301永久重定向，地址栏会显示转后的地址。<ul>
+<li>returns a permanent redirect with the 301 code.</li>
+</ul>
+</li>
+</ol>
+<h3 id="last-和-break-区别"><a href="#last-和-break-区别" class="headerlink" title="last 和 break 区别"></a>last 和 break 区别</h3><ol>
+<li>last一般写在server和if中，而break一般使用在location中。</li>
+<li>last不终止重写后的url匹配，即新的url会再从server和location开始进行下一轮的匹配流程，而break终止重写后的匹配。</li>
+<li>break和last都能中止当前rewrite指令集的匹配。</li>
+<li>编程语言中的continue和break的区别。</li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://nginx.org/en/docs/http/ngx_http_rewrite_module.html" target="_blank" rel="external">Module ngx_http_rewrite_module</a></li>
+<li><a href="http://seanlook.com/2015/05/17/nginx-location-rewrite/" target="_blank" rel="external">nginx配置location总结及rewrite规则写法</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2017/09/19/concurrency-vs-parallelism.html" rel="next" title="concurrency vs. parallelism">
+                上一篇：concurrency vs. parallelism
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2017/09/21/getting-started-with-the-G1-garbage-collector.html" rel="prev" title="getting started with the G1 garbage collector">
+                下一篇：getting started with the G1 garbage collector
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题重现"><span class="nav-number">1.</span> <span class="nav-text">问题重现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Request-Headers"><span class="nav-number">1.1.</span> <span class="nav-text">Request Headers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Response-Headers"><span class="nav-number">1.2.</span> <span class="nav-text">Response Headers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题修复"><span class="nav-number">2.</span> <span class="nav-text">问题修复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rewrite-规则"><span class="nav-number">3.</span> <span class="nav-text">rewrite 规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rewrite-flag-标志位"><span class="nav-number">3.1.</span> <span class="nav-text">rewrite flag 标志位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#last-和-break-区别"><span class="nav-number">3.2.</span> <span class="nav-text">last 和 break 区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

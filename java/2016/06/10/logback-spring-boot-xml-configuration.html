@@ -1,0 +1,560 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="根据spring-boot项目中的logback配置，定义了一份自己测试环境中使用的logback配置文件，并且对其中主要配置添加了备注说明。 &amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&amp;lt;configuration debug=&quot;true&quot;&amp;gt;    &amp;lt;!--        Defining variables        The s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="logback.xml configuration example">
+<meta property="og:url" content="https://www.4e00.com/java/2016/06/10/logback-spring-boot-xml-configuration.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="根据spring-boot项目中的logback配置，定义了一份自己测试环境中使用的logback配置文件，并且对其中主要配置添加了备注说明。 &amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&amp;lt;configuration debug=&quot;true&quot;&amp;gt;    &amp;lt;!--        Defining variables        The s">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="logback.xml configuration example">
+<meta name="twitter:description" content="根据spring-boot项目中的logback配置，定义了一份自己测试环境中使用的logback配置文件，并且对其中主要配置添加了备注说明。 &amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&amp;lt;configuration debug=&quot;true&quot;&amp;gt;    &amp;lt;!--        Defining variables        The s">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/06/10/logback-spring-boot-xml-configuration.html"/>
+
+  <title> logback.xml configuration example | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                logback.xml configuration example
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-06-10T22:28:17+08:00" content="2016-06-10">
+              2016-06-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>根据<code>spring-boot</code>项目中的<code>logback</code>配置，定义了一份自己测试环境中使用的<code>logback</code>配置文件，并且对其中主要配置添加了备注说明。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">configuration</span> <span class="attr">debug</span>=<span class="string">"true"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line"><span class="comment">        Defining variables</span></div><div class="line"><span class="comment">        The syntax of variable substitution is similar to that of Unix shells.</span></div><div class="line"><span class="comment">        The string between an opening $&#123; and closing &#125; is interpreted as a reference to the value of the property. For property aName, the string "$&#123;aName&#125;" will be replaced with the value held by the aName property.</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">        Default values for variables</span></div><div class="line"><span class="comment">        Under certain circumstances, it may be desirable for a variable to have a default value if it is not declared or its value is null.</span></div><div class="line"><span class="comment">        As in the Bash shell, default values can be specified using the ":-" operator.</span></div><div class="line"><span class="comment">        For example, assuming the variable named aName is not defined, "$&#123;aName:-golden&#125;" will be interpreted as "golden".</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">        Locate log file according by system property: $&#123;catalina.home&#125; or $&#123;java.io.tmpdir&#125; if $catalina.home&#125; not defined.</span></div><div class="line"><span class="comment">    --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"LOG_FILE"</span> <span class="attr">value</span>=<span class="string">"$&#123;catalina.home:-$&#123;java.io.tmpdir:-/tmp&#125;&#125;/logs/spring-jdbc.log&#125;"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line"><span class="comment">        Below is a configuration file illustrating coloring.</span></div><div class="line"><span class="comment">        Note the %cyan conversion specifier enclosing "%logger&#123;39&#125;". This will output the logger name abbreviated to 39 characters in cyan.</span></div><div class="line"><span class="comment">        The %codeblock lang:conversion specifier prints its sub-pattern in bold-red for events of level ERROR, in red for WARN, in BLUE for INFO, and in the default color for other levels.</span></div><div class="line"><span class="comment">    --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"CONSOLE_LOG_PATTERN"</span></span></div><div class="line"><span class="tag">              <span class="attr">value</span>=<span class="string">"%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; %highlight(-%5p) --- [%15.15thread] %cyan(%-40.40logger&#123;39&#125; [%5line] :) %m%n%ex"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"FILE_LOG_PATTERN"</span></span></div><div class="line"><span class="tag">              <span class="attr">value</span>=<span class="string">"%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; -%5p --- [%15.15thread] %-40.40logger&#123;39&#125; [%5line] : %m%n%ex"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line"><span class="comment">        What is an Appender? - http://logback.qos.ch/manual/appenders.html</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">        Logback delegates the task of writing a logging event to components called appenders.</span></div><div class="line"><span class="comment">        Appenders must implement the ch.qos.logback.core.Appender interface.</span></div><div class="line"><span class="comment">    --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"CONSOLE"</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.ConsoleAppender"</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="comment">&lt;!--</span></div><div class="line"><span class="comment">            What is an encoder - http://logback.qos.ch/manual/encoders.html</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">            Encoders are responsible for transforming an event into a byte array as well as writing out that byte array into an OutputStream.</span></div><div class="line"><span class="comment">            Encoders were introduced in logback version 0.9.19. In previous versions, most appenders relied on a layout to transform an event into a string and write it out using a java.io.Writer. In previous versions of logback, users would nest a PatternLayout within FileAppender.</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">            Since logback 0.9.19, FileAppender and sub-classes expect an encoder and no longer take a layout.</span></div><div class="line"><span class="comment">        --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">encoder</span>&gt;</span></div><div class="line"></div><div class="line">            <span class="comment">&lt;!--</span></div><div class="line"><span class="comment">                What is a layout? - http://logback.qos.ch/manual/layouts.html</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">                Layouts are logback components responsible for transforming an incoming event into a String.</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">                PatternLayout/XMLLayout/HTMLLayout</span></div><div class="line"><span class="comment">            --&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>$&#123;CONSOLE_LOG_PATTERN&#125;<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">charset</span>&gt;</span>utf8<span class="tag">&lt;/<span class="name">charset</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line"><span class="comment">        RollingFileAppender extends FileAppender to backup the log files depending on RollingPolicy and TriggeringPolicy.</span></div><div class="line"><span class="comment">    --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"FILE"</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.rolling.RollingFileAppender"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">encoder</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>$&#123;FILE_LOG_PATTERN&#125;<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">file</span>&gt;</span>$&#123;LOG_FILE&#125;<span class="tag">&lt;/<span class="name">file</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">rollingPolicy</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.rolling.FixedWindowRollingPolicy"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">fileNamePattern</span>&gt;</span>$&#123;LOG_FILE&#125;.%i<span class="tag">&lt;/<span class="name">fileNamePattern</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">rollingPolicy</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="comment">&lt;!--</span></div><div class="line"><span class="comment">            SizeBasedTriggeringPolicy looks at size of the file being currently written to.</span></div><div class="line"><span class="comment">            If it grows bigger than the specified size, the FileAppender using the SizeBasedTriggeringPolicy rolls the file and creates a new one.</span></div><div class="line"><span class="comment">        --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">triggeringPolicy</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">MaxFileSize</span>&gt;</span>10MB<span class="tag">&lt;/<span class="name">MaxFileSize</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">triggeringPolicy</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line"><span class="comment">        To ensure that all loggers can eventually inherit a level, the root logger always has an assigned level.</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">        By default, this level is DEBUG.</span></div><div class="line"><span class="comment">    --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">root</span> <span class="attr">level</span>=<span class="string">"DEBUG"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"CONSOLE"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"FILE"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">root</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://logback.qos.ch/manual/configuration.html" target="_blank" rel="external">Chapter 3: Logback configuration</a></li>
+<li><a href="http://logback.qos.ch/manual/layouts.html" target="_blank" rel="external">Chapter 6: Layouts</a></li>
+<li><a href="http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/" target="_blank" rel="external">Spring Boot Reference Guide</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2016/06/09/maven-resources-inheritance-problem.html" rel="next" title="maven resources inheritance problem">
+                上一篇：maven resources inheritance problem
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2016/06/19/bash-scripting-manipulating-variables.html" rel="prev" title="advanced bash scripting guide: manipulating variables">
+                下一篇：advanced bash scripting guide: manipulating variables
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

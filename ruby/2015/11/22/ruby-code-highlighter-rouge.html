@@ -1,0 +1,569 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="rouge是用ruby实现，兼容python pygments的语法高亮工具。 安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rouge - syntax highlighter">
+<meta property="og:url" content="https://www.4e00.com/ruby/2015/11/22/ruby-code-highlighter-rouge.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="rouge是用ruby实现，兼容python pygments的语法高亮工具。 安装">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="rouge - syntax highlighter">
+<meta name="twitter:description" content="rouge是用ruby实现，兼容python pygments的语法高亮工具。 安装">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/ruby/2015/11/22/ruby-code-highlighter-rouge.html"/>
+
+  <title> rouge - syntax highlighter | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                rouge - syntax highlighter
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2015-11-22T12:30:56+08:00" content="2015-11-22">
+              2015-11-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/ruby/" itemprop="url" rel="index">
+                    <span itemprop="name">ruby</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://rouge.jneen.net/" target="_blank" rel="external">rouge</a>是用ruby实现，兼容python <a href="http://pygments.org/" target="_blank" rel="external">pygments</a>的语法高亮工具。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> gem install rouge</div></pre></td></tr></table></figure>
+<p>主要有以下几种用法：</p>
+<h2 id="生成代码高亮的html片段"><a href="#生成代码高亮的html片段" class="headerlink" title="生成代码高亮的html片段"></a>生成代码高亮的html片段</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">'rouge'</span></div><div class="line"></div><div class="line"><span class="comment"># make some nice lexed html</span></div><div class="line">source = File.read(<span class="string">'/etc/bashrc'</span>)</div><div class="line">formatter = Rouge::Formatters::HTML.new(<span class="symbol">css_class:</span> <span class="string">'highlight'</span>)</div><div class="line">lexer = Rouge::Lexers::Shell.new</div><div class="line">html = formatter.format(lexer.lex(source))</div><div class="line">puts html</div></pre></td></tr></table></figure>
+<p>运行以上ruby脚本后，会输出如下类似html片段：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">pre</span> <span class="attr">class</span>=<span class="string">"highlight"</span>&gt;</span><span class="tag">&lt;<span class="name">code</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"c"</span>&gt;</span># System-wide .bashrc file for interactive bash(1) shells.<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"k"</span>&gt;</span>if<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>[<span class="tag">&lt;/<span class="name">span</span>&gt;</span> -z <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s2"</span>&gt;</span>"<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>$PS1<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s2"</span>&gt;</span>"<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>]<span class="tag">&lt;/<span class="name">span</span>&gt;</span>; <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"k"</span>&gt;</span>then</div><div class="line">   return</div><div class="line">fi</div><div class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>PS1<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>=<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s1"</span>&gt;</span>'\h:\W \u\$ '<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"c"</span>&gt;</span># Make bash check its window size after a process completes<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nb"</span>&gt;</span>shopt<span class="tag">&lt;/<span class="name">span</span>&gt;</span> -s checkwinsize</div><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"c"</span>&gt;</span># Tell the terminal about the working directory at each prompt.<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"k"</span>&gt;</span>if<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>[<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s2"</span>&gt;</span>"<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>$TERM_PROGRAM<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s2"</span>&gt;</span>"<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>==<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s2"</span>&gt;</span>"Apple_Terminal"<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>]<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>&amp;amp;&amp;amp;<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>[<span class="tag">&lt;/<span class="name">span</span>&gt;</span> -z <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s2"</span>&gt;</span>"<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>$INSIDE_EMACS<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s2"</span>&gt;</span>"<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>]<span class="tag">&lt;/<span class="name">span</span>&gt;</span>; <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"k"</span>&gt;</span>then</div><div class="line">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span>update_terminal_cwd<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>()<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>&#123;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"c"</span>&gt;</span># Identify the directory using a "file:" scheme URL,<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"c"</span>&gt;</span># including the host name to disambiguate local vs.<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"c"</span>&gt;</span># remote connections. Percent-escape spaces.<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">true<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nb"</span>&gt;</span>local <span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>SEARCH<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>=<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s1"</span>&gt;</span>' '<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">true<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nb"</span>&gt;</span>local <span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>REPLACE<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>=<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s1"</span>&gt;</span>'%20'<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">true<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nb"</span>&gt;</span>local <span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>PWD_URL<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>=<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s2"</span>&gt;</span>"file://<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>$HOSTNAME<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"k"</span>&gt;</span>$&#123;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>PWD<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"p"</span>&gt;</span>//<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>$SEARCH<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"p"</span>&gt;</span>/<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>$REPLACE<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"k"</span>&gt;</span>&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s2"</span>&gt;</span>"<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">true<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nb"</span>&gt;</span>printf<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s1"</span>&gt;</span>'\e]7;%s\a'<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s2"</span>&gt;</span>"<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>$PWD_URL<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s2"</span>&gt;</span>"<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>PROMPT_COMMAND<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"o"</span>&gt;</span>=<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s2"</span>&gt;</span>"update_terminal_cwd; <span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nv"</span>&gt;</span>$PROMPT_COMMAND<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"s2"</span>&gt;</span>"<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"k"</span>&gt;</span>fi<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">code</span>&gt;</span><span class="tag">&lt;/<span class="name">pre</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="生成css样式文件"><a href="#生成css样式文件" class="headerlink" title="生成css样式文件"></a>生成css样式文件</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">'rouge'</span></div><div class="line"></div><div class="line">puts Rouge::Themes::Base16.mode(<span class="symbol">:light</span>).render(<span class="symbol">scope:</span> <span class="string">'.highlight'</span>)</div></pre></td></tr></table></figure>
+<p>运行以上ruby脚本，得到如下css样式输出内容：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:table</span> <span class="selector-tag">td</span> &#123; <span class="attribute">padding</span>: <span class="number">5px</span>; &#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:table</span> <span class="selector-tag">pre</span> &#123; <span class="attribute">margin</span>: <span class="number">0</span>; &#125;</div><div class="line"><span class="selector-class">.highlight</span>, <span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.w</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#303030</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.err</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#151515</span>;</div><div class="line">  <span class="attribute">background-color</span>: <span class="number">#ac4142</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.c</span>, <span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.cd</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.cm</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.c1</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.cs</span> &#123; </div><div class="line">  <span class="attribute">color</span>: <span class="number">#505050</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.cp</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#f4bf75</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.nt</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#f4bf75</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.o</span>, <span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.ow</span> &#123; </div><div class="line">  <span class="attribute">color</span>: <span class="number">#d0d0d0</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.p</span>, <span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.pi</span> &#123; </div><div class="line">  <span class="attribute">color</span>: <span class="number">#d0d0d0</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.gi</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#90a959</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.gd</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#ac4142</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.gh</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#6a9fb5</span>;</div><div class="line">  <span class="attribute">background-color</span>: <span class="number">#151515</span>;</div><div class="line">  <span class="attribute">font-weight</span>: bold;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.k</span>, <span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.kn</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.kp</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.kr</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.kv</span> &#123; </div><div class="line">  <span class="attribute">color</span>: <span class="number">#aa759f</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.kc</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#d28445</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.kt</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#d28445</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.kd</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#d28445</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.s</span>, <span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.sb</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.sc</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.sd</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.s2</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.sh</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.sx</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.s1</span> &#123; </div><div class="line">  <span class="attribute">color</span>: <span class="number">#90a959</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.sr</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#75b5aa</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.si</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#8f5536</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.se</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#8f5536</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.nn</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#f4bf75</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.nc</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#f4bf75</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.no</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#f4bf75</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.na</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#6a9fb5</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.m</span>, <span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.mf</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.mh</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.mi</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.il</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.mo</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.mb</span>, <span class="selector-class">.highlight</span> <span class="selector-class">.mx</span> &#123; </div><div class="line">  <span class="attribute">color</span>: <span class="number">#90a959</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.codeblock</span> <span class="selector-tag">lang</span><span class="selector-pseudo">:.ss</span> &#123;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#90a959</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="rougify命令在控制台高亮输出脚本文件内容"><a href="#rougify命令在控制台高亮输出脚本文件内容" class="headerlink" title="rougify命令在控制台高亮输出脚本文件内容"></a>rougify命令在控制台高亮输出脚本文件内容</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">rougify</span> jquery.js</div></pre></td></tr></table></figure>
+<p>这个命令会在命令行里高亮输出文件内容，但不支持less/more分页查看。</p>
+<h2 id="将内置配色主题导出css样式文件"><a href="#将内置配色主题导出css样式文件" class="headerlink" title="将内置配色主题导出css样式文件"></a>将内置配色主题导出css样式文件</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">rougify</span> style monokai.sublime &gt; sublime.css</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">rougify</span> style monokai &gt; monokai.css</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">rougify</span> style github &gt; github.css</div></pre></td></tr></table></figure>
+<p>将内置的配色<a href="https://github.com/jneen/rouge/tree/master/lib/rouge/themes" target="_blank" rel="external">主题</a>导出为css文件。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://github.com/jneen/rouge" target="_blank" rel="external">https://github.com/jneen/rouge</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2015/11/22/linux-macos-date-rfc-822-and-iso-8601.html" rel="next" title="date输出rfc822格式的字符串">
+                上一篇：date输出rfc822格式的字符串
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/ruby/2015/11/22/liquid-template-for-designers.html" rel="prev" title="liquid模板使用简介">
+                下一篇：liquid模板使用简介
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成代码高亮的html片段"><span class="nav-number">2.</span> <span class="nav-text">生成代码高亮的html片段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成css样式文件"><span class="nav-number">3.</span> <span class="nav-text">生成css样式文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rougify命令在控制台高亮输出脚本文件内容"><span class="nav-number">4.</span> <span class="nav-text">rougify命令在控制台高亮输出脚本文件内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将内置配色主题导出css样式文件"><span class="nav-number">5.</span> <span class="nav-text">将内置配色主题导出css样式文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

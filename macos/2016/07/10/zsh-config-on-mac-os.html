@@ -1,0 +1,619 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="本文是使用powerline字体和一些zsh的插件，定制Mac OS上自带的命令行终端工具Terminal，而不是基于iTerm2。 首先查看一下系统是否已经安装了zsh，没有安装则使用brew install zsh安装。 $&amp;gt; cat /etc/shells  # List of acceptable shells for chpass(1). # Ftpd will not allow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zsh config on mac os">
+<meta property="og:url" content="https://www.4e00.com/macos/2016/07/10/zsh-config-on-mac-os.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="本文是使用powerline字体和一些zsh的插件，定制Mac OS上自带的命令行终端工具Terminal，而不是基于iTerm2。 首先查看一下系统是否已经安装了zsh，没有安装则使用brew install zsh安装。 $&amp;gt; cat /etc/shells  # List of acceptable shells for chpass(1). # Ftpd will not allow">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.4e00.com/blog/img/linux/zsh-powerline-autojump-theme.jpg">
+<meta property="og:image" content="https://www.4e00.com/blog/img/linux/iterm2-powerline-theme.png">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zsh config on mac os">
+<meta name="twitter:description" content="本文是使用powerline字体和一些zsh的插件，定制Mac OS上自带的命令行终端工具Terminal，而不是基于iTerm2。 首先查看一下系统是否已经安装了zsh，没有安装则使用brew install zsh安装。 $&amp;gt; cat /etc/shells  # List of acceptable shells for chpass(1). # Ftpd will not allow">
+<meta name="twitter:image" content="https://www.4e00.com/blog/img/linux/zsh-powerline-autojump-theme.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/macos/2016/07/10/zsh-config-on-mac-os.html"/>
+
+  <title> zsh config on mac os | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                zsh config on mac os
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-07-10T10:46:12+08:00" content="2016-07-10">
+              2016-07-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/macos/" itemprop="url" rel="index">
+                    <span itemprop="name">macos</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是使用<code>powerline</code>字体和一些<code>zsh</code>的插件，定制<code>Mac OS</code>上自带的命令行终端工具<code>Terminal</code>，而不是基于<code>iTerm2</code>。</p>
+<p>首先查看一下系统是否已经安装了<code>zsh</code>，没有安装则使用<code>brew install zsh</code>安装。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cat</span> /etc/shells</div></pre></td></tr></table></figure>
+<blockquote>
+<p># List of acceptable shells for chpass(1).</p>
+<p># Ftpd will not allow users to connect who are not using</p>
+<p># one of these shells.</p>
+<p>/bin/bash</p>
+<p>/bin/csh</p>
+<p>/bin/ksh</p>
+<p>/bin/sh</p>
+<p>/bin/tcsh</p>
+<p>/bin/zsh</p>
+</blockquote>
+<p>切换到<code>zsh</code>并退出终端。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">chsh</span> -s /bin/zsh</div></pre></td></tr></table></figure>
+<p>退出后重新进入<code>Terminal</code>，再确认当前的<code>shell</code>：</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">echo</span> <span class="variable">$SHELL</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>/bin/zsh</p>
+</blockquote>
+<h2 id="Oh-My-Zsh-Installation"><a href="#Oh-My-Zsh-Installation" class="headerlink" title="Oh My Zsh Installation"></a>Oh My Zsh Installation</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># using curl install on Mac OS</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sh</span> -c <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>"</span></div></pre></td></tr></table></figure>
+<p>linux下还可以通过<code>wget</code>方式安装，<code>Mac OS</code>系统默认安装里没有安装<code>wget</code>命令。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sh</span> -c <span class="string">"<span class="variable">$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)</span>"</span></div></pre></td></tr></table></figure>
+<p>安装完成之后，修改<code>~/.zshrc</code>配置文件，将主题改为<code>agnoster</code>。</p>
+<blockquote>
+<p>ZSH_THEME=&quot;agnoster&quot;</p>
+</blockquote>
+<h2 id="Install-a-patched-powerline-font"><a href="#Install-a-patched-powerline-font" class="headerlink" title="Install a patched powerline font"></a>Install a patched powerline font</h2><p>这里采用的<code>Menlo-for-Powerline</code>字体不是<a href="https://github.com/powerline/fonts" target="_blank" rel="external">https://github.com/powerline/fonts</a>里的那个<code>Meslo</code>字体，效果稍有不同，当然也可以用<a href="https://github.com/powerline/fonts/blob/master/Meslo/Meslo%20LG%20L%20Regular%20for%20Powerline.otf" target="_blank" rel="external">Meslo LG L Regular for Powerline字体</a>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">clone</span> git@github.com:abertsch/Menlo-for-Powerline.git</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">open</span> Menlo-for-Powerline</div></pre></td></tr></table></figure>
+<p>双击打开的文件夹中的字体文件，并点击安装字体，然后再修改<code>Terminal</code>的字体和字体大小（个人17吋Mac上设置为16pt，27吋iMac使用20pt），最后退出重进终端查看效果。</p>
+<h2 id="Install-zsh-syntax-highlighting"><a href="#Install-zsh-syntax-highlighting" class="headerlink" title="Install zsh-syntax-highlighting"></a>Install zsh-syntax-highlighting</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> install zsh-syntax-highlighting</div></pre></td></tr></table></figure>
+<p>将以下这句脚本添加到<code>~/.zshrc</code>文件中。</p>
+<blockquote>
+<p>source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh</p>
+</blockquote>
+<h2 id="Install-zsh-autosuggestions"><a href="#Install-zsh-autosuggestions" class="headerlink" title="Install zsh-autosuggestions"></a>Install zsh-autosuggestions</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">clone</span> git://github.com/zsh-users/zsh-autosuggestions <span class="variable">$ZSH_CUSTOM</span>/plugins/zsh-autosuggestions</div></pre></td></tr></table></figure>
+<p>绑定<code>ctrl + space</code>快捷键用于接受当前的自动完成提示，在<code>~/.zshrc</code>文件中加入下面的配置。</p>
+<blockquote>
+<p>bindkey &#39;^ &#39; autosuggest-accept</p>
+</blockquote>
+<h2 id="Install-autojump"><a href="#Install-autojump" class="headerlink" title="Install autojump"></a>Install autojump</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> install autojump</div></pre></td></tr></table></figure>
+<p>安装<code>zsh-autosuggestions</code>和<code>autojump</code>完成后在<code>~/.zshrc</code>中修改<code>plugins=(git)</code>为如下内容：</p>
+<blockquote>
+<p>plugins=(git bundler osx rake ruby zsh-autosuggestions autojump)</p>
+</blockquote>
+<p>然后继续在<code>~/.zshrc</code>文件中添加：</p>
+<blockquote>
+<p>[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] &amp;&amp; . $(brew --prefix)/etc/profile.d/autojump.sh</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">source</span> ~/.zshrc</div></pre></td></tr></table></figure>
+<p>退出终端后重新进入。</p>
+<p>最后确认一下<code>~/.zshrc</code>中有如下配置项：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">export</span> ZSH=<span class="string">"~/.oh-my-zsh"</span></div><div class="line"></div><div class="line">ZSH_THEME=<span class="string">"agnoster"</span></div><div class="line"></div><div class="line">plugins=(git bundler osx rake ruby zsh-autosuggestions autojump)</div><div class="line"></div><div class="line"><span class="built_in">bindkey</span> <span class="string">'^ '</span> autosuggest-accept</div><div class="line"></div><div class="line"><span class="built_in">source</span> <span class="variable">$ZSH</span>/oh-my-zsh.sh</div><div class="line"><span class="built_in">source</span> /usr/<span class="built_in">local</span>/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh</div><div class="line">[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] &amp;&amp; <span class="built_in">source</span> $(brew --prefix)/etc/profile.d/autojump.sh</div></pre></td></tr></table></figure>
+<h2 id="终端截图"><a href="#终端截图" class="headerlink" title="终端截图"></a>终端截图</h2><img src="/blog/img/linux/zsh-powerline-autojump-theme.jpg" title="[zsh-powerline-autojump-theme]">
+<h2 id="oh-my-zsh官方iTerm2配图"><a href="#oh-my-zsh官方iTerm2配图" class="headerlink" title="oh-my-zsh官方iTerm2配图"></a>oh-my-zsh官方iTerm2配图</h2><img src="/blog/img/linux/iterm2-powerline-theme.png" title="[iterm2-powerline-theme]">
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">oh-my-zsh</a></li>
+<li><a href="https://github.com/abertsch/Menlo-for-Powerline" target="_blank" rel="external">Menlo for Powerline</a></li>
+<li><a href="https://github.com/wting/autojump" target="_blank" rel="external">A cd command that learns</a></li>
+<li><a href="http://jmolivas.com/improve-your-shell-using-fish-and-oh-my-fish" target="_blank" rel="external">Improve your shell using fish and oh my fish</a></li>
+<li><a href="https://github.com/yuweijun/oh-my-zsh" target="_blank" rel="external">oh-my-zsh fork</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/mysql/2016/07/10/mysql-numeric-data-types.html" rel="next" title="mysql numeric data types">
+                上一篇：mysql numeric data types
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/vim/2016/07/17/vim-killer-plugin-surround.html" rel="prev" title="vim killer plugin surround.vim">
+                下一篇：vim killer plugin surround.vim
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Oh-My-Zsh-Installation"><span class="nav-number">1.</span> <span class="nav-text">Oh My Zsh Installation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-a-patched-powerline-font"><span class="nav-number">2.</span> <span class="nav-text">Install a patched powerline font</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-zsh-syntax-highlighting"><span class="nav-number">3.</span> <span class="nav-text">Install zsh-syntax-highlighting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-zsh-autosuggestions"><span class="nav-number">4.</span> <span class="nav-text">Install zsh-autosuggestions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-autojump"><span class="nav-number">5.</span> <span class="nav-text">Install autojump</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终端截图"><span class="nav-number">6.</span> <span class="nav-text">终端截图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#oh-my-zsh官方iTerm2配图"><span class="nav-number">7.</span> <span class="nav-text">oh-my-zsh官方iTerm2配图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

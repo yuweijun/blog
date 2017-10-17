@@ -1,0 +1,582 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="CSS 相关的jQuery方法官方文档如下所列，各方法逐一分析：  .addClass() Adds the specified class(es) to each of the set of matched elements. .css() Get the value of a style property for the first element in the set of matched">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jquery-1.4.2 css部分源码分析">
+<meta property="og:url" content="https://www.4e00.com/jquery/2014/07/31/jquery-src-css.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="CSS 相关的jQuery方法官方文档如下所列，各方法逐一分析：  .addClass() Adds the specified class(es) to each of the set of matched elements. .css() Get the value of a style property for the first element in the set of matched">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.145Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jquery-1.4.2 css部分源码分析">
+<meta name="twitter:description" content="CSS 相关的jQuery方法官方文档如下所列，各方法逐一分析：  .addClass() Adds the specified class(es) to each of the set of matched elements. .css() Get the value of a style property for the first element in the set of matched">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/jquery/2014/07/31/jquery-src-css.html"/>
+
+  <title> jquery-1.4.2 css部分源码分析 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jquery-1.4.2 css部分源码分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2014-07-31T20:23:36+08:00" content="2014-07-31">
+              2014-07-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/jquery/" itemprop="url" rel="index">
+                    <span itemprop="name">jquery</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CSS 相关的jQuery方法官方文档如下所列，各方法逐一分析：</p>
+<blockquote>
+<p>.addClass()</p>
+<p>Adds the specified class(es) to each of the set of matched elements.</p>
+<p>.css()</p>
+<p>Get the value of a style property for the first element in the set of matched elements.</p>
+<p>.hasClass()</p>
+<p>Determine whether any of the matched elements are assigned the given class.</p>
+<p>.removeClass()</p>
+<p>Remove a single class, multiple classes, or all classes from each element in the set of matched elements.</p>
+<p>.toggleClass()</p>
+<p>Add or remove one or more classes from each element in the set of matched elements, depending on either the class&#39;s presence or the value of the switch argument.</p>
+</blockquote>
+<p>addClass方法除传入一个新的class名为参数外，还在1.4版本中，新加了一个可接收function为参数的addClass:</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">addClass: <span class="function"><span class="keyword">function</span>(<span class="params"> value </span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> ( jQuery.isFunction(value) ) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params">i</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> self = jQuery(<span class="keyword">this</span>);</div><div class="line">            <span class="comment">// value = function(index, class)</span></div><div class="line">            <span class="comment">// A function returning one or more space-separated class names to be added.</span></div><div class="line">            <span class="comment">// Receives the index position of the element in the set and the old class value as arguments.</span></div><div class="line">            <span class="comment">// 当value为一个方法时，返回一个字符串，作为className被加入所有匹配的元素中，递归调用addClass本身</span></div><div class="line">            <span class="comment">// 这个方法接受二个参数，匹配的元素位置和此元素的当前className</span></div><div class="line">            self.addClass( value.call(<span class="keyword">this</span>, i, self.attr(<span class="string">"class"</span>)) );</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( value &amp;&amp; <span class="keyword">typeof</span> value === <span class="string">"string"</span> ) &#123;</div><div class="line">        <span class="keyword">var</span> classNames = (value || <span class="string">""</span>).split( rspace );</div><div class="line"></div><div class="line">        <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>, l = <span class="keyword">this</span>.length; i &lt; l; i++ ) &#123;</div><div class="line">            <span class="keyword">var</span> elem = <span class="keyword">this</span>[i];</div><div class="line"></div><div class="line">            <span class="keyword">if</span> ( elem.nodeType === <span class="number">1</span> ) &#123;</div><div class="line">                <span class="keyword">if</span> ( !elem.className ) &#123;</div><div class="line">                    <span class="comment">// 如果元素没有className，则设置value为此元素的className</span></div><div class="line">                    elem.className = value;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="keyword">var</span> className = <span class="string">" "</span> + elem.className + <span class="string">" "</span>, setClass = elem.className;</div><div class="line">                    <span class="keyword">for</span> ( <span class="keyword">var</span> c = <span class="number">0</span>, cl = classNames.length; c &lt; cl; c++ ) &#123;</div><div class="line">                        <span class="comment">// 如果传进来的value中的className在元素中不存在，则将此className加到原来的className后面</span></div><div class="line">                        <span class="keyword">if</span> ( className.indexOf( <span class="string">" "</span> + classNames[c] + <span class="string">" "</span> ) &lt; <span class="number">0</span> ) &#123;</div><div class="line">                            setClass += <span class="string">" "</span> + classNames[c];</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    elem.className = jQuery.trim( setClass );</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>jQuery.fn.removeClass()方法：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">removeClass: <span class="function"><span class="keyword">function</span>(<span class="params"> value </span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> ( jQuery.isFunction(value) ) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params">i</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> self = jQuery(<span class="keyword">this</span>);</div><div class="line">            <span class="comment">// 与addClass一样，当value是一个function时，将value的调用结果作为参数，递归调用自身</span></div><div class="line">            self.removeClass( value.call(<span class="keyword">this</span>, i, self.attr(<span class="string">"class"</span>)) );</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( (value &amp;&amp; <span class="keyword">typeof</span> value === <span class="string">"string"</span>) || value === <span class="literal">undefined</span> ) &#123;</div><div class="line">        <span class="keyword">var</span> classNames = (value || <span class="string">""</span>).split(rspace);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>, l = <span class="keyword">this</span>.length; i &lt; l; i++ ) &#123;</div><div class="line">            <span class="keyword">var</span> elem = <span class="keyword">this</span>[i];</div><div class="line"></div><div class="line">            <span class="comment">// 当前elem有className时</span></div><div class="line">            <span class="keyword">if</span> ( elem.nodeType === <span class="number">1</span> &amp;&amp; elem.className ) &#123;</div><div class="line">                <span class="keyword">if</span> ( value ) &#123;</div><div class="line">                    <span class="comment">// 将回车符和制表符替换为空格</span></div><div class="line">                    <span class="keyword">var</span> className = (<span class="string">" "</span> + elem.className + <span class="string">" "</span>).replace(rclass, <span class="string">" "</span>);</div><div class="line">                    <span class="keyword">for</span> ( <span class="keyword">var</span> c = <span class="number">0</span>, cl = classNames.length; c &lt; cl; c++ ) &#123;</div><div class="line">                        <span class="comment">// 遍历当前value中的每个className，如果元素中出现，将之移除</span></div><div class="line">                        className = className.replace(<span class="string">" "</span> + classNames[c] + <span class="string">" "</span>, <span class="string">" "</span>);</div><div class="line">                    &#125;</div><div class="line">                    elem.className = jQuery.trim( className );</div><div class="line"></div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    elem.className = <span class="string">""</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;,</div></pre></td></tr></table></figure></p>
+<p>toggleClass方法在attributes中有过分析。不过版本是1.3的，在新的1.4版本中可以传function给toggleClass:<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// .toggleClass( className, switch )</span></div><div class="line"><span class="comment">// className: One or more class names (separated by spaces) to be toggled for each element in the matched set.</span></div><div class="line"><span class="comment">// switch: A boolean value to determine whether the class should be added or removed.</span></div><div class="line">toggleClass: <span class="function"><span class="keyword">function</span>(<span class="params"> value, stateVal </span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> type = <span class="keyword">typeof</span> value, isBool = <span class="keyword">typeof</span> stateVal === <span class="string">"boolean"</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 当value为一个function时，与addClass/removeClass类似处理</span></div><div class="line">    <span class="keyword">if</span> ( jQuery.isFunction( value ) ) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params">i</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> self = jQuery(<span class="keyword">this</span>);</div><div class="line">            self.toggleClass( value.call(<span class="keyword">this</span>, i, self.attr(<span class="string">"class"</span>), stateVal), stateVal );</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> ( type === <span class="string">"string"</span> ) &#123;</div><div class="line">            <span class="comment">// toggle individual class names</span></div><div class="line">            <span class="keyword">var</span> className, i = <span class="number">0</span>, self = jQuery(<span class="keyword">this</span>),</div><div class="line">                state = stateVal,</div><div class="line">                classNames = value.split( rspace );</div><div class="line"></div><div class="line">            <span class="keyword">while</span> ( (className = classNames[ i++ ]) ) &#123;</div><div class="line">                <span class="comment">// check each className given, space seperated list</span></div><div class="line">                <span class="comment">// 如果没有stateVal传进来，则根据self.hasClass(className)来判断是否已经有此className，有则removeClass，无则addClass</span></div><div class="line">                state = isBool ? state : !self.hasClass( className );</div><div class="line">                <span class="comment">// 根据stateVal进行判断用addClass或者是removeClass，jQuery-1.3版本中添加的</span></div><div class="line">                self[ state ? <span class="string">"addClass"</span> : <span class="string">"removeClass"</span> ]( className );</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( type === <span class="string">"undefined"</span> || type === <span class="string">"boolean"</span> ) &#123;</div><div class="line">            <span class="comment">// 如果toggleClass传入一个布尔值，或者是不传参数调用时，toggle整个className</span></div><div class="line">            <span class="keyword">if</span> ( <span class="keyword">this</span>.className ) &#123;</div><div class="line">                <span class="comment">// store className if set</span></div><div class="line">                <span class="comment">// 利用jQuery.data将元素原来的className放到此元素的jQuery data中</span></div><div class="line">                jQuery.data( <span class="keyword">this</span>, <span class="string">"__className__"</span>, <span class="keyword">this</span>.className );</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// toggle whole className</span></div><div class="line">            <span class="keyword">this</span>.className = <span class="keyword">this</span>.className || value === <span class="literal">false</span> ? <span class="string">""</span> : jQuery.data( <span class="keyword">this</span>, <span class="string">"__className__"</span> ) || <span class="string">""</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;,</div></pre></td></tr></table></figure></p>
+<p>hasClass方法判断DOM元素是否拥有某个className：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 传入一个className作为参数进行查询</span></div><div class="line">hasClass: <span class="function"><span class="keyword">function</span>(<span class="params"> selector </span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> className = <span class="string">" "</span> + selector + <span class="string">" "</span>;</div><div class="line">    <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>, l = <span class="keyword">this</span>.length; i &lt; l; i++ ) &#123;</div><div class="line">        <span class="keyword">if</span> ( (<span class="string">" "</span> + <span class="keyword">this</span>[i].className + <span class="string">" "</span>).replace(rclass, <span class="string">" "</span>).indexOf( className ) &gt; <span class="number">-1</span> ) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;,</div></pre></td></tr></table></figure></p>
+<p>jQuery.fn.css()方法的几种用法<a href="http://api.jquery.com/css/" target="_blank" rel="external">css API of jQuery</a>：</p>
+<blockquote>
+<p>.css( propertyName ) Returns: String, Description: Get the value of a style property for the first element in the set of matched elements.</p>
+<p>.css( propertyName, value ) propertyName: A CSS property name.  value: A value to set for the property.</p>
+<p>.css( propertyName, function(index, value) ) function(index, value): A function returning the value to set. Receives the index position of the element in the set and the old value as arguments.</p>
+<p>.css( map ) map: A map of property-value pairs to set.</p>
+</blockquote>
+<p>其中access方法在attributes中也已经有过分析，这个access方法是最外层的那个匿名方法内部的一个方法，所以是被封装在这个闭包中的一个私有方法，外部不能直接访问，但jQuery源码在jQuery.fn.attr/css方法上调用了此方法，但也是比较简单的使用此方法，并没有用到第6个pass参数:<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Mutifunctional method to get and set values to a collection</span></div><div class="line"><span class="comment">// The value/s can be optionally by executed if its a function</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">access</span>(<span class="params"> elems, key, value, exec, fn, pass </span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> length = elems.length;</div><div class="line"></div><div class="line">    <span class="comment">// 如果key是一个object时，则将object展开，递归调用access方法，如使用jQuery.fn.css(&#123;color: 'red', background: '#ddd'&#125;)</span></div><div class="line">    <span class="comment">// Setting many attributes</span></div><div class="line">    <span class="keyword">if</span> ( <span class="keyword">typeof</span> key === <span class="string">"object"</span> ) &#123;</div><div class="line">        <span class="keyword">for</span> ( <span class="keyword">var</span> k <span class="keyword">in</span> key ) &#123;</div><div class="line">            <span class="comment">// 在这里将原来的value值当pass使用</span></div><div class="line">            access( elems, k, key[k], exec, fn, value );</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 这里返回jquery对象</span></div><div class="line">        <span class="keyword">return</span> elems;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Setting one attribute</span></div><div class="line">    <span class="keyword">if</span> ( value !== <span class="literal">undefined</span> ) &#123;</div><div class="line">        <span class="comment">// Optionally, function values get executed if exec is true</span></div><div class="line">        <span class="comment">// exec这个参数是为了控制value这个function是否执行，这里又多了个pass来控制方法是否执行，此处代码写得不好</span></div><div class="line">        exec = !pass &amp;&amp; exec &amp;&amp; jQuery.isFunction(value);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>; i &lt; length; i++ ) &#123;</div><div class="line">            <span class="comment">// 当value为function时，将其作为DOM对象的方法调用，把其在jquery对象中的位置和原来的属性值传给此方法，将value方法返回值作为value进行属性赋值</span></div><div class="line">            fn( elems[i], key, exec ? value.call( elems[i], i, fn( elems[i], key ) ) : value, pass );</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 在对属性赋值操作完成后，这里返回jquery对象</span></div><div class="line">        <span class="keyword">return</span> elems;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 如果没有传value值，则调用传入的回调方法fn，返回jquery对象第一个元素的key属性值</span></div><div class="line">    <span class="comment">// Getting an attribute</span></div><div class="line">    <span class="keyword">return</span> length ? fn( elems[<span class="number">0</span>], key ) : <span class="literal">undefined</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>需要注意jQuery.fn.width()方法返回的是不带px单位的纯宽度数值，而jQuery.fn.css(&quot;width&quot;)方法返回的则是通过style计算得到的是带px单位的字符串，并且在chrome/safari中，这二个方法返回的数值也会因为DOM对象出现滚动条而不一样：jQuery.fn.width()是通过offsetWidth减去border和padding的宽度得到的，所以不会受滚动条的影响，而jQuery.fn.css(&quot;width&quot;)是由window.getComputedStyle()方法计算得到。</p>
+<p>这二个方法运行结果的差异可以从jQuery.fn.offset()源码阅读笔记中查看。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// The .css() method is a convenient way to get a style property from the first matched element, especially in light of the different ways browsers access most of those properties (the getComputedStyle() method in standards-based browsers versus the currentStyle and runtimeStyle properties in Internet Explorer) and the different terms browsers use for certain properties. For example, Internet Explorer's DOM implementation refers to the float property as styleFloat, while W3C standards-compliant browsers refer to it as cssFloat. The .css() method accounts for such differences, producing the same result no matter which term we use.</span></div><div class="line">jQuery.fn.css = <span class="function"><span class="keyword">function</span>(<span class="params"> name, value </span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> access( <span class="keyword">this</span>, name, value, <span class="literal">true</span>, <span class="function"><span class="keyword">function</span>(<span class="params"> elem, name, value </span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> ( value === <span class="literal">undefined</span> ) &#123;</div><div class="line">            <span class="comment">// 如果只是传了一个参数name，则返回元素此css属性</span></div><div class="line">            <span class="keyword">return</span> jQuery.curCSS( elem, name );</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// rexclude中的几个CSS属性不需要以px为单位</span></div><div class="line">        <span class="keyword">if</span> ( <span class="keyword">typeof</span> value === <span class="string">"number"</span> &amp;&amp; !rexclude.test(name) ) &#123;</div><div class="line">            value += <span class="string">"px"</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 如果有传value值，在处理之后调用jQuery.style()方法，并返回其结果</span></div><div class="line">        jQuery.style( elem, name, value );</div><div class="line">    &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>jQuery.style()和jQuery.curCSS()方法定义如下：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">jQuery.extend(&#123;</div><div class="line">    <span class="comment">// 为元素elem设置名为name的属性</span></div><div class="line">    style: <span class="function"><span class="keyword">function</span>(<span class="params"> elem, name, value </span>) </span>&#123;</div><div class="line">        <span class="comment">// 忽略text和comment节点</span></div><div class="line">        <span class="comment">// don't set styles on text and comment nodes</span></div><div class="line">        <span class="keyword">if</span> ( !elem || elem.nodeType === <span class="number">3</span> || elem.nodeType === <span class="number">8</span> ) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">undefined</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 如果width/height属性设置为负值的话，重置Value</span></div><div class="line">        <span class="comment">// ignore negative width and height values #1599</span></div><div class="line">        <span class="keyword">if</span> ( (name === <span class="string">"width"</span> || name === <span class="string">"height"</span>) &amp;&amp; <span class="built_in">parseFloat</span>(value) &lt; <span class="number">0</span> ) &#123;</div><div class="line">            value = <span class="literal">undefined</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">var</span> style = elem.style || elem, set = value !== <span class="literal">undefined</span>;</div><div class="line"></div><div class="line">        <span class="comment">// 处理IE</span></div><div class="line">        <span class="comment">// IE uses filters for opacity</span></div><div class="line">        <span class="keyword">if</span> ( !jQuery.support.opacity &amp;&amp; name === <span class="string">"opacity"</span> ) &#123;</div><div class="line">            <span class="comment">// value有值的情况，进行属性赋值操作</span></div><div class="line">            <span class="keyword">if</span> ( set ) &#123;</div><div class="line">                <span class="comment">// IE has trouble with opacity if it does not have layout</span></div><div class="line">                <span class="comment">// Force it by setting the zoom level</span></div><div class="line">                style.zoom = <span class="number">1</span>;</div><div class="line"></div><div class="line">                <span class="comment">// Set the alpha filter to set the opacity</span></div><div class="line">                <span class="keyword">var</span> opacity = <span class="built_in">parseInt</span>( value, <span class="number">10</span> ) + <span class="string">""</span> === <span class="string">"NaN"</span> ? <span class="string">""</span> : <span class="string">"alpha(opacity="</span> + value * <span class="number">100</span> + <span class="string">")"</span>;</div><div class="line">                <span class="keyword">var</span> filter = style.filter || jQuery.curCSS( elem, <span class="string">"filter"</span> ) || <span class="string">""</span>;</div><div class="line">                style.filter = ralpha.test(filter) ? filter.replace(ralpha, opacity) : opacity;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">return</span> style.filter &amp;&amp; style.filter.indexOf(<span class="string">"opacity="</span>) &gt;= <span class="number">0</span> ?</div><div class="line">                (<span class="built_in">parseFloat</span>( ropacity.exec(style.filter)[<span class="number">1</span>] ) / <span class="number">100</span>) + <span class="string">""</span>:</div><div class="line">                <span class="string">""</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 处理float属性</span></div><div class="line">        <span class="comment">// Make sure we're using the right name for getting the float value</span></div><div class="line">        <span class="keyword">if</span> ( rfloat.test( name ) ) &#123;</div><div class="line">            name = styleFloat;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 将line-height这种属性转为驼峰词lineHeight</span></div><div class="line">        name = name.replace(rdashAlpha, fcamelCase);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( set ) &#123;</div><div class="line">            <span class="comment">// 有value值，进行style属性赋值</span></div><div class="line">            style[ name ] = value;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 最后返回此属性值</span></div><div class="line">        <span class="keyword">return</span> style[ name ];</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="comment">// 这个方法只处理DOM对象的width/height相关属性值，如clientWidth/offsetWidth，返回值为数值，无"px"单位，同时还受extra影响</span></div><div class="line">    <span class="comment">// 这个方法主要与CSS中的水平七要素有关</span></div><div class="line">    <span class="comment">// jQuery.css()方法在API文档中并没有放出来，主要是jQuery内部在使用</span></div><div class="line">    <span class="comment">// extra: border/margin/padding/undefined</span></div><div class="line">    css: <span class="function"><span class="keyword">function</span>(<span class="params"> elem, name, force, extra </span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> ( name === <span class="string">"width"</span> || name === <span class="string">"height"</span> ) &#123;</div><div class="line">            <span class="keyword">var</span> val, props = cssShow, which = name === <span class="string">"width"</span> ? cssWidth : cssHeight;</div><div class="line"></div><div class="line">            <span class="comment">// 内部方法，用于计算DOM对象的height/width，方法改变了变量作用域链上的val值</span></div><div class="line">            <span class="comment">// 如extra为border，则直接返回elem.offsetWidth/offsetHeight</span></div><div class="line">            <span class="comment">// 如extra为margin，则将marginLeft/marginRight加到val中</span></div><div class="line">            <span class="comment">// 如extra为padding，则计算包括padding的宽高，将elem.offsetWidth减去borderLeft/borderRight</span></div><div class="line">            <span class="comment">// 如extra未设置的话，则只是计算width，将减去paddingLeft/paddingRight</span></div><div class="line">            <span class="function"><span class="keyword">function</span> <span class="title">getWH</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                val = name === <span class="string">"width"</span> ? elem.offsetWidth : elem.offsetHeight;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> ( extra === <span class="string">"border"</span> ) &#123;</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                jQuery.each( which, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                    <span class="comment">// 计算DOM对象的paddingLeft/marginLeft/boarderLeftWidth等值</span></div><div class="line">                    <span class="keyword">if</span> ( !extra ) &#123;</div><div class="line">                        <span class="comment">// 如extra未设置的话，则只是计算width，将减去paddingLeft/paddingRight</span></div><div class="line">                        val -= <span class="built_in">parseFloat</span>(jQuery.curCSS( elem, <span class="string">"padding"</span> + <span class="keyword">this</span>, <span class="literal">true</span>)) || <span class="number">0</span>;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="keyword">if</span> ( extra === <span class="string">"margin"</span> ) &#123;</div><div class="line">                        <span class="comment">// 如extra为margin，则将marginLeft/marginRight加到val中</span></div><div class="line">                        val += <span class="built_in">parseFloat</span>(jQuery.curCSS( elem, <span class="string">"margin"</span> + <span class="keyword">this</span>, <span class="literal">true</span>)) || <span class="number">0</span>;</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        <span class="comment">// 如extra为padding，则计算包括padding的宽高，将elem.offsetWidth减去borderLeftWidth/borderRightWidth</span></div><div class="line">                        val -= <span class="built_in">parseFloat</span>(jQuery.curCSS( elem, <span class="string">"border"</span> + <span class="keyword">this</span> + <span class="string">"Width"</span>, <span class="literal">true</span>)) || <span class="number">0</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> ( elem.offsetWidth !== <span class="number">0</span> ) &#123;</div><div class="line">                getWH();</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                jQuery.swap( elem, props, getWH );</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">return</span> <span class="built_in">Math</span>.max(<span class="number">0</span>, <span class="built_in">Math</span>.round(val));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> jQuery.curCSS( elem, name, force );</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    curCSS: <span class="function"><span class="keyword">function</span>(<span class="params"> elem, name, force </span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> ret,</div><div class="line">            style = elem.style,</div><div class="line">            filter;</div><div class="line"></div><div class="line">        <span class="comment">// 处理IE的opacity值</span></div><div class="line">        <span class="comment">// IE uses filters for opacity</span></div><div class="line">        <span class="keyword">if</span> ( !jQuery.support.opacity &amp;&amp; name === <span class="string">"opacity"</span> &amp;&amp; elem.currentStyle ) &#123;</div><div class="line">            ret = ropacity.test(elem.currentStyle.filter || <span class="string">""</span>) ?</div><div class="line">                (<span class="built_in">parseFloat</span>(<span class="built_in">RegExp</span>.$<span class="number">1</span>) / <span class="number">100</span>) + <span class="string">""</span> :</div><div class="line">                <span class="string">""</span>;</div><div class="line"></div><div class="line">            <span class="keyword">return</span> ret === <span class="string">""</span> ?</div><div class="line">                <span class="string">"1"</span> :</div><div class="line">                ret;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// styleFloat = "cssFloat"</span></div><div class="line">        <span class="comment">// Make sure we're using the right name for getting the float value</span></div><div class="line">        <span class="comment">// styleFloat = "cssFloat"</span></div><div class="line">        <span class="keyword">if</span> ( rfloat.test( name ) ) &#123;</div><div class="line">            name = styleFloat;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 使用force=true的话，则强制属性值用getComputedStyle()方法计算</span></div><div class="line">        <span class="comment">// 否则可直接从style中获取属性值</span></div><div class="line">        <span class="keyword">if</span> ( !force &amp;&amp; style &amp;&amp; style[ name ] ) &#123;</div><div class="line">            ret = style[ name ];</div><div class="line"></div><div class="line">        <span class="comment">// window.getComputedStyle()方法，在IE中没有实现</span></div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( getComputedStyle ) &#123;</div><div class="line"></div><div class="line">            <span class="comment">// Only "float" is needed here</span></div><div class="line">            <span class="keyword">if</span> ( rfloat.test( name ) ) &#123;</div><div class="line">                name = <span class="string">"float"</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// 将lineHeight之类的驼峰词分为line-height</span></div><div class="line">            name = name.replace( rupper, <span class="string">"-$1"</span> ).toLowerCase();</div><div class="line"></div><div class="line">            <span class="comment">// Node.ownerDocument: The Document object of which this Node is a part. For Document nodes, this property is null. Read-only.</span></div><div class="line">            <span class="comment">// Document.defaultView: The Window in which the document is displayed.</span></div><div class="line">            <span class="keyword">var</span> defaultView = elem.ownerDocument.defaultView;</div><div class="line"></div><div class="line">            <span class="comment">// document.ownerDocument is null</span></div><div class="line">            <span class="comment">// window.ownerDocument is undefined</span></div><div class="line">            <span class="keyword">if</span> ( !defaultView ) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// window.getComputedStyle(elt)</span></div><div class="line">            <span class="comment">// Returns a read-only Style object that contains all CSS styles (not just inline styles) that apply to the specified document element elt.</span></div><div class="line">            <span class="comment">// Positioning attributes such as left, top, and width queried from this computed style object are always returned as pixel values.</span></div><div class="line">            <span class="keyword">var</span> computedStyle = defaultView.getComputedStyle( elem, <span class="literal">null</span> );</div><div class="line"></div><div class="line">            <span class="keyword">if</span> ( computedStyle ) &#123;</div><div class="line">                ret = computedStyle.getPropertyValue( name );</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// We should always get a number back from opacity</span></div><div class="line">            <span class="keyword">if</span> ( name === <span class="string">"opacity"</span> &amp;&amp; ret === <span class="string">""</span> ) &#123;</div><div class="line">                ret = <span class="string">"1"</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        <span class="comment">//  IE中有Element.currentStyle这个属性，根据Dean Edwards提供的方法返回CSS的值</span></div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( elem.currentStyle ) &#123;</div><div class="line">            <span class="keyword">var</span> camelCase = name.replace(rdashAlpha, fcamelCase);</div><div class="line"></div><div class="line">            ret = elem.currentStyle[ name ] || elem.currentStyle[ camelCase ];</div><div class="line"></div><div class="line">            <span class="comment">// From the awesome hack by Dean Edwards</span></div><div class="line">            <span class="comment">// http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291</span></div><div class="line"></div><div class="line">            <span class="comment">// If we're not dealing with a regular pixel number</span></div><div class="line">            <span class="comment">// but a number that has a weird ending, we need to convert it to pixels</span></div><div class="line">            <span class="keyword">if</span> ( !rnumpx.test( ret ) &amp;&amp; rnum.test( ret ) ) &#123;</div><div class="line">                <span class="comment">// Remember the original values</span></div><div class="line">                <span class="keyword">var</span> left = style.left, rsLeft = elem.runtimeStyle.left;</div><div class="line"></div><div class="line">                <span class="comment">// Put in the new values to get a computed value out</span></div><div class="line">                elem.runtimeStyle.left = elem.currentStyle.left;</div><div class="line">                style.left = camelCase === <span class="string">"fontSize"</span> ? <span class="string">"1em"</span> : (ret || <span class="number">0</span>);</div><div class="line">                ret = style.pixelLeft + <span class="string">"px"</span>;</div><div class="line"></div><div class="line">                <span class="comment">// Revert the changed values</span></div><div class="line">                style.left = left;</div><div class="line">                elem.runtimeStyle.left = rsLeft;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> ret;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="comment">// A method for quickly swapping in/out CSS properties to get correct calculations</span></div><div class="line">    swap: <span class="function"><span class="keyword">function</span>(<span class="params"> elem, options, callback </span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> old = &#123;&#125;;</div><div class="line"></div><div class="line">        <span class="comment">// Remember the old values, and insert the new ones</span></div><div class="line">        <span class="keyword">for</span> ( <span class="keyword">var</span> name <span class="keyword">in</span> options ) &#123;</div><div class="line">            old[ name ] = elem.style[ name ];</div><div class="line">            elem.style[ name ] = options[ name ];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        callback.call( elem );</div><div class="line"></div><div class="line">        <span class="comment">// Revert the old values</span></div><div class="line">        <span class="keyword">for</span> ( <span class="keyword">var</span> name <span class="keyword">in</span> options ) &#123;</div><div class="line">            elem.style[ name ] = old[ name ];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/jquery/2014/07/31/jquery-console-debug-plugin.html" rel="next" title="jquery debug plugin">
+                上一篇：jquery debug plugin
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/jquery/2014/07/31/jquery-src-data.html" rel="prev" title="jquery-1.4.2 data部分源码分析">
+                下一篇：jquery-1.4.2 data部分源码分析
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

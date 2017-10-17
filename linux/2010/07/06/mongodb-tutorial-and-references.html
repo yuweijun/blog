@@ -1,0 +1,719 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="IntroductionMongoDB is a collection-oriented, schema-free document database. By collection-oriented, we mean that data is grouped into sets that are called &amp;#39;collections&amp;#39;. Each collection has a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongodb tutorial and references">
+<meta property="og:url" content="https://www.4e00.com/linux/2010/07/06/mongodb-tutorial-and-references.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="IntroductionMongoDB is a collection-oriented, schema-free document database. By collection-oriented, we mean that data is grouped into sets that are called &amp;#39;collections&amp;#39;. Each collection has a">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mongodb tutorial and references">
+<meta name="twitter:description" content="IntroductionMongoDB is a collection-oriented, schema-free document database. By collection-oriented, we mean that data is grouped into sets that are called &amp;#39;collections&amp;#39;. Each collection has a">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/linux/2010/07/06/mongodb-tutorial-and-references.html"/>
+
+  <title> mongodb tutorial and references | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                mongodb tutorial and references
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2010-07-06T15:17:00+08:00" content="2010-07-06">
+              2010-07-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>MongoDB is a collection-oriented, schema-free document database.</p>
+<p>By collection-oriented, we mean that data is grouped into sets that are called &#39;collections&#39;. Each collection has a unique name in the database, and can contain an unlimited number of documents. Collections are analogous to tables in a RDBMS, except that they don&#39;t have any defined schema.</p>
+<p>By schema-free, we mean that the database doesn&#39;t need to know anything about the structure of the documents that you store in a collection. In fact, you can store documents with different structure in the same collection if you so choose.</p>
+<p>By document, we mean that we store data that is a structured collection of key-value pairs, where keys are strings, and values are any of a rich set of data types, including arrays and documents. We call this data format &quot;BSON&quot; for &quot;Binary Serialized dOcument Notation.&quot;</p>
+<p>MongoDB is a server process that runs on Linux, Windows and OS X. It can be run both as a 32 or 64-bit application. We recommend running in 64-bit mode, since Mongo is limited to a total data size of about 2GB for all databases in 32-bit mode.</p>
+<p>The MongoDB process listens on port 27017 by default (note that this can be set at start time - please see Command Line Parameters for more information).</p>
+<p>MongoDB stores its data in files (default location is /data/db/), and uses memory mapped files for data management for efficiency.</p>
+<p>Example data of mongodb</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">bin</span>/mongo --shell slides.js</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">* Slides for presentation on Mastering the MongoDB Shell.</span></div><div class="line"><span class="comment">* Copyright 2010 Mike Dirolf (http://dirolf.com)</span></div><div class="line"><span class="comment">* This work is licensed under the Creative Commons</span></div><div class="line"><span class="comment">* Attribution-Noncommercial-Share Alike 3.0 United States License. To</span></div><div class="line"><span class="comment">* view a copy of this license, visit</span></div><div class="line"><span class="comment">* http://creativecommons.org/licenses/by-nc-sa/3.0/us/ or send a</span></div><div class="line"><span class="comment">* letter to Creative Commons, 171 Second Street, Suite 300, San</span></div><div class="line"><span class="comment">* Francisco, California, 94105, USA.</span></div><div class="line"><span class="comment">* Originally given at MongoSF on 4/30/2010.</span></div><div class="line"><span class="comment">* Modified and given at MongoNYC on 5/21/2010.</span></div><div class="line"><span class="comment">* To use: run `mongo --shell slides.js`</span></div><div class="line"><span class="comment">*/</span></div><div class="line">db = db.getSisterDB(<span class="string">"shell"</span>);</div><div class="line">db.dropDatabase();</div><div class="line"><span class="comment">// some sample data</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i += <span class="number">1</span>) &#123;</div><div class="line">    db.data.save(&#123;</div><div class="line">        x: i</div><div class="line">    &#125;);</div><div class="line">&#125; <span class="comment">// "slides"</span></div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">0</span>,</div><div class="line">    welcome: <span class="string">"to MongoNYC!"</span>,</div><div class="line">    hashtag: <span class="string">"#mongonyc"</span>,</div><div class="line">    mirror: <span class="string">"http://confmirror.10gen.com/"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">1</span>,</div><div class="line">    title: <span class="string">"Mastering the MongoDB Shell"</span>,</div><div class="line">    who: <span class="string">"Mike Dirolf, 10gen"</span>,</div><div class="line">    handle: <span class="string">"@mdirolf"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">2</span>,</div><div class="line">    question: <span class="string">"what is the shell?"</span>,</div><div class="line">    answer: <span class="string">"a better Powerpoint?"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">3</span>,</div><div class="line">    question: <span class="string">"what is the shell?"</span>,</div><div class="line">    answer: <span class="string">"a full JavaScript environment"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">4</span>,</div><div class="line">    question: <span class="string">"what is the shell?"</span>,</div><div class="line">    answer: <span class="string">"a reference MongoDB client"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">5</span>,</div><div class="line">    <span class="string">"use cases"</span>: [<span class="string">"administrative scripting"</span>, <span class="string">"exploring and debugging"</span>, <span class="string">"learning (and teaching!)"</span>]</div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">6</span>,</div><div class="line">    repl: [<span class="string">"arrows for history"</span>, <span class="string">"^L"</span>]</div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">7</span>,</div><div class="line">    <span class="string">"getting help"</span>: [<span class="string">"help"</span>, <span class="string">"db.help"</span>, <span class="string">"db.foo.help"</span>]</div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">8</span>,</div><div class="line">    <span class="string">"show"</span>: [<span class="string">"dbs"</span>, <span class="string">"collections"</span>, <span class="string">"users"</span>, <span class="string">"profile"</span>]</div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">9</span>,</div><div class="line">    navigating: <span class="string">"databases"</span>,</div><div class="line">    how: <span class="string">"'use' or 'db.getSisterDB'"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">10</span>,</div><div class="line">    navigating: <span class="string">"collections"</span>,</div><div class="line">    how: <span class="string">"dots, brackets, or 'db.getCollection'"</span>,</div><div class="line">    note: <span class="string">"careful with names like foo-bar"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">11</span>,</div><div class="line">    <span class="string">"basic operations"</span>: [<span class="string">"insert"</span>, <span class="string">"findOne"</span>, <span class="string">"find"</span>, <span class="string">"remove"</span>]</div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">12</span>,</div><div class="line">    <span class="string">"fun with cursors"</span>: [<span class="string">"auto-iteration"</span>, <span class="string">"it"</span>]</div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">13</span>,</div><div class="line">    <span class="string">"error checking"</span>: <span class="string">"auto 'db.getLastError'"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">14</span>,</div><div class="line">    <span class="string">"commands"</span>: [<span class="string">"count"</span>, <span class="string">"stats"</span>, <span class="string">"repairDatabase"</span>],</div><div class="line">    <span class="string">"meta"</span>: <span class="string">"listCommands"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">15</span>,</div><div class="line">    <span class="string">"pro tip!"</span>: <span class="string">"viewing JS source"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">16</span>,</div><div class="line">    <span class="string">"getting help"</span>: <span class="string">"--help"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">17</span>,</div><div class="line">    scripting: <span class="string">"run .js files"</span>,</div><div class="line">    tools: [<span class="string">"--eval"</span>, <span class="string">"--shell"</span>, <span class="string">"runProgram"</span>]</div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">18</span>,</div><div class="line">    warning: <span class="string">"dates in JS suck"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">19</span>,</div><div class="line">    warning: <span class="string">"array iteration in JS sucks"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">20</span>,</div><div class="line">    warning: <span class="string">"numeric types in JS suck"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">21</span>,</div><div class="line">    so: <span class="string">"why JS?"</span></div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">22</span>,</div><div class="line">    homework: [<span class="string">"convince 2 friends to try MongoDB"</span>, <span class="string">"send feedback @mdirolf"</span>]</div><div class="line">&#125;);</div><div class="line">db.deck.save(&#123;</div><div class="line">    slide: <span class="number">23</span>,</div><div class="line">    url: <span class="string">"github.com/mdirolf/shell_presentation"</span>,</div><div class="line">    questions: <span class="string">"?"</span></div><div class="line">&#125;); <span class="comment">// current slide</span></div><div class="line"><span class="keyword">var</span> current = <span class="number">0</span>; <span class="comment">// print current slide and advance</span></div><div class="line"><span class="keyword">var</span> next = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> slide = db.deck.findOne(&#123;</div><div class="line">        slide: current</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">if</span> (slide) &#123;</div><div class="line">        current++;</div><div class="line">        <span class="keyword">delete</span> slide._id;</div><div class="line">        <span class="keyword">delete</span> slide.slide;</div><div class="line">        print(tojson(slide, <span class="literal">null</span>, <span class="literal">false</span>));</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        print(<span class="string">"The End!"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;; <span class="comment">// go to slide and print</span></div><div class="line"><span class="keyword">var</span> go = <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123;</div><div class="line">    current = n;</div><div class="line">    next();</div><div class="line">&#125;; <span class="comment">// repeat the previous slide</span></div><div class="line"><span class="keyword">var</span> again = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    current--;</div><div class="line">    next();</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="Basic-Commands-of-mongodb"><a href="#Basic-Commands-of-mongodb" class="headerlink" title="Basic Commands of mongodb"></a>Basic Commands of mongodb</h2><ul>
+<li><a href="http://www.mongodb.org/display/DOCS/List+of+Database+Commands" target="_blank" rel="external">http://www.mongodb.org/display/DOCS/List+of+Database+Commands</a></li>
+<li><a href="http://rezmuh.sixceedinc.com/2010/02/basic-commands-to-get-you-started-with-mongodb.html" target="_blank" rel="external">http://rezmuh.sixceedinc.com/2010/02/basic-commands-to-get-you-started-with-mongodb.html</a></li>
+</ul>
+<h2 id="Privileged-Commands"><a href="#Privileged-Commands" class="headerlink" title="Privileged Commands"></a>Privileged Commands</h2><p>Certain operations are for the database administrator only. These privileged operations may only be performed on the special database named admin.</p>
+<p>Start the server like this:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">bin</span>/mongod --dbpath /path/to/data</div></pre></td></tr></table></figure>
+<p>Stop it with <code>Ctrl-C</code> or with kill (but don’t use <code>kill -9</code>, which doesn’t give the server a chance to shut down cleanly and flush data to disk).</p>
+<p>Viewing stats without the mongo console:</p>
+<p>Visit <code>http://localhost:28017</code> (28017 is the port the server is running on, plus 1000) to get an overview of what’s going on.</p>
+<p>You can also query <code>http://localhost:28017/_status</code> to see the same data that <code>db.serverStatus()</code> returns, but in JSON format.</p>
+<h2 id="Use-client-command-console"><a href="#Use-client-command-console" class="headerlink" title="Use client command console"></a>Use client command console</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">bin</span>/mongo</div></pre></td></tr></table></figure>
+<blockquote>
+<p>use admin;<br>db.addUser(&#39;dummy, &#39;dummy&#39;) // create new user with password &quot;dummy&quot;<br>db.runCommand(&quot;shutdown&quot;); // shut down the database</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">bin</span>/mongo -u dummy -p dummy admin</div></pre></td></tr></table></figure>
+<h2 id="Create-a-new-Database"><a href="#Create-a-new-Database" class="headerlink" title="Create a new Database:"></a>Create a new Database:</h2><blockquote>
+<p>use new_database<br>db.addUser(&#39;dummy&#39;, &#39;differentpassword&#39;)</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">bin</span>/mongo -u dummy -p differentpassword new_database</div></pre></td></tr></table></figure>
+<h2 id="Deleting-a-database"><a href="#Deleting-a-database" class="headerlink" title="Deleting a database"></a>Deleting a database</h2><blockquote>
+<p>use [db name]<br>db.dropDatabase()</p>
+</blockquote>
+<h2 id="Working-with-Collections-Tables"><a href="#Working-with-Collections-Tables" class="headerlink" title="Working with Collections (Tables):"></a>Working with Collections (Tables):</h2><blockquote>
+<p>show collections</p>
+</blockquote>
+<h2 id="Lists-all-the-available-databases"><a href="#Lists-all-the-available-databases" class="headerlink" title="Lists all the available databases:"></a>Lists all the available databases:</h2><blockquote>
+<p>show dbs</p>
+</blockquote>
+<h2 id="To-get-a-list-of-data-in-a-specific-collection-use"><a href="#To-get-a-list-of-data-in-a-specific-collection-use" class="headerlink" title="To get a list of data in a specific collection, use:"></a>To get a list of data in a specific collection, use:</h2><blockquote>
+<p>db.[collection name].find()</p>
+</blockquote>
+<h2 id="Directory-Global-functions-and-properties"><a href="#Directory-Global-functions-and-properties" class="headerlink" title="Directory Global functions and properties:"></a>Directory Global functions and properties:</h2><blockquote>
+<p>for(var o in this) {<br>    print(o);<br>}</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">__quiet</div><div class="line">chatty</div><div class="line">friendlyEqual</div><div class="line">doassert</div><div class="line">assert</div><div class="line">argumentsToArray</div><div class="line">isString</div><div class="line">isNumber</div><div class="line">isObject</div><div class="line">tojson</div><div class="line">tojsonObject</div><div class="line">shellPrint</div><div class="line">printjson</div><div class="line">shellPrintHelper</div><div class="line">shellHelper</div><div class="line">help</div><div class="line">Random</div><div class="line">killWithUris</div><div class="line">Geo</div><div class="line">connect</div><div class="line">MR</div><div class="line">MapReduceResult</div><div class="line">__lastres__</div><div class="line">sleep_</div><div class="line">sleep</div><div class="line">quit_</div><div class="line">quit</div><div class="line">getMemInfo_</div><div class="line">getMemInfo</div><div class="line">_srand_</div><div class="line">_srand</div><div class="line">_rand_</div><div class="line">_rand</div><div class="line">_isWindows_</div><div class="line">_isWindows</div><div class="line">_startMongoProgram_</div><div class="line">_startMongoProgram</div><div class="line">runProgram_</div><div class="line">runProgram</div><div class="line">runMongoProgram_</div><div class="line">runMongoProgram</div><div class="line">stopMongod_</div><div class="line">stopMongod</div><div class="line">stopMongoProgram_</div><div class="line">stopMongoProgram</div><div class="line">stopMongoProgramByPid_</div><div class="line">stopMongoProgramByPid</div><div class="line">rawMongoProgramOutput_</div><div class="line">rawMongoProgramOutput</div><div class="line">clearRawMongoProgramOutput_</div><div class="line">clearRawMongoProgramOutput</div><div class="line">removeFile_</div><div class="line">removeFile</div><div class="line">listFiles_</div><div class="line">listFiles</div><div class="line">resetDbpath_</div><div class="line">resetDbpath</div><div class="line">copyDbpath_</div><div class="line">copyDbpath</div><div class="line">_parsePath</div><div class="line">_parsePort</div><div class="line">createMongoArgs</div><div class="line">startMongodTest</div><div class="line">startMongod</div><div class="line">startMongodNoReset</div><div class="line">startMongos</div><div class="line">startMongoProgram</div><div class="line">startMongoProgramNoConnect</div><div class="line">myPort</div><div class="line">ShardingTest</div><div class="line">printShardingStatus</div><div class="line">MongodRunner</div><div class="line">ReplPair</div><div class="line">ToolTest</div><div class="line">ReplTest</div><div class="line">allocatePorts</div><div class="line">SyncCCTest</div><div class="line">db</div><div class="line">hex_md5_</div><div class="line">hex_md5</div><div class="line">version_</div><div class="line">version</div><div class="line">i</div><div class="line">current</div><div class="line">next</div><div class="line">__iscmd__</div><div class="line">___it___</div><div class="line">it</div></pre></td></tr></table></figure>
+<h2 id="Directory-properties-of-db"><a href="#Directory-properties-of-db" class="headerlink" title="Directory properties of db:"></a>Directory properties of db:</h2><blockquote>
+<p>for(var o in db){<br>    print(o);<br>}</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">_mongo</div><div class="line">_name</div><div class="line">shellPrint</div><div class="line">getMongo</div><div class="line">getSisterDB</div><div class="line">getName</div><div class="line">stats</div><div class="line">getCollection</div><div class="line">commandHelp</div><div class="line">runCommand</div><div class="line">_dbCommand</div><div class="line">_adminCommand</div><div class="line">addUser</div><div class="line">removeUser</div><div class="line">__pwHash</div><div class="line">auth</div><div class="line">createCollection</div><div class="line">getProfilingLevel</div><div class="line">dropDatabase</div><div class="line">shutdownServer</div><div class="line">cloneDatabase</div><div class="line">cloneCollection</div><div class="line">copyDatabase</div><div class="line">repairDatabase</div><div class="line">help</div><div class="line">printCollectionStats</div><div class="line">setProfilingLevel</div><div class="line">eval</div><div class="line">dbEval</div><div class="line">groupeval</div><div class="line">groupcmd</div><div class="line">group</div><div class="line">_groupFixParms</div><div class="line">resetError</div><div class="line">forceError</div><div class="line">getLastError</div><div class="line">getLastErrorObj</div><div class="line">getLastErrorCmd</div><div class="line">getPrevError</div><div class="line">getCollectionNames</div><div class="line">tojson</div><div class="line">toString</div><div class="line">currentOp</div><div class="line">currentOP</div><div class="line">killOp</div><div class="line">killOP</div><div class="line">getReplicationInfo</div><div class="line">printReplicationInfo</div><div class="line">printSlaveReplicationInfo</div><div class="line">serverBuildInfo</div><div class="line">serverStatus</div><div class="line">version</div><div class="line">printShardingStatus</div></pre></td></tr></table></figure>
+<blockquote>
+<p>db.shell.help()</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">DBCollection help</div><div class="line">db.foo.count()</div><div class="line">db.foo.dataSize()</div><div class="line">db.foo.distinct( key ) - eg. db.foo.distinct( &apos;x&apos; )</div><div class="line">db.foo.drop() drop the collection</div><div class="line">db.foo.dropIndex(name)</div><div class="line">db.foo.dropIndexes()</div><div class="line">db.foo.ensureIndex(keypattern,options) - options should be an object with these possible fields: name, unique, dropDups</div><div class="line">db.foo.reIndex()</div><div class="line">db.foo.find( [query] , [fields]) - first parameter is an optional query filter. second parameter is optional set of fields to return.</div><div class="line">e.g. db.foo.find( &#123; x : 77 &#125; , &#123; name : 1 , x : 1 &#125; )</div><div class="line">db.foo.find(...).count()</div><div class="line">db.foo.find(...).limit(n)</div><div class="line">db.foo.find(...).skip(n)</div><div class="line">db.foo.find(...).sort(...)</div><div class="line">db.foo.findOne([query])</div><div class="line">db.foo.findAndModify( &#123; update : ... , remove : bool [, query: &#123;&#125;, sort: &#123;&#125;, &apos;new&apos;: false] &#125; )</div><div class="line">db.foo.getDB() get DB object associated with collection</div><div class="line">db.foo.getIndexes()</div><div class="line">db.foo.group( &#123; key : ..., initial: ..., reduce : ...[, cond: ...] &#125; )</div><div class="line">db.foo.mapReduce( mapFunction , reduceFunction , &lt;optional params&gt; )</div><div class="line">db.foo.remove(query)</div><div class="line">db.foo.renameCollection( newName , &lt;droptarget&gt; ) renames the collection.</div><div class="line">db.foo.runCommand( name , &lt;options&gt; ) runs a db command with the given name where the 1st param is the colleciton name</div><div class="line">db.foo.save(obj)</div><div class="line">db.foo.stats()</div><div class="line">db.foo.storageSize() - includes free space allocated to this collection</div><div class="line">db.foo.totalIndexSize() - size in bytes of all the indexes</div><div class="line">db.foo.totalSize() - storage allocated for all data and indexes</div><div class="line">db.foo.update(query, object[, upsert_bool, multi_bool])</div><div class="line">db.foo.validate() - SLOW</div><div class="line">db.foo.getShardVersion() - only for use with sharding</div></pre></td></tr></table></figure>
+<blockquote>
+<p>db.help()</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">DB methods:</div><div class="line">db.addUser(username, password[, readOnly=false])</div><div class="line">db.auth(username, password)</div><div class="line">db.cloneDatabase(fromhost)</div><div class="line">db.commandHelp(name) returns the help for the command</div><div class="line">db.copyDatabase(fromdb, todb, fromhost)</div><div class="line">db.createCollection(name, &#123; size : ..., capped : ..., max : ... &#125; )</div><div class="line">db.currentOp() displays the current operation in the db</div><div class="line">db.dropDatabase()</div><div class="line">db.eval(func, args) run code server-side</div><div class="line">db.getCollection(cname) same as db[&apos;cname&apos;] or db.cname</div><div class="line">db.getCollectionNames()</div><div class="line">db.getLastError() - just returns the err msg string</div><div class="line">db.getLastErrorObj() - return full status object</div><div class="line">db.getMongo() get the server connection object</div><div class="line">db.getMongo().setSlaveOk() allow this connection to read from the nonmaster member of a replica pair</div><div class="line">db.getName()</div><div class="line">db.getPrevError()</div><div class="line">db.getProfilingLevel()</div><div class="line">db.getReplicationInfo()</div><div class="line">db.getSisterDB(name) get the db at the same server as this onew</div><div class="line">db.killOp(opid) kills the current operation in the db</div><div class="line">db.printCollectionStats()</div><div class="line">db.printReplicationInfo()</div><div class="line">db.printSlaveReplicationInfo()</div><div class="line">db.printShardingStatus()</div><div class="line">db.removeUser(username)</div><div class="line">db.repairDatabase()</div><div class="line">db.resetError()</div><div class="line">db.runCommand(cmdObj) run a database command.  if cmdObj is a string, turns it into &#123; cmdObj : 1 &#125;</div><div class="line">db.serverStatus()</div><div class="line">db.setProfilingLevel(level,) 0=off 1=slow 2=all</div><div class="line">db.shutdownServer()</div><div class="line">db.stats()</div><div class="line">db.version() current version of the server</div></pre></td></tr></table></figure>
+<blockquote>
+<p>help()</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">HELP</div><div class="line">show dbs                     show database names</div><div class="line">show collections             show collections in current database</div><div class="line">show users                   show users in current database</div><div class="line">show profile                 show most recent system.profile entries with time &gt;= 1ms</div><div class="line">use &lt;db name&gt;                set curent database to &lt;db name&gt;</div><div class="line">db.help()                    help on DB methods</div><div class="line">db.foo.help()                help on collection methods</div><div class="line">db.foo.find()                list objects in collection foo</div><div class="line">db.foo.find( &#123; a : 1 &#125; )     list objects in foo where a == 1</div><div class="line">it                           result of the last line evaluated; use to further iterate</div></pre></td></tr></table></figure>
+<p>If I insert the same Document twice, it does not raise an Error?</p>
+<p>Using PyMongo for example, why does inserting the same document (read same _id) more than once not raise an error? When we need to detect if a document already exists in the database, we could try catching DuplicateKeyError on insert. Below we explicitly insert the document with the same _id twice but the exception is never raised. Why?</p>
+<h2 id="try"><a href="#try" class="headerlink" title="try"></a>try</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">doc = &#123; <span class="attr">_id</span>: <span class="string">'123123'</span> &#125;</div><div class="line">db.foo.insert(doc)</div><div class="line">db.foo.insert(doc)</div><div class="line">except pymongo.errors.DuplicateKeyError, <span class="attr">error</span>:</div><div class="line">print(<span class="string">"Same _id inserted twice:"</span>, error)</div></pre></td></tr></table></figure>
+<p>The answer is that DuplicateKeyError will only be raised if we do the insert in safe mode i.e. db.foo.insert(doc, safe=True). The reason why we do not see an error raised with most drivers but with MongoDB&#39;s interactive shell is because the shell does a safe insert by default whereas, with most drivers, it is the developers choice whether or not to use a safe insert.</p>
+<h2 id="mongodb-39-s-interactive-shell"><a href="#mongodb-39-s-interactive-shell" class="headerlink" title="mongodb&#39;s interactive shell"></a>mongodb&#39;s interactive shell</h2><blockquote>
+<p>doc = {_id: 123421, name: &#39;test&#39;};<br>// { &quot;_id&quot; : 123421, &quot;name&quot; : &quot;test&quot; }<br>db.deck.insert(doc)<br>db.deck.insert(doc)<br>// E11000 duplicate key error index: shell.deck.$<em>id</em>  dup key: { : 123421.0 }</p>
+</blockquote>
+<h2 id="Backup"><a href="#Backup" class="headerlink" title="Backup"></a>Backup</h2><ol>
+<li><a href="http://effectif.com/mongodb/mongo-administration" target="_blank" rel="external">http://effectif.com/mongodb/mongo-administration</a></li>
+</ol>
+<p>There are basically two approaches to backing up a Mongo database:</p>
+<ol>
+<li>mongodump and mongorestore are the classic approach. Dumps the contents of the database to files. The backup is stored in the same format as Mongo uses internally, so is very efficient. But it’s not a point-in-time snapshot.</li>
+<li>To get a point-in-time snapshot, shut the database down, copy the disk files (e.g. with cp) and then start mongod up again.</li>
+</ol>
+<p>Alternatively, rather than shutting mongod down before making your point-in-time snapshot, you could just stop it from accepting writes:</p>
+<blockquote>
+<p>db._adminCommand({fsync: 1, lock: 1})</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"info"</span> : <span class="string">"now locked against writes, use db.$cmd.sys.unlock.findOne() to unlock"</span>,</div><div class="line">    <span class="string">"ok"</span> : <span class="number">1</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>To unlock the database again, you need to switch to the admin database and then unlock it:</p>
+<blockquote>
+<p>use admin<br>// switched to db admin<br>db.$cmd.sys.unlock.findOne()<br>// { &quot;ok&quot; : 1, &quot;info&quot; : &quot;unlock requested&quot; }</p>
+</blockquote>
+<p>If you don’t switch to the admin database first you’ll get an unauthorized error:</p>
+<blockquote>
+<p>db._adminCommand({fsync: 1, lock: 1})</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"info"</span> : <span class="string">"now locked against writes, use db.$cmd.sys.unlock.findOne() to unlock"</span>,</div><div class="line">    <span class="string">"ok"</span> : <span class="number">1</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>db.$cmd.sys.unlock.findOne()<br>// { &quot;err&quot; : &quot;unauthorized&quot; }</p>
+</blockquote>
+<p>You can take a point in time snapshot from a slave just as easily as your master database, which avoids downtime. This is one of the reasons that running a slave is so strongly recommended…</p>
+<h2 id="What-RAID-should-I-use"><a href="#What-RAID-should-I-use" class="headerlink" title="What RAID should I use?"></a>What RAID should I use?</h2><ol>
+<li><a href="http://www.mongodb.org/display/DOCS/Developer+FAQ" target="_blank" rel="external">http://www.mongodb.org/display/DOCS/Developer+FAQ</a></li>
+</ol>
+<p>We recommend not using RAID-5, but rather, RAID-10 or the like. Both will work of course.</p>
+<h2 id="Replication"><a href="#Replication" class="headerlink" title="Replication"></a>Replication</h2><p>Do it (did you read the previous section?). Seriously.</p>
+<p>Start your master and slave up like this:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mongod</span> --master --oplogSize 500</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mongod</span> --slave --<span class="built_in">source</span> localhost:27017 --port 3000 --dbpath /data/slave</div></pre></td></tr></table></figure>
+<p>When seeding a new slave server from master use the <code>--fastsync</code> option.</p>
+<p>You can see what’s going on with these two commands:</p>
+<blockquote>
+<p>db.printReplicationInfo()  # tells you how long your oplog will last<br>db.printSlaveReplicationInfo()  # tells you how far behind the slave is</p>
+</blockquote>
+<p>If the slave isn’t keeping up, how do you find out what’s going on? Check the mongo log for any recent errors. Try connecting with the mongo console. Try running queries from the console to see if everything is working. Run the status commands above to try and find out which database is taking up resources. If you can’t work it out hop on the IRC channel; Mathias says they’ll be very responsive.</p>
+<h2 id="What-is-the-difference-between-MongoDB-and-RDBMSs"><a href="#What-is-the-difference-between-MongoDB-and-RDBMSs" class="headerlink" title="What is the difference between MongoDB and RDBMSs"></a>What is the difference between MongoDB and RDBMSs</h2><ol>
+<li><a href="http://sunoano.name/ws/mongodb.html#faqs" target="_blank" rel="external">http://sunoano.name/ws/mongodb.html#faqs</a></li>
+</ol>
+<h2 id="mysql-postgresql"><a href="#mysql-postgresql" class="headerlink" title="mysql, postgresql, ..."></a>mysql, postgresql, ...</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Server:Port</div><div class="line">- Database</div><div class="line">- Table</div><div class="line">- Row</div></pre></td></tr></table></figure>
+<h2 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Server:Port</div><div class="line">- Database</div><div class="line">- Collection</div><div class="line">- Document</div></pre></td></tr></table></figure>
+<p>The concept of server and database are very similar. But the concept of table and collection are quite different. In RDBMSs a table is a rectangle. It is all columns and rows. Each row has a fixed number of columns, if we add a new column, we add that column to each and every row.</p>
+<p>In MongoDB a collection is more like a really big box and each document is like a little bag of stuff in that box. Each bag contains whatever it needs in a totally flexible manner (read schema-less). However, schema-less does not equal type-less i.e. it is just that any document has its own schema, which it may or may not share with any other document. In practice it is normal to have the same schema for all the documents in collection.</p>
+<h2 id="Clone-Database"><a href="#Clone-Database" class="headerlink" title="Clone Database"></a>Clone Database</h2><ol>
+<li><a href="http://www.mongodb.org/display/DOCS/Clone+Database" target="_blank" rel="external">http://www.mongodb.org/display/DOCS/Clone+Database</a></li>
+</ol>
+<p>MongoDB includes commands for copying a database from one server to another.</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// copy an entire database from one name on one server to another</span></div><div class="line"><span class="comment">// name on another server.  omit &lt;from_hostname&gt; to copy from one</span></div><div class="line"><span class="comment">// name to another on the same server.</span></div><div class="line">db.copyDatabase(&lt;from_dbname&gt;, &lt;to_dbname&gt;, &lt;from_hostname&gt;);</div><div class="line">// if you must authenticate with the source database</div><div class="line">db.copyDatabase(&lt;from_dbname&gt;, &lt;to_dbname&gt;, &lt;from_hostname&gt;, &lt;username&gt;, &lt;password&gt;);</div><div class="line">// in "command" syntax (runnable from any driver):</div><div class="line">db.runCommand( &#123; copydb : 1, fromdb : ..., todb : ..., fromhost : ... &#125; );</div><div class="line">// command syntax for authenticating with the source:</div><div class="line">n = db.runCommand( &#123; copydbgetnonce : 1, fromhost: ... &#125; );</div><div class="line">db.runCommand( &#123; copydb : 1, fromhost: ..., fromdb: ..., todb: ..., username: ..., nonce: n.nonce, key: &lt;hash of username, nonce, password &gt; &#125; );</div><div class="line"></div><div class="line">// clone the current database (implied by 'db') from another host</div><div class="line">var fromhost = ...;</div><div class="line">print("about to get a copy of database " + db + " from " + fromhost);</div><div class="line">db.cloneDatabase(fromhost);</div><div class="line">// in "command" syntax (runnable from any driver):</div><div class="line">db.runCommand( &#123; clone : fromhost &#125; );</div></pre></td></tr></table></figure>
+<h2 id="What-might-be-a-use-case-for-fork"><a href="#What-might-be-a-use-case-for-fork" class="headerlink" title="What might be a use case for --fork?"></a>What might be a use case for --fork?</h2><p>The <code>--fork</code> switch forks a mongod process of another exiting process. One use case where this is pretty handy for example is if we SSH into a remote machine and start a MongoDB and leave right away after a new mongod got started.</p>
+<p>The fastest way to do so would simply be to append /path/to/mongod --fork to the SSH command line since this will skip creating an intermediate shell and bring up a remote mongod right away.</p>
+<h2 id="Are-there-any-Reasons-not-to-use-MongoDB"><a href="#Are-there-any-Reasons-not-to-use-MongoDB" class="headerlink" title="Are there any Reasons not to use MongoDB?"></a>Are there any Reasons not to use MongoDB?</h2><p><a href="http://sunoano.name/ws/mongodb.html#faqs" target="_blank" rel="external">http://sunoano.name/ws/mongodb.html#faqs</a></p>
+<ol>
+<li>We need transactions (read ACID).</li>
+<li>Our data is very relational.</li>
+<li>Related to 2, we want to be able to do joins on the server (but can not do embedded objects / arrays).</li>
+<li>We need triggers on our tables. There might be triggers available soon however.</li>
+<li>Related to 4, we rely on triggers (or similar functionality) to do cascading updates. or deletes. As for #4, this issue probably goes away once triggers are available.</li>
+<li>We need the database to enforce referential integrity (MongoDB has no notion of this at all).</li>
+<li>If we need 100% per node durability.</li>
+</ol>
+<h2 id="Use-Cases"><a href="#Use-Cases" class="headerlink" title="Use Cases"></a>Use Cases</h2><p><a href="http://www.mongodb.org/display/DOCS/Comparing+Mongo+DB+and+Couch+DB" target="_blank" rel="external">http://www.mongodb.org/display/DOCS/Comparing+Mongo+DB+and+Couch+DB</a></p>
+<p>It may be helpful to look at some particular problems and consider how we could solve them.</p>
+<ol>
+<li>if we were building Lotus Notes, we would use Couch as its programmer versioning reconciliation/MVCC model fits perfectly. Any problem where data is offline for hours then back online would fit this. In general, if we need several eventually consistent master-master replica databases, geographically distributed, often offline, we would use Couch.</li>
+<li>if we had very high performance requirements we would use Mongo. For example, web site user profile object storage and caching of data from other sources.</li>
+<li>if we were building a system with very critical transactions, such as bond trading, we would not use MongoDB for those transactions -- although we might in hybrid for other data elements of the system. For something like this we would likely choose a traditional RDBMS.</li>
+<li>for a problem with very high update rates, we would use Mongo as it is good at that. For example, updating real time analytics counters for a web sites (pages views, visits, etc.)</li>
+</ol>
+<p>Generally, we find MongoDB to be a very good fit for building web infrastructure.</p>
+<h2 id="ruby-driver-of-mongodb-tutorial"><a href="#ruby-driver-of-mongodb-tutorial" class="headerlink" title="ruby driver of mongodb tutorial"></a>ruby driver of mongodb tutorial</h2><ol>
+<li><a href="http://api.mongodb.org/ruby/1.0.3/index.html" target="_blank" rel="external">http://api.mongodb.org/ruby/1.0.3/index.html</a></li>
+<li><a href="http://www.mongodb.org/display/DOCS/Ruby+Tutorial" target="_blank" rel="external">http://www.mongodb.org/display/DOCS/Ruby+Tutorial</a></li>
+<li><a href="http://github.com/mongodb/mongo-ruby-driver" target="_blank" rel="external">http://github.com/mongodb/mongo-ruby-driver</a></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">gem</span> update --system</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">gem</span> install mongo</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">gem</span> install bson</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">gem</span> install bson_ext</div></pre></td></tr></table></figure>
+<h2 id="Making-a-Connection"><a href="#Making-a-Connection" class="headerlink" title="Making a Connection"></a>Making a Connection</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line"><span class="comment"># db = Mongo::Connection.new.db("shell")</span></div><div class="line"><span class="comment"># db = Mongo::Connection.new("localhost").db("shell")</span></div><div class="line">db = Mongo::Connection.new(<span class="string">"localhost"</span>, <span class="number">27017</span>).db(<span class="string">"shell"</span>)</div></pre></td></tr></table></figure>
+<h2 id="Listing-All-Databases"><a href="#Listing-All-Databases" class="headerlink" title="Listing All Databases"></a>Listing All Databases</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">m = Mongo::Connection.new <span class="comment"># (optional host/port args)</span></div><div class="line">m.database_names.each &#123; <span class="params">|name|</span> puts name &#125;</div><div class="line">m.database_info.each &#123; <span class="params">|info|</span> puts info.inspect&#125;</div></pre></td></tr></table></figure>
+<h2 id="Dropping-a-Database"><a href="#Dropping-a-Database" class="headerlink" title="Dropping a Database"></a>Dropping a Database</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">m.drop_database(<span class="string">'database_name'</span>)</div></pre></td></tr></table></figure>
+<h2 id="Authentication-Optional"><a href="#Authentication-Optional" class="headerlink" title="Authentication (Optional)"></a>Authentication (Optional)</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">auth = db.authenticate(my_user_name, my_password)</div></pre></td></tr></table></figure>
+<h2 id="Getting-a-Collection"><a href="#Getting-a-Collection" class="headerlink" title="Getting a Collection"></a>Getting a Collection</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">deck = db.collection(<span class="string">"deck"</span>)</div></pre></td></tr></table></figure>
+<h2 id="Inserting-a-Document"><a href="#Inserting-a-Document" class="headerlink" title="Inserting a Document"></a>Inserting a Document</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">deck = db[<span class="string">'deck'</span>]</div><div class="line"></div><div class="line">doc = &#123;<span class="string">"name"</span> =&gt; <span class="string">"MongoDB"</span>, <span class="string">"type"</span> =&gt; <span class="string">"database"</span>, <span class="string">"count"</span> =&gt; <span class="number">1</span>, <span class="string">"info"</span> =&gt; &#123;<span class="string">"x"</span> =&gt; <span class="number">203</span>, <span class="string">"y"</span> =&gt; <span class="string">'102'</span>&#125;&#125;</div><div class="line">deck.insert(doc)</div><div class="line"><span class="number">100</span>.times &#123; <span class="params">|i|</span> deck.insert(<span class="string">"i"</span> =&gt; i) &#125;</div></pre></td></tr></table></figure>
+<h2 id="Finding-the-First-Document-In-a-Collection-using-find-one"><a href="#Finding-the-First-Document-In-a-Collection-using-find-one" class="headerlink" title="Finding the First Document In a Collection using find_one()"></a>Finding the First Document In a Collection using find_one()</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">my_doc = deck.find_one()</div><div class="line">puts my_doc.inspect</div></pre></td></tr></table></figure>
+<p>Note the <code>_id</code> element has been added automatically by MongoDB to your document. Remember, MongoDB reserves element names that start with <code>_</code> for internal use.</p>
+<h2 id="Counting-Documents-in-a-Collection"><a href="#Counting-Documents-in-a-Collection" class="headerlink" title="Counting Documents in a Collection"></a>Counting Documents in a Collection</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">puts deck.count()</div></pre></td></tr></table></figure>
+<h2 id="Using-a-Cursor-to-get-all-of-the-Documents"><a href="#Using-a-Cursor-to-get-all-of-the-Documents" class="headerlink" title="Using a Cursor to get all of the Documents"></a>Using a Cursor to get all of the Documents</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">deck.find.each &#123; <span class="params">|row|</span> puts row.inspect &#125;</div></pre></td></tr></table></figure>
+<h2 id="Getting-a-Single-Document-with-a-Query"><a href="#Getting-a-Single-Document-with-a-Query" class="headerlink" title="Getting a Single Document with a Query:"></a>Getting a Single Document with a Query:</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">deck.find(<span class="string">"i"</span> =&gt; <span class="number">71</span>).each &#123; <span class="params">|row|</span> puts row.inspect &#125;</div></pre></td></tr></table></figure>
+<h2 id="Getting-a-Set-of-Documents-With-a-Query"><a href="#Getting-a-Set-of-Documents-With-a-Query" class="headerlink" title="Getting a Set of Documents With a Query:"></a>Getting a Set of Documents With a Query:</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">deck.find(<span class="string">"i"</span> =&gt; &#123;<span class="string">"$gt"</span> =&gt; <span class="number">50</span>&#125;).each &#123; <span class="params">|row|</span> puts row &#125;</div></pre></td></tr></table></figure>
+<h2 id="Querying-with-Regular-Expressions"><a href="#Querying-with-Regular-Expressions" class="headerlink" title="Querying with Regular Expressions:"></a>Querying with Regular Expressions:</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">deck.find(<span class="string">"question"</span> =&gt; <span class="regexp">/w/i</span>).each &#123; <span class="params">|row|</span> puts row &#125;</div></pre></td></tr></table></figure>
+<h2 id="Creating-An-Index"><a href="#Creating-An-Index" class="headerlink" title="Creating An Index:"></a>Creating An Index:</h2><p>To create an index, you specify an index name and an array of field names to be indexed, or a single field name.</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">deck.create_index(<span class="string">"i"</span>)</div><div class="line"><span class="comment"># deck.create_index([["i", Mongo::ASCENDING]])</span></div></pre></td></tr></table></figure>
+<h2 id="Getting-a-List-of-Indexes-on-a-Collection"><a href="#Getting-a-List-of-Indexes-on-a-Collection" class="headerlink" title="Getting a List of Indexes on a Collection:"></a>Getting a List of Indexes on a Collection:</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">deck.index_information</div></pre></td></tr></table></figure>
+<h2 id="Ruby-driver-example"><a href="#Ruby-driver-example" class="headerlink" title="Ruby driver example"></a>Ruby driver example</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">'rubygems'</span>  <span class="keyword">not</span> necessary <span class="keyword">for</span> Ruby <span class="number">1.9</span></div><div class="line"><span class="keyword">require</span> <span class="string">'mongo'</span></div><div class="line"><span class="comment"># 需要先导入slides.js之后，再进行下面的ruby代码测试</span></div><div class="line">db = Mongo::Connection.new.db(<span class="string">"mydb"</span>)</div><div class="line">db = Mongo::Connection.new(<span class="string">"localhost"</span>).db(<span class="string">"mydb"</span>)</div><div class="line">m = Mongo::Connection.new(<span class="string">"localhost"</span>, <span class="number">27017</span>)</div><div class="line">db = m.db(<span class="string">"shell"</span>)</div><div class="line">puts db.inspect</div><div class="line">m.database_names.each &#123; <span class="params">|name|</span> puts name &#125;</div><div class="line">m.database_info.each &#123; <span class="params">|info|</span> puts info.inspect&#125;</div><div class="line">db.collection_names.each &#123; <span class="params">|name|</span> puts name &#125;</div><div class="line">deck = db[<span class="string">'deck'</span>]</div><div class="line">doc = &#123;<span class="string">"name"</span> =&gt; <span class="string">"MongoDB"</span>, <span class="string">"type"</span> =&gt; <span class="string">"database"</span>, <span class="string">"count"</span> =&gt; <span class="number">1</span>,</div><div class="line"><span class="string">"info"</span> =&gt; &#123;<span class="string">"x"</span> =&gt; <span class="number">203</span>, <span class="string">"y"</span> =&gt; <span class="string">'102'</span>&#125;&#125;</div><div class="line">deck.insert(doc)</div><div class="line"><span class="number">100</span>.times &#123; <span class="params">|i|</span> deck.insert(<span class="string">"i"</span> =&gt; i) &#125;</div><div class="line">my_doc = deck.find_one()</div><div class="line">puts my_doc.inspect</div><div class="line">puts deck.count()</div><div class="line">deck.find.each &#123; <span class="params">|row|</span> puts row.inspect &#125;</div><div class="line">deck.find(<span class="string">"i"</span> =&gt; <span class="number">71</span>).each &#123; <span class="params">|row|</span> puts row.inspect &#125;</div><div class="line">deck.find(<span class="string">"i"</span> =&gt; &#123;<span class="string">"$gt"</span> =&gt; <span class="number">90</span>&#125;).each &#123; <span class="params">|row|</span> puts row &#125;</div><div class="line">deck.find(<span class="string">"i"</span> =&gt; &#123;<span class="string">"$gt"</span> =&gt; <span class="number">20</span>, <span class="string">"$lte"</span> =&gt; <span class="number">30</span>&#125;).each &#123; <span class="params">|row|</span> puts row &#125;</div><div class="line">deck.find(<span class="string">"question"</span> =&gt; <span class="regexp">/w/i</span>).each &#123; <span class="params">|row|</span> puts row &#125;</div><div class="line">deck.create_index([[<span class="string">"i"</span>, Mongo::ASCENDING]])</div><div class="line">p deck.index_information</div><div class="line">db.validate_collection(<span class="string">'deck'</span>)</div></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.mongodb.org/display/DOCS/Developer+Zone" target="_blank" rel="external">http://www.mongodb.org/display/DOCS/Developer+Zone</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2010/07/02/install-xen-4.0-from-source.html" rel="next" title="install xen-4.0 from source">
+                上一篇：install xen-4.0 from source
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/web/2010/07/17/acme-http-tool.html" rel="prev" title="acme网站上几个http小工具">
+                下一篇：acme网站上几个http小工具
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-Commands-of-mongodb"><span class="nav-number">2.</span> <span class="nav-text">Basic Commands of mongodb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Privileged-Commands"><span class="nav-number">3.</span> <span class="nav-text">Privileged Commands</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-client-command-console"><span class="nav-number">4.</span> <span class="nav-text">Use client command console</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-new-Database"><span class="nav-number">5.</span> <span class="nav-text">Create a new Database:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deleting-a-database"><span class="nav-number">6.</span> <span class="nav-text">Deleting a database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Working-with-Collections-Tables"><span class="nav-number">7.</span> <span class="nav-text">Working with Collections (Tables):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lists-all-the-available-databases"><span class="nav-number">8.</span> <span class="nav-text">Lists all the available databases:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#To-get-a-list-of-data-in-a-specific-collection-use"><span class="nav-number">9.</span> <span class="nav-text">To get a list of data in a specific collection, use:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Directory-Global-functions-and-properties"><span class="nav-number">10.</span> <span class="nav-text">Directory Global functions and properties:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Directory-properties-of-db"><span class="nav-number">11.</span> <span class="nav-text">Directory properties of db:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try"><span class="nav-number">12.</span> <span class="nav-text">try</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mongodb-39-s-interactive-shell"><span class="nav-number">13.</span> <span class="nav-text">mongodb's interactive shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Backup"><span class="nav-number">14.</span> <span class="nav-text">Backup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-RAID-should-I-use"><span class="nav-number">15.</span> <span class="nav-text">What RAID should I use?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Replication"><span class="nav-number">16.</span> <span class="nav-text">Replication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-the-difference-between-MongoDB-and-RDBMSs"><span class="nav-number">17.</span> <span class="nav-text">What is the difference between MongoDB and RDBMSs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql-postgresql"><span class="nav-number">18.</span> <span class="nav-text">mysql, postgresql, ...</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB"><span class="nav-number">19.</span> <span class="nav-text">MongoDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clone-Database"><span class="nav-number">20.</span> <span class="nav-text">Clone Database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-might-be-a-use-case-for-fork"><span class="nav-number">21.</span> <span class="nav-text">What might be a use case for --fork?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Are-there-any-Reasons-not-to-use-MongoDB"><span class="nav-number">22.</span> <span class="nav-text">Are there any Reasons not to use MongoDB?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-Cases"><span class="nav-number">23.</span> <span class="nav-text">Use Cases</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ruby-driver-of-mongodb-tutorial"><span class="nav-number">24.</span> <span class="nav-text">ruby driver of mongodb tutorial</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Making-a-Connection"><span class="nav-number">25.</span> <span class="nav-text">Making a Connection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Listing-All-Databases"><span class="nav-number">26.</span> <span class="nav-text">Listing All Databases</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dropping-a-Database"><span class="nav-number">27.</span> <span class="nav-text">Dropping a Database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Authentication-Optional"><span class="nav-number">28.</span> <span class="nav-text">Authentication (Optional)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-a-Collection"><span class="nav-number">29.</span> <span class="nav-text">Getting a Collection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inserting-a-Document"><span class="nav-number">30.</span> <span class="nav-text">Inserting a Document</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finding-the-First-Document-In-a-Collection-using-find-one"><span class="nav-number">31.</span> <span class="nav-text">Finding the First Document In a Collection using find_one()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Counting-Documents-in-a-Collection"><span class="nav-number">32.</span> <span class="nav-text">Counting Documents in a Collection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-a-Cursor-to-get-all-of-the-Documents"><span class="nav-number">33.</span> <span class="nav-text">Using a Cursor to get all of the Documents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-a-Single-Document-with-a-Query"><span class="nav-number">34.</span> <span class="nav-text">Getting a Single Document with a Query:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-a-Set-of-Documents-With-a-Query"><span class="nav-number">35.</span> <span class="nav-text">Getting a Set of Documents With a Query:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Querying-with-Regular-Expressions"><span class="nav-number">36.</span> <span class="nav-text">Querying with Regular Expressions:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-An-Index"><span class="nav-number">37.</span> <span class="nav-text">Creating An Index:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-a-List-of-Indexes-on-a-Collection"><span class="nav-number">38.</span> <span class="nav-text">Getting a List of Indexes on a Collection:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ruby-driver-example"><span class="nav-number">39.</span> <span class="nav-text">Ruby driver example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">40.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

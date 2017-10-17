@@ -1,0 +1,1012 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="一">
+<meta property="og:url" content="https://www.4e00.com/page/2/index.html">
+<meta property="og:site_name" content="一">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/page/2/"/>
+
+  <title> 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/java/2017/09/21/getting-started-with-the-G1-garbage-collector.html" itemprop="url">
+                  getting started with the G1 garbage collector
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-09-21T21:45:06+08:00" content="2017-09-21">
+              2017-09-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>This tutorial covers the basics of how to use the G1 garbage collector and how it can be used with the Hotspot JVM. You will learn how the G1 collector functions internally, the key command line switches for using G1, and options for logging its operation.</p>
+<h2 id="Java-Technology-and-the-JVM"><a href="#Java-Technology-and-the-JVM" class="headerlink" title="Java Technology and the JVM"></a>Java Technology and the JVM</h2><h3 id="Java-Overview"><a href="#Java-Overview" class="headerlink" title="Java Overview"></a>Java Overview</h3><p>Java is a programming language and computing platform first released by Sun Microsystems in 1995. It is the underlying technology that powers Java programs including utilities, games, and business applications. Java runs on more than 850 million personal computers worldwide, and on billions of devices worldwide, including mobile and TV devices. Java is composed of a number of key components that, as a whole, create the Java platform.</p>
+<h3 id="Java-Runtime-Edition"><a href="#Java-Runtime-Edition" class="headerlink" title="Java Runtime Edition"></a>Java Runtime Edition</h3><p>When you download Java, you get the Java Runtime Environment (JRE). The JRE consists of the Java Virtual Machine (JVM), Java platform core classes, and supporting Java platform libraries. All three are required to run Java applications on your computer. With Java 7, Java applications run as desktop applications from the operating system, as a desktop application but installed from the Web using Java Web Start, or as a Web Embedded application in a browser (using JavaFX).</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/java/2017/09/21/getting-started-with-the-G1-garbage-collector.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/linux/2017/09/20/user-session-reset-in-tomcat-webapp.html" itemprop="url">
+                  tomcat应用中用户session被重置的问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-09-20T19:53:06+08:00" content="2017-09-20">
+              2017-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>一个tomcat应用服务器中只有一个webapp项目名为app，tomcat前面有一个反向代理服务器nginx，nginx将所有访问<code>http://www.example.com/</code>下的请求转发给后台的tomcat应用服务器：<code>http://www.example.com/app/</code>，具体配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">location / &#123;</div><div class="line">    rewrite ^/(.*)$ /app/$1;</div><div class="line">    break;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当前用户已经在<code>http://www.example.com/app/</code>中登录，客户端cookie写入成功，因为是app写入的cookie，所以其作用路径即<code>path=/app/</code>。</p>
+<p>当用户访问<code>http://www.example.com/app/some/page</code>页面时，当前的用户session就被重置了，而访问其他页面都是正确的。</p>
+<p>检查所在页面的代码，发现页面上有个图片链接因为远程获取用户头像的数据不对，写入的地址变成<code>src=&quot;/0&quot;</code>，正确应该是用户的头像地址，就是因为访问了这个错误的地址<code>http://www.example.com/0</code>导致用户的session被重置了。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/linux/2017/09/20/user-session-reset-in-tomcat-webapp.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/linux/2017/09/19/concurrency-vs-parallelism.html" itemprop="url">
+                  concurrency vs. parallelism
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-09-19T21:12:38+08:00" content="2017-09-19">
+              2017-09-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Concurrency-vs-Parallelism"><a href="#Concurrency-vs-Parallelism" class="headerlink" title="Concurrency vs. Parallelism"></a>Concurrency vs. Parallelism</h2><p><code>Concurrency</code>和<code>Parallelism</code>是有关系但却又是不同的2个概念：</p>
+<ol>
+<li>Concurrency: 并发，多个线程同时处理多个任务，多个线程之间有状态共享或者资源共享。<ul>
+<li>如2个线程竞争CPU。</li>
+<li>如2个线程竞争同一个对象锁。</li>
+<li>多个GC线程垃圾回收时，对可回收对象进行并发标记，最后并发清理。</li>
+<li>并发相对于<code>Serial</code>执行而言，如Serial GC回收。</li>
+<li>可以是单核CPU上进行多线程并发执行。</li>
+</ul>
+</li>
+<li>Parallelism: 并行，多个线程各做各的事情，多线程间互相间无共享状态。<ul>
+<li>一个大文件被切分成10个小文件，然后对这个10个小文件并行分析处理。</li>
+<li>Linus Torvalds还专门在吐槽<a href="https://www.realworldtech.com/forum/?threadid=146066&amp;curpostid=146227" target="_blank" rel="external">并行就是未来</a>时提到过，并行计算在GPU图形处理和服务器端上是有用的。</li>
+<li>并行重点在于不同线程之间的独立性，无关性。</li>
+<li>必须要求是多核CPU。</li>
+</ul>
+</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/linux/2017/09/19/concurrency-vs-parallelism.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/javascript/2017/09/18/report-javascript-error-to-server.html" itemprop="url">
+                  report javascript error to server
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-09-18T22:08:25+08:00" content="2017-09-18">
+              2017-09-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>当JavaScript运行时错误（包括语法错误）发生时，window会触发一个<code>ErrorEvent</code>接口的error事件，并执行<code>window.onerror()</code>，<code>ErrorEvent</code>接口的属性和方法可以参考下面截图。</p>
+<p>当一项资源（如<code>&lt;img&gt;</code>或<code>&lt;script&gt;</code>）加载失败，加载资源的元素会触发一个<code>Event</code>接口的error事件，并执行该元素上的<code>onerror()</code>处理函数。这些error事件不会向上冒泡到window，不过在部分浏览器如Firefox中能被<code>window.addEventListener</code>捕获一次。</p>
+<p>加载一个全局的error事件处理函数可用于自动收集错误报告。</p>
+<p>由于历史原因，<code>window.onerror</code>和<code>element.onerror</code>接受不同的参数。</p>
+<blockquote>
+<p>window.onerror = function(message, source, lineno, colno, error) { ... }<br>element.onerror = function(event) { ... }</p>
+</blockquote>
+<p>JavaScript因为手机浏览器兼容性的问题，或者用户数据和状态问题导致异常，客户端运行时报错，服务器端有时没有任何错误信息，对bug查找和修复非常不方便，所以将客户端的JavaScript运行异常捕获并上传到后台服务器日志中，并且将错误和用户的会话关联上，可以明确知道哪个用户的手机上抛出了什么错误，便于问题排查。</p>
+<h2 id="测试-window-onerror-捕获异常"><a href="#测试-window-onerror-捕获异常" class="headerlink" title="测试 window.onerror 捕获异常"></a>测试 window.onerror 捕获异常</h2><p>客户端javascript的异常可以统一由<code>window.onerror</code>进行捕获，并且标准草案定义的也是<code>window.onerror</code>，一般不用<code>window.addEventListener</code>或<code>window.attachEvent</code>的形式去监听<code>window.onerror</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> fn = <span class="built_in">window</span>.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);</div><div class="line">    <span class="comment">// 函数中返回 return true，错误便不会暴露到控制台中。</span></div><div class="line">&#125;;</div><div class="line"><span class="comment">// 多次注册 error 事件，不会重复执行多个回调</span></div><div class="line"><span class="comment">// window.onerror 和 addEventListener 都执行了，并只执行了一次</span></div><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"error"</span>, fn);</div><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"error"</span>, fn);</div><div class="line"></div><div class="line"><span class="built_in">window</span>.onerror = <span class="function"><span class="keyword">function</span> (<span class="params">errorMessage, scriptURI, lineNumber, columnNumber, error</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);</div><div class="line">    <span class="keyword">if</span> (error) &#123;</div><div class="line">        <span class="comment">// 标准草案实现</span></div><div class="line">        <span class="built_in">console</span>.log(error);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(&#123;<span class="attr">message</span>: errorMessage, <span class="attr">script</span>: scriptURI, <span class="attr">line</span>: lineNumber, <span class="attr">column</span>: columnNumber&#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/javascript/2017/09/18/report-javascript-error-to-server.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/mysql/2017/09/16/mysql-deadlock-when-concurrent-insert.html" itemprop="url">
+                  mysql deadlock when concurrent insert
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-09-16T08:04:08+08:00" content="2017-09-16">
+              2017-09-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>MySQL中innodb引擎的锁有多种，具体可查看<a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html#innodb-next-key-locks" target="_blank" rel="external">官方文档</a>，这次碰到的死锁与<code>Next-Key Locks</code>没有关系，与<code>Record Locks</code>和<code>Gap Locks</code>有关，下面引用innodb锁的部分文档说明。</p>
+<h2 id="Shared-and-Exclusive-Locks"><a href="#Shared-and-Exclusive-Locks" class="headerlink" title="Shared and Exclusive Locks"></a>Shared and Exclusive Locks</h2><blockquote>
+<p>InnoDB implements standard row-level locking where there are two types of locks, shared (S) locks and exclusive (X) locks.</p>
+<ul>
+<li>A shared (S) lock permits the transaction that holds the lock to read a row.</li>
+<li>An exclusive (X) lock permits the transaction that holds the lock to update or delete a row.</li>
+</ul>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/mysql/2017/09/16/mysql-deadlock-when-concurrent-insert.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/blog/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/89/">89</a><a class="extend next" rel="next" href="/blog/page/3/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

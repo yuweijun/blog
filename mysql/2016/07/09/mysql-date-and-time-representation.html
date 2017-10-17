@@ -1,0 +1,765 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="DATETIME和TIMESTAMP区别 DATETIME能保存大范围的值，从1000-01-01 00:00:00到9999-12-31 23:59:59，精度为秒。它把日期和时间封装在一个格式为YYYYMMDDHHMMSS的整数中，与时区无关。 DATETIME在5.6.4版本之前使用了8字节的存储空间。默认情况下，MySQL以一种可排序，清楚的格式显示DATETIME值，如2016-07-0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql-5.6.4 date and time representation">
+<meta property="og:url" content="https://www.4e00.com/mysql/2016/07/09/mysql-date-and-time-representation.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="DATETIME和TIMESTAMP区别 DATETIME能保存大范围的值，从1000-01-01 00:00:00到9999-12-31 23:59:59，精度为秒。它把日期和时间封装在一个格式为YYYYMMDDHHMMSS的整数中，与时区无关。 DATETIME在5.6.4版本之前使用了8字节的存储空间。默认情况下，MySQL以一种可排序，清楚的格式显示DATETIME值，如2016-07-0">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-09-14T04:25:28.258Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql-5.6.4 date and time representation">
+<meta name="twitter:description" content="DATETIME和TIMESTAMP区别 DATETIME能保存大范围的值，从1000-01-01 00:00:00到9999-12-31 23:59:59，精度为秒。它把日期和时间封装在一个格式为YYYYMMDDHHMMSS的整数中，与时区无关。 DATETIME在5.6.4版本之前使用了8字节的存储空间。默认情况下，MySQL以一种可排序，清楚的格式显示DATETIME值，如2016-07-0">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/mysql/2016/07/09/mysql-date-and-time-representation.html"/>
+
+  <title> mysql-5.6.4 date and time representation | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                mysql-5.6.4 date and time representation
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-07-09T11:46:08+08:00" content="2016-07-09">
+              2016-07-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="DATETIME和TIMESTAMP区别"><a href="#DATETIME和TIMESTAMP区别" class="headerlink" title="DATETIME和TIMESTAMP区别"></a>DATETIME和TIMESTAMP区别</h2><ol>
+<li>DATETIME能保存大范围的值，从<code>1000-01-01 00:00:00</code>到<code>9999-12-31 23:59:59</code>，精度为秒。它把日期和时间封装在一个格式为<code>YYYYMMDDHHMMSS</code>的整数中，与时区无关。</li>
+<li>DATETIME在5.6.4版本之前使用了8字节的存储空间。默认情况下，MySQL以一种可排序，清楚的格式显示DATETIME值，如<code>2016-07-09 10:12:33</code>，这种方式也符合ANSI标准。</li>
+<li>TIMESTAMP类型保存了自1970年1月1日以来的秒数，它和Unix的时间戳相同。</li>
+<li>TIMESTAMP只使用了4个字节的存储空间。它能表示的范围比DATETIME小得多。它表示的日期范围只能从<code>1970-01-01 00:00:01</code>到<code>2038-01-19 03:14:07(UTC)</code>，这个数值受int值最大值限制，如下javascript console示例说明。</li>
+<li>MySQL提供了<code>FROM_UNIXTIME()</code>函数把UNIX时间戳转换为日期，并提供了<code>UNIX_TIMESTAMP()</code>函数，把日期转换为UNIX时间戳。</li>
+<li>TIMESTAMP显示的值也依赖于时区，MySQL服务器，操作系统和客户端连接都有时区设置。数据库里保存为0的值，在不同的时区的客户端显示的结果并不相同。</li>
+<li>TIMESTAMP还有个自动更新的特殊功能。在默认情况下，更新和插入记录，如果没有显式设置TIMESTAMP列的值，MySQL会把它设置为当前时间。</li>
+<li>除第一个以外的TIMESTAMP列也可以设置到当前的日期和时间，只要将列设为<code>NULL</code>，或<code>NOW()</code>。</li>
+<li>最后，TIMESTAMP列的默认值为<code>NOT NULL</code>，这和其他的数据类型都不一样。</li>
+</ol>
+<p>因为TIMESTAMP值不能比<code>1970-01-01</code>早，也不能比<code>2038-01-19</code>晚，这意味着，如果要存储一个生日日期<code>1968-01-01</code>，只能使用DATETIME或DATE，而不能使用TIMESTAMP数据类型进行存储！</p>
+<h3 id="javascript-console"><a href="#javascript-console" class="headerlink" title="javascript console"></a>javascript console</h3><blockquote>
+<p>new Date(1000 <em> (2 *</em> 31 - 1))<br>Tue Jan 19 2038 11:14:07 GMT+0800 (CST)</p>
+</blockquote>
+<h2 id="MySQL-5-6-4版本前后变化"><a href="#MySQL-5-6-4版本前后变化" class="headerlink" title="MySQL-5.6.4版本前后变化"></a>MySQL-5.6.4版本前后变化</h2><p><code>MySQL-5.6.4</code>版本升级对日期字段的精度和存储长度都有所变化。</p>
+<p>下表为日期存储字段的长度变化：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Type</th>
+<th style="text-align:left">Storage before MySQL 5.6.4</th>
+<th style="text-align:left">Storage as of MySQL 5.6.4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">YEAR</td>
+<td style="text-align:left">1 byte, little endian</td>
+<td style="text-align:left">Unchanged</td>
+</tr>
+<tr>
+<td style="text-align:center">DATE</td>
+<td style="text-align:left">3 bytes, little endian</td>
+<td style="text-align:left">Unchanged</td>
+</tr>
+<tr>
+<td style="text-align:center">TIME</td>
+<td style="text-align:left">3 bytes, little endian</td>
+<td style="text-align:left">3 bytes + fractional-seconds storage, big endian</td>
+</tr>
+<tr>
+<td style="text-align:center">TIMESTAMP</td>
+<td style="text-align:left">4 bytes, little endian</td>
+<td style="text-align:left">4 bytes + fractional-seconds storage, big endian</td>
+</tr>
+<tr>
+<td style="text-align:center">DATETIME</td>
+<td style="text-align:left">8 bytes, little endian</td>
+<td style="text-align:left">5 bytes + fractional-seconds storage, big endian</td>
+</tr>
+</tbody>
+</table>
+<p><code>MySQL-5.6.4</code>之前的版本中日期和时间精度小数部分并不会被存储下来，如果需要存储时间的微秒或者毫秒级别的部分小数，需要用MySQL的时间处理函数，如<code>MICROSECOND()</code>截取小数部分，再存储到单独的一个整数字段中。</p>
+<blockquote>
+<p>mysql&gt; SELECT MICROSECOND(&#39;2010-12-10 14:12:09.019473&#39;);</p>
+<table>
+<thead>
+<tr>
+<th>MICROSECOND(&#39;2010-12-10 14:12:09.019473&#39;)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>19473</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p><code>MySQL-5.6.4</code>中对于<code>TIME</code>，<code>DATETIME</code>，和<code>TIMESTAMP</code>这3种数据类型做了升级，可以提供最高6位精度的小数位，也就是能存储最高到微秒(<code>microsecond</code>)级别的时间精度。</p>
+<p><code>TIMESTAMP(N)</code>的<code>N</code>在老版本的MySQL中是代表显示的宽度，其实际存储的值还是一样的，而不是精度的含义，这个特性在<code>MySQL-5.5.3</code>中被移除了。</p>
+<p>使用如下语法定义时间精度：<code>type_name(fsp)</code></p>
+<p>其中，<code>type_name</code>是<code>TIME</code>，<code>DATETIME</code>或者<code>TIMESTAMP</code>，而<code>fsp</code>是时间小数的精度部分（0-6），如下例所示：</p>
+<a id="more"></a>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> t1 (t <span class="keyword">TIME</span>(<span class="number">3</span>), dt DATETIME(<span class="number">6</span>));</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> fractest( c1 <span class="keyword">TIME</span>(<span class="number">2</span>), c2 DATETIME(<span class="number">2</span>), c3 <span class="keyword">TIMESTAMP</span>(<span class="number">2</span>) );</div><div class="line"></div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> fractest <span class="keyword">VALUES</span> (<span class="string">'17:51:04.777'</span>, <span class="string">'2014-09-08 17:51:04.777'</span>, <span class="string">'2014-09-08 17:51:04.777'</span>);</div></pre></td></tr></table></figure>
+<h2 id="MySQL精度相关的时间函数"><a href="#MySQL精度相关的时间函数" class="headerlink" title="MySQL精度相关的时间函数"></a>MySQL精度相关的时间函数</h2><p> MySQL中一些时间函数，如果没有传参数的话，跟老版本一样，返回的结果是以秒为精度，不带后面精度小数部分，以<code>NOW()</code>为例，其结果如果存储到<code>TIMESTAMP(6)</code>数据类型的字段中时，则显示为<code>2016-07-09 17:29:42.000000</code>，后面6位精度都是0。如果调用<code>NOW(3)</code>则显示为<code>2016-07-09 17:29:42.017</code>，如下所示：</p>
+<blockquote>
+<p>mysql&gt; SELECT NOW(), NOW(3), NOW(6) \G</p>
+<p>*************************** 1. row ***************************</p>
+<p> NOW(): 2016-07-09 17:29:42</p>
+<p>NOW(3): 2016-07-09 17:29:42.017</p>
+<p>NOW(6): 2016-07-09 17:29:42.017278</p>
+<p>1 row in set (0.00 sec)</p>
+<p>mysql&gt; SELECT CURTIME(), CURTIME(3), CURTIME(6) \G</p>
+<p>*************************** 1. row ***************************</p>
+<p> CURTIME(): 20:55:45</p>
+<p>CURTIME(3): 20:55:45.183</p>
+<p>CURTIME(6): 20:55:45.183201</p>
+<p>1 row in set (0.00 sec)</p>
+<p>mysql&gt; SELECT SYSDATE(), SYSDATE(3), SYSDATE(6) \G</p>
+<p>*************************** 1. row ***************************</p>
+<p> SYSDATE(): 2016-07-09 20:56:26</p>
+<p>SYSDATE(3): 2016-07-09 20:56:26.301</p>
+<p>SYSDATE(6): 2016-07-09 20:56:26.301777</p>
+<p>1 row in set (0.00 sec)</p>
+<p>mysql&gt; SELECT UTC_TIMESTAMP(), UTC_TIMESTAMP(3), UTC_TIMESTAMP(6)\G</p>
+<p>*************************** 1. row ***************************</p>
+<p> UTC_TIMESTAMP(): 2016-07-09 12:57:35</p>
+<p>UTC_TIMESTAMP(3): 2016-07-09 12:57:35.477</p>
+<p>UTC_TIMESTAMP(6): 2016-07-09 12:57:35.477775</p>
+<p>1 row in set (0.00 sec)</p>
+</blockquote>
+<h2 id="关于TIMESTAMP字段自动更新的SQL测试脚本"><a href="#关于TIMESTAMP字段自动更新的SQL测试脚本" class="headerlink" title="关于TIMESTAMP字段自动更新的SQL测试脚本"></a>关于TIMESTAMP字段自动更新的SQL测试脚本</h2><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`date_time`</span>;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`date_time`</span> (</div><div class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">  <span class="string">`t1`</span> <span class="keyword">time</span>(<span class="number">3</span>),</div><div class="line">  <span class="string">`t2`</span> <span class="keyword">timestamp</span>(<span class="number">6</span>),</div><div class="line">  <span class="string">`t3`</span> datetime(<span class="number">1</span>),</div><div class="line">  <span class="string">`t4`</span> datetime,</div><div class="line">  <span class="string">`t5`</span> <span class="keyword">timestamp</span>(<span class="number">3</span>) <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</div><div class="line">  <span class="string">`t6`</span> <span class="keyword">timestamp</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span>,</div><div class="line">  <span class="string">`t7`</span> <span class="keyword">timestamp</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span>,</div><div class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</div><div class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</div><div class="line"></div><div class="line"><span class="keyword">INSERT</span> <span class="string">`date_time`</span> (t1, t2, t3, t4, t5) <span class="keyword">VALUES</span> (<span class="keyword">now</span>(<span class="number">3</span>), <span class="keyword">now</span>(<span class="number">6</span>), <span class="keyword">now</span>(<span class="number">1</span>), <span class="keyword">now</span>(), <span class="keyword">now</span>(<span class="number">3</span>));</div><div class="line"><span class="keyword">INSERT</span> <span class="string">`date_time`</span> (t1, t3, t4, t6) <span class="keyword">VALUES</span> (<span class="keyword">now</span>(<span class="number">3</span>), <span class="keyword">now</span>(<span class="number">1</span>), <span class="keyword">now</span>(), <span class="literal">null</span>);</div><div class="line"></div><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`date_time`</span>\G</div></pre></td></tr></table></figure>
+<p>表字段定义从上到下，<strong>第一个非空<code>TIMESTAMP</code>字段</strong>，会被<strong>自动更新</strong>，如上所示的SQL执行结果：</p>
+<blockquote>
+<p>*************************** 1. row ***************************</p>
+<p>id: 1</p>
+<p>t1: 17:21:54.792</p>
+<p>t2: 2016-07-09 17:21:54.792551  ==&gt; 注意这个时间精度是用 NOW(6) 得到的</p>
+<p>t3: 2016-07-09 17:21:54.7</p>
+<p>t4: 2016-07-09 17:21:54</p>
+<p>t5: 2016-07-09 17:21:54.792     ==&gt; 注意这个值是SQL写入的</p>
+<p>t6: 2016-07-09 17:21:54         ==&gt; 注意这个值是MySQL自动更新的</p>
+<p>t7: 2016-07-09 17:21:54         ==&gt; 注意这个值是MySQL自动更新的</p>
+<p>*************************** 2. row ***************************</p>
+<p>id: 2</p>
+<p>t1: 17:21:54.794</p>
+<p>t2: 2016-07-09 17:21:54.794616  ==&gt; 注意这个值是MySQL自动更新的</p>
+<p>t3: 2016-07-09 17:21:54.7</p>
+<p>t4: 2016-07-09 17:21:54</p>
+<p>t5: 0000-00-00 00:00:00.000     ==&gt; 注意这个默认值</p>
+<p>t6: 2016-07-09 17:21:54         ==&gt; 注意这个值被设置为NULL后，由MySQL自动更新的</p>
+<p>t7: 2016-07-09 17:21:54         ==&gt; 注意这个值是MySQL自动更新的</p>
+<p>2 rows in set (0.00 sec)</p>
+</blockquote>
+<p>而将TABLE中的<code>t2</code>和<code>t5</code>字段定义稍做改变，则这2个字段都不会被自动更新，除非像<code>t6</code>和<code>t7</code>这2个字段定义那样，显式声明为非空，并且用当前时间戳为默认值。</p>
+<p>另外需要特别注意一下，对于<code>TIMESTAMP(6)</code>这种定义的字段，如果需要自动更新，最好是第一个<code>TIMESTAMP</code>字段，MySQL中不能对<code>TIMESTAMP(N)</code>使用如下形式的字段定义：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">`t8` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP ON <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span>,</div></pre></td></tr></table></figure>
+<blockquote>
+<p>-- ERROR 1067 (42000): Invalid default value for &#39;t8&#39;</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">`t8` timestamp(6) NOT NULL ON <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span>,</div></pre></td></tr></table></figure>
+<blockquote>
+<p>-- ERROR 1294 (HY000): Invalid ON UPDATE clause for &#39;t8&#39; column</p>
+</blockquote>
+<h2 id="测试脚本二"><a href="#测试脚本二" class="headerlink" title="测试脚本二"></a>测试脚本二</h2><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`date_time`</span>;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`date_time`</span> (</div><div class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">  <span class="string">`t1`</span> <span class="keyword">time</span>(<span class="number">3</span>),</div><div class="line">  <span class="string">`t2`</span> <span class="keyword">timestamp</span>(<span class="number">6</span>) <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</div><div class="line">  <span class="string">`t3`</span> datetime(<span class="number">1</span>),</div><div class="line">  <span class="string">`t4`</span> datetime,</div><div class="line">  <span class="string">`t5`</span> <span class="keyword">timestamp</span>(<span class="number">3</span>),</div><div class="line">  <span class="string">`t6`</span> <span class="keyword">timestamp</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span>,</div><div class="line">  <span class="string">`t7`</span> <span class="keyword">timestamp</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span>,</div><div class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</div><div class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</div><div class="line"></div><div class="line"><span class="keyword">INSERT</span> <span class="string">`date_time`</span> (t1, t2, t3, t4, t5) <span class="keyword">VALUES</span> (<span class="keyword">now</span>(<span class="number">3</span>), <span class="keyword">now</span>(<span class="number">6</span>), <span class="keyword">now</span>(<span class="number">1</span>), <span class="keyword">now</span>(), <span class="keyword">now</span>(<span class="number">3</span>));</div><div class="line"><span class="keyword">INSERT</span> <span class="string">`date_time`</span> (t1, t3, t4, t6) <span class="keyword">VALUES</span> (<span class="keyword">now</span>(<span class="number">3</span>), <span class="keyword">now</span>(<span class="number">1</span>), <span class="keyword">now</span>(), <span class="literal">null</span>);</div><div class="line"></div><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`date_time`</span>\G</div></pre></td></tr></table></figure>
+<p>执行结果如下所示：</p>
+<blockquote>
+<p>*************************** 1. row ***************************</p>
+<p>id: 1</p>
+<p>t1: 17:20:41.948</p>
+<p>t2: 2016-07-09 17:20:41.948262  ==&gt; 注意这个值是SQL写入的</p>
+<p>t3: 2016-07-09 17:20:41.9</p>
+<p>t4: 2016-07-09 17:20:41</p>
+<p>t5: 2016-07-09 17:20:41.948     ==&gt; 注意这个值是SQL写入的</p>
+<p>t6: 2016-07-09 17:20:41         ==&gt; 注意这个值是MySQL自动更新的</p>
+<p>t7: 2016-07-09 17:20:41         ==&gt; 注意这个值是MySQL自动更新的</p>
+<p>*************************** 2. row ***************************</p>
+<p>id: 2</p>
+<p>t1: 17:20:41.948</p>
+<p>t2: 0000-00-00 00:00:00.000000  ==&gt; 注意这个是默认值</p>
+<p>t3: 2016-07-09 17:20:41.9</p>
+<p>t4: 2016-07-09 17:20:41</p>
+<p>t5: 0000-00-00 00:00:00.000     ==&gt; 注意这个TIMESTAMP字段并没有被自动更新</p>
+<p>t6: 2016-07-09 17:20:41         ==&gt; 注意这个值被设置为NULL后，由MySQL自动更新的</p>
+<p>t7: 2016-07-09 17:20:41         ==&gt; 注意这个值是MySQL自动更新的</p>
+<p>2 rows in set (0.00 sec)</p>
+</blockquote>
+<h2 id="spring-boot-test-case"><a href="#spring-boot-test-case" class="headerlink" title="spring-boot test case"></a>spring-boot test case</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> com.example.spring.jdbc.SpringJdbcApplication;</div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</div><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.test.SpringApplicationConfiguration;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.test.WebIntegrationTest;</div><div class="line"><span class="keyword">import</span> org.springframework.jdbc.core.JdbcTemplate;</div><div class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</div><div class="line"><span class="keyword">import</span> org.springframework.transaction.annotation.Transactional;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.sql.Timestamp;</div><div class="line"></div><div class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner.class)</div><div class="line"><span class="meta">@SpringApplicationConfiguration</span>(SpringJdbcApplication.class)</div><div class="line"><span class="meta">@WebIntegrationTest</span>(randomPort = <span class="keyword">true</span>)</div><div class="line"><span class="meta">@Transactional</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MysqlTimestampPrecisionTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(MysqlTimestampPrecisionTest.class);</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testTimestamp</span><span class="params">()</span> </span>&#123;</div><div class="line">        Timestamp now = <span class="keyword">new</span> Timestamp(System.currentTimeMillis());</div><div class="line">        <span class="comment">// now is 2016-07-09 17:57:11.207</span></div><div class="line">        LOGGER.info(<span class="string">"now is &#123;&#125;"</span>, now);</div><div class="line">        jdbcTemplate.execute(<span class="string">"truncate table date_time"</span>);</div><div class="line"></div><div class="line">        <span class="comment">/*</span></div><div class="line"><span class="comment">         * mysql&gt; SELECT * FROM `date_time`\G</span></div><div class="line"><span class="comment">         * ************************** 1. row ***************************</span></div><div class="line"><span class="comment">         * id: 1</span></div><div class="line"><span class="comment">         * t1: 17:57:11.207</span></div><div class="line"><span class="comment">         * t2: 2016-07-09 17:57:11.207000</span></div><div class="line"><span class="comment">         * t3: 2016-07-09 17:57:11.2</span></div><div class="line"><span class="comment">         * t4: 2016-07-09 17:57:11</span></div><div class="line"><span class="comment">         * t5: 2016-07-09 17:57:11.207</span></div><div class="line"><span class="comment">         * t6: 2016-07-09 17:57:11</span></div><div class="line"><span class="comment">         * t7: 2016-07-09 17:57:11</span></div><div class="line"><span class="comment">         * 1 row in set (0.00 sec)</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        <span class="keyword">int</span> inserted = jdbcTemplate.update(<span class="string">"insert into date_time(t1, t2, t3, t4, t5, t6) values (?, ?, ?, ?, ?, ?)"</span>, now, now, now, now, now, now);</div><div class="line">        Assert.assertEquals(<span class="number">1</span>, inserted);</div><div class="line"></div><div class="line">        <span class="keyword">int</span> countByT2 = jdbcTemplate.queryForObject(<span class="string">"select count(*) from date_time where id = ? and t2 = ?"</span>, Integer.class, <span class="number">1</span>, now);</div><div class="line">        Assert.assertEquals(<span class="number">1</span>, countByT2);</div><div class="line">        <span class="keyword">int</span> countByT3 = jdbcTemplate.queryForObject(<span class="string">"select count(*) from date_time where id = ? and t3 = ?"</span>, Integer.class, <span class="number">1</span>, now);</div><div class="line">        Assert.assertEquals(<span class="number">0</span>, countByT3);</div><div class="line">        <span class="keyword">int</span> countByT5 = jdbcTemplate.queryForObject(<span class="string">"select count(*) from date_time where id = ? and t5 = ?"</span>, Integer.class, <span class="number">1</span>, now);</div><div class="line">        Assert.assertEquals(<span class="number">1</span>, countByT5);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDate</span><span class="params">()</span> </span>&#123;</div><div class="line">        SimpleDateFormat format = <span class="keyword">new</span> SimpleDateFormat();</div><div class="line">        format.applyPattern(<span class="string">"yyyy-MM-dd HH:mm:ss.SSS"</span>);</div><div class="line">        Date now = <span class="keyword">new</span> Date();</div><div class="line">        <span class="comment">// now is 2016-07-09 20:25:07.815</span></div><div class="line">        LOGGER.info(<span class="string">"now is &#123;&#125;"</span>, format.format(now));</div><div class="line">        jdbcTemplate.execute(<span class="string">"truncate table date_time"</span>);</div><div class="line"></div><div class="line">        <span class="comment">/*</span></div><div class="line"><span class="comment">         * mysql&gt; SELECT * FROM `date_time`\G</span></div><div class="line"><span class="comment">         * ************************** 1. row ***************************</span></div><div class="line"><span class="comment">         * id: 1</span></div><div class="line"><span class="comment">         * t1: 20:25:07.815</span></div><div class="line"><span class="comment">         * t2: 2016-07-09 20:25:07.815000</span></div><div class="line"><span class="comment">         * t3: 2016-07-09 20:25:07.8</span></div><div class="line"><span class="comment">         * t4: 2016-07-09 20:25:08</span></div><div class="line"><span class="comment">         * t5: 2016-07-09 20:25:07.815</span></div><div class="line"><span class="comment">         * t6: 2016-07-09 20:25:08</span></div><div class="line"><span class="comment">         * t7: 2016-07-09 20:25:07</span></div><div class="line"><span class="comment">         * 1 row in set (0.00 sec)</span></div><div class="line"><span class="comment">         * -- t6和t7有点意思啊, 同时写入的, 一个是MySQL自动设置的值, t6被四舍五入为08, 而t7自动设置的值居然是07秒。</span></div><div class="line"><span class="comment">         * -- SQL插入时间肯定在java代码之后发生，也就是t7获取的时间戳CURRENT_TIMESTAMP值与后面的精度并没有关系，因此也不会四舍五入到08秒。</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        <span class="keyword">int</span> inserted = jdbcTemplate.update(<span class="string">"insert into date_time(t1, t2, t3, t4, t5, t6) values (?, ?, ?, ?, ?, ?)"</span>, now, now, now, now, now, now);</div><div class="line">        <span class="comment">// insert 1 records</span></div><div class="line">        LOGGER.info(<span class="string">"insert &#123;&#125; records"</span>, inserted);</div><div class="line"></div><div class="line">        <span class="keyword">int</span> countByT2 = jdbcTemplate.queryForObject(<span class="string">"select count(*) from date_time where id = ? and t2 = ?"</span>, Integer.class, <span class="number">1</span>, now);</div><div class="line">        Assert.assertEquals(<span class="number">1</span>, countByT2);</div><div class="line">        <span class="keyword">int</span> countByT3 = jdbcTemplate.queryForObject(<span class="string">"select count(*) from date_time where id = ? and t3 = ?"</span>, Integer.class, <span class="number">1</span>, now);</div><div class="line">        Assert.assertEquals(<span class="number">0</span>, countByT3);</div><div class="line">        <span class="keyword">int</span> countByT5 = jdbcTemplate.queryForObject(<span class="string">"select count(*) from date_time where id = ? and t5 = ?"</span>, Integer.class, <span class="number">1</span>, now);</div><div class="line">        Assert.assertEquals(<span class="number">1</span>, countByT5);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果中可以看到<code>java.sql.Timestamp</code>和<code>java.util.Date</code>提供到毫秒(<code>millisecond</code>)级别的精度<code>2016-07-09 17:57:11.207</code>，保存到MySQL中<code>TIMESTAMP(3)</code>精度以上数据类型的字段中都不会丢失精度，所以上面根据<code>t2</code>和<code>t5</code>都可以查找到刚插入的记录，而使用<code>t3</code>就无法查到刚插入的这条记录，因为数据库保存这条记录的时候，已经将后面的精度舍弃掉了，所以带着精度去查找记录时就匹配不到记录了。</p>
+<h2 id="JDBC-URL连接参数设置"><a href="#JDBC-URL连接参数设置" class="headerlink" title="JDBC URL连接参数设置"></a>JDBC URL连接参数设置</h2><p><code>MySQL Connector/J 5.1.37</code>发布时增加了一个新的MySQL连接属性<code>sendFractionalSeconds</code>，用这个变量表示服务器是否支持高精度的<code>TIMESTAMP</code>，并实现了<code>JDBC 4.2 API</code>的支持，注意下面参数说明，只有<code>Statement</code>中的时间精度会被JDBC处理。</p>
+<blockquote>
+<p>sendFractionalSeconds</p>
+<p>Send fractional part from TIMESTAMP seconds. If set to false, the nanoseconds value of TIMESTAMP values will be truncated before sending any data to the server. This option applies only to prepared statements, callable statements or updatable result sets.</p>
+<p>Default: true</p>
+<p>Since version: 5.1.37</p>
+</blockquote>
+<h3 id="JDBC-URL-Format"><a href="#JDBC-URL-Format" class="headerlink" title="JDBC URL Format"></a>JDBC URL Format</h3><blockquote>
+<p>jdbc:mysql://[host1][:port1][,[host2][:port2]]...[/[database]][?propertyName1=propertyValue1[&amp;propertyName2=propertyValue2]...]</p>
+</blockquote>
+<h3 id="This-is-mandatory-for-IPv6-connections"><a href="#This-is-mandatory-for-IPv6-connections" class="headerlink" title="This is mandatory for IPv6 connections"></a>This is mandatory for IPv6 connections</h3><blockquote>
+<p>jdbc:mysql://address=(key1=value)[(key2=value)]...[,address=(key3=value)[(key4=value)]...]...[/[database]][?propertyName1=propertyValue1[&amp;propertyName2=propertyValue2]...]</p>
+</blockquote>
+<p>根据上面所说，假如使用<code>sendFractionalSeconds=false</code>形式的<code>JDBC URL</code>:</p>
+<blockquote>
+<p>jdbc:mysql://localhost/test?sendFractionalSeconds=false</p>
+</blockquote>
+<p>再运行上面java的测试代码，就发现测试中三个查询语句都可以正确检索到记录行，并且数据库里生成的记录如下所示（因为以上测试会自动<code>ROLLBACK</code>，数据表中看不到记录，如果需要保存测试数据，需要加上<code>@Commit</code>），所有精度位都为<code>0</code>。</p>
+<blockquote>
+<p>mysql&gt; SELECT * FROM <code>date_time</code>\G</p>
+<p>*************************** 1. row ***************************</p>
+<p>id: 1</p>
+<p>t1: 22:38:43.000</p>
+<p>t2: 2016-07-09 22:38:43.000000</p>
+<p>t3: 2016-07-09 22:38:43.0</p>
+<p>t4: 2016-07-09 22:38:43</p>
+<p>t5: 2016-07-09 22:38:43.000</p>
+<p>t6: 2016-07-09 22:38:43</p>
+<p>t7: 2016-07-09 22:38:43</p>
+<p>1 row in set (0.00 sec)</p>
+</blockquote>
+<p>JDBC相关代码可查看以下几个接口和实现类：</p>
+<ol>
+<li>com.mysql.jdbc.ConnectionPropertie</li>
+<li>com.mysql.jdbc.ConnectionPropertieImpl</li>
+<li>com.mysql.jdbc.Statement</li>
+<li>com.mysql.jdbc.StatementImpl (sendFractionalSeconds定义)</li>
+<li>com.mysql.jdbc.ServerPreparedStatement (sendFractionalSeconds使用)</li>
+<li>com.mysql.jdbc.TimeUtil</li>
+</ol>
+<p><code>ServerPreparedStatement</code>中的相关代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (!<span class="keyword">this</span>.sendFractionalSeconds) &#123;</div><div class="line">    x = TimeUtil.truncateFractionalSeconds(x);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>TimeUtil.truncateFractionalSeconds()</code>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Timestamp <span class="title">truncateFractionalSeconds</span><span class="params">(Timestamp timestamp)</span> </span>&#123;</div><div class="line">    Timestamp truncatedTimestamp = <span class="keyword">new</span> Timestamp(timestamp.getTime());</div><div class="line">    truncatedTimestamp.setNanos(<span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> truncatedTimestamp;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://dev.mysql.com/doc/internals/en/date-and-time-data-type-representation.html" target="_blank" rel="external">10.9 Date and Time Data Type Representation</a></li>
+<li><a href="http://louishust.github.io/mysql/2014/09/05/timestamp-bug/" target="_blank" rel="external">MySQL升级之timestamp的坑</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/5.6/en/datetime.html" target="_blank" rel="external">11.3.1 The DATE, DATETIME, and TIMESTAMP Types</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/5.5/en/datetime.html" target="_blank" rel="external">11.3.1 The DATE, DATETIME, and TIMESTAMP Types</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/5.6/en/fractional-seconds.html" target="_blank" rel="external">11.3.6 Fractional Seconds in Time Values</a></li>
+<li><a href="https://dev.mysql.com/doc/relnotes/connector-j/5.1/en/news-5-1-37.html" target="_blank" rel="external">Changes in MySQL Connector/J 5.1.37 2015-10-15</a></li>
+<li><a href="http://insidemysql.com/mysql-connectorj-5-1-37-has-been-released/" target="_blank" rel="external">MySQL Connector/J 5.1.37 has been released</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2016/07/04/java-object-initialization-order.html" rel="next" title="java object initialization order">
+                上一篇：java object initialization order
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/mysql/2016/07/10/mysql-numeric-data-types.html" rel="prev" title="mysql numeric data types">
+                下一篇：mysql numeric data types
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DATETIME和TIMESTAMP区别"><span class="nav-number">1.</span> <span class="nav-text">DATETIME和TIMESTAMP区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#javascript-console"><span class="nav-number">1.1.</span> <span class="nav-text">javascript console</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-5-6-4版本前后变化"><span class="nav-number">2.</span> <span class="nav-text">MySQL-5.6.4版本前后变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL精度相关的时间函数"><span class="nav-number">3.</span> <span class="nav-text">MySQL精度相关的时间函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于TIMESTAMP字段自动更新的SQL测试脚本"><span class="nav-number">4.</span> <span class="nav-text">关于TIMESTAMP字段自动更新的SQL测试脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试脚本二"><span class="nav-number">5.</span> <span class="nav-text">测试脚本二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring-boot-test-case"><span class="nav-number">6.</span> <span class="nav-text">spring-boot test case</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDBC-URL连接参数设置"><span class="nav-number">7.</span> <span class="nav-text">JDBC URL连接参数设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JDBC-URL-Format"><span class="nav-number">7.1.</span> <span class="nav-text">JDBC URL Format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#This-is-mandatory-for-IPv6-connections"><span class="nav-number">7.2.</span> <span class="nav-text">This is mandatory for IPv6 connections</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

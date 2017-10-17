@@ -1,0 +1,564 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Sizzle部分源码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jquery-1.4.2 sizzle部分源码分析">
+<meta property="og:url" content="https://www.4e00.com/jquery/2014/08/01/jquery-src-sizzle.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="Sizzle部分源码分析">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.145Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jquery-1.4.2 sizzle部分源码分析">
+<meta name="twitter:description" content="Sizzle部分源码分析">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/jquery/2014/08/01/jquery-src-sizzle.html"/>
+
+  <title> jquery-1.4.2 sizzle部分源码分析 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jquery-1.4.2 sizzle部分源码分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2014-08-01T22:47:32+08:00" content="2014-08-01">
+              2014-08-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/jquery/" itemprop="url" rel="index">
+                    <span itemprop="name">jquery</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Sizzle部分源码分析"><a href="#Sizzle部分源码分析" class="headerlink" title="Sizzle部分源码分析"></a>Sizzle部分源码分析</h2><a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">jQuery.multiFilter = <span class="function"><span class="keyword">function</span>(<span class="params"> expr, elems, not </span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> ( not ) &#123;</div><div class="line">        expr = <span class="string">":not("</span> + expr + <span class="string">")"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> Sizzle.matches(expr, elems);</div><div class="line">&#125;;</div><div class="line"><span class="comment">// multiFilter return Array.</span></div></pre></td></tr></table></figure>
+<p>调用Sizzle.matches()方法：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">Sizzle.matches = <span class="function"><span class="keyword">function</span>(<span class="params">expr, set</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> Sizzle(expr, <span class="literal">null</span>, <span class="literal">null</span>, set);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Firefox3.5 中因为支持document.querySelectorAll()方法，所以jQuery为利用了浏览器的原生API方法，而重写了之前实现的Sizzle，原来实现的Sizzle对象被存储在临时变量oldSizzle中。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> ( <span class="built_in">document</span>.querySelectorAll ) (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> oldSizzle = Sizzle, div = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</div><div class="line">    div.innerHTML = <span class="string">"&lt;p class='TEST'&gt;&lt;/p&gt;"</span>;</div><div class="line"></div><div class="line">    <span class="comment">// Safari can't handle uppercase or unicode characters when</span></div><div class="line">    <span class="comment">// in quirks mode.</span></div><div class="line">    <span class="keyword">if</span> ( div.querySelectorAll &amp;&amp; div.querySelectorAll(<span class="string">".TEST"</span>).length === <span class="number">0</span> ) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Sizzle = <span class="function"><span class="keyword">function</span>(<span class="params">query, context, extra, seed</span>)</span>&#123;</div><div class="line">        context = context || <span class="built_in">document</span>;</div><div class="line"></div><div class="line">        <span class="comment">// Only use querySelectorAll on non-XML documents</span></div><div class="line">        <span class="comment">// (ID selectors don't work in non-HTML documents)</span></div><div class="line">        <span class="keyword">if</span> ( !seed &amp;&amp; context.nodeType === <span class="number">9</span> &amp;&amp; !isXML(context) ) &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="keyword">return</span> makeArray( context.querySelectorAll(query), extra );</div><div class="line">            &#125; <span class="keyword">catch</span>(e)&#123;&#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> oldSizzle(query, context, extra, seed);</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    Sizzle.find = oldSizzle.find;</div><div class="line">    Sizzle.filter = oldSizzle.filter;</div><div class="line">    Sizzle.selectors = oldSizzle.selectors;</div><div class="line">    Sizzle.matches = oldSizzle.matches;</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<p>如果传给Sizzle的只有selector一个参数，即seed为null，context则为document，则调用原生的querySelectorAll这个API方法。</p>
+<p>如$.multiFilter(&#39;#d1&#39;)。</p>
+<p>因为传入的seed是一个数组集合，不是null，所以又重新定向到原来jQuery实现的Sizzle对象上(oldSizzle)：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> Sizzle = <span class="function"><span class="keyword">function</span>(<span class="params">selector, context, results, seed</span>) </span>&#123;</div><div class="line">    results = results || [];</div><div class="line">    context = context || <span class="built_in">document</span>;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( context.nodeType !== <span class="number">1</span> &amp;&amp; context.nodeType !== <span class="number">9</span> )</div><div class="line">        <span class="keyword">return</span> [];</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( !selector || <span class="keyword">typeof</span> selector !== <span class="string">"string"</span> ) &#123;</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> parts = [], m, set, checkSet, check, mode, extra, prune = <span class="literal">true</span>;</div><div class="line"></div><div class="line">    <span class="comment">// Reset the position of the chunker regexp (start from head)</span></div><div class="line">    chunker.lastIndex = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> ( (m = chunker.exec(selector)) !== <span class="literal">null</span> ) &#123;</div><div class="line">        parts.push( m[<span class="number">1</span>] );</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( m[<span class="number">2</span>] ) &#123;</div><div class="line">            extra = <span class="built_in">RegExp</span>.rightContext;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( parts.length &gt; <span class="number">1</span> &amp;&amp; origPOS.exec( selector ) ) &#123;</div><div class="line">        <span class="keyword">if</span> ( parts.length === <span class="number">2</span> &amp;&amp; Expr.relative[ parts[<span class="number">0</span>] ] ) &#123;</div><div class="line">            set = posProcess( parts[<span class="number">0</span>] + parts[<span class="number">1</span>], context );</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            set = Expr.relative[ parts[<span class="number">0</span>] ] ?</div><div class="line">                [ context ] :</div><div class="line">                Sizzle( parts.shift(), context );</div><div class="line"></div><div class="line">            <span class="keyword">while</span> ( parts.length ) &#123;</div><div class="line">                selector = parts.shift();</div><div class="line"></div><div class="line">                <span class="keyword">if</span> ( Expr.relative[ selector ] )</div><div class="line">                    selector += parts.shift();</div><div class="line"></div><div class="line">                set = posProcess( selector, set );</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">var</span> ret = seed ?</div><div class="line">            &#123; <span class="attr">expr</span>: parts.pop(), <span class="attr">set</span>: makeArray(seed) &#125; :</div><div class="line">            Sizzle.find( parts.pop(), parts.length === <span class="number">1</span> &amp;&amp; context.parentNode ? context.parentNode : context, isXML(context) );</div><div class="line">        set = Sizzle.filter( ret.expr, ret.set );</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( parts.length &gt; <span class="number">0</span> ) &#123;</div><div class="line">            checkSet = makeArray(set);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            prune = <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> ( parts.length ) &#123;</div><div class="line">            <span class="keyword">var</span> cur = parts.pop(), pop = cur;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> ( !Expr.relative[ cur ] ) &#123;</div><div class="line">                cur = <span class="string">""</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                pop = parts.pop();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> ( pop == <span class="literal">null</span> ) &#123;</div><div class="line">                pop = context;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            Expr.relative[ cur ]( checkSet, pop, isXML(context) );</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( !checkSet ) &#123;</div><div class="line">        checkSet = set;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( !checkSet ) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="string">"Syntax error, unrecognized expression: "</span> + (cur || selector);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( toString.call(checkSet) === <span class="string">"[object Array]"</span> ) &#123;</div><div class="line">        <span class="keyword">if</span> ( !prune ) &#123;</div><div class="line">            results.push.apply( results, checkSet );</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( context.nodeType === <span class="number">1</span> ) &#123;</div><div class="line">            <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>; checkSet[i] != <span class="literal">null</span>; i++ ) &#123;</div><div class="line">                <span class="keyword">if</span> ( checkSet[i] &amp;&amp; (checkSet[i] === <span class="literal">true</span> || checkSet[i].nodeType === <span class="number">1</span> &amp;&amp; contains(context, checkSet[i])) ) &#123;</div><div class="line">                    results.push( set[i] );</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>; checkSet[i] != <span class="literal">null</span>; i++ ) &#123;</div><div class="line">                <span class="keyword">if</span> ( checkSet[i] &amp;&amp; checkSet[i].nodeType === <span class="number">1</span> ) &#123;</div><div class="line">                    results.push( set[i] );</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        makeArray( checkSet, results );</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( extra ) &#123;</div><div class="line">        Sizzle( extra, context, results, seed );</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( sortOrder ) &#123;</div><div class="line">            hasDuplicate = <span class="literal">false</span>;</div><div class="line">            results.sort(sortOrder);</div><div class="line"></div><div class="line">            <span class="keyword">if</span> ( hasDuplicate ) &#123;</div><div class="line">                <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">1</span>; i &lt; results.length; i++ ) &#123;</div><div class="line">                    <span class="keyword">if</span> ( results[i] === results[i<span class="number">-1</span>] ) &#123;</div><div class="line">                        results.splice(i--, <span class="number">1</span>);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> results;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>在Sizzle中解析selector，并且会转到Sizzle.find()和Sizzle.filter()方法中查到符合条件的元素。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">Sizzle.find = <span class="function"><span class="keyword">function</span>(<span class="params">expr, context, isXML</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> set, match;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( !expr ) &#123;</div><div class="line">        <span class="keyword">return</span> [];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>, l = Expr.order.length; i &lt; l; i++ ) &#123;</div><div class="line">        <span class="keyword">var</span> type = Expr.order[i], match;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( (match = Expr.match[ type ].exec( expr )) ) &#123;</div><div class="line">            <span class="keyword">var</span> left = <span class="built_in">RegExp</span>.leftContext;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> ( left.substr( left.length - <span class="number">1</span> ) !== <span class="string">"\\"</span> ) &#123;</div><div class="line">                match[<span class="number">1</span>] = (match[<span class="number">1</span>] || <span class="string">""</span>).replace(<span class="regexp">/\\/g</span>, <span class="string">""</span>);</div><div class="line">                set = Expr.find[ type ]( match, context, isXML );</div><div class="line">                <span class="keyword">if</span> ( set != <span class="literal">null</span> ) &#123;</div><div class="line">                    expr = expr.replace( Expr.match[ type ], <span class="string">""</span> );</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( !set ) &#123;</div><div class="line">        set = context.getElementsByTagName(<span class="string">"*"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> &#123;<span class="attr">set</span>: set, <span class="attr">expr</span>: expr&#125;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Sizzle.filter = <span class="function"><span class="keyword">function</span>(<span class="params">expr, set, inplace, not</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> old = expr, result = [], curLoop = set, match, anyFound,</div><div class="line">        isXMLFilter = set &amp;&amp; set[<span class="number">0</span>] &amp;&amp; isXML(set[<span class="number">0</span>]);</div><div class="line"></div><div class="line">    <span class="keyword">while</span> ( expr &amp;&amp; set.length ) &#123;</div><div class="line">        <span class="keyword">for</span> ( <span class="keyword">var</span> type <span class="keyword">in</span> Expr.filter ) &#123;</div><div class="line">            <span class="keyword">if</span> ( (match = Expr.match[ type ].exec( expr )) != <span class="literal">null</span> ) &#123;</div><div class="line">                <span class="keyword">var</span> filter = Expr.filter[ type ], found, item;</div><div class="line">                anyFound = <span class="literal">false</span>;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> ( curLoop == result ) &#123;</div><div class="line">                    result = [];</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> ( Expr.preFilter[ type ] ) &#123;</div><div class="line">                    match = Expr.preFilter[ type ]( match, curLoop, inplace, result, not, isXMLFilter );</div><div class="line"></div><div class="line">                    <span class="keyword">if</span> ( !match ) &#123;</div><div class="line">                        anyFound = found = <span class="literal">true</span>;</div><div class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( match === <span class="literal">true</span> ) &#123;</div><div class="line">                        <span class="keyword">continue</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> ( match ) &#123;</div><div class="line">                    <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>; (item = curLoop[i]) != <span class="literal">null</span>; i++ ) &#123;</div><div class="line">                        <span class="keyword">if</span> ( item ) &#123;</div><div class="line">                            found = filter( item, match, i, curLoop );</div><div class="line">                            <span class="keyword">var</span> pass = not ^ !!found;</div><div class="line"></div><div class="line">                            <span class="keyword">if</span> ( inplace &amp;&amp; found != <span class="literal">null</span> ) &#123;</div><div class="line">                                <span class="keyword">if</span> ( pass ) &#123;</div><div class="line">                                    anyFound = <span class="literal">true</span>;</div><div class="line">                                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                                    curLoop[i] = <span class="literal">false</span>;</div><div class="line">                                &#125;</div><div class="line">                            &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( pass ) &#123;</div><div class="line">                                result.push( item );</div><div class="line">                                anyFound = <span class="literal">true</span>;</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> ( found !== <span class="literal">undefined</span> ) &#123;</div><div class="line">                    <span class="keyword">if</span> ( !inplace ) &#123;</div><div class="line">                        curLoop = result;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    expr = expr.replace( Expr.match[ type ], <span class="string">""</span> );</div><div class="line"></div><div class="line">                    <span class="keyword">if</span> ( !anyFound ) &#123;</div><div class="line">                        <span class="keyword">return</span> [];</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Improper expression</span></div><div class="line">        <span class="keyword">if</span> ( expr == old ) &#123;</div><div class="line">            <span class="keyword">if</span> ( anyFound == <span class="literal">null</span> ) &#123;</div><div class="line">                <span class="keyword">throw</span> <span class="string">"Syntax error, unrecognized expression: "</span> + expr;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        old = expr;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> curLoop;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/jquery/2014/08/01/jquery-src-offset.html" rel="next" title="jquery-1.4.2 offset部分源码分析">
+                上一篇：jquery-1.4.2 offset部分源码分析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/jquery/2014/08/01/jquery-src-support.html" rel="prev" title="jquery-1.4.2 support部分源码分析">
+                下一篇：jquery-1.4.2 support部分源码分析
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sizzle部分源码分析"><span class="nav-number">1.</span> <span class="nav-text">Sizzle部分源码分析</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="install">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用spawn-fcgi运行php-cgi">
+<meta property="og:url" content="https://www.4e00.com/linux/2012/09/12/using-spawn-fcgi-run-php-cgi.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="install">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用spawn-fcgi运行php-cgi">
+<meta name="twitter:description" content="install">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/linux/2012/09/12/using-spawn-fcgi-run-php-cgi.html"/>
+
+  <title> 使用spawn-fcgi运行php-cgi | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用spawn-fcgi运行php-cgi
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2012-09-12T16:27:24+08:00" content="2012-09-12">
+              2012-09-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="install"><a href="#install" class="headerlink" title="install"></a>install</h2><a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">sudo apt-get install spawn-fcgi</div></pre></td></tr></table></figure>
+<h2 id="php启动脚本"><a href="#php启动脚本" class="headerlink" title="php启动脚本"></a>php启动脚本</h2><p>一种是使用端口号。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> /usr/<span class="built_in">local</span>/bin/spawn-fcgi -a 127.0.0.1 -p 9000 -u <span class="variable">$&#123;user&#125;</span> -g <span class="variable">$&#123;group&#125;</span> -f /usr/bin/php5-cgi -C 128</div></pre></td></tr></table></figure>
+<p>一种是使用sock文件。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> /usr/<span class="built_in">local</span>/bin/spawn-fcgi -u <span class="variable">$&#123;user&#125;</span> -g <span class="variable">$&#123;group&#125;</span> -s /tmp/php.sock -f /usr/bin/php5-cgi -P <span class="variable">$&#123;pidpath&#125;</span> 1&gt;/dev/null</div></pre></td></tr></table></figure>
+<h2 id="附nginx关于php-cgi配置"><a href="#附nginx关于php-cgi配置" class="headerlink" title="附nginx关于php-cgi配置"></a>附nginx关于php-cgi配置</h2><p>当spawn-fcgi开启两个端口，利用nginx的upstream负载均衡php程序到不同的fcgi端口上。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">upstream  spawn &#123;</div><div class="line">    # 负载策略: ip_hash;</div><div class="line">    server 127.0.0.1:9000 max_fails=0 fail_timeout=30s;</div><div class="line">    server 127.0.0.1:9001 max_fails=0 fail_timeout=30s;</div><div class="line">&#125;</div><div class="line"></div><div class="line">location ~ .php$ &#123;</div><div class="line">    fastcgi_pass   spawn;</div><div class="line">    fastcgi_index  index.php;</div><div class="line"></div><div class="line">    fastcgi_param  SCRIPT_FILENAME  /usr/local/nginx/html$fastcgi_script_name;</div><div class="line">    fastcgi_param  QUERY_STRING     $query_string;</div><div class="line">    fastcgi_param  REQUEST_METHOD   $request_method;</div><div class="line">    fastcgi_param  CONTENT_TYPE     $content_type;</div><div class="line">    fastcgi_param  CONTENT_LENGTH   $content_length;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="附运行spawn-fcgi脚本二种"><a href="#附运行spawn-fcgi脚本二种" class="headerlink" title="附运行spawn-fcgi脚本二种"></a>附运行spawn-fcgi脚本二种</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line">PHP_SCRIPT=<span class="string">"/usr/local/bin/spawn-fcgi -a 127.0.0.1 -p 2222 -u www-data -g www-data -f /usr/bin/php5-cgi -C 128"</span></div><div class="line">FASTCGI_USER=www-data</div><div class="line">RETVAL=0</div><div class="line"><span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span></div><div class="line">    start)</div><div class="line">        su - <span class="variable">$FASTCGI_USER</span> -c <span class="string">"<span class="variable">$PHP_SCRIPT</span>"</span></div><div class="line">        RETVAL=$?</div><div class="line">        ;;</div><div class="line">    stop)</div><div class="line">        killall -9 php5-cgi</div><div class="line">        RETVAL=$?</div><div class="line">        ;;</div><div class="line">    restart)</div><div class="line">        killall -9 php5-cgi</div><div class="line">        su - <span class="variable">$FASTCGI_USER</span> -c <span class="string">"<span class="variable">$PHP_SCRIPT</span>"</span></div><div class="line">        RETVAL=$?</div><div class="line">        ;;</div><div class="line">    *)</div><div class="line">        <span class="built_in">echo</span> <span class="string">"Usage: php &#123;start|stop|restart&#125;"</span></div><div class="line">        <span class="built_in">exit</span> 1</div><div class="line">        ;;</div><div class="line"><span class="keyword">esac</span></div><div class="line"><span class="built_in">exit</span> <span class="variable">$RETVAL</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#! /bin/bash</span></div><div class="line">pidpath=<span class="string">"/tmp/spawn_php.pid"</span></div><div class="line">user=<span class="string">"daemon"</span></div><div class="line">group=<span class="string">"daemon"</span></div><div class="line">phpcgi=<span class="string">"/usr/local/php/bin/php-cgi"</span></div><div class="line">PHP_FCGI_CHILDREN=50</div><div class="line">PHP_FCGI_MAX_REQUESTS=50000</div><div class="line"></div><div class="line">echo_ok ()</div><div class="line">&#123;</div><div class="line">    <span class="built_in">echo</span> -ne <span class="string">"/033[33C ["</span></div><div class="line">    <span class="built_in">echo</span> -ne <span class="string">"/033[32m"</span></div><div class="line">    <span class="built_in">echo</span> -ne <span class="string">"/033[1C OK"</span></div><div class="line">    <span class="built_in">echo</span> -ne <span class="string">"/033[39m"</span></div><div class="line">    <span class="built_in">echo</span> -ne <span class="string">"/033[1C ]/n"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">start_spawn()</div><div class="line">&#123;</div><div class="line">    env - PHP_FCGI_CHILDREN=<span class="variable">$&#123;PHP_FCGI_CHILDREN&#125;</span> PHP_FCGI_MAX_REQUESTS=<span class="variable">$&#123;PHP_FCGI_MAX_REQUESTS&#125;</span> /usr/<span class="built_in">local</span>/bin/spawn-fcgi -u <span class="variable">$&#123;user&#125;</span> -g <span class="variable">$&#123;group&#125;</span> -s /tmp/php.sock -f <span class="variable">$&#123;phpcgi&#125;</span> -P <span class="variable">$&#123;pidpath&#125;</span> 1&gt;/dev/null</div><div class="line">    <span class="built_in">echo</span> -ne <span class="string">"php-cgi start successfull"</span></div><div class="line">    echo_ok</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span></div><div class="line">    start)</div><div class="line">        <span class="keyword">if</span> [ ! -f <span class="variable">$pidpath</span> ]</div><div class="line">        <span class="keyword">then</span></div><div class="line">            start_spawn</div><div class="line">        <span class="keyword">else</span></div><div class="line">            pidcount=`ps -ef |grep <span class="variable">$&#123;phpcgi&#125;</span>|wc -l`</div><div class="line">            <span class="keyword">if</span> [ <span class="string">"<span class="variable">$pidcount</span>"</span> -gt <span class="string">"1"</span> ]</div><div class="line">            <span class="keyword">then</span></div><div class="line">                <span class="built_in">echo</span> -ne <span class="string">"php  already  running  "</span></div><div class="line">                echo_ok</div><div class="line">            <span class="keyword">else</span></div><div class="line">                rm -f <span class="variable">$pidpath</span></div><div class="line">                rm -f /tmp/php.sock</div><div class="line">                start_spawn</div><div class="line">            <span class="keyword">fi</span></div><div class="line">        <span class="keyword">fi</span></div><div class="line">        ;;</div><div class="line">    stop)</div><div class="line">        pid=`cat <span class="variable">$&#123;pidpath&#125;</span> 2&gt;/dev/null`</div><div class="line">        <span class="built_in">kill</span> <span class="variable">$&#123;pid&#125;</span> 2&gt;/dev/null</div><div class="line">        rm -f <span class="variable">$&#123;pidpath&#125;</span> 2&gt;/dev/null</div><div class="line">        rm -f /tmp/php.sock 2&gt;/dev/null</div><div class="line">        <span class="built_in">echo</span> -ne <span class="string">"php-cgi  stop successfull"</span></div><div class="line">        echo_ok</div><div class="line">        ;;</div><div class="line">    restart)</div><div class="line">        pid=`cat <span class="variable">$&#123;pidpath&#125;</span> 2&gt;/dev/null`</div><div class="line">        <span class="built_in">kill</span> <span class="variable">$&#123;pid&#125;</span> 2&gt;/dev/null</div><div class="line">        rm -f <span class="variable">$&#123;pidpath&#125;</span> 2&gt;/dev/null</div><div class="line">        rm -f /tmp/php.sock 2&gt;/dev/null</div><div class="line">        <span class="built_in">echo</span> -ne <span class="string">"php-cgi  stop successfull"</span></div><div class="line">        echo_ok</div><div class="line"></div><div class="line">        <span class="keyword">if</span> [ ! -f <span class="variable">$pidpath</span> ]</div><div class="line">        <span class="keyword">then</span></div><div class="line">            start_spawn</div><div class="line">        <span class="keyword">else</span></div><div class="line">            pidcount=`ps -ef |grep <span class="variable">$&#123;phpcgi&#125;</span>|wc -l`</div><div class="line">            <span class="keyword">if</span> [ <span class="string">"<span class="variable">$pidcount</span>"</span> -gt <span class="string">"1"</span> ]</div><div class="line">            <span class="keyword">then</span></div><div class="line">                <span class="built_in">echo</span> -ne <span class="string">"php  already  running  "</span></div><div class="line">                echo_ok</div><div class="line">            <span class="keyword">else</span></div><div class="line">                rm -f <span class="variable">$pidpath</span></div><div class="line">                rm -f /tmp/php.sock</div><div class="line">                start_spawn</div><div class="line">            <span class="keyword">fi</span></div><div class="line">        <span class="keyword">fi</span></div><div class="line">        ;;</div><div class="line">    *)</div><div class="line">        <span class="built_in">echo</span> <span class="string">"Usage: <span class="variable">$0</span> &#123;start|stop|restart&#125;"</span></div><div class="line">        <span class="built_in">exit</span> 1</div><div class="line"><span class="keyword">esac</span></div><div class="line"><span class="built_in">exit</span></div></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://blog.csdn.net/xiaomu_fireant/article/details/6343176" target="_blank" rel="external">使用spawn-fcgi运行php-cgi</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2012/09/12/php-cgi-fastcgi-server-script.html" rel="next" title="php-cgi启动php内置的fastcgi server">
+                上一篇：php-cgi启动php内置的fastcgi server
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2012/09/12/nginx-log-400-error.html" rel="prev" title="chrome造成nginx访问日志中大量400错误">
+                下一篇：chrome造成nginx访问日志中大量400错误
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#install"><span class="nav-number">1.</span> <span class="nav-text">install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#php启动脚本"><span class="nav-number">2.</span> <span class="nav-text">php启动脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附nginx关于php-cgi配置"><span class="nav-number">3.</span> <span class="nav-text">附nginx关于php-cgi配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附运行spawn-fcgi脚本二种"><span class="nav-number">4.</span> <span class="nav-text">附运行spawn-fcgi脚本二种</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

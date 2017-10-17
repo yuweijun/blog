@@ -1,0 +1,622 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="9.3 Positioning schemes[CSS2.1中的定位方式] In CSS 2.1, a box may be laid out according to three positioning schemes:  Normal flow [p. 130] . In CSS 2.1, normal flow includes block formatting [p. 130]of blo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jquery-1.4.2 offset部分源码分析">
+<meta property="og:url" content="https://www.4e00.com/jquery/2014/08/01/jquery-src-offset.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="9.3 Positioning schemes[CSS2.1中的定位方式] In CSS 2.1, a box may be laid out according to three positioning schemes:  Normal flow [p. 130] . In CSS 2.1, normal flow includes block formatting [p. 130]of blo">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.4e00.com/blog/img/web/ie/css-position.gif">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.145Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jquery-1.4.2 offset部分源码分析">
+<meta name="twitter:description" content="9.3 Positioning schemes[CSS2.1中的定位方式] In CSS 2.1, a box may be laid out according to three positioning schemes:  Normal flow [p. 130] . In CSS 2.1, normal flow includes block formatting [p. 130]of blo">
+<meta name="twitter:image" content="https://www.4e00.com/blog/img/web/ie/css-position.gif">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/jquery/2014/08/01/jquery-src-offset.html"/>
+
+  <title> jquery-1.4.2 offset部分源码分析 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jquery-1.4.2 offset部分源码分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2014-08-01T22:37:32+08:00" content="2014-08-01">
+              2014-08-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/jquery/" itemprop="url" rel="index">
+                    <span itemprop="name">jquery</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="9-3-Positioning-schemes-CSS2-1中的定位方式"><a href="#9-3-Positioning-schemes-CSS2-1中的定位方式" class="headerlink" title="9.3 Positioning schemes[CSS2.1中的定位方式]"></a>9.3 Positioning schemes[CSS2.1中的定位方式]</h2><blockquote>
+<p>In CSS 2.1, a box may be laid out according to three positioning schemes:</p>
+<ol>
+<li><p>Normal flow [p. 130] . In CSS 2.1, normal flow includes block formatting [p. 130]<br>of block [p. 121] boxes, inline formatting [p. 130] of inline [p. 123] boxes, relative<br>positioning [p. 133] of block or inline boxes, and positioning of run-in [p. 124]<br>boxes.</p>
+</li>
+<li><p>Floats [p. 134] . In the float model, a box is first laid out according to the normal<br>flow, then taken out of the flow and shifted to the left or right as far as possible.<br>Content may flow along the side of a float.</p>
+</li>
+<li><p>Absolute positioning [p. 141] . In the absolute positioning model, a box is<br>removed from the normal flow entirely (it has no impact on later siblings) and<br>assigned a position with respect to a containing block.</p>
+</li>
+</ol>
+<p>Note. CSS 2.1’s positioning schemes help authors make their documents more accessible by allowing them to avoid mark-up tricks (e.g., invisible images) used for layout effects.</p>
+</blockquote>
+<p>在CSS中关于position的说明：</p>
+<p>position:relative | absolute | static | fixed</p>
+<p>static 没有特别的设定，遵循基本的定位规定，不能通过z-index进行层次分级。</p>
+<p>relative 不脱离文档流，参考自身静态位置，并可通过 top, bottom, left, right 相对于其原来的静态位置进行定位，并且可以通过z-index进行层次分级。</p>
+<p>absolute 脱离文档流，通过 top, bottom, left, right 定位。选取其最近的non-static父级定位元素，当全部祖先元素的 position 为 static 时，absolute元素将以body坐标原点进行定位，可以通过z-index进行层次分级。</p>
+<p>fixed 固定定位，这里他所固定的对像是可视窗口而并非是body或是父级元素。可通过z-index进行层次分级。</p>
+<p>一、DOM元素对于offset提供了offsetParent、offsetTop、offsetLeft、offsetWidth、offsetHeight五个属性来定位于元素的相对位置。</p>
+<p>offsetParent是指当前元素的相对定位时的参考元素，当前元素可以根据offsetParent和top/left进行定位。</p>
+<p>offsetParent、parentNode（IE: parentElement）都是指元素的父节点。它们的针对的目标是不一样，功能也不一样。</p>
+<p>parentNode就是取文档层次中包含该节点的最近父节点（直接的父节点）。在FF中对于Attr, Document, DocumentFragment, Entity和Notation这些父节点，其parentNode返回null。还有如果没有附加到文档树的元素也是返回null。</p>
+<p>offsetParent是指可视的父节点。如:</p>
+<a id="more"></a>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span><span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;<span class="name">form</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"t1"</span>/&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>id为t1的元素的offsetParent是body，而parentNode则是form。</p>
+<p>offsetLeft和offsetTop是指当前元素左边框或上边框到offsetParent的左边框或上边框的距离。</p>
+<p>包含了当前元素的margin和其offsetParent的padding。不包含offsetParent的border的宽度(在IE8中将会包括offsetParent的border宽度)。如果当前元素为non-position的元素，并且有left/top偏移量的话，offsetLeft和offsetTop受这个偏移量的影响，也就是说在offsetLeft/offsetTop会包含元素style中的left/top值。</p>
+<p>offsetWidth/offsetHeight与offsetLeft/offsetTop相对offsetParent计算的方式不一样，它们就是当前元素自身的宽度或高度。它包含border、padding、scrollBar(显示的话)，不包括因为overflow而hidden的宽度。</p>
+<p>分析了offset，我们可以发现offsetLeft、offsetTop与CSS中top,left的属性有相通性，offsetLeft、offsetTop只能取值。而我们可以通过CSS中top,left的属性来设定一个元素的相对其它元素的位置（绝对定位，就是相对于body）。</p>
+<p>二、DOM元素对于scroll提供了scrollWidth、scrollHeigth、scrollTop、scrollLeft四个属性，这四个属性是对于产生了scroll的元素进行操作的。scroll的Width、Heigth是指元素真实的宽度和高度，它包含被scroll起来的部分，而scrollTop、scrollLeft则是被卷起来的隐藏部分的大小。<br>scrollHeight 是元素的实际高度 + 元素padding，包含元素的隐藏的部分，但其 border、margin 不应计算在内。<br>offsetHeight 是自身元素的宽度，而scrollHeight是内部元素的绝对宽度，包含内部元素的隐藏的部分。</p>
+<p>三、DOM元素对于client提供了clientWidth、clientHeigth、clientTop、clientLeft四个属性，这组属性是对于client进行操作的。clientWidth、clientHeigth是元素的内容可视区域的高度或宽度，包含padding，不包含scrollbar、border、margin，可以看出是元素可视的区域。</p>
+<h2 id="文档流中哪些元素可以用于定位"><a href="#文档流中哪些元素可以用于定位" class="headerlink" title="文档流中哪些元素可以用于定位"></a>文档流中哪些元素可以用于定位</h2><p>document.body(0, 0)是元素的终结offsetParent(没有找到就是它了), absolute、relative、fixed 都采用可以top, left来定其在文档的位置，也能计算其位置。</p>
+<p>而static是不需要top/left来设定其位置，offset是当前元素相对已经定位的元素的位移。当前元素的offsetParent是其父辈节点中的 position 为 non-static 的节点。</p>
+<p>在IE中<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.htmlelement.offsetparent(VS.80).aspx，可以看到其不支持fixed的offsetParent。" target="_blank" rel="external">http://msdn.microsoft.com/zh-cn/library/system.windows.forms.htmlelement.offsetparent(VS.80).aspx，可以看到其不支持fixed的offsetParent。</a></p>
+<p>在mozilla中<a href="http://developer.mozilla.org/en/DOM/element.offsetParent，可以看到如果元素没有定位，offsetParent就是body。" target="_blank" rel="external">http://developer.mozilla.org/en/DOM/element.offsetParent，可以看到如果元素没有定位，offsetParent就是body。</a></p>
+<p>jQuery针对于获取offsetParent提供了一个改进的方法，它还是在浏览器的offsetParent基础之上多加了一个判断的处理，筛选过滤其有可能会是static的祖先节点。</p>
+<p>定义jQuery.fn.offset()方法，注意这个方法不是返回当前元素的offsetLeft/offsetTop，而是当前元素相对于当前document的位置。</p>
+<p>根据是否有Element.getBoundingClientRect()方法，而分别定义offset方法，这里这样的写法造成数十行代码重复的出现，并不像传统的jQuery代码那么优雅：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// http://msdn.microsoft.com/en-us/library/ms536433.aspx</span></div><div class="line"><span class="comment">// 下面这个判断测试了IE6/IE7/IE8/Opera/Safari/Chrome/Firefox3这些浏览器，"getBoundingClientRect" in document.documentElement 都返回true</span></div><div class="line"><span class="comment">// 只有linux下面的Konqueror4.3中这个值返回为false</span></div><div class="line"><span class="comment">// Get the current coordinates of the first element in the set of matched elements, relative to the document.</span></div><div class="line"><span class="keyword">if</span> ( <span class="string">"getBoundingClientRect"</span> <span class="keyword">in</span> <span class="built_in">document</span>.documentElement ) &#123;</div><div class="line">    <span class="comment">// 定义jQuery.fn.offset()方法，获取当前元素在整个document文档中的偏移量</span></div><div class="line">    <span class="comment">// 注意：返回的这个值与elem.offsetLeft/elem.offsetTop不一样，关于offsetLeft/offsetTop的说明在上面已有详细说明</span></div><div class="line">    <span class="comment">// Get the current coordinates of the first element in the set of matched elements, relative to the document.</span></div><div class="line">    jQuery.fn.offset = <span class="function"><span class="keyword">function</span>(<span class="params"> options </span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> elem = <span class="keyword">this</span>[<span class="number">0</span>];</div><div class="line"></div><div class="line">        <span class="comment">// 如果设置了options，则利用jQuery.offset.setOffset()方法，设置jquery对象匹配到的所有元素的offset值</span></div><div class="line">        <span class="keyword">if</span> ( options ) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params"> i </span>) </span>&#123;</div><div class="line">                jQuery.offset.setOffset( <span class="keyword">this</span>, options, i );</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 如果elem是window/document的话，jQuery.fn.offset返回null</span></div><div class="line">        <span class="keyword">if</span> ( !elem || !elem.ownerDocument ) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 如果elem是document.body的话，调用jQuery.offset.bodyOffset()方法返回body的offset值</span></div><div class="line">        <span class="keyword">if</span> ( elem === elem.ownerDocument.body ) &#123;</div><div class="line">            <span class="keyword">return</span> jQuery.offset.bodyOffset( elem );</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Document.documentElement: A read-only reference to the html tag of the document.</span></div><div class="line">        <span class="comment">// Gecko/webkit 中的元素有getBoundingClientRect方法，返回ClientRect对象，包括以下属性: bottom, height, left, right, top, width</span></div><div class="line">        <span class="comment">// 其中height/width指元素的offsetHeight/offsetWidth，是包括元素的padding和border宽高的</span></div><div class="line">        <span class="keyword">var</span> box = elem.getBoundingClientRect(), doc = elem.ownerDocument, body = doc.body, docElem = doc.documentElement,</div><div class="line">            clientTop = docElem.clientTop || body.clientTop || <span class="number">0</span>, clientLeft = docElem.clientLeft || body.clientLeft || <span class="number">0</span>,</div><div class="line"></div><div class="line">            <span class="comment">// pageXOffset, pageYOffset: Read-only integers that specify the number of pixels that the current document has been scrolled to the right (pageXOffset) and down (pageYOffset).</span></div><div class="line">            top  = box.top  + (self.pageYOffset || jQuery.support.boxModel &amp;&amp; docElem.scrollTop  || body.scrollTop ) - clientTop,</div><div class="line">            left = box.left + (self.pageXOffset || jQuery.support.boxModel &amp;&amp; docElem.scrollLeft || body.scrollLeft) - clientLeft;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> &#123; <span class="attr">top</span>: top, <span class="attr">left</span>: left &#125;;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    jQuery.fn.offset = <span class="function"><span class="keyword">function</span>(<span class="params"> options </span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> elem = <span class="keyword">this</span>[<span class="number">0</span>];</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( options ) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params"> i </span>) </span>&#123;</div><div class="line">                jQuery.offset.setOffset( <span class="keyword">this</span>, options, i );</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( !elem || !elem.ownerDocument ) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( elem === elem.ownerDocument.body ) &#123;</div><div class="line">            <span class="keyword">return</span> jQuery.offset.bodyOffset( elem );</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        jQuery.offset.initialize();</div><div class="line"></div><div class="line">        <span class="keyword">var</span> offsetParent = elem.offsetParent, prevOffsetParent = elem,</div><div class="line">            doc = elem.ownerDocument, computedStyle, docElem = doc.documentElement,</div><div class="line">            body = doc.body, defaultView = doc.defaultView,</div><div class="line">            prevComputedStyle = defaultView ? defaultView.getComputedStyle( elem, <span class="literal">null</span> ) : elem.currentStyle,</div><div class="line">            top = elem.offsetTop, left = elem.offsetLeft;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> ( (elem = elem.parentNode) &amp;&amp; elem !== body &amp;&amp; elem !== docElem ) &#123;</div><div class="line">            <span class="keyword">if</span> ( jQuery.offset.supportsFixedPosition &amp;&amp; prevComputedStyle.position === <span class="string">"fixed"</span> ) &#123;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            computedStyle = defaultView ? defaultView.getComputedStyle(elem, <span class="literal">null</span>) : elem.currentStyle;</div><div class="line">            top  -= elem.scrollTop;</div><div class="line">            left -= elem.scrollLeft;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> ( elem === offsetParent ) &#123;</div><div class="line">                top  += elem.offsetTop;</div><div class="line">                left += elem.offsetLeft;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> ( jQuery.offset.doesNotAddBorder &amp;&amp; !(jQuery.offset.doesAddBorderForTableAndCells &amp;&amp; <span class="regexp">/^t(able|d|h)$/i</span>.test(elem.nodeName)) ) &#123;</div><div class="line">                    top  += <span class="built_in">parseFloat</span>( computedStyle.borderTopWidth  ) || <span class="number">0</span>;</div><div class="line">                    left += <span class="built_in">parseFloat</span>( computedStyle.borderLeftWidth ) || <span class="number">0</span>;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                prevOffsetParent = offsetParent, offsetParent = elem.offsetParent;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> ( jQuery.offset.subtractsBorderForOverflowNotVisible &amp;&amp; computedStyle.overflow !== <span class="string">"visible"</span> ) &#123;</div><div class="line">                top  += <span class="built_in">parseFloat</span>( computedStyle.borderTopWidth  ) || <span class="number">0</span>;</div><div class="line">                left += <span class="built_in">parseFloat</span>( computedStyle.borderLeftWidth ) || <span class="number">0</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            prevComputedStyle = computedStyle;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( prevComputedStyle.position === <span class="string">"relative"</span> || prevComputedStyle.position === <span class="string">"static"</span> ) &#123;</div><div class="line">            top  += body.offsetTop;</div><div class="line">            left += body.offsetLeft;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( jQuery.offset.supportsFixedPosition &amp;&amp; prevComputedStyle.position === <span class="string">"fixed"</span> ) &#123;</div><div class="line">            top  += <span class="built_in">Math</span>.max( docElem.scrollTop, body.scrollTop );</div><div class="line">            left += <span class="built_in">Math</span>.max( docElem.scrollLeft, body.scrollLeft );</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> &#123; <span class="attr">top</span>: top, <span class="attr">left</span>: left &#125;;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>定义jQuery.offset这个Object，这个对象中的3个方法主要是jQuery.fn.offset()方法定义时用到：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">jQuery.offset = &#123;</div><div class="line">    <span class="comment">// 通过initialize()方法检查浏览器关于border/position/margin与offset的关系，代码取出来可单独执行查看效果</span></div><div class="line">    <span class="comment">// 如在IE8中doesNotAddBorder为false，即元素的offsetLeft值会包括offsetParent的borderLeftWidth值，在Firefox3/safari4/chrome2中此值为true</span></div><div class="line">    <span class="comment">// 这些变量在以下几个浏览器的表现情况如下：</span></div><div class="line">    <span class="comment">// safari4/chrome2</span></div><div class="line">    <span class="comment">// doesNotAddBorder: true</span></div><div class="line">    <span class="comment">// doesAddBorderForTableAndCells: false</span></div><div class="line">    <span class="comment">// supportsFixedPosition: true</span></div><div class="line">    <span class="comment">// subtractsBorderForOverflowNotVisible: false</span></div><div class="line">    <span class="comment">// doesNotIncludeMarginInBodyOffset: true</span></div><div class="line">    <span class="comment">//</span></div><div class="line">    <span class="comment">// IE8</span></div><div class="line">    <span class="comment">// doesNotAddBorder: false</span></div><div class="line">    <span class="comment">// doesAddBorderForTableAndCells: true</span></div><div class="line">    <span class="comment">// supportsFixedPosition: true</span></div><div class="line">    <span class="comment">// subtractsBorderForOverflowNotVisible: false</span></div><div class="line">    <span class="comment">// doesNotIncludeMarginInBodyOffset: true</span></div><div class="line">    <span class="comment">//</span></div><div class="line">    <span class="comment">// firefox3</span></div><div class="line">    <span class="comment">// doesNotAddBorder: true</span></div><div class="line">    <span class="comment">// doesAddBorderForTableAndCells: true</span></div><div class="line">    <span class="comment">// supportsFixedPosition: true</span></div><div class="line">    <span class="comment">// subtractsBorderForOverflowNotVisible: false</span></div><div class="line">    <span class="comment">// doesNotIncludeMarginInBodyOffset: true</span></div><div class="line">    initialize: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> body = <span class="built_in">document</span>.body, container = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>), innerDiv, checkDiv, table, td, bodyMarginTop = <span class="built_in">parseFloat</span>( jQuery.curCSS(body, <span class="string">"marginTop"</span>, <span class="literal">true</span>) ) || <span class="number">0</span>,</div><div class="line">            html = <span class="string">"&lt;div style='position:absolute;top:0;left:0;margin:0;border:5px solid #000;padding:0;width:1px;height:1px;'&gt;&lt;div&gt;&lt;/div&gt;&lt;/div&gt;&lt;table style='position:absolute;top:0;left:0;margin:0;border:5px solid #000;padding:0;width:1px;height:1px;' cellpadding='0' cellspacing='0'&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;"</span>;</div><div class="line"></div><div class="line">        jQuery.extend( container.style, &#123; <span class="attr">position</span>: <span class="string">"absolute"</span>, <span class="attr">top</span>: <span class="number">0</span>, <span class="attr">left</span>: <span class="number">0</span>, <span class="attr">margin</span>: <span class="number">0</span>, <span class="attr">border</span>: <span class="number">0</span>, <span class="attr">width</span>: <span class="string">"1px"</span>, <span class="attr">height</span>: <span class="string">"1px"</span>, <span class="attr">visibility</span>: <span class="string">"hidden"</span> &#125; );</div><div class="line"></div><div class="line">        container.innerHTML = html;</div><div class="line">        body.insertBefore( container, body.firstChild );</div><div class="line">        innerDiv = container.firstChild;</div><div class="line">        checkDiv = innerDiv.firstChild;</div><div class="line">        td = innerDiv.nextSibling.firstChild.firstChild;</div><div class="line"></div><div class="line">        <span class="keyword">this</span>.doesNotAddBorder = (checkDiv.offsetTop !== <span class="number">5</span>);</div><div class="line">        <span class="keyword">this</span>.doesAddBorderForTableAndCells = (td.offsetTop === <span class="number">5</span>);</div><div class="line"></div><div class="line">        checkDiv.style.position = <span class="string">"fixed"</span>, checkDiv.style.top = <span class="string">"20px"</span>;</div><div class="line">        <span class="comment">// safari subtracts parent border width here which is 5px</span></div><div class="line">        <span class="keyword">this</span>.supportsFixedPosition = (checkDiv.offsetTop === <span class="number">20</span> || checkDiv.offsetTop === <span class="number">15</span>);</div><div class="line">        checkDiv.style.position = checkDiv.style.top = <span class="string">""</span>;</div><div class="line"></div><div class="line">        innerDiv.style.overflow = <span class="string">"hidden"</span>, innerDiv.style.position = <span class="string">"relative"</span>;</div><div class="line">        <span class="keyword">this</span>.subtractsBorderForOverflowNotVisible = (checkDiv.offsetTop === <span class="number">-5</span>);</div><div class="line"></div><div class="line">        <span class="keyword">this</span>.doesNotIncludeMarginInBodyOffset = (body.offsetTop !== bodyMarginTop);</div><div class="line"></div><div class="line">        body.removeChild( container );</div><div class="line">        body = container = innerDiv = checkDiv = table = td = <span class="literal">null</span>;</div><div class="line">        jQuery.offset.initialize = jQuery.noop;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    bodyOffset: <span class="function"><span class="keyword">function</span>(<span class="params"> body </span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> top = body.offsetTop, left = body.offsetLeft;</div><div class="line"></div><div class="line">        <span class="comment">// 通过initialize()方法是为了设置jQuery.offset对象的几个属性值，如下面会使用到的doesNotIncludeMarginInBodyOffset属性</span></div><div class="line">        jQuery.offset.initialize();</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( jQuery.offset.doesNotIncludeMarginInBodyOffset ) &#123;</div><div class="line">            top  += <span class="built_in">parseFloat</span>( jQuery.curCSS(body, <span class="string">"marginTop"</span>,  <span class="literal">true</span>) ) || <span class="number">0</span>;</div><div class="line">            left += <span class="built_in">parseFloat</span>( jQuery.curCSS(body, <span class="string">"marginLeft"</span>, <span class="literal">true</span>) ) || <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> &#123; <span class="attr">top</span>: top, <span class="attr">left</span>: left &#125;;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    setOffset: <span class="function"><span class="keyword">function</span>(<span class="params"> elem, options, i </span>) </span>&#123;</div><div class="line">        <span class="comment">// set position first, in-case top/left are set even on static elem</span></div><div class="line">        <span class="comment">// 如果当前对象position为static则将其置为relative</span></div><div class="line">        <span class="keyword">if</span> ( <span class="regexp">/static/</span>.test( jQuery.curCSS( elem, <span class="string">"position"</span> ) ) ) &#123;</div><div class="line">            elem.style.position = <span class="string">"relative"</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">var</span> curElem   = jQuery( elem ),</div><div class="line">            <span class="comment">// 获取当前元素的offset值，后面可作为参数使用</span></div><div class="line">            curOffset = curElem.offset(),</div><div class="line">            <span class="comment">// elem已经被设置为relative position，计算出当前elem的位置偏移量</span></div><div class="line">            <span class="comment">// 但如果是absolute元素，此处会因为top/left为auto值，而使得curTop/curLeft返回为0，这个结果有时候并不是想要的，会产生计算BUG，下面会继续说明</span></div><div class="line">            curTop    = <span class="built_in">parseInt</span>( jQuery.curCSS( elem, <span class="string">"top"</span>,  <span class="literal">true</span> ), <span class="number">10</span> ) || <span class="number">0</span>,</div><div class="line">            curLeft   = <span class="built_in">parseInt</span>( jQuery.curCSS( elem, <span class="string">"left"</span>, <span class="literal">true</span> ), <span class="number">10</span> ) || <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="comment">// function(index, coords)</span></div><div class="line">        <span class="comment">// A function to return the coordinates to set. Receives the index of the element in the collection as the first argument and the current coordinates as the second argument. The function should return an object with the new top and left properties.</span></div><div class="line">        <span class="comment">// The .offset() setter method allows us to reposition an element. The element's position is specified relative to the document. If the element's position style property is currently static, it will be set to relative to allow for this repositioning.</span></div><div class="line">        <span class="comment">// 如果options是一个方法，则将options作为每个elem的方法，传入其在jquery对象中的位置和当前的offset值作为方法参数，进行调用返回的值作为新的options</span></div><div class="line">        <span class="keyword">if</span> ( jQuery.isFunction( options ) ) &#123;</div><div class="line">            options = options.call( elem, i, curOffset );</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// .offset( coordinates ) Returns: jQuery</span></div><div class="line">        <span class="comment">// Description: Set the current coordinates of every element in the set of matched elements, relative to the document.</span></div><div class="line">        <span class="comment">// coordinates: An object containing the properties top and left, which are integers indicating the new top and left coordinates for the elements.</span></div><div class="line">        <span class="comment">// 注意此处代码有计算bug</span></div><div class="line">        <span class="comment">// jQuery此处计算relative元素，结果是正确的，如果是absolute元素，并且其offsetParent不是body元素，结果也是正确的</span></div><div class="line">        <span class="comment">// 如果当前elem为absolute定位元素，并且其offsetParent为body时，需要注意在不同浏览器中，会出现不同的结果：</span></div><div class="line">        <span class="comment">// firefox3: 因为curTop其实根据浏览器的window.getComputedStyle()方法返回的是像素值，所以parseInt之后是一个数字，而不是0，所以在下面的计算中也没问题</span></div><div class="line">        <span class="comment">// IE8/safari4/chrome2： 因为elem.currentStyle(IE8)和window.getComputedStyle()方法返回的可能是"auto"值，从而curTop/curLeft被设置为0，而实际当前元素到body是有top/left值的，从而导致下面的公式计算产生问题。</span></div><div class="line">        <span class="comment">// jQuery bug tracker: http://dev.jquery.com/ticket/6483</span></div><div class="line">        <span class="keyword">var</span> props = &#123;</div><div class="line">            top:  (options.top  - curOffset.top)  + curTop,</div><div class="line">            left: (options.left - curOffset.left) + curLeft</div><div class="line">        &#125;;</div><div class="line">        <span class="comment">// 此处正确的计算方法应该再补上以下判断：</span></div><div class="line">        <span class="keyword">if</span> (jQuery.nodeName(curElem.offsetParent()[<span class="number">0</span>], <span class="string">'body'</span>) &amp;&amp; curElem.css(<span class="string">'position'</span>) === <span class="string">'absolute'</span>) &#123;</div><div class="line">            props = &#123;<span class="attr">top</span>: options.top, <span class="attr">left</span>: options.left&#125;;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// options = &#123;top: 1, left: 1, using: function(i, corps)&#123;&#125;&#125;</span></div><div class="line">        <span class="keyword">if</span> ( <span class="string">"using"</span> <span class="keyword">in</span> options ) &#123;</div><div class="line">            <span class="comment">// options中不但包括了位置的新偏移量，还有一个方法用于设置当前elem的offset</span></div><div class="line">            options.using.call( elem, props );</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">// 调用jQuery.fn.css()方法将offset值设置给当前elem</span></div><div class="line">            curElem.css( props );</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>定义jQuery.fn.position()方法和jQuery.fn.offsetParent()方法：</p>
+<blockquote>
+<p>jQuery.fn.position(): Get the current coordinates of the first element in the set of matched elements, relative to the offset parent.</p>
+<p>The jQuery.fn.position() method allows us to retrieve the current position of an element relative to the offset parent.</p>
+<p>Contrast this with .offset(), which retrieves the current position relative to the document. When positioning a new element near another one and within the same containing DOM element, .position() is the more useful.</p>
+</blockquote>
+<p>jQuery.fn.position()方法是计算当前元素(包括当前元素的margin在内)相对于其offsetParent的border的偏移量。</p>
+<p>即position方法返回的值为：如果当前元素为static元素，则值为offsetParent的paddingLeft/paddingTop值，如果当前元素为non-static元素，则是offsetParent.paddingLeft + elem.style.left的值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">jQuery.fn.extend(&#123;</div><div class="line">    position: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> ( !<span class="keyword">this</span>[<span class="number">0</span>] ) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">var</span> elem = <span class="keyword">this</span>[<span class="number">0</span>],</div><div class="line"></div><div class="line">        <span class="comment">// Get *real* offsetParent</span></div><div class="line">        <span class="comment">// 找到elem的offsetParent</span></div><div class="line">        offsetParent = <span class="keyword">this</span>.offsetParent(),</div><div class="line"></div><div class="line">        <span class="comment">// Get correct offsets</span></div><div class="line">        offset       = <span class="keyword">this</span>.offset(),</div><div class="line">        parentOffset = <span class="regexp">/^body|html$/i</span>.test(offsetParent[<span class="number">0</span>].nodeName) ? &#123; <span class="attr">top</span>: <span class="number">0</span>, <span class="attr">left</span>: <span class="number">0</span> &#125; : offsetParent.offset();</div><div class="line"></div><div class="line">        <span class="comment">// Subtract element margins</span></div><div class="line">        <span class="comment">// 减去当前元素的marginTop/marginLeft</span></div><div class="line">        <span class="comment">// note: when an element has margin: auto the offsetLeft and marginLeft are the same in Safari causing offset.left to incorrectly be 0</span></div><div class="line">        offset.top  -= <span class="built_in">parseFloat</span>( jQuery.curCSS(elem, <span class="string">"marginTop"</span>,  <span class="literal">true</span>) ) || <span class="number">0</span>;</div><div class="line">        offset.left -= <span class="built_in">parseFloat</span>( jQuery.curCSS(elem, <span class="string">"marginLeft"</span>, <span class="literal">true</span>) ) || <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="comment">// Add offsetParent borders</span></div><div class="line">        <span class="comment">// 添加offsetParent的边框值</span></div><div class="line">        parentOffset.top  += <span class="built_in">parseFloat</span>( jQuery.curCSS(offsetParent[<span class="number">0</span>], <span class="string">"borderTopWidth"</span>,  <span class="literal">true</span>) ) || <span class="number">0</span>;</div><div class="line">        parentOffset.left += <span class="built_in">parseFloat</span>( jQuery.curCSS(offsetParent[<span class="number">0</span>], <span class="string">"borderLeftWidth"</span>, <span class="literal">true</span>) ) || <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="comment">// jQuery.fn.position()方法是计算当前元素(包括当前元素的margin在内)相对于其offsetParent的border的偏移量。</span></div><div class="line">        <span class="comment">// Subtract the two offsets</span></div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            top:  offset.top  - parentOffset.top,</div><div class="line">            left: offset.left - parentOffset.left</div><div class="line">        &#125;;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="comment">// 通过offsetParent()方法，找到当前元素所有祖先元素中，position为non-static的祖先元素，如果没找到，则最后为document.body</span></div><div class="line">    <span class="comment">// 在文档流中找到position为非static的祖先元素，当前元素能根据此元素进行top/left定位</span></div><div class="line">    offsetParent: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.map(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> offsetParent = <span class="keyword">this</span>.offsetParent || <span class="built_in">document</span>.body;</div><div class="line">            <span class="keyword">while</span> ( offsetParent &amp;&amp; (!<span class="regexp">/^body|html$/i</span>.test(offsetParent.nodeName) &amp;&amp; jQuery.css(offsetParent, <span class="string">"position"</span>) === <span class="string">"static"</span>) ) &#123;</div><div class="line">                offsetParent = offsetParent.offsetParent;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> offsetParent;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div></pre></td></tr></table></figure>
+<ul>
+<li>jQuery.fn.scrollLeft(): Get the current horizontal position of the scroll bar for the first element in the set of matched elements.</li>
+<li>jQuery.fn.scrollLeft( value ): Set the current horizontal position of the scroll bar for each of the set of matched elements.</li>
+<li>jQuery.fn.scrollTop(): Get the current vertical position of the scroll bar for the first element in the set of matched elements.</li>
+<li>jQuery.fn.scrollTop( value ): Set the current vertical position of the scroll bar for each of the set of matched elements.</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// scrollLeft: 对象的最左边到对象在当前窗口显示的范围内的左边的距离，即是在出现了横向滚动条的情况下，滚动条拉动的距离</span></div><div class="line"><span class="comment">// scrollTop: 对象的最顶部到对象在当前窗口显示的范围内的顶边的距离，即是在出现了纵向滚动条的情况下，滚动条拉动的距离，或者说对象被“卷”起的高度</span></div><div class="line"><span class="comment">// scrollLeft/scrollTop在对象被设置了overview属性，产生滚动条之后产生</span></div><div class="line"><span class="comment">// Create scrollLeft and scrollTop methods</span></div><div class="line">jQuery.each( [<span class="string">"Left"</span>, <span class="string">"Top"</span>], <span class="function"><span class="keyword">function</span>(<span class="params"> i, name </span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> method = <span class="string">"scroll"</span> + name;</div><div class="line"></div><div class="line">    jQuery.fn[ method ] = <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> elem = <span class="keyword">this</span>[<span class="number">0</span>], win;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( !elem ) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 如果val有值，则将window对象scrollTo对应的位置</span></div><div class="line">        <span class="comment">// 其他elem元素则设置elem.scrollLeft属性为val值</span></div><div class="line">        <span class="keyword">if</span> ( val !== <span class="literal">undefined</span> ) &#123;</div><div class="line">            <span class="comment">// Set the scroll offset</span></div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                win = getWindow( <span class="keyword">this</span> );</div><div class="line"></div><div class="line">                <span class="keyword">if</span> ( win ) &#123;</div><div class="line">                    win.scrollTo(</div><div class="line">                        !i ? val : jQuery(win).scrollLeft(),</div><div class="line">                         i ? val : jQuery(win).scrollTop()</div><div class="line">                    );</div><div class="line"></div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="keyword">this</span>[ method ] = val;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">// 如果当前元素elem是window或者是document时，返回window对象，不然返回false</span></div><div class="line">            win = getWindow( elem );</div><div class="line"></div><div class="line">            <span class="comment">// Return the scroll offset</span></div><div class="line">            <span class="keyword">return</span> win ? (<span class="string">"pageXOffset"</span> <span class="keyword">in</span> win) ? win[ i ? <span class="string">"pageYOffset"</span> : <span class="string">"pageXOffset"</span> ] :</div><div class="line">                jQuery.support.boxModel &amp;&amp; win.document.documentElement[ method ] ||</div><div class="line">                    win.document.body[ method ] :</div><div class="line">                <span class="comment">// 调用elem.scrollLeft属性返回结果</span></div><div class="line">                elem[ method ];</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 获取当前元素elem所在的window对象</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getWindow</span>(<span class="params"> elem </span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> (<span class="string">"scrollTo"</span> <span class="keyword">in</span> elem &amp;&amp; elem.document) ?</div><div class="line">        elem :</div><div class="line">        elem.nodeType === <span class="number">9</span> ?</div><div class="line">            elem.defaultView || elem.parentWindow :</div><div class="line">            <span class="literal">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<img src="/blog/img/web/ie/css-position.gif" title="[css-javascript-position]">
+<p>图注：其中中间的div的position为non-static属性，其有style.left，style.top属性值，div向右下角有偏移量</p>
+<p>clientLeft为左边border宽度的像素值(只有数值)，即clientLeft == parseFloat(jQuery(div).css(&#39;borderLeftWidth&#39;), 10)</p>
+<p>clientWidth为div中间的可视区域宽度，不包括scrollbar的宽度，这里因为浏览器不同，scrollbar的宽度也是不同的，所以不同浏览器中clientWidth值也会不一样</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://jljlpch.javaeye.com/blog/232480" target="_blank" rel="external">http://jljlpch.javaeye.com/blog/232480</a></li>
+<li><a href="http://www.jb51.net/article/18340.htm" target="_blank" rel="external">http://www.jb51.net/article/18340.htm</a></li>
+<li><a href="http://www.cssrain.cn/article.asp?id=1365" target="_blank" rel="external">http://www.cssrain.cn/article.asp?id=1365</a></li>
+<li><a href="http://www.cnblogs.com/believe3301/archive/2008/07/19/1246806.html" target="_blank" rel="external">http://www.cnblogs.com/believe3301/archive/2008/07/19/1246806.html</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/jquery/2014/08/01/jquery-src-manipulation.html" rel="next" title="jquery-1.4.2 manipulation部分源码分析">
+                上一篇：jquery-1.4.2 manipulation部分源码分析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/jquery/2014/08/01/jquery-src-sizzle.html" rel="prev" title="jquery-1.4.2 sizzle部分源码分析">
+                下一篇：jquery-1.4.2 sizzle部分源码分析
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-3-Positioning-schemes-CSS2-1中的定位方式"><span class="nav-number">1.</span> <span class="nav-text">9.3 Positioning schemes[CSS2.1中的定位方式]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文档流中哪些元素可以用于定位"><span class="nav-number">2.</span> <span class="nav-text">文档流中哪些元素可以用于定位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,591 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="maven的pom文件有一份默认的super pom，所有新建的pom文件都是继承自此pom，这个super pom的build配置部分如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="maven2学习笔记">
+<meta property="og:url" content="https://www.4e00.com/java/2010/09/17/maven2-learning.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="maven的pom文件有一份默认的super pom，所有新建的pom文件都是继承自此pom，这个super pom的build配置部分如下：">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="maven2学习笔记">
+<meta name="twitter:description" content="maven的pom文件有一份默认的super pom，所有新建的pom文件都是继承自此pom，这个super pom的build配置部分如下：">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/java/2010/09/17/maven2-learning.html"/>
+
+  <title> maven2学习笔记 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                maven2学习笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2010-09-17T18:24:00+08:00" content="2010-09-17">
+              2010-09-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>maven的pom文件有一份默认的super pom，所有新建的pom文件都是继承自此pom，这个super pom的build配置部分如下：</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;build&gt;</div><div class="line">    &lt;directory&gt;target&lt;/directory&gt;</div><div class="line">    &lt;outputDirectory&gt;target/classes&lt;/outputDirectory&gt;</div><div class="line">    &lt;finalName&gt;$&#123;artifactId&#125;-$&#123;version&#125;&lt;/finalName&gt;</div><div class="line">    &lt;testOutputDirectory&gt;target/test-classes&lt;/testOutputDirectory&gt;</div><div class="line">    &lt;sourceDirectory&gt;src/main/java&lt;/sourceDirectory&gt;</div><div class="line">    &lt;scriptSourceDirectory&gt;src/main/scripts&lt;/scriptSourceDirectory&gt;</div><div class="line">    &lt;testSourceDirectory&gt;src/test/java&lt;/testSourceDirectory&gt;</div><div class="line">    &lt;resources&gt;</div><div class="line">        &lt;resource&gt;</div><div class="line">            &lt;directory&gt;src/main/resources&lt;/directory&gt;</div><div class="line">        &lt;/resource&gt;</div><div class="line">    &lt;/resources&gt;</div><div class="line">    &lt;testResources&gt;</div><div class="line">        &lt;testResource&gt;</div><div class="line">            &lt;directory&gt;src/test/resources&lt;/directory&gt;</div><div class="line">        &lt;/testResource&gt;</div><div class="line">    &lt;/testResources&gt;</div><div class="line">&lt;/build&gt;</div></pre></td></tr></table></figure>
+<p>在web项目中会希望在<code>mvn package</code>之后将maven导入的lib文件自动复制到<code>wepapp/WEB-INF/lib</code>下方便测试，如果maven导入的依赖文件发生变化时，将lib目录下的文件先清理之后，再重新加入，同时也可以将其他的lib目录的文件一起复制到<code>webapp/WEB-INF/lib</code>下，要达到这个功能，可以用maven去运行ant的可执行脚本，<code>maven-antrun-plugin</code>就达到这个目的，只要将ant的任务放到tasks标签里，格式如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;project&gt;</div><div class="line">    &lt;build&gt;</div><div class="line">        &lt;plugins&gt;</div><div class="line">            &lt;plugin&gt;</div><div class="line">                &lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;</div><div class="line">                &lt;version&gt;1.4&lt;/version&gt;</div><div class="line">                &lt;executions&gt;</div><div class="line">                    &lt;execution&gt;</div><div class="line">                        &lt;phase&gt;</div><div class="line">                            &lt;!-- a lifecycle phase --&gt;</div><div class="line">                        &lt;/phase&gt;</div><div class="line">                        &lt;configuration&gt;</div><div class="line">                            &lt;tasks&gt;</div><div class="line"></div><div class="line">                                &lt;!--</div><div class="line">                                  Place any Ant task here. You can add anything</div><div class="line">                                  you can add between &lt;target&gt; and &lt;/target&gt; in a</div><div class="line">                                  build.xml.</div><div class="line">                                --&gt;</div><div class="line"></div><div class="line">                            &lt;/tasks&gt;</div><div class="line">                        &lt;/configuration&gt;</div><div class="line">                        &lt;goals&gt;</div><div class="line">                            &lt;goal&gt;run&lt;/goal&gt;</div><div class="line">                        &lt;/goals&gt;</div><div class="line">                    &lt;/execution&gt;</div><div class="line">                &lt;/executions&gt;</div><div class="line">            &lt;/plugin&gt;</div><div class="line">        &lt;/plugins&gt;</div><div class="line">    &lt;/build&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
+<p>在linux中，因为默认使用了<code>openjdk</code>，所以在使用maven时，会遇到提示<code>tools.jar</code>包的依赖问题，可以在POM中添加下面的配置，引入<code>tools.jar</code>:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;profiles&gt;</div><div class="line">    &lt;profile&gt;</div><div class="line">        &lt;id&gt;default-tools.jar&lt;/id&gt;</div><div class="line">        &lt;activation&gt;</div><div class="line">            &lt;property&gt;</div><div class="line">                &lt;name&gt;java.vendor&lt;/name&gt;</div><div class="line">                &lt;value&gt;Sun Microsystems Inc.&lt;/value&gt;</div><div class="line">            &lt;/property&gt;</div><div class="line">        &lt;/activation&gt;</div><div class="line">        &lt;dependencies&gt;</div><div class="line">            &lt;dependency&gt;</div><div class="line">                &lt;groupId&gt;com.sun&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;tools&lt;/artifactId&gt;</div><div class="line">                &lt;version&gt;1.4.2&lt;/version&gt;</div><div class="line">                &lt;scope&gt;system&lt;/scope&gt;</div><div class="line">                &lt;systemPath&gt;$&#123;java.home&#125;/../lib/tools.jar&lt;/systemPath&gt;</div><div class="line">            &lt;/dependency&gt;</div><div class="line">        &lt;/dependencies&gt;</div><div class="line">    &lt;/profile&gt;</div><div class="line">&lt;/profiles&gt;</div></pre></td></tr></table></figure>
+<p>在项目目录下运行mvn命令时，如果看到<code>jvm 1.3</code>的编译错误，则需要为maven指定源码和jvm的版本，如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;build&gt;</div><div class="line">    &lt;plugins&gt;</div><div class="line">        &lt;plugin&gt;</div><div class="line">            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;2.0.2&lt;/version&gt;</div><div class="line">            &lt;configuration&gt;</div><div class="line">                &lt;source&gt;1.6&lt;/source&gt;</div><div class="line">                &lt;target&gt;1.6&lt;/target&gt;</div><div class="line">            &lt;/configuration&gt;</div><div class="line">        &lt;/plugin&gt;</div><div class="line">    &lt;/plugins&gt;</div><div class="line">&lt;/build&gt;</div></pre></td></tr></table></figure>
+<p>在项目下面运行<code>jUnit test</code>时，如果运行<code>mvn test</code>是成功的，但是单独在一个test文件是运行jUnit test时则报错说<code>Class not found</code>(或者二者相反)，这个是因为maven默认为test的java文件生成的class放到<code>target/test-classes</code>，项目本身的classes output目录可能是设置在<code>webapp/WEB-INF/classes</code>目录中的，二者不一致才造成这个问题，需要在build标签下面设置<code>outputDirectory</code>和<code>testOutputDirectory</code>这二个标签，让maven也到<code>webapp/WEB-INF/classes</code>目录中查找编译后的文件。</p>
+<p>maven中常用命令说明，项目打包和安装到仓库中，在项目下运行:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> package</div></pre></td></tr></table></figure>
+<p>为当前项目生成一个jar文件或者是war文件，这个由pom文件配置中的packaging参数决定是jar还是war，运行成功后，会在<code>${basedir}/target</code>目录下生成文件。如果需要将生成的jar文件放到maven仓库中(默认是:<code>~/.m2/repository</code>)，则运行命令:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> install</div></pre></td></tr></table></figure>
+<p>为eclipse ide生成maven项目，配合eclipse maven插件如:<code>m2e - http://m2eclipse.sonatype.org/sites/m2e</code>一起使用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> eclipse:eclipse</div></pre></td></tr></table></figure>
+<p>运行当前项目中的junit test，maven是使用<code>maven-surefire-plugin</code>完成test的，关于这个插件，可以查看<a href="http://tianya23.blog.51cto.com/1081650/386012" target="_blank" rel="external">这篇文章</a>中的说明，可以忽略或者指定测试文件的名字，以及在test发生错误如何不影响打包:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> <span class="built_in">test</span></div></pre></td></tr></table></figure>
+<p>根据上面的maven知识点，配置出符合项目需求的pom配置的build部分如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;build&gt;</div><div class="line">    &lt;sourceDirectory&gt;src/main/java&lt;/sourceDirectory&gt;</div><div class="line">    &lt;resources&gt;</div><div class="line">        &lt;resource&gt;</div><div class="line">            &lt;directory&gt;src/main/resources&lt;/directory&gt;</div><div class="line">        &lt;/resource&gt;</div><div class="line">    &lt;/resources&gt;</div><div class="line"></div><div class="line">    &lt;outputDirectory&gt;src/main/webapp/WEB-INF/classes&lt;/outputDirectory&gt;</div><div class="line">    &lt;testOutputDirectory&gt;src/main/webapp/WEB-INF/classes&lt;/testOutputDirectory&gt;</div><div class="line"></div><div class="line">    &lt;plugins&gt;</div><div class="line">        &lt;plugin&gt;</div><div class="line">            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</div><div class="line">            &lt;configuration&gt;</div><div class="line">                &lt;source&gt;1.6&lt;/source&gt;</div><div class="line">                &lt;target&gt;1.6&lt;/target&gt;</div><div class="line">                &lt;encoding&gt;UTF-8&lt;/encoding&gt;</div><div class="line">            &lt;/configuration&gt;</div><div class="line">        &lt;/plugin&gt;</div><div class="line">        &lt;plugin&gt;</div><div class="line">            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;</div><div class="line">            &lt;configuration&gt;</div><div class="line">                &lt;webXml&gt;src/main/webapp/WEB-INF/web.xml&lt;/webXml&gt;</div><div class="line">            &lt;/configuration&gt;</div><div class="line">        &lt;/plugin&gt;</div><div class="line"></div><div class="line">        &lt;plugin&gt;</div><div class="line">            &lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;</div><div class="line">            &lt;executions&gt;</div><div class="line">                &lt;execution&gt;</div><div class="line">                    &lt;id&gt;copy-lib-src-webapp&lt;/id&gt;</div><div class="line">                    &lt;phase&gt;install&lt;/phase&gt;</div><div class="line">                    &lt;configuration&gt;</div><div class="line">                        &lt;tasks&gt;</div><div class="line">                            &lt;delete dir=&quot;src/main/webapp/WEB-INF/lib&quot; /&gt;</div><div class="line">                            &lt;copy todir=&quot;src/main/webapp/WEB-INF/lib&quot;&gt;</div><div class="line">                                &lt;fileset dir=&quot;target/package-name-0.0.1-SNAPSHOT/WEB-INF/lib&quot;&gt;</div><div class="line">                                    &lt;include name=&quot;*&quot; /&gt;</div><div class="line">                                &lt;/fileset&gt;</div><div class="line">                            &lt;/copy&gt;</div><div class="line">                            &lt;copy todir=&quot;src/main/webapp/WEB-INF/lib&quot;&gt;</div><div class="line">                                &lt;fileset dir=&quot;lib&quot;&gt;</div><div class="line">                                    &lt;include name=&quot;*&quot; /&gt;</div><div class="line">                                &lt;/fileset&gt;</div><div class="line">                            &lt;/copy&gt;</div><div class="line">                        &lt;/tasks&gt;</div><div class="line">                    &lt;/configuration&gt;</div><div class="line">                    &lt;goals&gt;</div><div class="line">                        &lt;goal&gt;run&lt;/goal&gt;</div><div class="line">                    &lt;/goals&gt;</div><div class="line">                &lt;/execution&gt;</div><div class="line">            &lt;/executions&gt;</div><div class="line">        &lt;/plugin&gt;</div><div class="line">    &lt;/plugins&gt;</div><div class="line"></div><div class="line">&lt;/build&gt;</div></pre></td></tr></table></figure>
+<p>可以从下面的maven仓库中查找包的依赖和maven配置：</p>
+<ul>
+<li><a href="http://repository.apache.org" target="_blank" rel="external">http://repository.apache.org</a></li>
+<li><a href="http://www.artifact-repository.org" target="_blank" rel="external">http://www.artifact-repository.org</a></li>
+<li><a href="http://mvnrepository.com" target="_blank" rel="external">http://mvnrepository.com</a></li>
+<li><a href="http://www.mvnbrowser.com" target="_blank" rel="external">http://www.mvnbrowser.com</a></li>
+<li><a href="http://www.jarvana.com" target="_blank" rel="external">http://www.jarvana.com</a></li>
+<li><a href="http://mavensearch.net" target="_blank" rel="external">http://mavensearch.net</a></li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://maven.apache.org/general.html" target="_blank" rel="external">http://maven.apache.org/general.html</a></li>
+<li><a href="http://maven.apache.org/plugins/" target="_blank" rel="external">http://maven.apache.org/plugins/</a></li>
+<li><a href="http://maven.apache.org/pom.html" target="_blank" rel="external">http://maven.apache.org/pom.html</a></li>
+<li><a href="http://maven.apache.org/settings.html" target="_blank" rel="external">http://maven.apache.org/settings.html</a></li>
+<li><a href="http://maven.apache.org/guides/getting-started/index.html" target="_blank" rel="external">http://maven.apache.org/guides/getting-started/index.html</a></li>
+<li><a href="http://maven.apache.org/plugins/maven-antrun-plugin/usage.html" target="_blank" rel="external">http://maven.apache.org/plugins/maven-antrun-plugin/usage.html</a></li>
+<li><a href="http://maven.apache.org/plugins/maven-surefire-plugin/usage.html" target="_blank" rel="external">http://maven.apache.org/plugins/maven-surefire-plugin/usage.html</a></li>
+<li><a href="http://maven.apache.org/guides/introduction/introduction-to-the-pom.html" target="_blank" rel="external">http://maven.apache.org/guides/introduction/introduction-to-the-pom.html</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2010/08/30/maven-install-m2eclipse-failure.html" rel="next" title="maven:install在命令行构建成功而m2eclipse中构建失败">
+                上一篇：maven:install在命令行构建成功而m2eclipse中构建失败
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2010/10/01/ubuntu-nvidia-display-card-problem.html" rel="prev" title="ubuntu-10.04下nvidia显卡不定时闪屏的解决">
+                下一篇：ubuntu-10.04下nvidia显卡不定时闪屏的解决
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

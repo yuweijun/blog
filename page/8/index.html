@@ -1,0 +1,1075 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="一">
+<meta property="og:url" content="https://www.4e00.com/page/8/index.html">
+<meta property="og:site_name" content="一">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/page/8/"/>
+
+  <title> 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/linux/2016/08/06/tcp-open-and-close.html" itemprop="url">
+                  tcp connection open and close
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-08-06T23:36:55+08:00" content="2016-08-06">
+              2016-08-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="wireshark-install-and-usage"><a href="#wireshark-install-and-usage" class="headerlink" title="wireshark install and usage"></a>wireshark install and usage</h2><p>下面示例中会用到<code>wireshark</code>抓包工具，安装<code>wireshark</code>并且通过一个http访问来查看TCP连接打开关闭请求的过程。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$&gt; brew install wireshark --with-qt</div><div class="line">$&gt; sudo wireshark-qt</div></pre></td></tr></table></figure>
+<p><code>wireshark</code>过滤规则简单示例，更多使用说明可查阅<a href="https://www.wireshark.org/docs/man-pages/wireshark-filter.html" target="_blank" rel="external">参考链接</a>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">host 10.1.2.3</div><div class="line">ip src host 10.1.1.1</div><div class="line">ip.addr == 10.1.1.1</div><div class="line">ip.addr eq 10.1.1.1</div><div class="line">ip.src != 10.1.2.3 and ip.dst != 10.4.5.6</div><div class="line">src host 10.7.2.12 and not dst net 10.200.0.0/16</div><div class="line">tcp.port == 25</div><div class="line">tcp.dstport == 25</div><div class="line">tcp dst port 3128</div><div class="line">http.request.method == <span class="string">"POST"</span></div><div class="line">http.host == <span class="string">"www.google.com"</span></div></pre></td></tr></table></figure>
+<p>在<code>wireshark</code>中打开有数据流量的那个网络设备，并打开新的<code>Terminal</code>输入以下命令，发起一个http请求：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$&gt; curl -o index.html http://www.baidu.com</div></pre></td></tr></table></figure>
+<p>请求完成将<code>wireshark</code>监控暂停，并保存结果到文件，方便重新分析使用。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/linux/2016/08/06/tcp-open-and-close.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/java/2016/07/27/java-object-serialization.html" itemprop="url">
+                  java object serialization
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-07-27T21:22:50+08:00" content="2016-07-27">
+              2016-07-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Java-序列化简介"><a href="#Java-序列化简介" class="headerlink" title="Java 序列化简介"></a>Java 序列化简介</h2><p><code>Java对象序列化</code>是<code>JDK 1.1</code>中引入的一组开创性特性之一，是Java语言内建的一种对象持久化方式，用于作为一种将Java对象的状态转换为字节数组，以便存储或传输的机制，以后仍可以将字节数组转换回Java对象原有的状态。</p>
+<p>实际上，序列化的思想是<code>冻结</code>对象状态，<code>传输</code>对象状态，如写到磁盘或者通过网络使用RMI远程方法调用等，然后<code>解冻</code>对象状态，重新获得可用的Java对象。</p>
+<h2 id="相关接口及类"><a href="#相关接口及类" class="headerlink" title="相关接口及类"></a>相关接口及类</h2><p>Java为了方便开发人员将Java对象进行序列化及反序列化提供了一套方便的API来支持，其中包括以下接口和类：</p>
+<ol>
+<li>java.io.Serializable</li>
+<li>java.io.Externalizable</li>
+<li>java.io.ObjectOutput</li>
+<li>java.io.ObjectInput</li>
+<li>java.io.ObjectOutputStream</li>
+<li>java.io.ObjectInputStream</li>
+<li>javax.crypto.SealedObject</li>
+<li>java.security.SignedObject</li>
+</ol>
+<h2 id="如何对Java对象进行序列化与反序列化"><a href="#如何对Java对象进行序列化与反序列化" class="headerlink" title="如何对Java对象进行序列化与反序列化"></a>如何对Java对象进行序列化与反序列化</h2><p>在Java中，只要一个类实现了<code>java.io.Serializable</code>接口，那么它就可以被序列化，这个接口属于标记接口，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment"> * @see java.io.ObjectOutputStream</span></div><div class="line"><span class="comment"> * @see java.io.ObjectInputStream</span></div><div class="line"><span class="comment"> * @see java.io.ObjectOutput</span></div><div class="line"><span class="comment"> * @see java.io.ObjectInput</span></div><div class="line"><span class="comment"> * @see java.io.Externalizable</span></div><div class="line"><span class="comment"> * @since   JDK1.1</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/java/2016/07/27/java-object-serialization.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/linux/2016/07/24/ansible-simple-tutorial.html" itemprop="url">
+                  ansible simple tutorial
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-07-24T00:01:46+08:00" content="2016-07-24">
+              2016-07-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="ANSIBLE"><a href="#ANSIBLE" class="headerlink" title="ANSIBLE"></a>ANSIBLE</h2><blockquote>
+<p>Simple, agentless and powerful open source IT automation.</p>
+</blockquote>
+<p>ansible是一个轻量级的自动化运维工具，学习门槛低，安装简单，执行方便，它基于ssh，远程服务器上不需要安装客户端agent，利用推送方式对客户系统加以配置，这样所有工作都可在主服务器端完成，不需要维护远程服务器上的客户端agent。</p>
+<h2 id="ansible中的概念"><a href="#ansible中的概念" class="headerlink" title="ansible中的概念"></a>ansible中的概念</h2><ol>
+<li>任务task：多个<code>task</code>顺序执行，在每个<code>task</code>执行结束可以通知<code>hanlder</code>触发新操作。</li>
+<li>变量variable：用户定义的变量。</li>
+<li>环境facts：<code>facts</code>从每台服务器上收集得到，可以用作变量。</li>
+<li>模块module：比如<code>shell</code>，<code>ping</code>，<code>apt</code>，<code>git</code>，<code>copy</code>，默认的<code>command</code>等等。</li>
+<li>操作hanlder：任务执行后的回调任务，通过<code>task</code>中的<code>notify</code>配置关联<code>handler</code>，不管有多少个通知，<code>handler</code>在所有任务运行后，按照配置的先后顺序只运行一次。</li>
+</ol>
+<h2 id="使用前提"><a href="#使用前提" class="headerlink" title="使用前提"></a>使用前提</h2><p>ansible基于ssh操作远程服务器，所以要求远程服务器提供：</p>
+<ol>
+<li><code>remote_user</code>能够通过ssh公钥无密码登录到所管理的远程服务器。</li>
+<li><code>remote_user</code>执行<code>sudo</code>的时候不需要密码，配置如下说明。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$&gt; sudo chmod +w /etc/sudoers</div><div class="line">$&gt; visudo</div></pre></td></tr></table></figure>
+<p>或者是用<code>vim</code>直接编辑此文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$&gt; sudo vim /etc/sudoers</div></pre></td></tr></table></figure>
+<p>找到<code>root ALL=(ALL:ALL) ALL</code>，在下面添加一行，<code>username</code>为ssh远程登陆用户的用户名：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">username    ALL=(ALL:ALL) NOPASSWD:ALL</div></pre></td></tr></table></figure>
+<p>保存退出，然后恢复为只读。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/linux/2016/07/24/ansible-simple-tutorial.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/linux/2016/07/23/serve-current-directory-from-command-line.html" itemprop="url">
+                  serve current directory from command line
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-07-23T14:40:36+08:00" content="2016-07-23">
+              2016-07-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在当前目录下，用简单的命令行启动一个web服务器。</p>
+<h2 id="python版本最常用"><a href="#python版本最常用" class="headerlink" title="python版本最常用"></a>python版本最常用</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$&gt; python -m SimpleHTTPServer 9090</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Serving HTTP on 0.0.0.0 port 9090 ...</p>
+<p>127.0.0.1 - - [23/Jul/2016 14:48:09] &quot;GET / HTTP/1.1&quot; 200 -</p>
+<p>127.0.0.1 - - [23/Jul/2016 14:48:09] &quot;GET /css/main.css HTTP/1.1&quot; 200 -</p>
+<p>127.0.0.1 - - [23/Jul/2016 14:48:09] &quot;GET /favicon.ico HTTP/1.1&quot; 200 -</p>
+</blockquote>
+<h2 id="ruby版本"><a href="#ruby版本" class="headerlink" title="ruby版本"></a>ruby版本</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$&gt; ruby -run -e httpd . -p 9090</div></pre></td></tr></table></figure>
+<blockquote>
+<p>[2016-07-23 14:40:23] INFO  WEBrick 1.3.1</p>
+<p>[2016-07-23 14:40:23] INFO  ruby 2.0.0 (2014-05-08) [universal.x86_64-darwin14]</p>
+<p>[2016-07-23 14:40:23] INFO  WEBrick::HTTPServer#start: pid=39145 port=9090</p>
+<p>localhost - - [23/Jul/2016:14:40:32 CST] &quot;GET / HTTP/1.1&quot; 200 5002</p>
+<p>--&gt; /</p>
+<p>localhost - - [23/Jul/2016:14:40:32 CST] &quot;GET /css/main.css HTTP/1.1&quot; 200 4123</p>
+<p><a href="http://localhost:9090/" target="_blank" rel="external">http://localhost:9090/</a> -&gt; /css/main.css</p>
+<p>localhost - - [23/Jul/2016:14:40:33 CST] &quot;GET /favicon.ico HTTP/1.1&quot; 200 6518</p>
+<p><a href="http://localhost:9090/" target="_blank" rel="external">http://localhost:9090/</a> -&gt; /favicon.ico</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/linux/2016/07/23/serve-current-directory-from-command-line.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/vim/2016/07/17/vim-killer-plugin-surround.html" itemprop="url">
+                  vim killer plugin surround.vim
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-07-17T12:36:33+08:00" content="2016-07-17">
+              2016-07-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="What-39-s-surround-vim"><a href="#What-39-s-surround-vim" class="headerlink" title="What&#39;s surround.vim"></a>What&#39;s surround.vim</h2><p>这个插件主要可以用来处理一些标点和标签配对相关的删除(Delete)、修改(Change)和复制(Yank)操作，如<code>&grave;&grave;</code>，<code>&quot;&quot;</code>，<code>&#39;&#39;</code>，<code>&lt;&gt;</code>，<code>()</code>，<code>{}</code>，<code>[]</code>，<code>&lt;p&gt;&lt;/p&gt;</code>和<code>&lt;div&gt;&lt;/div&gt;</code>，所以在HTML、XML的配对标签编辑处理时尤其方便。</p>
+<h2 id="Install-surround-vim"><a href="#Install-surround-vim" class="headerlink" title="Install surround.vim"></a>Install surround.vim</h2><p>建议使用<a href="https://github.com/tpope/vim-pathogen" target="_blank" rel="external">pathogen.vim</a>或者是<a href="https://github.com/VundleVim/Vundle.vim" target="_blank" rel="external">vundle.vim</a>来管理vim插件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$&gt; <span class="built_in">cd</span> ~/.vim/bundle</div><div class="line">$&gt; git <span class="built_in">clone</span> git://github.com/tpope/vim-surround.git</div></pre></td></tr></table></figure>
+<h2 id="Help-manual"><a href="#Help-manual" class="headerlink" title="Help manual"></a>Help manual</h2><p>可以通过<code>:h surround</code>命令查看帮助手册，其中有在普通模式中命令操作举例说明，<code>*</code>是指光标所在字母上：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Old text</th>
+<th style="text-align:left">Command</th>
+<th style="text-align:left">New text</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&quot;Hello *world!&quot;</td>
+<td style="text-align:left">ds&quot;</td>
+<td style="text-align:left">Hello world!</td>
+</tr>
+<tr>
+<td style="text-align:left">[123+4*56]/2</td>
+<td style="text-align:left">cs])</td>
+<td style="text-align:left">(123+456)/2</td>
+</tr>
+<tr>
+<td style="text-align:left">&quot;Look ma, I&#39;m *HTML!&quot;</td>
+<td style="text-align:left">cs&quot;<q></q></td>
+<td style="text-align:left"><q>Look ma, I&#39;m HTML!</q></td>
+</tr>
+<tr>
+<td style="text-align:left">if *x&gt;3 {</td>
+<td style="text-align:left">ysW(</td>
+<td style="text-align:left">if ( x&gt;3 ) {</td>
+</tr>
+<tr>
+<td style="text-align:left">my $str = *whee!;</td>
+<td style="text-align:left">vllllS&#39;</td>
+<td style="text-align:left">my $str = &#39;whee!&#39;;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Normal-mode"><a href="#Normal-mode" class="headerlink" title="Normal mode"></a>Normal mode</h2><p>当光标位于<code>Hello world!</code>的Hello这个单词字母上时，按组合命令<code>ysiw]</code>或者是<code>ysiw[</code>，<code>iw</code>是一个<code>text-object</code>，下面另详细说明。结果分别如下，用<code>[</code>生成的配对标点带有空格：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Hello] world!</div><div class="line"></div><div class="line">[ Hello ] world!</div></pre></td></tr></table></figure>
+<p>在如上结果上执行命令<code>cs]}</code>或者是<code>cs]{</code>，<code>cs</code>命令可以理解为<code>Change Surround</code>，结果如下，用<code>{</code>生成的配对标点带有空格：</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/vim/2016/07/17/vim-killer-plugin-surround.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/blog/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/blog/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/89/">89</a><a class="extend next" rel="next" href="/blog/page/9/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,691 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="git show-branchgit show-branch显示分支和提交的版本情况，下面示例图可以参考此脚本生成。  输出分为上下两部分，使用若干个短划线-分隔。两个分支使用两个短划线-，三个分支使用三个短划线-，依次类推，最多不超过29个分支。 上半部分为层次缩进的分支列表，下半部分为commit列表。 上半部分的分支列表中，使用*标识当前分支，其他分支使用!标识（不同的分支的!标识颜色不一样">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git一些有用但不常用的命令">
+<meta property="og:url" content="https://www.4e00.com/linux/2017/08/08/git-useful-commands.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="git show-branchgit show-branch显示分支和提交的版本情况，下面示例图可以参考此脚本生成。  输出分为上下两部分，使用若干个短划线-分隔。两个分支使用两个短划线-，三个分支使用三个短划线-，依次类推，最多不超过29个分支。 上半部分为层次缩进的分支列表，下半部分为commit列表。 上半部分的分支列表中，使用*标识当前分支，其他分支使用!标识（不同的分支的!标识颜色不一样">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-09-01T03:40:08.486Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git一些有用但不常用的命令">
+<meta name="twitter:description" content="git show-branchgit show-branch显示分支和提交的版本情况，下面示例图可以参考此脚本生成。  输出分为上下两部分，使用若干个短划线-分隔。两个分支使用两个短划线-，三个分支使用三个短划线-，依次类推，最多不超过29个分支。 上半部分为层次缩进的分支列表，下半部分为commit列表。 上半部分的分支列表中，使用*标识当前分支，其他分支使用!标识（不同的分支的!标识颜色不一样">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/linux/2017/08/08/git-useful-commands.html"/>
+
+  <title> git一些有用但不常用的命令 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                git一些有用但不常用的命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-08-08T20:11:32+08:00" content="2017-08-08">
+              2017-08-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="git-show-branch"><a href="#git-show-branch" class="headerlink" title="git show-branch"></a>git show-branch</h2><p><code>git show-branch</code>显示分支和提交的版本情况，下面示例图可以参考此<a href="https://www.4e00.com/blog/linux/2016/05/31/git-branch-and-log-graph.html">脚本</a>生成。</p>
+<ol>
+<li>输出分为上下两部分，使用若干个短划线<code>-</code>分隔。两个分支使用两个短划线<code>-</code>，三个分支使用三个短划线<code>-</code>，依次类推，最多不超过29个分支。</li>
+<li>上半部分为层次缩进的分支列表，下半部分为commit列表。</li>
+<li>上半部分的分支列表中，使用<code>*</code>标识当前分支，其他分支使用<code>!</code>标识（不同的分支的<code>!</code>标识颜色不一样）。分支前的标识符<code>*</code>或者<code>!</code>一直垂直贯通到下半部分，这一垂直列的符号都是属于这个分支的。</li>
+<li>下半部分的commit列表中，前导的符号有<code>*</code>、<code>+</code>和<code>-</code>号:<ol>
+<li><code>*</code>表示这一列上的分支(当前分支)有此commit。</li>
+<li><code>+</code>表示这一列上的分支(非当前分支)有此commit。</li>
+<li><code>-</code>表示这是一次合并操作。</li>
+</ol>
+</li>
+<li>标识符的颜色只是用于容易区分列，一个分支一个颜色，<a href="/blog/img/linux/git/git-show-branch.png">如图</a>。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> show-branch</div><div class="line output">! [br1] v15-br1</div><div class="line output"> ! [br2] v12-br2</div><div class="line output">  ! [br3] v13-br3</div><div class="line output">   * [master] merge br2 into master</div><div class="line output">----</div><div class="line output">   - [master] merge br2 into master</div><div class="line output"> + * [br2] v12-br2</div><div class="line output"> + * [br2^] v11-br2</div><div class="line output"> + * [br2~2] v10-br2</div><div class="line output">+  * [br1] v15-br1</div><div class="line output">+  * [br1^] v14-br1</div><div class="line output">+  * [br1~2] v7-br1</div><div class="line output">  +* [br3] v13-br3</div><div class="line output">  +* [br3^] v5-br3</div><div class="line output">   * [master~3] v9-master</div><div class="line output">   * [master~4] v8-master</div><div class="line output">   * [master~5] v6-master</div><div class="line output">  +* [master~6] v4-br3</div><div class="line output"> ++* [master~7] v3-br2</div><div class="line output">+++* [master~8] v2-br1</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="git-cat-file"><a href="#git-cat-file" class="headerlink" title="git cat-file"></a>git cat-file</h2><p>可以使用<code>git cat-file</code>命令去查询特定对象的信息，并常与<code>git ls-tree</code>和<code>git ls-files -s</code>命令一起使用。<code>git cat-file</code>参数说明:</p>
+<ol>
+<li><code>-t</code>: 显示对象的类型。</li>
+<li><code>-s</code>: 显示对象的大小。</li>
+<li><code>-e</code>: 如果对象存在且有效，返回值为<code>0</code>。</li>
+<li><code>-p</code>: 根据对象的类型，格式化打印对象内容。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> cat-file -t 34948cf</div><div class="line output">commit</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> cat-file -p 34948cf</div><div class="line output">tree df43c4f968f9329b7498b86eabb66a45229f21e2</div><div class="line output">parent 90e415d6b6efa80d74c8fe7ec528b560fa0777f6</div><div class="line output">author yuweijun &lt;yuweijun@live.com&gt; 1502198776 +0800</div><div class="line output">committer yuweijun &lt;yuweijun@live.com&gt; 1502198776 +0800</div><div class="line output"></div><div class="line output">v9-master</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> cat-file commit 34948cf</div><div class="line output">tree df43c4f968f9329b7498b86eabb66a45229f21e2</div><div class="line output">parent 90e415d6b6efa80d74c8fe7ec528b560fa0777f6</div><div class="line output">author yuweijun &lt;yuweijun@live.com&gt; 1502198776 +0800</div><div class="line output">committer yuweijun &lt;yuweijun@live.com&gt; 1502198776 +0800</div><div class="line output"></div><div class="line output">v9-master</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> ls-tree 34948cf</div><div class="line output">100644 blob 626799f0f85326a8c1fc522db584e86cdfccd51f    v1.txt</div><div class="line output">100644 blob 8c1384d825dbbe41309b7dc18ee7991a9085c46e    v2.txt</div><div class="line output">100644 blob 29ef827e8a45b1039d908884aae4490157bcb2b4    v3.txt</div><div class="line output">100644 blob c694117fd4e76c22ae04348c15861413019aa03b    v4.txt</div><div class="line output">100644 blob 9c0be88a7ecb5f679fe637f1b69838f6b46227d3    v6.txt</div><div class="line output">100644 blob a00f43e3090a7d141b8d181468197f2f5e979040    v8.txt</div><div class="line output">100644 blob cc406030c5d3ed8c4491977a8391e0d5c5850f89    v9.txt</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> cat-file -t a00f43e</div><div class="line output">blob</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> cat-file blob a00f43e</div><div class="line output">v8</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> ls-files -s</div><div class="line output">100644 626799f0f85326a8c1fc522db584e86cdfccd51f 0       v1.txt</div><div class="line output">100644 e338b86593faf8b676070731c784a5493c8e98b2 0       v10.txt</div><div class="line output">100644 882cecb02f7b120a45f2fd624811562095b35d1c 0       v11.txt</div><div class="line output">100644 dae199aecb18022d9c525b7af95f6cd1bb44f43a 0       v12.txt</div><div class="line output">100644 a2680a75e29da0261ba8354de83dd09ed700aa2e 0       v13.txt</div><div class="line output">100644 958b5a36e1fad087be8e389960a6a09c50217c47 0       v14.txt</div><div class="line output">100644 75701b22948d38da9f21cdaa720bd8ab26c4286d 0       v15.txt</div><div class="line output">100644 8c1384d825dbbe41309b7dc18ee7991a9085c46e 0       v2.txt</div><div class="line output">100644 29ef827e8a45b1039d908884aae4490157bcb2b4 0       v3.txt</div><div class="line output">100644 c694117fd4e76c22ae04348c15861413019aa03b 0       v4.txt</div><div class="line output">100644 47e5d40a50f8db1524f5308633ae3f0d1de58619 0       v5.txt</div><div class="line output">100644 9c0be88a7ecb5f679fe637f1b69838f6b46227d3 0       v6.txt</div><div class="line output">100644 02a819f21d4c6b8b8b26c4a840bfd54a99872bc1 0       v7.txt</div><div class="line output">100644 a00f43e3090a7d141b8d181468197f2f5e979040 0       v8.txt</div><div class="line output">100644 cc406030c5d3ed8c4491977a8391e0d5c5850f89 0       v9.txt</div></pre></td></tr></table></figure>
+<h2 id="git-rev-parse"><a href="#git-rev-parse" class="headerlink" title="git rev-parse"></a>git rev-parse</h2><p>如果你想知道某个分支指向哪个特定的<code>sha-1</code>码(如<code>HEAD</code>)，或者想看某个提交对应的<code>sha-1</code>码，你可以使用一个叫做<code>rev-parse</code>的git探测工具。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> rev-parse HEAD@&#123;&quot;2 days ago&quot;&#125;</div><div class="line output">96dea4282684bb249b4bb0e5964f9c8b2717bf27</div></pre></td></tr></table></figure>
+<h3 id="帮助手册"><a href="#帮助手册" class="headerlink" title="帮助手册"></a>帮助手册</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> help rev-parse</div></pre></td></tr></table></figure>
+<p><code>rev-parse</code>是为了底层操作而不是日常操作设计的，<code>rev-parse</code>的帮助手册里一些关于版本定位的一些表示方式如下：</p>
+<h3 id="版本号表示及示例"><a href="#版本号表示及示例" class="headerlink" title="版本号表示及示例"></a>版本号表示及示例</h3><ol>
+<li><code>@</code>, shortcut for <code>HEAD</code>.</li>
+<li><code>&lt;refname&gt;@{&lt;date&gt;}</code>, e.g. master@{yesterday}, HEAD@{&quot;5 minutes ago&quot;}, HEAD@{5.minutes.ago}</li>
+<li><code>&lt;refname&gt;@{&lt;n&gt;}</code>, e.g. master@{1}</li>
+<li><code>@{&lt;n&gt;}</code>, e.g. @{1}</li>
+<li><code>@{-&lt;n&gt;}</code>, e.g. @{-1}</li>
+<li><code>&lt;branchname&gt;@{upstream}</code>, e.g. master@{upstream}, @{u}</li>
+<li><code>&lt;rev&gt;^</code>, e.g. HEAD^, v1.5.1^0</li>
+<li><code>&lt;rev&gt;~&lt;n&gt;</code>, e.g. master~3</li>
+<li><code>&lt;rev&gt;^{&lt;type&gt;}</code>, e.g. v0.99.8^{commit}</li>
+<li><code>&lt;rev&gt;^{}</code>, e.g. v0.99.8^{}</li>
+<li><code>&lt;rev&gt;^{/&lt;text&gt;}</code>, e.g. HEAD^{/&quot;fix nasty bug&quot;}</li>
+<li><code>:/&lt;text&gt;</code>, e.g. :/&quot;fix nasty bug&quot;</li>
+<li><code>:/^foo</code>, search with regular expression</li>
+<li><code>&lt;rev&gt;:&lt;path&gt;</code>, e.g. HEAD:README, :README, master:./README</li>
+<li><code>:&lt;n&gt;:&lt;path&gt;</code>, e.g. :0:README, :README</li>
+</ol>
+<h3 id="提交的版本范围"><a href="#提交的版本范围" class="headerlink" title="提交的版本范围"></a>提交的版本范围</h3><ol>
+<li><code>&lt;rev&gt;</code>: Include commits that are reachable from (i.e. ancestors of) <code>&lt;rev&gt;</code>，当前命令从<code>&lt;rev&gt;</code>版本（包括此版本）开始操作。</li>
+<li><code>^&lt;rev&gt;</code>: Exclude commits that are reachable from (i.e. ancestors of) <code>&lt;rev&gt;</code>，从<code>&lt;rev&gt;</code>版本开始排除命令范围在外，这里注意:<ol>
+<li>在提交版本号前的<code>^</code>符是版本排除的作用，表示取反操作；</li>
+<li><code>^</code>在版本号之后是表示父提交版本。</li>
+<li><code>git log ^HEAD^ HEAD</code>，HEAD所能到达的所有提交，减去其第一个父提交所能到达的所有提交。</li>
+<li><code>git log HEAD^..HEAD</code>，含义同上。</li>
+</ol>
+</li>
+<li><code>&lt;rev1&gt;..&lt;rev2&gt;</code>: Include commits that are reachable from <code>&lt;rev2&gt;</code> but exclude those that are reachable from <code>&lt;rev1&gt;</code>. When either <code>&lt;rev1&gt;</code> or <code>&lt;rev2&gt;</code> is omitted, it defaults to <code>HEAD</code>，版本<code>&lt;rev2&gt;</code>能到达的版本号中排队<code>&lt;rev1&gt;</code>能到达的版本号，即<code>&lt;rev2&gt;</code>和<code>&lt;rev1&gt;</code>版本之间的集合差，主要用于比较分支之间的提交差别。</li>
+<li><code>&lt;rev1&gt;...&lt;rev2&gt;</code>: Include commits that are reachable from either <code>&lt;rev1&gt;</code> or <code>&lt;rev2&gt;</code> but exclude those that are reachable from both. When either <code>&lt;rev1&gt;</code> or <code>&lt;rev2&gt;</code> is omitted, it defaults to <code>HEAD</code>，这是二个提交版本的并集再减去二者的交集，过滤后剩下的版本是2个版本互相缺失的那些提交。</li>
+<li><code>&lt;rev&gt;^@</code>: e.g. <code>HEAD^@</code>, A suffix <code>^</code> followed by an at sign is the same as listing all parents of <code>&lt;rev&gt;</code> (meaning, include anything reachable from its parents, but not the commit itself)，包含除了<code>&lt;rev&gt;</code>之外的所有它的祖先提交。</li>
+<li><code>&lt;rev&gt;^!</code>, e.g. <code>HEAD^!</code> A suffix <code>^</code> followed by an exclamation mark is the same as giving commit <code>&lt;rev&gt;</code> and then all its parents prefixed with <code>^</code> to exclude them (and their ancestors)，与上面刚好相反，仅只包括<code>&lt;rev&gt;</code>这一提交，但不包括其祖先提交。查看以下示例观察运行结果:<ol>
+<li><code>git log HEAD^!</code></li>
+<li><code>git log HEAD</code></li>
+<li><code>git log HEAD^@</code></li>
+</ol>
+</li>
+</ol>
+<h4 id="提交范围示例"><a href="#提交范围示例" class="headerlink" title="提交范围示例"></a>提交范围示例</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> rev-list br1..br2</div><div class="line output">99812dcc3c700d044df84b1456d90fdd073ad92c</div><div class="line output">849a0578c735f18182d7d587a1aaca381b9ca01b</div><div class="line output">c3644e4c3af3705bfbc90751571551a328093bad</div><div class="line output">8a1e833c512a1fc5d5592b7838b07226fb121a87</div></pre></td></tr></table></figure>
+<p>上面输出的4个提交都是在<code>br2</code>分支上的，而<code>br1</code>分支没有这些提交。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> log br1...br2</div><div class="line output">b15012622287ee05af6ad288d218f1d13ad2526a</div><div class="line output">7422cecd9c4c38ac64f4c58e0f664c4297928d91</div><div class="line output">3d040d06546df6eb9c8b5ac8343d759f74bc3d25</div><div class="line output">3c04f6148226468c197c53bac362769f8457ead9</div><div class="line output">c1341c3453570ad06883df4b02f13ebe2c12d3b7</div><div class="line output">99812dcc3c700d044df84b1456d90fdd073ad92c</div><div class="line output">849a0578c735f18182d7d587a1aaca381b9ca01b</div><div class="line output">c3644e4c3af3705bfbc90751571551a328093bad</div><div class="line output">34948cf11e372cf26107a1278042ff891f57b1ac</div><div class="line output">90e415d6b6efa80d74c8fe7ec528b560fa0777f6</div><div class="line output">265c7df31b9d9b40b68c0205e76f720b283f1de5</div><div class="line output">5886c7ae151cc431c87e3cc9654f369315e35e94</div><div class="line output">c5f69516d0b0740904b51879224ad65a86f6cdd2</div><div class="line output">8a1e833c512a1fc5d5592b7838b07226fb121a87</div></pre></td></tr></table></figure>
+<p>输出的提交包含了2部分，一部分是<code>br1</code>分支所能到达而<code>br2</code>分支不能到达的提交，另一部分正好相反。</p>
+<h2 id="git-rev-list"><a href="#git-rev-list" class="headerlink" title="git rev-list"></a>git rev-list</h2><p>根据条件显示所有提交版本号。</p>
+<h3 id="根据日期来查询相应的版本号"><a href="#根据日期来查询相应的版本号" class="headerlink" title="根据日期来查询相应的版本号"></a>根据日期来查询相应的版本号</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> rev-list -n 2 --before=&quot;Aug 1, 2017 00:00:00&quot; master</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> rev-list -n 3 --before=&quot;2017-05-08 15:51:12&quot; master</div></pre></td></tr></table></figure>
+<h3 id="显示指定分支上文件的版本号"><a href="#显示指定分支上文件的版本号" class="headerlink" title="显示指定分支上文件的版本号"></a>显示指定分支上文件的版本号</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> rev-list master -- filename</div></pre></td></tr></table></figure>
+<h2 id="git-show-branch-filename"><a href="#git-show-branch-filename" class="headerlink" title="git show branch:filename"></a>git show branch:filename</h2><p>显示指定分支的文件内容，不用切到指定分支，直接查看该分支下的指定文件的内容。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> show master:index.html</div></pre></td></tr></table></figure>
+<h2 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h2><p>跟踪指定文件的文件名和内容变化。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> log --follow -p -- filename</div></pre></td></tr></table></figure>
+<p>如果你曾经与很多小伙伴工作在同一个持久分支上，也许会有这样的经历，父分支（例如: <code>master</code>）上的大量合并同步到你当前的分支。<br>这使得我们很难分辨哪些变更时发生在主分支，哪些变更发生在当前分支，尚未合并到<code>master</code>分支。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> log --no-merges master..</div></pre></td></tr></table></figure>
+<p>可以解决这个问题。注意<code>--no-merges</code>标志意味着只显示没有合并到任何分支的变更，<code>master..</code>选项，意思是指显示没有合并到master分支的变更（在<code>master</code>后面必须有<code>..</code>，省略了<code>HEAD</code>）。</p>
+<h3 id="常用日志显示格式化"><a href="#常用日志显示格式化" class="headerlink" title="常用日志显示格式化"></a>常用日志显示格式化</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> log --pretty=format:&apos;%C(yellow)%h %C(green)| %C(white)%ad %C(green)| %C(blue)%&gt;(15,trunc)%an %C(green)| %C(green)%d %C(reset)%s&apos;</div><div class="line output">c5f6951 | 2017-08-08 21:26:06 +0800 |        test |  v4-br3</div><div class="line output">8a1e833 | 2017-08-08 21:26:04 +0800 |        test |  v3-br2</div><div class="line output">a908021 | 2017-08-08 21:26:00 +0800 |        test |  v2-br1</div><div class="line output">b700e2e | 2017-08-08 21:25:57 +0800 |        test |  v1-master</div></pre></td></tr></table></figure>
+<h2 id="git-checkout-m-branch"><a href="#git-checkout-m-branch" class="headerlink" title="git checkout -m branch"></a>git checkout -m branch</h2><p>有时，本地做了一些修改，忘记<code>git stash</code>时，切到另一个分支时，可能提示本地有内容修改，无法切换分支:</p>
+<blockquote>
+<p>git checkout develop<br>error: You have local changes to &#39;develop&#39;; not switching branches.</p>
+<p>You can give the -m flag to the command, which would try a three-way merge:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> checkout -m develop</div></pre></td></tr></table></figure>
+<p>如果合并发生冲突，会有相应提示，解决冲突，并<code>git add</code>。</p>
+<h2 id="git-stash-branch"><a href="#git-stash-branch" class="headerlink" title="git stash branch"></a>git stash branch</h2><p><code>git stash branch</code>会创建一个新分支，从<code>stash</code>中弹出一个暂存并应用修改到新分支上，在新分支上继续当时的工作。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> stash</div><div class="line output">Saved working directory and index state WIP on master: 7422cec merge br2 into master</div><div class="line output">HEAD is now at 7422cec merge br2 into master</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> stash branch test</div><div class="line output">Switched to a new branch &apos;test&apos;</div><div class="line output">On branch test</div><div class="line output">Changes not staged for commit:</div><div class="line output">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</div><div class="line output">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</div><div class="line output"></div><div class="line output">        modified:   v9.txt</div><div class="line output"></div><div class="line output">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</div><div class="line output">Dropped refs/stash@&#123;0&#125; (34e6c8eee86972f44676c86f6dac8306d1dabfa5)</div></pre></td></tr></table></figure>
+<h2 id="git-reflog"><a href="#git-reflog" class="headerlink" title="git reflog"></a>git reflog</h2><p>需要注意的是，<code>git reflog</code>信息只存在于本地 —— 这是一个记录你在你自己的仓库里做过什么的日志。<br>其他人copy的仓库里的引用日志不会和你的相同；而你新clone一个仓库的时候，<code>reflog</code>是空的，因为你在仓库里还没有操作。</p>
+<h3 id="显示当前分支2个月前的提交"><a href="#显示当前分支2个月前的提交" class="headerlink" title="显示当前分支2个月前的提交"></a>显示当前分支2个月前的提交</h3><p>如下这条命令只有在你克隆了一个项目至少两个月时才会有用 —— 如果你是五分钟前克隆的仓库，那么它将不会有结果返回。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> reflog HEAD@&#123;2.months.ago&#125;</div></pre></td></tr></table></figure>
+<h3 id="显示master分支上所有提交的版本号"><a href="#显示master分支上所有提交的版本号" class="headerlink" title="显示master分支上所有提交的版本号"></a>显示master分支上所有提交的版本号</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> reflog master</div></pre></td></tr></table></figure>
+<h2 id="git-show-ref"><a href="#git-show-ref" class="headerlink" title="git show-ref"></a>git show-ref</h2><p><code>git show-ref</code>列出仓库中所有的引用，仓库中所有的分支和标签实际上都是对应于相应的某个提交版本。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> show-ref</div><div class="line output">02ac3819c29fadc0f02f43da3991d969d1fc7afa refs/heads/br1</div><div class="line output">99812dcc3c700d044df84b1456d90fdd073ad92c refs/heads/br2</div><div class="line output">c1341c3453570ad06883df4b02f13ebe2c12d3b7 refs/heads/br3</div><div class="line output">7422cecd9c4c38ac64f4c58e0f664c4297928d91 refs/heads/master</div><div class="line output">7422cecd9c4c38ac64f4c58e0f664c4297928d91 refs/remotes/origin/master</div></pre></td></tr></table></figure>
+<h2 id="git-pull-rebase"><a href="#git-pull-rebase" class="headerlink" title="git pull --rebase"></a>git pull --rebase</h2><p>这是一个非常有用的变基用法。</p>
+<p>举个例子，假设你正在<code>master</code>分支的一个本地版本上工作，你已经向仓库提交了一小部分变更。<br>与此同时，也有人向<code>master</code>分支提交了他一周的工作成果。<br>当你尝试推送本地变更时，git提示你需要先运行一下<code>git pull</code>:</p>
+<blockquote>
+<p>To git-branch-test.git<br>! [rejected]        master -&gt; master (non-fast-forward)<br>error: failed to push some refs to &#39;git-branch-test.git&#39;<br>hint: Updates were rejected because the tip of your current branch is behind<br>hint: its remote counterpart. Integrate the remote changes (e.g.<br>hint: &#39;git pull ...&#39;) before pushing again.<br>hint: See the &#39;Note about fast-forwards&#39; in &#39;git push --help&#39; for details.</p>
+</blockquote>
+<p>尽管这不是什么大问题，也完全安全，但是不太有利于历史记录的整洁。</p>
+<p>这种情况下，<code>git pull --rebase</code>是一个不错的选择。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> pull --rebase</div></pre></td></tr></table></figure>
+<p>这个命令会迫使git将远程分支上的变更同步到本地，然后将尚未推送的提交重新应用到这个最新版本，就好象它们刚刚发生一样。<br>这样就可以避免提交一个像下面这样的合并信息了。</p>
+<blockquote>
+<p>Merge remote-tracking branch ‘origin/master’</p>
+</blockquote>
+<h2 id="git-remote"><a href="#git-remote" class="headerlink" title="git remote"></a>git remote</h2><p>查看当前配置有哪些远程仓库，对应于<code>.git/gitconfig</code>文件中的配置。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> remote</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> remote -v</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> remote show remote</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> help remote</div></pre></td></tr></table></figure>
+<h2 id="git-ls-remote"><a href="#git-ls-remote" class="headerlink" title="git ls-remote"></a>git ls-remote</h2><p>显示远程仓库的版本引用：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> ls-remote</div><div class="line output">From git-branch-test.git</div><div class="line output">7422cecd9c4c38ac64f4c58e0f664c4297928d91        HEAD</div><div class="line output">7422cecd9c4c38ac64f4c58e0f664c4297928d91        refs/heads/master</div></pre></td></tr></table></figure>
+<h2 id="git-checkout-track"><a href="#git-checkout-track" class="headerlink" title="git checkout --track"></a>git checkout --track</h2><h3 id="远程分支检出时自动跟踪分支"><a href="#远程分支检出时自动跟踪分支" class="headerlink" title="远程分支检出时自动跟踪分支"></a>远程分支检出时自动跟踪分支</h3><p>也可以在检出之后，用<code>-u</code>或<code>--set-upstream-to</code>选项运行<code>git branch</code>来显式地设置，甚至直接编辑配置文件<code>.git/gitconfig</code>。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> checkout --track origin/serverfix</div><div class="line output">Branch serverfix set up to track remote branch serverfix from origin.</div><div class="line output">Switched to a new branch &apos;serverfix&apos;</div></pre></td></tr></table></figure>
+<h3 id="恢复当前文件夹下的文件变更"><a href="#恢复当前文件夹下的文件变更" class="headerlink" title="恢复当前文件夹下的文件变更"></a>恢复当前文件夹下的文件变更</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> checkout -- .</div></pre></td></tr></table></figure>
+<h2 id="git-fsck"><a href="#git-fsck" class="headerlink" title="git fsck"></a>git fsck</h2><p>该命令显示所有未被其他对象引用的所有对象，可以从<code>dangling commit</code>找到丢失了的<code>commit</code>。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> fsck --full</div><div class="line output">Checking object directories: 100% (256/256), done.</div><div class="line output">dangling commit 34e6c8eee86972f44676c86f6dac8306d1dabfa5</div></pre></td></tr></table></figure>
+<h3 id="git-gc"><a href="#git-gc" class="headerlink" title="git gc"></a>git gc</h3><p><code>git gc</code>指垃圾收集(garbage collect)：收集所有松散对象并将它们存入packfile，合并这些packfile进一个大的packfile，然后将不被任何commit引用并且已存在一段时间(数月)的对象删除。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> gc</div><div class="line output">Counting objects: 373923, done.</div><div class="line output">Delta compression using up to 4 threads.</div><div class="line output">Compressing objects: 100% (106664/106664), done.</div><div class="line output">Writing objects: 100% (373923/373923), done.</div><div class="line output">Total 373923 (delta 232320), reused 370405 (delta 228834)</div><div class="line output">Checking connectivity: 373923, done.</div></pre></td></tr></table></figure>
+<h2 id="git-clean"><a href="#git-clean" class="headerlink" title="git clean"></a>git clean</h2><p><code>git clean</code>可以帮你清理当前workspace中未被git版本控制的文件，比如临时文件，构建出来的二进制文件。<br>这个命令还有<code>-x</code>和<code>-X</code>参数要注意慎用，避免误删文件。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> clean -df</div></pre></td></tr></table></figure>
+<h2 id="git-grep"><a href="#git-grep" class="headerlink" title="git grep"></a>git grep</h2><p>用<code>git grep</code>命令查找git库里面的某段文字是很方便的。当然，你也可以用unix下的<code>grep</code>命令进行搜索, 但是<code>git grep</code>命令能让你不用签出<code>git checkout</code>历史文件，就能查找它们。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> grep -n &apos;v&apos;</div><div class="line output">v1.txt:1:v1</div><div class="line output">v14.txt:1:v14</div><div class="line output">v15.txt:1:v15</div><div class="line output">v2.txt:1:v2</div><div class="line output">v7.txt:1:v7</div></pre></td></tr></table></figure>
+<h2 id="git-bisect"><a href="#git-bisect" class="headerlink" title="git bisect"></a>git bisect</h2><p>利用二分法查找问题版本。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> bisect start</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> bisect bad</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> bisect good master@&#123;7&#125;</div><div class="line output">Bisecting: 4 revisions left to test after this (roughly 3 steps)</div><div class="line output">[3d040d06546df6eb9c8b5ac8343d759f74bc3d25] merge br1 into master</div><div class="line"></div><div class="line">$ git bisect good</div><div class="line output">Bisecting: 2 revisions left to test after this (roughly 1 step)</div><div class="line output">[849a0578c735f18182d7d587a1aaca381b9ca01b] v11-br2</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> bisect good</div><div class="line output">Bisecting: 0 revisions left to test after this (roughly 1 step)</div><div class="line output">[7422cecd9c4c38ac64f4c58e0f664c4297928d91] merge br2 into master</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> bisect bad</div><div class="line output">Bisecting: 0 revisions left to test after this (roughly 0 steps)</div><div class="line output">[99812dcc3c700d044df84b1456d90fdd073ad92c] v12-br2</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> bisect reset</div><div class="line output">Previous HEAD position was 99812dc... v12-br2</div><div class="line output">Switched to branch &apos;master&apos;</div></pre></td></tr></table></figure>
+<h2 id="git-diff-w"><a href="#git-diff-w" class="headerlink" title="git diff -w"></a>git diff -w</h2><p>给git部分命令加一个<code>-w</code>参数，git将会忽略空白的变更，如下所示:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> diff -w master^</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> blame -w filename</div></pre></td></tr></table></figure>
+<h2 id="git-help-hooks"><a href="#git-help-hooks" class="headerlink" title="git help hooks"></a>git help hooks</h2><p>git 能在特定的重要动作发生时触发自定义脚本，有两组这样的钩子:</p>
+<ol>
+<li>客户端的hooks，由诸如提交和合并这样的操作所调用；</li>
+<li>服务器端的hooks，作用于诸如接收被推送的提交这样的联网操作。</li>
+</ol>
+<p>钩子都被存储在<code>.git</code>目录下的<code>hooks</code>子目录中，即<code>.git/hooks</code>。更多使用说明可参考<a href="https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90" target="_blank" rel="external">在线文档</a>，或者查看帮助手册。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90" target="_blank" rel="external">git scm - git hooks</a></li>
+<li><a href="https://git-scm.com/book/zh/v1/Git-%E5%B7%A5%E5%85%B7-%E4%BF%AE%E8%AE%A2%E7%89%88%E6%9C%AC%EF%BC%88Revision%EF%BC%89%E9%80%89%E6%8B%A9" target="_blank" rel="external">git 工具 - 修订版本revision选择</a></li>
+<li><a href="https://git-scm.com/book/zh/v1/Git-%E5%B7%A5%E5%85%B7-%E5%82%A8%E8%97%8F%EF%BC%88Stashing%EF%BC%89" target="_blank" rel="external">git 工具 - stashing</a></li>
+<li><a href="https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF" target="_blank" rel="external">git 分支 - 远程分支</a></li>
+<li><a href="https://git-scm.com/book/zh/v1/Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86-%E7%BB%B4%E6%8A%A4%E5%8F%8A%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D" target="_blank" rel="external">git 内部原理 - 维护及数据恢复</a></li>
+<li><a href="https://git-scm.com/docs/git-bisect" target="_blank" rel="external">git-bisect - Use binary search to find the commit</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2017/08/07/java-inner-class-and-jvm-implements.html" rel="next" title="java inner class and jvm implements">
+                上一篇：java inner class and jvm implements
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/mysql/2017/09/16/mysql-deadlock-when-concurrent-insert.html" rel="prev" title="mysql deadlock when concurrent insert">
+                下一篇：mysql deadlock when concurrent insert
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-show-branch"><span class="nav-number">1.</span> <span class="nav-text">git show-branch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-cat-file"><span class="nav-number">2.</span> <span class="nav-text">git cat-file</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-rev-parse"><span class="nav-number">3.</span> <span class="nav-text">git rev-parse</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">3.1.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#帮助手册"><span class="nav-number">3.2.</span> <span class="nav-text">帮助手册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本号表示及示例"><span class="nav-number">3.3.</span> <span class="nav-text">版本号表示及示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交的版本范围"><span class="nav-number">3.4.</span> <span class="nav-text">提交的版本范围</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#提交范围示例"><span class="nav-number">3.4.1.</span> <span class="nav-text">提交范围示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-rev-list"><span class="nav-number">4.</span> <span class="nav-text">git rev-list</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#根据日期来查询相应的版本号"><span class="nav-number">4.1.</span> <span class="nav-text">根据日期来查询相应的版本号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示指定分支上文件的版本号"><span class="nav-number">4.2.</span> <span class="nav-text">显示指定分支上文件的版本号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-show-branch-filename"><span class="nav-number">5.</span> <span class="nav-text">git show branch:filename</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-log"><span class="nav-number">6.</span> <span class="nav-text">git log</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用日志显示格式化"><span class="nav-number">6.1.</span> <span class="nav-text">常用日志显示格式化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-checkout-m-branch"><span class="nav-number">7.</span> <span class="nav-text">git checkout -m branch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-stash-branch"><span class="nav-number">8.</span> <span class="nav-text">git stash branch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-reflog"><span class="nav-number">9.</span> <span class="nav-text">git reflog</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#显示当前分支2个月前的提交"><span class="nav-number">9.1.</span> <span class="nav-text">显示当前分支2个月前的提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示master分支上所有提交的版本号"><span class="nav-number">9.2.</span> <span class="nav-text">显示master分支上所有提交的版本号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-show-ref"><span class="nav-number">10.</span> <span class="nav-text">git show-ref</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-pull-rebase"><span class="nav-number">11.</span> <span class="nav-text">git pull --rebase</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-remote"><span class="nav-number">12.</span> <span class="nav-text">git remote</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-ls-remote"><span class="nav-number">13.</span> <span class="nav-text">git ls-remote</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-checkout-track"><span class="nav-number">14.</span> <span class="nav-text">git checkout --track</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#远程分支检出时自动跟踪分支"><span class="nav-number">14.1.</span> <span class="nav-text">远程分支检出时自动跟踪分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#恢复当前文件夹下的文件变更"><span class="nav-number">14.2.</span> <span class="nav-text">恢复当前文件夹下的文件变更</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-fsck"><span class="nav-number">15.</span> <span class="nav-text">git fsck</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git-gc"><span class="nav-number">15.1.</span> <span class="nav-text">git gc</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-clean"><span class="nav-number">16.</span> <span class="nav-text">git clean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-grep"><span class="nav-number">17.</span> <span class="nav-text">git grep</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-bisect"><span class="nav-number">18.</span> <span class="nav-text">git bisect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-diff-w"><span class="nav-number">19.</span> <span class="nav-text">git diff -w</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-help-hooks"><span class="nav-number">20.</span> <span class="nav-text">git help hooks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">21.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

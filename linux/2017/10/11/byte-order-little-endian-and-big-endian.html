@@ -1,0 +1,654 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="什么是little-endian和big-endian字节序(byte order)又称端序或尾序(Endianness)，多字节对象都被存储为连续的字节序列，存储地址内的排列有两个通用规则：  little-endian: 小端序，就是低位字节放在内存的起始地址，即最低有效位在最高有效位的前面。 big-endian:    大端序，就是高位字节放在内存的起始地址，即最高有效位在最低有效位的前面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="byte order - little-endian and big-endian">
+<meta property="og:url" content="https://www.4e00.com/linux/2017/10/11/byte-order-little-endian-and-big-endian.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="什么是little-endian和big-endian字节序(byte order)又称端序或尾序(Endianness)，多字节对象都被存储为连续的字节序列，存储地址内的排列有两个通用规则：  little-endian: 小端序，就是低位字节放在内存的起始地址，即最低有效位在最高有效位的前面。 big-endian:    大端序，就是高位字节放在内存的起始地址，即最高有效位在最低有效位的前面">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.4e00.com/blog/img/web/js/javascript-typed-arrays.png">
+<meta property="og:updated_time" content="2017-10-16T05:42:13.343Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="byte order - little-endian and big-endian">
+<meta name="twitter:description" content="什么是little-endian和big-endian字节序(byte order)又称端序或尾序(Endianness)，多字节对象都被存储为连续的字节序列，存储地址内的排列有两个通用规则：  little-endian: 小端序，就是低位字节放在内存的起始地址，即最低有效位在最高有效位的前面。 big-endian:    大端序，就是高位字节放在内存的起始地址，即最高有效位在最低有效位的前面">
+<meta name="twitter:image" content="https://www.4e00.com/blog/img/web/js/javascript-typed-arrays.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/linux/2017/10/11/byte-order-little-endian-and-big-endian.html"/>
+
+  <title> byte order - little-endian and big-endian | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                byte order - little-endian and big-endian
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-10-11T21:01:42+08:00" content="2017-10-11">
+              2017-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是little-endian和big-endian"><a href="#什么是little-endian和big-endian" class="headerlink" title="什么是little-endian和big-endian"></a>什么是little-endian和big-endian</h2><p><code>字节序</code>(<code>byte order</code>)又称端序或尾序(<code>Endianness</code>)，多字节对象都被存储为连续的字节序列，存储地址内的排列有两个通用规则：</p>
+<ol>
+<li>little-endian: 小端序，就是低位字节放在内存的起始地址，即最低有效位在最高有效位的前面。</li>
+<li>big-endian:    大端序，就是高位字节放在内存的起始地址，即最高有效位在最低有效位的前面。</li>
+</ol>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>比如16进制数字<code>0x12345678</code>(10进制为<code>305419896</code>)在内存中的表示形式为：</p>
+<h4 id="大端模式"><a href="#大端模式" class="headerlink" title="大端模式"></a>大端模式</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">低地址     ------------------------&gt;  高地址</div><div class="line">0x12      |  0x34     |  0x56     |  0x78</div><div class="line">00010010  |  00110100 |  01010110 |  01111000</div></pre></td></tr></table></figure>
+<h4 id="小端模式"><a href="#小端模式" class="headerlink" title="小端模式"></a>小端模式</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">低地址     ------------------------&gt;  高地址</div><div class="line">0x78      |  0x56     |  0x34     |  0x12</div><div class="line">01111000  |  01010110 |  00110100 |  00010010</div></pre></td></tr></table></figure>
+<ol>
+<li>上面2者比较可见，大端模式和直接阅读数字的习惯一致。</li>
+<li>这2个模式中，共同点就是每个字节<code>byte</code>都是由<code>8bit</code>组成，而<code>bit</code>只有2个值，即<code>0</code>和<code>1</code>。</li>
+<li>比如上面<code>0x78</code>在内存中保存在一个字节中，其表现是一样的，其8个bit都是自右向左，和数学数字表示法一样，高位在左边，即<code>01111000</code>。</li>
+</ol>
+<a id="more"></a>
+<h2 id="big-endian还是little-endian"><a href="#big-endian还是little-endian" class="headerlink" title="big-endian还是little-endian"></a>big-endian还是little-endian</h2><ol>
+<li>x86架构的是小端模式的，所以当前大多数的cpu是小端模式的。</li>
+<li>多数的powerpc架构的cpu是大端模式的。</li>
+<li>arm架构的cpu可以设置使用大端还是小端模式。</li>
+<li>jpeg是大端模式，而gif则是小端模式。</li>
+<li><code>网络字节序</code>是tcp/ip中规定好的一种数据表示格式，它与具体的cpu类型、操作系统等无关，从而可以保证数据在不同主机之间传输时能够被正确解释。<code>网络字节序</code>采用<code>big-endian</code>排序方式。</li>
+</ol>
+<h3 id="UNIX-Networking-Programming-书中的例子"><a href="#UNIX-Networking-Programming-书中的例子" class="headerlink" title="UNIX Networking Programming 书中的例子"></a>UNIX Networking Programming 书中的例子</h3><p>c语言中可以利用联合体<code>union</code>判断cpu对内存采用<code>little-endian</code>还是<code>big-endian</code>模式读写。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</div><div class="line">    <span class="keyword">union</span> &#123;</div><div class="line">        <span class="keyword">short</span> s;</div><div class="line">        <span class="keyword">char</span> c[<span class="keyword">sizeof</span>(<span class="keyword">short</span>)];</div><div class="line">    &#125; un;</div><div class="line"></div><div class="line">    un.s = <span class="number">0x0102</span>;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">sizeof</span>(<span class="keyword">short</span>) == <span class="number">2</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (un.c[<span class="number">0</span>] == <span class="number">1</span> &amp;&amp; un.c[<span class="number">1</span>] == <span class="number">2</span>) &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"big-endian\n"</span>);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (un.c[<span class="number">0</span>] == <span class="number">2</span> &amp;&amp; un.c[<span class="number">1</span>] == <span class="number">1</span>) &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"little-endian\n"</span>);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"unknown\n"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"sizeof(short) = %d\n"</span>, <span class="keyword">sizeof</span>(<span class="keyword">short</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="通过类型强转进行判断"><a href="#通过类型强转进行判断" class="headerlink" title="通过类型强转进行判断"></a>通过类型强转进行判断</h3><figure class="highlight c"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">big_endian</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> a = <span class="number">0x1234</span>;</div><div class="line">    <span class="comment">// 通过将int强制类型转换成char单字节，通过判断起始存储位置。</span></div><div class="line">    <span class="comment">// 即取b等于a的低地址部分</span></div><div class="line">    <span class="keyword">char</span> b = *(<span class="keyword">char</span> *) &amp;a;</div><div class="line">    <span class="keyword">if</span> (b == <span class="number">0x12</span>) &#123;</div><div class="line">        <span class="comment">// 高位存储在起始地址，即为大端</span></div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="网络字节序与主机字节序转换函数"><a href="#网络字节序与主机字节序转换函数" class="headerlink" title="网络字节序与主机字节序转换函数"></a>网络字节序与主机字节序转换函数</h2><ol>
+<li><code>htons()</code>: host to network short，将short类型数据从主机字节序转换为网络字节序。</li>
+<li><code>ntohs()</code>: network to host short，将short类型数据从网络字节序转换为主机字节序。</li>
+<li><code>htonl()</code>: host to network long，将long类型数据从主机字节序转换为网络字节序。</li>
+<li><code>ntohl()</code>: network to host long，将long类型数据从网络字节序转换为主机字节序。</li>
+</ol>
+<p>通常，以<code>s</code>为后缀的函数中，<code>s</code>代表<code>2</code>个字节<code>short</code>，因此用于端口号转换；以<code>l</code>为后缀的函数中，<code>l</code>代表<code>4</code>个字节的<code>long</code>，因此用于IP地址转换。</p>
+<h3 id="网络字节序与主机字节序转换函数测试代码"><a href="#网络字节序与主机字节序转换函数测试代码" class="headerlink" title="网络字节序与主机字节序转换函数测试代码"></a>网络字节序与主机字节序转换函数测试代码</h3><figure class="highlight c"><table><tr><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> host_port = <span class="number">0x1234</span>, net_port;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> host_addr = <span class="number">0x12345678</span>, net_addr;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"0x12345678: %d\n"</span>, host_addr); <span class="comment">// 305419896</span></div><div class="line"></div><div class="line">    net_port = htons(host_port);</div><div class="line">    net_addr = htonl(host_addr);</div><div class="line"></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Host ordered port: %#x\n"</span>, host_port);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Network ordered port: %#x\n"</span>, net_port);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Host ordered address: %#lx\n"</span>, host_addr);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Network ordered address: %#lx\n"</span>, net_addr);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>0x12345678: 305419896<br>Host ordered port: 0x1234<br>Network ordered port: 0x3412<br>Host ordered address: 0x12345678<br>Network ordered address: 0x78563412</p>
+</blockquote>
+<h2 id="UTF-8编码和UTF-16编码"><a href="#UTF-8编码和UTF-16编码" class="headerlink" title="UTF-8编码和UTF-16编码"></a>UTF-8编码和UTF-16编码</h2><ol>
+<li>UTF-8编码的规则决定了其存储与字节序没有关系，所以UTF-8文件头可以有<code>BOM</code>(byte order mark)，也可以没有，一般linux下面的创建的UTF-8文件默认是没有<code>BOM</code>的。</li>
+<li>UTF-16编码则是用2个字节来保存一个字符，一个字母<code>a</code>和一个中文字<code>中</code>都用2个字节保存，所以必须要知道文件保存的字节序，才能正确的读写相应的内容。</li>
+<li>对于UTF-16编码的文件，不论是大端模式还是小端模式，存储的第一个字符都是<code>BOM</code>，占2个字节，<code>BOM</code>的unicode码是<code>0xFEFF</code>，存储在大端模式unicode文件里是<code>0xFEFF</code>，存储在小端模式unicode文件里是<code>0xFFFE</code>。</li>
+</ol>
+<h2 id="java中的字节序"><a href="#java中的字节序" class="headerlink" title="java中的字节序"></a>java中的字节序</h2><p>java中字节存储默认为大端模式，可以查看包含多字节字符的字符串方法<code>String#getBytes()</code>返回的数组内容进行确认，下面示例中的字符串中有个多字节的字符<code>中</code>字，其字节码输出为<code>[-28, -72, -83]</code>，高位在前，即大端模式。另外这3个字节在16进制的表现形式为<code>[E4, B8, AD]</code>，即<code>中</code>字<code>UTF-8</code>编码：<code>%E4%B8%AD</code>，具体可以看下面代码的备注说明，之前我在这篇<a href="/blog/linux/2008/10/11/utf-8-unicode-relationship.html">文章</a>里用javascript演示了<code>UNICODE</code>码和<code>UTF-8</code>编码之间的转换关系。</p>
+<h3 id="使用UTF-8编码并使用java默认字节序"><a href="#使用UTF-8编码并使用java默认字节序" class="headerlink" title="使用UTF-8编码并使用java默认字节序"></a>使用UTF-8编码并使用java默认字节序</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUTF8ByteSort</span><span class="params">()</span> <span class="keyword">throws</span> UnsupportedEncodingException </span>&#123;</div><div class="line">    <span class="keyword">byte</span>[] dst;</div><div class="line">    ByteBuffer byteBuffer = ByteBuffer.wrap(<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">16</span>]); <span class="comment">// 创建字节缓冲区，java中字节存储默认为大端模式</span></div><div class="line"></div><div class="line">    String abcdef = <span class="string">"abcde中"</span>;          <span class="comment">// “中”字16进制为： 0x4e2d ，其 unicode 码为： 20013</span></div><div class="line">    byteBuffer.put(abcdef.getBytes());  <span class="comment">// default charset UTF-8</span></div><div class="line">    System.out.println(Arrays.toString(abcdef.getBytes())); <span class="comment">// [97, 98, 99, 100, 101, -28, -72, -83]</span></div><div class="line"></div><div class="line">    <span class="comment">// 计算机中负数用补码表示:</span></div><div class="line">    <span class="comment">// -28 的2进制表示：　~(28) + 1，即 11100100，再转成16进制，即为e4</span></div><div class="line">    <span class="comment">// 同样得到 -72 对应的16进制 b8</span></div><div class="line">    <span class="comment">// -83 对应的16进制 ad</span></div><div class="line">    String b1 = Integer.toBinaryString(-<span class="number">28</span>);</div><div class="line">    String b0 = Integer.toBinaryString(-<span class="number">28</span> &amp; <span class="number">0xFF</span>);</div><div class="line">    System.out.println(b1); <span class="comment">// 11111111111111111111111111100100</span></div><div class="line">    System.out.println(b0); <span class="comment">// 11100100</span></div><div class="line">    System.out.println(Integer.parseInt(b0, <span class="number">2</span>)); <span class="comment">// 228</span></div><div class="line">    System.out.println(Integer.toHexString(Integer.valueOf(b0, <span class="number">2</span>))); <span class="comment">// e4</span></div><div class="line">    System.out.println(Integer.toHexString(Integer.valueOf(Integer.toBinaryString(-<span class="number">28</span> &amp; <span class="number">0xFF</span>), <span class="number">2</span>))); <span class="comment">// e4</span></div><div class="line"></div><div class="line">    <span class="comment">// 每个byte的16进制数</span></div><div class="line">    System.out.println(<span class="string">"=========================="</span>);</div><div class="line">    System.out.println(Integer.toHexString(-<span class="number">28</span> &amp; <span class="number">0xFF</span>)); <span class="comment">// e4</span></div><div class="line">    System.out.println(Integer.toHexString(-<span class="number">72</span> &amp; <span class="number">0xFF</span>)); <span class="comment">// b8</span></div><div class="line">    System.out.println(Integer.toHexString(-<span class="number">83</span> &amp; <span class="number">0xFF</span>)); <span class="comment">// ad</span></div><div class="line">    System.out.println(<span class="string">"=========================="</span>);</div><div class="line"></div><div class="line">    <span class="comment">// 因此 "中" 字uri encode的编码即为: "%e4%b8%ad"</span></div><div class="line">    String encode = URLEncoder.encode(<span class="string">"中"</span>, Charsets.UTF_8.name());</div><div class="line">    System.out.println(encode);</div><div class="line">    String decode = URLDecoder.decode(<span class="string">"%e4%b8%ad"</span>, Charsets.UTF_8.name());</div><div class="line">    System.out.println(decode);</div><div class="line"></div><div class="line">    System.out.println(<span class="string">"=========================="</span>);</div><div class="line">    System.out.println(byteBuffer); <span class="comment">// java.nio.HeapByteBuffer[pos=8 lim=16 cap=16]</span></div><div class="line">    byteBuffer.flip();              <span class="comment">// 注意flip()之后的pos/limit值的变化</span></div><div class="line">    System.out.println(byteBuffer); <span class="comment">// java.nio.HeapByteBuffer[pos=0 lim=8 cap=16]</span></div><div class="line">    System.out.println(<span class="string">"=========================="</span>);</div><div class="line"></div><div class="line">    dst = <span class="keyword">new</span> <span class="keyword">byte</span>[byteBuffer.limit()];</div><div class="line">    byteBuffer.get(dst);                        <span class="comment">// byteBuffer中有效的字节</span></div><div class="line">    System.out.println(Arrays.toString(dst));   <span class="comment">// [97, 98, 99, 100, 101, -28, -72, -83]</span></div><div class="line">    System.out.println(<span class="keyword">new</span> String(dst));        <span class="comment">// abcde中</span></div><div class="line"></div><div class="line">    <span class="comment">// 下面打印ByteBuffer中所有的字节内容</span></div><div class="line">    System.out.println(Arrays.toString(byteBuffer.array())); <span class="comment">// [97, 98, 99, 100, 101, -28, -72, -83, 0, 0, 0, 0, 0, 0, 0, 0]</span></div><div class="line">    System.out.println(<span class="keyword">new</span> String(byteBuffer.array()));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="javascript中-quot-28-quot-的无符号数2进制和16进制转化"><a href="#javascript中-quot-28-quot-的无符号数2进制和16进制转化" class="headerlink" title="javascript中&quot;-28&quot;的无符号数2进制和16进制转化"></a>javascript中&quot;-28&quot;的无符号数2进制和16进制转化</h3><p>上面的代码用java对<code>-28</code>的16进制无符号数的转化过程做了一个演示，下面再用javascript演示一下转化过程如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// a zero fill right shift converts it's operand to a 32 signed bit integer.</span></div><div class="line"><span class="keyword">var</span> binary = (<span class="number">-28</span> &gt;&gt;&gt; <span class="number">0</span>).toString(<span class="number">2</span>);  <span class="comment">// coerced to uint32</span></div><div class="line"><span class="built_in">console</span>.log(binary);                   <span class="comment">// 11111111111111111111111111100100</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(binary, <span class="number">2</span>) &gt;&gt; <span class="number">0</span>); <span class="comment">// -28, binary to int32</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> b0 = <span class="number">-28</span> &amp; <span class="number">0xFF</span>;             <span class="comment">// -28 用1个字节来表示其无符号数即为228</span></div><div class="line"><span class="built_in">console</span>.log(b0);                 <span class="comment">// 228</span></div><div class="line"><span class="built_in">console</span>.log(b0.toString(<span class="number">16</span>));    <span class="comment">// e4</span></div><div class="line"></div><div class="line"><span class="built_in">encodeURIComponent</span>(<span class="string">"中"</span>);        <span class="comment">// '%E4%B8%AD'</span></div><div class="line"><span class="built_in">decodeURIComponent</span>(<span class="string">"%e4%b8%ad"</span>); <span class="comment">// '中'</span></div></pre></td></tr></table></figure>
+<h3 id="使用UTF-16编码并使用java默认的字节序"><a href="#使用UTF-16编码并使用java默认的字节序" class="headerlink" title="使用UTF-16编码并使用java默认的字节序"></a>使用UTF-16编码并使用java默认的字节序</h3><p>当上述字符串使用<code>UTF-16</code>编码格式进行存储时，仍然是高位在前，即大端模式，而且因为16进制有字节序的问题，必须声明当前存储的内容的字节序是什么模式的，所以最前面有<code>0xFEFF</code>的2个字节来表示<code>BOM</code>。</p>
+<p><code>UTF-16</code>编码中所有的字符都是用2个字节来表示的，因为字母<code>a</code>也是用<code>[0, 97]</code>这2个字节来表示，并且高位<code>0</code>(0x00)在低位<code>97</code>(0x61)之前。因为<code>UTF-16</code>用<code>2个字节</code>表示<code>一个字符</code>，那么其最多能表示<code>1 &lt;&lt; 16 - 1 = 65535</code>个字符。</p>
+<p>因为java中不存在<code>无符号数</code>，即没有<code>C</code>语言中<code>unsigned</code>类型的整数，java中一个字节<code>byte</code>能表示的数值范围为<code>-128 ~ 127</code>，因此1个字节<code>0xFE</code>即为有符号数的<code>-2</code>，而<code>0xFF</code>则为有符号数的<code>-1</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUTF16ByteOrder</span><span class="params">()</span> </span>&#123;</div><div class="line">    String abcdef = <span class="string">"abcde中"</span>; <span class="comment">// 中 16进制为： 0x4e2d ，其 unicode 码为： 20013</span></div><div class="line">    <span class="comment">// 下面这句输出为：[-2, -1, 0, 97, 0, 98, 0, 99, 0, 100, 0, 101, 78, 45]</span></div><div class="line">    <span class="comment">// UTF_16 编码中每个字符占2个字节存储空间，“中”字的16进制为0x4e2d，按大端模式，高位先存储在第1个字节</span></div><div class="line">    <span class="comment">// 1. 即0x4e2d中的4e存储在第1个字节，4e的10进制数即为78，2进制数为： 01001110</span></div><div class="line">    <span class="comment">// 2. 而0x4e2d中的2d存储在第2个字节，2d的10进制数即为45，2进制数为： 00101101</span></div><div class="line">    <span class="comment">// 3. 内存中的形式如： 0100111000101101</span></div><div class="line">    System.out.println(Arrays.toString(abcdef.getBytes(Charsets.UTF_16)));</div><div class="line"></div><div class="line">    <span class="comment">// 4. 转化 0100111000101101 为10进制数： 20013</span></div><div class="line">    <span class="keyword">int</span> charCode = Integer.parseInt(<span class="string">"0100111000101101"</span>, <span class="number">2</span>);</div><div class="line">    System.out.println(charCode); <span class="comment">// 20013</span></div><div class="line">    System.out.println((<span class="keyword">int</span>) <span class="string">"中"</span>.charAt(<span class="number">0</span>)); <span class="comment">// 20013</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="java中设置字符串存储的字节序"><a href="#java中设置字符串存储的字节序" class="headerlink" title="java中设置字符串存储的字节序"></a>java中设置字符串存储的字节序</h3><p>通过设置<code>ByteBuffer#order(ByteOrder)</code>方法，设置其以<code>CharBuffer</code>使用时，控制每个<code>char</code>存储的字节序。如果是按<code>byte</code>存储，则使用默认的大端模式存储，这个方法设置就没有意义了。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testBigEndian</span><span class="params">()</span> </span>&#123;</div><div class="line">    ByteBuffer byteBuffer = ByteBuffer.wrap(<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">16</span>]);</div><div class="line">    <span class="comment">// byteBuffer.order(ByteOrder.BIG_ENDIAN); // 默认值，不设置</span></div><div class="line"></div><div class="line">    String abcdef = <span class="string">"abcde中"</span>;</div><div class="line">    CharBuffer charBuffer = byteBuffer.asCharBuffer();</div><div class="line">    charBuffer.put(abcdef);</div><div class="line">    charBuffer.rewind();</div><div class="line">    System.out.println(charBuffer.position()); <span class="comment">// 0</span></div><div class="line">    System.out.println(charBuffer.limit()); <span class="comment">// 8</span></div><div class="line">    System.out.println(charBuffer.capacity()); <span class="comment">// 16 / 2 = 8; 1个char占2个bytes</span></div><div class="line"></div><div class="line">    <span class="comment">// 大端字节序输出为：[0, 97, 0, 98, 0, 99, 0, 100, 0, 101, 78, 45]</span></div><div class="line">    System.out.println(Arrays.toString(byteBuffer.array()));</div><div class="line">    System.out.println(<span class="keyword">new</span> String(byteBuffer.array()));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testLittleEndian</span><span class="params">()</span> </span>&#123;</div><div class="line">    ByteBuffer byteBuffer = ByteBuffer.wrap(<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">16</span>]);</div><div class="line">    byteBuffer.order(ByteOrder.LITTLE_ENDIAN); <span class="comment">// 设置字节序</span></div><div class="line"></div><div class="line">    String abcdef = <span class="string">"abcde中"</span>;</div><div class="line">    CharBuffer charBuffer = byteBuffer.asCharBuffer();</div><div class="line">    charBuffer.put(abcdef);</div><div class="line">    charBuffer.rewind();</div><div class="line"></div><div class="line">    <span class="comment">// 小端字节序输出：[97, 0, 98, 0, 99, 0, 100, 0, 101, 0, 45, 78, 0, 0, 0, 0]</span></div><div class="line">    System.out.println(Arrays.toString(byteBuffer.array()));</div><div class="line">    System.out.println(<span class="keyword">new</span> String(byteBuffer.array()));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="关于java和C语言中的char类型"><a href="#关于java和C语言中的char类型" class="headerlink" title="关于java和C语言中的char类型"></a>关于java和C语言中的char类型</h2><p>简单说一下这2个语言中都有<code>char</code>类型，但使用方式不一样，C语言中的<code>char</code>类型：</p>
+<ol>
+<li>只使用<code>1个字节</code>，1个字节也就没有字节序的问题。</li>
+<li><code>unsigned char</code>，数值表示范围为<code>0 ~ 255</code>。</li>
+<li><code>signed char</code>，有符号数的表示范围为<code>-128 ~ 127</code>，这个与java中的<code>byte</code>相同。</li>
+</ol>
+<p>java语言中的<code>char</code>类型：</p>
+<ol>
+<li>使用<code>2个字节</code>，所以有字节序的问题，java默认为大端序。</li>
+<li>类似于<code>C</code>语言的<code>signed short int</code>，可表示的数值范围为<code>0 ~ 65535</code>。</li>
+<li>java中没有实现无符号数。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sizeOfJavaChar</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// java中的char有点像C语言中的signed short int，256以内的字符实际上只要一个字节就可以</span></div><div class="line">    <span class="keyword">char</span> ff = <span class="number">0xFF</span>;</div><div class="line">    System.out.println((<span class="keyword">int</span>) ff);  <span class="comment">// 255</span></div><div class="line"></div><div class="line">    <span class="keyword">char</span> ff2 = <span class="number">0xFFFF</span>;             <span class="comment">// 255以上，65536以下，则需要2个字节</span></div><div class="line">    System.out.println((<span class="keyword">int</span>) ff2); <span class="comment">// 65535</span></div><div class="line"></div><div class="line">    <span class="comment">// 超过0xFFFF就走出数值表示范围了</span></div><div class="line">    <span class="keyword">int</span> i0000 = <span class="number">0x10000</span>;</div><div class="line">    System.out.println(i0000);     <span class="comment">// 65536</span></div><div class="line">    <span class="keyword">char</span> ff3 = (<span class="keyword">char</span>) <span class="number">0x10000</span>;     <span class="comment">// 不强转，则已经超出char的数值范围了，强转就丢精度了</span></div><div class="line">    System.out.println((<span class="keyword">int</span>) ff3); <span class="comment">// 0</span></div><div class="line"></div><div class="line">    <span class="keyword">short</span> s = <span class="number">0x0102</span>;</div><div class="line">    System.out.println(s);        <span class="comment">// 258</span></div><div class="line">    System.out.println(s &gt;&gt; <span class="number">8</span>);   <span class="comment">// 1 高位</span></div><div class="line">    System.out.println(s &amp; <span class="number">0xFF</span>); <span class="comment">// 2 低位</span></div><div class="line">    System.out.println((<span class="keyword">byte</span>) s); <span class="comment">// 2 丢失高位</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="javascript中的字节序"><a href="#javascript中的字节序" class="headerlink" title="javascript中的字节序"></a>javascript中的字节序</h2><p>下面的ES6代码对同一段内存<code>ArrayBuffer</code>，分别建立两种视图<code>TypedArray</code>：</p>
+<ol>
+<li>8位无符号整数（Uint8Array构造函数）。</li>
+<li>16位带无符号整数（Uint16Array构造函数）。</li>
+</ol>
+<p><code>ArrayBuffer</code>是不能直接被访问的，因此需要借助<code>TypedArray</code>。由于两个视图对应的是同一段内存，一个视图修改底层内存，会影响到另一个视图。这个过程有点像<code>C</code>语言中的<code>union</code>联合类型。</p>
+<img src="/blog/img/web/js/javascript-typed-arrays.png" title="[javascript-typed-arrays.png]">
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> arrayBuffer = <span class="keyword">new</span> <span class="built_in">ArrayBuffer</span>(<span class="number">2</span>);</div><div class="line"><span class="keyword">var</span> u8 = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(arrayBuffer);   <span class="comment">// 同一段内存地址</span></div><div class="line"><span class="keyword">var</span> u16 = <span class="keyword">new</span> <span class="built_in">Uint16Array</span>(arrayBuffer); <span class="comment">// 同一段内存地址</span></div><div class="line"></div><div class="line"><span class="comment">// Determine whether Uint16 is little-endian or big-endian.</span></div><div class="line">u16[<span class="number">0</span>] = (<span class="number">1</span> &lt;&lt; <span class="number">8</span>) + <span class="number">2</span>; <span class="comment">// 即0x0102，必须加括号，&lt;&lt; 左移操作符优先级低于 +</span></div><div class="line"><span class="built_in">console</span>.log(u8);       <span class="comment">// [2, 1]</span></div><div class="line"><span class="built_in">console</span>.log(u16);      <span class="comment">// [258]</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> isLittleEndian = <span class="literal">true</span>;</div><div class="line"><span class="keyword">if</span> (u8[<span class="number">0</span>] === <span class="number">0x01</span> &amp;&amp; u8[<span class="number">1</span>] === <span class="number">0x02</span>) &#123;</div><div class="line">    isLittleEndian = <span class="literal">false</span>;</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"is little endian : "</span> + isLittleEndian);</div><div class="line"></div><div class="line">u8[<span class="number">0</span>] = <span class="number">0xFF</span>; <span class="comment">// 修改内存低地址的值，查看对u16的影响</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(u8);     <span class="comment">// [255, 1]</span></div><div class="line"><span class="built_in">console</span>.log(u16);    <span class="comment">// [511]，即0x01FF</span></div><div class="line"><span class="built_in">console</span>.log(<span class="number">0x01FF</span>); <span class="comment">// 低位由0x02改成0xFF</span></div></pre></td></tr></table></figure>
+<p>以上代码在浏览器里运行的结果如下：</p>
+<blockquote>
+<p>Uint8Array(2) [2, 1]<br>Uint16Array [258]<br>is little endian : true<br>Uint8Array(2) [255, 1]<br>Uint16Array [511]<br>511</p>
+</blockquote>
+<p>在<code>node</code>的<code>REPL</code>中的运行结果如下：</p>
+<blockquote>
+<p>{ &#39;0&#39;: 2, &#39;1&#39;: 1 }<br>{ &#39;0&#39;: 258 }<br>is little endian : true<br>{ &#39;0&#39;: 255, &#39;1&#39;: 1 }<br>{ &#39;0&#39;: 511 }<br>511</p>
+</blockquote>
+<p>以上javascript代码都是在<code>x86</code>的CPU上运行的，无论是浏览器和还是<code>REPL</code>，表现的结果都是<code>小端</code>序。</p>
+<p>在<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays" target="_blank" rel="external">MDN</a>上<code>Typed array views</code>说明了其字节序是平台相关的，摘录部分内容如下：</p>
+<blockquote>
+<p>Typed array views are in the native byte-order (see Endianness) of your platform. With a DataView you are able to control the byte-order.</p>
+</blockquote>
+<h3 id="使用DataView检测平台的字节序"><a href="#使用DataView检测平台的字节序" class="headerlink" title="使用DataView检测平台的字节序"></a>使用DataView检测平台的字节序</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isLittleEndian</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> arrayBuffer = <span class="keyword">new</span> <span class="built_in">ArrayBuffer</span>(<span class="number">2</span>);</div><div class="line">    <span class="keyword">var</span> view = <span class="keyword">new</span> <span class="built_in">DataView</span>(arrayBuffer);</div><div class="line">    view.setInt16(<span class="number">0</span>, <span class="number">256</span>, <span class="literal">true</span>); <span class="comment">// 显式以little endian写入数据256，即0x0100</span></div><div class="line"></div><div class="line">    <span class="comment">// 此时arrayBuffer里的内存布局应该是 0x00 0x01</span></div><div class="line">    <span class="keyword">var</span> i16 = <span class="keyword">new</span> <span class="built_in">Int16Array</span>(arrayBuffer);</div><div class="line">    <span class="comment">// 如果以little endian读取，它就是0x0100，即256；以big endian读取，则是0x0001，即为1</span></div><div class="line">    <span class="keyword">return</span> i16[<span class="number">0</span>] === <span class="number">256</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="javascipt中有符号数与无符号数转换"><a href="#javascipt中有符号数与无符号数转换" class="headerlink" title="javascipt中有符号数与无符号数转换"></a>javascipt中有符号数与无符号数转换</h3><p>通过使用逻辑右移运算符，移动位数为0，可以将32位有符号整数，转化为32位无符号整数。</p>
+<blockquote>
+<p>unsigned = signed &gt;&gt;&gt; 0;</p>
+</blockquote>
+<p>通过使用左移运算符，位动位数为0，可以将32位无符号整数，转化为32位有符号整数。</p>
+<blockquote>
+<p>signed = unsigned &lt;&lt; 0;</p>
+</blockquote>
+<h4 id="javascript有符号数和无符号数转换测试代码"><a href="#javascript有符号数和无符号数转换测试代码" class="headerlink" title="javascript有符号数和无符号数转换测试代码"></a>javascript有符号数和无符号数转换测试代码</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> signed, unsigned;</div><div class="line">signed = <span class="number">-1</span>;</div><div class="line">unsigned = signed &gt;&gt;&gt; <span class="number">0</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"unsigned = "</span> + unsigned); <span class="comment">// unsigned = 4294967295</span></div><div class="line">signed = unsigned &lt;&lt; <span class="number">0</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"signed = "</span> + signed);   <span class="comment">// signed = -1</span></div></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://betterexplained.com/articles/understanding-big-and-little-endian-byte-order/" target="_blank" rel="external">Understanding Big and Little Endian Byte Order</a></li>
+<li><a href="http://blog.csdn.net/ce123_zhouwei/article/details/6971544" target="_blank" rel="external">详解大端模式和小端模式</a></li>
+<li><a href="http://c.biancheng.net/cpp/html/3047.html" target="_blank" rel="external">socket网络字节序以及大端序小端序</a></li>
+<li><a href="http://www.bysocket.com/?p=615" target="_blank" rel="external">深入浅出： 大小端模式</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays" target="_blank" rel="external">JavaScript typed arrays</a></li>
+<li><a href="http://javascript.ruanyifeng.com/stdlib/arraybuffer.html" target="_blank" rel="external">ES6二进制数组</a></li>
+<li><a href="https://stackoverflow.com/questions/7869752/javascript-typed-arrays-and-endianness" target="_blank" rel="external">Javascript Typed Arrays and Endianness</a></li>
+<li><a href="http://jimliu.net/2015/09/26/a-brief-look-at-binary-ops-in-js/" target="_blank" rel="external">JS中的二进制操作</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2017/10/09/last-name-guess-java.html" rel="next" title="猜姓氏java版">
+                上一篇：猜姓氏java版
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是little-endian和big-endian"><span class="nav-number">1.</span> <span class="nav-text">什么是little-endian和big-endian</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">1.1.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#大端模式"><span class="nav-number">1.1.1.</span> <span class="nav-text">大端模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小端模式"><span class="nav-number">1.1.2.</span> <span class="nav-text">小端模式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#big-endian还是little-endian"><span class="nav-number">2.</span> <span class="nav-text">big-endian还是little-endian</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIX-Networking-Programming-书中的例子"><span class="nav-number">2.1.</span> <span class="nav-text">UNIX Networking Programming 书中的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过类型强转进行判断"><span class="nav-number">2.2.</span> <span class="nav-text">通过类型强转进行判断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络字节序与主机字节序转换函数"><span class="nav-number">3.</span> <span class="nav-text">网络字节序与主机字节序转换函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络字节序与主机字节序转换函数测试代码"><span class="nav-number">3.1.</span> <span class="nav-text">网络字节序与主机字节序转换函数测试代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UTF-8编码和UTF-16编码"><span class="nav-number">4.</span> <span class="nav-text">UTF-8编码和UTF-16编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java中的字节序"><span class="nav-number">5.</span> <span class="nav-text">java中的字节序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用UTF-8编码并使用java默认字节序"><span class="nav-number">5.1.</span> <span class="nav-text">使用UTF-8编码并使用java默认字节序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#javascript中-quot-28-quot-的无符号数2进制和16进制转化"><span class="nav-number">5.2.</span> <span class="nav-text">javascript中"-28"的无符号数2进制和16进制转化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用UTF-16编码并使用java默认的字节序"><span class="nav-number">5.3.</span> <span class="nav-text">使用UTF-16编码并使用java默认的字节序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java中设置字符串存储的字节序"><span class="nav-number">5.4.</span> <span class="nav-text">java中设置字符串存储的字节序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于java和C语言中的char类型"><span class="nav-number">6.</span> <span class="nav-text">关于java和C语言中的char类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#javascript中的字节序"><span class="nav-number">7.</span> <span class="nav-text">javascript中的字节序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用DataView检测平台的字节序"><span class="nav-number">7.1.</span> <span class="nav-text">使用DataView检测平台的字节序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#javascipt中有符号数与无符号数转换"><span class="nav-number">7.2.</span> <span class="nav-text">javascipt中有符号数与无符号数转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#javascript有符号数和无符号数转换测试代码"><span class="nav-number">7.2.1.</span> <span class="nav-text">javascript有符号数和无符号数转换测试代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

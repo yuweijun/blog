@@ -1,0 +1,577 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="jQuery本身的二个静态方法jQuery.data()和jQuery.removeData()，jQuery.fn.data()/jQuery.fn.removeData()都是调用这二个方法对jquery对象中所有匹配的DOM元素进行操作：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jquery-1.4.2 data部分源码分析">
+<meta property="og:url" content="https://www.4e00.com/jquery/2014/07/31/jquery-src-data.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="jQuery本身的二个静态方法jQuery.data()和jQuery.removeData()，jQuery.fn.data()/jQuery.fn.removeData()都是调用这二个方法对jquery对象中所有匹配的DOM元素进行操作：">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-07-31T01:27:48.145Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jquery-1.4.2 data部分源码分析">
+<meta name="twitter:description" content="jQuery本身的二个静态方法jQuery.data()和jQuery.removeData()，jQuery.fn.data()/jQuery.fn.removeData()都是调用这二个方法对jquery对象中所有匹配的DOM元素进行操作：">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://www.4e00.com/blog/jquery/2014/07/31/jquery-src-data.html"/>
+
+  <title> jquery-1.4.2 data部分源码分析 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jquery-1.4.2 data部分源码分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2014-07-31T20:32:36+08:00" content="2014-07-31">
+              2014-07-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/jquery/" itemprop="url" rel="index">
+                    <span itemprop="name">jquery</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>jQuery本身的二个静态方法jQuery.data()和jQuery.removeData()，jQuery.fn.data()/jQuery.fn.removeData()都是调用这二个方法对jquery对象中所有匹配的DOM元素进行操作：</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> expando = <span class="string">"jQuery"</span> + now(), uuid = <span class="number">0</span>, windowData = &#123;&#125;;</div><div class="line"></div><div class="line">jQuery.extend(&#123;</div><div class="line">    cache: &#123;&#125;,</div><div class="line"></div><div class="line">    expando:expando,</div><div class="line"></div><div class="line">    <span class="comment">// The following elements throw uncatchable exceptions if you</span></div><div class="line">    <span class="comment">// attempt to add expando properties to them.</span></div><div class="line">    noData: &#123;</div><div class="line">        <span class="string">"embed"</span>: <span class="literal">true</span>,</div><div class="line">        <span class="string">"object"</span>: <span class="literal">true</span>,</div><div class="line">        <span class="string">"applet"</span>: <span class="literal">true</span></div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="comment">// jQuery.data()方法会有内存泄漏的问题，具体可参考以下二个链接文章说明，官方文档建议使用jQuery.fn.data()方法</span></div><div class="line">    <span class="comment">// http://www.denisdeng.com/?p=805</span></div><div class="line">    <span class="comment">// http://forum.jquery.com/topic/data-object-and-memory-leak</span></div><div class="line">    <span class="comment">// 一般是针对DOM对象，将一个key/value键值对存入此DOM对象的data中，也可以将jquery对象作为elem</span></div><div class="line">    data: <span class="function"><span class="keyword">function</span>(<span class="params"> elem, name, data </span>) </span>&#123;</div><div class="line">        <span class="comment">// 如果想将data附在embed/object/applet上，将无法生效</span></div><div class="line">        <span class="keyword">if</span> ( elem.nodeName &amp;&amp; jQuery.noData[elem.nodeName.toLowerCase()] ) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        elem = elem == <span class="built_in">window</span> ?</div><div class="line">            windowData :</div><div class="line">            elem;</div><div class="line"></div><div class="line">        <span class="comment">// thisCache 只是cache[id]的引用，为了提高运行速度将cache[id]也缓存到thisCache上面</span></div><div class="line">        <span class="comment">// elem对象上只是多了一个expando属性，其中放了一个id，根据此id从jQuery.cache中获取data</span></div><div class="line">        <span class="keyword">var</span> id = elem[ expando ], cache = jQuery.cache, thisCache;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( !id &amp;&amp; <span class="keyword">typeof</span> name === <span class="string">"string"</span> &amp;&amp; data === <span class="literal">undefined</span> ) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 如果当前elem没有uuid，则生成之</span></div><div class="line">        <span class="comment">// Compute a unique ID for the element</span></div><div class="line">        <span class="keyword">if</span> ( !id ) &#123;</div><div class="line">            id = ++uuid;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 当name为object，则缓存此object</span></div><div class="line">        <span class="comment">// jQuery.data( element, key ) Returns: Object</span></div><div class="line">        <span class="comment">// Description: Returns value at named data store for the element, as set by jQuery.data(element, name, value),</span></div><div class="line">        <span class="comment">// or the full data store for the element.</span></div><div class="line">        <span class="comment">// Avoid generating a new cache unless none exists and we want to manipulate it.</span></div><div class="line">        <span class="keyword">if</span> ( <span class="keyword">typeof</span> name === <span class="string">"object"</span> ) &#123;</div><div class="line">            elem[ expando ] = id;</div><div class="line">            <span class="comment">// thisCache不需要在此赋值，后面单独还有一句赋值操作: thisCache = cache[ id ]</span></div><div class="line">            <span class="comment">// 深拷贝name对象的所有属性到&#123;&#125;对象中，保证cache是一个plainObject</span></div><div class="line">            thisCache = cache[ id ] = jQuery.extend(<span class="literal">true</span>, &#123;&#125;, name);</div><div class="line"></div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( !cache[ id ] ) &#123;</div><div class="line">            elem[ expando ] = id;</div><div class="line">            cache[ id ] = &#123;&#125;;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        thisCache = cache[ id ];</div><div class="line"></div><div class="line">        <span class="comment">// 避免被undefined覆写</span></div><div class="line">        <span class="comment">// Prevent overriding the named cache with undefined values</span></div><div class="line">        <span class="keyword">if</span> ( data !== <span class="literal">undefined</span> ) &#123;</div><div class="line">            thisCache[ name ] = data;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// name值可能为: undefined, string, object</span></div><div class="line">        <span class="comment">// 存储成功后返回data，或者返回查询缓存得到的data，如果name不是一个string，则返回cache[id]所对应的缓存结果</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">typeof</span> name === <span class="string">"string"</span> ? thisCache[ name ] : thisCache;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="comment">// Remove a previously-stored piece of data.</span></div><div class="line">    removeData: <span class="function"><span class="keyword">function</span>(<span class="params"> elem, name </span>) </span>&#123;</div><div class="line">        <span class="comment">// 避免object/embed/object对象</span></div><div class="line">        <span class="keyword">if</span> ( elem.nodeName &amp;&amp; jQuery.noData[elem.nodeName.toLowerCase()] ) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        elem = elem == <span class="built_in">window</span> ?</div><div class="line">            windowData :</div><div class="line">            elem;</div><div class="line"></div><div class="line">        <span class="keyword">var</span> id = elem[ expando ], cache = jQuery.cache, thisCache = cache[ id ];</div><div class="line"></div><div class="line">        <span class="comment">// If we want to remove a specific section of the element's data</span></div><div class="line">        <span class="keyword">if</span> ( name ) &#123;</div><div class="line">            <span class="keyword">if</span> ( thisCache ) &#123;</div><div class="line">                <span class="comment">// 从缓存中删除指定的key</span></div><div class="line">                <span class="comment">// Remove the section of cache data</span></div><div class="line">                <span class="keyword">delete</span> thisCache[ name ];</div><div class="line"></div><div class="line">                <span class="comment">// 如果缓存中所有的key都被删除，则将cache从此元素上移除</span></div><div class="line">                <span class="comment">// If we've removed all the data, remove the element's cache</span></div><div class="line">                <span class="keyword">if</span> ( jQuery.isEmptyObject(thisCache) ) &#123;</div><div class="line">                    jQuery.removeData( elem );</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Otherwise, we want to remove all of the element's data</span></div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">if</span> ( jQuery.support.deleteExpando ) &#123;</div><div class="line">                <span class="keyword">delete</span> elem[ jQuery.expando ];</div><div class="line"></div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( elem.removeAttribute ) &#123;</div><div class="line">                elem.removeAttribute( jQuery.expando );</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// 从jQuery.cache中彻底删除此elem的data缓存</span></div><div class="line">            <span class="comment">// Completely remove the data cache</span></div><div class="line">            <span class="keyword">delete</span> cache[ id ];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>jQuery.fn.data()/jQuery.fn.removeData()方法，操作jquery对象：</p>
+<blockquote>
+<p>Use $.data Instead of $.fn.data</p>
+<p>Using $.data on a DOM element instead of calling $.fn.data on a jQuery selection can be up to 10 times faster. Be sure you understand the difference between a DOM element and a jQuery selection before doing this, though.</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// regular</span></div><div class="line">$(elem).data(key,value);</div><div class="line"></div><div class="line"><span class="comment">// faster</span></div><div class="line">$.data(elem,key,value);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">jQuery.fn.extend(&#123;</div><div class="line">    <span class="comment">// jQuery.data和jQuery.removeData是比较底层的方法，不建议使用，一般是通过jQuery.fn.data/removeData方法进行操作，如果出于性能考虑，则可以直接使用jQuery.data()方法</span></div><div class="line">    data: <span class="function"><span class="keyword">function</span>(<span class="params"> key, value </span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> ( <span class="keyword">typeof</span> key === <span class="string">"undefined"</span> &amp;&amp; <span class="keyword">this</span>.length ) &#123;</div><div class="line">            <span class="comment">// .data()</span></div><div class="line">            <span class="comment">// 返回jquery对象中的第一个DOM元素中的data</span></div><div class="line">            <span class="keyword">return</span> jQuery.data( <span class="keyword">this</span>[<span class="number">0</span>] );</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( <span class="keyword">typeof</span> key === <span class="string">"object"</span> ) &#123;</div><div class="line">            <span class="comment">// 如果key为一个object的话，jquery对象中所有的DOM对象中的data内容会全部被重置为obj</span></div><div class="line">            <span class="comment">// .data( obj ) Setting an element's data object with .data(obj) replaces all data previously stored with that element.</span></div><div class="line">            <span class="comment">// obj: An object of key-value pairs of data to set.</span></div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                jQuery.data( <span class="keyword">this</span>, key );</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">var</span> parts = key.split(<span class="string">"."</span>);</div><div class="line">        parts[<span class="number">1</span>] = parts[<span class="number">1</span>] ? <span class="string">"."</span> + parts[<span class="number">1</span>] : <span class="string">""</span>;</div><div class="line"></div><div class="line">        <span class="comment">// 以下代码中涉及自定义事件的处理，在jQuery.event中详细分析jQuery.fn.triggerHandler/trigger</span></div><div class="line">        <span class="keyword">if</span> ( value === <span class="literal">undefined</span> ) &#123;</div><div class="line">            <span class="comment">// .data( key )</span></div><div class="line">            <span class="comment">// key: Name of the data stored.</span></div><div class="line">            <span class="comment">// 根据key获取存储在此DOM对象上的data</span></div><div class="line">            <span class="keyword">var</span> data = <span class="keyword">this</span>.triggerHandler(<span class="string">"getData"</span> + parts[<span class="number">1</span>] + <span class="string">"!"</span>, [parts[<span class="number">0</span>]]);</div><div class="line"></div><div class="line">            <span class="keyword">if</span> ( data === <span class="literal">undefined</span> &amp;&amp; <span class="keyword">this</span>.length ) &#123;</div><div class="line">                data = jQuery.data( <span class="keyword">this</span>[<span class="number">0</span>], key );</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> data === <span class="literal">undefined</span> &amp;&amp; parts[<span class="number">1</span>] ?</div><div class="line">                <span class="keyword">this</span>.data( parts[<span class="number">0</span>] ) :</div><div class="line">                data;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">// .data( key, value ) Returns: jQuery</span></div><div class="line">            <span class="comment">// Description: Store arbitrary data associated with the matched elements.</span></div><div class="line">            <span class="comment">// 设置key/value键值对到elem对象的data中</span></div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.trigger(<span class="string">"setData"</span> + parts[<span class="number">1</span>] + <span class="string">"!"</span>, [parts[<span class="number">0</span>], value]).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                jQuery.data( <span class="keyword">this</span>, key, value );</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    removeData: <span class="function"><span class="keyword">function</span>(<span class="params"> key </span>) </span>&#123;</div><div class="line">        <span class="comment">// 删除jquery对象中匹配到的每个DOM对象中指定key的data</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            jQuery.removeData( <span class="keyword">this</span>, key );</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>###建议jQuery.fn.queue()和jQuery.fn.dequeue()这2个方法使用Chrome进行调试</p>
+<p>jQuery.queue()和jQuery.dequeue()方法，通过jQuery.data()来缓存每个DOM对象上的事件处理方法和fx方法:</p>
+<blockquote>
+<p>Note that when adding a function with .queue(), we should ensure that .dequeue() is eventually called so that the next function in line executes.</p>
+<p>In jQuery 1.4 the function that&#39;s called is passed in another function, as the first argument, that when called automatically dequeues the next item and keeps the queue moving. You would use it like so:</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">$(<span class="string">"#test"</span>).queue(<span class="function"><span class="keyword">function</span>(<span class="params">next</span>) </span>&#123;</div><div class="line">    <span class="comment">// Do some stuff...</span></div><div class="line">    next();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">jQuery.extend(&#123;</div><div class="line"><span class="comment">// 显示匹配到的elem中，待执行的方法列表，或者追加新回调方法到queue列表中，并返回新的queue</span></div><div class="line"><span class="comment">// Show the queue of functions to be executed on the matched elements.</span></div><div class="line">queue: <span class="function"><span class="keyword">function</span>(<span class="params"> elem, type, data </span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> ( !elem ) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 默认为fx，指jQuery的效果</span></div><div class="line">    type = (type || <span class="string">"fx"</span>) + <span class="string">"queue"</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 根据type将此待执行方法列表从jQuery.data中取出</span></div><div class="line">    <span class="keyword">var</span> q = jQuery.data( elem, type );</div><div class="line"></div><div class="line">    <span class="comment">// Speed up dequeue by getting out quickly if this is just a lookup</span></div><div class="line">    <span class="keyword">if</span> ( !data ) &#123;</div><div class="line">        <span class="comment">// 如果是jQuery.quene(elem, [queueName])，则返回正在等待执行的方法列表，或者是空数组</span></div><div class="line">        <span class="comment">// Show the queue of functions to be executed on the matched elements.</span></div><div class="line">        <span class="keyword">return</span> q || [];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( !q || jQuery.isArray(data) ) &#123;</div><div class="line">        <span class="comment">// jQuery.queue( element, queueName, newQueue )</span></div><div class="line">        <span class="comment">// element: A DOM element where the array of queued functions is attached.</span></div><div class="line">        <span class="comment">// queueName: A string containing the name of the queue. Defaults to fx, the standard effects queue.</span></div><div class="line">        <span class="comment">// newQueue: An array of functions to replace the current queue contents.</span></div><div class="line">        <span class="comment">// 如果此type的function列表原来不存在，或者data是一个function数组，则重置此elem的此type的function列表</span></div><div class="line">        q = jQuery.data( elem, type, jQuery.makeArray(data) );</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// jQuery.queue( element, queueName, callback )</span></div><div class="line">        <span class="comment">// element: A DOM element on which to add a queued function.</span></div><div class="line">        <span class="comment">// queueName: A string containing the name of the queue. Defaults to fx, the standard effects queue.</span></div><div class="line">        <span class="comment">// callback: The new function to add to the queue.</span></div><div class="line">        <span class="comment">// 如果此elem中，已经存在此type的执行方法列表，并且data不是数组时，将data(一个callback)追加到待执行的方法列表中</span></div><div class="line">        q.push( data );</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> q;</div><div class="line">&#125;,</div><div class="line"></div><div class="line"><span class="comment">// 从方法队列中移出并调用一个方法(当前无其他方法在执行时)</span></div><div class="line"><span class="comment">// 对于fx类型的方法队列，在取出一个方法执行后，会往队列头添加一个字符串"inprogress"标记当前队列正在运行中</span></div><div class="line">dequeue: <span class="function"><span class="keyword">function</span>(<span class="params"> elem, type </span>) </span>&#123;</div><div class="line">    type = type || <span class="string">"fx"</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 获取此type的待执行方法列表，并取出第一个方法赋个fn</span></div><div class="line">    <span class="keyword">var</span> queue = jQuery.queue( elem, type ), fn = queue.shift();</div><div class="line"></div><div class="line">    <span class="comment">// 在elem对象中可能已经加入多个fx效果方法，queue队列的第一个值为inprogress时，再从quene数组中弹出一个对象</span></div><div class="line">    <span class="comment">// If the fx queue is dequeued, always remove the progress sentinel</span></div><div class="line">    <span class="keyword">if</span> ( fn === <span class="string">"inprogress"</span> ) &#123;</div><div class="line">        fn = queue.shift();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( fn ) &#123;</div><div class="line">        <span class="comment">// Add a progress sentinel to prevent the fx queue from being</span></div><div class="line">        <span class="comment">// automatically dequeued</span></div><div class="line">        <span class="comment">// 如果是效果类的列表，再次压入一个"inprogress"到列表数组头部</span></div><div class="line">        <span class="keyword">if</span> ( type === <span class="string">"fx"</span> ) &#123;</div><div class="line">            queue.unshift(<span class="string">"inprogress"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 如果用jQuery.fn.queue(fn)为方法队列增加了一个方法，必须在fn中调用一次jQuery.fn.dequeue()方法，使得方法队列中的下一个方法能被调用</span></div><div class="line">        <span class="comment">// jQuery 1.4版本中，fn(next)可以传入一个参数，并在fn中调用next()，如：</span></div><div class="line">        <span class="comment">// $("#test").queue(function(next) &#123; /* Do some stuff...;*/ next(); &#125;);</span></div><div class="line">        <span class="comment">// 将得到的fn作为此elem对象的方法调用，并传入一个回调方法(next)作为参数，因为在fn中有next()这样的调用，所以会触发方法列表中的下一个方法</span></div><div class="line">        fn.call(elem, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            jQuery.dequeue(elem, type);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>jQuery.fn.queue()/jQuery.fn.dequeue()，针对jquery对象进行queue/dequeue操作，其内部都是在调用jQuery.queue()/jQuery.dequeue()进行管理:<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// .queue( [ queueName ], newQueue )</span></div><div class="line"><span class="comment">// queueName: A string containing the name of the queue. Defaults to fx, the standard effects queue.</span></div><div class="line"><span class="comment">// newQueue: An array of functions to replace the current queue contents.</span></div><div class="line"></div><div class="line"><span class="comment">// .queue( [ queueName ], callback( next ) )</span></div><div class="line"><span class="comment">// queueName: A string containing the name of the queue. Defaults to fx, the standard effects queue.</span></div><div class="line"><span class="comment">// callback( next ): The new function to add to the queue, with a function to call that will dequeue the next item.</span></div><div class="line">jQuery.fn.extend(&#123;</div><div class="line">queue: <span class="function"><span class="keyword">function</span>(<span class="params"> type, data </span>) </span>&#123;</div><div class="line">    <span class="comment">// 如果只传了一个参数进来，那就当是一个fx类型的方法，并将第一个参数作为data</span></div><div class="line">    <span class="keyword">if</span> ( <span class="keyword">typeof</span> type !== <span class="string">"string"</span> ) &#123;</div><div class="line">        data = type;</div><div class="line">        type = <span class="string">"fx"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ( data === <span class="literal">undefined</span> ) &#123;</div><div class="line">        <span class="comment">// .queue( [ queueName ] ) queueName: A string containing the name of the queue.</span></div><div class="line">        <span class="comment">// Defaults to fx, the standard effects queue.</span></div><div class="line">        <span class="comment">// 不传参数进来，则返回jquery对象中第一个匹配的DOM对象中，此type的待执行方法列表</span></div><div class="line">        <span class="keyword">return</span> jQuery.queue( <span class="keyword">this</span>[<span class="number">0</span>], type );</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params"> i, elem </span>) </span>&#123;</div><div class="line">        <span class="comment">// 将此type的data压入jquery对象中每个匹配的DOM元素的缓存中</span></div><div class="line">        <span class="keyword">var</span> queue = jQuery.queue( <span class="keyword">this</span>, type, data );</div><div class="line"></div><div class="line">        <span class="comment">// 对于fx类型的方法队列，在每次添加一个data到queue队列中时，给jQuery.fn.queue()一次开始运行queue队列中的方法的时机</span></div><div class="line">        <span class="keyword">if</span> ( type === <span class="string">"fx"</span> &amp;&amp; queue[<span class="number">0</span>] !== <span class="string">"inprogress"</span> ) &#123;</div><div class="line">            <span class="comment">// 当前elem对象正在运行队列中的效果方法(animate)时，queue的第一个值为inprogress</span></div><div class="line">            <span class="comment">// 如queue的第一个值不是inprogress，即开始运行queue队列中的方法</span></div><div class="line">            jQuery.dequeue( <span class="keyword">this</span>, type );</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;,</div><div class="line">dequeue: <span class="function"><span class="keyword">function</span>(<span class="params"> type </span>) </span>&#123;</div><div class="line">    <span class="comment">// When .dequeue() is called, the next function on the queue is removed from the queue, and then executed.</span></div><div class="line">    <span class="comment">// This function should in turn (directly or indirectly) cause .dequeue() to be called, so that the sequence can continue.</span></div><div class="line">    <span class="comment">// 遍历jquery对象匹配的DOM对象，触发元素上的方法队列</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        jQuery.dequeue( <span class="keyword">this</span>, type );</div><div class="line">    &#125;);</div><div class="line">&#125;,</div></pre></td></tr></table></figure></p>
+<p>Using the standard effects queue, we can, for example, set an 800-millisecond delay between the .slideUp() and .fadeIn() of <code>&lt;div id=&quot;foo&quot;&gt;</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">$(<span class="string">'#foo'</span>).slideUp(<span class="number">300</span>).delay(<span class="number">800</span>).fadeIn(<span class="number">400</span>);</div></pre></td></tr></table></figure>
+<p>When this statement is executed, the element slides up for 300 milliseconds and then pauses for 800 milliseconds before fading in for 400 milliseconds.</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Based off of the plugin by Clint Helfers, with permission.</span></div><div class="line"><span class="comment">// http://blindsignals.com/index.php/2009/07/jquery-delay/</span></div><div class="line">delay: <span class="function"><span class="keyword">function</span>(<span class="params"> time, type </span>) </span>&#123;</div><div class="line">    time = jQuery.fx ? jQuery.fx.speeds[time] || time : time;</div><div class="line">    type = type || <span class="string">"fx"</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 往当前queue压入一个新的function，在此function被触发后，调用setTimeout，延时time毫秒之后，触发此type的方法队列中的后续方法执行</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.queue( type, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> elem = <span class="keyword">this</span>;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            jQuery.dequeue( elem, type );</div><div class="line">        &#125;, time );</div><div class="line">    &#125;);</div><div class="line">&#125;,</div><div class="line"></div><div class="line">clearQueue: <span class="function"><span class="keyword">function</span>(<span class="params"> type </span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.queue( type || <span class="string">"fx"</span>, [] );</div><div class="line">&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>通过jQuery.fn.queue()或者jQuery.queue()方法加入elem对象中的待执行效果方法，是在opt.complete方法被调用时执行，这里细节在jQuery.fx中另行说明：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Queueing</span></div><div class="line">opt.old = opt.complete;</div><div class="line">opt.complete = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"><span class="keyword">if</span> ( opt.queue !== <span class="literal">false</span> ) &#123;</div><div class="line">    jQuery(<span class="keyword">this</span>).dequeue();</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> ( jQuery.isFunction( opt.old ) ) &#123;</div><div class="line">    opt.old.call( <span class="keyword">this</span> );</div><div class="line">&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/jquery/2014/07/31/jquery-src-css.html" rel="next" title="jquery-1.4.2 css部分源码分析">
+                上一篇：jquery-1.4.2 css部分源码分析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/jquery/2014/07/31/jquery-src-deferred.html" rel="prev" title="jquery-1.5 deferred部分源码分析">
+                下一篇：jquery-1.5 deferred部分源码分析
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.jpg"
+               alt="yuweijun" />
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

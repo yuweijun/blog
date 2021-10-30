@@ -1,0 +1,573 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="OOP-Klass 二分模型 OOP是指ordinary object pointer，普通对象指针，用来描述 JVM 中的实例对象的实例信息。 Klass是 Java 类在 C++ 中的对等体，用来描述 Java 类，在其中包括了类的相关信息。  这个模型也体现了编程设计的最根本的一个设计原则：分离变化的与不变化的部分。其中 Java 实例信息相对 Java 类而言，是包含了变化的部分数据，Ja">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hotspot source code - klass and oop">
+<meta property="og:url" content="http://www.4e00.com/java/2018/08/04/hotspot-source-code-klass-and-oop.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="OOP-Klass 二分模型 OOP是指ordinary object pointer，普通对象指针，用来描述 JVM 中的实例对象的实例信息。 Klass是 Java 类在 C++ 中的对等体，用来描述 Java 类，在其中包括了类的相关信息。  这个模型也体现了编程设计的最根本的一个设计原则：分离变化的与不变化的部分。其中 Java 实例信息相对 Java 类而言，是包含了变化的部分数据，Ja">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.136Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hotspot source code - klass and oop">
+<meta name="twitter:description" content="OOP-Klass 二分模型 OOP是指ordinary object pointer，普通对象指针，用来描述 JVM 中的实例对象的实例信息。 Klass是 Java 类在 C++ 中的对等体，用来描述 Java 类，在其中包括了类的相关信息。  这个模型也体现了编程设计的最根本的一个设计原则：分离变化的与不变化的部分。其中 Java 实例信息相对 Java 类而言，是包含了变化的部分数据，Ja">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/08/04/hotspot-source-code-klass-and-oop.html">
+
+  <title> hotspot source code - klass and oop | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                hotspot source code - klass and oop
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-08-04T22:43:41+08:00" content="2018-08-04">
+              2018-08-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="OOP-Klass-二分模型"><a href="#OOP-Klass-二分模型" class="headerlink" title="OOP-Klass 二分模型"></a>OOP-Klass 二分模型</h2><ol>
+<li><code>OOP</code>是指<code>ordinary object pointer</code>，普通对象指针，用来描述 JVM 中的实例对象的实例信息。</li>
+<li><code>Klass</code>是 Java 类在 C++ 中的对等体，用来描述 Java 类，在其中包括了类的相关信息。</li>
+</ol>
+<p>这个模型也体现了编程设计的最根本的一个设计原则：分离变化的与不变化的部分。其中 Java 实例信息相对 Java 类而言，是包含了变化的部分数据，Java 类描述了类的行为和类信息，为所有实例所共享。这个二分模型中的 Klass 向 JVM 提供了二个功能：</p>
+<ol>
+<li>实现语言层面的 Java 类</li>
+<li>实现 Java 对象的方法分发(dispatch)功能</li>
+</ol>
+<h3 id="oop-基类"><a href="#oop-基类" class="headerlink" title="oop 基类"></a>oop 基类</h3><p><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/oops/oop.hpp#35" target="_blank" rel="noopener">vm/oops/oop.hpp</a> 第<code>35</code>行，<code>**OopDesc</code>类型都继承自<code>class oopDesc</code>，源码如下：</p>
+<figure class="highlight hpp"><table><tr><td class="gutter"><pre><span class="line">30</span><span class="line">31</span><span class="line">32</span><span class="line">33</span><span class="line">34</span><span class="line">35</span><span class="line">36</span><span class="line">37</span><span class="line">38</span><span class="line">39</span><span class="line">40</span><span class="line">41</span><span class="line">42</span><span class="line">43</span><span class="line">44</span><span class="line">45</span><span class="line">46</span><span class="line">47</span><span class="line">48</span><span class="line">49</span><span class="line">50</span><span class="line">51</span><span class="line">52</span><span class="line">53</span><span class="line">54</span><span class="line">55</span><span class="line">56</span><span class="line">57</span><span class="line">58</span><span class="line">59</span><span class="line">60</span><span class="line">61</span><span class="line">62</span><span class="line">63</span><span class="line">64</span><span class="line">65</span><span class="line">66</span><span class="line">67</span><span class="line">68</span><span class="line">69</span><span class="line">70</span><span class="line">71</span><span class="line">72</span><span class="line">73</span><span class="line">74</span><span class="line">75</span><span class="line">76</span><span class="line">77</span><span class="line">78</span><span class="line">79</span><span class="line">80</span><span class="line">81</span><span class="line">82</span><span class="line">83</span><span class="line">84</span><span class="line">85</span><span class="line">86</span><span class="line">87</span><span class="line">88</span><span class="line">89</span><span class="line">90</span><span class="line">91</span><span class="line">92</span><span class="line">93</span><span class="line">94</span><span class="line">95</span><span class="line">96</span><span class="line">97</span><span class="line">98</span><span class="line">99</span><span class="line">100</span><span class="line">101</span><span class="line">102</span><span class="line">103</span><span class="line">104</span><span class="line">105</span><span class="line">106</span><span class="line">107</span><span class="line">108</span><span class="line">109</span><span class="line">110</span><span class="line">111</span><span class="line">112</span><span class="line">113</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// oopDesc is the top baseclass for objects classes.  The &#123;name&#125;Desc classes describe</span></span><span class="line"><span class="comment">// the format of Java objects so the fields can be accessed from C++.</span></span><span class="line"><span class="comment">// oopDesc is abstract.</span></span><span class="line"><span class="comment">// (see oopHierarchy for complete oop class hierarchy)</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// no virtual functions allowed</span></span><span class="line"></span><span class="line"><span class="comment">// store into oop with store check</span></span><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">void</span> <span class="title">oop_store</span>(<span class="title">T</span>* <span class="title">p</span>, <span class="title">oop</span> <span class="title">v</span>);</span></span><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">void</span> <span class="title">oop_store</span>(<span class="title">volatile</span> <span class="title">T</span>* <span class="title">p</span>, <span class="title">oop</span> <span class="title">v</span>);</span></span><span class="line"></span><span class="line"><span class="keyword">extern</span> <span class="keyword">bool</span> always_do_update_barrier;</span><span class="line"></span><span class="line"><span class="comment">// Forward declarations.</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OopClosure</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ScanClosure</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FastScanClosure</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FilteringClosure</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BarrierSet</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CMSIsAliveClosure</span>;</span></span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PSPromotionManager</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ParCompactionManager</span>;</span></span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">oopDesc</span> &#123;</span></span><span class="line">  <span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">VMStructs</span>;</span></span><span class="line"> <span class="keyword">private</span>:</span><span class="line">  <span class="keyword">volatile</span> markOop  _mark;</span><span class="line">  <span class="keyword">union</span> _metadata &#123;</span><span class="line">    Klass*      _klass;</span><span class="line">    narrowKlass _compressed_klass;</span><span class="line">  &#125; _metadata;</span><span class="line"></span><span class="line">  <span class="comment">// Fast access to barrier set.  Must be initialized.</span></span><span class="line">  <span class="keyword">static</span> BarrierSet* _bs;</span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="function">markOop  <span class="title">mark</span><span class="params">()</span> <span class="keyword">const</span>         </span>&#123; <span class="keyword">return</span> _mark; &#125;</span><span class="line">  <span class="function">markOop* <span class="title">mark_addr</span><span class="params">()</span> <span class="keyword">const</span>    </span>&#123; <span class="keyword">return</span> (markOop*) &amp;_mark; &#125;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_mark</span><span class="params">(<span class="keyword">volatile</span> markOop m)</span>      </span>&#123; _mark = m;   &#125;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">void</span>    <span class="title">release_set_mark</span><span class="params">(markOop m)</span></span>;</span><span class="line">  <span class="function">markOop <span class="title">cas_set_mark</span><span class="params">(markOop new_mark, markOop old_mark)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Used only to re-initialize the mark word (e.g., of promoted</span></span><span class="line">  <span class="comment">// objects during a GC) -- requires a valid klass pointer</span></span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">init_mark</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">  <span class="function">Klass* <span class="title">klass</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function">Klass* <span class="title">klass_or_null</span><span class="params">()</span> <span class="keyword">const</span> <span class="keyword">volatile</span></span>;</span><span class="line">  <span class="function">Klass** <span class="title">klass_addr</span><span class="params">()</span></span>;</span><span class="line">  <span class="function">narrowKlass* <span class="title">compressed_klass_addr</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_klass</span><span class="params">(Klass* k)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// For klass field compression</span></span><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">klass_gap</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_klass_gap</span><span class="params">(<span class="keyword">int</span> z)</span></span>;</span><span class="line">  <span class="comment">// For when the klass pointer is being used as a linked list "next" field.</span></span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_klass_to_list_ptr</span><span class="params">(oop k)</span></span>;</span><span class="line">  <span class="function">oop <span class="title">list_ptr_from_klass</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// size of object header, aligned to platform wordSize</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">header_size</span><span class="params">()</span>          </span>&#123; <span class="keyword">return</span> <span class="keyword">sizeof</span>(oopDesc)/HeapWordSize; &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Returns whether this is an instance of k or an instance of a subclass of k</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_a</span><span class="params">(Klass* k)</span>  <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Returns the actual oop size of the object</span></span><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Sometimes (for complicated concurrency-related reasons), it is useful</span></span><span class="line">  <span class="comment">// to be able to figure out the size of an object knowing its klass.</span></span><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">size_given_klass</span><span class="params">(Klass* klass)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// type test operations (inlined in oop.inline.h)</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_instance</span><span class="params">()</span>            <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_instanceMirror</span><span class="params">()</span>      <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_instanceClassLoader</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_instanceRef</span><span class="params">()</span>         <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_array</span><span class="params">()</span>               <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_objArray</span><span class="params">()</span>            <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_typeArray</span><span class="params">()</span>           <span class="keyword">const</span></span>;</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="Klass-数据结构"><a href="#Klass-数据结构" class="headerlink" title="Klass 数据结构"></a>Klass 数据结构</h2><p><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/oops/klass.hpp#44" target="_blank" rel="noopener">vm/oops/klass.hpp</a> 第<code>44</code>行，<code>Klass</code>类型数据结构说明，源码如下：</p>
+<figure class="highlight hpp"><table><tr><td class="gutter"><pre><span class="line">44</span><span class="line">45</span><span class="line">46</span><span class="line">47</span><span class="line">48</span><span class="line">49</span><span class="line">50</span><span class="line">51</span><span class="line">52</span><span class="line">53</span><span class="line">54</span><span class="line">55</span><span class="line">56</span><span class="line">57</span><span class="line">58</span><span class="line">59</span><span class="line">60</span><span class="line">61</span><span class="line">62</span><span class="line">63</span><span class="line">64</span><span class="line">65</span><span class="line">66</span><span class="line">67</span><span class="line">68</span><span class="line">69</span><span class="line">70</span><span class="line">71</span><span class="line">72</span><span class="line">73</span><span class="line">74</span><span class="line">75</span><span class="line">76</span><span class="line">77</span><span class="line">78</span><span class="line">79</span><span class="line">80</span><span class="line">81</span><span class="line">82</span><span class="line">83</span><span class="line">84</span><span class="line">85</span><span class="line">86</span><span class="line">87</span><span class="line">88</span><span class="line">89</span><span class="line">90</span><span class="line">91</span><span class="line">92</span><span class="line">93</span><span class="line">94</span><span class="line">95</span><span class="line">96</span><span class="line">97</span><span class="line">98</span><span class="line">99</span><span class="line">100</span><span class="line">101</span><span class="line">102</span><span class="line">103</span><span class="line">104</span><span class="line">105</span><span class="line">106</span><span class="line">107</span><span class="line">108</span><span class="line">109</span><span class="line">110</span><span class="line">111</span><span class="line">112</span><span class="line">113</span><span class="line">114</span><span class="line">115</span><span class="line">116</span><span class="line">117</span><span class="line">118</span><span class="line">119</span><span class="line">120</span><span class="line">121</span><span class="line">122</span><span class="line">123</span><span class="line">124</span><span class="line">125</span><span class="line">126</span><span class="line">127</span><span class="line">128</span><span class="line">129</span><span class="line">130</span><span class="line">131</span><span class="line">132</span><span class="line">133</span><span class="line">134</span><span class="line">135</span><span class="line">136</span><span class="line">137</span><span class="line">138</span><span class="line">139</span><span class="line">140</span><span class="line">141</span><span class="line">142</span><span class="line">143</span><span class="line">144</span><span class="line">145</span><span class="line">146</span><span class="line">147</span><span class="line">148</span><span class="line">149</span><span class="line">150</span><span class="line">151</span><span class="line">152</span><span class="line">153</span><span class="line">154</span><span class="line">155</span><span class="line">156</span><span class="line">157</span><span class="line">158</span><span class="line">159</span><span class="line">160</span><span class="line">161</span><span class="line">162</span><span class="line">163</span><span class="line">164</span><span class="line">165</span><span class="line">166</span><span class="line">167</span><span class="line">168</span><span class="line">169</span><span class="line">170</span><span class="line">171</span><span class="line">172</span><span class="line">173</span><span class="line">174</span><span class="line">175</span><span class="line">176</span><span class="line">177</span></pre></td><td class="code"><pre><span class="line">/</span><span class="line"><span class="comment">// A Klass provides:</span></span><span class="line"><span class="comment">//  1: language level class object (method dictionary etc.)</span></span><span class="line"><span class="comment">//  2: provide vm dispatch behavior for the object</span></span><span class="line"><span class="comment">// Both functions are combined into one C++ class.</span></span><span class="line"></span><span class="line"><span class="comment">// One reason for the oop/klass dichotomy in the implementation is</span></span><span class="line"><span class="comment">// that we don't want a C++ vtbl pointer in every object.  Thus,</span></span><span class="line"><span class="comment">// normal oops don't have any virtual functions.  Instead, they</span></span><span class="line"><span class="comment">// forward all "virtual" functions to their klass, which does have</span></span><span class="line"><span class="comment">// a vtbl and does the C++ dispatch depending on the object's</span></span><span class="line"><span class="comment">// actual type.  (See oop.inline.hpp for some of the forwarding code.)</span></span><span class="line"><span class="comment">// ALL FUNCTIONS IMPLEMENTING THIS DISPATCH ARE PREFIXED WITH "oop_"!</span></span><span class="line"></span><span class="line"><span class="comment">//  Klass layout:</span></span><span class="line"><span class="comment">//    [C++ vtbl ptr  ] (contained in Metadata)</span></span><span class="line"><span class="comment">//    [layout_helper ]</span></span><span class="line"><span class="comment">//    [super_check_offset   ] for fast subtype checks</span></span><span class="line"><span class="comment">//    [name          ]</span></span><span class="line"><span class="comment">//    [secondary_super_cache] for fast subtype checks</span></span><span class="line"><span class="comment">//    [secondary_supers     ] array of 2ndary supertypes</span></span><span class="line"><span class="comment">//    [primary_supers 0]</span></span><span class="line"><span class="comment">//    [primary_supers 1]</span></span><span class="line"><span class="comment">//    [primary_supers 2]</span></span><span class="line"><span class="comment">//    ...</span></span><span class="line"><span class="comment">//    [primary_supers 7]</span></span><span class="line"><span class="comment">//    [java_mirror   ]</span></span><span class="line"><span class="comment">//    [super         ]</span></span><span class="line"><span class="comment">//    [subklass      ] first subclass</span></span><span class="line"><span class="comment">//    [next_sibling  ] link to chain additional subklasses</span></span><span class="line"><span class="comment">//    [next_link     ]</span></span><span class="line"><span class="comment">//    [class_loader_data]</span></span><span class="line"><span class="comment">//    [modifier_flags]</span></span><span class="line"><span class="comment">//    [access_flags  ]</span></span><span class="line"><span class="comment">//    [last_biased_lock_bulk_revocation_time] (64 bits)</span></span><span class="line"><span class="comment">//    [prototype_header]</span></span><span class="line"><span class="comment">//    [biased_lock_revocation_count]</span></span><span class="line"><span class="comment">//    [_modified_oops]</span></span><span class="line"><span class="comment">//    [_accumulated_modified_oops]</span></span><span class="line"><span class="comment">//    [trace_id]</span></span><span class="line"></span><span class="line"></span><span class="line"><span class="comment">// Forward declarations.</span></span><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Array</span>;</span></span><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">GrowableArray</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassLoaderData</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">klassVtable</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ParCompactionManager</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KlassSizeStats</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">fieldDescriptor</span>;</span></span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Klass</span> :</span> <span class="keyword">public</span> Metadata &#123;</span><span class="line">  <span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">VMStructs</span>;</span></span><span class="line"> <span class="keyword">protected</span>:</span><span class="line">  <span class="comment">// note: put frequently-used fields together at start of klass structure</span></span><span class="line">  <span class="comment">// for better cache behavior (may not make much of a difference but sure won't hurt)</span></span><span class="line">  <span class="keyword">enum</span> &#123; _primary_super_limit = <span class="number">8</span> &#125;;</span><span class="line"></span><span class="line">  <span class="comment">// The "layout helper" is a combined descriptor of object layout.</span></span><span class="line">  <span class="comment">// For klasses which are neither instance nor array, the value is zero.</span></span><span class="line">  <span class="comment">//</span></span><span class="line">  <span class="comment">// For instances, layout helper is a positive number, the instance size.</span></span><span class="line">  <span class="comment">// This size is already passed through align_object_size and scaled to bytes.</span></span><span class="line">  <span class="comment">// The low order bit is set if instances of this class cannot be</span></span><span class="line">  <span class="comment">// allocated using the fastpath.</span></span><span class="line">  <span class="comment">//</span></span><span class="line">  <span class="comment">// For arrays, layout helper is a negative number, containing four</span></span><span class="line">  <span class="comment">// distinct bytes, as follows:</span></span><span class="line">  <span class="comment">//    MSB:[tag, hsz, ebt, log2(esz)]:LSB</span></span><span class="line">  <span class="comment">// where:</span></span><span class="line">  <span class="comment">//    tag is 0x80 if the elements are oops, 0xC0 if non-oops</span></span><span class="line">  <span class="comment">//    hsz is array header size in bytes (i.e., offset of first element)</span></span><span class="line">  <span class="comment">//    ebt is the BasicType of the elements</span></span><span class="line">  <span class="comment">//    esz is the element size in bytes</span></span><span class="line">  <span class="comment">// This packed word is arranged so as to be quickly unpacked by the</span></span><span class="line">  <span class="comment">// various fast paths that use the various subfields.</span></span><span class="line">  <span class="comment">//</span></span><span class="line">  <span class="comment">// The esz bits can be used directly by a SLL instruction, without masking.</span></span><span class="line">  <span class="comment">//</span></span><span class="line">  <span class="comment">// Note that the array-kind tag looks like 0x00 for instance klasses,</span></span><span class="line">  <span class="comment">// since their length in bytes is always less than 24Mb.</span></span><span class="line">  <span class="comment">//</span></span><span class="line">  <span class="comment">// Final note:  This comes first, immediately after C++ vtable,</span></span><span class="line">  <span class="comment">// because it is frequently queried.</span></span><span class="line">  jint        _layout_helper;</span><span class="line"></span><span class="line">  <span class="comment">// The fields _super_check_offset, _secondary_super_cache, _secondary_supers</span></span><span class="line">  <span class="comment">// and _primary_supers all help make fast subtype checks.  See big discussion</span></span><span class="line">  <span class="comment">// in doc/server_compiler/checktype.txt</span></span><span class="line">  <span class="comment">//</span></span><span class="line">  <span class="comment">// Where to look to observe a supertype (it is &amp;_secondary_super_cache for</span></span><span class="line">  <span class="comment">// secondary supers, else is &amp;_primary_supers[depth()].</span></span><span class="line">  juint       _super_check_offset;</span><span class="line"></span><span class="line">  <span class="comment">// Class name.  Instance classes: java/lang/String, etc.  Array classes: [I,</span></span><span class="line">  <span class="comment">// [Ljava/lang/String;, etc.  Set to zero for all other kinds of classes.</span></span><span class="line">  Symbol*     _name;</span><span class="line"></span><span class="line">  <span class="comment">// Cache of last observed secondary supertype</span></span><span class="line">  Klass*      _secondary_super_cache;</span><span class="line">  <span class="comment">// Array of all secondary supertypes</span></span><span class="line">  Array&lt;Klass*&gt;* _secondary_supers;</span><span class="line">  <span class="comment">// Ordered list of all primary supertypes</span></span><span class="line">  Klass*      _primary_supers[_primary_super_limit];</span><span class="line">  <span class="comment">// java/lang/Class instance mirroring this class</span></span><span class="line">  oop       _java_mirror;</span><span class="line">  <span class="comment">// Superclass</span></span><span class="line">  Klass*      _super;</span><span class="line">  <span class="comment">// First subclass (NULL if none); _subklass-&gt;next_sibling() is next one</span></span><span class="line">  Klass*      _subklass;</span><span class="line">  <span class="comment">// Sibling link (or NULL); links all subklasses of a klass</span></span><span class="line">  Klass*      _next_sibling;</span><span class="line"></span><span class="line">  <span class="comment">// All klasses loaded by a class loader are chained through these links</span></span><span class="line">  Klass*      _next_link;</span><span class="line"></span><span class="line">  <span class="comment">// The VM's representation of the ClassLoader used to load this class.</span></span><span class="line">  <span class="comment">// Provide access the corresponding instance java.lang.ClassLoader.</span></span><span class="line">  ClassLoaderData* _class_loader_data;</span><span class="line"></span><span class="line">  jint        _modifier_flags;  <span class="comment">// Processed access flags, for use by Class.getModifiers.</span></span><span class="line">  AccessFlags _access_flags;    <span class="comment">// Access flags. The class/interface distinction is stored here.</span></span><span class="line"></span><span class="line">  <span class="comment">// Biased locking implementation and statistics</span></span><span class="line">  <span class="comment">// (the 64-bit chunk goes first, to avoid some fragmentation)</span></span><span class="line">  jlong    _last_biased_lock_bulk_revocation_time;</span><span class="line">  markOop  _prototype_header;   <span class="comment">// Used when biased locking is both enabled and disabled for this type</span></span><span class="line">  jint     _biased_lock_revocation_count;</span><span class="line"></span><span class="line">  TRACE_DEFINE_KLASS_TRACE_ID;</span><span class="line"></span><span class="line">  <span class="comment">// Remembered sets support for the oops in the klasses.</span></span><span class="line">  jbyte _modified_oops;             <span class="comment">// Card Table Equivalent (YC/CMS support)</span></span><span class="line">  jbyte _accumulated_modified_oops; <span class="comment">// Mod Union Equivalent (CMS support)</span></span></pre></td></tr></table></figure>
+<h3 id="instanceKlass"><a href="#instanceKlass" class="headerlink" title="instanceKlass"></a>instanceKlass</h3><p><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/oops/instanceKlass.hpp#43" target="_blank" rel="noopener">vm/oops/instanceKlass.hpp</a> 第<code>43</code>行，<code>instanceKlass</code>是 JVM 中 Java 类的对等体，<code>instanceKlass</code>类型数据结构说明，源码如下：</p>
+<figure class="highlight hpp"><table><tr><td class="gutter"><pre><span class="line">43</span><span class="line">44</span><span class="line">45</span><span class="line">46</span><span class="line">47</span><span class="line">48</span><span class="line">49</span><span class="line">50</span><span class="line">51</span><span class="line">52</span><span class="line">53</span><span class="line">54</span><span class="line">55</span><span class="line">56</span><span class="line">57</span><span class="line">58</span><span class="line">59</span><span class="line">60</span><span class="line">61</span><span class="line">62</span><span class="line">63</span><span class="line">64</span><span class="line">65</span><span class="line">66</span><span class="line">67</span><span class="line">68</span><span class="line">69</span><span class="line">70</span><span class="line">71</span><span class="line">72</span><span class="line">73</span><span class="line">74</span><span class="line">75</span><span class="line">76</span><span class="line">77</span><span class="line">78</span><span class="line">79</span><span class="line">80</span><span class="line">81</span><span class="line">82</span><span class="line">83</span><span class="line">84</span><span class="line">85</span><span class="line">86</span><span class="line">87</span><span class="line">88</span><span class="line">89</span><span class="line">90</span><span class="line">91</span><span class="line">92</span><span class="line">93</span><span class="line">94</span><span class="line">95</span><span class="line">96</span><span class="line">97</span><span class="line">98</span><span class="line">99</span><span class="line">100</span><span class="line">101</span><span class="line">102</span><span class="line">103</span><span class="line">104</span><span class="line">105</span><span class="line">106</span><span class="line">107</span><span class="line">108</span><span class="line">109</span><span class="line">110</span><span class="line">111</span><span class="line">112</span><span class="line">113</span><span class="line">114</span><span class="line">115</span><span class="line">116</span><span class="line">117</span><span class="line">118</span><span class="line">119</span><span class="line">120</span><span class="line">121</span><span class="line">122</span><span class="line">123</span><span class="line">124</span><span class="line">125</span><span class="line">126</span><span class="line">127</span><span class="line">128</span><span class="line">129</span><span class="line">130</span><span class="line">131</span><span class="line">132</span><span class="line">133</span><span class="line">134</span><span class="line">135</span><span class="line">136</span><span class="line">137</span><span class="line">138</span><span class="line">139</span><span class="line">140</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// An InstanceKlass is the VM level representation of a Java class.</span></span><span class="line"><span class="comment">// It contains all information needed for at class at execution runtime.</span></span><span class="line"></span><span class="line"><span class="comment">//  InstanceKlass layout:</span></span><span class="line"><span class="comment">//    [C++ vtbl pointer           ] Klass</span></span><span class="line"><span class="comment">//    [subtype cache              ] Klass</span></span><span class="line"><span class="comment">//    [instance size              ] Klass</span></span><span class="line"><span class="comment">//    [java mirror                ] Klass</span></span><span class="line"><span class="comment">//    [super                      ] Klass</span></span><span class="line"><span class="comment">//    [access_flags               ] Klass</span></span><span class="line"><span class="comment">//    [name                       ] Klass</span></span><span class="line"><span class="comment">//    [first subklass             ] Klass</span></span><span class="line"><span class="comment">//    [next sibling               ] Klass</span></span><span class="line"><span class="comment">//    [array klasses              ]</span></span><span class="line"><span class="comment">//    [methods                    ]</span></span><span class="line"><span class="comment">//    [local interfaces           ]</span></span><span class="line"><span class="comment">//    [transitive interfaces      ]</span></span><span class="line"><span class="comment">//    [fields                     ]</span></span><span class="line"><span class="comment">//    [constants                  ]</span></span><span class="line"><span class="comment">//    [class loader               ]</span></span><span class="line"><span class="comment">//    [source file name           ]</span></span><span class="line"><span class="comment">//    [inner classes              ]</span></span><span class="line"><span class="comment">//    [static field size          ]</span></span><span class="line"><span class="comment">//    [nonstatic field size       ]</span></span><span class="line"><span class="comment">//    [static oop fields size     ]</span></span><span class="line"><span class="comment">//    [nonstatic oop maps size    ]</span></span><span class="line"><span class="comment">//    [has finalize method        ]</span></span><span class="line"><span class="comment">//    [deoptimization mark bit    ]</span></span><span class="line"><span class="comment">//    [initialization state       ]</span></span><span class="line"><span class="comment">//    [initializing thread        ]</span></span><span class="line"><span class="comment">//    [Java vtable length         ]</span></span><span class="line"><span class="comment">//    [oop map cache (stack maps) ]</span></span><span class="line"><span class="comment">//    [EMBEDDED Java vtable             ] size in words = vtable_len</span></span><span class="line"><span class="comment">//    [EMBEDDED nonstatic oop-map blocks] size in words = nonstatic_oop_map_size</span></span><span class="line"><span class="comment">//      The embedded nonstatic oop-map blocks are short pairs (offset, length)</span></span><span class="line"><span class="comment">//      indicating where oops are located in instances of this klass.</span></span><span class="line"><span class="comment">//    [EMBEDDED implementor of the interface] only exist for interface</span></span><span class="line"><span class="comment">//    [EMBEDDED host klass        ] only exist for an anonymous class (JSR 292 enabled)</span></span><span class="line"></span><span class="line"></span><span class="line"><span class="comment">// forward declaration for class -- see below for definition</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SuperTypeClosure</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JNIid</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">jniIdMapBase</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BreakpointInfo</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">fieldDescriptor</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DepChange</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">nmethodBucket</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JvmtiCachedClassFieldMap</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MemberNameTable</span>;</span></span><span class="line"></span><span class="line"><span class="comment">// This is used in iterators below.</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FieldClosure</span>:</span> <span class="keyword">public</span> StackObj &#123;</span><span class="line"><span class="keyword">public</span>:</span><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">do_field</span><span class="params">(fieldDescriptor* fd)</span> </span>= <span class="number">0</span>;</span><span class="line">&#125;;</span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> PRODUCT</span></span><span class="line"><span class="comment">// Print fields.</span></span><span class="line"><span class="comment">// If "obj" argument to constructor is NULL, prints static fields, otherwise prints non-static fields.</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FieldPrinter</span>:</span> <span class="keyword">public</span> FieldClosure &#123;</span><span class="line">   oop _obj;</span><span class="line">   outputStream* _st;</span><span class="line"> <span class="keyword">public</span>:</span><span class="line">   FieldPrinter(outputStream* st, oop obj = <span class="literal">NULL</span>) : _obj(obj), _st(st) &#123;&#125;</span><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">do_field</span><span class="params">(fieldDescriptor* fd)</span></span>;</span><span class="line">&#125;;</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span>  <span class="comment">// !PRODUCT</span></span></span><span class="line"></span><span class="line"><span class="comment">// ValueObjs embedded in klass. Describes where oops are located in instances of</span></span><span class="line"><span class="comment">// this klass.</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OopMapBlock</span> <span class="title">VALUE_OBJ_CLASS_SPEC</span> &#123;</span></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="comment">// Byte offset of the first oop mapped by this block.</span></span><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">offset</span><span class="params">()</span> <span class="keyword">const</span>          </span>&#123; <span class="keyword">return</span> _offset; &#125;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_offset</span><span class="params">(<span class="keyword">int</span> offset)</span> </span>&#123; _offset = offset; &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Number of oops in this block.</span></span><span class="line">  <span class="function">uint <span class="title">count</span><span class="params">()</span> <span class="keyword">const</span>         </span>&#123; <span class="keyword">return</span> _count; &#125;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_count</span><span class="params">(uint count)</span> </span>&#123; _count = count; &#125;</span><span class="line"></span><span class="line">  <span class="comment">// sizeof(OopMapBlock) in HeapWords.</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> <span class="title">size_in_words</span><span class="params">()</span> </span>&#123;</span><span class="line">    <span class="keyword">return</span> align_size_up(<span class="keyword">int</span>(<span class="keyword">sizeof</span>(OopMapBlock)), HeapWordSize) &gt;&gt;</span><span class="line">      LogHeapWordSize;</span><span class="line">  &#125;</span><span class="line"></span><span class="line"> <span class="keyword">private</span>:</span><span class="line">  <span class="keyword">int</span>  _offset;</span><span class="line">  uint _count;</span><span class="line">&#125;;</span><span class="line"></span><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">JvmtiCachedClassFileData</span>;</span></span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InstanceKlass</span>:</span> <span class="keyword">public</span> Klass &#123;</span><span class="line">  <span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">VMStructs</span>;</span></span><span class="line">  <span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassFileParser</span>;</span></span><span class="line">  <span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">CompileReplay</span>;</span></span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/oops/oop.hpp#35" target="_blank" rel="noopener">vm/oops/oop.hpp</a></li>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/oops/klass.hpp#44" target="_blank" rel="noopener">vm/oops/klass.hpp</a></li>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/oops/instanceKlass.hpp#43" target="_blank" rel="noopener">vm/oops/instanceKlass.hpp</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/08/04/hotspot-source-code-class-file-parse.html" rel="next" title="hotspot source code - class file parse">
+                <i class="fa fa-chevron-left"></i>
+                hotspot source code - class file parse
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/08/04/hotspot-source-code-mark-word.html" rel="prev" title="hotspot source code - mark word">
+                <i class="fa fa-chevron-right"></i>
+                hotspot source code - mark word
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OOP-Klass-二分模型"><span class="nav-number">1.</span> <span class="nav-text">OOP-Klass 二分模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#oop-基类"><span class="nav-number">1.1.</span> <span class="nav-text">oop 基类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Klass-数据结构"><span class="nav-number">2.</span> <span class="nav-text">Klass 数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#instanceKlass"><span class="nav-number">2.1.</span> <span class="nav-text">instanceKlass</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

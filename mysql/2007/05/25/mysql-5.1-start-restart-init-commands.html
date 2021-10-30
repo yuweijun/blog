@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="在安装目录下运行:">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql-5.1 启动关闭和重启命令并添加系统启动项">
-<meta property="og:url" content="https://www.4e00.com/mysql/2007/05/25/mysql-5.1-start-restart-init-commands.html">
+<meta property="og:url" content="http://www.4e00.com/mysql/2007/05/25/mysql-5.1-start-restart-init-commands.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="在安装目录下运行:">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.133Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.021Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql-5.1 启动关闭和重启命令并添加系统启动项">
 <meta name="twitter:description" content="在安装目录下运行:">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/mysql/2007/05/25/mysql-5.1-start-restart-init-commands.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/mysql/2007/05/25/mysql-5.1-start-restart-init-commands.html">
 
   <title> mysql-5.1 启动关闭和重启命令并添加系统启动项 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/mysql/" itemprop="url" rel="index">
                     <span itemprop="name">mysql</span>
                   </a>
@@ -256,19 +256,19 @@
       
         <p>在安装目录下运行:</p>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">support-files</span>/mysql.server start</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">support-files</span>/mysql.server stop</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">support-files</span>/mysql.server restart</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">support-files</span>/mysql.server reload</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">support-files</span>/mysql.server start</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">support-files</span>/mysql.server stop</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">support-files</span>/mysql.server restart</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">support-files</span>/mysql.server reload</span></pre></td></tr></table></figure>
 <p>执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cp</span> support-files/mysql.server /etc/init.d/mysql</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">chmod</span> +x /etc/init.d/mysql</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cp</span> support-files/mysql.server /etc/init.d/mysql</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">chmod</span> +x /etc/init.d/mysql</span></pre></td></tr></table></figure>
 <p>旧的Red Hat系统使用<code>/etc/rc.d/init.d</code>目录，不使用<code>/etc/init.d</code>。相应地调节前面的命令。<br>后即安装了mysql server以便自己重启和关闭。<br>安装脚本后，用来激活它以便在系统启动时运行所需要的命令取决于你的操作系统。在Linux中，你可以使用<code>chkconfig</code>：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">chkconfig</span> --list mysql</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">chkconfig</span> --list mysql</span></pre></td></tr></table></figure>
 <p>mysql 服务支持<code>chkconfig</code>，但它在任何级别中都没有被引用(运行<code>chkconfig --add mysql</code>)</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">chkconfig</span> --add mysql</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">chkconfig</span> --add mysql</span></pre></td></tr></table></figure>
 <p>再用list查看：<br>mysql 0:关闭 1:关闭 2:启用 3:启用 4:启用 5:启用 6:关闭</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">ntsysv</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ntsysv</span></span></pre></td></tr></table></figure>
 <p>可以看到 [ * ] mysql 这一行，表示开机后会自动启动mysql server。<br>在一些Linux系统中，还需要下面的命令来完全激活MySQL脚本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">chkconfig</span> --level 345 mysql on</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">chkconfig</span> --level 345 mysql on</span></pre></td></tr></table></figure>
 <p>便可以用：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">service</span> mysql start</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">service</span> mysql stop</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">service</span> mysql restart</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">service</span> mysql start</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">service</span> mysql stop</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">service</span> mysql restart</span></pre></td></tr></table></figure>
 <p>控制mysql server(不同Linux分发版本这个命令不一样)。</p>
 <p>另外上面的内容是基于mysql-5.1二进制分发版操作，源码包里support-files文件夹下面有的是mysql.server.sh，这个文件就算按上面一样操作也是不能启动mysql server的，需要make之后用mysql安装目录下生成的share/mysql/mysql.server按照上面的操作执行后即可以，直接用二进制分发包里提供的mysql.server也可以。</p>
 
@@ -297,7 +297,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/mysql/2007/05/24/mysql-configure-command-parameters.html" rel="next" title="mysql configure 安装参数及其查看方法">
-                上一篇：mysql configure 安装参数及其查看方法
+                <i class="fa fa-chevron-left"></i>
+                mysql configure 安装参数及其查看方法
               </a>
             
           </div>
@@ -305,7 +306,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/mysql/2007/05/26/mysqld-safe-defaults-file-option.html" rel="prev" title="mysqld_safe 启动选项文件使用说明">
-                下一篇：mysqld_safe 启动选项文件使用说明
+                <i class="fa fa-chevron-right"></i>
+                mysqld_safe 启动选项文件使用说明
               </a>
             
           </div>
@@ -354,7 +356,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -365,16 +367,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -456,10 +456,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

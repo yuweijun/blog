@@ -1,0 +1,587 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="本文通过几个简单示例了解一下java局部变量定义的作用域scope，变量名字的遮蔽shadowing和简单名的遮掩obscuring，这2者具体区别下面会示例说明，先说一下规范里定义的2个名词：简单名和限定名。 Simple Name and Qualified Namejava中的name可以被用来引用在程序中声明的实体entity，其有两种形式：简单名和限定名，即Simple Name和Qua">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java names shadowing and obscuring">
+<meta property="og:url" content="http://www.4e00.com/java/2018/01/21/java-names-shadowing-and-obscuring.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="本文通过几个简单示例了解一下java局部变量定义的作用域scope，变量名字的遮蔽shadowing和简单名的遮掩obscuring，这2者具体区别下面会示例说明，先说一下规范里定义的2个名词：简单名和限定名。 Simple Name and Qualified Namejava中的name可以被用来引用在程序中声明的实体entity，其有两种形式：简单名和限定名，即Simple Name和Qua">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.126Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java names shadowing and obscuring">
+<meta name="twitter:description" content="本文通过几个简单示例了解一下java局部变量定义的作用域scope，变量名字的遮蔽shadowing和简单名的遮掩obscuring，这2者具体区别下面会示例说明，先说一下规范里定义的2个名词：简单名和限定名。 Simple Name and Qualified Namejava中的name可以被用来引用在程序中声明的实体entity，其有两种形式：简单名和限定名，即Simple Name和Qua">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/01/21/java-names-shadowing-and-obscuring.html">
+
+  <title> java names shadowing and obscuring | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java names shadowing and obscuring
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-01-21T10:27:25+08:00" content="2018-01-21">
+              2018-01-21
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文通过几个简单示例了解一下java局部变量定义的作用域<code>scope</code>，变量名字的遮蔽<code>shadowing</code>和简单名的遮掩<code>obscuring</code>，这2者具体区别下面会示例说明，先说一下规范里定义的2个名词：简单名和限定名。</p>
+<h2 id="Simple-Name-and-Qualified-Name"><a href="#Simple-Name-and-Qualified-Name" class="headerlink" title="Simple Name and Qualified Name"></a>Simple Name and Qualified Name</h2><p>java中的<code>name</code>可以被用来引用在程序中声明的实体<code>entity</code>，其有两种形式：简单名和限定名，即<code>Simple Name</code>和<code>Qualified Name</code>。</p>
+<ol>
+<li>简单名是单个的标识符。</li>
+<li>限定名是由一个名字，一个<code>.</code>号，再一个标识符组成。</li>
+</ol>
+<p>完全限定名为<code>Fully Qualified Name</code>，缩写即<code>FQN</code>，该名字在整个命名空间中具有唯一性，局部类没有完全限定名。</p>
+<blockquote>
+<p>Every primitive type, named package, top level class, and top level interface has a fully qualified name.</p>
+</blockquote>
+<h2 id="局部变量声明及其初始化"><a href="#局部变量声明及其初始化" class="headerlink" title="局部变量声明及其初始化"></a>局部变量声明及其初始化</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VariableNamesScope</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> x; <span class="comment">// 类加载之后 x 被初始化为0</span></span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        <span class="comment">// 类变量 x 已经被局部变量 x 遮蔽(shadowed)了</span></span><span class="line">        <span class="comment">// int x = x; // 编译错误</span></span><span class="line"></span><span class="line">        <span class="keyword">int</span> y;</span><span class="line">        y = <span class="number">2</span>;</span><span class="line">        y = y * <span class="number">3</span>;</span><span class="line">        System.out.println(<span class="string">"y = "</span> + y); <span class="comment">// y = 6</span></span><span class="line"></span><span class="line">        <span class="keyword">int</span> x = (x = <span class="number">2</span>) * <span class="number">3</span>, w = x * <span class="number">4</span>; <span class="comment">// 局部变量 x 在使用之前已经被赋值了</span></span><span class="line">        System.out.println(<span class="string">"x = "</span> + x); <span class="comment">// x = 6</span></span><span class="line">        System.out.println(<span class="string">"w = "</span> + w); <span class="comment">// w = 24</span></span><span class="line">        System.out.println(<span class="string">"VariableNamesScope.x = "</span> + VariableNamesScope.x);</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>上述代码运行后，结果如下：</p>
+<blockquote>
+<p>y = 6<br>x = 6<br>w = 24<br>VariableNamesScope.x = 0</p>
+</blockquote>
+<p>其中代码<code>int x = x;</code>这句编译错误，因为局部变量<code>x</code>已经遮蔽了类变量<code>x</code>，此时的<code>x</code>并没有被初始化，作为右值进行赋值是错误的。</p>
+<p>在某个块中的局部变量声明的作用域，是在该声明所在的块中的剩余部分，从它的初始化语句开始，包括变量声明语句中右侧出现的此变量声明。所以上述代码<code>int x = (x = 2) * 3</code>中的局部变量<code>x</code>在使用之前已经被初始化赋值为2，然后再乘以3，所以可以编译通过。</p>
+<a id="more"></a>
+<h2 id="子作用域中的局部变量"><a href="#子作用域中的局部变量" class="headerlink" title="子作用域中的局部变量"></a>子作用域中的局部变量</h2><p>java中变量只在声明的作用域内起作用，如<code>{}</code>代码块声明的变量，<code>for</code>语句中声明的变量，<code>catch</code>子句中声明的变量，以及<code>lambda</code>表达式中声明的变量，都与代码块外部共享变量名，如果外部已经有此变量声明，在这些子作用域内声明同名变量，则会报编译错误。</p>
+<p>不过在局部类或者匿名类中，则可以对相同的变量名再次声明，并因此对其外部声明的各种变量名产生了遮蔽效果，不能再使用简单的变量名直接引用，同时内部类类名不能与其外部类类名相同。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NameBlockScope</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        &#123;</span><span class="line">            <span class="keyword">int</span> i = <span class="number">1</span>;</span><span class="line">        &#125;</span><span class="line">        <span class="comment">// 上面这句语句中定义的变量只在其所在的代码块中生效，所以下面的语句会报编译错误</span></span><span class="line">        <span class="comment">// System.out.println(i); // cannot resolve symbol i</span></span><span class="line"></span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><span class="line">            <span class="comment">// i 只在其声明之后有效，在此for语句之后就立即失效</span></span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i : <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;) &#123;</span><span class="line">            <span class="comment">// i 只在其声明之后有效，在此for语句之后就立即失效</span></span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="comment">// lambda 表达式与上面 for 循环一样的道理</span></span><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><span class="line">            <span class="keyword">int</span> i = <span class="number">0</span>;</span><span class="line">            <span class="keyword">int</span> NameBlockScope = <span class="number">2</span>; <span class="comment">// 局部变量名遮掩了类名 obscuring</span></span><span class="line">            System.out.println(i);</span><span class="line">            System.out.println(NameBlockScope);</span><span class="line">        &#125;).start();</span><span class="line"></span><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><span class="line">        <span class="comment">// for (int i = 0; i &lt; 5; i++) &#123;&#125; // i 在for循环外面已经定义，因此报编译错误</span></span><span class="line"></span><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><span class="line">            <span class="meta">@Override</span></span><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">                <span class="keyword">int</span> i = <span class="number">1</span>;</span><span class="line">                <span class="keyword">int</span> NameBlockScope = <span class="number">2</span>; <span class="comment">// 变量名遮掩 obscuring</span></span><span class="line">                System.out.println(i); <span class="comment">// 变量名遮蔽 shadowing</span></span><span class="line">                System.out.println(NameBlockScope);</span><span class="line">            &#125;</span><span class="line">        &#125;).start();</span><span class="line"></span><span class="line">        <span class="keyword">try</span> &#123;</span><span class="line">            TimeUnit.MILLISECONDS.sleep(<span class="number">10</span>);</span><span class="line">        <span class="comment">// &#125; catch (InterruptedException i) &#123; // 编译错误，变量i在前面已经声明</span></span><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><span class="line">            <span class="comment">// 不能声明此变量，在catch子句中已经声明了此变量e</span></span><span class="line">            <span class="comment">// Exception e; // 编译错误</span></span><span class="line">            e.printStackTrace();</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        String System = <span class="string">""</span>;</span><span class="line">        <span class="comment">// System.out.println("Hello World"); // 编译错误，System is obscured by the local variable.</span></span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span><span class="line"></span></pre></td></tr></table></figure>
+<h2 id="Names-Shadow-and-Obscure"><a href="#Names-Shadow-and-Obscure" class="headerlink" title="Names Shadow and Obscure"></a>Names Shadow and Obscure</h2><p>从上面的2个例子简单说一下java中变量名字的遮蔽和遮掩：</p>
+<ol>
+<li>Shadowing: 在一个闭合的文本范围之内，某些变量的声明在其作用域之内被其他同名的变量声明所<code>遮蔽</code>，这时简单名就不能引用其声明的实体了。</li>
+<li>Obscuring: 一个简单名可以被解释为变量名，类型名或者包名，在相同上下文中，变量名优于类型名，类型名优于包名，这就是名字声明的<code>遮掩</code>，如上示例中的变量名<code>NameBlockScope</code>和<code>System</code>就产生了<code>obscuring</code>的效果。</li>
+<li>Hiding: 一个简单名可以被隐藏，即子类的类变量隐藏(<code>hiding</code>)超类的类变量，通常也简单的说覆写了超类的类变量，子类覆写超类相同签名的方法一般使用重写<code>overrided</code>这个说法，同理子类实例属性会隐藏超类的实例属性，<code>hiding</code>与上述变量名字的<code>shadowing</code>和<code>obsucring</code>不同，并不局限于一个闭合的上下文之内。</li>
+</ol>
+<h3 id="类型声明被内部类所遮蔽"><a href="#类型声明被内部类所遮蔽" class="headerlink" title="类型声明被内部类所遮蔽"></a>类型声明被内部类所遮蔽</h3><p>内部类<code>HashMap&lt;K, V&gt;</code>遮蔽了jdk的工具类<code>java.util.HashMap&lt;K, V&gt;</code>，内部类方法声明遮蔽外部类方法声明<code>shadowing</code>，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassNameShadowing</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        HashMap&lt;Integer, String&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><span class="line">        map.put(<span class="number">1</span>, map.getClass().getCanonicalName());</span><span class="line">        System.out.println(map.get(<span class="number">1</span>));</span><span class="line"></span><span class="line">        ClassNameShadowing classNameShadowing = <span class="keyword">new</span> ClassNameShadowing();</span><span class="line">        MethodNameShadowing methodNameShadowing = classNameShadowing.<span class="keyword">new</span> MethodNameShadowing();</span><span class="line">        methodNameShadowing.print();</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><span class="line">        System.out.println(<span class="string">"method in "</span> + getClass().getCanonicalName());</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">shadowing</span><span class="params">()</span> </span>&#123;</span><span class="line">        System.out.println(<span class="string">"shadowing in "</span> + getClass().getCanonicalName());</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodNameShadowing</span> </span>&#123;</span><span class="line"></span><span class="line">        <span class="comment">/**</span></span><span class="line"><span class="comment">         * 内部类方法名声明遮蔽外部类方法名声明</span></span><span class="line"><span class="comment">         */</span></span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">shadowing</span><span class="params">()</span> </span>&#123;</span><span class="line">            System.out.println(<span class="string">"shadowing in "</span> + getClass().getCanonicalName());</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><span class="line">            method();</span><span class="line">            shadowing();</span><span class="line">            ClassNameShadowing.<span class="keyword">this</span>.shadowing();</span><span class="line">        &#125;</span><span class="line"></span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HashMap</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> Map&lt;K, V&gt; map = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</span><span class="line">        <span class="keyword">return</span> map.put(key, value);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(K key)</span> </span>&#123;</span><span class="line">        <span class="keyword">return</span> map.get(key);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="实例属性遮蔽示例"><a href="#实例属性遮蔽示例" class="headerlink" title="实例属性遮蔽示例"></a>实例属性遮蔽示例</h3><p>关键字<code>this</code>也常用来访问被遮蔽的实例属性<code>xxx</code>，即使用<code>this.xxx</code>的形式，主要用在构造器和<code>setXxx</code>方法中。如下形式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> String name;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(<span class="keyword">int</span> id, String name)</span> </span>&#123;</span><span class="line">        <span class="keyword">this</span>.id = id;</span><span class="line">        <span class="keyword">this</span>.name = name;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">return</span> id;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><span class="line">        <span class="keyword">this</span>.id = id;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">return</span> name;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><span class="line">        <span class="keyword">this</span>.name = name;</span><span class="line">    &#125;</span><span class="line">    </span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-6.html#jls-6.4.2" target="_blank" rel="noopener">6.4. Shadowing and Obscuring</a></li>
+<li><a href="http://programming.guide/java/overloading-overriding-shadowing-hiding-obscuring.html" target="_blank" rel="noopener">Java concepts explained: Overloading, overriding, shadowing, hiding, and obscuring</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2017/12/07/spring-boot-guide.html" rel="next" title="spring boot guide">
+                <i class="fa fa-chevron-left"></i>
+                spring boot guide
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/01/25/statement-cancelled-due-to-timeout-or-client-request.html" rel="prev" title="mysqltimeoutexception: statement cancelled due to timeout or client request">
+                <i class="fa fa-chevron-right"></i>
+                mysqltimeoutexception: statement cancelled due to timeout or client request
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Simple-Name-and-Qualified-Name"><span class="nav-number">1.</span> <span class="nav-text">Simple Name and Qualified Name</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#局部变量声明及其初始化"><span class="nav-number">2.</span> <span class="nav-text">局部变量声明及其初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子作用域中的局部变量"><span class="nav-number">3.</span> <span class="nav-text">子作用域中的局部变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Names-Shadow-and-Obscure"><span class="nav-number">4.</span> <span class="nav-text">Names Shadow and Obscure</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类型声明被内部类所遮蔽"><span class="nav-number">4.1.</span> <span class="nav-text">类型声明被内部类所遮蔽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例属性遮蔽示例"><span class="nav-number">4.2.</span> <span class="nav-text">实例属性遮蔽示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

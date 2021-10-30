@@ -1,0 +1,561 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="vm/runtime/javaCalls.hpp 第179行，开始定义JavaCalls::call()系列方法，源码如下： 179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215216217218// All calls to J">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hotspot source code - java method calls">
+<meta property="og:url" content="http://www.4e00.com/java/2018/08/05/hotspot-source-code-java-method-calls.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="vm/runtime/javaCalls.hpp 第179行，开始定义JavaCalls::call()系列方法，源码如下： 179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215216217218// All calls to J">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.137Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hotspot source code - java method calls">
+<meta name="twitter:description" content="vm/runtime/javaCalls.hpp 第179行，开始定义JavaCalls::call()系列方法，源码如下： 179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215216217218// All calls to J">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/08/05/hotspot-source-code-java-method-calls.html">
+
+  <title> hotspot source code - java method calls | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                hotspot source code - java method calls
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-08-05T09:24:26+08:00" content="2018-08-05">
+              2018-08-05
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/runtime/javaCalls.hpp#179" target="_blank" rel="noopener">vm/runtime/javaCalls.hpp</a> 第<code>179</code>行，开始定义<code>JavaCalls::call()</code>系列方法，源码如下：</p>
+<figure class="highlight hpp"><table><tr><td class="gutter"><pre><span class="line">179</span><span class="line">180</span><span class="line">181</span><span class="line">182</span><span class="line">183</span><span class="line">184</span><span class="line">185</span><span class="line">186</span><span class="line">187</span><span class="line">188</span><span class="line">189</span><span class="line">190</span><span class="line">191</span><span class="line">192</span><span class="line">193</span><span class="line">194</span><span class="line">195</span><span class="line">196</span><span class="line">197</span><span class="line">198</span><span class="line">199</span><span class="line">200</span><span class="line">201</span><span class="line">202</span><span class="line">203</span><span class="line">204</span><span class="line">205</span><span class="line">206</span><span class="line">207</span><span class="line">208</span><span class="line">209</span><span class="line">210</span><span class="line">211</span><span class="line">212</span><span class="line">213</span><span class="line">214</span><span class="line">215</span><span class="line">216</span><span class="line">217</span><span class="line">218</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// All calls to Java have to go via JavaCalls. Sets up the stack frame</span></span><span class="line"><span class="comment">// and makes sure that the last_Java_frame pointers are chained correctly.</span></span><span class="line"><span class="comment">//</span></span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JavaCalls</span>:</span> AllStatic &#123;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_helper</span><span class="params">(JavaValue* result, methodHandle* method, JavaCallArguments* args, TRAPS)</span></span>;</span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="comment">// Optimized Constuctor call</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_default_constructor</span><span class="params">(JavaThread* thread, methodHandle method, Handle receiver, TRAPS)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// call_special</span></span><span class="line">  <span class="comment">// ------------</span></span><span class="line">  <span class="comment">// The receiver must be first oop in argument list</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_special</span><span class="params">(JavaValue* result, KlassHandle klass, Symbol* name, Symbol* signature, JavaCallArguments* args, TRAPS)</span></span>;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_special</span><span class="params">(JavaValue* result, Handle receiver, KlassHandle klass, Symbol* name, Symbol* signature, TRAPS)</span></span>; <span class="comment">// No args</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_special</span><span class="params">(JavaValue* result, Handle receiver, KlassHandle klass, Symbol* name, Symbol* signature, Handle arg1, TRAPS)</span></span>;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_special</span><span class="params">(JavaValue* result, Handle receiver, KlassHandle klass, Symbol* name, Symbol* signature, Handle arg1, Handle arg2, TRAPS)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// virtual call</span></span><span class="line">  <span class="comment">// ------------</span></span><span class="line"></span><span class="line">  <span class="comment">// The receiver must be first oop in argument list</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_virtual</span><span class="params">(JavaValue* result, KlassHandle spec_klass, Symbol* name, Symbol* signature, JavaCallArguments* args, TRAPS)</span></span>;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_virtual</span><span class="params">(JavaValue* result, Handle receiver, KlassHandle spec_klass, Symbol* name, Symbol* signature, TRAPS)</span></span>; <span class="comment">// No args</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_virtual</span><span class="params">(JavaValue* result, Handle receiver, KlassHandle spec_klass, Symbol* name, Symbol* signature, Handle arg1, TRAPS)</span></span>;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_virtual</span><span class="params">(JavaValue* result, Handle receiver, KlassHandle spec_klass, Symbol* name, Symbol* signature, Handle arg1, Handle arg2, TRAPS)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Static call</span></span><span class="line">  <span class="comment">// -----------</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_static</span><span class="params">(JavaValue* result, KlassHandle klass, Symbol* name, Symbol* signature, JavaCallArguments* args, TRAPS)</span></span>;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_static</span><span class="params">(JavaValue* result, KlassHandle klass, Symbol* name, Symbol* signature, TRAPS)</span></span>;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_static</span><span class="params">(JavaValue* result, KlassHandle klass, Symbol* name, Symbol* signature, Handle arg1, TRAPS)</span></span>;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call_static</span><span class="params">(JavaValue* result, KlassHandle klass, Symbol* name, Symbol* signature, Handle arg1, Handle arg2, TRAPS)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Low-level interface</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(JavaValue* result, methodHandle method, JavaCallArguments* args, TRAPS)</span></span>;</span><span class="line">&#125;;</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/runtime/javaCalls.cpp#175" target="_blank" rel="noopener">vm/runtime/javaCalls.cpp</a> 第<code>175</code>行，实现<code>JavaCalls::call()</code>系列方法，源码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">175</span><span class="line">176</span><span class="line">177</span><span class="line">178</span><span class="line">179</span><span class="line">180</span><span class="line">181</span><span class="line">182</span><span class="line">183</span><span class="line">184</span><span class="line">185</span><span class="line">186</span><span class="line">187</span><span class="line">188</span><span class="line">189</span><span class="line">190</span><span class="line">191</span><span class="line">192</span><span class="line">193</span><span class="line">194</span><span class="line">195</span><span class="line">196</span><span class="line">197</span><span class="line">198</span><span class="line">199</span><span class="line">200</span><span class="line">201</span><span class="line">202</span><span class="line">203</span><span class="line">204</span><span class="line">205</span><span class="line">206</span><span class="line">207</span><span class="line">208</span><span class="line">209</span><span class="line">210</span><span class="line">211</span><span class="line">212</span><span class="line">213</span><span class="line">214</span><span class="line">215</span><span class="line">216</span><span class="line">217</span><span class="line">218</span><span class="line">219</span><span class="line">220</span><span class="line">221</span><span class="line">222</span><span class="line">223</span><span class="line">224</span><span class="line">225</span><span class="line">226</span><span class="line">227</span><span class="line">228</span><span class="line">229</span><span class="line">230</span><span class="line">231</span><span class="line">232</span><span class="line">233</span><span class="line">234</span><span class="line">235</span><span class="line">236</span><span class="line">237</span><span class="line">238</span><span class="line">239</span><span class="line">240</span><span class="line">241</span><span class="line">242</span><span class="line">243</span><span class="line">244</span><span class="line">245</span><span class="line">246</span><span class="line">247</span><span class="line">248</span><span class="line">249</span><span class="line">250</span><span class="line">251</span><span class="line">252</span><span class="line">253</span><span class="line">254</span><span class="line">255</span><span class="line">256</span><span class="line">257</span><span class="line">258</span><span class="line">259</span><span class="line">260</span><span class="line">261</span><span class="line">262</span><span class="line">263</span><span class="line">264</span><span class="line">265</span><span class="line">266</span><span class="line">267</span><span class="line">268</span><span class="line">269</span><span class="line">270</span><span class="line">271</span><span class="line">272</span><span class="line">273</span><span class="line">274</span><span class="line">275</span><span class="line">276</span><span class="line">277</span><span class="line">278</span><span class="line">279</span><span class="line">280</span><span class="line">281</span><span class="line">282</span><span class="line">283</span><span class="line">284</span><span class="line">285</span><span class="line">286</span><span class="line">287</span><span class="line">288</span><span class="line">289</span><span class="line">290</span><span class="line">291</span><span class="line">292</span><span class="line">293</span><span class="line">294</span><span class="line">295</span><span class="line">296</span><span class="line">297</span><span class="line">298</span><span class="line">299</span><span class="line">300</span><span class="line">301</span><span class="line">302</span><span class="line">303</span><span class="line">304</span><span class="line">305</span><span class="line">306</span><span class="line">307</span><span class="line">308</span><span class="line">309</span><span class="line">310</span><span class="line">311</span><span class="line">312</span><span class="line">313</span><span class="line">314</span><span class="line">315</span><span class="line">316</span><span class="line">317</span><span class="line">318</span><span class="line">319</span><span class="line">320</span><span class="line">321</span><span class="line">322</span><span class="line">323</span><span class="line">324</span><span class="line">325</span><span class="line">326</span><span class="line">327</span><span class="line">328</span><span class="line">329</span><span class="line">330</span><span class="line">331</span><span class="line">332</span><span class="line">333</span><span class="line">334</span><span class="line">335</span><span class="line">336</span><span class="line">337</span><span class="line">338</span><span class="line">339</span><span class="line">340</span><span class="line">341</span><span class="line">342</span><span class="line">343</span><span class="line">344</span><span class="line">345</span><span class="line">346</span><span class="line">347</span><span class="line">348</span><span class="line">349</span><span class="line">350</span><span class="line">351</span><span class="line">352</span><span class="line">353</span><span class="line">354</span><span class="line">355</span><span class="line">356</span><span class="line">357</span><span class="line">358</span><span class="line">359</span><span class="line">360</span><span class="line">361</span><span class="line">362</span><span class="line">363</span><span class="line">364</span><span class="line">365</span><span class="line">366</span><span class="line">367</span><span class="line">368</span><span class="line">369</span><span class="line">370</span><span class="line">371</span><span class="line">372</span><span class="line">373</span><span class="line">374</span><span class="line">375</span><span class="line">376</span><span class="line">377</span><span class="line">378</span><span class="line">379</span><span class="line">380</span><span class="line">381</span><span class="line">382</span><span class="line">383</span><span class="line">384</span><span class="line">385</span><span class="line">386</span><span class="line">387</span><span class="line">388</span><span class="line">389</span><span class="line">390</span><span class="line">391</span><span class="line">392</span><span class="line">393</span><span class="line">394</span><span class="line">395</span><span class="line">396</span><span class="line">397</span><span class="line">398</span><span class="line">399</span><span class="line">400</span><span class="line">401</span><span class="line">402</span><span class="line">403</span><span class="line">404</span><span class="line">405</span><span class="line">406</span><span class="line">407</span><span class="line">408</span><span class="line">409</span><span class="line">410</span><span class="line">411</span><span class="line">412</span><span class="line">413</span><span class="line">414</span><span class="line">415</span><span class="line">416</span><span class="line">417</span><span class="line">418</span><span class="line">419</span><span class="line">420</span><span class="line">421</span><span class="line">422</span><span class="line">423</span><span class="line">424</span><span class="line">425</span><span class="line">426</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// ===== object constructor calls =====</span></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_default_constructor</span><span class="params">(JavaThread* thread, methodHandle method, Handle receiver, TRAPS)</span> </span>&#123;</span><span class="line">  assert(method-&gt;name() == vmSymbols::object_initializer_name(),    <span class="string">"Should only be called for default constructor"</span>);</span><span class="line">  assert(method-&gt;signature() == vmSymbols::void_method_signature(), <span class="string">"Should only be called for default constructor"</span>);</span><span class="line"></span><span class="line">  InstanceKlass* ik = method-&gt;method_holder();</span><span class="line">  <span class="keyword">if</span> (ik-&gt;is_initialized() &amp;&amp; ik-&gt;has_vanilla_constructor()) &#123;</span><span class="line">    <span class="comment">// safe to skip constructor call</span></span><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><span class="line">    <span class="keyword">static</span> JavaValue result(T_VOID);</span><span class="line">    <span class="function">JavaCallArguments <span class="title">args</span><span class="params">(receiver)</span></span>;</span><span class="line">    call(&amp;result, method, &amp;args, CHECK);</span><span class="line">  &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment">// ============ Virtual calls ============</span></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_virtual</span><span class="params">(JavaValue* result, KlassHandle spec_klass, Symbol* name, Symbol* signature, JavaCallArguments* args, TRAPS)</span> </span>&#123;</span><span class="line">  CallInfo callinfo;</span><span class="line">  Handle receiver = args-&gt;receiver();</span><span class="line">  <span class="function">KlassHandle <span class="title">recvrKlass</span><span class="params">(THREAD, receiver.is_null() ? (Klass*)<span class="literal">NULL</span> : receiver-&gt;klass())</span></span>;</span><span class="line">  LinkResolver::resolve_virtual_call(</span><span class="line">          callinfo, receiver, recvrKlass, spec_klass, name, signature,</span><span class="line">          KlassHandle(), <span class="literal">false</span>, <span class="literal">true</span>, CHECK);</span><span class="line">  methodHandle method = callinfo.selected_method();</span><span class="line">  assert(method.not_null(), <span class="string">"should have thrown exception"</span>);</span><span class="line"></span><span class="line">  <span class="comment">// Invoke the method</span></span><span class="line">  JavaCalls::call(result, method, args, CHECK);</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_virtual</span><span class="params">(JavaValue* result, Handle receiver, KlassHandle spec_klass, Symbol* name, Symbol* signature, TRAPS)</span> </span>&#123;</span><span class="line">  <span class="function">JavaCallArguments <span class="title">args</span><span class="params">(receiver)</span></span>; <span class="comment">// One oop argument</span></span><span class="line">  call_virtual(result, spec_klass, name, signature, &amp;args, CHECK);</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_virtual</span><span class="params">(JavaValue* result, Handle receiver, KlassHandle spec_klass, Symbol* name, Symbol* signature, Handle arg1, TRAPS)</span> </span>&#123;</span><span class="line">  <span class="function">JavaCallArguments <span class="title">args</span><span class="params">(receiver)</span></span>; <span class="comment">// One oop argument</span></span><span class="line">  args.push_oop(arg1);</span><span class="line">  call_virtual(result, spec_klass, name, signature, &amp;args, CHECK);</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_virtual</span><span class="params">(JavaValue* result, Handle receiver, KlassHandle spec_klass, Symbol* name, Symbol* signature, Handle arg1, Handle arg2, TRAPS)</span> </span>&#123;</span><span class="line">  <span class="function">JavaCallArguments <span class="title">args</span><span class="params">(receiver)</span></span>; <span class="comment">// One oop argument</span></span><span class="line">  args.push_oop(arg1);</span><span class="line">  args.push_oop(arg2);</span><span class="line">  call_virtual(result, spec_klass, name, signature, &amp;args, CHECK);</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="comment">// ============ Special calls ============</span></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_special</span><span class="params">(JavaValue* result, KlassHandle klass, Symbol* name, Symbol* signature, JavaCallArguments* args, TRAPS)</span> </span>&#123;</span><span class="line">  CallInfo callinfo;</span><span class="line">  LinkResolver::resolve_special_call(callinfo, args-&gt;receiver(), klass, name, signature, KlassHandle(), <span class="literal">false</span>, CHECK);</span><span class="line">  methodHandle method = callinfo.selected_method();</span><span class="line">  assert(method.not_null(), <span class="string">"should have thrown exception"</span>);</span><span class="line"></span><span class="line">  <span class="comment">// Invoke the method</span></span><span class="line">  JavaCalls::call(result, method, args, CHECK);</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_special</span><span class="params">(JavaValue* result, Handle receiver, KlassHandle klass, Symbol* name, Symbol* signature, TRAPS)</span> </span>&#123;</span><span class="line">  <span class="function">JavaCallArguments <span class="title">args</span><span class="params">(receiver)</span></span>; <span class="comment">// One oop argument</span></span><span class="line">  call_special(result, klass, name, signature, &amp;args, CHECK);</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_special</span><span class="params">(JavaValue* result, Handle receiver, KlassHandle klass, Symbol* name, Symbol* signature, Handle arg1, TRAPS)</span> </span>&#123;</span><span class="line">  <span class="function">JavaCallArguments <span class="title">args</span><span class="params">(receiver)</span></span>; <span class="comment">// One oop argument</span></span><span class="line">  args.push_oop(arg1);</span><span class="line">  call_special(result, klass, name, signature, &amp;args, CHECK);</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_special</span><span class="params">(JavaValue* result, Handle receiver, KlassHandle klass, Symbol* name, Symbol* signature, Handle arg1, Handle arg2, TRAPS)</span> </span>&#123;</span><span class="line">  <span class="function">JavaCallArguments <span class="title">args</span><span class="params">(receiver)</span></span>; <span class="comment">// One oop argument</span></span><span class="line">  args.push_oop(arg1);</span><span class="line">  args.push_oop(arg2);</span><span class="line">  call_special(result, klass, name, signature, &amp;args, CHECK);</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="comment">// ============ Static calls ============</span></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_static</span><span class="params">(JavaValue* result, KlassHandle klass, Symbol* name, Symbol* signature, JavaCallArguments* args, TRAPS)</span> </span>&#123;</span><span class="line">  CallInfo callinfo;</span><span class="line">  LinkResolver::resolve_static_call(callinfo, klass, name, signature, KlassHandle(), <span class="literal">false</span>, <span class="literal">true</span>, CHECK);</span><span class="line">  methodHandle method = callinfo.selected_method();</span><span class="line">  assert(method.not_null(), <span class="string">"should have thrown exception"</span>);</span><span class="line"></span><span class="line">  <span class="comment">// Invoke the method</span></span><span class="line">  JavaCalls::call(result, method, args, CHECK);</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_static</span><span class="params">(JavaValue* result, KlassHandle klass, Symbol* name, Symbol* signature, TRAPS)</span> </span>&#123;</span><span class="line">  JavaCallArguments args; <span class="comment">// No argument</span></span><span class="line">  call_static(result, klass, name, signature, &amp;args, CHECK);</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_static</span><span class="params">(JavaValue* result, KlassHandle klass, Symbol* name, Symbol* signature, Handle arg1, TRAPS)</span> </span>&#123;</span><span class="line">  <span class="function">JavaCallArguments <span class="title">args</span><span class="params">(arg1)</span></span>; <span class="comment">// One oop argument</span></span><span class="line">  call_static(result, klass, name, signature, &amp;args, CHECK);</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_static</span><span class="params">(JavaValue* result, KlassHandle klass, Symbol* name, Symbol* signature, Handle arg1, Handle arg2, TRAPS)</span> </span>&#123;</span><span class="line">  JavaCallArguments args; <span class="comment">// One oop argument</span></span><span class="line">  args.push_oop(arg1);</span><span class="line">  args.push_oop(arg2);</span><span class="line">  call_static(result, klass, name, signature, &amp;args, CHECK);</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="comment">// -------------------------------------------------</span></span><span class="line"><span class="comment">// Implementation of JavaCalls (low level)</span></span><span class="line"></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call</span><span class="params">(JavaValue* result, methodHandle method, JavaCallArguments* args, TRAPS)</span> </span>&#123;</span><span class="line">  <span class="comment">// Check if we need to wrap a potential OS exception handler around thread</span></span><span class="line">  <span class="comment">// This is used for e.g. Win32 structured exception handlers</span></span><span class="line">  assert(THREAD-&gt;is_Java_thread(), <span class="string">"only JavaThreads can make JavaCalls"</span>);</span><span class="line">  <span class="comment">// Need to wrap each and everytime, since there might be native code down the</span></span><span class="line">  <span class="comment">// stack that has installed its own exception handlers</span></span><span class="line">  os::os_exception_wrapper(call_helper, result, &amp;method, args, THREAD);</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JavaCalls::call_helper</span><span class="params">(JavaValue* result, methodHandle* m, JavaCallArguments* args, TRAPS)</span> </span>&#123;</span><span class="line">  <span class="comment">// During dumping, Java execution environment is not fully initialized. Also, Java execution</span></span><span class="line">  <span class="comment">// may cause undesirable side-effects in the class metadata.</span></span><span class="line">  assert(!DumpSharedSpaces, <span class="string">"must not execute Java bytecodes when dumping"</span>);</span><span class="line"></span><span class="line">  methodHandle method = *m;</span><span class="line">  JavaThread* thread = (JavaThread*)THREAD;</span><span class="line">  assert(thread-&gt;is_Java_thread(), <span class="string">"must be called by a java thread"</span>);</span><span class="line">  assert(method.not_null(), <span class="string">"must have a method to call"</span>);</span><span class="line">  assert(!SafepointSynchronize::is_at_safepoint(), <span class="string">"call to Java code during VM operation"</span>);</span><span class="line">  assert(!thread-&gt;handle_area()-&gt;no_handle_mark_active(), <span class="string">"cannot call out to Java here"</span>);</span><span class="line"></span><span class="line"></span><span class="line">  CHECK_UNHANDLED_OOPS_ONLY(thread-&gt;clear_unhandled_oops();)</span><span class="line"></span><span class="line">  <span class="comment">// Verify the arguments</span></span><span class="line"></span><span class="line">  <span class="keyword">if</span> (CheckJNICalls)  &#123;</span><span class="line">    args-&gt;verify(method, result-&gt;get_type(), thread);</span><span class="line">  &#125;</span><span class="line">  <span class="keyword">else</span> debug_only(args-&gt;verify(method, result-&gt;get_type(), thread));</span><span class="line"></span><span class="line">  <span class="comment">// Ignore call if method is empty</span></span><span class="line">  <span class="keyword">if</span> (method-&gt;is_empty_method()) &#123;</span><span class="line">    assert(result-&gt;get_type() == T_VOID, <span class="string">"an empty method must return a void value"</span>);</span><span class="line">    <span class="keyword">return</span>;</span><span class="line">  &#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> ASSERT</span></span><span class="line">  &#123; InstanceKlass* holder = method-&gt;method_holder();</span><span class="line">    <span class="comment">// A klass might not be initialized since JavaCall's might be used during the executing of</span></span><span class="line">    <span class="comment">// the &lt;clinit&gt;. For example, a Thread.start might start executing on an object that is</span></span><span class="line">    <span class="comment">// not fully initialized! (bad Java programming style)</span></span><span class="line">    assert(holder-&gt;is_linked(), <span class="string">"rewritting must have taken place"</span>);</span><span class="line">  &#125;</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><span class="line"></span><span class="line"></span><span class="line">  assert(!thread-&gt;is_Compiler_thread(), <span class="string">"cannot compile from the compiler"</span>);</span><span class="line">  <span class="keyword">if</span> (CompilationPolicy::must_be_compiled(method)) &#123;</span><span class="line">    CompileBroker::compile_method(method, InvocationEntryBci,</span><span class="line">                                  CompilationPolicy::policy()-&gt;initial_compile_level(),</span><span class="line">                                  methodHandle(), <span class="number">0</span>, <span class="string">"must_be_compiled"</span>, CHECK);</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Since the call stub sets up like the interpreter we call the from_interpreted_entry</span></span><span class="line">  <span class="comment">// so we can go compiled via a i2c. Otherwise initial entry method will always</span></span><span class="line">  <span class="comment">// run interpreted.</span></span><span class="line">  address entry_point = method-&gt;from_interpreted_entry();</span><span class="line">  <span class="keyword">if</span> (JvmtiExport::can_post_interpreter_events() &amp;&amp; thread-&gt;is_interp_only_mode()) &#123;</span><span class="line">    entry_point = method-&gt;interpreter_entry();</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Figure out if the result value is an oop or not (Note: This is a different value</span></span><span class="line">  <span class="comment">// than result_type. result_type will be T_INT of oops. (it is about size)</span></span><span class="line">  BasicType result_type = runtime_type_from(result);</span><span class="line">  <span class="keyword">bool</span> oop_result_flag = (result-&gt;get_type() == T_OBJECT || result-&gt;get_type() == T_ARRAY);</span><span class="line"></span><span class="line">  <span class="comment">// <span class="doctag">NOTE:</span> if we move the computation of the result_val_address inside</span></span><span class="line">  <span class="comment">// the call to call_stub, the optimizer produces wrong code.</span></span><span class="line">  <span class="keyword">intptr_t</span>* result_val_address = (<span class="keyword">intptr_t</span>*)(result-&gt;get_value_addr());</span><span class="line"></span><span class="line">  <span class="comment">// Find receiver</span></span><span class="line">  Handle receiver = (!method-&gt;is_static()) ? args-&gt;receiver() : Handle();</span><span class="line"></span><span class="line">  <span class="comment">// When we reenter Java, we need to reenable the yellow zone which</span></span><span class="line">  <span class="comment">// might already be disabled when we are in VM.</span></span><span class="line">  <span class="keyword">if</span> (thread-&gt;stack_yellow_zone_disabled()) &#123;</span><span class="line">    thread-&gt;reguard_stack();</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Check that there are shadow pages available before changing thread state</span></span><span class="line">  <span class="comment">// to Java</span></span><span class="line">  <span class="keyword">if</span> (!os::stack_shadow_pages_available(THREAD, method)) &#123;</span><span class="line">    <span class="comment">// Throw stack overflow exception with preinitialized exception.</span></span><span class="line">    Exceptions::throw_stack_overflow_exception(THREAD, __FILE__, __LINE__, method);</span><span class="line">    <span class="keyword">return</span>;</span><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><span class="line">    <span class="comment">// Touch pages checked if the OS needs them to be touched to be mapped.</span></span><span class="line">    os::bang_stack_shadow_pages();</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// do call</span></span><span class="line">  &#123; <span class="function">JavaCallWrapper <span class="title">link</span><span class="params">(method, receiver, result, CHECK)</span></span>;</span><span class="line">    &#123; <span class="function">HandleMark <span class="title">hm</span><span class="params">(thread)</span></span>;  <span class="comment">// HandleMark used by HandleMarkCleaner</span></span><span class="line"></span><span class="line">      StubRoutines::call_stub()(</span><span class="line">        (address)&amp;link,</span><span class="line">        <span class="comment">// (intptr_t*)&amp;(result-&gt;_value), // see NOTE above (compiler problem)</span></span><span class="line">        result_val_address,          <span class="comment">// see NOTE above (compiler problem)</span></span><span class="line">        result_type,</span><span class="line">        method(),</span><span class="line">        entry_point,</span><span class="line">        args-&gt;parameters(),</span><span class="line">        args-&gt;size_of_parameters(),</span><span class="line">        CHECK</span><span class="line">      );</span><span class="line"></span><span class="line">      result = link.result();  <span class="comment">// circumvent MS C++ 5.0 compiler bug (result is clobbered across call)</span></span><span class="line">      <span class="comment">// Preserve oop return value across possible gc points</span></span><span class="line">      <span class="keyword">if</span> (oop_result_flag) &#123;</span><span class="line">        thread-&gt;set_vm_result((oop) result-&gt;get_jobject());</span><span class="line">      &#125;</span><span class="line">    &#125;</span><span class="line">  &#125; <span class="comment">// Exit JavaCallWrapper (can block - potential return oop must be preserved)</span></span><span class="line"></span><span class="line">  <span class="comment">// Check if a thread stop or suspend should be executed</span></span><span class="line">  <span class="comment">// The following assert was not realistic.  Thread.stop can set that bit at any moment.</span></span><span class="line">  <span class="comment">//assert(!thread-&gt;has_special_runtime_exit_condition(), "no async. exceptions should be installed");</span></span><span class="line"></span><span class="line">  <span class="comment">// Restore possible oop return</span></span><span class="line">  <span class="keyword">if</span> (oop_result_flag) &#123;</span><span class="line">    result-&gt;set_jobject((jobject)thread-&gt;vm_result());</span><span class="line">    thread-&gt;set_vm_result(<span class="literal">NULL</span>);</span><span class="line">  &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/runtime/javaCalls.hpp#179" target="_blank" rel="noopener">vm/runtime/javaCalls.hpp</a></li>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/runtime/javaCalls.cpp#175" target="_blank" rel="noopener">vm/runtime/javaCalls.cpp</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/08/04/hotspot-source-code-object-monitor.html" rel="next" title="hotspot source code - object monitor">
+                <i class="fa fa-chevron-left"></i>
+                hotspot source code - object monitor
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/08/05/hotspot-source-code-jvm-stack-frame.html" rel="prev" title="hotspot source code - jvm stack frame">
+                <i class="fa fa-chevron-right"></i>
+                hotspot source code - jvm stack frame
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

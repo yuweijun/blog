@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="利用gmail smtp和javamail发送邮件。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="send mail through gmail smtp using javamail">
-<meta property="og:url" content="https://www.4e00.com/java/2008/11/16/send-mail-through-gmail-smtp-using-javamail.html">
+<meta property="og:url" content="http://www.4e00.com/java/2008/11/16/send-mail-through-gmail-smtp-using-javamail.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="利用gmail smtp和javamail发送邮件。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.137Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.054Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="send mail through gmail smtp using javamail">
 <meta name="twitter:description" content="利用gmail smtp和javamail发送邮件。">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/java/2008/11/16/send-mail-through-gmail-smtp-using-javamail.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2008/11/16/send-mail-through-gmail-smtp-using-javamail.html">
 
   <title> send mail through gmail smtp using javamail | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -256,7 +256,7 @@
       
         <p>利用gmail smtp和javamail发送邮件。</p>
 <a id="more"></a>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.security.Security;</div><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.mail.Authenticator;</div><div class="line"><span class="keyword">import</span> javax.mail.Message;</div><div class="line"><span class="keyword">import</span> javax.mail.PasswordAuthentication;</div><div class="line"><span class="keyword">import</span> javax.mail.Session;</div><div class="line"><span class="keyword">import</span> javax.mail.Transport;</div><div class="line"><span class="keyword">import</span> javax.mail.internet.InternetAddress;</div><div class="line"><span class="keyword">import</span> javax.mail.internet.MimeMessage;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.sun.net.ssl.internal.ssl.Provider;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GmailSend</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String mailhost = <span class="string">"smtp.gmail.com"</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">sendMail</span><span class="params">(String subject, String body, String sender, String recipients)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line"></div><div class="line">        Security.addProvider(<span class="keyword">new</span> Provider());</div><div class="line"></div><div class="line">        Properties props = <span class="keyword">new</span> Properties();</div><div class="line">        props.setProperty(<span class="string">"mail.transport.protocol"</span>, <span class="string">"smtp"</span>);</div><div class="line">        props.setProperty(<span class="string">"mail.host"</span>, <span class="string">"smtp.gmail.com"</span>);</div><div class="line">        props.put(<span class="string">"mail.smtp.auth"</span>, <span class="string">"true"</span>);</div><div class="line">        props.put(<span class="string">"mail.smtp.port"</span>, <span class="string">"465"</span>);</div><div class="line">        props.put(<span class="string">"mail.smtp.socketFactory.port"</span>, <span class="string">"465"</span>);</div><div class="line">        props.put(<span class="string">"mail.smtp.socketFactory.class"</span>, <span class="string">"javax.net.ssl.SSLSocketFactory"</span>);</div><div class="line">        props.put(<span class="string">"mail.smtp.socketFactory.fallback"</span>, <span class="string">"false"</span>);</div><div class="line">        props.setProperty(<span class="string">"mail.smtp.quitwait"</span>, <span class="string">"false"</span>);</div><div class="line"></div><div class="line">        Session session = Session.getDefaultInstance(props, <span class="keyword">new</span> Authenticator() &#123;</div><div class="line">            <span class="function"><span class="keyword">protected</span> PasswordAuthentication <span class="title">getPasswordAuthentication</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> PasswordAuthentication(<span class="string">"test.yu@gmail.com"</span>, <span class="string">"****password****"</span>);</div><div class="line">            &#125;</div><div class="line">            &#125;);</div><div class="line"></div><div class="line">        MimeMessage message = <span class="keyword">new</span> MimeMessage(session);</div><div class="line">        message.setSender(<span class="keyword">new</span> InternetAddress(sender));</div><div class="line">        message.setSubject(subject);</div><div class="line">        message.setContent(body, <span class="string">"text/plain"</span>);</div><div class="line">        <span class="keyword">if</span> (recipients.indexOf(<span class="string">','</span>) &gt; <span class="number">0</span>)</div><div class="line">            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));</div><div class="line">        <span class="keyword">else</span></div><div class="line">            message.setRecipient(Message.RecipientType.TO, <span class="keyword">new</span> InternetAddress(recipients));</div><div class="line"></div><div class="line">        Transport.send(message);</div><div class="line">        System.out.println(<span class="string">"finished!"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        GmailSend gmailSend = <span class="keyword">new</span> GmailSend();</div><div class="line">        gmailSend.sendMail(<span class="string">"send from javamail"</span>, <span class="string">"send form javamail by java programmng."</span>, <span class="string">"test@gmail.com"</span>, <span class="string">"test@gmail.com"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.security.Security;</span><span class="line"><span class="keyword">import</span> java.util.Properties;</span><span class="line"></span><span class="line"><span class="keyword">import</span> javax.mail.Authenticator;</span><span class="line"><span class="keyword">import</span> javax.mail.Message;</span><span class="line"><span class="keyword">import</span> javax.mail.PasswordAuthentication;</span><span class="line"><span class="keyword">import</span> javax.mail.Session;</span><span class="line"><span class="keyword">import</span> javax.mail.Transport;</span><span class="line"><span class="keyword">import</span> javax.mail.internet.InternetAddress;</span><span class="line"><span class="keyword">import</span> javax.mail.internet.MimeMessage;</span><span class="line"></span><span class="line"><span class="keyword">import</span> com.sun.net.ssl.internal.ssl.Provider;</span><span class="line"></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GmailSend</span> </span>&#123;</span><span class="line">    <span class="keyword">private</span> String mailhost = <span class="string">"smtp.gmail.com"</span>;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">sendMail</span><span class="params">(String subject, String body, String sender, String recipients)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><span class="line"></span><span class="line">        Security.addProvider(<span class="keyword">new</span> Provider());</span><span class="line"></span><span class="line">        Properties props = <span class="keyword">new</span> Properties();</span><span class="line">        props.setProperty(<span class="string">"mail.transport.protocol"</span>, <span class="string">"smtp"</span>);</span><span class="line">        props.setProperty(<span class="string">"mail.host"</span>, <span class="string">"smtp.gmail.com"</span>);</span><span class="line">        props.put(<span class="string">"mail.smtp.auth"</span>, <span class="string">"true"</span>);</span><span class="line">        props.put(<span class="string">"mail.smtp.port"</span>, <span class="string">"465"</span>);</span><span class="line">        props.put(<span class="string">"mail.smtp.socketFactory.port"</span>, <span class="string">"465"</span>);</span><span class="line">        props.put(<span class="string">"mail.smtp.socketFactory.class"</span>, <span class="string">"javax.net.ssl.SSLSocketFactory"</span>);</span><span class="line">        props.put(<span class="string">"mail.smtp.socketFactory.fallback"</span>, <span class="string">"false"</span>);</span><span class="line">        props.setProperty(<span class="string">"mail.smtp.quitwait"</span>, <span class="string">"false"</span>);</span><span class="line"></span><span class="line">        Session session = Session.getDefaultInstance(props, <span class="keyword">new</span> Authenticator() &#123;</span><span class="line">            <span class="function"><span class="keyword">protected</span> PasswordAuthentication <span class="title">getPasswordAuthentication</span><span class="params">()</span> </span>&#123;</span><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> PasswordAuthentication(<span class="string">"test.yu@gmail.com"</span>, <span class="string">"****password****"</span>);</span><span class="line">            &#125;</span><span class="line">            &#125;);</span><span class="line"></span><span class="line">        MimeMessage message = <span class="keyword">new</span> MimeMessage(session);</span><span class="line">        message.setSender(<span class="keyword">new</span> InternetAddress(sender));</span><span class="line">        message.setSubject(subject);</span><span class="line">        message.setContent(body, <span class="string">"text/plain"</span>);</span><span class="line">        <span class="keyword">if</span> (recipients.indexOf(<span class="string">','</span>) &gt; <span class="number">0</span>)</span><span class="line">            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));</span><span class="line">        <span class="keyword">else</span></span><span class="line">            message.setRecipient(Message.RecipientType.TO, <span class="keyword">new</span> InternetAddress(recipients));</span><span class="line"></span><span class="line">        Transport.send(message);</span><span class="line">        System.out.println(<span class="string">"finished!"</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception </span>&#123;</span><span class="line">        GmailSend gmailSend = <span class="keyword">new</span> GmailSend();</span><span class="line">        gmailSend.sendMail(<span class="string">"send from javamail"</span>, <span class="string">"send form javamail by java programmng."</span>, <span class="string">"test@gmail.com"</span>, <span class="string">"test@gmail.com"</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
 
       
     </div>
@@ -283,7 +283,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/java/2008/11/16/get-mail-from-gmail-using-javamail.html" rel="next" title="get mail from gmail using javamail">
-                上一篇：get mail from gmail using javamail
+                <i class="fa fa-chevron-left"></i>
+                get mail from gmail using javamail
               </a>
             
           </div>
@@ -291,7 +292,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/php/2008/11/16/send-mail-through-gmail-smtp-using-php-and-phpmailer.html" rel="prev" title="send mail through gmail smtp using php and phpmailer">
-                下一篇：send mail through gmail smtp using php and phpmailer
+                <i class="fa fa-chevron-right"></i>
+                send mail through gmail smtp using php and phpmailer
               </a>
             
           </div>
@@ -340,7 +342,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -351,16 +353,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -442,10 +442,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

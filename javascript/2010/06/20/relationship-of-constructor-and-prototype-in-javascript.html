@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="javascript构造方法与原型关系。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="relationship of constructor and prototype in javascript">
-<meta property="og:url" content="https://www.4e00.com/javascript/2010/06/20/relationship-of-constructor-and-prototype-in-javascript.html">
+<meta property="og:url" content="http://www.4e00.com/javascript/2010/06/20/relationship-of-constructor-and-prototype-in-javascript.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="javascript构造方法与原型关系。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.072Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="relationship of constructor and prototype in javascript">
 <meta name="twitter:description" content="javascript构造方法与原型关系。">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2010/06/20/relationship-of-constructor-and-prototype-in-javascript.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/javascript/2010/06/20/relationship-of-constructor-and-prototype-in-javascript.html">
 
   <title> relationship of constructor and prototype in javascript | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/javascript/" itemprop="url" rel="index">
                     <span itemprop="name">javascript</span>
                   </a>
@@ -256,13 +256,13 @@
       
         <p>javascript构造方法与原型关系。</p>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">var animal = <span class="keyword">function</span>(status) &#123;</div><div class="line">    this.status = status;</div><div class="line">    this.breathes = <span class="string">"yes"</span>;</div><div class="line">    this.action = <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">        console.log(<span class="string">'flying...'</span>)</div><div class="line">    &#125;;</div><div class="line">&#125;,</div><div class="line">human = <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">    this.name = <span class="string">'human'</span>;</div><div class="line">&#125;,</div><div class="line">cat = <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">    this.type = <span class="string">'cat'</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">// javascript支持原型继承，这种方式比类继承更强大，类继承中一个对象可以继承结构和行为，而原型继承可以继承结构和行为之外，并可以继承一个对象的状态</div><div class="line">// new一个animal的实例对象作为cat.prototype的原型，这个animal实例对象就成为cat的实例对象原型链上的一员</div><div class="line">// __proto__这个魔法属性在这些浏览器不能工作： ie 6/7/8, safari &lt; 5, opera &lt; 10.50</div><div class="line">// 当在cat的某个实例上检索一个属性时，如果在其本身中没有找到，则会延着原型链向上检索，如下例子中的c.__proto__即为一个animal对象</div><div class="line">// 如果检索c.breathes，如果在c对象本身没有找到此属性，则会检索t.__proto__.breathes、t.__proto__.__proto__.breathes等原型链上的对象，直到找到为止，没找到返回undefined</div><div class="line">cat.prototype = new animal(<span class="string">"live"</span>);</div><div class="line">// cat继承的原型对象是具有特定状态的animal对象</div><div class="line">var c = new cat();</div><div class="line">console.log(cat.prototype);</div><div class="line">console.log(cat.prototype.constructor.tostring());</div><div class="line">console.log(c.constructor.tostring());</div><div class="line">console.log(<span class="string">"cat breathes:"</span> + c.breathes);</div><div class="line">console.log(<span class="string">"c.__proto__:"</span>, c.__proto__);</div><div class="line"></div><div class="line">// ie不支持此属性</div><div class="line">// 你可以利用object.__proto__这个魔法属性修改当前对象的原型，下面将一只猫猫化为人形</div><div class="line">var d = new cat();</div><div class="line">d.__proto__ = new human();</div><div class="line">console.log(<span class="string">"d.__proto__:"</span>, d.__proto__);</div><div class="line"></div><div class="line">// 从上面结果可以看到cat的实例c.constructor不是指向cat这个构造函数，而是animal构造函数</div><div class="line">// 需要修改对象的constructor为其构造函数本身</div><div class="line">// 当一个函数对象被创建时，<span class="keyword">function</span>构造器产生的函数对象会运行类似这样的一些代码：this.prototype = &#123;constructor: this&#125;，参考javascript: the good parts 5.1节说明</div><div class="line">// 新函数对象被赋予一个prototype属性，其值是包含一个constuctor属性，并且其属性值为此新函数对象本身</div><div class="line">// 但是通过原型方式继承时，会给prototype重新赋予一个新对象，此prototype对象中的constructor是指向其自身的构造函数，而不是新函数的，所以需要重置其fn.prototype.constructor = this</div><div class="line">// 参考javascript权威指南第五版example 9-3. subclassing a javascript class</div><div class="line"></div><div class="line">cat.prototype.constructor = cat;</div><div class="line">console.log(cat.prototype.constructor.tostring());</div><div class="line">console.log(c.constructor.tostring());</div><div class="line">console.log(c.__proto__);</div><div class="line">var tostring = object.prototype.tostring;</div><div class="line">language = <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">    this.type = <span class="string">"programming"</span>;</div><div class="line">    <span class="built_in">return</span> &#123;</div><div class="line">        <span class="string">"locale"</span>: <span class="string">"en"</span>,</div><div class="line">        <span class="string">"class-free"</span>: <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">            <span class="built_in">return</span> <span class="literal">false</span></div><div class="line">        &#125;,</div><div class="line">        <span class="string">"tostring"</span>: <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">            <span class="built_in">return</span> tostring.apply(this, arguments)</div><div class="line">        &#125;</div><div class="line">        // 如果tostring方法被重写成非<span class="keyword">function</span>对象，则后面console中无法输出对象j</div><div class="line">    &#125;</div><div class="line">&#125;,</div><div class="line">javascript = <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">    this.value = <span class="string">"javascript"</span>;</div><div class="line">    this[<span class="string">"class-free"</span>] = <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">        <span class="built_in">return</span> <span class="literal">true</span></div><div class="line">    &#125;;</div><div class="line">&#125;;</div><div class="line">language.prototype = &#123;</div><div class="line">    a: 1,</div><div class="line">    b: 2</div><div class="line">&#125;;</div><div class="line">javascript.prototype = new language();</div><div class="line">var j = new javascript();</div><div class="line">console.log(j);</div><div class="line">console.log(j.__proto__);</div><div class="line">// locale: en，此处因为language构造函数返回不是this，而是另一个object直接量，而object直接的构造方法为object()，因此language的原型被丢失了</div><div class="line">console.log(language.prototype);</div><div class="line">console.log(javascript.prototype);</div><div class="line">console.log(j.constructor.tostring());</div><div class="line">// <span class="keyword">function</span> <span class="function"><span class="title">object</span></span>() &#123; [native code] &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">var animal = <span class="keyword">function</span>(status) &#123;</span><span class="line">    this.status = status;</span><span class="line">    this.breathes = <span class="string">"yes"</span>;</span><span class="line">    this.action = <span class="function"><span class="title">function</span></span>() &#123;</span><span class="line">        console.log(<span class="string">'flying...'</span>)</span><span class="line">    &#125;;</span><span class="line">&#125;,</span><span class="line">human = <span class="function"><span class="title">function</span></span>() &#123;</span><span class="line">    this.name = <span class="string">'human'</span>;</span><span class="line">&#125;,</span><span class="line">cat = <span class="function"><span class="title">function</span></span>() &#123;</span><span class="line">    this.type = <span class="string">'cat'</span>;</span><span class="line">&#125;;</span><span class="line"></span><span class="line">// javascript支持原型继承，这种方式比类继承更强大，类继承中一个对象可以继承结构和行为，而原型继承可以继承结构和行为之外，并可以继承一个对象的状态</span><span class="line">// new一个animal的实例对象作为cat.prototype的原型，这个animal实例对象就成为cat的实例对象原型链上的一员</span><span class="line">// __proto__这个魔法属性在这些浏览器不能工作： ie 6/7/8, safari &lt; 5, opera &lt; 10.50</span><span class="line">// 当在cat的某个实例上检索一个属性时，如果在其本身中没有找到，则会延着原型链向上检索，如下例子中的c.__proto__即为一个animal对象</span><span class="line">// 如果检索c.breathes，如果在c对象本身没有找到此属性，则会检索t.__proto__.breathes、t.__proto__.__proto__.breathes等原型链上的对象，直到找到为止，没找到返回undefined</span><span class="line">cat.prototype = new animal(<span class="string">"live"</span>);</span><span class="line">// cat继承的原型对象是具有特定状态的animal对象</span><span class="line">var c = new cat();</span><span class="line">console.log(cat.prototype);</span><span class="line">console.log(cat.prototype.constructor.tostring());</span><span class="line">console.log(c.constructor.tostring());</span><span class="line">console.log(<span class="string">"cat breathes:"</span> + c.breathes);</span><span class="line">console.log(<span class="string">"c.__proto__:"</span>, c.__proto__);</span><span class="line"></span><span class="line">// ie不支持此属性</span><span class="line">// 你可以利用object.__proto__这个魔法属性修改当前对象的原型，下面将一只猫猫化为人形</span><span class="line">var d = new cat();</span><span class="line">d.__proto__ = new human();</span><span class="line">console.log(<span class="string">"d.__proto__:"</span>, d.__proto__);</span><span class="line"></span><span class="line">// 从上面结果可以看到cat的实例c.constructor不是指向cat这个构造函数，而是animal构造函数</span><span class="line">// 需要修改对象的constructor为其构造函数本身</span><span class="line">// 当一个函数对象被创建时，<span class="keyword">function</span>构造器产生的函数对象会运行类似这样的一些代码：this.prototype = &#123;constructor: this&#125;，参考javascript: the good parts 5.1节说明</span><span class="line">// 新函数对象被赋予一个prototype属性，其值是包含一个constuctor属性，并且其属性值为此新函数对象本身</span><span class="line">// 但是通过原型方式继承时，会给prototype重新赋予一个新对象，此prototype对象中的constructor是指向其自身的构造函数，而不是新函数的，所以需要重置其fn.prototype.constructor = this</span><span class="line">// 参考javascript权威指南第五版example 9-3. subclassing a javascript class</span><span class="line"></span><span class="line">cat.prototype.constructor = cat;</span><span class="line">console.log(cat.prototype.constructor.tostring());</span><span class="line">console.log(c.constructor.tostring());</span><span class="line">console.log(c.__proto__);</span><span class="line">var tostring = object.prototype.tostring;</span><span class="line">language = <span class="function"><span class="title">function</span></span>() &#123;</span><span class="line">    this.type = <span class="string">"programming"</span>;</span><span class="line">    <span class="built_in">return</span> &#123;</span><span class="line">        <span class="string">"locale"</span>: <span class="string">"en"</span>,</span><span class="line">        <span class="string">"class-free"</span>: <span class="function"><span class="title">function</span></span>() &#123;</span><span class="line">            <span class="built_in">return</span> <span class="literal">false</span></span><span class="line">        &#125;,</span><span class="line">        <span class="string">"tostring"</span>: <span class="function"><span class="title">function</span></span>() &#123;</span><span class="line">            <span class="built_in">return</span> tostring.apply(this, arguments)</span><span class="line">        &#125;</span><span class="line">        // 如果tostring方法被重写成非<span class="keyword">function</span>对象，则后面console中无法输出对象j</span><span class="line">    &#125;</span><span class="line">&#125;,</span><span class="line">javascript = <span class="function"><span class="title">function</span></span>() &#123;</span><span class="line">    this.value = <span class="string">"javascript"</span>;</span><span class="line">    this[<span class="string">"class-free"</span>] = <span class="function"><span class="title">function</span></span>() &#123;</span><span class="line">        <span class="built_in">return</span> <span class="literal">true</span></span><span class="line">    &#125;;</span><span class="line">&#125;;</span><span class="line">language.prototype = &#123;</span><span class="line">    a: 1,</span><span class="line">    b: 2</span><span class="line">&#125;;</span><span class="line">javascript.prototype = new language();</span><span class="line">var j = new javascript();</span><span class="line">console.log(j);</span><span class="line">console.log(j.__proto__);</span><span class="line">// locale: en，此处因为language构造函数返回不是this，而是另一个object直接量，而object直接的构造方法为object()，因此language的原型被丢失了</span><span class="line">console.log(language.prototype);</span><span class="line">console.log(javascript.prototype);</span><span class="line">console.log(j.constructor.tostring());</span><span class="line">// <span class="keyword">function</span> <span class="function"><span class="title">object</span></span>() &#123; [native code] &#125;</span></pre></td></tr></table></figure>
 <h2 id="构造函数与其返回值"><a href="#构造函数与其返回值" class="headerlink" title="构造函数与其返回值"></a>构造函数与其返回值</h2><p>构造函数会返回一个对象，如果没有直接<code>return</code>语句，构造函数会自动返回当前对象：<code>return this;</code>，也可以返回一个对象直接量，而不返回<code>this</code>，这样会中断正常的原型链。</p>
 <p><code>prototype.js</code>中class对象定义是封装在一个匿名函数里的，从而使得其内部变量和方法与外界隔离，其中有二句代码为：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">subclass</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">subclass.prototype = parent.prototype;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">subclass</span>(<span class="params"></span>) </span>&#123;&#125;;</span><span class="line">subclass.prototype = parent.prototype;</span></pre></td></tr></table></figure>
 <p>因为<code>parent</code>的构造可能返回语句不是返回<code>this</code>对象，而是返回了一个其他的对象，如<code>{tostring: true}</code>，如果不用<code>subclass.prototype = parent.prototype</code>这样写，可能这样会丢失原型链上的方法和属性，通过<code>subclass</code>这个空构造将<code>parent.prototype</code>引用到自身的<code>prototype</code>上，从而保持住部分原型链。这其实也已经不是原型继承了，因为它不是通过<code>new parent()</code>来获取原型对象，丢失了<code>new parent</code>所得对象中的属性和方法。</p>
 <p><code>prototype</code>中的<code>class</code>其实放弃了原型对象，只是简单的继承了<code>parent.prototype</code>对象，已经失去原型继承可以继承对象状态的功能，这样操作其实是很好的模似了类继承方式。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="class"><span class="keyword">class</span> </span>= (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">subclass</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> parent = <span class="literal">null</span>,</div><div class="line">            properties = $a(<span class="built_in">arguments</span>);</div><div class="line">        <span class="keyword">if</span> (object.isfunction(properties[<span class="number">0</span>])) parent = properties.shift();</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">klass</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">this</span>.initialize.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        object.extend(klass, <span class="class"><span class="keyword">class</span>.<span class="title">methods</span>)</span>;</div><div class="line">        klass.superclass = parent;</div><div class="line">        klass.subclasses = [];</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (parent) &#123;</div><div class="line">            <span class="comment">// 因为parent的构造可能返回对象直接量，而不是返回this，如&#123;tostring:true&#125;</span></div><div class="line">            subclass.prototype = parent.prototype;</div><div class="line">            klass.prototype = <span class="keyword">new</span> subclass;</div><div class="line">            parent.subclasses.push(klass);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; properties.length; i++) klass.addmethods(properties[i]);</div><div class="line">        <span class="keyword">if</span> (!klass.prototype.initialize) klass.prototype.initialize = prototype.emptyfunction;</div><div class="line">        klass.prototype.constructor = klass;</div><div class="line">        <span class="keyword">return</span> klass;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addmethods</span>(<span class="params">source</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> ancestor = <span class="keyword">this</span>.superclass &amp;&amp; <span class="keyword">this</span>.superclass.prototype;</div><div class="line">        <span class="keyword">var</span> properties = object.keys(source);</div><div class="line">        <span class="keyword">if</span> (!object.keys(&#123;</div><div class="line">            tostring: <span class="literal">true</span></div><div class="line">        &#125;).length) &#123;</div><div class="line">            <span class="keyword">if</span> (source.tostring != object.prototype.tostring) properties.push(<span class="string">"tostring"</span>);</div><div class="line">            <span class="keyword">if</span> (source.valueof != object.prototype.valueof) properties.push(<span class="string">"valueof"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, length = properties.length; i &lt; length; i++) &#123;</div><div class="line">            <span class="keyword">var</span> property = properties[i],</div><div class="line">                value = source[property];</div><div class="line">            <span class="keyword">if</span> (ancestor &amp;&amp; object.isfunction(value) &amp;&amp; value.argumentnames().first() == <span class="string">"$super"</span>) &#123;</div><div class="line">                <span class="keyword">var</span> method = value;</div><div class="line">                value = (<span class="function"><span class="keyword">function</span>(<span class="params">m</span>) </span>&#123;</div><div class="line">                    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                        <span class="keyword">return</span> ancestor[m].apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">                    &#125;;</div><div class="line">                &#125;)(property).wrap(method);</div><div class="line">                value.valueof = method.valueof.bind(method);</div><div class="line">                value.tostring = method.tostring.bind(method);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">this</span>.prototype[property] = value;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        create: create,</div><div class="line">        methods: &#123;</div><div class="line">            addmethods: addmethods</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="class"><span class="keyword">class</span> </span>= (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">subclass</span>(<span class="params"></span>) </span>&#123;&#125;;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>) </span>&#123;</span><span class="line">        <span class="keyword">var</span> parent = <span class="literal">null</span>,</span><span class="line">            properties = $a(<span class="built_in">arguments</span>);</span><span class="line">        <span class="keyword">if</span> (object.isfunction(properties[<span class="number">0</span>])) parent = properties.shift();</span><span class="line"></span><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">klass</span>(<span class="params"></span>) </span>&#123;</span><span class="line">            <span class="keyword">this</span>.initialize.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        object.extend(klass, <span class="class"><span class="keyword">class</span>.<span class="title">methods</span>)</span>;</span><span class="line">        klass.superclass = parent;</span><span class="line">        klass.subclasses = [];</span><span class="line"></span><span class="line">        <span class="keyword">if</span> (parent) &#123;</span><span class="line">            <span class="comment">// 因为parent的构造可能返回对象直接量，而不是返回this，如&#123;tostring:true&#125;</span></span><span class="line">            subclass.prototype = parent.prototype;</span><span class="line">            klass.prototype = <span class="keyword">new</span> subclass;</span><span class="line">            parent.subclasses.push(klass);</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; properties.length; i++) klass.addmethods(properties[i]);</span><span class="line">        <span class="keyword">if</span> (!klass.prototype.initialize) klass.prototype.initialize = prototype.emptyfunction;</span><span class="line">        klass.prototype.constructor = klass;</span><span class="line">        <span class="keyword">return</span> klass;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addmethods</span>(<span class="params">source</span>) </span>&#123;</span><span class="line">        <span class="keyword">var</span> ancestor = <span class="keyword">this</span>.superclass &amp;&amp; <span class="keyword">this</span>.superclass.prototype;</span><span class="line">        <span class="keyword">var</span> properties = object.keys(source);</span><span class="line">        <span class="keyword">if</span> (!object.keys(&#123;</span><span class="line">            tostring: <span class="literal">true</span></span><span class="line">        &#125;).length) &#123;</span><span class="line">            <span class="keyword">if</span> (source.tostring != object.prototype.tostring) properties.push(<span class="string">"tostring"</span>);</span><span class="line">            <span class="keyword">if</span> (source.valueof != object.prototype.valueof) properties.push(<span class="string">"valueof"</span>);</span><span class="line">        &#125;</span><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, length = properties.length; i &lt; length; i++) &#123;</span><span class="line">            <span class="keyword">var</span> property = properties[i],</span><span class="line">                value = source[property];</span><span class="line">            <span class="keyword">if</span> (ancestor &amp;&amp; object.isfunction(value) &amp;&amp; value.argumentnames().first() == <span class="string">"$super"</span>) &#123;</span><span class="line">                <span class="keyword">var</span> method = value;</span><span class="line">                value = (<span class="function"><span class="keyword">function</span>(<span class="params">m</span>) </span>&#123;</span><span class="line">                    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                        <span class="keyword">return</span> ancestor[m].apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><span class="line">                    &#125;;</span><span class="line">                &#125;)(property).wrap(method);</span><span class="line">                value.valueof = method.valueof.bind(method);</span><span class="line">                value.tostring = method.tostring.bind(method);</span><span class="line">            &#125;</span><span class="line">            <span class="keyword">this</span>.prototype[property] = value;</span><span class="line">        &#125;</span><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">    &#125;</span><span class="line">    <span class="keyword">return</span> &#123;</span><span class="line">        create: create,</span><span class="line">        methods: &#123;</span><span class="line">            addmethods: addmethods</span><span class="line">        &#125;</span><span class="line">    &#125;;</span><span class="line">&#125;)();</span></pre></td></tr></table></figure>
 
       
     </div>
@@ -289,7 +289,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/javascript/2010/06/08/javascript-closures-lexical-scope-and-scope-chain.html" rel="next" title="javascript: closures, lexical scope and scope chain">
-                上一篇：javascript: closures, lexical scope and scope chain
+                <i class="fa fa-chevron-left"></i>
+                javascript: closures, lexical scope and scope chain
               </a>
             
           </div>
@@ -297,7 +298,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/javascript/2010/06/25/script-defer-property.html" rel="prev" title="script标签中的defer属性说明">
-                下一篇：script标签中的defer属性说明
+                <i class="fa fa-chevron-right"></i>
+                script标签中的defer属性说明
               </a>
             
           </div>
@@ -346,7 +348,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -357,16 +359,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -448,10 +448,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

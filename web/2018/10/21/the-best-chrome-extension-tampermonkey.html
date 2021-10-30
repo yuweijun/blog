@@ -1,0 +1,586 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="Tampermonkey这个插件类似 Firefox 上的 GreaseMonkey，插件地址为:https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo。 插件使用帮助文档：https://tampermonkey.net/documentation.php。 页面加载初始化操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chrome 插件之 tampermonkey">
+<meta property="og:url" content="http://www.4e00.com/web/2018/10/21/the-best-chrome-extension-tampermonkey.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="Tampermonkey这个插件类似 Firefox 上的 GreaseMonkey，插件地址为:https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo。 插件使用帮助文档：https://tampermonkey.net/documentation.php。 页面加载初始化操作">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.139Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="chrome 插件之 tampermonkey">
+<meta name="twitter:description" content="Tampermonkey这个插件类似 Firefox 上的 GreaseMonkey，插件地址为:https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo。 插件使用帮助文档：https://tampermonkey.net/documentation.php。 页面加载初始化操作">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/web/2018/10/21/the-best-chrome-extension-tampermonkey.html">
+
+  <title> chrome 插件之 tampermonkey | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                chrome 插件之 tampermonkey
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-10-21T19:25:20+08:00" content="2018-10-21">
+              2018-10-21
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Tampermonkey"><a href="#Tampermonkey" class="headerlink" title="Tampermonkey"></a>Tampermonkey</h2><p>这个插件类似 Firefox 上的 GreaseMonkey，插件地址为:<a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank" rel="noopener">https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo</a>。</p>
+<p>插件使用帮助文档：<a href="https://tampermonkey.net/documentation.php" target="_blank" rel="noopener">https://tampermonkey.net/documentation.php</a>。</p>
+<h3 id="页面加载初始化操作"><a href="#页面加载初始化操作" class="headerlink" title="页面加载初始化操作"></a>页面加载初始化操作</h3><p>下面是在页面显示之前执行的<a href="https://github.com/yuweijun/d.js/blob/master/start.js" target="_blank" rel="noopener">脚本</a>，其中的部分注释说明：</p>
+<ol>
+<li><code>@name</code>就是当前脚本的名字</li>
+<li><code>@run-at</code>可以控制脚本在页面不同阶段中注入进来</li>
+<li><code>@match</code>的说明可查看 Google 浏览器路径匹配规则<a href="http://code.google.com/chrome/extensions/match_patterns.html" target="_blank" rel="noopener">文档</a></li>
+<li><code>@grant</code>授权是为当前的脚本授权一些高级的 API 方法调用，如<code>window.close()</code>方法</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ==UserScript==</span></span><span class="line"><span class="comment">// @name         document start</span></span><span class="line"><span class="comment">// @namespace    http://tampermonkey.net/</span></span><span class="line"><span class="comment">// @version      0.1</span></span><span class="line"><span class="comment">// @author       test.yu</span></span><span class="line"><span class="comment">// @match        http*://*/*</span></span><span class="line"><span class="comment">// @run-at       document-start</span></span><span class="line"><span class="comment">// @grant        none</span></span><span class="line"><span class="comment">// ==/UserScript==</span></span><span class="line"></span><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line"></span><span class="line">    <span class="comment">// 在页面载入前，先将整个页面完全置为不可见，并且隐藏滚动条</span></span><span class="line">    <span class="comment">// 避免看到页面原来的布局被改写的页面渲染过程</span></span><span class="line">    <span class="built_in">document</span>.head.insertAdjacentHTML(<span class="string">'beforeend'</span>, <span class="string">'&lt;style id="tampermonkey-hide-body"&gt;body &#123;visibility: hidden; overflow: hidden;&#125; aside &#123;display: none;&#125;&lt;/style&gt;'</span>);</span><span class="line"></span><span class="line">    <span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">        <span class="built_in">document</span>.head.querySelector(<span class="string">'#tampermonkey-hide-body'</span>).remove();</span><span class="line">    &#125;;</span><span class="line"></span><span class="line">    <span class="comment">// 有些页面有js问题，不能触发下面的 DOMContentLoaded 事件，所以加了一个补救的 setTimeout 方法恢复页面</span></span><span class="line">    <span class="keyword">var</span> timeId = setTimeout(fn, <span class="number">3000</span>);</span><span class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><span class="line">        clearTimeout(timeId);</span><span class="line">        setTimeout(fn, <span class="number">50</span>);</span><span class="line">    &#125;, <span class="literal">false</span>);</span><span class="line"></span><span class="line">&#125;)();</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="简单的操作-DOM-的全局方法"><a href="#简单的操作-DOM-的全局方法" class="headerlink" title="简单的操作 DOM 的全局方法"></a>简单的操作 DOM 的全局方法</h3><p>为<code>document</code>增加了一个<code>$</code>方法，返回的内容与<code>document.querySelectorAll(selector)</code>方法返回的一样，只是原生的方法返回的是<code>NodeList</code>，而<code>document.$(selector)</code>方法返回的是一个强化版的<code>Array</code>，这个返回对象添加了一些 DOM 的操作方法，方法使用类似<code>jquery</code>的API，<code>jquery</code>是添加在<code>window</code>对象上的，而这个<code>$</code>是添加在<code>document</code>对象上的。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ==UserScript==</span></span><span class="line"><span class="comment">// @name         d.js</span></span><span class="line"><span class="comment">// @namespace    http://tampermonkey.net/</span></span><span class="line"><span class="comment">// @version      0.2</span></span><span class="line"><span class="comment">// @author       test.yu</span></span><span class="line"><span class="comment">// @match        http*://*/*</span></span><span class="line"><span class="comment">// @run-at       document-start</span></span><span class="line"><span class="comment">// @grant        none</span></span><span class="line"><span class="comment">// ==/UserScript==</span></span><span class="line"></span><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">var</span> element = &#123;</span><span class="line">        siblings: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">            <span class="keyword">return</span> [...this.parentNode.children].filter(<span class="function"><span class="params">c</span> =&gt;</span> c.nodeType == <span class="number">1</span> &amp;&amp; c != <span class="keyword">this</span>);</span><span class="line">        &#125;,</span><span class="line">        attr: <span class="function"><span class="keyword">function</span>(<span class="params">attributes</span>) </span>&#123;</span><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.nodeType === <span class="number">3</span> || <span class="keyword">this</span>.nodeType === <span class="number">8</span> || <span class="keyword">this</span>.nodeType === <span class="number">2</span>) &#123;</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">if</span> (<span class="keyword">typeof</span> attributes === <span class="string">'string'</span>) &#123;</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>.getAttribute(attributes);</span><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> attributes) &#123;</span><span class="line">                    <span class="keyword">this</span>.setAttribute(key, attributes[key]);</span><span class="line">                &#125;</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;</span><span class="line">        &#125;,</span><span class="line">        css: <span class="function"><span class="keyword">function</span>(<span class="params">styles</span>) </span>&#123;</span><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.nodeType === <span class="number">1</span>) &#123;</span><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> styles) &#123;</span><span class="line">                    <span class="keyword">this</span>.style[key] = styles[key];</span><span class="line">                &#125;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">        &#125;,</span><span class="line">        parents: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">            <span class="keyword">var</span> matched = [],</span><span class="line">                elem = <span class="keyword">this</span>;</span><span class="line">            <span class="keyword">while</span> (elem) &#123;</span><span class="line">                <span class="keyword">if</span> (elem.nodeType === <span class="number">9</span>) &#123;</span><span class="line">                    <span class="keyword">break</span>;</span><span class="line">                &#125;</span><span class="line"></span><span class="line">                <span class="keyword">if</span> (elem.nodeType === <span class="number">1</span>) &#123;</span><span class="line">                    <span class="keyword">if</span> (matched.indexOf(elem) === <span class="number">-1</span>) &#123;</span><span class="line">                        matched.push(elem);</span><span class="line">                    &#125;</span><span class="line">                &#125;</span><span class="line"></span><span class="line">                elem = elem.parentNode;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">return</span> matched;</span><span class="line">        &#125;,</span><span class="line">        hasClass: <span class="function"><span class="keyword">function</span>(<span class="params">selector</span>) </span>&#123;</span><span class="line">            <span class="keyword">var</span> classes = <span class="string">" "</span> + (<span class="keyword">this</span>.getAttribute(<span class="string">"class"</span>) || <span class="string">""</span>) + <span class="string">" "</span>,</span><span class="line">                className = <span class="string">" "</span> + selector + <span class="string">" "</span>;</span><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.nodeType === <span class="number">1</span> &amp;&amp; classes.indexOf(className) &gt; <span class="number">-1</span>) &#123;</span><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><span class="line">        &#125;,</span><span class="line">        addClass: <span class="function"><span class="keyword">function</span>(<span class="params">selector</span>) </span>&#123;</span><span class="line">            <span class="keyword">if</span> (!element.hasClass.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)) &#123;</span><span class="line">                <span class="keyword">var</span> classes = <span class="keyword">this</span>.getAttribute(<span class="string">"class"</span>) || <span class="string">""</span>,</span><span class="line">                    className = classes + <span class="string">" "</span> + selector + <span class="string">" "</span>;</span><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.nodeType === <span class="number">1</span>) &#123;</span><span class="line">                    <span class="keyword">this</span>.setAttribute(<span class="string">'class'</span>, className.trim());</span><span class="line">                &#125;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">        &#125;,</span><span class="line">        removeClass: <span class="function"><span class="keyword">function</span>(<span class="params">selector</span>) </span>&#123;</span><span class="line">            <span class="keyword">if</span> (element.hasClass.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)) &#123;</span><span class="line">                <span class="keyword">var</span> classes = <span class="string">" "</span> + (<span class="keyword">this</span>.getAttribute(<span class="string">"class"</span>) || <span class="string">""</span>) + <span class="string">" "</span>,</span><span class="line">                    className = <span class="string">" "</span> + selector + <span class="string">" "</span>;</span><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.nodeType === <span class="number">1</span>) &#123;</span><span class="line">                    <span class="keyword">while</span> (classes.indexOf(className) &gt; <span class="number">-1</span>) &#123;</span><span class="line">                        classes = classes.replace(className, <span class="string">" "</span>);</span><span class="line">                    &#125;</span><span class="line">                    <span class="keyword">this</span>.setAttribute(<span class="string">'class'</span>, classes.trim());</span><span class="line">                &#125;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">        &#125;,</span><span class="line">        hide: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">            <span class="keyword">this</span>.style.display = <span class="string">'none'</span>;</span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">        &#125;,</span><span class="line">        show: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">            <span class="keyword">this</span>.style.display = <span class="string">'block'</span>;</span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">        &#125;,</span><span class="line">        after: <span class="function"><span class="keyword">function</span>(<span class="params">elem</span>) </span>&#123;</span><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.parentNode) &#123;</span><span class="line">                <span class="keyword">this</span>.parentNode.insertBefore(elem, <span class="keyword">this</span>.nextSibling);</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">        &#125;,</span><span class="line">        before: <span class="function"><span class="keyword">function</span>(<span class="params">elem</span>) </span>&#123;</span><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.parentNode) &#123;</span><span class="line">                <span class="keyword">this</span>.parentNode.insertBefore(elem, <span class="keyword">this</span>);</span><span class="line">            &#125;</span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">        &#125;,</span><span class="line">        empty: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.nodeType === <span class="number">1</span>) &#123;</span><span class="line">                <span class="keyword">this</span>.textContent = <span class="string">""</span>;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">        &#125;,</span><span class="line">        html: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.nodeType === <span class="number">1</span>) &#123;</span><span class="line">                <span class="keyword">if</span> (<span class="built_in">arguments</span>.length) &#123;</span><span class="line">                    <span class="keyword">this</span>.innerHTML = <span class="built_in">arguments</span>[<span class="number">0</span>];</span><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><span class="line">                    <span class="keyword">return</span> <span class="keyword">this</span>.innerHTML;</span><span class="line">                &#125;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">        &#125;,</span><span class="line">        prepend: <span class="function"><span class="keyword">function</span>(<span class="params">nodes</span>) </span>&#123;</span><span class="line">            <span class="keyword">if</span> (nodes) &#123;</span><span class="line">                <span class="keyword">if</span> (nodes <span class="keyword">instanceof</span> <span class="built_in">Array</span>) &#123;</span><span class="line">                    nodes.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> <span class="keyword">this</span>.insertBefore(elem, <span class="keyword">this</span>.firstElementChild));</span><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><span class="line">                    $(nodes).forEach(<span class="function"><span class="params">elem</span> =&gt;</span> <span class="keyword">this</span>.insertBefore(elem, <span class="keyword">this</span>.firstElementChild));</span><span class="line">                &#125;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">        &#125;,</span><span class="line">        append: <span class="function"><span class="keyword">function</span>(<span class="params">nodes</span>) </span>&#123;</span><span class="line">            <span class="keyword">if</span> (nodes) &#123;</span><span class="line">                <span class="keyword">if</span> (nodes <span class="keyword">instanceof</span> <span class="built_in">Array</span>) &#123;</span><span class="line">                    nodes.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> <span class="keyword">this</span>.appendChild(elem));</span><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><span class="line">                    $(nodes).forEach(<span class="function"><span class="params">elem</span> =&gt;</span> <span class="keyword">this</span>.appendChild(elem));</span><span class="line">                &#125;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">        &#125;</span><span class="line">    &#125;;</span><span class="line"></span><span class="line">    <span class="comment">// transform object of Node/NodeList/Array to enhanced Array instance</span></span><span class="line">    <span class="keyword">var</span> $ = <span class="function"><span class="keyword">function</span>(<span class="params">array</span>) </span>&#123;</span><span class="line">        <span class="keyword">var</span> attr = &#123;&#125;;</span><span class="line"></span><span class="line">        <span class="keyword">if</span> (!<span class="built_in">arguments</span>.length) &#123;</span><span class="line">            array = [];</span><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (array <span class="keyword">instanceof</span> Node) &#123;</span><span class="line">            array = [array];</span><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (array <span class="keyword">instanceof</span> NodeList) &#123;</span><span class="line">            array = [...array];</span><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (array <span class="keyword">instanceof</span> HTMLCollection) &#123;</span><span class="line">            array = [...array];</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        [<span class="string">'filter'</span>, <span class="string">'map'</span>, <span class="string">'slice'</span>, <span class="string">'sort'</span>].forEach(<span class="function"><span class="keyword">function</span>(<span class="params">method</span>) </span>&#123;</span><span class="line">            attr[method] = &#123;</span><span class="line">                value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                    <span class="keyword">var</span> array = <span class="built_in">Array</span>.prototype[method].apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><span class="line">                    <span class="keyword">return</span> $(array);</span><span class="line">                &#125;,</span><span class="line">                enumerable: <span class="literal">false</span></span><span class="line">            &#125;;</span><span class="line">        &#125;);</span><span class="line">        (<span class="string">"blur focus click mouseover mouseenter mouseleave "</span> +</span><span class="line">            <span class="string">"change select submit keydown keypress keyup"</span>).split(<span class="string">" "</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><span class="line">            attr[event] = &#123;</span><span class="line">                value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                    <span class="keyword">this</span>.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> &#123;</span><span class="line">                        <span class="keyword">if</span> (<span class="built_in">arguments</span>.length) &#123;</span><span class="line">                            [...arguments].forEach(<span class="function">(<span class="params">fn</span>) =&gt;</span> &#123;</span><span class="line">                                elem.addEventListener(event, fn, <span class="literal">false</span>);</span><span class="line">                            &#125;);</span><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><span class="line">                            elem[event]();</span><span class="line">                        &#125;</span><span class="line">                    &#125;);</span><span class="line"></span><span class="line">                    <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">                &#125;,</span><span class="line">                enumerable: <span class="literal">false</span></span><span class="line">            &#125;;</span><span class="line">        &#125;);</span><span class="line">        attr.first = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">var</span> array = <span class="built_in">Array</span>.prototype.slice.call(<span class="keyword">this</span>, <span class="number">0</span>, <span class="number">1</span>);</span><span class="line">                <span class="keyword">return</span> $(array);</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.last = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">var</span> array = <span class="built_in">Array</span>.prototype.slice.call(<span class="keyword">this</span>, <span class="keyword">this</span>.length - <span class="number">1</span>, <span class="keyword">this</span>.length);</span><span class="line">                <span class="keyword">return</span> $(array);</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.remove = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">this</span>.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">elem</span>) </span>&#123;</span><span class="line">                    <span class="keyword">if</span> (elem.nodeType === <span class="number">1</span>) &#123;</span><span class="line">                        elem.remove();</span><span class="line">                    &#125;</span><span class="line">                &#125;);</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.siblings = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">var</span> array = [];</span><span class="line">                <span class="keyword">this</span>.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">elem</span>) </span>&#123;</span><span class="line">                    array = array.concat(element.siblings.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                &#125;);</span><span class="line"></span><span class="line">                <span class="keyword">return</span> $(array);</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.parent = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">var</span> array = [];</span><span class="line">                <span class="keyword">this</span>.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> &#123;</span><span class="line">                    <span class="keyword">if</span> (elem) &#123;</span><span class="line">                        array.push(elem.parentNode);</span><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><span class="line">                        array.push(<span class="literal">null</span>);</span><span class="line">                    &#125;</span><span class="line">                &#125;);</span><span class="line">                <span class="keyword">return</span> $(array);</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.parents = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">var</span> array = [];</span><span class="line">                <span class="keyword">this</span>.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">elem</span>) </span>&#123;</span><span class="line">                    element.parents.apply(elem, <span class="built_in">arguments</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">p</span>) </span>&#123;</span><span class="line">                        <span class="keyword">if</span> (array.indexOf(p) === <span class="number">-1</span>) &#123;</span><span class="line">                            array.push(p);</span><span class="line">                        &#125;</span><span class="line">                    &#125;);</span><span class="line">                &#125;);</span><span class="line">                <span class="keyword">return</span> $(array);</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.closest = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params">selector</span>) </span>&#123;</span><span class="line">                <span class="keyword">var</span> array = [];</span><span class="line">                <span class="keyword">this</span>.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> array.push(elem.closest(selector)));</span><span class="line">                <span class="keyword">return</span> $(array);</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.hasClass = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</span><span class="line">                    <span class="keyword">if</span> (element.hasClass.apply(<span class="keyword">this</span>[i], <span class="built_in">arguments</span>)) &#123;</span><span class="line">                        <span class="keyword">return</span> <span class="literal">true</span>;</span><span class="line">                    &#125;</span><span class="line">                &#125;</span><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.addClass = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">this</span>.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> element.addClass.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.removeClass = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">this</span>.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> element.removeClass.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.attr = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">if</span> (<span class="built_in">arguments</span>.length) &#123;</span><span class="line">                    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">arguments</span>[<span class="number">0</span>] === <span class="string">'string'</span>) &#123;</span><span class="line">                        <span class="keyword">var</span> values = [];</span><span class="line">                        <span class="keyword">this</span>.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> values.push(element.attr.apply(elem, <span class="built_in">arguments</span>)));</span><span class="line">                        <span class="keyword">if</span> (values.length === <span class="number">1</span>) &#123;</span><span class="line">                            <span class="keyword">return</span> values[<span class="number">0</span>];</span><span class="line">                        &#125;</span><span class="line">                        <span class="keyword">return</span> values;</span><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><span class="line">                        <span class="keyword">this</span>.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> element.attr.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                    &#125;</span><span class="line">                &#125;</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.css = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">this</span>.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> element.css.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.hide = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">this</span>.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> element.hide.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.show = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">this</span>.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> element.show.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.after = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">this</span>.first().forEach(<span class="function"><span class="params">elem</span> =&gt;</span> element.after.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.before = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">this</span>.first().forEach(<span class="function"><span class="params">elem</span> =&gt;</span> element.before.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.empty = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">this</span>.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> element.empty.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.html = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">if</span> (<span class="built_in">arguments</span>.length) &#123;</span><span class="line">                    <span class="keyword">this</span>.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> element.html.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><span class="line">                    <span class="keyword">return</span> <span class="keyword">this</span>.map(<span class="function"><span class="params">elem</span> =&gt;</span> element.html.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                &#125;</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.prepend = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">this</span>.first().forEach(<span class="function"><span class="params">elem</span> =&gt;</span> element.prepend.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.append = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">this</span>.first().forEach(<span class="function"><span class="params">elem</span> =&gt;</span> element.append.apply(elem, <span class="built_in">arguments</span>));</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.querySelectorAll = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params">selector</span>) </span>&#123;</span><span class="line">                <span class="keyword">if</span> (<span class="keyword">typeof</span> selector === <span class="string">'string'</span>) &#123;</span><span class="line">                    <span class="keyword">var</span> array = [];</span><span class="line">                    <span class="keyword">this</span>.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">elem</span>) </span>&#123;</span><span class="line">                        <span class="keyword">var</span> subs = elem.querySelectorAll(selector);</span><span class="line">                        array.push(...subs);</span><span class="line">                    &#125;);</span><span class="line">                    <span class="keyword">return</span> $(array);</span><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><span class="line">                    <span class="keyword">return</span> $(selector);</span><span class="line">                &#125;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.tee = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="built_in">console</span>.log(...this);</span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line">        attr.readable = &#123;</span><span class="line">            value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.length === <span class="number">0</span>) <span class="keyword">return</span>;</span><span class="line"></span><span class="line">                <span class="keyword">var</span> parents = <span class="keyword">this</span>.parents();</span><span class="line"></span><span class="line">                <span class="keyword">this</span>.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">elem</span>) </span>&#123;</span><span class="line">                    <span class="keyword">while</span> (elem &amp;&amp; elem.tagName.toUpperCase() !== <span class="string">'BODY'</span>) &#123;</span><span class="line">                        <span class="keyword">var</span> $elem = $(elem);</span><span class="line">                        $elem.css(&#123;</span><span class="line">                            padding: <span class="number">0</span>,</span><span class="line">                            margin: <span class="string">'0 auto'</span>,</span><span class="line">                            display: <span class="string">'block'</span>,</span><span class="line">                            width: <span class="string">'100%'</span>,</span><span class="line">                            maxWidth: <span class="string">'1024px'</span>,</span><span class="line">                            position: <span class="string">'static'</span></span><span class="line">                        &#125;);</span><span class="line"></span><span class="line">                        $elem.siblings().filter(<span class="function"><span class="keyword">function</span>(<span class="params">elem</span>) </span>&#123;</span><span class="line">                            <span class="keyword">if</span> (elem.tagName.toUpperCase() === <span class="string">'LINK'</span>) &#123;</span><span class="line">                                <span class="keyword">return</span> <span class="literal">false</span>;</span><span class="line">                            &#125;</span><span class="line">                            <span class="keyword">if</span> (parents.indexOf(elem) &gt; <span class="number">-1</span>) &#123;</span><span class="line">                                <span class="keyword">return</span> <span class="literal">false</span>;</span><span class="line">                            &#125;</span><span class="line">                            <span class="keyword">return</span> <span class="literal">true</span>;</span><span class="line">                        &#125;).remove();</span><span class="line"></span><span class="line">                        elem = elem.parentNode;</span><span class="line">                    &#125;</span><span class="line">                &#125;);</span><span class="line"></span><span class="line">                $(<span class="keyword">this</span>).css(&#123;</span><span class="line">                    padding: <span class="string">'15px'</span>,</span><span class="line">                    boxSizing: <span class="string">'border-box'</span></span><span class="line">                &#125;);</span><span class="line"></span><span class="line">                <span class="built_in">document</span>.head.querySelectorAll(<span class="string">'script'</span>).$.remove();</span><span class="line">                $(<span class="built_in">document</span>.head).append(<span class="built_in">document</span>.body.querySelectorAll(<span class="string">'link'</span>));</span><span class="line">                <span class="built_in">document</span>.body.style.height = <span class="built_in">document</span>.documentElement.scrollHeight + <span class="string">'px'</span>;</span><span class="line"></span><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</span><span class="line">            &#125;,</span><span class="line">            enumerable: <span class="literal">false</span></span><span class="line">        &#125;;</span><span class="line"></span><span class="line">        <span class="keyword">return</span> <span class="built_in">Object</span>.create(array, attr);</span><span class="line">    &#125;;</span><span class="line"></span><span class="line">    <span class="built_in">Object</span>.defineProperty(Document.prototype, <span class="string">'$'</span>, &#123;</span><span class="line">        <span class="keyword">get</span>() &#123;</span><span class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">                <span class="keyword">if</span> (<span class="built_in">arguments</span>.length === <span class="number">0</span>) &#123;</span><span class="line">                    <span class="keyword">return</span> $(<span class="built_in">document</span>);</span><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!(<span class="built_in">arguments</span>[<span class="number">0</span>] <span class="keyword">instanceof</span> <span class="built_in">Object</span>)) &#123;</span><span class="line">                    <span class="keyword">return</span> $(<span class="built_in">document</span>.querySelectorAll.apply(<span class="built_in">document</span>, <span class="built_in">arguments</span>));</span><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><span class="line">                    <span class="keyword">return</span> $(<span class="built_in">arguments</span>[<span class="number">0</span>]);</span><span class="line">                &#125;</span><span class="line">            &#125;;</span><span class="line">        &#125;,</span><span class="line">        enumerable: <span class="literal">false</span></span><span class="line">    &#125;);</span><span class="line"></span><span class="line">    <span class="built_in">Object</span>.defineProperty(NodeList.prototype, <span class="string">'$'</span>, &#123;</span><span class="line">        <span class="keyword">get</span>() &#123;</span><span class="line">            <span class="keyword">return</span> $(<span class="keyword">this</span>);</span><span class="line">        &#125;,</span><span class="line">        enumerable: <span class="literal">false</span></span><span class="line">    &#125;);</span><span class="line"></span><span class="line">&#125;)();</span></pre></td></tr></table></figure>
+<h4 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h4><p>一些文章页面会使用<code>article</code>标签，如果只想看到文章本体部分内容，删除页面上多余的元素，可以运行如下脚本：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 传入想在页面上保留的部分元素的 CSS 选择器</span></span><span class="line"><span class="built_in">document</span>.$(<span class="string">'article'</span>).readable();</span></pre></td></tr></table></figure>
+<h3 id="Alt-C-复制选择的文本"><a href="#Alt-C-复制选择的文本" class="headerlink" title="Alt+C 复制选择的文本"></a>Alt+C 复制选择的文本</h3><p>下面这段脚本增加了几个快捷键：</p>
+<ol>
+<li><code>Alt+C</code> 同 <code>Ctrl+C</code></li>
+<li><code>Alt+R</code> 同 <code>Ctrl+R</code></li>
+<li><code>Alt+W</code> 同 <code>Ctrl+W</code></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ==UserScript==</span></span><span class="line"><span class="comment">// @name         copy</span></span><span class="line"><span class="comment">// @namespace    http://tampermonkey.net/</span></span><span class="line"><span class="comment">// @version      0.1</span></span><span class="line"><span class="comment">// @description  shortcuts for copy selection using alt+c</span></span><span class="line"><span class="comment">// @author       test.yu</span></span><span class="line"><span class="comment">// @match        http*://*/*</span></span><span class="line"><span class="comment">// @grant        window.close</span></span><span class="line"><span class="comment">// @grant        GM_setClipboard</span></span><span class="line"><span class="comment">// ==/UserScript==</span></span><span class="line"></span><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line"><span class="meta">    'use strict'</span>;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">se</span>(<span class="params">d</span>) </span>&#123;</span><span class="line">        <span class="keyword">return</span> d.selection ? d.selection.createRange().text : d.getSelection();</span><span class="line">    &#125;;</span><span class="line"></span><span class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">'keydown'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><span class="line">        <span class="keyword">if</span> (e.altKey) &#123;</span><span class="line">            e.preventDefault();</span><span class="line">            <span class="keyword">if</span> (e.which === <span class="number">67</span>) &#123;</span><span class="line">                <span class="keyword">var</span> s = se(<span class="built_in">document</span>);</span><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; frames.length &amp;&amp; !s; i++) &#123;</span><span class="line">                    s = se(frames[i].document);</span><span class="line">                &#125;</span><span class="line">                <span class="built_in">console</span>.log(<span class="string">"copy"</span>, s.toString());</span><span class="line">                GM_setClipboard(s.toString(), &#123;<span class="attr">type</span>: <span class="string">'text'</span>, <span class="attr">mimetype</span>: <span class="string">'text/plain'</span>&#125;);</span><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.which === <span class="number">82</span>) &#123;</span><span class="line">                <span class="comment">// console.log('reload window');</span></span><span class="line">                <span class="built_in">window</span>.location.reload();</span><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.which == <span class="number">87</span>) &#123;</span><span class="line">                <span class="comment">// console.log('close window');</span></span><span class="line">                <span class="built_in">window</span>.close();</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line">    &#125;);</span><span class="line">&#125;)();</span></pre></td></tr></table></figure>
+<h3 id="VIM-移动快捷键"><a href="#VIM-移动快捷键" class="headerlink" title="VIM 移动快捷键"></a>VIM 移动快捷键</h3><ol>
+<li><code>Shift+G</code> 页尾</li>
+<li><code>gg</code> 页首</li>
+<li><code>Ctrl+D</code> 向下翻页，取代原来的收藏功能</li>
+<li><code>Ctrl+U</code> 向上翻页，取代原来的源码查看功能</li>
+<li><code>j</code> 向下键</li>
+<li><code>k</code> 向上键</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ==UserScript==</span></span><span class="line"><span class="comment">// @name         vim.js</span></span><span class="line"><span class="comment">// @namespace    http://tampermonkey.net/</span></span><span class="line"><span class="comment">// @version      0.2</span></span><span class="line"><span class="comment">// @description  emulation HOME/END/UP/DOWN shortcuts of vim</span></span><span class="line"><span class="comment">// @author       test.yu</span></span><span class="line"><span class="comment">// @match        http*://*/*</span></span><span class="line"><span class="comment">// @grant        none</span></span><span class="line"><span class="comment">// ==/UserScript==</span></span><span class="line"></span><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">var</span> stack = &#123;</span><span class="line">        timeId: <span class="number">0</span>,</span><span class="line">        e: [],</span><span class="line">        push: <span class="function"><span class="keyword">function</span>(<span class="params">k</span>) </span>&#123;</span><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.full()) &#123;</span><span class="line">                stack.clear();</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">this</span>.e.push(k);</span><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.timeId) &#123;</span><span class="line">                clearTimeout(<span class="keyword">this</span>.timeId);</span><span class="line">                <span class="keyword">this</span>.timeId = <span class="number">0</span>;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">this</span>.timeId = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><span class="line">                <span class="keyword">this</span>.clear()</span><span class="line">            &#125;, <span class="number">300</span>);</span><span class="line">        &#125;,</span><span class="line">        dump: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.e.join(<span class="string">''</span>);</span><span class="line">        &#125;,</span><span class="line">        clear: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">            <span class="keyword">this</span>.e.length = <span class="number">0</span>;</span><span class="line">        &#125;,</span><span class="line">        full: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.e.length === <span class="number">2</span>;</span><span class="line">        &#125;</span><span class="line">    &#125;;</span><span class="line"></span><span class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">'keydown'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><span class="line"></span><span class="line">        <span class="keyword">if</span> (<span class="built_in">document</span>.querySelectorAll(<span class="string">'input:focus, textarea:focus, select:focus'</span>).length) <span class="keyword">return</span>;</span><span class="line"></span><span class="line">        <span class="keyword">if</span> (e.shiftKey) &#123;</span><span class="line">            <span class="keyword">var</span> height = <span class="built_in">document</span>.documentElement.scrollHeight;</span><span class="line"></span><span class="line">            <span class="keyword">if</span> (e.which === <span class="number">71</span>) &#123;</span><span class="line">                <span class="comment">// console.log('G');</span></span><span class="line">                <span class="built_in">window</span>.scrollBy(&#123;</span><span class="line">                    top: height</span><span class="line">                &#125;);</span><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.which === <span class="number">72</span>) &#123;</span><span class="line">                <span class="comment">// console.log('H');</span></span><span class="line">                <span class="built_in">window</span>.scroll(&#123;</span><span class="line">                    top: <span class="number">0</span></span><span class="line">                &#125;);</span><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.which === <span class="number">77</span>) &#123;</span><span class="line">                <span class="comment">// console.log("M");</span></span><span class="line">                <span class="built_in">window</span>.scroll(&#123;</span><span class="line">                    top: height / <span class="number">2</span></span><span class="line">                &#125;);</span><span class="line">            &#125;</span><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.ctrlKey) &#123;</span><span class="line">            <span class="keyword">var</span> page = <span class="built_in">Math</span>.floor(<span class="built_in">window</span>.innerHeight / <span class="number">50</span>) * <span class="number">50</span>;</span><span class="line">            <span class="keyword">if</span> (e.which === <span class="number">68</span>) &#123;</span><span class="line">                <span class="comment">// console.log('D');</span></span><span class="line">                <span class="comment">// default action is bookmark</span></span><span class="line">                e.preventDefault();</span><span class="line">                <span class="built_in">window</span>.scrollBy(&#123;</span><span class="line">                    top: page</span><span class="line">                &#125;);</span><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.which === <span class="number">85</span>) &#123;</span><span class="line">                <span class="comment">// console.log('U');</span></span><span class="line">                <span class="comment">// default action is source code</span></span><span class="line">                e.preventDefault();</span><span class="line">                <span class="built_in">window</span>.scrollBy(&#123;</span><span class="line">                    top: -page</span><span class="line">                &#125;);</span><span class="line">            &#125;</span><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><span class="line">            <span class="comment">// console.log(e.key, e.which, stack.e);</span></span><span class="line">            stack.push(e.key);</span><span class="line"></span><span class="line">            <span class="comment">// check combination key shortcuts firstly</span></span><span class="line">            <span class="keyword">if</span> (stack.full()) &#123;</span><span class="line">                <span class="keyword">var</span> keys = stack.dump();</span><span class="line">                <span class="comment">// console.log(keys);</span></span><span class="line">                <span class="keyword">if</span> (keys === <span class="string">'gg'</span>) &#123;</span><span class="line">                    <span class="built_in">window</span>.scroll(&#123;</span><span class="line">                        top: <span class="number">0</span></span><span class="line">                    &#125;);</span><span class="line">                    <span class="keyword">return</span>;</span><span class="line">                &#125;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="comment">// check key shortcuts for J/K</span></span><span class="line">            <span class="keyword">if</span> (e.which === <span class="number">74</span>) &#123;</span><span class="line">                <span class="comment">// console.log('J');</span></span><span class="line">                <span class="comment">// chrome default scroll 40px using arrow keys</span></span><span class="line">                <span class="built_in">window</span>.scrollBy(&#123;</span><span class="line">                    top: <span class="number">50</span></span><span class="line">                &#125;);</span><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.which === <span class="number">75</span>) &#123;</span><span class="line">                <span class="comment">// console.log('K');</span></span><span class="line">                <span class="built_in">window</span>.scrollBy(&#123;</span><span class="line">                    top: <span class="number">-50</span></span><span class="line">                &#125;);</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line"></span><span class="line">    &#125;);</span><span class="line"></span><span class="line">&#125;)();</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://tampermonkey.net/documentation.php" target="_blank" rel="noopener">Tampermonkey 帮助文件</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/10/21/inside-java-memory-model.html" rel="next" title="深入理解 java 内存模型">
+                <i class="fa fa-chevron-left"></i>
+                深入理解 java 内存模型
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/10/25/java-checkstyle-guide.html" rel="prev" title="checkstyle guide">
+                <i class="fa fa-chevron-right"></i>
+                checkstyle guide
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tampermonkey"><span class="nav-number">1.</span> <span class="nav-text">Tampermonkey</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#页面加载初始化操作"><span class="nav-number">1.1.</span> <span class="nav-text">页面加载初始化操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单的操作-DOM-的全局方法"><span class="nav-number">1.2.</span> <span class="nav-text">简单的操作 DOM 的全局方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用示例"><span class="nav-number">1.2.1.</span> <span class="nav-text">使用示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Alt-C-复制选择的文本"><span class="nav-number">1.3.</span> <span class="nav-text">Alt+C 复制选择的文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VIM-移动快捷键"><span class="nav-number">1.4.</span> <span class="nav-text">VIM 移动快捷键</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">2.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

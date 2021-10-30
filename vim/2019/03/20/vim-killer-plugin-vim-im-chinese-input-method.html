@@ -1,0 +1,572 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="vimim 中文输入法插件原版插件地址 安装下载简化版本原来的这个插件功能很强大，并支持云输入法，我对插件作者vimim表示由衷的钦佩和感谢。 我将原插件的功能做了精简，并把 python 相关的脚本也都移除了，安装方式如下：  git clone https://github.com/yuweijun/vim-im.git 复制安装将vim-im/plugin目录下面的 2 个文件，复制到 vi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim killer plugin vim-im chinese input method">
+<meta property="og:url" content="http://www.4e00.com/vim/2019/03/20/vim-killer-plugin-vim-im-chinese-input-method.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="vimim 中文输入法插件原版插件地址 安装下载简化版本原来的这个插件功能很强大，并支持云输入法，我对插件作者vimim表示由衷的钦佩和感谢。 我将原插件的功能做了精简，并把 python 相关的脚本也都移除了，安装方式如下：  git clone https://github.com/yuweijun/vim-im.git 复制安装将vim-im/plugin目录下面的 2 个文件，复制到 vi">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-23T04:53:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vim killer plugin vim-im chinese input method">
+<meta name="twitter:description" content="vimim 中文输入法插件原版插件地址 安装下载简化版本原来的这个插件功能很强大，并支持云输入法，我对插件作者vimim表示由衷的钦佩和感谢。 我将原插件的功能做了精简，并把 python 相关的脚本也都移除了，安装方式如下：  git clone https://github.com/yuweijun/vim-im.git 复制安装将vim-im/plugin目录下面的 2 个文件，复制到 vi">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/vim/2019/03/20/vim-killer-plugin-vim-im-chinese-input-method.html">
+
+  <title> vim killer plugin vim-im chinese input method | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                vim killer plugin vim-im chinese input method
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-03-20T14:38:56+08:00" content="2019-03-20">
+              2019-03-20
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="vimim-中文输入法插件"><a href="#vimim-中文输入法插件" class="headerlink" title="vimim 中文输入法插件"></a>vimim 中文输入法插件</h2><p><a href="https://www.vim.org/scripts/script.php?script_id=2506" target="_blank" rel="noopener">原版插件地址</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="下载简化版本"><a href="#下载简化版本" class="headerlink" title="下载简化版本"></a>下载简化版本</h3><p>原来的这个插件功能很强大，并支持云输入法，我对插件作者<code>vimim</code>表示由衷的<strong>钦佩和感谢</strong>。</p>
+<p>我将原插件的功能做了精简，并把 python 相关的脚本也都移除了，安装方式如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">clone</span> https://github.com/yuweijun/vim-im.git</span></pre></td></tr></table></figure>
+<h3 id="复制安装"><a href="#复制安装" class="headerlink" title="复制安装"></a>复制安装</h3><p>将<code>vim-im/plugin</code>目录下面的 2 个文件，复制到 vim 的<code>plugin</code>目录里即可，或者是使用<code>vundle</code>和<code>vim-plug</code>来管理 vim 插件。</p>
+<h3 id="vundle-管理安装"><a href="#vundle-管理安装" class="headerlink" title="vundle 管理安装"></a>vundle 管理安装</h3><p>使用<code>vundle</code>管理安装如下：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> nocompatible</span><span class="line"><span class="keyword">filetype</span> off</span><span class="line"></span><span class="line"><span class="keyword">set</span> rtp+=~/.<span class="keyword">vim</span>/bundle/Vundle.<span class="keyword">vim</span></span><span class="line"></span><span class="line"><span class="keyword">call</span> vundle#begin()</span><span class="line"><span class="comment">" Plugin ...</span></span><span class="line">Plugin <span class="string">'yuweijun/vim-im'</span></span><span class="line"><span class="keyword">call</span> vundle#end()</span><span class="line"></span><span class="line"><span class="keyword">filetype</span> plugin <span class="built_in">indent</span> <span class="keyword">on</span></span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="vim-plug-管理安装"><a href="#vim-plug-管理安装" class="headerlink" title="vim-plug 管理安装"></a>vim-plug 管理安装</h3><p>使用<code>vim-plug</code>管理安装的配置如下：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">call</span> plug#begin(<span class="string">'~/.local/share/nvim/plugged'</span>)</span><span class="line"><span class="comment">" Plug ...</span></span><span class="line">Plug <span class="string">'yuweijun/vim-im'</span></span><span class="line"><span class="keyword">call</span> plug#end()</span></pre></td></tr></table></figure>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>在<code>.vimrc</code>配置文件中加入以下配置，避免输入法状态下搜索功能按键显示有问题：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> imsearch=<span class="number">0</span></span></pre></td></tr></table></figure>
+<h2 id="输入法切换"><a href="#输入法切换" class="headerlink" title="输入法切换"></a>输入法切换</h2><p>简化了部分功能，加入极点五笔输入法作为默认输入法，如需要调整输入法，可以从 <a href="https://code.google.com/archive/p/vimim/downloads?page=2" target="_blank" rel="noopener">这里</a> 下载其他输入法码表，或者从 <a href="https://github.com/yuweijun/vim-im/tree/master/ime" target="_blank" rel="noopener">ime</a> 文件夹里找一个码表替换极点五笔输入法。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>在普通或者插入模式中按快捷键<kbd>Ctrl-_</kbd>，也就是<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>-</kbd>，就可以输入中文了，默认也添加了<kbd>Ctrl-Space</kbd>这个组合键用来切换输入法。</p>
+<h2 id="与英文混排输入的问题"><a href="#与英文混排输入的问题" class="headerlink" title="与英文混排输入的问题"></a>与英文混排输入的问题</h2><p>一般在输入英文单词前后用空格<kbd>Space</kbd>与中文字符分隔开来，如果需要中英文混排并且不要插入空格<kbd>Space</kbd>的话，则在输入英文单词之后按回车符<kbd>Enter</kbd>，英文词上屏后就可以接着输入中文了。</p>
+<h3 id="vim-space-插件"><a href="#vim-space-插件" class="headerlink" title="vim-space 插件"></a>vim-space 插件</h3><p>关于这个中英文之间的空格处理，我额外写了个处理空格的 <a href="https://github.com/yuweijun/vim-space.git" target="_blank" rel="noopener">vim 插件</a>，安装完之后，执行<code>&lt;leader&gt;sa</code>组合键就可以在中英文之间自动添加一个空格，这里的<code>&lt;leader&gt;</code>符在 vim 中默认是<kbd>\</kbd>，但我个人习惯都是将之映射改为逗号<kbd>,</kbd>，因此<code>&lt;leader&gt;sa</code>就是<kbd>,sa</kbd>，反之<kbd>,sd</kbd>就是删除中英文之间的空格。</p>
+<h2 id="plugin-vimim-wubijd-txt"><a href="#plugin-vimim-wubijd-txt" class="headerlink" title="plugin/vimim.wubijd.txt"></a>plugin/vimim.wubijd.txt</h2><p>里面五笔词汇调整了一些个人使用词语的先后顺序，如<code>线程</code>调整到<code>纯种</code>前面，修复文件开头与第一行记录<code>a 工</code>连在一起，导致不能一键输出<code>工</code>字的问题。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://www.vim.org/scripts/script.php?script_id=2506" target="_blank" rel="noopener">vimim</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2019/03/18/java-nio-need-to-known.html" rel="next" title="java nio need to known">
+                <i class="fa fa-chevron-left"></i>
+                java nio need to known
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/vim/2019/03/20/vim-killer-plugin-vim-easy-align.html" rel="prev" title="vim killer plugin - vim easy align">
+                <i class="fa fa-chevron-right"></i>
+                vim killer plugin - vim easy align
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vimim-中文输入法插件"><span class="nav-number">1.</span> <span class="nav-text">vimim 中文输入法插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载简化版本"><span class="nav-number">2.1.</span> <span class="nav-text">下载简化版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制安装"><span class="nav-number">2.2.</span> <span class="nav-text">复制安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vundle-管理安装"><span class="nav-number">2.3.</span> <span class="nav-text">vundle 管理安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vim-plug-管理安装"><span class="nav-number">2.4.</span> <span class="nav-text">vim-plug 管理安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入法切换"><span class="nav-number">4.</span> <span class="nav-text">输入法切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">5.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与英文混排输入的问题"><span class="nav-number">6.</span> <span class="nav-text">与英文混排输入的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vim-space-插件"><span class="nav-number">6.1.</span> <span class="nav-text">vim-space 插件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plugin-vimim-wubijd-txt"><span class="nav-number">7.</span> <span class="nav-text">plugin/vimim.wubijd.txt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

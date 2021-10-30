@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -56,37 +56,37 @@
 
 <meta name="description" content="OverviewThis tutorial covers the basics of how to use the G1 garbage collector and how it can be used with the Hotspot JVM. You will learn how the G1 collector functions internally, the key command li">
 <meta property="og:type" content="article">
-<meta property="og:title" content="getting started with the G1 garbage collector">
-<meta property="og:url" content="https://www.4e00.com/java/2017/09/21/getting-started-with-the-G1-garbage-collector.html">
+<meta property="og:title" content="getting started with the g1 garbage collector">
+<meta property="og:url" content="http://www.4e00.com/java/2017/09/21/getting-started-with-the-G1-garbage-collector.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="OverviewThis tutorial covers the basics of how to use the G1 garbage collector and how it can be used with the Hotspot JVM. You will learn how the G1 collector functions internally, the key command li">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/1-jvm-architecture.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/2-jvm-components.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/6-hotspot-heap-structure.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-g1/g1-heap-allocation.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/1-cms-heap-structure.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/2-how-young-gc-works.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/3-young-generation-collection.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/4-after-young-gc.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/5-old-generation-collection-with-cms.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/6-old-generation-collection-concurrent-sweep.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/7-old-generation-collection-after-sweeping.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-g1/g1-heap-structure.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-g1/g1-heap-allocation.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-g1/yong-generation-g1.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-g1/young-generation-g1-eden.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-g1/young-generation-g1-end.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-g1/g1-initial-marking-phase.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-g1/g1-concurrent-marking-phase.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-g1/g1-remarking-phase.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-g1/g1-copying-clean-phase.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-g1/g1-copying-clean-phase.png">
-<meta property="og:updated_time" content="2017-09-25T01:50:17.669Z">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/1-jvm-architecture.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/2-jvm-components.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/6-hotspot-heap-structure.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-heap-allocation.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/1-cms-heap-structure.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/2-how-young-gc-works.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/3-young-generation-collection.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/4-after-young-gc.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/5-old-generation-collection-with-cms.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/6-old-generation-collection-concurrent-sweep.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/7-old-generation-collection-after-sweeping.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-heap-structure.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-heap-allocation.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/yong-generation-g1.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/young-generation-g1-eden.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/young-generation-g1-end.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-initial-marking-phase.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-concurrent-marking-phase.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-remarking-phase.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-copying-clean-phase.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-copying-clean-phase.png">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.124Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="getting started with the G1 garbage collector">
+<meta name="twitter:title" content="getting started with the g1 garbage collector">
 <meta name="twitter:description" content="OverviewThis tutorial covers the basics of how to use the G1 garbage collector and how it can be used with the Hotspot JVM. You will learn how the G1 collector functions internally, the key command li">
-<meta name="twitter:image" content="https://www.4e00.com/blog/img/java/java-gc/1-jvm-architecture.png">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/java/java-gc/1-jvm-architecture.png">
 
 
 
@@ -107,9 +107,9 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/java/2017/09/21/getting-started-with-the-G1-garbage-collector.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2017/09/21/getting-started-with-the-G1-garbage-collector.html">
 
-  <title> getting started with the G1 garbage collector | 一 </title>
+  <title> getting started with the g1 garbage collector | 一 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="default">
@@ -138,7 +138,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -161,7 +161,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -171,7 +171,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -179,7 +179,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -206,7 +206,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -217,7 +217,7 @@
             
             
               
-                getting started with the G1 garbage collector
+                getting started with the g1 garbage collector
               
             
           </h1>
@@ -235,14 +235,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -288,7 +288,7 @@
 <p>The first prototype implementation of the Java virtual machine, done at Sun Microsystems, Inc., emulated the Java virtual machine instruction set in software hosted by a handheld device that resembled a contemporary Personal Digital Assistant (PDA). Oracle&#39;s current implementations emulate the Java virtual machine on mobile, desktop and server devices, but the Java virtual machine does not assume any particular implementation technology, host hardware, or host operating system. It is not inherently interpreted, but can just as well be implemented by compiling its instruction set to that of a silicon CPU. It may also be implemented in microcode or directly in silicon.</p>
 <p>The Java virtual machine knows nothing of the Java programming language, only of a particular binary format, the class file format. A class file contains Java virtual machine instructions (or bytecodes) and a symbol table, as well as other ancillary information.</p>
 <p>For the sake of security, the Java virtual machine imposes strong syntactic and structural constraints on the code in a class file. However, any language with functionality that can be expressed in terms of a valid class file can be hosted by the Java virtual machine. Attracted by a generally available, machine-independent platform, implementors of other languages can turn to the Java virtual machine as a delivery vehicle for their languages.</p>
-<p>(1) <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-1.html" target="_blank" rel="external">The Java Virtual Machine</a></p>
+<p>(1) <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-1.html" target="_blank" rel="noopener">The Java Virtual Machine</a></p>
 <h2 id="Exploring-the-JVM-Architecture"><a href="#Exploring-the-JVM-Architecture" class="headerlink" title="Exploring the JVM Architecture"></a>Exploring the JVM Architecture</h2><h3 id="Hotspot-Architecture"><a href="#Hotspot-Architecture" class="headerlink" title="Hotspot Architecture"></a>Hotspot Architecture</h3><p>The HotSpot JVM possesses an architecture that supports a strong foundation of features and capabilities and supports the ability to realize high performance and massive scalability. For example, the HotSpot JVM JIT compilers generate dynamic optimizations. In other words, they make optimization decisions while the Java application is running and generate high-performing native machine instructions targeted for the underlying system architecture. In addition, through the maturing evolution and continuous engineering of its runtime environment and multithreaded garbage collector, the HotSpot JVM yields high scalability on even the largest available computer systems.</p>
 <img src="/blog/img/java/java-gc/1-jvm-architecture.png" class="image-lg" title="[1-jvm-architecture.png]">
 <p>The main components of the JVM include the class loader, the runtime data areas, and the execution engine.</p>
@@ -440,8 +440,8 @@
 </ol>
 <h2 id="Command-Line-Options-and-Best-Practices"><a href="#Command-Line-Options-and-Best-Practices" class="headerlink" title="Command Line Options and Best Practices"></a>Command Line Options and Best Practices</h2><p>In this section let&#39;s take a look at the various command line options for G1.</p>
 <h3 id="Basic-Command-Line"><a href="#Basic-Command-Line" class="headerlink" title="Basic Command Line"></a>Basic Command Line</h3><p>To enable the G1 Collector use: <code>-XX:+UseG1GC</code></p>
-<p>Here is a sample command line for starting the <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">Java2Demo</a> included in the JDK demos and samples download:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">java</span> -Xmx50m -Xms50m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -jar c:\javademos\demo\jfc\Java2D\Java2demo.jar</div></pre></td></tr></table></figure>
+<p>Here is a sample command line for starting the <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">Java2Demo</a> included in the JDK demos and samples download:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">java</span> -Xmx50m -Xms50m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -jar c:\javademos\demo\jfc\Java2D\Java2demo.jar</span></pre></td></tr></table></figure>
 <h3 id="Key-Command-Line-Switches"><a href="#Key-Command-Line-Switches" class="headerlink" title="Key Command Line Switches"></a>Key Command Line Switches</h3><ol>
 <li><code>-XX:+UseG1GC</code> - Tells the JVM to use the G1 Garbage collector.</li>
 <li><code>-XX:MaxGCPauseMillis=200</code> - Sets a target for the maximum GC pause time. This is a soft goal, and the JVM will make its best effort to achieve it. Therefore, the pause time goal will sometimes not be met. The default value is 200 milliseconds.</li>
@@ -477,7 +477,7 @@
 <h2 id="Logging-GC-with-G1"><a href="#Logging-GC-with-G1" class="headerlink" title="Logging GC with G1"></a>Logging GC with G1</h2><p>The final topic we need to cover is using logging information to analyze performance with the G1 collector. This section provides a quick overview of the switches you can use to collect data and the information that is printed in the logs.</p>
 <h3 id="Setting-the-Log-Detail"><a href="#Setting-the-Log-Detail" class="headerlink" title="Setting the Log Detail"></a>Setting the Log Detail</h3><p>You can set the detail to three different levels of detail.</p>
 <p>(1) <code>-verbosegc</code> (which is equivalent to <code>-XX:+PrintGC</code>) sets the detail level of the log to fine.</p>
-<h4 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output"></a>Sample Output</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[GC pause (G1 Humongous Allocation) (young) (initial-mark) 24M- &gt;21M(64M), 0.2349730 secs]</div><div class="line">[GC pause (G1 Evacuation Pause) (mixed) 66M-&gt;21M(236M), 0.1625268 secs]</div></pre></td></tr></table></figure>
+<h4 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output"></a>Sample Output</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[GC pause (G1 Humongous Allocation) (young) (initial-mark) 24M- &gt;21M(64M), 0.2349730 secs]</span><span class="line">[GC pause (G1 Evacuation Pause) (mixed) 66M-&gt;21M(236M), 0.1625268 secs]</span></pre></td></tr></table></figure>
 <p>(2) <code>-XX:+PrintGCDetails</code> sets the detail level to finer. The options shows the following information:</p>
 <ol>
 <li>Average, Min, and Max time are displayed for each phase.</li>
@@ -485,14 +485,14 @@
 <li>Also shows “other” time such as time spent choosing CSet, reference processing, reference enqueuing and freeing CSet.</li>
 <li>Shows the Eden, Survivors and Total Heap occupancies.</li>
 </ol>
-<h4 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output"></a>Sample Output</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Ext Root Scanning (ms): Avg: 1.7 Min: 0.0 Max: 3.7 Diff: 3.7]</div><div class="line">[Eden: 818M(818M)-&gt;0B(714M) Survivors: 0B-&gt;104M Heap: 836M(4096M)-&gt;409M(4096M)]</div></pre></td></tr></table></figure>
+<h4 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output"></a>Sample Output</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Ext Root Scanning (ms): Avg: 1.7 Min: 0.0 Max: 3.7 Diff: 3.7]</span><span class="line">[Eden: 818M(818M)-&gt;0B(714M) Survivors: 0B-&gt;104M Heap: 836M(4096M)-&gt;409M(4096M)]</span></pre></td></tr></table></figure>
 <p>(3) <code>-XX:+UnlockExperimentalVMOptions -XX:G1LogLevel=finest</code> sets the detail level to its finest. Like finer but includes individual worker thread information.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Ext Root Scanning (ms): 2.1 2.4 2.0 0.0</div><div class="line">           Avg: 1.6 Min: 0.0 Max: 2.4 Diff: 2.3]</div><div class="line">       [Update RS (ms):  0.4  0.2  0.4  0.0</div><div class="line">           Avg: 0.2 Min: 0.0 Max: 0.4 Diff: 0.4]</div><div class="line">           [Processed Buffers : 5 1 10 0</div><div class="line">           Sum: 16, Avg: 4, Min: 0, Max: 10, Diff: 10]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Ext Root Scanning (ms): 2.1 2.4 2.0 0.0</span><span class="line">           Avg: 1.6 Min: 0.0 Max: 2.4 Diff: 2.3]</span><span class="line">       [Update RS (ms):  0.4  0.2  0.4  0.0</span><span class="line">           Avg: 0.2 Min: 0.0 Max: 0.4 Diff: 0.4]</span><span class="line">           [Processed Buffers : 5 1 10 0</span><span class="line">           Sum: 16, Avg: 4, Min: 0, Max: 10, Diff: 10]</span></pre></td></tr></table></figure>
 <h3 id="Determining-Time"><a href="#Determining-Time" class="headerlink" title="Determining Time"></a>Determining Time</h3><p>A couple of switches determine how time is displayed in the GC log.</p>
 <p>(1) <code>-XX:+PrintGCTimeStamps</code> - Shows the elapsed time since the JVM started.</p>
-<h4 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output"></a>Sample Output</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">1.729: [GC pause (young) 46M-&gt;35M(1332M), 0.0310029 secs]</div></pre></td></tr></table></figure>
+<h4 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output"></a>Sample Output</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.729: [GC pause (young) 46M-&gt;35M(1332M), 0.0310029 secs]</span></pre></td></tr></table></figure>
 <p>(2) <code>-XX:+PrintGCDateStamps</code> - Adds a time of day prefix to each entry.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">2012-05-02T11:16:32.057+0200: [GC pause (young) 46M-&gt;35M(1332M), 0.0317225 secs]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2012-05-02T11:16:32.057+0200: [GC pause (young) 46M-&gt;35M(1332M), 0.0317225 secs]</span></pre></td></tr></table></figure>
 <h3 id="Understanding-G1-Log"><a href="#Understanding-G1-Log" class="headerlink" title="Understanding G1 Log"></a>Understanding G1 Log</h3><p>To understand the log, this section defines a number of terms using actual GC log output. The following examples show output from the log with explanations of the terms and values you will find in it.</p>
 <blockquote>
 <p>Note: For more information check out Poonam Bajaj&#39;s Blog post on G1 GC logs.</p>
@@ -515,7 +515,7 @@
 <li>Worker Start</li>
 <li>Parallel Time</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">414.557: [GC pause (young), 0.03039600 secs] [Parallel Time: 22.9 ms]</div><div class="line">[GC Worker Start (ms): 7096.0 7096.0 7096.1 7096.1 706.1 7096.1 7096.1 7096.1 7096.2 7096.2 7096.2 7096.2</div><div class="line">       Avg: 7096.1, Min: 7096.0, Max: 7096.2, Diff: 0.2]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">414.557: [GC pause (young), 0.03039600 secs] [Parallel Time: 22.9 ms]</span><span class="line">[GC Worker Start (ms): 7096.0 7096.0 7096.1 7096.1 706.1 7096.1 7096.1 7096.1 7096.2 7096.2 7096.2 7096.2</span><span class="line">       Avg: 7096.1, Min: 7096.0, Max: 7096.2, Diff: 0.2]</span></pre></td></tr></table></figure>
 <ol>
 <li>Parallel Time – Overall elapsed time of the main parallel part of the pause</li>
 <li>Worker Start – Timestamp at which the workers start</li>
@@ -523,34 +523,34 @@
 <blockquote>
 <p>Note: The logs are ordered on thread id and are consistent on each entry</p>
 </blockquote>
-<h4 id="External-Root-Scanning"><a href="#External-Root-Scanning" class="headerlink" title="External Root Scanning"></a>External Root Scanning</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Ext Root Scanning (ms): 3.1 3.4 3.4 3.0 4.2 2.0 3.6 3.2 3.4 7.7 3.7 4.4</div><div class="line">     Avg: 3.8, Min: 2.0, Max: 7.7, Diff: 5.7]</div></pre></td></tr></table></figure>
+<h4 id="External-Root-Scanning"><a href="#External-Root-Scanning" class="headerlink" title="External Root Scanning"></a>External Root Scanning</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Ext Root Scanning (ms): 3.1 3.4 3.4 3.0 4.2 2.0 3.6 3.2 3.4 7.7 3.7 4.4</span><span class="line">     Avg: 3.8, Min: 2.0, Max: 7.7, Diff: 5.7]</span></pre></td></tr></table></figure>
 <p>External root scanning - The time taken to scan the external root (e.g., things like system dictionary that point into the heap.)</p>
-<h4 id="Update-Remembered-Set"><a href="#Update-Remembered-Set" class="headerlink" title="Update Remembered Set"></a>Update Remembered Set</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Update RS (ms): 0.1 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 Avg: 0.0, Min: 0.0, Max: 0.1, Diff: 0.1]</div><div class="line">   [Processed Buffers : 26 0 0 0 0 0 0 0 0 0 0 0</div><div class="line">    Sum: 26, Avg: 2, Min: 0, Max: 26, Diff: 26]</div></pre></td></tr></table></figure>
+<h4 id="Update-Remembered-Set"><a href="#Update-Remembered-Set" class="headerlink" title="Update Remembered Set"></a>Update Remembered Set</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Update RS (ms): 0.1 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 Avg: 0.0, Min: 0.0, Max: 0.1, Diff: 0.1]</span><span class="line">   [Processed Buffers : 26 0 0 0 0 0 0 0 0 0 0 0</span><span class="line">    Sum: 26, Avg: 2, Min: 0, Max: 26, Diff: 26]</span></pre></td></tr></table></figure>
 <p>Update Remembered Set - Any buffers that are completed but have not yet been processed by the concurrent refinement thread before the start of the pause have to be updated. Time depends on density of the cards. The more cards, the longer it will take.</p>
-<h4 id="Scanning-Remembered-Sets"><a href="#Scanning-Remembered-Sets" class="headerlink" title="Scanning Remembered Sets"></a>Scanning Remembered Sets</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Scan RS (ms): 0.4 0.2 0.1 0.3 0.0 0.0 0.1 0.2 0.0 0.1 0.0 0.0 Avg: 0.1, Min: 0.0, Max: 0.4, Diff: 0.3]F</div></pre></td></tr></table></figure>
+<h4 id="Scanning-Remembered-Sets"><a href="#Scanning-Remembered-Sets" class="headerlink" title="Scanning Remembered Sets"></a>Scanning Remembered Sets</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Scan RS (ms): 0.4 0.2 0.1 0.3 0.0 0.0 0.1 0.2 0.0 0.1 0.0 0.0 Avg: 0.1, Min: 0.0, Max: 0.4, Diff: 0.3]F</span></pre></td></tr></table></figure>
 <p>Scanning Remembered Sets - Look for pointers that point into the Collection Set.</p>
-<h4 id="Object-Copy"><a href="#Object-Copy" class="headerlink" title="Object Copy"></a>Object Copy</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Object Copy (ms): 16.7 16.7 16.7 16.9 16.0 18.1 16.5 16.8 16.7 12.3 16.4 15.7 Avg: 16.3, Min: 12.3, Max:  18.1, Diff: 5.8]</div></pre></td></tr></table></figure>
+<h4 id="Object-Copy"><a href="#Object-Copy" class="headerlink" title="Object Copy"></a>Object Copy</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Object Copy (ms): 16.7 16.7 16.7 16.9 16.0 18.1 16.5 16.8 16.7 12.3 16.4 15.7 Avg: 16.3, Min: 12.3, Max:  18.1, Diff: 5.8]</span></pre></td></tr></table></figure>
 <p>Object copy – The time that each individual thread spent copying and evacuating objects.</p>
-<h4 id="Termination-Time"><a href="#Termination-Time" class="headerlink" title="Termination Time"></a>Termination Time</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Termination (ms): 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0</div><div class="line">0.0 Avg: 0.0, Min: 0.0, Max: 0.0, Diff: 0.0] [Termination Attempts : 1 1 1 1 1 1 1 1 1 1 1 1 Sum: 12, Avg: 1, Min: 1, Max: 1, Diff: 0]</div></pre></td></tr></table></figure>
+<h4 id="Termination-Time"><a href="#Termination-Time" class="headerlink" title="Termination Time"></a>Termination Time</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Termination (ms): 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0</span><span class="line">0.0 Avg: 0.0, Min: 0.0, Max: 0.0, Diff: 0.0] [Termination Attempts : 1 1 1 1 1 1 1 1 1 1 1 1 Sum: 12, Avg: 1, Min: 1, Max: 1, Diff: 0]</span></pre></td></tr></table></figure>
 <p>Termination time - When a worker thread is finished with its particular set of objects to copy and scan, it enters the termination protocol. It looks for work to steal and once it&#39;s done with that work it again enters the termination protocol. Termination attempt counts all the attempts to steal work.</p>
-<h4 id="GC-Worker-End"><a href="#GC-Worker-End" class="headerlink" title="GC Worker End"></a>GC Worker End</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[GC Worker End (ms): 7116.4 7116.3 7116.4 7116.3 7116.4 7116.3 7116.4 7116.4 7116.4 7116.4 7116.3 7116.3</div><div class="line">    Avg: 7116.4, Min: 7116.3, Max: 7116.4, Diff:   0.1]</div><div class="line">[GC Worker (ms): 20.4 20.3 20.3 20.2 20.3 20.2 20.2 20.2 20.3 20.2 20.1 20.1</div><div class="line">     Avg: 20.2, Min: 20.1, Max: 20.4, Diff: 0.3]</div></pre></td></tr></table></figure>
+<h4 id="GC-Worker-End"><a href="#GC-Worker-End" class="headerlink" title="GC Worker End"></a>GC Worker End</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[GC Worker End (ms): 7116.4 7116.3 7116.4 7116.3 7116.4 7116.3 7116.4 7116.4 7116.4 7116.4 7116.3 7116.3</span><span class="line">    Avg: 7116.4, Min: 7116.3, Max: 7116.4, Diff:   0.1]</span><span class="line">[GC Worker (ms): 20.4 20.3 20.3 20.2 20.3 20.2 20.2 20.2 20.3 20.2 20.1 20.1</span><span class="line">     Avg: 20.2, Min: 20.1, Max: 20.4, Diff: 0.3]</span></pre></td></tr></table></figure>
 <ol>
 <li>GC worker end time – Timestamp when the individual GC worker stops.</li>
 <li>GC worker time – Time taken by individual GC worker thread.</li>
 </ol>
-<h4 id="GC-Worker-Other"><a href="#GC-Worker-Other" class="headerlink" title="GC Worker Other"></a>GC Worker Other</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[GC Worker Other (ms): 2.6 2.6 2.7 2.7 2.7 2.7 2.7 2.8 2.8 2.8 2.8 2.8</div><div class="line">    Avg: 2.7, Min: 2.6, Max: 2.8, Diff: 0.2]</div></pre></td></tr></table></figure>
+<h4 id="GC-Worker-Other"><a href="#GC-Worker-Other" class="headerlink" title="GC Worker Other"></a>GC Worker Other</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[GC Worker Other (ms): 2.6 2.6 2.7 2.7 2.7 2.7 2.7 2.8 2.8 2.8 2.8 2.8</span><span class="line">    Avg: 2.7, Min: 2.6, Max: 2.8, Diff: 0.2]</span></pre></td></tr></table></figure>
 <p>GC worker other – The time (for each GC thread) that can&#39;t be attributed to the worker phases listed previously. Should be quite low. In the past, we have seen excessively high values and they have been attributed to bottlenecks in other parts of the JVM (e.g., increases in the Code Cache occupancy with Tiered).</p>
-<h4 id="Clear-CT"><a href="#Clear-CT" class="headerlink" title="Clear CT"></a>Clear CT</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Clear CT: 0.6 ms]</div></pre></td></tr></table></figure>
+<h4 id="Clear-CT"><a href="#Clear-CT" class="headerlink" title="Clear CT"></a>Clear CT</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Clear CT: 0.6 ms]</span></pre></td></tr></table></figure>
 <p>Time taken to clear the card table of RSet scanning meta-data</p>
-<h4 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Other: 6.8 ms]</div></pre></td></tr></table></figure>
+<h4 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Other: 6.8 ms]</span></pre></td></tr></table></figure>
 <p>Time taken for various other sequential phases of the GC pause.</p>
-<h4 id="CSet"><a href="#CSet" class="headerlink" title="CSet"></a>CSet</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Choose CSet: 0.1 ms]</div></pre></td></tr></table></figure>
+<h4 id="CSet"><a href="#CSet" class="headerlink" title="CSet"></a>CSet</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Choose CSet: 0.1 ms]</span></pre></td></tr></table></figure>
 <p>Time taken finalizing the set of regions to collect. Usually very small; slightly longer when having to select old.</p>
-<h4 id="Ref-Proc"><a href="#Ref-Proc" class="headerlink" title="Ref Proc"></a>Ref Proc</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Ref Proc: 4.4 ms]</div></pre></td></tr></table></figure>
+<h4 id="Ref-Proc"><a href="#Ref-Proc" class="headerlink" title="Ref Proc"></a>Ref Proc</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Ref Proc: 4.4 ms]</span></pre></td></tr></table></figure>
 <p>Time spent processing soft, weak, etc. references deferred from the prior phases of the GC.</p>
-<h4 id="Ref-Enq"><a href="#Ref-Enq" class="headerlink" title="Ref Enq"></a>Ref Enq</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Ref Enq: 0.1 ms]</div></pre></td></tr></table></figure>
+<h4 id="Ref-Enq"><a href="#Ref-Enq" class="headerlink" title="Ref Enq"></a>Ref Enq</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Ref Enq: 0.1 ms]</span></pre></td></tr></table></figure>
 <p>Time spent placing soft, weak, etc. references on to the pending list.</p>
-<h4 id="Free-CSet"><a href="#Free-CSet" class="headerlink" title="Free CSet"></a>Free CSet</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Free CSet: 2.0 ms]</div></pre></td></tr></table></figure>
+<h4 id="Free-CSet"><a href="#Free-CSet" class="headerlink" title="Free CSet"></a>Free CSet</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Free CSet: 2.0 ms]</span></pre></td></tr></table></figure>
 <p>Time spent freeing the set of regions that have just been collected, including their remembered sets.</p>
 <h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>In this OBE, you have been given an overview of the G1 garbage collector included in the Java JVM. First you learned how the Heap and the Garbage Collector are key parts of any Java JVM. Next your reviewed how garbage collection works using the CMS collector and the G1 collector. Next you learned about the G1 command line switches and the best practices for using them. Finally, you learned about logging object and data included in the GC logs.</p>
 <p>In this tutorial, you have learned:</p>
@@ -572,12 +572,12 @@
 <li>Oracle Learning Library</li>
 </ul>
 <h3 id="Credits"><a href="#Credits" class="headerlink" title="Credits"></a>Credits</h3><p>Curriculum Developer: Michael J Williams<br>QA: Krishnanjani Chitta</p>
-<h2 id="Example-GC-log-of-G1-using-Java2Demo-jar"><a href="#Example-GC-log-of-G1-using-Java2Demo-jar" class="headerlink" title="Example GC log of G1 using Java2Demo.jar"></a>Example GC log of G1 using Java2Demo.jar</h2><p>Download <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">jdk-8u144-linux-x64-demos.tar.gz</a> and extract <code>Java2Demo.jar</code> from it.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">java</span> -Xmx50m -Xms50m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+PrintGC -XX:+PrintGCDetails -XX:+UnlockExperimentalVMOptions -XX:G1LogLevel=finest -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -jar demo/jfc/Java2D/Java2Demo.jar</div><div class="line output">2017-09-21T14:20:49.177+0800: 0.405: [GC pause (G1 Evacuation Pause) (young), 0.0070815 secs]</div><div class="line output">  [Parallel Time: 4.8 ms, GC Workers: 4]</div><div class="line output">  [GC Worker Start (ms): 406.4 406.4 406.4 406.9</div><div class="line output">  Min: 406.4, Avg: 406.5, Max: 406.9, Diff: 0.5]</div><div class="line output">  [Ext Root Scanning (ms): 2.2 0.8 0.5 0.4</div><div class="line output">  Min: 0.4, Avg: 1.0, Max: 2.2, Diff: 1.8, Sum: 3.9]</div><div class="line output">  [Thread Roots (ms): 0.0 0.8 0.3 0.0</div><div class="line output">  Min: 0.0, Avg: 0.3, Max: 0.8, Diff: 0.8, Sum: 1.1]</div><div class="line output">  [StringTable Roots (ms): 0.0 0.0 0.4 0.5</div><div class="line output">  Min: 0.0, Avg: 0.2, Max: 0.5, Diff: 0.5, Sum: 0.9]</div><div class="line output">  [Universe Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [JNI Handles Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [ObjectSynchronizer Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [FlatProfiler Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [Management Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [SystemDictionary Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [CLDG Roots (ms): 2.2 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.5, Max: 2.2, Diff: 2.2, Sum: 2.2]</div><div class="line output">  [JVMTI Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [CodeCache Roots (ms): 0.0 0.1 0.3 0.0</div><div class="line output">  Min: 0.0, Avg: 0.1, Max: 0.3, Diff: 0.3, Sum: 0.4]</div><div class="line output">  [CM RefProcessor Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [Wait For Strong CLD (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [Weak CLD Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [SATB Filtering (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [Update RS (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [Processed Buffers: 0 0 0 0</div><div class="line output">  Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]</div><div class="line output">  [Scan RS (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [Code Root Scanning (ms): 0.0 0.1 0.3 0.0</div><div class="line output">  Min: 0.0, Avg: 0.1, Max: 0.3, Diff: 0.3, Sum: 0.4]</div><div class="line output">  [Object Copy (ms): 2.5 3.1 3.3 3.3</div><div class="line output">  Min: 2.5, Avg: 3.1, Max: 3.3, Diff: 0.8, Sum: 12.2]</div><div class="line output">  [Termination (ms): 0.0 0.6 0.6 0.6</div><div class="line output">  Min: 0.0, Avg: 0.5, Max: 0.6, Diff: 0.6, Sum: 1.9]</div><div class="line output">  [Termination Attempts: 1 5 8 9</div><div class="line output">  Min: 1, Avg: 5.8, Max: 9, Diff: 8, Sum: 23]</div><div class="line output">  [GC Worker Other (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [GC Worker Total (ms): 4.7 4.7 4.7 4.3</div><div class="line output">  Min: 4.3, Avg: 4.6, Max: 4.7, Diff: 0.5, Sum: 18.4]</div><div class="line output">  [GC Worker End (ms): 411.1 411.1 411.1 411.2</div><div class="line output">  Min: 411.1, Avg: 411.1, Max: 411.2, Diff: 0.0]</div><div class="line output">  [Code Root Fixup: 0.1 ms]</div><div class="line output">  [Code Root Purge: 0.0 ms]</div><div class="line output">  [Clear CT: 0.1 ms]</div><div class="line output">  [Other: 2.1 ms]</div><div class="line output">  [Choose CSet: 0.0 ms]</div><div class="line output">  [Ref Proc: 0.4 ms]</div><div class="line output">  [Ref Enq: 0.0 ms]</div><div class="line output">  [Redirty Cards: 0.0 ms]</div><div class="line output">  [Parallel Redirty: 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [Redirtied Cards: 965 492 0 0</div><div class="line output">  Min: 0, Avg: 364.2, Max: 965, Diff: 965, Sum: 1457]</div><div class="line output">  [Humongous Register: 0.0 ms]</div><div class="line output">  [Humongous Total: 0]</div><div class="line output">  [Humongous Candidate: 0]</div><div class="line output">  [Humongous Reclaim: 0.0 ms]</div><div class="line output">  [Humongous Reclaimed: 0]</div><div class="line output">  [Free CSet: 0.0 ms]</div><div class="line output">  [Young Free CSet: 0.0 ms]</div><div class="line output">  [Non-Young Free CSet: 0.0 ms]</div><div class="line output">  [Eden: 14.0M(14.0M)-&gt;0.0B(13.0M) Survivors: 0.0B-&gt;2048.0K Heap: 14.0M(50.0M)-&gt;5212.0K(50.0M)]</div><div class="line output"> [Times: user=0.02 sys=0.00, real=0.01 secs]</div><div class="line output">2017-09-21T14:20:49.297+0800: 0.525: [GC pause (G1 Evacuation Pause) (young), 0.0033552 secs]</div><div class="line output">  [Parallel Time: 2.6 ms, GC Workers: 4]</div><div class="line output">  [GC Worker Start (ms): 525.3 525.4 525.4 525.4</div><div class="line output">  Min: 525.3, Avg: 525.4, Max: 525.4, Diff: 0.1]</div><div class="line output">  [Ext Root Scanning (ms): 0.7 0.3 0.3 0.3</div><div class="line output">  Min: 0.3, Avg: 0.4, Max: 0.7, Diff: 0.4, Sum: 1.6]</div><div class="line output">  [Thread Roots (ms): 0.0 0.2 0.2 0.2</div><div class="line output">  Min: 0.0, Avg: 0.1, Max: 0.2, Diff: 0.2, Sum: 0.5]</div><div class="line output">  [StringTable Roots (ms): 0.0 0.4 0.4 0.2</div><div class="line output">  Min: 0.0, Avg: 0.3, Max: 0.4, Diff: 0.4, Sum: 1.0]</div><div class="line output">  [Universe Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [JNI Handles Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [ObjectSynchronizer Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [FlatProfiler Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [Management Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [SystemDictionary Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [CLDG Roots (ms): 0.7 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.2, Max: 0.7, Diff: 0.7, Sum: 0.7]</div><div class="line output">  [JVMTI Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [CodeCache Roots (ms): 0.4 0.4 0.5 0.9</div><div class="line output">  Min: 0.4, Avg: 0.5, Max: 0.9, Diff: 0.5, Sum: 2.2]</div><div class="line output">  [CM RefProcessor Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [Wait For Strong CLD (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [Weak CLD Roots (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [SATB Filtering (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [Update RS (ms): 0.2 0.1 0.1 0.2</div><div class="line output">  Min: 0.1, Avg: 0.2, Max: 0.2, Diff: 0.1, Sum: 0.6]</div><div class="line output">  [Processed Buffers: 1 2 2 1</div><div class="line output">  Min: 1, Avg: 1.5, Max: 2, Diff: 1, Sum: 6]</div><div class="line output">  [Scan RS (ms): 0.2 0.3 0.2 0.3</div><div class="line output">  Min: 0.2, Avg: 0.2, Max: 0.3, Diff: 0.1, Sum: 1.0]</div><div class="line output">  [Code Root Scanning (ms): 0.0 0.1 0.1 0.4</div><div class="line output">  Min: 0.0, Avg: 0.1, Max: 0.4, Diff: 0.4, Sum: 0.6]</div><div class="line output">  [Object Copy (ms): 1.5 1.8 1.7 1.3</div><div class="line output">  Min: 1.3, Avg: 1.6, Max: 1.8, Diff: 0.5, Sum: 6.3]</div><div class="line output">  [Termination (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [Termination Attempts: 1 1 1 1</div><div class="line output">  Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 4]</div><div class="line output">  [GC Worker Other (ms): 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [GC Worker Total (ms): 2.6 2.5 2.5 2.5</div><div class="line output">  Min: 2.5, Avg: 2.5, Max: 2.6, Diff: 0.1, Sum: 10.1]</div><div class="line output">  [GC Worker End (ms): 527.9 527.9 527.9 527.9</div><div class="line output">  Min: 527.9, Avg: 527.9, Max: 527.9, Diff: 0.0]</div><div class="line output">  [Code Root Fixup: 0.1 ms]</div><div class="line output">  [Code Root Purge: 0.0 ms]</div><div class="line output">  [Clear CT: 0.2 ms]</div><div class="line output">  [Other: 0.4 ms]</div><div class="line output">  [Choose CSet: 0.0 ms]</div><div class="line output">  [Ref Proc: 0.3 ms]</div><div class="line output">  [Ref Enq: 0.0 ms]</div><div class="line output">  [Redirty Cards: 0.1 ms]</div><div class="line output">  [Parallel Redirty: 0.0 0.0 0.0 0.0</div><div class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</div><div class="line output">  [Redirtied Cards: 1919 1636 571 0</div><div class="line output">  Min: 0, Avg: 1031.5, Max: 1919, Diff: 1919, Sum: 4126]</div><div class="line output">  [Humongous Register: 0.0 ms]</div><div class="line output">  [Humongous Total: 0]</div><div class="line output">  [Humongous Candidate: 0]</div><div class="line output">  [Humongous Reclaim: 0.0 ms]</div><div class="line output">  [Humongous Reclaimed: 0]</div><div class="line output">  [Free CSet: 0.0 ms]</div><div class="line output">  [Young Free CSet: 0.0 ms]</div><div class="line output">  [Non-Young Free CSet: 0.0 ms]</div><div class="line output">  [Eden: 12.0M(6144.0K)-&gt;0.0B(25.0M) Survivors: 2048.0K-&gt;1024.0K Heap: 17.1M(50.0M)-&gt;8532.0K(50.0M)]</div><div class="line output"> [Times: user=0.01 sys=0.00, real=0.01 secs]</div><div class="line output">2017-09-21T14:20:50.101+0800: 1.329: [Full GC (System.gc()) 15M-&gt;8266K(50M), 0.0379003 secs]</div><div class="line output">  [Eden: 7168.0K(25.0M)-&gt;0.0B(25.0M) Survivors: 1024.0K-&gt;0.0B Heap: 15.5M(50.0M)-&gt;8266.1K(50.0M)], [Metaspace: 16513K-&gt;16513K(1064960K)]</div><div class="line output"> [Times: user=0.04 sys=0.00, real=0.04 secs]</div><div class="line output">2017-09-21T14:20:50.836+0800: 2.063: [Full GC (System.gc()) 9216K-&gt;8071K(50M), 0.0376095 secs]</div><div class="line output">  [Eden: 1024.0K(25.0M)-&gt;0.0B(25.0M) Survivors: 0.0B-&gt;0.0B Heap: 9216.7K(50.0M)-&gt;8072.0K(50.0M)], [Metaspace: 16554K-&gt;16554K(1064960K)]</div><div class="line output"> [Times: user=0.04 sys=0.00, real=0.04 secs]</div><div class="line output">2017-09-21T14:20:51.509+0800: 2.737: [Full GC (System.gc()) 9022K-&gt;8074K(50M), 0.0371841 secs]</div><div class="line output">  [Eden: 1024.0K(25.0M)-&gt;0.0B(25.0M) Survivors: 0.0B-&gt;0.0B Heap: 9022.6K(50.0M)-&gt;8074.5K(50.0M)], [Metaspace: 16581K-&gt;16581K(1064960K)]</div><div class="line output"> [Times: user=0.04 sys=0.00, real=0.04 secs]</div><div class="line output">2017-09-21T14:20:53.787+0800: 5.015: [Full GC (System.gc()) 9900K-&gt;8080K(50M), 0.0213002 secs]</div><div class="line output">  [Eden: 2048.0K(25.0M)-&gt;0.0B(25.0M) Survivors: 0.0B-&gt;0.0B Heap: 9900.6K(50.0M)-&gt;8080.1K(50.0M)], [Metaspace: 16636K-&gt;16636K(1064960K)]</div><div class="line output"> [Times: user=0.03 sys=0.00, real=0.02 secs]</div><div class="line output">2017-09-21T14:20:54.443+0800: 5.671: [Full GC (System.gc()) 9659K-&gt;8721K(50M), 0.0210222 secs]</div><div class="line output">  [Eden: 1024.0K(25.0M)-&gt;0.0B(24.0M) Survivors: 0.0B-&gt;0.0B Heap: 9659.7K(50.0M)-&gt;8721.5K(50.0M)], [Metaspace: 16666K-&gt;16666K(1064960K)]</div><div class="line output"> [Times: user=0.03 sys=0.00, real=0.02 secs]</div><div class="line output">2017-09-21T14:20:59.433+0800: 10.661: [Full GC (System.gc()) 10131K-&gt;8727K(50M), 0.0463835 secs]</div><div class="line output">  [Eden: 2048.0K(24.0M)-&gt;0.0B(24.0M) Survivors: 0.0B-&gt;0.0B Heap: 10131.5K(50.0M)-&gt;8727.2K(50.0M)], [Metaspace: 16790K-&gt;16790K(1064960K)]</div><div class="line output"> [Times: user=0.06 sys=0.00, real=0.05 secs]</div><div class="line output">2017-09-21T14:21:00.140+0800: 11.368: [Full GC (System.gc()) 10M-&gt;8749K(50M), 0.0198179 secs]</div><div class="line output">  [Eden: 2048.0K(24.0M)-&gt;0.0B(24.0M) Survivors: 0.0B-&gt;0.0B Heap: 10.4M(50.0M)-&gt;8749.4K(50.0M)], [Metaspace: 16951K-&gt;16951K(1064960K)]</div><div class="line output"> [Times: user=0.03 sys=0.00, real=0.02 secs]</div><div class="line output">2017-09-21T14:21:00.697+0800: 11.925: [Full GC (System.gc()) 10M-&gt;8917K(50M), 0.0282837 secs]</div><div class="line output">  [Eden: 2048.0K(24.0M)-&gt;0.0B(24.0M) Survivors: 0.0B-&gt;0.0B Heap: 10.5M(50.0M)-&gt;8917.0K(50.0M)], [Metaspace: 17346K-&gt;17346K(1064960K)]</div><div class="line output"> [Times: user=0.03 sys=0.00, real=0.03 secs]</div><div class="line output">2017-09-21T14:21:01.348+0800: 12.575: [Full GC (System.gc()) 11M-&gt;8947K(50M), 0.0319808 secs]</div><div class="line output">  [Eden: 3072.0K(24.0M)-&gt;0.0B(24.0M) Survivors: 0.0B-&gt;0.0B Heap: 11.5M(50.0M)-&gt;8947.9K(50.0M)], [Metaspace: 17549K-&gt;17549K(1064960K)]</div><div class="line output"> [Times: user=0.04 sys=0.00, real=0.04 secs]</div><div class="line output">Heap</div><div class="line output"> garbage-first heap total 51200K, used 13043K [0x00000000fce00000, 0x00000000fcf00190, 0x0000000100000000]</div><div class="line output">  region size 1024K, 5 young (5120K), 0 survivors (0K)</div><div class="line output"> Metaspace used 17791K, capacity 18052K, committed 18176K, reserved 1064960K</div><div class="line output">  class space used 2405K, capacity 2479K, committed 2560K, reserved 1048576K</div></pre></td></tr></table></figure>
+<h2 id="Example-GC-log-of-G1-using-Java2Demo-jar"><a href="#Example-GC-log-of-G1-using-Java2Demo-jar" class="headerlink" title="Example GC log of G1 using Java2Demo.jar"></a>Example GC log of G1 using Java2Demo.jar</h2><p>Download <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">jdk-8u144-linux-x64-demos.tar.gz</a> and extract <code>Java2Demo.jar</code> from it.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">java</span> -Xmx50m -Xms50m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+PrintGC -XX:+PrintGCDetails -XX:+UnlockExperimentalVMOptions -XX:G1LogLevel=finest -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -jar demo/jfc/Java2D/Java2Demo.jar</span><span class="line output">2017-09-21T14:20:49.177+0800: 0.405: [GC pause (G1 Evacuation Pause) (young), 0.0070815 secs]</span><span class="line output">  [Parallel Time: 4.8 ms, GC Workers: 4]</span><span class="line output">  [GC Worker Start (ms): 406.4 406.4 406.4 406.9</span><span class="line output">  Min: 406.4, Avg: 406.5, Max: 406.9, Diff: 0.5]</span><span class="line output">  [Ext Root Scanning (ms): 2.2 0.8 0.5 0.4</span><span class="line output">  Min: 0.4, Avg: 1.0, Max: 2.2, Diff: 1.8, Sum: 3.9]</span><span class="line output">  [Thread Roots (ms): 0.0 0.8 0.3 0.0</span><span class="line output">  Min: 0.0, Avg: 0.3, Max: 0.8, Diff: 0.8, Sum: 1.1]</span><span class="line output">  [StringTable Roots (ms): 0.0 0.0 0.4 0.5</span><span class="line output">  Min: 0.0, Avg: 0.2, Max: 0.5, Diff: 0.5, Sum: 0.9]</span><span class="line output">  [Universe Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [JNI Handles Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [ObjectSynchronizer Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [FlatProfiler Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [Management Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [SystemDictionary Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [CLDG Roots (ms): 2.2 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.5, Max: 2.2, Diff: 2.2, Sum: 2.2]</span><span class="line output">  [JVMTI Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [CodeCache Roots (ms): 0.0 0.1 0.3 0.0</span><span class="line output">  Min: 0.0, Avg: 0.1, Max: 0.3, Diff: 0.3, Sum: 0.4]</span><span class="line output">  [CM RefProcessor Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [Wait For Strong CLD (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [Weak CLD Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [SATB Filtering (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [Update RS (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [Processed Buffers: 0 0 0 0</span><span class="line output">  Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]</span><span class="line output">  [Scan RS (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [Code Root Scanning (ms): 0.0 0.1 0.3 0.0</span><span class="line output">  Min: 0.0, Avg: 0.1, Max: 0.3, Diff: 0.3, Sum: 0.4]</span><span class="line output">  [Object Copy (ms): 2.5 3.1 3.3 3.3</span><span class="line output">  Min: 2.5, Avg: 3.1, Max: 3.3, Diff: 0.8, Sum: 12.2]</span><span class="line output">  [Termination (ms): 0.0 0.6 0.6 0.6</span><span class="line output">  Min: 0.0, Avg: 0.5, Max: 0.6, Diff: 0.6, Sum: 1.9]</span><span class="line output">  [Termination Attempts: 1 5 8 9</span><span class="line output">  Min: 1, Avg: 5.8, Max: 9, Diff: 8, Sum: 23]</span><span class="line output">  [GC Worker Other (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [GC Worker Total (ms): 4.7 4.7 4.7 4.3</span><span class="line output">  Min: 4.3, Avg: 4.6, Max: 4.7, Diff: 0.5, Sum: 18.4]</span><span class="line output">  [GC Worker End (ms): 411.1 411.1 411.1 411.2</span><span class="line output">  Min: 411.1, Avg: 411.1, Max: 411.2, Diff: 0.0]</span><span class="line output">  [Code Root Fixup: 0.1 ms]</span><span class="line output">  [Code Root Purge: 0.0 ms]</span><span class="line output">  [Clear CT: 0.1 ms]</span><span class="line output">  [Other: 2.1 ms]</span><span class="line output">  [Choose CSet: 0.0 ms]</span><span class="line output">  [Ref Proc: 0.4 ms]</span><span class="line output">  [Ref Enq: 0.0 ms]</span><span class="line output">  [Redirty Cards: 0.0 ms]</span><span class="line output">  [Parallel Redirty: 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [Redirtied Cards: 965 492 0 0</span><span class="line output">  Min: 0, Avg: 364.2, Max: 965, Diff: 965, Sum: 1457]</span><span class="line output">  [Humongous Register: 0.0 ms]</span><span class="line output">  [Humongous Total: 0]</span><span class="line output">  [Humongous Candidate: 0]</span><span class="line output">  [Humongous Reclaim: 0.0 ms]</span><span class="line output">  [Humongous Reclaimed: 0]</span><span class="line output">  [Free CSet: 0.0 ms]</span><span class="line output">  [Young Free CSet: 0.0 ms]</span><span class="line output">  [Non-Young Free CSet: 0.0 ms]</span><span class="line output">  [Eden: 14.0M(14.0M)-&gt;0.0B(13.0M) Survivors: 0.0B-&gt;2048.0K Heap: 14.0M(50.0M)-&gt;5212.0K(50.0M)]</span><span class="line output"> [Times: user=0.02 sys=0.00, real=0.01 secs]</span><span class="line output">2017-09-21T14:20:49.297+0800: 0.525: [GC pause (G1 Evacuation Pause) (young), 0.0033552 secs]</span><span class="line output">  [Parallel Time: 2.6 ms, GC Workers: 4]</span><span class="line output">  [GC Worker Start (ms): 525.3 525.4 525.4 525.4</span><span class="line output">  Min: 525.3, Avg: 525.4, Max: 525.4, Diff: 0.1]</span><span class="line output">  [Ext Root Scanning (ms): 0.7 0.3 0.3 0.3</span><span class="line output">  Min: 0.3, Avg: 0.4, Max: 0.7, Diff: 0.4, Sum: 1.6]</span><span class="line output">  [Thread Roots (ms): 0.0 0.2 0.2 0.2</span><span class="line output">  Min: 0.0, Avg: 0.1, Max: 0.2, Diff: 0.2, Sum: 0.5]</span><span class="line output">  [StringTable Roots (ms): 0.0 0.4 0.4 0.2</span><span class="line output">  Min: 0.0, Avg: 0.3, Max: 0.4, Diff: 0.4, Sum: 1.0]</span><span class="line output">  [Universe Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [JNI Handles Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [ObjectSynchronizer Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [FlatProfiler Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [Management Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [SystemDictionary Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [CLDG Roots (ms): 0.7 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.2, Max: 0.7, Diff: 0.7, Sum: 0.7]</span><span class="line output">  [JVMTI Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [CodeCache Roots (ms): 0.4 0.4 0.5 0.9</span><span class="line output">  Min: 0.4, Avg: 0.5, Max: 0.9, Diff: 0.5, Sum: 2.2]</span><span class="line output">  [CM RefProcessor Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [Wait For Strong CLD (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [Weak CLD Roots (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [SATB Filtering (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [Update RS (ms): 0.2 0.1 0.1 0.2</span><span class="line output">  Min: 0.1, Avg: 0.2, Max: 0.2, Diff: 0.1, Sum: 0.6]</span><span class="line output">  [Processed Buffers: 1 2 2 1</span><span class="line output">  Min: 1, Avg: 1.5, Max: 2, Diff: 1, Sum: 6]</span><span class="line output">  [Scan RS (ms): 0.2 0.3 0.2 0.3</span><span class="line output">  Min: 0.2, Avg: 0.2, Max: 0.3, Diff: 0.1, Sum: 1.0]</span><span class="line output">  [Code Root Scanning (ms): 0.0 0.1 0.1 0.4</span><span class="line output">  Min: 0.0, Avg: 0.1, Max: 0.4, Diff: 0.4, Sum: 0.6]</span><span class="line output">  [Object Copy (ms): 1.5 1.8 1.7 1.3</span><span class="line output">  Min: 1.3, Avg: 1.6, Max: 1.8, Diff: 0.5, Sum: 6.3]</span><span class="line output">  [Termination (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [Termination Attempts: 1 1 1 1</span><span class="line output">  Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 4]</span><span class="line output">  [GC Worker Other (ms): 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [GC Worker Total (ms): 2.6 2.5 2.5 2.5</span><span class="line output">  Min: 2.5, Avg: 2.5, Max: 2.6, Diff: 0.1, Sum: 10.1]</span><span class="line output">  [GC Worker End (ms): 527.9 527.9 527.9 527.9</span><span class="line output">  Min: 527.9, Avg: 527.9, Max: 527.9, Diff: 0.0]</span><span class="line output">  [Code Root Fixup: 0.1 ms]</span><span class="line output">  [Code Root Purge: 0.0 ms]</span><span class="line output">  [Clear CT: 0.2 ms]</span><span class="line output">  [Other: 0.4 ms]</span><span class="line output">  [Choose CSet: 0.0 ms]</span><span class="line output">  [Ref Proc: 0.3 ms]</span><span class="line output">  [Ref Enq: 0.0 ms]</span><span class="line output">  [Redirty Cards: 0.1 ms]</span><span class="line output">  [Parallel Redirty: 0.0 0.0 0.0 0.0</span><span class="line output">  Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]</span><span class="line output">  [Redirtied Cards: 1919 1636 571 0</span><span class="line output">  Min: 0, Avg: 1031.5, Max: 1919, Diff: 1919, Sum: 4126]</span><span class="line output">  [Humongous Register: 0.0 ms]</span><span class="line output">  [Humongous Total: 0]</span><span class="line output">  [Humongous Candidate: 0]</span><span class="line output">  [Humongous Reclaim: 0.0 ms]</span><span class="line output">  [Humongous Reclaimed: 0]</span><span class="line output">  [Free CSet: 0.0 ms]</span><span class="line output">  [Young Free CSet: 0.0 ms]</span><span class="line output">  [Non-Young Free CSet: 0.0 ms]</span><span class="line output">  [Eden: 12.0M(6144.0K)-&gt;0.0B(25.0M) Survivors: 2048.0K-&gt;1024.0K Heap: 17.1M(50.0M)-&gt;8532.0K(50.0M)]</span><span class="line output"> [Times: user=0.01 sys=0.00, real=0.01 secs]</span><span class="line output">2017-09-21T14:20:50.101+0800: 1.329: [Full GC (System.gc()) 15M-&gt;8266K(50M), 0.0379003 secs]</span><span class="line output">  [Eden: 7168.0K(25.0M)-&gt;0.0B(25.0M) Survivors: 1024.0K-&gt;0.0B Heap: 15.5M(50.0M)-&gt;8266.1K(50.0M)], [Metaspace: 16513K-&gt;16513K(1064960K)]</span><span class="line output"> [Times: user=0.04 sys=0.00, real=0.04 secs]</span><span class="line output">2017-09-21T14:20:50.836+0800: 2.063: [Full GC (System.gc()) 9216K-&gt;8071K(50M), 0.0376095 secs]</span><span class="line output">  [Eden: 1024.0K(25.0M)-&gt;0.0B(25.0M) Survivors: 0.0B-&gt;0.0B Heap: 9216.7K(50.0M)-&gt;8072.0K(50.0M)], [Metaspace: 16554K-&gt;16554K(1064960K)]</span><span class="line output"> [Times: user=0.04 sys=0.00, real=0.04 secs]</span><span class="line output">2017-09-21T14:20:51.509+0800: 2.737: [Full GC (System.gc()) 9022K-&gt;8074K(50M), 0.0371841 secs]</span><span class="line output">  [Eden: 1024.0K(25.0M)-&gt;0.0B(25.0M) Survivors: 0.0B-&gt;0.0B Heap: 9022.6K(50.0M)-&gt;8074.5K(50.0M)], [Metaspace: 16581K-&gt;16581K(1064960K)]</span><span class="line output"> [Times: user=0.04 sys=0.00, real=0.04 secs]</span><span class="line output">2017-09-21T14:20:53.787+0800: 5.015: [Full GC (System.gc()) 9900K-&gt;8080K(50M), 0.0213002 secs]</span><span class="line output">  [Eden: 2048.0K(25.0M)-&gt;0.0B(25.0M) Survivors: 0.0B-&gt;0.0B Heap: 9900.6K(50.0M)-&gt;8080.1K(50.0M)], [Metaspace: 16636K-&gt;16636K(1064960K)]</span><span class="line output"> [Times: user=0.03 sys=0.00, real=0.02 secs]</span><span class="line output">2017-09-21T14:20:54.443+0800: 5.671: [Full GC (System.gc()) 9659K-&gt;8721K(50M), 0.0210222 secs]</span><span class="line output">  [Eden: 1024.0K(25.0M)-&gt;0.0B(24.0M) Survivors: 0.0B-&gt;0.0B Heap: 9659.7K(50.0M)-&gt;8721.5K(50.0M)], [Metaspace: 16666K-&gt;16666K(1064960K)]</span><span class="line output"> [Times: user=0.03 sys=0.00, real=0.02 secs]</span><span class="line output">2017-09-21T14:20:59.433+0800: 10.661: [Full GC (System.gc()) 10131K-&gt;8727K(50M), 0.0463835 secs]</span><span class="line output">  [Eden: 2048.0K(24.0M)-&gt;0.0B(24.0M) Survivors: 0.0B-&gt;0.0B Heap: 10131.5K(50.0M)-&gt;8727.2K(50.0M)], [Metaspace: 16790K-&gt;16790K(1064960K)]</span><span class="line output"> [Times: user=0.06 sys=0.00, real=0.05 secs]</span><span class="line output">2017-09-21T14:21:00.140+0800: 11.368: [Full GC (System.gc()) 10M-&gt;8749K(50M), 0.0198179 secs]</span><span class="line output">  [Eden: 2048.0K(24.0M)-&gt;0.0B(24.0M) Survivors: 0.0B-&gt;0.0B Heap: 10.4M(50.0M)-&gt;8749.4K(50.0M)], [Metaspace: 16951K-&gt;16951K(1064960K)]</span><span class="line output"> [Times: user=0.03 sys=0.00, real=0.02 secs]</span><span class="line output">2017-09-21T14:21:00.697+0800: 11.925: [Full GC (System.gc()) 10M-&gt;8917K(50M), 0.0282837 secs]</span><span class="line output">  [Eden: 2048.0K(24.0M)-&gt;0.0B(24.0M) Survivors: 0.0B-&gt;0.0B Heap: 10.5M(50.0M)-&gt;8917.0K(50.0M)], [Metaspace: 17346K-&gt;17346K(1064960K)]</span><span class="line output"> [Times: user=0.03 sys=0.00, real=0.03 secs]</span><span class="line output">2017-09-21T14:21:01.348+0800: 12.575: [Full GC (System.gc()) 11M-&gt;8947K(50M), 0.0319808 secs]</span><span class="line output">  [Eden: 3072.0K(24.0M)-&gt;0.0B(24.0M) Survivors: 0.0B-&gt;0.0B Heap: 11.5M(50.0M)-&gt;8947.9K(50.0M)], [Metaspace: 17549K-&gt;17549K(1064960K)]</span><span class="line output"> [Times: user=0.04 sys=0.00, real=0.04 secs]</span><span class="line output">Heap</span><span class="line output"> garbage-first heap total 51200K, used 13043K [0x00000000fce00000, 0x00000000fcf00190, 0x0000000100000000]</span><span class="line output">  region size 1024K, 5 young (5120K), 0 survivors (0K)</span><span class="line output"> Metaspace used 17791K, capacity 18052K, committed 18176K, reserved 1064960K</span><span class="line output">  class space used 2405K, capacity 2479K, committed 2560K, reserved 1048576K</span></pre></td></tr></table></figure>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://www.oracle.com/technetwork/tutorials/tutorials-1876574.html" target="_blank" rel="external">getting started with the G1 garbage collector</a></li>
-<li><a href="http://blog.csdn.net/renfufei/article/details/41897113" target="_blank" rel="external">G1垃圾收集器入门</a></li>
-<li><a href="https://blogs.oracle.com/poonam/understanding-g1-gc-logs" target="_blank" rel="external">Understanding G1 GC Logs</a></li>
+<li><a href="http://www.oracle.com/technetwork/tutorials/tutorials-1876574.html" target="_blank" rel="noopener">getting started with the G1 garbage collector</a></li>
+<li><a href="http://blog.csdn.net/renfufei/article/details/41897113" target="_blank" rel="noopener">G1垃圾收集器入门</a></li>
+<li><a href="https://blogs.oracle.com/poonam/understanding-g1-gc-logs" target="_blank" rel="noopener">Understanding G1 GC Logs</a></li>
 <li><a href="/blog/java/2016/10/13/java-jvm-and-gc.html">java jvm and gc</a></li>
 </ol>
 
@@ -606,15 +606,17 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/linux/2017/09/20/user-session-reset-in-tomcat-webapp.html" rel="next" title="tomcat应用中用户session被重置的问题">
-                上一篇：tomcat应用中用户session被重置的问题
+                <i class="fa fa-chevron-left"></i>
+                tomcat应用中用户session被重置的问题
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/java/2017/09/23/GoF-relationships-of-23-design-patterns.html" rel="prev" title="GoF - relationships of 23 design patterns">
-                下一篇：GoF - relationships of 23 design patterns
+              <a href="/blog/java/2017/09/23/GoF-relationships-of-23-design-patterns.html" rel="prev" title="gof - relationships of 23 design patterns">
+                <i class="fa fa-chevron-right"></i>
+                gof - relationships of 23 design patterns
               </a>
             
           </div>
@@ -663,7 +665,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -674,16 +676,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -765,10 +765,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

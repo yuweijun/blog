@@ -1,0 +1,661 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="tldr top tldr topDisplay dynamic real-time information about running processes.  - Start top:    top  - Do not show any idle or zombie processes:    top -i  - Show only processes owned by given user:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 常用命令之 top">
+<meta property="og:url" content="http://www.4e00.com/linux/2018/06/06/linux-commands-top.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="tldr top tldr topDisplay dynamic real-time information about running processes.  - Start top:    top  - Do not show any idle or zombie processes:    top -i  - Show only processes owned by given user:">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.132Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 常用命令之 top">
+<meta name="twitter:description" content="tldr top tldr topDisplay dynamic real-time information about running processes.  - Start top:    top  - Do not show any idle or zombie processes:    top -i  - Show only processes owned by given user:">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2018/06/06/linux-commands-top.html">
+
+  <title> linux 常用命令之 top | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux 常用命令之 top
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-06-06T21:21:10+08:00" content="2018-06-06">
+              2018-06-06
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="tldr-top"><a href="#tldr-top" class="headerlink" title="tldr top"></a>tldr top</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tldr</span> top</span><span class="line"></span><span class="line output">Display dynamic real-time information about running processes.</span><span class="line output"></span><span class="line output">  - Start top:</span><span class="line">    top</span><span class="line output"></span><span class="line output">  - Do not show any idle or zombie processes:</span><span class="line">    top -i</span><span class="line output"></span><span class="line output">  - Show only processes owned by given user:</span><span class="line">    top -u user_name</span><span class="line output"></span><span class="line output">  - Show only the processes with the given PID(s), passed as a comma-separated list. (Normally you would not know PIDs off hand. This example picks the PIDs from the process name):</span><span class="line">    top -p $(pgrep -d <span class="string">','</span> process_name)</span><span class="line output"></span><span class="line output">  - Show java processes</span><span class="line">    top -p $(pgrep -d <span class="string">','</span> java)</span><span class="line output"></span><span class="line output">  - Show threads of specified java process</span><span class="line">    top -Hp 15961</span><span class="line output"></span><span class="line output">  - Get <span class="built_in">help</span> about interactive commands:</span><span class="line">    ?</span></pre></td></tr></table></figure>
+<h2 id="top-默认值"><a href="#top-默认值" class="headerlink" title="top 默认值"></a>top 默认值</h2><p><code>*</code>开头的参数可以在<code>top</code>命令行参数中进行覆盖，其他的参数可以通过<code>~/.toprc</code>文件自定义配置。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Global_defaults</span><span class="line">   &apos;A&apos; - Alt display      Off (full-screen)</span><span class="line"> * &apos;d&apos; - Delay time       3.0 seconds</span><span class="line">   &apos;I&apos; - Irix mode        On  (no, &apos;solaris&apos; smp)</span><span class="line"> * &apos;p&apos; - PID monitoring   Off</span><span class="line"> * &apos;s&apos; - Secure mode      Off (unsecured)</span><span class="line">   &apos;B&apos; - Bold disable     Off</span><span class="line">Summary_Area_defaults</span><span class="line">   &apos;l&apos; - Load Avg/Uptime  On  (thus program name)</span><span class="line">   &apos;t&apos; - Task/Cpu states  On  (1+1 lines, see &apos;1&apos;)</span><span class="line">   &apos;m&apos; - Mem/Swap usage   On  (2 lines worth)</span><span class="line">   &apos;1&apos; - Single Cpu       On  (thus 1 line if smp)</span><span class="line">Task_Area_defaults</span><span class="line">   &apos;b&apos; - Bold hilite      On  (not &apos;reverse&apos;)</span><span class="line"> * &apos;c&apos; - Command line     Off (name, not cmdline)</span><span class="line"> * &apos;H&apos; - Threads          Off (show all threads)</span><span class="line"> * &apos;i&apos; - Idle tasks       On  (show all tasks)</span><span class="line">   &apos;R&apos; - Reverse sort     On  (pids high-to-low)</span><span class="line"> * &apos;S&apos; - Cumulative time  Off (no, dead children)</span><span class="line">   &apos;x&apos; - Column hilite    Off (no, sort field)</span><span class="line">   &apos;y&apos; - Row hilite       On  (yes, running tasks)</span><span class="line">   &apos;z&apos; - color/mono       Off (no, colors)</span></pre></td></tr></table></figure>
+<h3 id="top-命令常用选项"><a href="#top-命令常用选项" class="headerlink" title="top 命令常用选项"></a>top 命令常用选项</h3><ol>
+<li><code>-b</code>：批量模式，一般用来导出 top 命令结果到一个文件中</li>
+<li><code>-c</code>：显示完整的命令路径信息</li>
+<li><code>-d</code>：屏幕刷新间隔时间</li>
+<li><code>-u</code>：指定用户名</li>
+<li><code>-p</code>：指定进程</li>
+<li><code>-n</code>：循环显示的次数</li>
+</ol>
+<h2 id="top-帮助文档"><a href="#top-帮助文档" class="headerlink" title="top 帮助文档"></a>top 帮助文档</h2><ol>
+<li><code>h</code> : 显示帮助画面。</li>
+<li><code>k</code> : 终止一个进程。</li>
+<li><code>i</code> : 忽略闲置和僵死进程。</li>
+<li><code>q</code> : 退出程序。</li>
+<li><code>r</code> : 重新安排一个进程的优先级别。</li>
+<li><code>S</code> : 切换到累计模式。</li>
+<li><code>s</code> : 改变两次刷新之间的延迟时间。</li>
+<li><code>f</code> : 从当前显示中添加或者删除项目。</li>
+<li><code>o</code> : 改变显示项目的顺序。</li>
+<li><code>l</code> : 切换显示平均负载和启动时间信息。</li>
+<li><code>m</code> : 切换显示内存信息。</li>
+<li><code>t</code> : 切换显示进程和CPU状态信息。</li>
+<li><code>c</code> : 切换显示命令名称和完整命令行。</li>
+<li><code>M</code> : 根据驻留内存大小进行排序。</li>
+<li><code>P</code> : 根据CPU使用百分比大小进行排序。</li>
+<li><code>T</code> : 根据时间/累计时间进行排序。</li>
+<li><code>W</code> : 将当前设置写入<code>~/.toprc</code>文件中。</li>
+</ol>
+<h2 id="Example-of-linux-top"><a href="#Example-of-linux-top" class="headerlink" title="Example of linux top"></a>Example of linux top</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">top</span></span><span class="line output">top - 15:17:03 up 32 days, 22:35,  1 user,  load average: 0.06, 0.04, 0.00</span><span class="line output">Tasks: 101 total,   1 running, 100 sleeping,   0 stopped,   0 zombie</span><span class="line output">Cpu(s): 11.3%us,  3.4%sy,  0.0%ni, 84.3%id,  0.1%wa,  0.0%hi,  0.9%si,  0.0%st</span><span class="line output">Mem:   3924684k total,  3817324k used,   107360k free,     8628k buffers</span><span class="line output">Swap:        0k total,        0k used,        0k free,   414188k cached</span><span class="line output"></span><span class="line output">  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND</span><span class="line output">27221 tomcat    20   0 5221m 2.7g  17m S 59.3 73.0 591:09.49 java</span><span class="line output">26833 nginx     20   0 76096  29m 1340 S  2.0  0.8  25:51.72 nginx</span><span class="line output">    1 root      20   0 21448 1104  804 S  0.0  0.0   0:00.77 init</span><span class="line output">    2 root      20   0     0    0    0 S  0.0  0.0   0:00.00 kthreadd</span><span class="line output">    3 root      RT   0     0    0    0 S  0.0  0.0   0:13.43 migration/0</span><span class="line output">    4 root      20   0     0    0    0 S  0.0  0.0   3:08.30 ksoftirqd/0</span><span class="line output">    5 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 migration/0</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="Linux-load-average-简单说明"><a href="#Linux-load-average-简单说明" class="headerlink" title="Linux load average 简单说明"></a>Linux load average 简单说明</h2><ol>
+<li>load average: 0.00, 0.00, 0.00 — 后面的三个数分别是<code>1分钟</code>、<code>5分钟</code>、<code>15分钟</code>的系统负载情况。</li>
+<li>load average 的值是从<code>/proc/loadavg</code>文件中读取的。</li>
+<li>如果这个数除以 CPU 的内核数量，结果高于<code>1.0</code>的时候就要注意了。</li>
+<li>Linux 中因为1993年一个内核补丁，这些数值可以理解为系统的整体负载，而 UNIX 中则是 CPU 的负载。</li>
+<li>关于 Linux 的<code>load balance</code>算法，可参考这篇<a href="https://www.linuxjournal.com/article/9001" target="_blank" rel="noopener">文章</a>。</li>
+<li><p>引用 linux 源码 <a href="https://github.com/torvalds/linux/blob/master/kernel/sched/loadavg.c" target="_blank" rel="noopener">kernel/sched/loadavg.c</a> 中的注释如下：</p>
+<blockquote>
+<p>This file contains the magic bits required to compute the global loadavg<br>figure. <strong>Its a silly number but people think its important</strong>. We go through<br>great pains to make it work on big machines and tickless kernels.</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="CPU-状态信息简单说明"><a href="#CPU-状态信息简单说明" class="headerlink" title="CPU 状态信息简单说明"></a>CPU 状态信息简单说明</h2><ol>
+<li><code>0.3%  us</code> — 用户空间占用CPU的百分比</li>
+<li><code>0.0%  sy</code> — 内核空间占用CPU的百分比</li>
+<li><code>0.0%  ni</code> — 改变过优先级的进程占用CPU的百分比</li>
+<li><code>99.7% id</code> — 空闲CPU百分比</li>
+<li><code>0.0%  wa</code> — IO等待占用CPU的百分比</li>
+<li><code>0.0%  hi</code> — 硬中断（Hardware IRQ）占用CPU的百分比</li>
+<li><code>0.0%  si</code> — 软中断（Software Interrupts）占用CPU的百分比</li>
+<li><code>0.0%  st</code> — 这个虚拟机被Hypervisor占用的CPU时间</li>
+</ol>
+<p>这里显示数据是所有CPU的平均值，如果想看每一个CPU的处理情况，按数字<code>1</code>即可；折叠，再次按<code>1</code>。</p>
+<h3 id="CPU-数量查看命令"><a href="#CPU-数量查看命令" class="headerlink" title="CPU 数量查看命令"></a>CPU 数量查看命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">lscpu</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nproc</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">grep</span> <span class="string">'model name'</span> /proc/cpuinfo | wc -l</span></pre></td></tr></table></figure>
+<h2 id="top-内存信息简单说明"><a href="#top-内存信息简单说明" class="headerlink" title="top 内存信息简单说明"></a>top 内存信息简单说明</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Mem:   3924684k total,  3817324k used,   107360k free,     8628k buffers</span><span class="line">Swap:        0k total,        0k used,        0k free,   414188k cached</span></pre></td></tr></table></figure>
+<ol>
+<li><code>total</code>   — 物理内存总量</li>
+<li><code>used</code>    — 使用中的内存总量</li>
+<li><code>free</code>    — 空闲内存总量</li>
+<li><code>buffers</code> — 缓存的内存量</li>
+<li><code>cached</code>  — 缓冲的交换区总量</li>
+</ol>
+<h3 id="系统实际可用内存"><a href="#系统实际可用内存" class="headerlink" title="系统实际可用内存"></a>系统实际可用内存</h3><p>当前系统可用内存可以用<code>top</code>命令中这3个字段加起来<code>free + buffers + cached</code>进行估计。</p>
+<p>如上显示的信息，可以估计系统大概还有 530M 内存可用，与下面<code>free</code>命令显示的结果差不多：</p>
+<blockquote>
+<p>107360 + 8628 + 414188 = 530176</p>
+</blockquote>
+<h3 id="free-显示-CentOS-6-5-内存使用情况"><a href="#free-显示-CentOS-6-5-内存使用情况" class="headerlink" title="free 显示 CentOS 6.5 内存使用情况"></a>free 显示 CentOS 6.5 内存使用情况</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">free</span></span><span class="line output">             total       used       free     shared    buffers     cached</span><span class="line output">Mem:       3924684    3806404     118280          0       6476     404972</span><span class="line output">-/+ buffers/cache:    3394956     529728</span><span class="line output">Swap:            0          0          0</span></pre></td></tr></table></figure>
+<blockquote>
+<p>118280 + 6476 + 404972 = 529728</p>
+</blockquote>
+<h3 id="free-显示-Ubuntu-18-04-内存使用情况"><a href="#free-显示-Ubuntu-18-04-内存使用情况" class="headerlink" title="free 显示 Ubuntu 18.04 内存使用情况"></a>free 显示 Ubuntu 18.04 内存使用情况</h3><p>在 Ubuntu 中显示<code>top</code>和<code>free</code>的信息字段名与 CentOS 中显示的字段名略有差异。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">free</span></span><span class="line output">              total        used        free      shared  buff/cache   available</span><span class="line output">Mem:         492952      102008       22276         644      368668      374128</span><span class="line output">Swap:             0           0           0</span></pre></td></tr></table></figure>
+<h2 id="top-进程信息字段说明"><a href="#top-进程信息字段说明" class="headerlink" title="top 进程信息字段说明"></a>top 进程信息字段说明</h2><ol>
+<li><code>PID</code>：     进程的ID</li>
+<li><code>USER</code>：    进程所有者</li>
+<li><code>PR</code>：      进程的优先级别，越小越优先被执行</li>
+<li><code>NI</code>：      进程的nice值</li>
+<li><code>VIRT</code>：    进程使用的虚拟内存总量(VIRT = SWAP + RES)，单位kb</li>
+<li><code>RES</code>：     进程使用的、未被换出的物理内存大小(RES = CODE + DATA)，单位kb</li>
+<li><code>SHR</code>：     进程使用的共享内存，单位kb</li>
+<li><code>S</code>：       进程的状态，S表示休眠，R表示正在运行，Z表示僵死状态，N表示该进程优先值为负数</li>
+<li><code>%CPU</code>：    进程占用CPU的使用率</li>
+<li><code>%MEM</code>：    进程使用的物理内存和总内存的百分比</li>
+<li><code>TIME+</code>：   该进程启动后占用的总的CPU时间，即占用CPU使用时间的累加值</li>
+<li><code>COMMAND</code>： 进程启动命令名称</li>
+</ol>
+<p>以上是默认显示的字段说明，更多的字段可以使用<code>man top</code>，或者是<code>top</code>运行中按<code>o</code>键查看并使用字段对应的字母大小写排序，按<code>f</code>键控制字段显示。</p>
+<h2 id="字段排序和高亮显示"><a href="#字段排序和高亮显示" class="headerlink" title="字段排序和高亮显示"></a>字段排序和高亮显示</h2><p>在<code>top</code>命令运行时，按下<code>z</code>和<code>x</code>，可以看到<code>%CPU</code>列被高亮显示了。默认的排序列是<code>%CPU</code>，通过<code>&gt;</code>或<code>&lt;</code>键可以向右或左改变排序列。</p>
+<h2 id="toprc-文件"><a href="#toprc-文件" class="headerlink" title="~/.toprc 文件"></a>~/.toprc 文件</h2><p>在<code>top</code>命令运行时，使用<code>f</code>和<code>o</code>键进行显示的设置，然后返回到<code>top</code>应用运行界面中，按大写<code>W</code>键可以保存当前的配置文件<code>.toprc</code>到个人主目录下，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">RCfile for &quot;top with windows&quot;           # shameless braggin&apos;</span><span class="line">Id:a, Mode_altscr=0, Mode_irixps=1, Delay_time=3.000, Curwin=0</span><span class="line">Def     fieldscur=AEHIOQTWKNMbcdfgjplrsuvyzX</span><span class="line">        winflags=65465, sortindx=10, maxtasks=0</span><span class="line">        summclr=1, msgsclr=1, headclr=3, taskclr=1</span><span class="line">Job     fieldscur=ABcefgjlrstuvyzMKNHIWOPQDX</span><span class="line">        winflags=62777, sortindx=0, maxtasks=0</span><span class="line">        summclr=6, msgsclr=6, headclr=7, taskclr=6</span><span class="line">Mem     fieldscur=ANOPQRSTUVbcdefgjlmyzWHIKX</span><span class="line">        winflags=62777, sortindx=13, maxtasks=0</span><span class="line">        summclr=5, msgsclr=5, headclr=4, taskclr=5</span><span class="line">Usr     fieldscur=ABDECGfhijlopqrstuvyzMKNWX</span><span class="line">        winflags=62777, sortindx=4, maxtasks=0</span><span class="line">        summclr=3, msgsclr=3, headclr=2, taskclr=3</span></pre></td></tr></table></figure>
+<h3 id="ps-命令显示-CPU-使用最高的进程"><a href="#ps-命令显示-CPU-使用最高的进程" class="headerlink" title="ps 命令显示 CPU 使用最高的进程"></a>ps 命令显示 CPU 使用最高的进程</h3><p>在 CentOS 中运行以下<code>ps</code>命令，可以查看进程的 CPU 使用情况，效果类似上面的<code>top</code>命令。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -e -o pid,user,nice,size,rss,pcpu,pmem,etime,comm --sort=-pcpu | head</span><span class="line output">  PID USER   SZ      RSS     %CPU %MEM ELAPSED     COMMAND</span><span class="line output">27221 tomcat 5184880 2856904 22.3 72.7 2-02:01:01  java</span><span class="line output"> 2043 root   284664  59192   1.0  1.5  33-06:02:15 ilogtail</span><span class="line output">26832 nginx  28500   30488   0.6  0.7  3-12:44:49  nginx</span><span class="line output">  997 root   2351344 67248   0.5  1.7  33-06:13:11 java</span><span class="line output">26833 nginx  28936   30264   0.5  0.7  3-12:44:49  nginx</span><span class="line output">  708 root   3465836 231636  0.2  5.9  33-06:13:19 java</span><span class="line output">    1 root   412     1104    0.0  0.0  33-06:13:22 init</span><span class="line output">    2 root   0       0       0.0  0.0  33-06:13:22 kthreadd</span><span class="line output">    6 root   0       0       0.0  0.0  33-06:13:22 watchdog/0</span></pre></td></tr></table></figure>
+<h2 id="Show-java-processes"><a href="#Show-java-processes" class="headerlink" title="Show java processes"></a>Show java processes</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">top</span> -p $(pgrep -d <span class="string">','</span> java)</span><span class="line output">top - 14:36:53 up 32 days, 21:55,  1 user,  load average: 0.00, 0.00, 0.00</span><span class="line output">Tasks:   3 total,   0 running,   3 sleeping,   0 stopped,   0 zombie</span><span class="line output">Cpu(s): 11.3%us,  3.4%sy,  0.0%ni, 84.3%id,  0.1%wa,  0.0%hi,  0.9%si,  0.0%st</span><span class="line output">Mem:   3924684k total,  3801792k used,   122892k free,    10756k buffers</span><span class="line output">Swap:        0k total,        0k used,        0k free,   401836k cached</span><span class="line output"></span><span class="line output">  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND</span><span class="line output">27221 tomcat    20   0 5172m 2.7g 7632 S 45.9 72.6 572:22.10 java</span><span class="line output">  708 root      20   0 3539m 226m 6468 S  0.0  5.9 105:34.78 java</span><span class="line output">  997 root      20   0 2447m  65m 2872 S  0.0  1.7 259:02.85 java</span></pre></td></tr></table></figure>
+<h2 id="Show-threads-of-tomcat-process"><a href="#Show-threads-of-tomcat-process" class="headerlink" title="Show threads of tomcat process"></a>Show threads of tomcat process</h2><p>显示 tomcat 进程中的所有线程，可以查看哪个线程实际使用的 CPU 资源最高。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">top</span> -Hp 27221</span><span class="line output">top - 14:32:07 up 32 days, 21:50,  1 user,  load average: 0.01, 0.02, 0.00</span><span class="line output">Tasks: 268 total,   0 running, 268 sleeping,   0 stopped,   0 zombie</span><span class="line output">Cpu(s): 21.1%us,  6.4%sy,  0.0%ni, 70.3%id,  0.0%wa,  0.0%hi,  2.2%si,  0.0%st</span><span class="line output">Mem:   3924684k total,  3788740k used,   135944k free,    10524k buffers</span><span class="line output">Swap:        0k total,        0k used,        0k free,   389656k cached</span><span class="line output"></span><span class="line output">  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND</span><span class="line output">27602 tomcat    20   0 5172m 2.7g 7624 S  3.7 72.6   1:18.00 java</span><span class="line output">27229 tomcat    20   0 5172m 2.7g 7624 S  3.3 72.6  19:16.14 java</span><span class="line output">27253 tomcat    20   0 5172m 2.7g 7624 S  2.3 72.6  25:36.15 java</span><span class="line output">27595 tomcat    20   0 5172m 2.7g 7624 S  2.3 72.6   1:17.06 java</span><span class="line output"> 5629 tomcat    20   0 5172m 2.7g 7624 S  2.0 72.6   7:16.77 java</span><span class="line output">29973 tomcat    20   0 5172m 2.7g 7624 S  1.7 72.6  10:17.02 java</span><span class="line output">31240 tomcat    20   0 5172m 2.7g 7624 S  1.7 72.6   9:16.38 java</span><span class="line output">27588 tomcat    20   0 5172m 2.7g 7624 S  1.7 72.6   1:16.14 java</span><span class="line output">27267 tomcat    20   0 5172m 2.7g 7624 S  1.3 72.6  13:47.18 java</span><span class="line output"> 4076 tomcat    20   0 5172m 2.7g 7624 S  1.3 72.6  13:46.08 java</span><span class="line output">27590 tomcat    20   0 5172m 2.7g 7624 S  1.3 72.6   1:16.81 java</span><span class="line output">27603 tomcat    20   0 5172m 2.7g 7624 S  1.3 72.6   1:15.60 java</span><span class="line output">27609 tomcat    20   0 5172m 2.7g 7624 S  1.3 72.6   1:16.83 java</span><span class="line output">27863 tomcat    20   0 5172m 2.7g 7624 S  1.0 72.6  12:43.72 java</span><span class="line output">29829 tomcat    20   0 5172m 2.7g 7624 S  1.0 72.6   3:45.81 java</span></pre></td></tr></table></figure>
+<h2 id="一次性导出-top-运行的结果"><a href="#一次性导出-top-运行的结果" class="headerlink" title="一次性导出 top 运行的结果"></a>一次性导出 top 运行的结果</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">top</span> -bc -n 1</span><span class="line output">top - 15:11:59 up 32 days, 22:30,  1 user,  load average: 0.02, 0.02, 0.00</span><span class="line output">Tasks: 101 total,   1 running, 100 sleeping,   0 stopped,   0 zombie</span><span class="line output">Cpu(s): 11.3%us,  3.4%sy,  0.0%ni, 84.3%id,  0.1%wa,  0.0%hi,  0.9%si,  0.0%st</span><span class="line output">Mem:   3924684k total,  3817316k used,   107368k free,     8784k buffers</span><span class="line output">Swap:        0k total,        0k used,        0k free,   414308k cached</span><span class="line output"></span><span class="line output">  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND</span><span class="line output">27221 tomcat    20   0 5216m 2.7g  12m S 39.6 72.9 588:44.48 /opt/java/jdk/bin/java -Djava.util.logging.config.file=/opt/tomcat/conf/loggin</span><span class="line output">26832 nginx     20   0 75920  29m 1340 S  4.0  0.8  32:11.93 nginx: worker process</span><span class="line output">    1 root      20   0 21448 1104  804 S  0.0  0.0   0:00.77 /sbin/init</span><span class="line output">    2 root      20   0     0    0    0 S  0.0  0.0   0:00.00 [kthreadd]</span></pre></td></tr></table></figure>
+<h2 id="其他的类似工具"><a href="#其他的类似工具" class="headerlink" title="其他的类似工具"></a>其他的类似工具</h2><ol>
+<li>htop</li>
+<li>glances</li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.4e00.com/manpages/man1/top.1.html">Linux User&#39;s Manual - TOP</a></li>
+<li><a href="http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages" target="_blank" rel="noopener">Understanding Linux CPU Load - when should you be worried</a></li>
+<li><a href="http://www.brendangregg.com/blog/2017-08-08/linux-load-averages.html" target="_blank" rel="noopener">Linux Load Averages: Solving the Mystery</a></li>
+<li><a href="https://www.tecmint.com/understand-linux-load-averages-and-monitor-performance/" target="_blank" rel="noopener">Understand Linux Load Averages and Monitor Performance of Linux</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2018/04/28/the-best-commands-openssl.html" rel="next" title="命令行神器之 openssl 篇">
+                <i class="fa fa-chevron-left"></i>
+                命令行神器之 openssl 篇
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2018/06/09/linux-commands-networking.html" rel="prev" title="linux 常用命令之 流量监控命令">
+                <i class="fa fa-chevron-right"></i>
+                linux 常用命令之 流量监控命令
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tldr-top"><span class="nav-number">1.</span> <span class="nav-text">tldr top</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#top-默认值"><span class="nav-number">2.</span> <span class="nav-text">top 默认值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#top-命令常用选项"><span class="nav-number">2.1.</span> <span class="nav-text">top 命令常用选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#top-帮助文档"><span class="nav-number">3.</span> <span class="nav-text">top 帮助文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-of-linux-top"><span class="nav-number">4.</span> <span class="nav-text">Example of linux top</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-load-average-简单说明"><span class="nav-number">5.</span> <span class="nav-text">Linux load average 简单说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-状态信息简单说明"><span class="nav-number">6.</span> <span class="nav-text">CPU 状态信息简单说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU-数量查看命令"><span class="nav-number">6.1.</span> <span class="nav-text">CPU 数量查看命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#top-内存信息简单说明"><span class="nav-number">7.</span> <span class="nav-text">top 内存信息简单说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统实际可用内存"><span class="nav-number">7.1.</span> <span class="nav-text">系统实际可用内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#free-显示-CentOS-6-5-内存使用情况"><span class="nav-number">7.2.</span> <span class="nav-text">free 显示 CentOS 6.5 内存使用情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#free-显示-Ubuntu-18-04-内存使用情况"><span class="nav-number">7.3.</span> <span class="nav-text">free 显示 Ubuntu 18.04 内存使用情况</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#top-进程信息字段说明"><span class="nav-number">8.</span> <span class="nav-text">top 进程信息字段说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字段排序和高亮显示"><span class="nav-number">9.</span> <span class="nav-text">字段排序和高亮显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toprc-文件"><span class="nav-number">10.</span> <span class="nav-text">~/.toprc 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-命令显示-CPU-使用最高的进程"><span class="nav-number">10.1.</span> <span class="nav-text">ps 命令显示 CPU 使用最高的进程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Show-java-processes"><span class="nav-number">11.</span> <span class="nav-text">Show java processes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Show-threads-of-tomcat-process"><span class="nav-number">12.</span> <span class="nav-text">Show threads of tomcat process</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一次性导出-top-运行的结果"><span class="nav-number">13.</span> <span class="nav-text">一次性导出 top 运行的结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他的类似工具"><span class="nav-number">14.</span> <span class="nav-text">其他的类似工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">15.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

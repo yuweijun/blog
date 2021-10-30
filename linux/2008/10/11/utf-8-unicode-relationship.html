@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,40 +33,40 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
 
 
-<meta name="description" content="UTF-8是UNICODE的实现方式之一。 UTF-8最大的一个特点，就是它是一种变长的编码方式。它可以使用1~4个字节表示一个符号，根据不同的符号而变化字节长度。 UTF-8的编码规则很简单，只有二条：  对于单字节的符号，字节的第一位设为0，后面7位为这个符号的UNICODE码。因此对于英语字母，UTF-8编码和ASCII码是相同的。 对于n字节的符号（n&amp;gt;1），第一个字节的前n位都设为">
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="UNICODE 基本知识Unicode 及编码方式概述，这篇文章写得非常详细，不明白的细节可以参考那篇文章。 UTF-8 编码UTF-8是UNICODE的实现方式之一。 UTF-8最大的一个特点，就是它是一种变长的编码方式。它可以使用 1~4 个字节表示一个符号，根据不同的符号而变化字节长度。 UTF-8的编码规则很简单，只有二条：  对于单字节的符号，字节的第一位设为0，后面 7 位为这个符号的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="utf-8和unicode之间相互转换">
-<meta property="og:url" content="https://www.4e00.com/linux/2008/10/11/utf-8-unicode-relationship.html">
+<meta property="og:title" content="utf-8 和 unicode 之间相互转换">
+<meta property="og:url" content="http://www.4e00.com/linux/2008/10/11/utf-8-unicode-relationship.html">
 <meta property="og:site_name" content="一">
-<meta property="og:description" content="UTF-8是UNICODE的实现方式之一。 UTF-8最大的一个特点，就是它是一种变长的编码方式。它可以使用1~4个字节表示一个符号，根据不同的符号而变化字节长度。 UTF-8的编码规则很简单，只有二条：  对于单字节的符号，字节的第一位设为0，后面7位为这个符号的UNICODE码。因此对于英语字母，UTF-8编码和ASCII码是相同的。 对于n字节的符号（n&amp;gt;1），第一个字节的前n位都设为">
+<meta property="og:description" content="UNICODE 基本知识Unicode 及编码方式概述，这篇文章写得非常详细，不明白的细节可以参考那篇文章。 UTF-8 编码UTF-8是UNICODE的实现方式之一。 UTF-8最大的一个特点，就是它是一种变长的编码方式。它可以使用 1~4 个字节表示一个符号，根据不同的符号而变化字节长度。 UTF-8的编码规则很简单，只有二条：  对于单字节的符号，字节的第一位设为0，后面 7 位为这个符号的">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://www.4e00.com/blog/img/linux/utf-8-encoding-scheme.png">
-<meta property="og:updated_time" content="2017-10-16T01:54:04.726Z">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/utf-8-encoding-scheme.png">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.050Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="utf-8和unicode之间相互转换">
-<meta name="twitter:description" content="UTF-8是UNICODE的实现方式之一。 UTF-8最大的一个特点，就是它是一种变长的编码方式。它可以使用1~4个字节表示一个符号，根据不同的符号而变化字节长度。 UTF-8的编码规则很简单，只有二条：  对于单字节的符号，字节的第一位设为0，后面7位为这个符号的UNICODE码。因此对于英语字母，UTF-8编码和ASCII码是相同的。 对于n字节的符号（n&amp;gt;1），第一个字节的前n位都设为">
-<meta name="twitter:image" content="https://www.4e00.com/blog/img/linux/utf-8-encoding-scheme.png">
+<meta name="twitter:title" content="utf-8 和 unicode 之间相互转换">
+<meta name="twitter:description" content="UNICODE 基本知识Unicode 及编码方式概述，这篇文章写得非常详细，不明白的细节可以参考那篇文章。 UTF-8 编码UTF-8是UNICODE的实现方式之一。 UTF-8最大的一个特点，就是它是一种变长的编码方式。它可以使用 1~4 个字节表示一个符号，根据不同的符号而变化字节长度。 UTF-8的编码规则很简单，只有二条：  对于单字节的符号，字节的第一位设为0，后面 7 位为这个符号的">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/linux/utf-8-encoding-scheme.png">
 
 
 
@@ -87,9 +87,9 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2008/10/11/utf-8-unicode-relationship.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2008/10/11/utf-8-unicode-relationship.html">
 
-  <title> utf-8和unicode之间相互转换 | 一 </title>
+  <title> utf-8 和 unicode 之间相互转换 | 一 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="default">
@@ -118,7 +118,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -141,7 +141,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -151,7 +151,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -159,7 +159,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -186,7 +186,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -197,7 +197,7 @@
             
             
               
-                utf-8和unicode之间相互转换
+                utf-8 和 unicode 之间相互转换
               
             
           </h1>
@@ -215,14 +215,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -256,19 +256,20 @@
       
 
       
-        <p><code>UTF-8</code>是<code>UNICODE</code>的实现方式之一。</p>
-<p><code>UTF-8</code>最大的一个特点，就是它是一种变长的编码方式。它可以使用1~4个字节表示一个符号，根据不同的符号而变化字节长度。</p>
+        <h2 id="UNICODE-基本知识"><a href="#UNICODE-基本知识" class="headerlink" title="UNICODE 基本知识"></a>UNICODE 基本知识</h2><p><a href="https://www.ibm.com/developerworks/cn/java/unicode-programming-language/index.html" target="_blank" rel="noopener">Unicode 及编码方式概述</a>，这篇文章写得非常详细，不明白的细节可以参考那篇文章。</p>
+<h2 id="UTF-8-编码"><a href="#UTF-8-编码" class="headerlink" title="UTF-8 编码"></a>UTF-8 编码</h2><p><code>UTF-8</code>是<code>UNICODE</code>的实现方式之一。</p>
+<p><code>UTF-8</code>最大的一个特点，就是它是一种变长的编码方式。它可以使用 1~4 个字节表示一个符号，根据不同的符号而变化字节长度。</p>
 <p><code>UTF-8</code>的编码规则很简单，只有二条：</p>
 <ol>
-<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的UNICODE码。因此对于英语字母，UTF-8编码和ASCII码是相同的。</li>
-<li>对于n字节的符号（n&gt;1），第一个字节的前n位都设为1，第n+1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的UNICODE码。</li>
+<li>对于单字节的符号，字节的第一位设为<code>0</code>，后面 <code>7</code> 位为这个符号的 UNICODE 码。因此对于英语字母，UTF-8 编码和 ASCII 码是相同的，因为首位是<code>0</code>，所以只能表示<code>U+0000</code>到<code>U+007F</code>范围内(十进制为<code>0 ~ 127</code>)。</li>
+<li>对于 n 字节的符号（<code>n&gt;1</code>），第一个字节的前 n 位都设为<code>1</code>，第 n+1 位设为<code>0</code>，<strong>后面</strong>字节的<strong>前两位</strong>一律设为<code>10</code>。剩下的没有提及的二进制位，全部为这个符号的 UNICODE 码。</li>
 </ol>
-<p>下表总结了编码规则，字母x表示可用编码的位。</p>
+<p>下表总结了编码规则，字母 x 表示可用编码的位。</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">unicode符号范围</th>
-<th style="text-align:left">utf-8编码方式</th>
+<th style="text-align:left">unicode 符号范围</th>
+<th style="text-align:left">utf-8 编码方式</th>
 </tr>
 </thead>
 <tbody>
@@ -278,36 +279,48 @@
 </tr>
 <tr>
 <td style="text-align:left">0000 0000-0000 007F</td>
-<td style="text-align:left">0xxxxxxx</td>
+<td style="text-align:left"><code>0xxxxxxx</code></td>
 </tr>
 <tr>
 <td style="text-align:left">0000 0080-0000 07FF</td>
-<td style="text-align:left">110xxxxx 10xxxxxx</td>
+<td style="text-align:left"><code>110xxxxx 10xxxxxx</code></td>
 </tr>
 <tr>
 <td style="text-align:left">0000 0800-0000 FFFF</td>
-<td style="text-align:left">1110xxxx 10xxxxxx 10xxxxxx</td>
+<td style="text-align:left"><code>1110xxxx 10xxxxxx 10xxxxxx</code></td>
 </tr>
 <tr>
 <td style="text-align:left">0001 0000-0010 FFFF</td>
-<td style="text-align:left">11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+<td style="text-align:left"><code>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</code></td>
 </tr>
 </tbody>
 </table>
-<p>从上表可以看到首字节前几位可以看出这个<code>UNICODE</code>字符的长度，如<code>110</code>开头的则说明这个字符是<code>2BYTE</code>的<code>UNICODE</code>字符，<code>1110</code>开头则是<code>3BYTE</code>的<code>UNICODE</code>字符，需要注意的是单字节字符第<code>1</code>位设置为<code>0</code>，而不是<code>10</code>，而<code>10</code>开始的字节被用于2个字节长度以上的<code>UNICODE</code>字符的非首字节上，所以这里也可以看到<code>UTF-8</code>编码设计非常巧妙。<br>以汉字<code>严</code>为例，演示如何实现<code>UTF-8</code>编码。</p>
-<p>已知<code>严</code>的UNICODE是<code>4e25</code>（100111000100101），根据上表，可以发现<code>4e25</code>处在第三行的范围内（0000 0800-0000 ffff），因此&quot;严&quot;的<code>UTF-8</code>编码需要三个字节，即格式是&quot;1110xxxx 10xxxxxx 10xxxxxx&quot;。然后，从&quot;严&quot;的最后一个二进制位开始，依次从后向前填入格式中的<code>x</code>，多出的位补<code>0</code>。这样就得到了，&quot;严&quot;的<code>UTF-8</code>编码是 &quot;11100100 10111000 10100101&quot;，转换成十六进制就是<code>e4b8a5</code>。</p>
-<p>在firebug中测试中文&quot;胡&quot;字：</p>
+<p>从上表可以看到：</p>
+<ol>
+<li>首字节前几位可以看出这个<code>UNICODE</code>字符的长度，如：<ol>
+<li><code>110</code>开头的则说明这个字符是<code>2BYTE</code>的<code>UNICODE</code>字符；</li>
+<li><code>1110</code>开头则是<code>3BYTE</code>的<code>UNICODE</code>字符；</li>
+</ol>
+</li>
+<li>需要注意的是<code>单字节</code>字符第一位上是<code>0</code>，而不是<code>10</code>；</li>
+<li>而<code>10</code>开始的字节被用于 2 个字节长度以上的<code>UNICODE</code>字符的非首字节上。</li>
+</ol>
+<p>所以从<code>0</code>，<code>10</code>，<code>110</code>，<code>1110</code>这些字节点的设计利用上可以看到<code>UTF-8</code>编码设计非常巧妙。</p>
+<p>以汉字<code>严</code>为例，演示如何实现<code>UTF-8</code>编码。</p>
+<p>已知<code>严</code>的 UNICODE 是<code>4e25</code>（100111000100101），根据上表，可以发现<code>4e25</code>处在第三行的范围内（0000 0800-0000 ffff），因此&quot;严&quot;的<code>UTF-8</code>编码需要三个字节，即格式是&quot;1110xxxx 10xxxxxx 10xxxxxx&quot;。然后，从&quot;严&quot;的最后一个二进制位开始，依次从后向前填入格式中的<code>x</code>，多出的位补<code>0</code>。这样就得到了，&quot;严&quot;的<code>UTF-8</code>编码是 &quot;11100100 10111000 10100101&quot;，转换成十六进制就是<code>e4b8a5</code>。</p>
+<p>在 firebug 中测试中文&quot;胡&quot;字：</p>
 <a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="built_in">encodeURI</span>(<span class="string">'胡'</span>));</div><div class="line"><span class="comment">// "%E8%83%A1"</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'胡'</span>.charCodeAt().toString(<span class="number">16</span>));</div><div class="line"><span class="comment">// "80e1"</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'胡'</span>.charCodeAt().toString(<span class="number">2</span>));</div><div class="line"><span class="comment">// "1000000011100001"</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">'111010001000001110100001'</span>, <span class="number">2</span>));</div><div class="line"><span class="comment">// 15238049</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">'111010001000001110100001'</span>, <span class="number">2</span>).toString(<span class="number">16</span>));</div><div class="line"><span class="comment">// "e883a1"</span></div></pre></td></tr></table></figure>
-<p>其中将<code>1000000011100001</code>对应位置补上<code>110</code>或者<code>10</code>，生成unicode二进制值<code>111010001000001110100001</code>，反过来从unicode转到utf-8只要移除对应位置上的<code>110</code>和<code>10</code>即可得到utf-8的二进制值。</p>
-<h2 id="关于BOM和字节序"><a href="#关于BOM和字节序" class="headerlink" title="关于BOM和字节序"></a>关于BOM和字节序</h2><p>虽然不是标准，但许多Windows程序（包括Windows记事本）在<code>UTF-8</code>编码的文件的开首加入一段字节串<code>EF BB BF</code>。这是字节序掩码<code>U+FEFF</code>的<code>UTF-8</code>编码结果。<br>而POSIX系统上明确不建议使用<code>字节序掩码</code>，即<code>BOM</code>（byte order mask），这会与<code>bash</code>脚本中开头的bashbang（<code>#!</code>）有冲突，影响到脚本执行。</p>
-<p>字节<code>0xFE</code>和<code>0xFF</code>在<code>UTF-8</code>编码中从未用到，同时，<code>UTF-8</code>以字节为编码单元，它的字节顺序在所有系统中都是一样的，没有字节序的问题，也因此它实际上并不需要<a href="https://zh.m.wikipedia.org/wiki/%E4%BD%8D%E5%85%83%E7%B5%84%E9%A0%86%E5%BA%8F%E8%A8%98%E8%99%9F" target="_blank" rel="external">BOM: byte-order-mark</a>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">encodeURI</span>(<span class="string">'胡'</span>));</span><span class="line"><span class="comment">// "%E8%83%A1"</span></span><span class="line"><span class="built_in">console</span>.log(<span class="string">'胡'</span>.charCodeAt().toString(<span class="number">16</span>));</span><span class="line"><span class="comment">// "80e1"</span></span><span class="line"><span class="built_in">console</span>.log(<span class="string">'胡'</span>.charCodeAt().toString(<span class="number">2</span>));</span><span class="line"><span class="comment">// "1000000011100001"</span></span><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">'111010001000001110100001'</span>, <span class="number">2</span>));</span><span class="line"><span class="comment">// 15238049</span></span><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">'111010001000001110100001'</span>, <span class="number">2</span>).toString(<span class="number">16</span>));</span><span class="line"><span class="comment">// "e883a1"</span></span></pre></td></tr></table></figure>
+<p>其中将<code>1000000011100001</code>对应位置补上<code>110</code>或者<code>10</code>，生成 unicode 二进制值<code>111010001000001110100001</code>，反过来从 unicode 转到 utf-8 只要移除对应位置上的<code>110</code>和<code>10</code>即可得到 utf-8 的二进制值。</p>
+<h2 id="关于-BOM-和字节序"><a href="#关于-BOM-和字节序" class="headerlink" title="关于 BOM 和字节序"></a>关于 BOM 和字节序</h2><p>虽然不是标准，但许多 Windows 程序（包括 Windows 记事本）在<code>UTF-8</code>编码的文件的开首加入一段字节串<code>EF BB BF</code>。这是字节序掩码<code>U+FEFF</code>的<code>UTF-8</code>编码结果。<br>而 POSIX 系统上明确不建议使用<code>字节序掩码</code>，即<code>BOM</code>（byte order mask），这会与<code>bash</code>脚本中开头的 bashbang（<code>#!</code>）有冲突，影响到脚本执行。</p>
+<p>字节<code>0xFE</code>和<code>0xFF</code>在<code>UTF-8</code>编码中从未用到，同时，<code>UTF-8</code>以字节为编码单元，它的字节顺序在所有系统中都是一样的，没有字节序的问题，也因此它实际上并不需要<a href="https://zh.m.wikipedia.org/wiki/%E4%BD%8D%E5%85%83%E7%B5%84%E9%A0%86%E5%BA%8F%E8%A8%98%E8%99%9F" target="_blank" rel="noopener">BOM: byte-order-mark</a>。</p>
 <h2 id="UTF-8-Encoding-Scheme"><a href="#UTF-8-Encoding-Scheme" class="headerlink" title="UTF-8 Encoding Scheme"></a>UTF-8 Encoding Scheme</h2><img src="/blog/img/linux/utf-8-encoding-scheme.png" title="[UTF-8 Encoding Scheme]">
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://yuweijun.blogspot.com/2008/06/unicode.html" target="_blank" rel="external">http://yuweijun.blogspot.com/2008/06/unicode.html</a></li>
-<li><a href="http://yuweijun.blogspot.com/2008/08/unicode-and-html-entities-in-javascript.html" target="_blank" rel="external">http://yuweijun.blogspot.com/2008/08/unicode-and-html-entities-in-javascript.html</a></li>
-<li><a href="http://dreamstone.iteye.com/blog/77939" target="_blank" rel="external">http://dreamstone.iteye.com/blog/77939</a></li>
-<li><a href="https://zh.m.wikipedia.org/zh-cn/UTF-8" target="_blank" rel="external">UTF-8</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/unicode-programming-language/index.html" target="_blank" rel="noopener">Unicode 及编码方式概述</a></li>
+<li><a href="http://yuweijun.blogspot.com/2008/06/unicode.html" target="_blank" rel="noopener">http://yuweijun.blogspot.com/2008/06/unicode.html</a></li>
+<li><a href="http://yuweijun.blogspot.com/2008/08/unicode-and-html-entities-in-javascript.html" target="_blank" rel="noopener">http://yuweijun.blogspot.com/2008/08/unicode-and-html-entities-in-javascript.html</a></li>
+<li><a href="http://dreamstone.iteye.com/blog/77939" target="_blank" rel="noopener">http://dreamstone.iteye.com/blog/77939</a></li>
+<li><a href="https://zh.m.wikipedia.org/zh-cn/UTF-8" target="_blank" rel="noopener">UTF-8</a></li>
 </ol>
 
       
@@ -335,7 +348,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/vim/2008/10/11/howto-set-width-height-font-fontsize-of-vim-window.html" rel="next" title="howto set width/height/font/fontsize of vim window">
-                上一篇：howto set width/height/font/fontsize of vim window
+                <i class="fa fa-chevron-left"></i>
+                howto set width/height/font/fontsize of vim window
               </a>
             
           </div>
@@ -343,7 +357,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/ruby/2008/10/12/twostring-has-the-same-md5-value.html" rel="prev" title="md5值相同的二个字符串">
-                下一篇：md5值相同的二个字符串
+                <i class="fa fa-chevron-right"></i>
+                md5值相同的二个字符串
               </a>
             
           </div>
@@ -392,7 +407,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -403,16 +418,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -478,7 +491,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于BOM和字节序"><span class="nav-number">1.</span> <span class="nav-text">关于BOM和字节序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UTF-8-Encoding-Scheme"><span class="nav-number">2.</span> <span class="nav-text">UTF-8 Encoding Scheme</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#UNICODE-基本知识"><span class="nav-number">1.</span> <span class="nav-text">UNICODE 基本知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UTF-8-编码"><span class="nav-number">2.</span> <span class="nav-text">UTF-8 编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-BOM-和字节序"><span class="nav-number">3.</span> <span class="nav-text">关于 BOM 和字节序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UTF-8-Encoding-Scheme"><span class="nav-number">4.</span> <span class="nav-text">UTF-8 Encoding Scheme</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
             
           </div>
         </section>
@@ -494,10 +507,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

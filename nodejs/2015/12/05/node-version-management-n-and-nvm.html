@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="nodejs版本更新非常快，并且不能完全兼容之前的第3方开发者开发的类库，有很多类库需要在指定的nodejs版本环境中运行，如果系统中只有一个全局的nodejs环境就会产生非常多的错误，而且很难解决，这时可以使用n和nvm这样的nodejs版本管理器来处理。 nn是nodejs的一个模块，作者是TJ Holowaychuk（鼎鼎大名的Express框架作者），它的理念就是简单：no subshel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nodejs版本管理器n和nvm">
-<meta property="og:url" content="https://www.4e00.com/nodejs/2015/12/05/node-version-management-n-and-nvm.html">
+<meta property="og:url" content="http://www.4e00.com/nodejs/2015/12/05/node-version-management-n-and-nvm.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="nodejs版本更新非常快，并且不能完全兼容之前的第3方开发者开发的类库，有很多类库需要在指定的nodejs版本环境中运行，如果系统中只有一个全局的nodejs环境就会产生非常多的错误，而且很难解决，这时可以使用n和nvm这样的nodejs版本管理器来处理。 nn是nodejs的一个模块，作者是TJ Holowaychuk（鼎鼎大名的Express框架作者），它的理念就是简单：no subshel">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.100Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nodejs版本管理器n和nvm">
 <meta name="twitter:description" content="nodejs版本更新非常快，并且不能完全兼容之前的第3方开发者开发的类库，有很多类库需要在指定的nodejs版本环境中运行，如果系统中只有一个全局的nodejs环境就会产生非常多的错误，而且很难解决，这时可以使用n和nvm这样的nodejs版本管理器来处理。 nn是nodejs的一个模块，作者是TJ Holowaychuk（鼎鼎大名的Express框架作者），它的理念就是简单：no subshel">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/nodejs/2015/12/05/node-version-management-n-and-nvm.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/nodejs/2015/12/05/node-version-management-n-and-nvm.html">
 
   <title> nodejs版本管理器n和nvm | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/nodejs/" itemprop="url" rel="index">
                     <span itemprop="name">nodejs</span>
                   </a>
@@ -257,25 +257,25 @@
         <p><code>nodejs</code>版本更新非常快，并且不能完全兼容之前的第3方开发者开发的类库，有很多类库需要在指定的<code>nodejs</code>版本环境中运行，如果系统中只有一个全局的<code>nodejs</code>环境就会产生非常多的错误，而且很难解决，这时可以使用<code>n</code>和<code>nvm</code>这样的<code>nodejs</code>版本管理器来处理。</p>
 <h2 id="n"><a href="#n" class="headerlink" title="n"></a>n</h2><p><code>n</code>是nodejs的一个模块，作者是<code>TJ Holowaychuk</code>（鼎鼎大名的<code>Express</code>框架作者），它的理念就是<code>简单</code>：<code>no subshells, no profile setup, no convoluted api, just simple</code>。</p>
 <h3 id="安装n"><a href="#安装n" class="headerlink" title="安装n"></a>安装n</h3><a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">npm</span> install -g n</div></pre></td></tr></table></figure>
-<h3 id="用n安装不同版本的nodejs"><a href="#用n安装不同版本的nodejs" class="headerlink" title="用n安装不同版本的nodejs"></a>用n安装不同版本的nodejs</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> 0.8.14</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> 0.8.17</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> 0.9.6</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> latest</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> stable</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">npm</span> install -g n</span></pre></td></tr></table></figure>
+<h3 id="用n安装不同版本的nodejs"><a href="#用n安装不同版本的nodejs" class="headerlink" title="用n安装不同版本的nodejs"></a>用n安装不同版本的nodejs</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> 0.8.14</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> 0.8.17</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> 0.9.6</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> latest</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> stable</span></pre></td></tr></table></figure>
 <h3 id="指定nodejs版本"><a href="#指定nodejs版本" class="headerlink" title="指定nodejs版本"></a>指定nodejs版本</h3><p>输入<code>n</code>命令后，用箭头选到对应的版本后，回车确认，或者是按<code>CTRL+C</code>取消。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span></div><div class="line"></div><div class="line"><span class="comment">#   0.8.14</span></div><div class="line"><span class="comment"># ο 0.8.17</span></div><div class="line"><span class="comment">#   0.9.6</span></div></pre></td></tr></table></figure>
-<h3 id="删除nodejs版本"><a href="#删除nodejs版本" class="headerlink" title="删除nodejs版本"></a>删除nodejs版本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> rm 0.9.4 v0.10.0</div><div class="line"><span class="comment"># or</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> - 0.9.4</div></pre></td></tr></table></figure>
-<h3 id="指定版本nodejs运行"><a href="#指定版本nodejs运行" class="headerlink" title="指定版本nodejs运行"></a>指定版本nodejs运行</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> bin 0.9.4</div><div class="line"><span class="comment"># /usr/local/n/versions/0.9.4/bin/node</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> use 0.9.4 some.js</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> as 0.9.4 --debug some.js</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span></span><span class="line"></span><span class="line"><span class="comment">#   0.8.14</span></span><span class="line"><span class="comment"># ο 0.8.17</span></span><span class="line"><span class="comment">#   0.9.6</span></span></pre></td></tr></table></figure>
+<h3 id="删除nodejs版本"><a href="#删除nodejs版本" class="headerlink" title="删除nodejs版本"></a>删除nodejs版本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> rm 0.9.4 v0.10.0</span><span class="line"><span class="comment"># or</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> - 0.9.4</span></pre></td></tr></table></figure>
+<h3 id="指定版本nodejs运行"><a href="#指定版本nodejs运行" class="headerlink" title="指定版本nodejs运行"></a>指定版本nodejs运行</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> bin 0.9.4</span><span class="line"><span class="comment"># /usr/local/n/versions/0.9.4/bin/node</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> use 0.9.4 some.js</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">n</span> as 0.9.4 --debug some.js</span></pre></td></tr></table></figure>
 <h3 id="bad-external-relocation-length"><a href="#bad-external-relocation-length" class="headerlink" title="bad external relocation length"></a>bad external relocation length</h3><p>在用<code>n</code>指令安装某个<code>node</code>版本过程中，如出现<code>dyld:bad external relocation length</code>这样的问题，可以使用<code>brew doctor</code>查看原因，按说明解决。</p>
 <p>或者是使用<code>n latest</code>指令安装一个最新版本，并将之前出问题的版本删除。</p>
 <h2 id="nvm"><a href="#nvm" class="headerlink" title="nvm"></a>nvm</h2><p><code>nvm</code>全称<code>node version manager</code>，完全基于bash shell实现。</p>
-<h3 id="安装nvm"><a href="#安装nvm" class="headerlink" title="安装nvm"></a>安装nvm</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">curl</span> -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash</div></pre></td></tr></table></figure>
-<h3 id="使用nvm安装不同版本的nodejs"><a href="#使用nvm安装不同版本的nodejs" class="headerlink" title="使用nvm安装不同版本的nodejs"></a>使用nvm安装不同版本的nodejs</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> install 5.0</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> install 5.1.0</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> install 0.12.2</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> install 0.10.25</div></pre></td></tr></table></figure>
-<h3 id="查看所有nvm管理的nodejs版本"><a href="#查看所有nvm管理的nodejs版本" class="headerlink" title="查看所有nvm管理的nodejs版本"></a>查看所有nvm管理的nodejs版本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> ls</div><div class="line"><span class="comment">#        v0.10.25</span></div><div class="line"><span class="comment">#         v0.12.2</span></div><div class="line"><span class="comment"># -&gt;       system</span></div><div class="line"><span class="comment"># node -&gt; stable (-&gt; v0.12.2) (default)</span></div><div class="line"><span class="comment"># stable -&gt; 0.12 (-&gt; v0.12.2) (default)</span></div><div class="line"><span class="comment"># iojs -&gt; N/A (default)</span></div></pre></td></tr></table></figure>
-<h3 id="使用nvm指定nodejs版本"><a href="#使用nvm指定nodejs版本" class="headerlink" title="使用nvm指定nodejs版本"></a>使用nvm指定nodejs版本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> use 5.0</div></pre></td></tr></table></figure>
-<h3 id="使用指定的nodejs版本来运行命令"><a href="#使用指定的nodejs版本来运行命令" class="headerlink" title="使用指定的nodejs版本来运行命令"></a>使用指定的nodejs版本来运行命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> run system --version</div><div class="line"></div><div class="line"><span class="comment"># Running node system (npm v3.3.12)</span></div><div class="line"><span class="comment"># v5.1.0</span></div></pre></td></tr></table></figure>
-<h3 id="在一个subshell中运行指定版本的nodejs命令"><a href="#在一个subshell中运行指定版本的nodejs命令" class="headerlink" title="在一个subshell中运行指定版本的nodejs命令"></a>在一个subshell中运行指定版本的nodejs命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> <span class="built_in">exec</span> v0.12.2 node --version</div><div class="line"></div><div class="line"><span class="comment"># Running node v0.12.2 (npm v3.3.12)</span></div><div class="line"><span class="comment"># v0.12.2</span></div></pre></td></tr></table></figure>
+<h3 id="安装nvm"><a href="#安装nvm" class="headerlink" title="安装nvm"></a>安装nvm</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">curl</span> -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash</span></pre></td></tr></table></figure>
+<h3 id="使用nvm安装不同版本的nodejs"><a href="#使用nvm安装不同版本的nodejs" class="headerlink" title="使用nvm安装不同版本的nodejs"></a>使用nvm安装不同版本的nodejs</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> install 5.0</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> install 5.1.0</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> install 0.12.2</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> install 0.10.25</span></pre></td></tr></table></figure>
+<h3 id="查看所有nvm管理的nodejs版本"><a href="#查看所有nvm管理的nodejs版本" class="headerlink" title="查看所有nvm管理的nodejs版本"></a>查看所有nvm管理的nodejs版本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> ls</span><span class="line"><span class="comment">#        v0.10.25</span></span><span class="line"><span class="comment">#         v0.12.2</span></span><span class="line"><span class="comment"># -&gt;       system</span></span><span class="line"><span class="comment"># node -&gt; stable (-&gt; v0.12.2) (default)</span></span><span class="line"><span class="comment"># stable -&gt; 0.12 (-&gt; v0.12.2) (default)</span></span><span class="line"><span class="comment"># iojs -&gt; N/A (default)</span></span></pre></td></tr></table></figure>
+<h3 id="使用nvm指定nodejs版本"><a href="#使用nvm指定nodejs版本" class="headerlink" title="使用nvm指定nodejs版本"></a>使用nvm指定nodejs版本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> use 5.0</span></pre></td></tr></table></figure>
+<h3 id="使用指定的nodejs版本来运行命令"><a href="#使用指定的nodejs版本来运行命令" class="headerlink" title="使用指定的nodejs版本来运行命令"></a>使用指定的nodejs版本来运行命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> run system --version</span><span class="line"></span><span class="line"><span class="comment"># Running node system (npm v3.3.12)</span></span><span class="line"><span class="comment"># v5.1.0</span></span></pre></td></tr></table></figure>
+<h3 id="在一个subshell中运行指定版本的nodejs命令"><a href="#在一个subshell中运行指定版本的nodejs命令" class="headerlink" title="在一个subshell中运行指定版本的nodejs命令"></a>在一个subshell中运行指定版本的nodejs命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nvm</span> <span class="built_in">exec</span> v0.12.2 node --version</span><span class="line"></span><span class="line"><span class="comment"># Running node v0.12.2 (npm v3.3.12)</span></span><span class="line"><span class="comment"># v0.12.2</span></span></pre></td></tr></table></figure>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://github.com/visionmedia/n" target="_blank" rel="external">https://github.com/visionmedia/n</a></li>
-<li><a href="https://github.com/creationix/nvm" target="_blank" rel="external">https://github.com/creationix/nvm</a></li>
-<li><a href="http://it.taocms.org/03/3079.htm" target="_blank" rel="external">利用n和nvm管理Node的版本</a></li>
+<li><a href="https://github.com/visionmedia/n" target="_blank" rel="noopener">https://github.com/visionmedia/n</a></li>
+<li><a href="https://github.com/creationix/nvm" target="_blank" rel="noopener">https://github.com/creationix/nvm</a></li>
+<li><a href="http://it.taocms.org/03/3079.htm" target="_blank" rel="noopener">利用n和nvm管理Node的版本</a></li>
 </ol>
 
       
@@ -303,7 +303,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/javascript/2015/12/01/json-parse-stringify.html" rel="next" title="javascript中json对象及其方法说明">
-                上一篇：javascript中json对象及其方法说明
+                <i class="fa fa-chevron-left"></i>
+                javascript中json对象及其方法说明
               </a>
             
           </div>
@@ -311,7 +312,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2015/12/06/simple-ssh-proxy-through-socks5.html" rel="prev" title="一个命令建立socks5代理服务器">
-                下一篇：一个命令建立socks5代理服务器
+                <i class="fa fa-chevron-right"></i>
+                一个命令建立socks5代理服务器
               </a>
             
           </div>
@@ -360,7 +362,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -371,16 +373,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -462,10 +462,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

@@ -1,0 +1,825 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="th:nth-of-type(1) { width: 30%; }  ALT key shortcuts   快捷键 说明     Alt + b 按单词后移（左向）   Alt + c 从光标处更改为首字母大写的单词   Alt + d 从光标处删除至字尾   Alt + f 按单词前移（右向）   Alt + l 从光标处更改为全部小写的单词   Alt + t 交换光标处和之前的单词   A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux bash shell shortcuts cheatsheet">
+<meta property="og:url" content="http://www.4e00.com/linux/2019/03/01/linux-bash-shell-shortcuts-cheatsheet.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="th:nth-of-type(1) { width: 30%; }  ALT key shortcuts   快捷键 说明     Alt + b 按单词后移（左向）   Alt + c 从光标处更改为首字母大写的单词   Alt + d 从光标处删除至字尾   Alt + f 按单词前移（右向）   Alt + l 从光标处更改为全部小写的单词   Alt + t 交换光标处和之前的单词   A">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/command-line-shortcuts.png">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.140Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux bash shell shortcuts cheatsheet">
+<meta name="twitter:description" content="th:nth-of-type(1) { width: 30%; }  ALT key shortcuts   快捷键 说明     Alt + b 按单词后移（左向）   Alt + c 从光标处更改为首字母大写的单词   Alt + d 从光标处删除至字尾   Alt + f 按单词前移（右向）   Alt + l 从光标处更改为全部小写的单词   Alt + t 交换光标处和之前的单词   A">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/linux/command-line-shortcuts.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2019/03/01/linux-bash-shell-shortcuts-cheatsheet.html">
+
+  <title> linux bash shell shortcuts cheatsheet | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux bash shell shortcuts cheatsheet
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-03-01T10:37:48+08:00" content="2019-03-01">
+              2019-03-01
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <style>th:nth-of-type(1) { width: 30%; }</style>
+
+<h2 id="ALT-key-shortcuts"><a href="#ALT-key-shortcuts" class="headerlink" title="ALT key shortcuts"></a>ALT key shortcuts</h2><table>
+<thead>
+<tr>
+<th style="text-align:right">快捷键</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right"><kbd>Alt + b</kbd></td>
+<td style="text-align:left">按单词后移（左向）</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Alt + c</kbd></td>
+<td style="text-align:left">从光标处更改为首字母大写的单词</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Alt + d</kbd></td>
+<td style="text-align:left">从光标处删除至字尾</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Alt + f</kbd></td>
+<td style="text-align:left">按单词前移（右向）</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Alt + l</kbd></td>
+<td style="text-align:left">从光标处更改为全部小写的单词</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Alt + t</kbd></td>
+<td style="text-align:left">交换光标处和之前的单词</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Alt + u</kbd></td>
+<td style="text-align:left">从光标处更改为全部大写的单词</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Alt + .</kbd></td>
+<td style="text-align:left">粘贴上一条命令的最后一个参数</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Alt + Backspace</kbd></td>
+<td style="text-align:left">与<code>Ctrl + w</code>相似，但分隔符略有不同</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Alt + [0-9] Alt + .</kbd></td>
+<td style="text-align:left">粘贴上一条命令的第[0-9]个参数</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h2 id="CTRL-key-shortcuts"><a href="#CTRL-key-shortcuts" class="headerlink" title="CTRL key shortcuts"></a>CTRL key shortcuts</h2><table>
+<thead>
+<tr>
+<th style="text-align:right">快捷键</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + a</kbd></td>
+<td style="text-align:left">移到命令行首</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + b</kbd></td>
+<td style="text-align:left">按字符后移(左向)</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + c</kbd></td>
+<td style="text-align:left">终止命令</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + d</kbd></td>
+<td style="text-align:left">删除光标处的字符</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + e</kbd></td>
+<td style="text-align:left">移到命令行尾</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + f</kbd></td>
+<td style="text-align:left">按字符前移(右向)</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + g</kbd></td>
+<td style="text-align:left">从历史搜索模式(<code>Ctrl + r</code>)退出</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + h</kbd></td>
+<td style="text-align:left">删除光标前的字符</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + j</kbd></td>
+<td style="text-align:left">与回车键<code>Enter</code>相同</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + k</kbd></td>
+<td style="text-align:left">从光标处删除至命令行尾</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + l</kbd></td>
+<td style="text-align:left">清屏</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + n</kbd></td>
+<td style="text-align:left">历史中的下一条命令，要先使用<code>Ctrl + p</code>后才有用</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + m</kbd></td>
+<td style="text-align:left">与回车键<code>Enter</code>相同</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + o</kbd></td>
+<td style="text-align:left">执行当前命令，并选择上一条命令</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + p</kbd></td>
+<td style="text-align:left">历史中的上一条命令</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + q</kbd></td>
+<td style="text-align:left">允许屏幕继续输出，在使用<code>Ctrl + s</code>锁屏之后，使用此组合键解锁屏幕</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + r</kbd></td>
+<td style="text-align:left">逆向搜索命令历史，连续按<code>Ctrl + r</code>可以匹配更早之前的命令(fzf)</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + s</kbd></td>
+<td style="text-align:left">阻止屏幕输出，如<code>tail -f</code>命令输出日志时</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + t</kbd></td>
+<td style="text-align:left">交换光标处和之前的字符</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + v</kbd></td>
+<td style="text-align:left">标记开始输入特殊字符，如<code>Ctrl + v Ctrl + m</code></td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + u</kbd></td>
+<td style="text-align:left">从光标处删除至命令行首</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + w</kbd></td>
+<td style="text-align:left">从光标处删除至字首</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + xx</kbd></td>
+<td style="text-align:left">在命令行首和光标之间移动(需要连击<code>x</code>键二下)</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + x</kbd> <kbd>Ctrl + e</kbd></td>
+<td style="text-align:left">调出系统默认编辑器编辑当前输入的命令，退出编辑器时，命令执行</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + y</kbd></td>
+<td style="text-align:left">在光标后粘贴<code>Ctrl + w</code>或<code>Ctrl + k</code>删除的内容</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + z</kbd></td>
+<td style="text-align:left">挂起命令</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + [</kbd></td>
+<td style="text-align:left">与<code>Esc</code>键相同</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + ]</kbd></td>
+<td style="text-align:left">从当前光标往后搜索字符串，用于快速移动到该字符串</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + Alt + ]</kbd></td>
+<td style="text-align:left">从当前光标往前搜索字符串，用于快速移动到该字符串</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + _ </kbd></td>
+<td style="text-align:left">撤销输入，需要按下<code>Shift</code>键</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Miscellaneous"><a href="#Miscellaneous" class="headerlink" title="Miscellaneous"></a>Miscellaneous</h2><table>
+<thead>
+<tr>
+<th style="text-align:right">快捷键</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right"><kbd>ESC + t</kbd></td>
+<td style="text-align:left">交换最后二个单词的位置</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Ctrl + Insert</kbd></td>
+<td style="text-align:left">复制</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Shift + Insert</kbd></td>
+<td style="text-align:left">粘贴</td>
+</tr>
+<tr>
+<td style="text-align:right"><kbd>Enter</kbd> <kbd>~</kbd> <kbd>.</kbd></td>
+<td style="text-align:left">退出僵死或者中断的SSH连接</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Bang-命令"><a href="#Bang-命令" class="headerlink" title="Bang (!) 命令"></a>Bang (!) 命令</h2><p>这组不是快捷键，只是命令行中方便添加之前命令中参数到当前命令中，主要常用就是<code>sudo !!</code>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">! 命令</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right"><code>!!</code></td>
+<td style="text-align:left">执行上一条命令</td>
+</tr>
+<tr>
+<td style="text-align:right"><code>!blah</code></td>
+<td style="text-align:left">执行最近的以<code>blah</code>开头的命令，如<code>!ls</code></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>!blah:p</code></td>
+<td style="text-align:left">仅打印输出，而不执行</td>
+</tr>
+<tr>
+<td style="text-align:right"><code>!$</code></td>
+<td style="text-align:left">上一条命令的最后一个参数，与<code>Alt + .</code>相同</td>
+</tr>
+<tr>
+<td style="text-align:right"><code>!$:p</code></td>
+<td style="text-align:left">打印输出<code>!$</code>的内容</td>
+</tr>
+<tr>
+<td style="text-align:right"><code>!*</code></td>
+<td style="text-align:left">上一条命令的所有参数</td>
+</tr>
+<tr>
+<td style="text-align:right"><code>!*:p</code></td>
+<td style="text-align:left">打印输出<code>!*</code>的内容</td>
+</tr>
+<tr>
+<td style="text-align:right"><code>^blah</code></td>
+<td style="text-align:left">删除上一条命令中的<code>blah</code></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>^blah^foo</code></td>
+<td style="text-align:left">将上一条命令中的<code>blah</code>替换为<code>foo</code></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>^blah^foo^</code></td>
+<td style="text-align:left">将上一条命令中所有的<code>blah</code>都替换为<code>foo</code></td>
+</tr>
+</tbody>
+</table>
+<p>Bash默认为emacs编辑模式，可通过以下命令设置：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">set</span> -o emacs</span></pre></td></tr></table></figure>
+<h2 id="cheatsheet-of-bash-shell-shortcuts"><a href="#cheatsheet-of-bash-shell-shortcuts" class="headerlink" title="cheatsheet of bash shell shortcuts"></a>cheatsheet of bash shell shortcuts</h2><img src="/blog/img/linux/command-line-shortcuts.png" title="[linux-shell-chortcuts]">
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://www.ostechnix.com/list-useful-bash-keyboard-shortcuts/" target="_blank" rel="noopener">List Of Useful Bash Keyboard Shortcuts</a></li>
+<li><a href="https://skorks.com/2009/09/bash-shortcuts-for-maximum-productivity/" target="_blank" rel="noopener">Bash Shortcuts For Maximum Productivity</a></li>
+<li><a href="https://linuxtoy.org/archives/bash-shortcuts.html" target="_blank" rel="noopener">让你提升命令行效率的 Bash 快捷键</a></li>
+<li><a href="https://blog.ssdnodes.com/blog/cheatsheet-bash-shortcuts/" target="_blank" rel="noopener">Cheatsheet: Productivity-boosting Bash shortcuts</a></li>
+<li><a href="https://www.cheatography.com/citguy/cheat-sheets/bash-shortcuts/" target="_blank" rel="noopener">bash Shortcuts Cheat Sheet</a></li>
+<li><a href="https://dwmkerr.com/effective-shell-part-1-navigating-the-command-line/" target="_blank" rel="noopener">Navigating the Command Line</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2018/11/23/ubuntu-18-04-configurations-and-customizations.html" rel="next" title="ubuntu 18.04 configurations and customizations">
+                <i class="fa fa-chevron-left"></i>
+                ubuntu 18.04 configurations and customizations
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2019/03/15/doug-lea-scalable-io-in-java.html" rel="prev" title="doug lea - scalable io in java">
+                <i class="fa fa-chevron-right"></i>
+                doug lea - scalable io in java
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ALT-key-shortcuts"><span class="nav-number">1.</span> <span class="nav-text">ALT key shortcuts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CTRL-key-shortcuts"><span class="nav-number">2.</span> <span class="nav-text">CTRL key shortcuts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Miscellaneous"><span class="nav-number">3.</span> <span class="nav-text">Miscellaneous</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bang-命令"><span class="nav-number">4.</span> <span class="nav-text">Bang (!) 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cheatsheet-of-bash-shell-shortcuts"><span class="nav-number">5.</span> <span class="nav-text">cheatsheet of bash shell shortcuts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

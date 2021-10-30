@@ -1,0 +1,558 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="JVM 虚拟机创建进入vm/runtime/thread.cpp文件的第3317行，查看主要方法Threads::create_vm(JavaVMInitArgs* args, bool* canTryAgain)，源码如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hotspot source code - jvm create">
+<meta property="og:url" content="http://www.4e00.com/java/2018/08/04/hotspot-source-code-jvm-create.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="JVM 虚拟机创建进入vm/runtime/thread.cpp文件的第3317行，查看主要方法Threads::create_vm(JavaVMInitArgs* args, bool* canTryAgain)，源码如下：">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.136Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hotspot source code - jvm create">
+<meta name="twitter:description" content="JVM 虚拟机创建进入vm/runtime/thread.cpp文件的第3317行，查看主要方法Threads::create_vm(JavaVMInitArgs* args, bool* canTryAgain)，源码如下：">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/08/04/hotspot-source-code-jvm-create.html">
+
+  <title> hotspot source code - jvm create | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                hotspot source code - jvm create
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-08-04T21:05:57+08:00" content="2018-08-04">
+              2018-08-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="JVM-虚拟机创建"><a href="#JVM-虚拟机创建" class="headerlink" title="JVM 虚拟机创建"></a>JVM 虚拟机创建</h2><p>进入<a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/runtime/thread.cpp" target="_blank" rel="noopener">vm/runtime/thread.cpp</a>文件的第<code>3317</code>行，查看主要方法<code>Threads::create_vm(JavaVMInitArgs* args, bool* canTryAgain)</code>，源码如下：</p>
+<a id="more"></a>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">3317</span><span class="line">3318</span><span class="line">3319</span><span class="line">3320</span><span class="line">3321</span><span class="line">3322</span><span class="line">3323</span><span class="line">3324</span><span class="line">3325</span><span class="line">3326</span><span class="line">3327</span><span class="line">3328</span><span class="line">3329</span><span class="line">3330</span><span class="line">3331</span><span class="line">3332</span><span class="line">3333</span><span class="line">3334</span><span class="line">3335</span><span class="line">3336</span><span class="line">3337</span><span class="line">3338</span><span class="line">3339</span><span class="line">3340</span><span class="line">3341</span><span class="line">3342</span><span class="line">3343</span><span class="line">3344</span><span class="line">3345</span><span class="line">3346</span><span class="line">3347</span><span class="line">3348</span><span class="line">3349</span><span class="line">3350</span><span class="line">3351</span><span class="line">3352</span><span class="line">3353</span><span class="line">3354</span><span class="line">3355</span><span class="line">3356</span><span class="line">3357</span><span class="line">3358</span><span class="line">3359</span><span class="line">3360</span><span class="line">3361</span><span class="line">3362</span><span class="line">3363</span><span class="line">3364</span><span class="line">3365</span><span class="line">3366</span><span class="line">3367</span><span class="line">3368</span><span class="line">3369</span><span class="line">3370</span><span class="line">3371</span><span class="line">3372</span><span class="line">3373</span><span class="line">3374</span><span class="line">3375</span><span class="line">3376</span><span class="line">3377</span><span class="line">3378</span><span class="line">3379</span><span class="line">3380</span><span class="line">3381</span><span class="line">3382</span><span class="line">3383</span><span class="line">3384</span><span class="line">3385</span><span class="line">3386</span><span class="line">3387</span><span class="line">3388</span><span class="line">3389</span><span class="line">3390</span><span class="line">3391</span><span class="line">3392</span><span class="line">3393</span><span class="line">3394</span><span class="line">3395</span><span class="line">3396</span><span class="line">3397</span><span class="line">3398</span><span class="line">3399</span><span class="line">3400</span><span class="line">3401</span><span class="line">3402</span><span class="line">3403</span><span class="line">3404</span><span class="line">3405</span><span class="line">3406</span><span class="line">3407</span><span class="line">3408</span><span class="line">3409</span><span class="line">3410</span><span class="line">3411</span><span class="line">3412</span><span class="line">3413</span><span class="line">3414</span><span class="line">3415</span><span class="line">3416</span><span class="line">3417</span><span class="line">3418</span><span class="line">3419</span><span class="line">3420</span><span class="line">3421</span><span class="line">3422</span><span class="line">3423</span><span class="line">3424</span><span class="line">3425</span><span class="line">3426</span><span class="line">3427</span><span class="line">3428</span><span class="line">3429</span><span class="line">3430</span><span class="line">3431</span><span class="line">3432</span><span class="line">3433</span><span class="line">3434</span><span class="line">3435</span><span class="line">3436</span><span class="line">3437</span><span class="line">3438</span><span class="line">3439</span><span class="line">3440</span><span class="line">3441</span><span class="line">3442</span><span class="line">3443</span><span class="line">3444</span><span class="line">3445</span><span class="line">3446</span><span class="line">3447</span><span class="line">3448</span><span class="line">3449</span><span class="line">3450</span><span class="line">3451</span><span class="line">3452</span><span class="line">3453</span><span class="line">3454</span><span class="line">3455</span><span class="line">3456</span><span class="line">3457</span><span class="line">3458</span><span class="line">3459</span><span class="line">3460</span><span class="line">3461</span><span class="line">3462</span><span class="line">3463</span><span class="line">3464</span><span class="line">3465</span><span class="line">3466</span><span class="line">3467</span><span class="line">3468</span><span class="line">3469</span><span class="line">3470</span><span class="line">3471</span><span class="line">3472</span><span class="line">3473</span><span class="line">3474</span><span class="line">3475</span><span class="line">3476</span><span class="line">3477</span><span class="line">3478</span><span class="line">3479</span><span class="line">3480</span><span class="line">3481</span><span class="line">3482</span><span class="line">3483</span><span class="line">3484</span><span class="line">3485</span><span class="line">3486</span><span class="line">3487</span><span class="line">3488</span><span class="line">3489</span><span class="line">3490</span><span class="line">3491</span><span class="line">3492</span><span class="line">3493</span><span class="line">3494</span><span class="line">3495</span><span class="line">3496</span><span class="line">3497</span><span class="line">3498</span><span class="line">3499</span><span class="line">3500</span><span class="line">3501</span><span class="line">3502</span><span class="line">3503</span><span class="line">3504</span><span class="line">3505</span><span class="line">3506</span><span class="line">3507</span><span class="line">3508</span><span class="line">3509</span><span class="line">3510</span><span class="line">3511</span><span class="line">3512</span><span class="line">3513</span><span class="line">3514</span><span class="line">3515</span><span class="line">3516</span><span class="line">3517</span><span class="line">3518</span><span class="line">3519</span><span class="line">3520</span><span class="line">3521</span><span class="line">3522</span><span class="line">3523</span><span class="line">3524</span><span class="line">3525</span><span class="line">3526</span><span class="line">3527</span><span class="line">3528</span><span class="line">3529</span><span class="line">3530</span><span class="line">3531</span><span class="line">3532</span><span class="line">3533</span><span class="line">3534</span><span class="line">3535</span><span class="line">3536</span><span class="line">3537</span><span class="line">3538</span><span class="line">3539</span><span class="line">3540</span><span class="line">3541</span><span class="line">3542</span><span class="line">3543</span><span class="line">3544</span><span class="line">3545</span><span class="line">3546</span><span class="line">3547</span><span class="line">3548</span><span class="line">3549</span><span class="line">3550</span><span class="line">3551</span><span class="line">3552</span><span class="line">3553</span><span class="line">3554</span><span class="line">3555</span><span class="line">3556</span><span class="line">3557</span><span class="line">3558</span><span class="line">3559</span><span class="line">3560</span><span class="line">3561</span><span class="line">3562</span><span class="line">3563</span><span class="line">3564</span><span class="line">3565</span><span class="line">3566</span><span class="line">3567</span><span class="line">3568</span><span class="line">3569</span><span class="line">3570</span><span class="line">3571</span><span class="line">3572</span><span class="line">3573</span><span class="line">3574</span><span class="line">3575</span><span class="line">3576</span><span class="line">3577</span><span class="line">3578</span><span class="line">3579</span><span class="line">3580</span><span class="line">3581</span><span class="line">3582</span><span class="line">3583</span><span class="line">3584</span><span class="line">3585</span><span class="line">3586</span><span class="line">3587</span><span class="line">3588</span><span class="line">3589</span><span class="line">3590</span><span class="line">3591</span><span class="line">3592</span><span class="line">3593</span><span class="line">3594</span><span class="line">3595</span><span class="line">3596</span><span class="line">3597</span><span class="line">3598</span><span class="line">3599</span><span class="line">3600</span><span class="line">3601</span><span class="line">3602</span><span class="line">3603</span><span class="line">3604</span><span class="line">3605</span><span class="line">3606</span><span class="line">3607</span><span class="line">3608</span><span class="line">3609</span><span class="line">3610</span><span class="line">3611</span><span class="line">3612</span><span class="line">3613</span><span class="line">3614</span><span class="line">3615</span><span class="line">3616</span><span class="line">3617</span><span class="line">3618</span><span class="line">3619</span><span class="line">3620</span><span class="line">3621</span><span class="line">3622</span><span class="line">3623</span><span class="line">3624</span><span class="line">3625</span><span class="line">3626</span><span class="line">3627</span><span class="line">3628</span><span class="line">3629</span><span class="line">3630</span><span class="line">3631</span><span class="line">3632</span><span class="line">3633</span><span class="line">3634</span><span class="line">3635</span><span class="line">3636</span><span class="line">3637</span><span class="line">3638</span><span class="line">3639</span><span class="line">3640</span><span class="line">3641</span><span class="line">3642</span><span class="line">3643</span><span class="line">3644</span><span class="line">3645</span><span class="line">3646</span><span class="line">3647</span><span class="line">3648</span><span class="line">3649</span><span class="line">3650</span><span class="line">3651</span><span class="line">3652</span><span class="line">3653</span><span class="line">3654</span><span class="line">3655</span><span class="line">3656</span><span class="line">3657</span><span class="line">3658</span><span class="line">3659</span><span class="line">3660</span><span class="line">3661</span><span class="line">3662</span><span class="line">3663</span><span class="line">3664</span><span class="line">3665</span><span class="line">3666</span><span class="line">3667</span><span class="line">3668</span><span class="line">3669</span><span class="line">3670</span><span class="line">3671</span><span class="line">3672</span><span class="line">3673</span><span class="line">3674</span><span class="line">3675</span><span class="line">3676</span><span class="line">3677</span><span class="line">3678</span><span class="line">3679</span><span class="line">3680</span><span class="line">3681</span><span class="line">3682</span><span class="line">3683</span><span class="line">3684</span><span class="line">3685</span><span class="line">3686</span><span class="line">3687</span><span class="line">3688</span><span class="line">3689</span><span class="line">3690</span><span class="line">3691</span><span class="line">3692</span><span class="line">3693</span><span class="line">3694</span><span class="line">3695</span><span class="line">3696</span><span class="line">3697</span><span class="line">3698</span><span class="line">3699</span><span class="line">3700</span><span class="line">3701</span><span class="line">3702</span><span class="line">3703</span><span class="line">3704</span><span class="line">3705</span><span class="line">3706</span><span class="line">3707</span><span class="line">3708</span><span class="line">3709</span><span class="line">3710</span><span class="line">3711</span><span class="line">3712</span><span class="line">3713</span></pre></td><td class="code"><pre><span class="line"><span class="function">jint <span class="title">Threads::create_vm</span><span class="params">(JavaVMInitArgs* args, <span class="keyword">bool</span>* canTryAgain)</span> </span>&#123;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">JDK_Version_init</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Preinitialize version info.</span></span><span class="line">  VM_Version::early_initialize();</span><span class="line"></span><span class="line">  <span class="comment">// Check version</span></span><span class="line">  <span class="keyword">if</span> (!is_supported_jni_version(args-&gt;version)) <span class="keyword">return</span> JNI_EVERSION;</span><span class="line"></span><span class="line">  <span class="comment">// Initialize the output stream module</span></span><span class="line">  ostream_init();</span><span class="line"></span><span class="line">  <span class="comment">// Process java launcher properties.</span></span><span class="line">  Arguments::process_sun_java_launcher_properties(args);</span><span class="line"></span><span class="line">  <span class="comment">// Initialize the os module before using TLS</span></span><span class="line">  os::init();</span><span class="line"></span><span class="line">  <span class="comment">// Initialize system properties.</span></span><span class="line">  Arguments::init_system_properties();</span><span class="line"></span><span class="line">  <span class="comment">// So that JDK version can be used as a discrimintor when parsing arguments</span></span><span class="line">  JDK_Version_init();</span><span class="line"></span><span class="line">  <span class="comment">// Update/Initialize System properties after JDK version number is known</span></span><span class="line">  Arguments::init_version_specific_system_properties();</span><span class="line"></span><span class="line">  <span class="comment">// Parse arguments</span></span><span class="line">  <span class="comment">// Note: this internally calls os::init_container_support()</span></span><span class="line">  jint parse_result = Arguments::parse(args);</span><span class="line">  <span class="keyword">if</span> (parse_result != JNI_OK) <span class="keyword">return</span> parse_result;</span><span class="line"></span><span class="line">  os::init_before_ergo();</span><span class="line"></span><span class="line">  jint ergo_result = Arguments::apply_ergo();</span><span class="line">  <span class="keyword">if</span> (ergo_result != JNI_OK) <span class="keyword">return</span> ergo_result;</span><span class="line"></span><span class="line">  <span class="keyword">if</span> (PauseAtStartup) &#123;</span><span class="line">    os::pause();</span><span class="line">  &#125;</span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> USDT2</span></span><span class="line">  HS_DTRACE_PROBE(hotspot, vm__init__begin);</span><span class="line"><span class="meta">#<span class="meta-keyword">else</span> <span class="comment">/* USDT2 */</span></span></span><span class="line">  HOTSPOT_VM_INIT_BEGIN();</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* USDT2 */</span></span></span><span class="line"></span><span class="line">  <span class="comment">// Record VM creation timing statistics</span></span><span class="line">  TraceVmCreationTime create_vm_timer;</span><span class="line">  create_vm_timer.start();</span><span class="line"></span><span class="line">  <span class="comment">// Timing (must come after argument parsing)</span></span><span class="line">  <span class="function">TraceTime <span class="title">timer</span><span class="params">(<span class="string">"Create VM"</span>, TraceStartupTime)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Initialize the os module after parsing the args</span></span><span class="line">  jint os_init_2_result = os::init_2();</span><span class="line">  <span class="keyword">if</span> (os_init_2_result != JNI_OK) <span class="keyword">return</span> os_init_2_result;</span><span class="line"></span><span class="line">  jint adjust_after_os_result = Arguments::adjust_after_os();</span><span class="line">  <span class="keyword">if</span> (adjust_after_os_result != JNI_OK) <span class="keyword">return</span> adjust_after_os_result;</span><span class="line"></span><span class="line">  <span class="comment">// intialize TLS</span></span><span class="line">  ThreadLocalStorage::init();</span><span class="line"></span><span class="line">  <span class="comment">// Initialize output stream logging</span></span><span class="line">  ostream_init_log();</span><span class="line"></span><span class="line">  <span class="comment">// Convert -Xrun to -agentlib: if there is no JVM_OnLoad</span></span><span class="line">  <span class="comment">// Must be before create_vm_init_agents()</span></span><span class="line">  <span class="keyword">if</span> (Arguments::init_libraries_at_startup()) &#123;</span><span class="line">    convert_vm_init_libraries_to_agents();</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Launch -agentlib/-agentpath and converted -Xrun agents</span></span><span class="line">  <span class="keyword">if</span> (Arguments::init_agents_at_startup()) &#123;</span><span class="line">    create_vm_init_agents();</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Initialize Threads state</span></span><span class="line">  _thread_list = <span class="literal">NULL</span>;</span><span class="line">  _number_of_threads = <span class="number">0</span>;</span><span class="line">  _number_of_non_daemon_threads = <span class="number">0</span>;</span><span class="line"></span><span class="line">  <span class="comment">// Initialize global data structures and create system classes in heap</span></span><span class="line">  vm_init_globals();</span><span class="line"></span><span class="line">  <span class="comment">// Attach the main thread to this os thread</span></span><span class="line">  JavaThread* main_thread = <span class="keyword">new</span> JavaThread();</span><span class="line">  main_thread-&gt;set_thread_state(_thread_in_vm);</span><span class="line">  <span class="comment">// must do this before set_active_handles and initialize_thread_local_storage</span></span><span class="line">  <span class="comment">// Note: on solaris initialize_thread_local_storage() will (indirectly)</span></span><span class="line">  <span class="comment">// change the stack size recorded here to one based on the java thread</span></span><span class="line">  <span class="comment">// stacksize. This adjusted size is what is used to figure the placement</span></span><span class="line">  <span class="comment">// of the guard pages.</span></span><span class="line">  main_thread-&gt;record_stack_base_and_size();</span><span class="line">  main_thread-&gt;initialize_thread_local_storage();</span><span class="line"></span><span class="line">  main_thread-&gt;set_active_handles(JNIHandleBlock::allocate_block());</span><span class="line"></span><span class="line">  <span class="keyword">if</span> (!main_thread-&gt;set_as_starting_thread()) &#123;</span><span class="line">    vm_shutdown_during_initialization(</span><span class="line">      <span class="string">"Failed necessary internal allocation. Out of swap space"</span>);</span><span class="line">    <span class="keyword">delete</span> main_thread;</span><span class="line">    *canTryAgain = <span class="literal">false</span>; <span class="comment">// don't let caller call JNI_CreateJavaVM again</span></span><span class="line">    <span class="keyword">return</span> JNI_ENOMEM;</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Enable guard page *after* os::create_main_thread(), otherwise it would</span></span><span class="line">  <span class="comment">// crash Linux VM, see notes in os_linux.cpp.</span></span><span class="line">  main_thread-&gt;create_stack_guard_pages();</span><span class="line"></span><span class="line">  <span class="comment">// Initialize Java-Level synchronization subsystem</span></span><span class="line">  ObjectMonitor::Initialize() ;</span><span class="line"></span><span class="line">  <span class="comment">// Initialize global modules</span></span><span class="line">  jint status = init_globals();</span><span class="line">  <span class="keyword">if</span> (status != JNI_OK) &#123;</span><span class="line">    <span class="keyword">delete</span> main_thread;</span><span class="line">    *canTryAgain = <span class="literal">false</span>; <span class="comment">// don't let caller call JNI_CreateJavaVM again</span></span><span class="line">    <span class="keyword">return</span> status;</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Should be done after the heap is fully created</span></span><span class="line">  main_thread-&gt;cache_global_variables();</span><span class="line"></span><span class="line">  HandleMark hm;</span><span class="line"></span><span class="line">  &#123; <span class="function">MutexLocker <span class="title">mu</span><span class="params">(Threads_lock)</span></span>;</span><span class="line">    Threads::add(main_thread);</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Any JVMTI raw monitors entered in onload will transition into</span></span><span class="line">  <span class="comment">// real raw monitor. VM is setup enough here for raw monitor enter.</span></span><span class="line">  JvmtiExport::transition_pending_onload_raw_monitors();</span><span class="line"></span><span class="line">  <span class="comment">// Create the VMThread</span></span><span class="line">  &#123; <span class="function">TraceTime <span class="title">timer</span><span class="params">(<span class="string">"Start VMThread"</span>, TraceStartupTime)</span></span>;</span><span class="line">    VMThread::create();</span><span class="line">    Thread* vmthread = VMThread::vm_thread();</span><span class="line"></span><span class="line">    <span class="keyword">if</span> (!os::create_thread(vmthread, os::vm_thread))</span><span class="line">      vm_exit_during_initialization(<span class="string">"Cannot create VM thread. Out of system resources."</span>);</span><span class="line"></span><span class="line">    <span class="comment">// Wait for the VM thread to become ready, and VMThread::run to initialize</span></span><span class="line">    <span class="comment">// Monitors can have spurious returns, must always check another state flag</span></span><span class="line">    &#123;</span><span class="line">      <span class="function">MutexLocker <span class="title">ml</span><span class="params">(Notify_lock)</span></span>;</span><span class="line">      os::start_thread(vmthread);</span><span class="line">      <span class="keyword">while</span> (vmthread-&gt;active_handles() == <span class="literal">NULL</span>) &#123;</span><span class="line">        Notify_lock-&gt;wait();</span><span class="line">      &#125;</span><span class="line">    &#125;</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  assert (Universe::is_fully_initialized(), <span class="string">"not initialized"</span>);</span><span class="line">  <span class="keyword">if</span> (VerifyDuringStartup) &#123;</span><span class="line">    <span class="comment">// Make sure we're starting with a clean slate.</span></span><span class="line">    VM_Verify verify_op;</span><span class="line">    VMThread::execute(&amp;verify_op);</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  EXCEPTION_MARK;</span><span class="line"></span><span class="line">  <span class="comment">// At this point, the Universe is initialized, but we have not executed</span></span><span class="line">  <span class="comment">// any byte code.  Now is a good time (the only time) to dump out the</span></span><span class="line">  <span class="comment">// internal state of the JVM for sharing.</span></span><span class="line">  <span class="keyword">if</span> (DumpSharedSpaces) &#123;</span><span class="line">    MetaspaceShared::preload_and_dump(CHECK_0);</span><span class="line">    ShouldNotReachHere();</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Always call even when there are not JVMTI environments yet, since environments</span></span><span class="line">  <span class="comment">// may be attached late and JVMTI must track phases of VM execution</span></span><span class="line">  JvmtiExport::enter_start_phase();</span><span class="line"></span><span class="line">  <span class="comment">// Notify JVMTI agents that VM has started (JNI is up) - nop if no agents.</span></span><span class="line">  JvmtiExport::post_vm_start();</span><span class="line"></span><span class="line">  &#123;</span><span class="line">    <span class="function">TraceTime <span class="title">timer</span><span class="params">(<span class="string">"Initialize java.lang classes"</span>, TraceStartupTime)</span></span>;</span><span class="line"></span><span class="line">    <span class="keyword">if</span> (EagerXrunInit &amp;&amp; Arguments::init_libraries_at_startup()) &#123;</span><span class="line">      create_vm_init_libraries();</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    initialize_class(vmSymbols::java_lang_String(), CHECK_0);</span><span class="line"></span><span class="line">    <span class="comment">// Initialize java_lang.System (needed before creating the thread)</span></span><span class="line">    initialize_class(vmSymbols::java_lang_System(), CHECK_0);</span><span class="line">    initialize_class(vmSymbols::java_lang_ThreadGroup(), CHECK_0);</span><span class="line">    Handle thread_group = create_initial_thread_group(CHECK_0);</span><span class="line">    Universe::set_main_thread_group(thread_group());</span><span class="line">    initialize_class(vmSymbols::java_lang_Thread(), CHECK_0);</span><span class="line">    oop thread_object = create_initial_thread(thread_group, main_thread, CHECK_0);</span><span class="line">    main_thread-&gt;set_threadObj(thread_object);</span><span class="line">    <span class="comment">// Set thread status to running since main thread has</span></span><span class="line">    <span class="comment">// been started and running.</span></span><span class="line">    java_lang_Thread::set_thread_status(thread_object,</span><span class="line">                                        java_lang_Thread::RUNNABLE);</span><span class="line"></span><span class="line">    <span class="comment">// The VM creates &amp; returns objects of this class. Make sure it's initialized.</span></span><span class="line">    initialize_class(vmSymbols::java_lang_Class(), CHECK_0);</span><span class="line"></span><span class="line">    <span class="comment">// The VM preresolves methods to these classes. Make sure that they get initialized</span></span><span class="line">    initialize_class(vmSymbols::java_lang_reflect_Method(), CHECK_0);</span><span class="line">    initialize_class(vmSymbols::java_lang_ref_Finalizer(),  CHECK_0);</span><span class="line">    call_initializeSystemClass(CHECK_0);</span><span class="line"></span><span class="line">    <span class="comment">// get the Java runtime name after java.lang.System is initialized</span></span><span class="line">    JDK_Version::set_runtime_name(get_java_runtime_name(THREAD));</span><span class="line">    JDK_Version::set_runtime_version(get_java_runtime_version(THREAD));</span><span class="line"></span><span class="line">    <span class="comment">// an instance of OutOfMemory exception has been allocated earlier</span></span><span class="line">    initialize_class(vmSymbols::java_lang_OutOfMemoryError(), CHECK_0);</span><span class="line">    initialize_class(vmSymbols::java_lang_NullPointerException(), CHECK_0);</span><span class="line">    initialize_class(vmSymbols::java_lang_ClassCastException(), CHECK_0);</span><span class="line">    initialize_class(vmSymbols::java_lang_ArrayStoreException(), CHECK_0);</span><span class="line">    initialize_class(vmSymbols::java_lang_ArithmeticException(), CHECK_0);</span><span class="line">    initialize_class(vmSymbols::java_lang_StackOverflowError(), CHECK_0);</span><span class="line">    initialize_class(vmSymbols::java_lang_IllegalMonitorStateException(), CHECK_0);</span><span class="line">    initialize_class(vmSymbols::java_lang_IllegalArgumentException(), CHECK_0);</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// See        : bugid 4211085.</span></span><span class="line">  <span class="comment">// Background : the static initializer of java.lang.Compiler tries to read</span></span><span class="line">  <span class="comment">//              property"java.compiler" and read &amp; write property "java.vm.info".</span></span><span class="line">  <span class="comment">//              When a security manager is installed through the command line</span></span><span class="line">  <span class="comment">//              option "-Djava.security.manager", the above properties are not</span></span><span class="line">  <span class="comment">//              readable and the static initializer for java.lang.Compiler fails</span></span><span class="line">  <span class="comment">//              resulting in a NoClassDefFoundError.  This can happen in any</span></span><span class="line">  <span class="comment">//              user code which calls methods in java.lang.Compiler.</span></span><span class="line">  <span class="comment">// Hack :       the hack is to pre-load and initialize this class, so that only</span></span><span class="line">  <span class="comment">//              system domains are on the stack when the properties are read.</span></span><span class="line">  <span class="comment">//              Currently even the AWT code has calls to methods in java.lang.Compiler.</span></span><span class="line">  <span class="comment">//              On the classic VM, java.lang.Compiler is loaded very early to load the JIT.</span></span><span class="line">  <span class="comment">// Future Fix : the best fix is to grant everyone permissions to read "java.compiler" and</span></span><span class="line">  <span class="comment">//              read and write"java.vm.info" in the default policy file. See bugid 4211383</span></span><span class="line">  <span class="comment">//              Once that is done, we should remove this hack.</span></span><span class="line">  initialize_class(vmSymbols::java_lang_Compiler(), CHECK_0);</span><span class="line"></span><span class="line">  <span class="comment">// More hackery - the static initializer of java.lang.Compiler adds the string "nojit" to</span></span><span class="line">  <span class="comment">// the java.vm.info property if no jit gets loaded through java.lang.Compiler (the hotspot</span></span><span class="line">  <span class="comment">// compiler does not get loaded through java.lang.Compiler).  "java -version" with the</span></span><span class="line">  <span class="comment">// hotspot vm says "nojit" all the time which is confusing.  So, we reset it here.</span></span><span class="line">  <span class="comment">// This should also be taken out as soon as 4211383 gets fixed.</span></span><span class="line">  reset_vm_info_property(CHECK_0);</span><span class="line"></span><span class="line">  quicken_jni_functions();</span><span class="line"></span><span class="line">  <span class="comment">// Must be run after init_ft which initializes ft_enabled</span></span><span class="line">  <span class="keyword">if</span> (TRACE_INITIALIZE() != JNI_OK) &#123;</span><span class="line">    vm_exit_during_initialization(<span class="string">"Failed to initialize tracing backend"</span>);</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Set flag that basic initialization has completed. Used by exceptions and various</span></span><span class="line">  <span class="comment">// debug stuff, that does not work until all basic classes have been initialized.</span></span><span class="line">  set_init_completed();</span><span class="line"></span><span class="line">  Metaspace::post_initialize();</span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> USDT2</span></span><span class="line">  HS_DTRACE_PROBE(hotspot, vm__init__end);</span><span class="line"><span class="meta">#<span class="meta-keyword">else</span> <span class="comment">/* USDT2 */</span></span></span><span class="line">  HOTSPOT_VM_INIT_END();</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* USDT2 */</span></span></span><span class="line"></span><span class="line">  <span class="comment">// record VM initialization completion time</span></span><span class="line"><span class="meta">#<span class="meta-keyword">if</span> INCLUDE_MANAGEMENT</span></span><span class="line">  Management::record_vm_init_completed();</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// INCLUDE_MANAGEMENT</span></span></span><span class="line"></span><span class="line">  <span class="comment">// Compute system loader. Note that this has to occur after set_init_completed, since</span></span><span class="line">  <span class="comment">// valid exceptions may be thrown in the process.</span></span><span class="line">  <span class="comment">// Note that we do not use CHECK_0 here since we are inside an EXCEPTION_MARK and</span></span><span class="line">  <span class="comment">// set_init_completed has just been called, causing exceptions not to be shortcut</span></span><span class="line">  <span class="comment">// anymore. We call vm_exit_during_initialization directly instead.</span></span><span class="line">  SystemDictionary::compute_java_system_loader(THREAD);</span><span class="line">  <span class="keyword">if</span> (HAS_PENDING_EXCEPTION) &#123;</span><span class="line">    vm_exit_during_initialization(Handle(THREAD, PENDING_EXCEPTION));</span><span class="line">  &#125;</span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">if</span> INCLUDE_ALL_GCS</span></span><span class="line">  <span class="comment">// Support for ConcurrentMarkSweep. This should be cleaned up</span></span><span class="line">  <span class="comment">// and better encapsulated. The ugly nested if test would go away</span></span><span class="line">  <span class="comment">// once things are properly refactored. XXX YSR</span></span><span class="line">  <span class="keyword">if</span> (UseConcMarkSweepGC || UseG1GC) &#123;</span><span class="line">    <span class="keyword">if</span> (UseConcMarkSweepGC) &#123;</span><span class="line">      ConcurrentMarkSweepThread::makeSurrogateLockerThread(THREAD);</span><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><span class="line">      ConcurrentMarkThread::makeSurrogateLockerThread(THREAD);</span><span class="line">    &#125;</span><span class="line">    <span class="keyword">if</span> (HAS_PENDING_EXCEPTION) &#123;</span><span class="line">      vm_exit_during_initialization(Handle(THREAD, PENDING_EXCEPTION));</span><span class="line">    &#125;</span><span class="line">  &#125;</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// INCLUDE_ALL_GCS</span></span></span><span class="line"></span><span class="line">  <span class="comment">// Always call even when there are not JVMTI environments yet, since environments</span></span><span class="line">  <span class="comment">// may be attached late and JVMTI must track phases of VM execution</span></span><span class="line">  JvmtiExport::enter_live_phase();</span><span class="line"></span><span class="line">  <span class="comment">// Signal Dispatcher needs to be started before VMInit event is posted</span></span><span class="line">  os::signal_init();</span><span class="line"></span><span class="line">  <span class="comment">// Start Attach Listener if +StartAttachListener or it can't be started lazily</span></span><span class="line">  <span class="keyword">if</span> (!DisableAttachMechanism) &#123;</span><span class="line">    AttachListener::vm_start();</span><span class="line">    <span class="keyword">if</span> (StartAttachListener || AttachListener::init_at_startup()) &#123;</span><span class="line">      AttachListener::init();</span><span class="line">    &#125;</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Launch -Xrun agents</span></span><span class="line">  <span class="comment">// Must be done in the JVMTI live phase so that for backward compatibility the JDWP</span></span><span class="line">  <span class="comment">// back-end can launch with -Xdebug -Xrunjdwp.</span></span><span class="line">  <span class="keyword">if</span> (!EagerXrunInit &amp;&amp; Arguments::init_libraries_at_startup()) &#123;</span><span class="line">    create_vm_init_libraries();</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Notify JVMTI agents that VM initialization is complete - nop if no agents.</span></span><span class="line">  JvmtiExport::post_vm_initialized();</span><span class="line"></span><span class="line">  <span class="keyword">if</span> (TRACE_START() != JNI_OK) &#123;</span><span class="line">    vm_exit_during_initialization(<span class="string">"Failed to start tracing backend."</span>);</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="keyword">if</span> (CleanChunkPoolAsync) &#123;</span><span class="line">    Chunk::start_chunk_pool_cleaner_task();</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// initialize compiler(s)</span></span><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(COMPILER1) || defined(COMPILER2) || defined(SHARK)</span></span><span class="line">  CompileBroker::compilation_init();</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><span class="line"></span><span class="line">  <span class="keyword">if</span> (EnableInvokeDynamic) &#123;</span><span class="line">    <span class="comment">// Pre-initialize some JSR292 core classes to avoid deadlock during class loading.</span></span><span class="line">    <span class="comment">// It is done after compilers are initialized, because otherwise compilations of</span></span><span class="line">    <span class="comment">// signature polymorphic MH intrinsics can be missed</span></span><span class="line">    <span class="comment">// (see SystemDictionary::find_method_handle_intrinsic).</span></span><span class="line">    initialize_class(vmSymbols::java_lang_invoke_MethodHandle(), CHECK_0);</span><span class="line">    initialize_class(vmSymbols::java_lang_invoke_MemberName(), CHECK_0);</span><span class="line">    initialize_class(vmSymbols::java_lang_invoke_MethodHandleNatives(), CHECK_0);</span><span class="line">  &#125;</span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">if</span> INCLUDE_MANAGEMENT</span></span><span class="line">  Management::initialize(THREAD);</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// INCLUDE_MANAGEMENT</span></span></span><span class="line"></span><span class="line">  <span class="keyword">if</span> (HAS_PENDING_EXCEPTION) &#123;</span><span class="line">    <span class="comment">// management agent fails to start possibly due to</span></span><span class="line">    <span class="comment">// configuration problem and is responsible for printing</span></span><span class="line">    <span class="comment">// stack trace if appropriate. Simply exit VM.</span></span><span class="line">    vm_exit(<span class="number">1</span>);</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="keyword">if</span> (Arguments::has_profile())       FlatProfiler::engage(main_thread, <span class="literal">true</span>);</span><span class="line">  <span class="keyword">if</span> (MemProfiling)                   MemProfiler::engage();</span><span class="line">  StatSampler::engage();</span><span class="line">  <span class="keyword">if</span> (CheckJNICalls)                  JniPeriodicChecker::engage();</span><span class="line"></span><span class="line">  BiasedLocking::init();</span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">if</span> INCLUDE_RTM_OPT</span></span><span class="line">  RTMLockingCounters::init();</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><span class="line"></span><span class="line">  <span class="keyword">if</span> (JDK_Version::current().post_vm_init_hook_enabled()) &#123;</span><span class="line">    call_postVMInitHook(THREAD);</span><span class="line">    <span class="comment">// The Java side of PostVMInitHook.run must deal with all</span></span><span class="line">    <span class="comment">// exceptions and provide means of diagnosis.</span></span><span class="line">    <span class="keyword">if</span> (HAS_PENDING_EXCEPTION) &#123;</span><span class="line">      CLEAR_PENDING_EXCEPTION;</span><span class="line">    &#125;</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  &#123;</span><span class="line">      <span class="function">MutexLockerEx <span class="title">ml</span><span class="params">(PeriodicTask_lock, Mutex::_no_safepoint_check_flag)</span></span>;</span><span class="line">      <span class="comment">// Make sure the watcher thread can be started by WatcherThread::start()</span></span><span class="line">      <span class="comment">// or by dynamic enrollment.</span></span><span class="line">      WatcherThread::make_startable();</span><span class="line">      <span class="comment">// Start up the WatcherThread if there are any periodic tasks</span></span><span class="line">      <span class="comment">// <span class="doctag">NOTE:</span>  All PeriodicTasks should be registered by now. If they</span></span><span class="line">      <span class="comment">//   aren't, late joiners might appear to start slowly (we might</span></span><span class="line">      <span class="comment">//   take a while to process their first tick).</span></span><span class="line">      <span class="keyword">if</span> (PeriodicTask::num_tasks() &gt; <span class="number">0</span>) &#123;</span><span class="line">          WatcherThread::start();</span><span class="line">      &#125;</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  create_vm_timer.end();</span><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> ASSERT</span></span><span class="line">  _vm_complete = <span class="literal">true</span>;</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><span class="line">  <span class="keyword">return</span> JNI_OK;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/runtime/thread.cpp" target="_blank" rel="noopener">vm/runtime/thread.cpp</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/08/04/hotspot-source-code-jdk8u-downloads.html" rel="next" title="hotspot source code - jdk8u downloads">
+                <i class="fa fa-chevron-left"></i>
+                hotspot source code - jdk8u downloads
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/08/04/hotspot-source-code-call-java-main-method.html" rel="prev" title="hotspot source code - call java main method">
+                <i class="fa fa-chevron-right"></i>
+                hotspot source code - call java main method
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-虚拟机创建"><span class="nav-number">1.</span> <span class="nav-text">JVM 虚拟机创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">2.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="error">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mongrel and rails 2.2.2 环境下报 mysql lib 的错误及解决方法">
-<meta property="og:url" content="https://www.4e00.com/mysql/2008/12/15/mysql-and-rails-mongrel-error.html">
+<meta property="og:url" content="http://www.4e00.com/mysql/2008/12/15/mysql-and-rails-mongrel-error.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="error">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.137Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.057Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mongrel and rails 2.2.2 环境下报 mysql lib 的错误及解决方法">
 <meta name="twitter:description" content="error">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/mysql/2008/12/15/mysql-and-rails-mongrel-error.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/mysql/2008/12/15/mysql-and-rails-mongrel-error.html">
 
   <title> mongrel and rails 2.2.2 环境下报 mysql lib 的错误及解决方法 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/mysql/" itemprop="url" rel="index">
                     <span itemprop="name">mysql</span>
                   </a>
@@ -255,9 +255,9 @@
 
       
         <h2 id="error"><a href="#error" class="headerlink" title="error"></a>error</h2><a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Processing Rails::InfoController#properties (for 127.0.0.1 at 2008-12-15 17:10:53) [GET]</div><div class="line">LoadError (dlopen(/Library/Ruby/Site/1.8/universal-darwin9.0/mysql.bundle, 9): Library not loaded: /usr/local/mysql/lib/libmysqlclient.15.dylib</div><div class="line">Referenced from: /Library/Ruby/Site/1.8/universal-darwin9.0/mysql.bundle</div><div class="line">Reason: image not found - /Library/Ruby/Site/1.8/universal-darwin9.0/mysql.bundle):</div><div class="line">/Library/Ruby/Site/1.8/universal-darwin9.0/mysql.bundle</div><div class="line">/Library/Ruby/Site/1.8/rubygems/custom_require.rb:31:in `require&apos;</div><div class="line">/Library/Ruby/Gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:153:in `require&apos;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Processing Rails::InfoController#properties (for 127.0.0.1 at 2008-12-15 17:10:53) [GET]</span><span class="line">LoadError (dlopen(/Library/Ruby/Site/1.8/universal-darwin9.0/mysql.bundle, 9): Library not loaded: /usr/local/mysql/lib/libmysqlclient.15.dylib</span><span class="line">Referenced from: /Library/Ruby/Site/1.8/universal-darwin9.0/mysql.bundle</span><span class="line">Reason: image not found - /Library/Ruby/Site/1.8/universal-darwin9.0/mysql.bundle):</span><span class="line">/Library/Ruby/Site/1.8/universal-darwin9.0/mysql.bundle</span><span class="line">/Library/Ruby/Site/1.8/rubygems/custom_require.rb:31:in `require&apos;</span><span class="line">/Library/Ruby/Gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:153:in `require&apos;</span></pre></td></tr></table></figure>
 <p>在MAC OSX 10.5 和 mysql 5.1.23-rc 上，rails 2.2.2 用 mongrel server 启动时访问首页mysql连接属性时抛出以上错误，在对应的/usr/local/mysql/lib下根本没有/usr/local/mysql/lib/libmysqlclient.15.dylib这个文件，当然会加载失败，之前在 rails 2.0.2 上倒没有碰到过这个问题。</p>
-<p>从mysql官网重新下载了一个 mysql 5.0.67，从其下面拷了一个libmysqlclient.15.dylib 到 /usr/local/mysql/lib/libmysqlclient.15.dylib，就可以解决此问题。<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> cp /usr/<span class="built_in">local</span>/mysql5/lib/libmysqlclient.15.dylib /usr/<span class="built_in">local</span>/mysql/lib/libmysqlclient.15.dylib</div></pre></td></tr></table></figure></p>
+<p>从mysql官网重新下载了一个 mysql 5.0.67，从其下面拷了一个libmysqlclient.15.dylib 到 /usr/local/mysql/lib/libmysqlclient.15.dylib，就可以解决此问题。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> cp /usr/<span class="built_in">local</span>/mysql5/lib/libmysqlclient.15.dylib /usr/<span class="built_in">local</span>/mysql/lib/libmysqlclient.15.dylib</span></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -284,7 +284,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/mysql/2008/12/08/mysql-errno-2013.html" rel="next" title="mysql5.0 同步错误 errno 2013 及解决方法">
-                上一篇：mysql5.0 同步错误 errno 2013 及解决方法
+                <i class="fa fa-chevron-left"></i>
+                mysql5.0 同步错误 errno 2013 及解决方法
               </a>
             
           </div>
@@ -292,7 +293,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/ruby/2008/12/16/rails-error-action-controller-invalid-authenticity-token.html" rel="prev" title="rails error about action controller invalid authenticity token">
-                下一篇：rails error about action controller invalid authenticity token
+                <i class="fa fa-chevron-right"></i>
+                rails error about action controller invalid authenticity token
               </a>
             
           </div>
@@ -341,7 +343,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -352,16 +354,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -443,10 +443,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="MySQL中innodb引擎的锁有多种，具体可查看官方文档，这次碰到的死锁与Next-Key Locks没有关系，与Record Locks和Gap Locks有关，下面引用innodb锁的部分文档说明。 Shared and Exclusive Locks InnoDB implements standard row-level locking where there are two types">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql deadlock when concurrent insert">
-<meta property="og:url" content="https://www.4e00.com/mysql/2017/09/16/mysql-deadlock-when-concurrent-insert.html">
+<meta property="og:url" content="http://www.4e00.com/mysql/2017/09/16/mysql-deadlock-when-concurrent-insert.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="MySQL中innodb引擎的锁有多种，具体可查看官方文档，这次碰到的死锁与Next-Key Locks没有关系，与Record Locks和Gap Locks有关，下面引用innodb锁的部分文档说明。 Shared and Exclusive Locks InnoDB implements standard row-level locking where there are two types">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-09-21T00:46:10.343Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.122Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql deadlock when concurrent insert">
 <meta name="twitter:description" content="MySQL中innodb引擎的锁有多种，具体可查看官方文档，这次碰到的死锁与Next-Key Locks没有关系，与Record Locks和Gap Locks有关，下面引用innodb锁的部分文档说明。 Shared and Exclusive Locks InnoDB implements standard row-level locking where there are two types">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/mysql/2017/09/16/mysql-deadlock-when-concurrent-insert.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/mysql/2017/09/16/mysql-deadlock-when-concurrent-insert.html">
 
   <title> mysql deadlock when concurrent insert | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/mysql/" itemprop="url" rel="index">
                     <span itemprop="name">mysql</span>
                   </a>
@@ -254,7 +254,7 @@
       
 
       
-        <p>MySQL中innodb引擎的锁有多种，具体可查看<a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html#innodb-next-key-locks" target="_blank" rel="external">官方文档</a>，这次碰到的死锁与<code>Next-Key Locks</code>没有关系，与<code>Record Locks</code>和<code>Gap Locks</code>有关，下面引用innodb锁的部分文档说明。</p>
+        <p>MySQL中innodb引擎的锁有多种，具体可查看<a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html#innodb-next-key-locks" target="_blank" rel="noopener">官方文档</a>，这次碰到的死锁与<code>Next-Key Locks</code>没有关系，与<code>Record Locks</code>和<code>Gap Locks</code>有关，下面引用innodb锁的部分文档说明。</p>
 <h2 id="Shared-and-Exclusive-Locks"><a href="#Shared-and-Exclusive-Locks" class="headerlink" title="Shared and Exclusive Locks"></a>Shared and Exclusive Locks</h2><blockquote>
 <p>InnoDB implements standard row-level locking where there are two types of locks, shared (S) locks and exclusive (X) locks.</p>
 <ul>
@@ -273,7 +273,7 @@
 </blockquote>
 <h2 id="Record-Locks"><a href="#Record-Locks" class="headerlink" title="Record Locks"></a>Record Locks</h2><blockquote>
 <p>A record lock is a lock on an index record. For example, SELECT c1 FROM t WHERE c1 = 10 FOR UPDATE; prevents any other transaction from inserting, updating, or deleting rows where the value of t.c1 is 10.</p>
-<p>Record locks always lock index records, even if a table is defined with no indexes. For such cases, InnoDB creates a hidden clustered index and uses this index for record locking. See Section <a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-index-types.html" target="_blank" rel="external">14.8.2.1</a>, &quot;Clustered and Secondary Indexes&quot;.</p>
+<p>Record locks always lock index records, even if a table is defined with no indexes. For such cases, InnoDB creates a hidden clustered index and uses this index for record locking. See Section <a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-index-types.html" target="_blank" rel="noopener">14.8.2.1</a>, &quot;Clustered and Secondary Indexes&quot;.</p>
 <p>Transaction data for a record lock appears similar to the following in SHOW ENGINE INNODB STATUS and InnoDB monitor output:</p>
 <p>RECORD LOCKS space id 58 page no 3 n bits 72 index <code>PRIMARY</code> of table test.t trx id 10078 lock_mode X locks rec but not gap<br>Record lock, heap no 2 PHYSICAL RECORD: n_fields 3; compact format; info bits 0<br> 0: len 4; hex 8000000a; asc     ;;<br> 1: len 6; hex 00000000274f; asc     &#39;O;;<br> 2: len 7; hex b60000019d0110; asc        ;;</p>
 </blockquote>
@@ -294,7 +294,7 @@
 <p>There are also other effects of using the READ COMMITTED isolation level or enabling innodb_locks_unsafe_for_binlog. Record locks for nonmatching rows are released after MySQL has evaluated the WHERE condition. For UPDATE statements, InnoDB does a &quot;semi-consistent&quot; read, such that it returns the latest committed version to MySQL so that MySQL can determine whether the row matches the WHERE condition of the UPDATE.</p>
 </blockquote>
 <h2 id="Next-Key-Locks"><a href="#Next-Key-Locks" class="headerlink" title="Next-Key Locks"></a>Next-Key Locks</h2><blockquote>
-<p>By default, InnoDB operates in REPEATABLE READ transaction isolation level. In this case, InnoDB uses next-key locks for searches and index scans, which prevents phantom rows (see Section <a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-next-key-locking.html" target="_blank" rel="external">14.5.4</a>, &quot;Phantom Rows&quot;).</p>
+<p>By default, InnoDB operates in REPEATABLE READ transaction isolation level. In this case, InnoDB uses next-key locks for searches and index scans, which prevents phantom rows (see Section <a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-next-key-locking.html" target="_blank" rel="noopener">14.5.4</a>, &quot;Phantom Rows&quot;).</p>
 </blockquote>
 <h2 id="InnoDB-Locks"><a href="#InnoDB-Locks" class="headerlink" title="InnoDB Locks"></a>InnoDB Locks</h2><p><code>IS/IX/S/X</code>锁兼容矩阵：</p>
 <table>
@@ -355,7 +355,7 @@
 </li>
 <li>Next-Key Locks (NK)<ul>
 <li>Record Locks + Gap Locks, 半开半闭区间。</li>
-<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html#innodb-next-key-locks" target="_blank" rel="external">Next-Key Locks</a>是为防止幻读的发生，而只有<code>REPEATABLE-READ</code>以及以上隔离级别才能防止幻读，所以在<code>READ-COMMITTED</code>隔离级别下面没有<code>Next-Key Locks</code>。</li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html#innodb-next-key-locks" target="_blank" rel="noopener">Next-Key Locks</a>是为防止幻读的发生，而只有<code>REPEATABLE-READ</code>以及以上隔离级别才能防止幻读，所以在<code>READ-COMMITTED</code>隔离级别下面没有<code>Next-Key Locks</code>。</li>
 </ul>
 </li>
 </ol>
@@ -403,19 +403,19 @@
 </tbody>
 </table>
 <h2 id="问题重现"><a href="#问题重现" class="headerlink" title="问题重现"></a>问题重现</h2><p>应用程序集群有3台机器，由于并发的问题，3台机器同时往数据里插入记录，并且在插入数据过程有其他的数据校验，因为数据校验失败，事务需要回滚，而导致死锁产生。</p>
-<p>死锁问题产生的<code>SHOW ENGINE INNODB STATUS</code>提示内容与网上的文章：<a href="http://blog.itpub.net/27000195/viewspace-2120472/" target="_blank" rel="external">并发insert操作导致的dead lock</a>基本是一样的，事务隔离级别为<code>READ-COMMITTED</code>，有2个字段联合的唯一索引，状态提及内容中涉及Gap Lock：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">------------------------</div><div class="line">LATEST DETECTED DEADLOCK</div><div class="line">------------------------</div><div class="line">2017-09-15 09:35:16 7fdb8b6fb700</div><div class="line">*** (1) TRANSACTION:</div><div class="line">TRANSACTION 606898669, ACTIVE 0.036 sec inserting</div><div class="line">mysql tables in use 1, locked 1</div><div class="line">LOCK WAIT 4 lock struct(s), heap size 1184, 2 row lock(s), undo log entries 1</div><div class="line">LOCK BLOCKING MySQL thread id: 5706233 block 5707263</div><div class="line">MySQL thread id 5707263, OS thread handle 0x7fdb867be700, query id 4809191957 10.28.30.213 dbadmin update</div><div class="line">insert into `t_deadlock` (user_id,type,value,active,created) values(3016018,&apos;ADMIN&apos;,&apos;500&apos;,1,&apos;2017-09-15 09:35:16&apos;)</div><div class="line">*** (1) WAITING FOR THIS LOCK TO BE GRANTED:</div><div class="line">RECORD LOCKS space id 543110 page no 15540 n bits 584 index `ix_user_id_type` of table `test`.`t_deadlock` trx id 606898669 lock_mode X locks gap before rec insert intention waiting</div><div class="line">Record lock, heap no 508 PHYSICAL RECORD: n_fields 3; compact format; info bits 0</div><div class="line"> 0: len 4; hex 802e0552; asc . R;;</div><div class="line"> 1: len 13; hex 77785f73756273637269626564; asc subscribed;;</div><div class="line"> 2: len 4; hex 8027c73d; asc &apos; =;;</div><div class="line"></div><div class="line">*** (2) TRANSACTION:</div><div class="line">TRANSACTION 606898668, ACTIVE 0.057 sec inserting</div><div class="line">mysql tables in use 1, locked 1</div><div class="line">4 lock struct(s), heap size 1184, 2 row lock(s), undo log entries 1</div><div class="line">MySQL thread id 5706233, OS thread handle 0x7fdb8b6fb700, query id 4809191891 10.172.25.211 dbadmin update</div><div class="line">insert into `t_deadlock` (user_id,type,value,active,created) values(3016018,&apos;ADMIN&apos;,&apos;2000&apos;,1,&apos;2017-09-15 09:35:15.973&apos;)</div><div class="line">*** (2) HOLDS THE LOCK(S):</div><div class="line">RECORD LOCKS space id 543110 page no 15540 n bits 584 index `ix_user_id_type` of table `test`.`t_deadlock` trx id 606898668 lock mode S locks gap before rec</div><div class="line">Record lock, heap no 508 PHYSICAL RECORD: n_fields 3; compact format; info bits 0</div><div class="line"> 0: len 4; hex 802e0552; asc . R;;</div><div class="line"> 1: len 13; hex 77785f73756273637269626564; asc subscribed;;</div><div class="line"> 2: len 4; hex 8027c73d; asc &apos; =;;</div><div class="line"></div><div class="line">*** (2) WAITING FOR THIS LOCK TO BE GRANTED:</div><div class="line">RECORD LOCKS space id 543110 page no 15540 n bits 584 index `ix_user_id_type` of table `test`.`t_deadlock` trx id 606898668 lock_mode X locks gap before rec insert intention waiting</div><div class="line">Record lock, heap no 508 PHYSICAL RECORD: n_fields 3; compact format; info bits 0</div><div class="line"> 0: len 4; hex 802e0552; asc . R;;</div><div class="line"> 1: len 13; hex 77785f73756273637269626564; asc subscribed;;</div><div class="line"> 2: len 4; hex 8027c73d; asc &apos; =;;</div><div class="line"></div><div class="line">*** WE ROLL BACK TRANSACTION (2)</div><div class="line">------------</div><div class="line">TRANSACTIONS</div><div class="line">------------</div></pre></td></tr></table></figure>
+<p>死锁问题产生的<code>SHOW ENGINE INNODB STATUS</code>提示内容与网上的文章：<a href="http://blog.itpub.net/27000195/viewspace-2120472/" target="_blank" rel="noopener">并发insert操作导致的dead lock</a>基本是一样的，事务隔离级别为<code>READ-COMMITTED</code>，有2个字段联合的唯一索引，状态提及内容中涉及Gap Lock：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">------------------------</span><span class="line">LATEST DETECTED DEADLOCK</span><span class="line">------------------------</span><span class="line">2017-09-15 09:35:16 7fdb8b6fb700</span><span class="line">*** (1) TRANSACTION:</span><span class="line">TRANSACTION 606898669, ACTIVE 0.036 sec inserting</span><span class="line">mysql tables in use 1, locked 1</span><span class="line">LOCK WAIT 4 lock struct(s), heap size 1184, 2 row lock(s), undo log entries 1</span><span class="line">LOCK BLOCKING MySQL thread id: 5706233 block 5707263</span><span class="line">MySQL thread id 5707263, OS thread handle 0x7fdb867be700, query id 4809191957 10.28.30.213 dbadmin update</span><span class="line">insert into `t_deadlock` (user_id,type,value,active,created) values(3016018,&apos;ADMIN&apos;,&apos;500&apos;,1,&apos;2017-09-15 09:35:16&apos;)</span><span class="line">*** (1) WAITING FOR THIS LOCK TO BE GRANTED:</span><span class="line">RECORD LOCKS space id 543110 page no 15540 n bits 584 index `ix_user_id_type` of table `test`.`t_deadlock` trx id 606898669 lock_mode X locks gap before rec insert intention waiting</span><span class="line">Record lock, heap no 508 PHYSICAL RECORD: n_fields 3; compact format; info bits 0</span><span class="line"> 0: len 4; hex 802e0552; asc . R;;</span><span class="line"> 1: len 13; hex 77785f73756273637269626564; asc subscribed;;</span><span class="line"> 2: len 4; hex 8027c73d; asc &apos; =;;</span><span class="line"></span><span class="line">*** (2) TRANSACTION:</span><span class="line">TRANSACTION 606898668, ACTIVE 0.057 sec inserting</span><span class="line">mysql tables in use 1, locked 1</span><span class="line">4 lock struct(s), heap size 1184, 2 row lock(s), undo log entries 1</span><span class="line">MySQL thread id 5706233, OS thread handle 0x7fdb8b6fb700, query id 4809191891 10.172.25.211 dbadmin update</span><span class="line">insert into `t_deadlock` (user_id,type,value,active,created) values(3016018,&apos;ADMIN&apos;,&apos;2000&apos;,1,&apos;2017-09-15 09:35:15.973&apos;)</span><span class="line">*** (2) HOLDS THE LOCK(S):</span><span class="line">RECORD LOCKS space id 543110 page no 15540 n bits 584 index `ix_user_id_type` of table `test`.`t_deadlock` trx id 606898668 lock mode S locks gap before rec</span><span class="line">Record lock, heap no 508 PHYSICAL RECORD: n_fields 3; compact format; info bits 0</span><span class="line"> 0: len 4; hex 802e0552; asc . R;;</span><span class="line"> 1: len 13; hex 77785f73756273637269626564; asc subscribed;;</span><span class="line"> 2: len 4; hex 8027c73d; asc &apos; =;;</span><span class="line"></span><span class="line">*** (2) WAITING FOR THIS LOCK TO BE GRANTED:</span><span class="line">RECORD LOCKS space id 543110 page no 15540 n bits 584 index `ix_user_id_type` of table `test`.`t_deadlock` trx id 606898668 lock_mode X locks gap before rec insert intention waiting</span><span class="line">Record lock, heap no 508 PHYSICAL RECORD: n_fields 3; compact format; info bits 0</span><span class="line"> 0: len 4; hex 802e0552; asc . R;;</span><span class="line"> 1: len 13; hex 77785f73756273637269626564; asc subscribed;;</span><span class="line"> 2: len 4; hex 8027c73d; asc &apos; =;;</span><span class="line"></span><span class="line">*** WE ROLL BACK TRANSACTION (2)</span><span class="line">------------</span><span class="line">TRANSACTIONS</span><span class="line">------------</span></pre></td></tr></table></figure>
 <p>上述信息中关键的3个锁记录如下：</p>
 <blockquote>
 <p>RECORD LOCKS space id 543110 page no 15540 n bits 584 index ix_user_id_type of table test.t_deadlock trx id 606898669 lock_mode X locks gap before rec insert intention waiting<br>RECORD LOCKS space id 543110 page no 15540 n bits 584 index ix_user_id_type of table test.t_deadlock trx id 606898668 lock mode S locks gap before rec<br>RECORD LOCKS space id 543110 page no 15540 n bits 584 index ix_user_id_type of table test.t_deadlock trx id 606898668 lock_mode X locks gap before rec insert intention waiting</p>
 </blockquote>
-<h3 id="MySQL-环境"><a href="#MySQL-环境" class="headerlink" title="MySQL 环境"></a>MySQL 环境</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">mysql&gt; SELECT version();</div><div class="line output">+-----------+</div><div class="line output">| version() |</div><div class="line output">+-----------+</div><div class="line output">| 5.6.24    |</div><div class="line output">+-----------+</div><div class="line output">1 row in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; SHOW VARIABLES LIKE &apos;innodb_locks_unsafe_for_binlog&apos;;</div><div class="line output">+--------------------------------+-------+</div><div class="line output">| Variable_name                  | Value |</div><div class="line output">+--------------------------------+-------+</div><div class="line output">| innodb_locks_unsafe_for_binlog | OFF   |</div><div class="line output">+--------------------------------+-------+</div><div class="line output">1 row in set (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT @@global.tx_isolation, @@session.tx_isolation, @@tx_isolation;</div><div class="line output">+-----------------------+------------------------+----------------+</div><div class="line output">| @@global.tx_isolation | @@session.tx_isolation | @@tx_isolation |</div><div class="line output">+-----------------------+------------------------+----------------+</div><div class="line output">| READ-COMMITTED        | READ-COMMITTED         | READ-COMMITTED |</div><div class="line output">+-----------------------+------------------------+----------------+</div><div class="line output">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
-<h3 id="设置隔离级别"><a href="#设置隔离级别" class="headerlink" title="设置隔离级别"></a>设置隔离级别</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">mysql&gt; SET GLOBAL tx_isolation = &apos;READ-COMMITTED&apos;;</div><div class="line output">Query OK, 0 rows affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; SET SESSION tx_isolation = &apos;READ-COMMITTED&apos;;</div><div class="line output">Query OK, 0 rows affected (0.00 sec)</div></pre></td></tr></table></figure>
+<h3 id="MySQL-环境"><a href="#MySQL-环境" class="headerlink" title="MySQL 环境"></a>MySQL 环境</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; SELECT version();</span><span class="line output">+-----------+</span><span class="line output">| version() |</span><span class="line output">+-----------+</span><span class="line output">| 5.6.24    |</span><span class="line output">+-----------+</span><span class="line output">1 row in set (0.00 sec)</span><span class="line"></span><span class="line">mysql&gt; SHOW VARIABLES LIKE &apos;innodb_locks_unsafe_for_binlog&apos;;</span><span class="line output">+--------------------------------+-------+</span><span class="line output">| Variable_name                  | Value |</span><span class="line output">+--------------------------------+-------+</span><span class="line output">| innodb_locks_unsafe_for_binlog | OFF   |</span><span class="line output">+--------------------------------+-------+</span><span class="line output">1 row in set (0.01 sec)</span><span class="line"></span><span class="line">mysql&gt; SELECT @@global.tx_isolation, @@session.tx_isolation, @@tx_isolation;</span><span class="line output">+-----------------------+------------------------+----------------+</span><span class="line output">| @@global.tx_isolation | @@session.tx_isolation | @@tx_isolation |</span><span class="line output">+-----------------------+------------------------+----------------+</span><span class="line output">| READ-COMMITTED        | READ-COMMITTED         | READ-COMMITTED |</span><span class="line output">+-----------------------+------------------------+----------------+</span><span class="line output">1 row in set (0.00 sec)</span></pre></td></tr></table></figure>
+<h3 id="设置隔离级别"><a href="#设置隔离级别" class="headerlink" title="设置隔离级别"></a>设置隔离级别</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; SET GLOBAL tx_isolation = &apos;READ-COMMITTED&apos;;</span><span class="line output">Query OK, 0 rows affected (0.01 sec)</span><span class="line"></span><span class="line">mysql&gt; SET SESSION tx_isolation = &apos;READ-COMMITTED&apos;;</span><span class="line output">Query OK, 0 rows affected (0.00 sec)</span></pre></td></tr></table></figure>
 <p>在每个mysql session开启后都执行以下命令，mysql默认的隔离级别一般是<code>REPEATABLE-READ</code>。</p>
 <blockquote>
 <p>SET SESSION tx_isolation = &#39;READ-COMMITTED&#39;;</p>
 </blockquote>
-<h3 id="创建测试表"><a href="#创建测试表" class="headerlink" title="创建测试表"></a>创建测试表</h3><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">USE</span> <span class="keyword">test</span>;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> deadlock (</div><div class="line">  <span class="keyword">id</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">  a <span class="built_in">smallint</span>(<span class="number">5</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</div><div class="line">  b <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</div><div class="line">  c <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</div><div class="line">  d datetime <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0000-00-00 00:00:00'</span>,</div><div class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>),</div><div class="line">  <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> uniq_b_c_a (b,c,a)</div><div class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</div></pre></td></tr></table></figure>
+<h3 id="创建测试表"><a href="#创建测试表" class="headerlink" title="创建测试表"></a>创建测试表</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">USE</span> <span class="keyword">test</span>;</span><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> deadlock (</span><span class="line">  <span class="keyword">id</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><span class="line">  a <span class="built_in">smallint</span>(<span class="number">5</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><span class="line">  b <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><span class="line">  c <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><span class="line">  d datetime <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0000-00-00 00:00:00'</span>,</span><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>),</span><span class="line">  <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> uniq_b_c_a (b,c,a)</span><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span></pre></td></tr></table></figure>
 <h3 id="复现死锁过程"><a href="#复现死锁过程" class="headerlink" title="复现死锁过程"></a>复现死锁过程</h3><table>
 <thead>
 <tr>
@@ -463,12 +463,12 @@
 </tbody>
 </table>
 <p>在事务T1没有ROLLBACK时，可以查看数据库引擎innodb锁的情况如下：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><div class="line">mysql&gt; SELECT * FROM information_schema.INNODB_LOCKS;</div><div class="line output">+----------------+-------------+-----------+-----------+-------------------+------------+------------+-----------+----------+-----------+</div><div class="line output">| lock_id        | lock_trx_id | lock_mode | lock_type | lock_table        | lock_index | lock_space | lock_page | lock_rec | lock_data |</div><div class="line output">+----------------+-------------+-----------+-----------+-------------------+------------+------------+-----------+----------+-----------+</div><div class="line output">| 140106:270:4:3 | 140106      | S         | RECORD    | `test`.`deadlock` | unq_b_c_a  |        270 |         4 |        3 | 2, 4, 1   |</div><div class="line output">| 140104:270:4:3 | 140104      | X         | RECORD    | `test`.`deadlock` | unq_b_c_a  |        270 |         4 |        3 | 2, 4, 1   |</div><div class="line output">| 140105:270:4:3 | 140105      | S         | RECORD    | `test`.`deadlock` | unq_b_c_a  |        270 |         4 |        3 | 2, 4, 1   |</div><div class="line output">+----------------+-------------+-----------+-----------+-------------------+------------+------------+-----------+----------+-----------+</div><div class="line output">3 rows in set (0.01 sec)</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM information_schema.INNODB_LOCKS;</span><span class="line output">+----------------+-------------+-----------+-----------+-------------------+------------+------------+-----------+----------+-----------+</span><span class="line output">| lock_id        | lock_trx_id | lock_mode | lock_type | lock_table        | lock_index | lock_space | lock_page | lock_rec | lock_data |</span><span class="line output">+----------------+-------------+-----------+-----------+-------------------+------------+------------+-----------+----------+-----------+</span><span class="line output">| 140106:270:4:3 | 140106      | S         | RECORD    | `test`.`deadlock` | unq_b_c_a  |        270 |         4 |        3 | 2, 4, 1   |</span><span class="line output">| 140104:270:4:3 | 140104      | X         | RECORD    | `test`.`deadlock` | unq_b_c_a  |        270 |         4 |        3 | 2, 4, 1   |</span><span class="line output">| 140105:270:4:3 | 140105      | S         | RECORD    | `test`.`deadlock` | unq_b_c_a  |        270 |         4 |        3 | 2, 4, 1   |</span><span class="line output">+----------------+-------------+-----------+-----------+-------------------+------------+------------+-----------+----------+-----------+</span><span class="line output">3 rows in set (0.01 sec)</span></pre></td></tr></table></figure>
 <p>如果T1未<code>ROLLBACK</code>，而是<code>COMMIT</code>的话，T2和T3会报唯一键冲突，提示内容如下：</p>
 <blockquote>
 <p>ERROR 1062 (23000): Duplicate entry &#39;2-3-1&#39; for key &#39;unq_b_c_a&#39;</p>
 </blockquote>
-<h3 id="SHOW-ENGINE-INNODB-STATUS"><a href="#SHOW-ENGINE-INNODB-STATUS" class="headerlink" title="SHOW ENGINE INNODB STATUS"></a>SHOW ENGINE INNODB STATUS</h3><figure class="highlight"><table><tr><td class="code"><pre><div class="line">mysql&gt; SHOW ENGINE INNODB STATUS\G</div><div class="line output">------------------------</div><div class="line output">LATEST DETECTED DEADLOCK</div><div class="line output">------------------------</div><div class="line output">2017-09-16 09:50:09 12ff74000</div><div class="line output">*** (1) TRANSACTION:</div><div class="line output">TRANSACTION 140105, ACTIVE 32 sec inserting</div><div class="line output">mysql tables in use 1, locked 1</div><div class="line output">LOCK WAIT 4 lock struct(s), heap size 1184, 2 row lock(s), undo log entries 1</div><div class="line output">MySQL thread id 154, OS thread handle 0x12ffb8000, query id 2318 localhost root update</div><div class="line output">insert into deadlock(a,b,c) values(1,2,4)</div><div class="line output">*** (1) WAITING FOR THIS LOCK TO BE GRANTED:</div><div class="line output">RECORD LOCKS space id 270 page no 4 n bits 72 index `unq_b_c_a` of table `test`.`deadlock` trx id 140105 lock_mode X insert intention waiting</div><div class="line output">Record lock, heap no 1 PHYSICAL RECORD: n_fields 1; compact format; info bits 0</div><div class="line output"> 0: len 8; hex 73757072656d756d; asc supremum;;</div><div class="line output"></div><div class="line output">*** (2) TRANSACTION:</div><div class="line output">TRANSACTION 140106, ACTIVE 17 sec inserting</div><div class="line output">mysql tables in use 1, locked 1</div><div class="line output">4 lock struct(s), heap size 1184, 2 row lock(s), undo log entries 1</div><div class="line output">MySQL thread id 153, OS thread handle 0x12ff74000, query id 2320 localhost root update</div><div class="line output">insert into deadlock(a,b,c) values(1,2,4)</div><div class="line output">*** (2) HOLDS THE LOCK(S):</div><div class="line output">RECORD LOCKS space id 270 page no 4 n bits 72 index `unq_b_c_a` of table `test`.`deadlock` trx id 140106 lock mode S</div><div class="line output">Record lock, heap no 1 PHYSICAL RECORD: n_fields 1; compact format; info bits 0</div><div class="line output"> 0: len 8; hex 73757072656d756d; asc supremum;;</div><div class="line output"></div><div class="line output">*** (2) WAITING FOR THIS LOCK TO BE GRANTED:</div><div class="line output">RECORD LOCKS space id 270 page no 4 n bits 72 index `unq_b_c_a` of table `test`.`deadlock` trx id 140106 lock_mode X insert intention waiting</div><div class="line output">Record lock, heap no 1 PHYSICAL RECORD: n_fields 1; compact format; info bits 0</div><div class="line output"> 0: len 8; hex 73757072656d756d; asc supremum;;</div><div class="line output"></div><div class="line output">*** WE ROLL BACK TRANSACTION (2)</div><div class="line output">----------------------------</div><div class="line output">END OF INNODB MONITOR OUTPUT</div><div class="line output">============================</div><div class="line output">1 row in set (0.01 sec)</div></pre></td></tr></table></figure>
+<h3 id="SHOW-ENGINE-INNODB-STATUS"><a href="#SHOW-ENGINE-INNODB-STATUS" class="headerlink" title="SHOW ENGINE INNODB STATUS"></a>SHOW ENGINE INNODB STATUS</h3><figure class="highlight"><table><tr><td class="code"><pre><span class="line">mysql&gt; SHOW ENGINE INNODB STATUS\G</span><span class="line output">------------------------</span><span class="line output">LATEST DETECTED DEADLOCK</span><span class="line output">------------------------</span><span class="line output">2017-09-16 09:50:09 12ff74000</span><span class="line output">*** (1) TRANSACTION:</span><span class="line output">TRANSACTION 140105, ACTIVE 32 sec inserting</span><span class="line output">mysql tables in use 1, locked 1</span><span class="line output">LOCK WAIT 4 lock struct(s), heap size 1184, 2 row lock(s), undo log entries 1</span><span class="line output">MySQL thread id 154, OS thread handle 0x12ffb8000, query id 2318 localhost root update</span><span class="line output">insert into deadlock(a,b,c) values(1,2,4)</span><span class="line output">*** (1) WAITING FOR THIS LOCK TO BE GRANTED:</span><span class="line output">RECORD LOCKS space id 270 page no 4 n bits 72 index `unq_b_c_a` of table `test`.`deadlock` trx id 140105 lock_mode X insert intention waiting</span><span class="line output">Record lock, heap no 1 PHYSICAL RECORD: n_fields 1; compact format; info bits 0</span><span class="line output"> 0: len 8; hex 73757072656d756d; asc supremum;;</span><span class="line output"></span><span class="line output">*** (2) TRANSACTION:</span><span class="line output">TRANSACTION 140106, ACTIVE 17 sec inserting</span><span class="line output">mysql tables in use 1, locked 1</span><span class="line output">4 lock struct(s), heap size 1184, 2 row lock(s), undo log entries 1</span><span class="line output">MySQL thread id 153, OS thread handle 0x12ff74000, query id 2320 localhost root update</span><span class="line output">insert into deadlock(a,b,c) values(1,2,4)</span><span class="line output">*** (2) HOLDS THE LOCK(S):</span><span class="line output">RECORD LOCKS space id 270 page no 4 n bits 72 index `unq_b_c_a` of table `test`.`deadlock` trx id 140106 lock mode S</span><span class="line output">Record lock, heap no 1 PHYSICAL RECORD: n_fields 1; compact format; info bits 0</span><span class="line output"> 0: len 8; hex 73757072656d756d; asc supremum;;</span><span class="line output"></span><span class="line output">*** (2) WAITING FOR THIS LOCK TO BE GRANTED:</span><span class="line output">RECORD LOCKS space id 270 page no 4 n bits 72 index `unq_b_c_a` of table `test`.`deadlock` trx id 140106 lock_mode X insert intention waiting</span><span class="line output">Record lock, heap no 1 PHYSICAL RECORD: n_fields 1; compact format; info bits 0</span><span class="line output"> 0: len 8; hex 73757072656d756d; asc supremum;;</span><span class="line output"></span><span class="line output">*** WE ROLL BACK TRANSACTION (2)</span><span class="line output">----------------------------</span><span class="line output">END OF INNODB MONITOR OUTPUT</span><span class="line output">============================</span><span class="line output">1 row in set (0.01 sec)</span></pre></td></tr></table></figure>
 <h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><ol>
 <li><code>SHOW ENGINE INNODB STATUS\G</code>看到的DEADLOCK相关信息，只会返回最后的2个事务的信息，而其实有可能有更多的事务才最终导致的死锁。</li>
 <li>当有3个（或以上）事务对相同的表进行insert操作，如果insert对应的字段上有uniq key约束并且第一个事务ROLLBACK了，那其中一个将返回死锁错误信息。</li>
@@ -491,11 +491,11 @@
 </li>
 </ol>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html" target="_blank" rel="external">14.5.1 InnoDB Locking</a></li>
-<li><a href="http://yeshaoting.cn/article/database/%E9%80%9A%E8%BF%87InnoDB%E7%9B%91%E6%8E%A7%E7%8A%B6%E6%80%81%E5%88%86%E6%9E%90%E9%94%81%E5%8D%A0%E7%94%A8/index.html" target="_blank" rel="external">通过InnoDB监控状态分析锁占用</a></li>
-<li><a href="http://yeshaoting.cn/article/database/mysql%20insert%E9%94%81%E6%9C%BA%E5%88%B6/index.html" target="_blank" rel="external">mysql insert锁机制</a></li>
-<li><a href="http://blog.itpub.net/27000195/viewspace-2120472/" target="_blank" rel="external">并发insert操作导致的dead lock</a></li>
-<li><a href="http://www.cnblogs.com/renolei/p/4673842.html" target="_blank" rel="external">MySQL gap locks/next-key locks浅析</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html" target="_blank" rel="noopener">14.5.1 InnoDB Locking</a></li>
+<li><a href="http://yeshaoting.cn/article/database/%E9%80%9A%E8%BF%87InnoDB%E7%9B%91%E6%8E%A7%E7%8A%B6%E6%80%81%E5%88%86%E6%9E%90%E9%94%81%E5%8D%A0%E7%94%A8/index.html" target="_blank" rel="noopener">通过InnoDB监控状态分析锁占用</a></li>
+<li><a href="http://yeshaoting.cn/article/database/mysql%20insert%E9%94%81%E6%9C%BA%E5%88%B6/index.html" target="_blank" rel="noopener">mysql insert锁机制</a></li>
+<li><a href="http://blog.itpub.net/27000195/viewspace-2120472/" target="_blank" rel="noopener">并发insert操作导致的dead lock</a></li>
+<li><a href="http://www.cnblogs.com/renolei/p/4673842.html" target="_blank" rel="noopener">MySQL gap locks/next-key locks浅析</a></li>
 </ol>
 
       
@@ -522,8 +522,9 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/linux/2017/08/08/git-useful-commands.html" rel="next" title="git一些有用但不常用的命令">
-                上一篇：git一些有用但不常用的命令
+              <a href="/blog/linux/2017/08/08/git-useful-commands.html" rel="next" title="命令行神器之 git 不常用子命令篇">
+                <i class="fa fa-chevron-left"></i>
+                命令行神器之 git 不常用子命令篇
               </a>
             
           </div>
@@ -531,7 +532,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/javascript/2017/09/18/report-javascript-error-to-server.html" rel="prev" title="report javascript error to server">
-                下一篇：report javascript error to server
+                <i class="fa fa-chevron-right"></i>
+                report javascript error to server
               </a>
             
           </div>
@@ -580,7 +582,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -591,16 +593,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -682,10 +682,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

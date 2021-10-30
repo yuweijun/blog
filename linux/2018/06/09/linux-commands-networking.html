@@ -1,0 +1,600 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="Linux 查看流量相关的命令 nethogs iptraf ifstat ethtool tcpdump ss dstat slurm nload bmon nmon dstat atop iftop iptraf sar jnettop slurm tcptrack  其中一些在 Mac OSX 上也能同样工作，如：  nethogs tcptrack iftop bmon slurm  ne">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 常用命令之 流量监控命令">
+<meta property="og:url" content="http://www.4e00.com/linux/2018/06/09/linux-commands-networking.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="Linux 查看流量相关的命令 nethogs iptraf ifstat ethtool tcpdump ss dstat slurm nload bmon nmon dstat atop iftop iptraf sar jnettop slurm tcptrack  其中一些在 Mac OSX 上也能同样工作，如：  nethogs tcptrack iftop bmon slurm  ne">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 常用命令之 流量监控命令">
+<meta name="twitter:description" content="Linux 查看流量相关的命令 nethogs iptraf ifstat ethtool tcpdump ss dstat slurm nload bmon nmon dstat atop iftop iptraf sar jnettop slurm tcptrack  其中一些在 Mac OSX 上也能同样工作，如：  nethogs tcptrack iftop bmon slurm  ne">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2018/06/09/linux-commands-networking.html">
+
+  <title> linux 常用命令之 流量监控命令 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux 常用命令之 流量监控命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-06-09T13:12:22+08:00" content="2018-06-09">
+              2018-06-09
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Linux-查看流量相关的命令"><a href="#Linux-查看流量相关的命令" class="headerlink" title="Linux 查看流量相关的命令"></a>Linux 查看流量相关的命令</h2><ul>
+<li>nethogs</li>
+<li>iptraf</li>
+<li>ifstat</li>
+<li>ethtool</li>
+<li>tcpdump</li>
+<li>ss</li>
+<li>dstat</li>
+<li>slurm</li>
+<li>nload</li>
+<li>bmon</li>
+<li>nmon</li>
+<li>dstat</li>
+<li>atop</li>
+<li>iftop</li>
+<li>iptraf</li>
+<li>sar</li>
+<li>jnettop</li>
+<li>slurm</li>
+<li>tcptrack</li>
+</ul>
+<p>其中一些在 Mac OSX 上也能同样工作，如：</p>
+<ol>
+<li>nethogs</li>
+<li>tcptrack</li>
+<li>iftop</li>
+<li>bmon</li>
+<li>slurm</li>
+</ol>
+<h2 id="nethogs"><a href="#nethogs" class="headerlink" title="nethogs"></a>nethogs</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nethogs</span></span><span class="line output">NetHogs version 0.8.5-2</span><span class="line output"></span><span class="line output">    PID   USER PROGRAM                                     DEV SENT   RECEIVED</span><span class="line output">      ?   root 149.28.53.9:80-101.86.236.205:65032     311.416 10.356   KB/sec</span><span class="line output">      ?   root 149.28.53.9:8888-112.65.48.103:62927      0.998 0.727    KB/sec</span><span class="line output">  12083   root sshd:                                root@pts/0 0.617     0.444 KB/sec</span><span class="line output">    712 nobody /usr/bin/python                            ens3 0.346     0.049 KB/sec</span><span class="line output">    713 nobody /usr/bin/python                            ens3 0.000     0.000 KB/sec</span><span class="line output">      ?   root unknown                                     TCP 0.000     0.000 KB/sec</span><span class="line output"></span><span class="line output">  TOTAL                                                    274.976      10.216 KB/sec</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="tcptrack"><a href="#tcptrack" class="headerlink" title="tcptrack"></a>tcptrack</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcptrack</span> -i ens3</span><span class="line output"> Client                Server                State        Idle A Speed</span><span class="line output"> 101.86.236.205:65184  149.28.53.9:80        ESTABLISHED  2s     21 KB/s</span><span class="line output"> 101.86.236.205:32023  149.28.53.9:80        ESTABLISHED  3s     0 B/s</span><span class="line output"> 101.86.236.205:32025  149.28.53.9:80        ESTABLISHED  0s     41 KB/s</span><span class="line output"> 101.86.236.205:31645  149.28.53.9:22        ESTABLISHED  0s     6 KB/s</span><span class="line output"> 101.86.236.205:65188  149.28.53.9:8888      ESTABLISHED  3s     0 B/s</span><span class="line output"> 101.86.236.205:65186  149.28.53.9:80        ESTABLISHED  0s     10 KB/s</span><span class="line output"> 101.86.236.205:65182  149.28.53.9:80        ESTABLISHED  1s     82 KB/s</span><span class="line output"> 149.28.53.9:42006     172.217.5.228:443     ESTABLISHED  3s     0 B/s</span><span class="line output"> 101.86.236.205:65181  149.28.53.9:80        ESTABLISHED  0s     86 KB/s</span><span class="line output"></span><span class="line output"> TOTAL                                                           250 KB/s</span></pre></td></tr></table></figure>
+<h2 id="iftop"><a href="#iftop" class="headerlink" title="iftop"></a>iftop</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iftop</span></span><span class="line output">                           12.5Kb                     25.0Kb 37.5Kb                   50.0Kb 62.5Kb</span><span class="line output">+--------------------------+--------------------------+-------------------------------+--------------------------+--</span><span class="line output">149.28.53.9.0b001.com                                  =&gt;     101.86.236.205                     1.67Mb 349Kb  292Kb</span><span class="line output">                                                    &lt;= 67.2Kb 16.6Kb                             14.2Kb</span><span class="line output">149.28.53.9.0b001.com                                  =&gt;     qb-in-f188.1e100.net               0b     1.10Kb 935b</span><span class="line output">                                                    &lt;= 0b     626b                               522b</span><span class="line output">149.28.53.9.0b001.com                                  =&gt;     108.61.10.10.choopa.net            340b   534b   445b</span><span class="line output">                                                    &lt;= 476b   853b                               711b</span><span class="line output">149.28.53.9.0b001.com                                  =&gt;     qm-in-f188.1e100.net               556b   111b   93b</span><span class="line output">                                                    &lt;= 332b   66b                                55b</span><span class="line output">149.28.53.9.0b001.com                                  =&gt;     qo-in-f188.1e100.net               0b     83b    69b</span><span class="line output">                                                    &lt;= 0b     32b                                27b</span><span class="line output">149.28.53.9.0b001.com                                  =&gt;     78.188.192.127.static.ttnet.com.tr 0b     0b     29b</span><span class="line output">                                                                   &lt;= 0b     0b                                 0b</span><span class="line output"></span><span class="line output">---------------------------------------------------------------------------------------------------------------------</span><span class="line output">TX:                                 cum:   440KB                              peak:  1.67Mb rates: 1.67Mb 351Kb 294Kb</span><span class="line output">RX:                                 23.2KB 68.0Kb                             68.0Kb 18.1Kb 15.5Kb</span><span class="line output">TOTAL:                              463KB  1.74Mb                             1.74Mb 369Kb  309Kb</span></pre></td></tr></table></figure>
+<h2 id="bmon"><a href="#bmon" class="headerlink" title="bmon"></a>bmon</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">bmon</span></span><span class="line output"> lo                                                                                                                                         bmon 4.0</span><span class="line output">Interfaces                     │ RX bps       pps     %│ TX bps       pps     %</span><span class="line output">  lo                           │   2.13KiB      0      │   2.13KiB      0</span><span class="line output">    qdisc none (noqueue)       │      0         0      │      0         0</span><span class="line output">  ens3                         │   7.10KiB    110      │ 139.95KiB     72</span><span class="line output">    qdisc none (fq_codel)      │      0         0      │ 141.72KiB    114</span><span class="line output">─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span><span class="line output">     KiB                      (RX Bytes/second)                                      KiB                      (TX Bytes/second)</span><span class="line output">  714.69 ....|.....|.................................................             714.69 ....|.....|.................................................</span><span class="line output">  595.57 ....|..||.|.................................................             595.57 ....|..||.|.................................................</span><span class="line output">  476.46 ....|..||.|.||..............................................             476.46 ....|..||.|.||..............................................</span><span class="line output">  357.34 ....|..||.||||..............................................             357.34 ....|..||.||||..............................................</span><span class="line output">  238.23 ....|..||.||||..............................................             238.23 ....|..||.||||..............................................</span><span class="line output">  119.11 ....|..||.||||..............................................             119.11 ....|..||.||||..............................................</span><span class="line output">         1   5   10   15   20   25   30   35   40   45   50   55   60                    1   5   10   15   20   25   30   35   40   45   50   55   60</span><span class="line output"></span><span class="line output"></span><span class="line output">─────────────────────────────────────────────────────────── Press d to <span class="built_in">enable</span> detailed statistics ───────────────────────────────────────────────────</span><span class="line output">───────────────────────────────────────────────────────── Press i to <span class="built_in">enable</span> additional information ──────────────────────────────────────────────────</span></pre></td></tr></table></figure>
+<h2 id="slurm"><a href="#slurm" class="headerlink" title="slurm"></a>slurm</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">slurm</span> -i ens3</span><span class="line output">                          -= slurm 0.4.3 on 4e00.com =-</span><span class="line output"></span><span class="line output">   x</span><span class="line output">   x                                          x</span><span class="line output"> xxx                                       x  x     x xx</span><span class="line output"> xxxx                                      x  x     xxxxxx</span><span class="line output"> xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span><span class="line output"> xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span><span class="line output"> xxxx                                      xx       xxxxx</span><span class="line output"> xxx                                       x        x xx</span><span class="line output"> x x</span><span class="line output"> x</span><span class="line output"></span><span class="line output"></span><span class="line output"></span><span class="line output">      Active Interface: ens3                    Interface Speed: unknown</span><span class="line output"></span><span class="line output">      Current RX Speed: 16.94 KB/s             Current TX Speed: 569.39 KB/s</span><span class="line output">    Graph Top RX Speed: 21.61 KB/s           Graph Top TX Speed: 569.39 KB/s</span><span class="line output">  Overall Top RX Speed: 21.61 KB/s         Overall Top TX Speed: 569.39 KB/s</span><span class="line output">      Received Packets: 252756              Transmitted Packets: 235054</span><span class="line output">       MBytes Received: 66.703 MB            MBytes Transmitted: 179.114 MB</span><span class="line output">   Errors on Receiving: 0                Errors on Transmission: 0</span></pre></td></tr></table></figure>
+<h2 id="sar"><a href="#sar" class="headerlink" title="sar"></a>sar</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sar</span> -n DEV 1 10</span><span class="line output">Linux 4.15.0-22-generic (localhost)      06/10/2018      _x86_64_        (1 CPU)</span><span class="line output"></span><span class="line output">11:08:50 AM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil</span><span class="line output">11:08:51 AM      ens3      4.00      0.00      0.26      0.00      0.00      0.00      0.00      0.00</span><span class="line output">11:08:51 AM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</span><span class="line output"></span><span class="line output">11:08:51 AM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil</span><span class="line output">11:08:52 AM      ens3      5.00      5.00      0.36      0.63      0.00      0.00      0.00      0.00</span><span class="line output">11:08:52 AM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</span><span class="line output"></span><span class="line output">11:08:52 AM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil</span><span class="line output">11:08:53 AM      ens3      6.00      6.00      0.39      1.07      0.00      0.00      0.00      0.00</span><span class="line output">11:08:53 AM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</span><span class="line output"></span><span class="line output">11:08:53 AM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil</span><span class="line output">11:08:54 AM      ens3      5.00      6.00      0.32      0.96      0.00      0.00      0.00      0.00</span><span class="line output">11:08:54 AM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</span><span class="line output"></span><span class="line output">11:08:54 AM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil</span><span class="line output">11:08:55 AM      ens3     39.00     42.00      5.61     86.01      0.00      0.00      0.00      0.00</span><span class="line output">11:08:55 AM        lo     80.00     80.00    537.36    537.36      0.00      0.00      0.00      0.00</span><span class="line output"></span><span class="line output">11:08:55 AM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil</span><span class="line output">11:08:56 AM      ens3    118.18     80.81      6.37    203.39      0.00      0.00      0.00      0.00</span><span class="line output">11:08:56 AM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</span><span class="line output"></span><span class="line output">11:08:56 AM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil</span><span class="line output">11:08:57 AM      ens3     81.19     51.49      5.02    120.80      0.00      0.00      0.00      0.00</span><span class="line output">11:08:57 AM        lo      9.90      9.90      7.05      7.05      0.00      0.00      0.00      0.00</span><span class="line output"></span><span class="line output">11:08:57 AM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil</span><span class="line output">11:08:58 AM      ens3     81.00     67.00      6.00    150.46      0.00      0.00      0.00      0.00</span><span class="line output">11:08:58 AM        lo     58.00     58.00    643.49    643.49      0.00      0.00      0.00      0.00</span><span class="line output"></span><span class="line output">11:08:58 AM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil</span><span class="line output">11:08:59 AM      ens3     88.00     59.00      4.78    130.33      0.00      0.00      0.00      0.00</span><span class="line output">11:08:59 AM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</span><span class="line output"></span><span class="line output">11:08:59 AM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil</span><span class="line output">11:09:00 AM      ens3     83.00     68.00      6.87    114.07      0.00      0.00      0.00      0.00</span><span class="line output">11:09:00 AM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</span><span class="line output"></span><span class="line output">Average:        IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil</span><span class="line output">Average:         ens3     51.00     38.50      3.60     80.69      0.00      0.00      0.00      0.00</span><span class="line output">Average:           lo     14.80     14.80    118.80    118.80      0.00      0.00      0.00      0.00</span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sar</span> -n TCP 3 10</span><span class="line output">Linux 4.15.0-22-generic (localhost)      06/10/2018      _x86_64_        (1 CPU)</span><span class="line output"></span><span class="line output">11:15:16 AM  active/s passive/s    iseg/s    oseg/s</span><span class="line output">11:15:19 AM      0.00      0.00      2.68      0.00</span><span class="line output">11:15:22 AM      5.02      5.69    223.41    300.67</span><span class="line output">11:15:25 AM      2.01      2.01    220.40    255.18</span><span class="line output">11:15:28 AM      2.35      2.35    203.69    249.33</span><span class="line output">11:15:31 AM      0.33      0.33     92.00    109.33</span><span class="line output">11:15:34 AM      0.00      0.00      3.68      3.01</span><span class="line output">11:15:37 AM      1.00      1.00     28.09     33.11</span><span class="line output">11:15:40 AM      0.00      0.00     33.33     35.67</span><span class="line output">11:15:43 AM      0.67      0.67     51.84     66.22</span><span class="line output">11:15:46 AM      1.35      1.35    364.98    459.93</span><span class="line output">Average:         1.27      1.34    122.18    150.95</span></pre></td></tr></table></figure>
+<h2 id="dstat"><a href="#dstat" class="headerlink" title="dstat"></a>dstat</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">dstat</span> -nf</span><span class="line output">--net/ens3-</span><span class="line output"> recv  send</span><span class="line output">   0     0</span><span class="line output"> 660B  590B</span><span class="line output"> 132B  236B</span><span class="line output"> 132B  260B</span><span class="line output"> 132B  260B</span><span class="line output"> 132B  260B</span><span class="line output"> 600B  748B</span><span class="line output">4663B   89k</span><span class="line output">6438B  189k</span><span class="line output">  13k  123k</span><span class="line output">3864B  117k</span><span class="line output">1152B 5912B</span><span class="line output"> 853B  368B</span><span class="line output">4021B   74k</span><span class="line output">5262B  156k</span><span class="line output">3804B  156k</span><span class="line output">5622B  118k</span><span class="line output">6205B  234k</span><span class="line output">6882B  265k</span></pre></td></tr></table></figure>
+<h2 id="jnettop"><a href="#jnettop" class="headerlink" title="jnettop"></a>jnettop</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">jnettop</span> -i en1</span><span class="line output">run   0:00:14 device en1        pkt[f]ilter: none                                           .</span><span class="line output">[c]ntfilter: on  [b]ps=bytes/s [l]ocal aggr.: none [r]emote aggr.: none</span><span class="line output">[q]uit [h]elp [s]orting [p]ackets [.] pause [0]-[9] switch device</span><span class="line output">LOCAL                          &lt;-&gt;     REMOTE          TXBPS           RXBPS  TOTALBPS</span><span class="line output">(IP)                           PORT    PROTO           (IP)            PORT   TX    RX    TOTAL</span><span class="line output">192.168.31.1                   &lt;-&gt;     239.255.255.250 1.88k/s         0b/s   1.88k/s</span><span class="line output">192.168.31.1                   20322   UDP             239.255.255.250 1900   9.42k 0b    9.42k</span><span class="line output"></span><span class="line output">149.28.53.9.0b001.com          &lt;-&gt;     192.168.31.127  882b/s          272b/s 1.13k/s</span><span class="line output">149.28.53.9                    8888    TCP             192.168.31.127  63847  4.31k 1.33k 5.64k</span><span class="line output"></span><span class="line output">149.28.53.9.0b001.com          &lt;-&gt;     192.168.31.127  216b/s          395b/s 611b/s</span><span class="line output">149.28.53.9                    8888    TCP             192.168.31.127  63821  1.06k 1.93k 2.99k</span><span class="line output"></span><span class="line output">192.168.31.127                 &lt;-&gt;     239.255.255.250 173b/s          0b/s   173b/s</span><span class="line output">192.168.31.127                 49708   UDP             239.255.255.250 1900   868b  0b    868b</span><span class="line output"></span><span class="line output">149.28.53.9.0b001.com          &lt;-&gt;     192.168.31.127  65b/s           49b/s  114b/s</span><span class="line output">149.28.53.9                    8888    TCP             192.168.31.127  63788  261b  198b  459b</span><span class="line output"></span><span class="line output">149.28.53.9.0b001.com          &lt;-&gt;     192.168.31.127  63b/s           51b/s  114b/s</span><span class="line output">149.28.53.9                    22      TCP             192.168.31.127  63738  252b  204b  456b</span><span class="line output"></span><span class="line output">google-public-dns-a.google.com &lt;-&gt;     192.168.31.127  29b/s           17b/s  46b/s</span><span class="line output">8.8.8.8                        53      UDP             192.168.31.127  60521  145b  88b   233b</span><span class="line output"></span><span class="line output">google-public-dns-a.google.com &lt;-&gt;     192.168.31.127  17b/s           17b/s  34b/s</span><span class="line output">8.8.8.8                        53      UDP             192.168.31.127  57562  85b   85b   170b</span><span class="line output"></span><span class="line output">149.28.53.9.0b001.com          &lt;-&gt;     192.168.31.127  0b/s            0b/s   0b/s</span><span class="line output">149.28.53.9                    8888    TCP             192.168.31.127  63791  120k  7.28k 127k</span><span class="line output"></span><span class="line output">192.168.31.127                 &lt;-&gt;     203.208.41.89   0b/s            0b/s   0b/s</span><span class="line output">192.168.31.127                 63527   UDP             203.208.41.89   443    295b  348b  643b</span><span class="line output"></span><span class="line output">google-public-dns-a.google.com &lt;-&gt;     192.168.31.127  0b/s            0b/s   0b/s</span><span class="line output">8.8.8.8                        53      UDP             192.168.31.127  61409  146b  86b   232b</span><span class="line output"></span><span class="line output">─────────────────────────────────────────────────────────────────────────────────────────────</span><span class="line output">TOTAL                          3.29k/s 801b/s          4.08k/s</span></pre></td></tr></table></figure>
+<h2 id="vnstat"><a href="#vnstat" class="headerlink" title="vnstat"></a>vnstat</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">vnstat</span> -u -i ens3</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">service</span> vnstat start</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">vnstat</span> -d</span><span class="line"><span class="comment output"></span></span><span class="line"><span class="comment output"> ens3  /  daily</span></span><span class="line"><span class="comment output"></span></span><span class="line"><span class="comment output">         day         rx      |     tx      |    total    |   avg. rate</span></span><span class="line"><span class="comment output">     ------------------------+-------------+-------------+---------------</span></span><span class="line"><span class="comment output">     06/10/2018      102 KiB |     208 KiB |     310 KiB |    0.09 kbit/s</span></span><span class="line"><span class="comment output">     ------------------------+-------------+-------------+---------------</span></span><span class="line"><span class="comment output">     estimated        --     |      --     |      --     |</span></span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">vnstat</span> -m</span><span class="line"><span class="comment output"></span></span><span class="line"><span class="comment output"> ens3  /  monthly</span></span><span class="line"><span class="comment output"></span></span><span class="line"><span class="comment output">       month        rx      |     tx      |    total    |   avg. rate</span></span><span class="line"><span class="comment output">    ------------------------+-------------+-------------+---------------</span></span><span class="line"><span class="comment output">      Jun' 18       102 KiB |     208 KiB |     310 KiB |    0.00 kbit/s</span></span><span class="line"><span class="comment output">    ------------------------+-------------+-------------+---------------</span></span><span class="line"><span class="comment output">    estimated        --     |      --     |      --     |</span></span></pre></td></tr></table></figure>
+<h2 id="glances"><a href="#glances" class="headerlink" title="glances"></a>glances</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">glances</span></span><span class="line output">4e00.com (Ubuntu 18.04 64bit / Linux 4.15.0-22-generic)                                                                                  Uptime: 1 day, 6:58:50</span><span class="line output">AWS EC2  instance a35f67e5ce7ff0dbea289a346c262390 ()</span><span class="line output"></span><span class="line output">CPU  [|||                            10.3%]   CPU \    10.3%  nice:     0.0%  ctx_sw:   338   MEM /   51.9%  active:     301M   SWAP -    0.0%   LOAD    1-core</span><span class="line output">MEM  [||||||||||||||||               51.9%]   user:     8.1%  irq:      0.0%  inter:     79   total:   481M  inactive:  68.9M   total:       0   1 min:    0.00</span><span class="line output">SWAP [                                0.0%]   system:   2.3%  iowait:   0.0%  sw_int:   125   used:    250M  buffers:   14.1M   used:        0   5 min:    0.00</span><span class="line output">                                              idle:    89.7%  steal:    0.0%                  free:    232M  cached:     229M   free:        0   15 min:   0.00</span><span class="line output"></span><span class="line output">NETWORK     Rx/s   Tx/s   TASKS  92 (137 thr), 1 run, 57 slp, 34 oth sorted automatically by cpu_percent, flat view</span><span class="line output">ens3        24Kb  180Kb</span><span class="line output">lo        1.61Mb 1.61Mb   Systemd          8    Services loaded: 158 active: 158</span><span class="line output"></span><span class="line output">DISK I/O     R/s    W/s     CPU%  MEM%  VIRT   RES   PID USER        NI S     TIME+   R/s   W/s Command</span><span class="line output">sr0            0      0      5.8  11.6  928M 55.8M 11727 git          0 S   0:20.69     0     0 www</span><span class="line output">vda1         86K      0      3.8   8.2  481M 39.7M 14482 root         0 R   0:01.32     0     0 /usr/bin/python3 /usr/bin/glances</span><span class="line output">                             0.3   0.9  140M 4.34M   544 www-data     0 S   0:04.42    3K   65K nginx: worker process</span><span class="line output">FILE SYS    Used  Total      0.3   9.6 1.18G 46.4M  9958 git          0 S   0:27.19     0    1K .pm2)</span><span class="line output">/ (vda1)   7.07G  19.6G      0.3   0.0 4.41M   68K 12466 root       -20 S   0:00.40     0     0 /usr/sbin/atopacctd</span><span class="line output">                             0.0   1.5  156M 7.17M     1 root         0 S   1:01.22     0     0 /sbin/init</span><span class="line output">                             0.0   0.0     0     0     2 root         0 S   0:00.20     0     0 kthreadd</span><span class="line output">                             0.0   0.0     0     0     4 root       -20 ?   0:00.00     0     0 kworker/0:0H</span><span class="line output">                             0.0   0.0     0     0     6 root       -20 ?   0:00.00     0     0 mm_percpu_wq</span><span class="line output">                             0.0   0.0     0     0     7 root         0 S   0:00.70     0     0 ksoftirqd/0</span><span class="line output">                             0.0   0.0     0     0     8 root         0 ?   0:01.59     0     0 rcu_sched</span><span class="line output">                             0.0   0.0     0     0     9 root         0 ?   0:00.00     0     0 rcu_bh</span><span class="line output">                             0.0   0.0     0     0    10 root         0 S   0:00.00     0     0 migration/0</span><span class="line output">                             0.0   0.0     0     0    11 root         0 S   0:00.35     0     0 watchdog/0</span><span class="line output">                             0.0   0.0     0     0    12 root         0 S   0:00.00     0     0 cpuhp/0</span><span class="line output">                             0.0   0.0     0     0    13 root         0 S   0:00.00     0     0 kdevtmpfs</span><span class="line output">                             0.0   0.0     0     0    14 root       -20 ?   0:00.00     0     0 netns</span><span class="line output">                             0.0   0.0     0     0    15 root         0 S   0:00.00     0     0 rcu_tasks_kthre</span><span class="line output">                             0.0   0.0     0     0    16 root         0 S   0:00.00     0     0 kauditd</span><span class="line output">                             0.0   0.0     0     0    17 root         0 S   0:00.18     0     0 khungtaskd</span><span class="line output">                             0.0   0.0     0     0    18 root         0 S   0:00.00     0     0 oom_reaper</span><span class="line output">                             0.0   0.0     0     0    19 root       -20 ?   0:00.00     0     0 writeback</span><span class="line output">                             0.0   0.0     0     0    20 root         0 S   0:00.20     0     0 kcompactd0</span><span class="line output">                             0.0   0.0     0     0    21 root         5 S   0:00.00     0     0 ksmd</span><span class="line output">                             0.0   0.0     0     0    22 root       -20 ?   0:00.00     0     0 crypto</span><span class="line output">                             0.0   0.0     0     0    23 root       -20 ?   0:00.00     0     0 kintegrityd</span><span class="line output"></span><span class="line output">2018-06-10 11:31:11       No warning or critical alert detected</span></pre></td></tr></table></figure>
+<h2 id="ifstat"><a href="#ifstat" class="headerlink" title="ifstat"></a>ifstat</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ifstat</span></span><span class="line output">       ens3</span><span class="line output"> KB/s <span class="keyword">in</span>  KB/s out</span><span class="line output">    0.32      0.43</span><span class="line output">    0.13      0.21</span><span class="line output">    0.13      0.21</span><span class="line output">    0.14      0.21</span><span class="line output">    0.13      0.21</span><span class="line output">    0.13      0.21</span><span class="line output">    5.03     31.63</span><span class="line output">   13.50    292.68</span><span class="line output">   10.07    319.00</span><span class="line output">   12.22    302.47</span><span class="line output">   10.99    285.41</span><span class="line output">    8.72    198.51</span></pre></td></tr></table></figure>
+<h2 id="nmon"><a href="#nmon" class="headerlink" title="nmon"></a>nmon</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nmon</span></span><span class="line output">┌nmon─14g─────────────────────Hostname=localhost────Refresh= 2secs ───10:05.50────────────</span><span class="line output">│ CPU Utilisation ────────────────────────────────────────────────────────────────────────</span><span class="line output">│---------------------------+-------------------------------------------------+</span><span class="line output">│CPU  User%  Sys% Wait% Idle|0          |25         |50          |75       100|</span><span class="line output">│  1   2.0   0.0   0.0  98.0|U &gt;                                              |</span><span class="line output">│  2   3.0   2.0   0.0  95.1|U    &gt;                                           |</span><span class="line output">│  3   3.5   1.0   0.0  95.5|U &gt;                                              |</span><span class="line output">│  4   1.0   0.0   0.0  99.0|  &gt;                                              |</span><span class="line output">│---------------------------+-------------------------------------------------+</span><span class="line output">│Avg   2.2   0.7   0.0  97.0|U &gt;                                              |</span><span class="line output">│---------------------------+-------------------------------------------------+</span><span class="line output">│ Memory Stats ───────────────────────────────────────────────────────────────────────────</span><span class="line output">│                RAM     High      Low     Swap    Page Size=4 KB</span><span class="line output">│ Total MB     15996.7     -0.0     -0.0      0.0</span><span class="line output">│ Free  MB     11733.6     -0.0     -0.0      0.0</span><span class="line output">│ Free Percent    73.4%   100.0%   100.0%     0.0%</span><span class="line output">│             MB                  MB                  MB</span><span class="line output">│                      Cached=  1608.5     Active=  2992.1</span><span class="line output">│ Buffers=   342.6 Swapcached=     0.0  Inactive =   862.6</span><span class="line output">│ Dirty  =     0.0 Writeback =     0.0  Mapped   =   420.3</span><span class="line output">│ Slab   =   188.3 Commit_AS =  9650.2 PageTables=    61.1</span><span class="line output">│ Kernel Stats ───────────────────────────────────────────────────────────────────────────</span><span class="line output">│ RunQueue              1   Load Average    CPU use since boot time</span><span class="line output">│ ContextSwitch    1191.0    1 mins  0.20    Uptime Days=  0 Hours= 0 Mins=17</span><span class="line output">│ Forks               0.0    5 mins  0.67    Idle   Days=  0 Hours= 0 Mins=49</span><span class="line output">│ Interrupts        343.4   15 mins  0.77    Average CPU use=-177.36%</span><span class="line output">│ Network I/O ────────────────────────────────────────────────────────────────────────────</span><span class="line output">│I/F Name Recv=KB/s Trans=KB/s packin packout insize outsize Peak-&gt;Recv Trans</span><span class="line output">│      lo     0.0     0.0       0.0      0.0     0.0    0.0        6.6     6.6</span><span class="line output">│    eth0     2.7     0.0      20.8      0.0   134.5    0.0       45.1     5.7</span><span class="line output">│ Disk I/O ──/proc/diskstats────mostly <span class="keyword">in</span> KB/s─────Warning:contains duplicates────────────</span><span class="line output">│DiskName Busy  Read WriteKB|0          |25         |50          |75       100|</span><span class="line output">│loop0      0%    0.0    0.0|&gt;disk busy not available                         |</span><span class="line output">│loop1      0%    0.0    0.0|&gt;                                                |</span><span class="line output">│loop2      0%    0.0    0.0|&gt;                                                |</span><span class="line output">│loop3      0%    0.0    0.0|&gt;                                                |</span><span class="line output">│loop4      0%    0.0    0.0|&gt;                                                |</span><span class="line output">│sda        0%    0.0    0.0|&gt;                                                |</span><span class="line output">│sda1       0%    0.0    0.0|&gt;                                                |</span><span class="line output">│sda2       0%    0.0    0.0|&gt;                                                |</span><span class="line output">│sda3       0%    0.0    0.0|&gt;                                                |</span><span class="line output">└─────────Warning: Some Statistics may not shown──────────────────────────────────────────</span></pre></td></tr></table></figure>
+<h2 id="speedometer"><a href="#speedometer" class="headerlink" title="speedometer"></a>speedometer</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">speedometer</span> -r ens3 -t ens3</span><span class="line output">TX: ens3  52.7 KiB/s 89.5 KiB/s 96.6 KiB/s</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://askubuntu.com/questions/257263/how-to-display-network-traffic-in-the-terminal" target="_blank" rel="noopener">How to display network traffic in the terminal</a></li>
+<li><a href="https://www.binarytides.com/linux-commands-monitor-network/" target="_blank" rel="noopener">18 commands to monitor network bandwidth on Linux server</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2018/06/06/linux-commands-top.html" rel="next" title="linux 常用命令之 top">
+                <i class="fa fa-chevron-left"></i>
+                linux 常用命令之 top
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2018/06/10/linux-commands-ps.html" rel="prev" title="linux 常用命令之 ps">
+                <i class="fa fa-chevron-right"></i>
+                linux 常用命令之 ps
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-查看流量相关的命令"><span class="nav-number">1.</span> <span class="nav-text">Linux 查看流量相关的命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nethogs"><span class="nav-number">2.</span> <span class="nav-text">nethogs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcptrack"><span class="nav-number">3.</span> <span class="nav-text">tcptrack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iftop"><span class="nav-number">4.</span> <span class="nav-text">iftop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bmon"><span class="nav-number">5.</span> <span class="nav-text">bmon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slurm"><span class="nav-number">6.</span> <span class="nav-text">slurm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sar"><span class="nav-number">7.</span> <span class="nav-text">sar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dstat"><span class="nav-number">8.</span> <span class="nav-text">dstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jnettop"><span class="nav-number">9.</span> <span class="nav-text">jnettop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vnstat"><span class="nav-number">10.</span> <span class="nav-text">vnstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#glances"><span class="nav-number">11.</span> <span class="nav-text">glances</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ifstat"><span class="nav-number">12.</span> <span class="nav-text">ifstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nmon"><span class="nav-number">13.</span> <span class="nav-text">nmon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#speedometer"><span class="nav-number">14.</span> <span class="nav-text">speedometer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">15.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

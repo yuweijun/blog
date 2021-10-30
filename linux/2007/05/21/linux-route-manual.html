@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="linux中route命令说明：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux route 详解">
-<meta property="og:url" content="https://www.4e00.com/linux/2007/05/21/linux-route-manual.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2007/05/21/linux-route-manual.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="linux中route命令说明：">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-08-01T01:47:39.781Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.020Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux route 详解">
 <meta name="twitter:description" content="linux中route命令说明：">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2007/05/21/linux-route-manual.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2007/05/21/linux-route-manual.html">
 
   <title> linux route 详解 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -256,19 +256,19 @@
       
         <p>linux中route命令说明：</p>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">ping</span> -c 4 192.168.1.1</div><div class="line"></div><div class="line">PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.</div><div class="line">64 bytes from 192.168.1.1: icmp_seq=1 ttl=64 time=0.683 ms</div><div class="line">64 bytes from 192.168.1.1: icmp_seq=2 ttl=64 time=0.671 ms</div><div class="line">64 bytes from 192.168.1.1: icmp_seq=3 ttl=64 time=0.683 ms</div><div class="line">64 bytes from 192.168.1.1: icmp_seq=4 ttl=64 time=0.670 ms</div><div class="line"></div><div class="line">--- 192.168.1.1 ping statistics ---</div><div class="line">4 packets transmitted, 4 received, 0% packet loss, time 3000ms</div><div class="line">rtt min/avg/max/mdev = 0.670/0.676/0.683/0.032 ms</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ping</span> -c 4 192.168.1.1</span><span class="line"></span><span class="line">PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.</span><span class="line">64 bytes from 192.168.1.1: icmp_seq=1 ttl=64 time=0.683 ms</span><span class="line">64 bytes from 192.168.1.1: icmp_seq=2 ttl=64 time=0.671 ms</span><span class="line">64 bytes from 192.168.1.1: icmp_seq=3 ttl=64 time=0.683 ms</span><span class="line">64 bytes from 192.168.1.1: icmp_seq=4 ttl=64 time=0.670 ms</span><span class="line"></span><span class="line">--- 192.168.1.1 ping statistics ---</span><span class="line">4 packets transmitted, 4 received, 0% packet loss, time 3000ms</span><span class="line">rtt min/avg/max/mdev = 0.670/0.676/0.683/0.032 ms</span></pre></td></tr></table></figure>
 <p>说明局域网是正常的。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">ping</span> 202.101.63.200</div><div class="line">connect: Network is unreachable</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ping</span> 202.101.63.200</span><span class="line">connect: Network is unreachable</span></pre></td></tr></table></figure>
 <p>这是因为路由没有设置，在ifcfg-eth0文件里设置GATEWAY即可，或者是利用route命令，在命令行里添加一个路由或者默认路由。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">route</span> add default gw 192.168.1.1</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">route</span> add default gw 192.168.1.1</span></pre></td></tr></table></figure>
 <h2 id="route命令详解："><a href="#route命令详解：" class="headerlink" title="route命令详解："></a>route命令详解：</h2><p>来源于iputils</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">语法 route [参数] 内部指令 [内部指令参数]</div><div class="line"></div><div class="line">内部指令</div><div class="line">del|add 删除增加路由</div><div class="line">-net|-host 指定网段地址或主机地址</div><div class="line">target 目的地址或者网络表示</div><div class="line"></div><div class="line">内部指令参数：</div><div class="line">netmask NM</div><div class="line">gw IPADDR</div><div class="line">metric M 设置路由表中的长度字段</div><div class="line">mss M 设置TCP最大的区块长度为MB</div><div class="line">refect 指定拒绝的路由。</div><div class="line">def IF 指定该路由绑定特定的设备IF（如eth0)</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">语法 route [参数] 内部指令 [内部指令参数]</span><span class="line"></span><span class="line">内部指令</span><span class="line">del|add 删除增加路由</span><span class="line">-net|-host 指定网段地址或主机地址</span><span class="line">target 目的地址或者网络表示</span><span class="line"></span><span class="line">内部指令参数：</span><span class="line">netmask NM</span><span class="line">gw IPADDR</span><span class="line">metric M 设置路由表中的长度字段</span><span class="line">mss M 设置TCP最大的区块长度为MB</span><span class="line">refect 指定拒绝的路由。</span><span class="line">def IF 指定该路由绑定特定的设备IF（如eth0)</span></pre></td></tr></table></figure>
 <p>范例：通过eth0的设备增加一个路由到192.168.1.0（子网掩码为255.255.255.0）网段：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">route</span> add -net 192.168.1.0 netmask 255.255.255.0 dev eth0</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">route</span> add -net 192.168.1.0 netmask 255.255.255.0 dev eth0</span></pre></td></tr></table></figure>
 <p>要把目标地址是202.101.x.x的数据包通过202.101.62.254路由出去，使用：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ route add –net 202.101.0.0 netmask 255.255.0.0 gw 202.101.62.254</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ route add –net 202.101.0.0 netmask 255.255.0.0 gw 202.101.62.254</span></pre></td></tr></table></figure>
 <p>删除添加默认路由：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">route</span> del default gw 192.168.0.1</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">route</span> add default gw 192.168.1.1</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">route</span> del default gw 192.168.0.1</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">route</span> add default gw 192.168.1.1</span></pre></td></tr></table></figure>
 
       
     </div>
@@ -295,7 +295,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/linux/2007/05/17/linux-ifconfig-manual.html" rel="next" title="linux ifconfig 详解">
-                上一篇：linux ifconfig 详解
+                <i class="fa fa-chevron-left"></i>
+                linux ifconfig 详解
               </a>
             
           </div>
@@ -303,7 +304,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2007/05/21/replace-tab-with-space.html" rel="prev" title="replace tab with space">
-                下一篇：replace tab with space
+                <i class="fa fa-chevron-right"></i>
+                replace tab with space
               </a>
             
           </div>
@@ -352,7 +354,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -363,16 +365,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -454,10 +454,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

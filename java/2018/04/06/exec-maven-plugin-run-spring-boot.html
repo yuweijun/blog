@@ -1,0 +1,575 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="Maven 项目中一般使用exec-maven-plugin运行项目中有main方法的类，运行目标为exec:java时常用的参数简单说明如下：  exec.mainClass，运行时指定main方法所在 Java 类的完全限定名 exec.args，给main方法的参数  exec-maven-plugin详细的使用帮助可以用如下命令查看：  mvn exec:help -Ddetail=tru">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用exec-maven-plugin运行spring boot应用">
+<meta property="og:url" content="http://www.4e00.com/java/2018/04/06/exec-maven-plugin-run-spring-boot.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="Maven 项目中一般使用exec-maven-plugin运行项目中有main方法的类，运行目标为exec:java时常用的参数简单说明如下：  exec.mainClass，运行时指定main方法所在 Java 类的完全限定名 exec.args，给main方法的参数  exec-maven-plugin详细的使用帮助可以用如下命令查看：  mvn exec:help -Ddetail=tru">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.130Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用exec-maven-plugin运行spring boot应用">
+<meta name="twitter:description" content="Maven 项目中一般使用exec-maven-plugin运行项目中有main方法的类，运行目标为exec:java时常用的参数简单说明如下：  exec.mainClass，运行时指定main方法所在 Java 类的完全限定名 exec.args，给main方法的参数  exec-maven-plugin详细的使用帮助可以用如下命令查看：  mvn exec:help -Ddetail=tru">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/04/06/exec-maven-plugin-run-spring-boot.html">
+
+  <title> 使用exec-maven-plugin运行spring boot应用 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用exec-maven-plugin运行spring boot应用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-04-06T23:41:00+08:00" content="2018-04-06">
+              2018-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Maven 项目中一般使用<code>exec-maven-plugin</code>运行项目中有<code>main</code>方法的类，运行目标为<code>exec:java</code>时常用的参数简单说明如下：</p>
+<ul>
+<li>exec.mainClass，运行时指定<code>main</code>方法所在 Java 类的完全限定名</li>
+<li>exec.args，给<code>main</code>方法的参数</li>
+</ul>
+<p><code>exec-maven-plugin</code>详细的使用帮助可以用如下命令查看：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> exec:help -Ddetail=<span class="keyword">true</span></span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="spring-boot-运行-exec-maven-plugin-碰到的问题"><a href="#spring-boot-运行-exec-maven-plugin-碰到的问题" class="headerlink" title="spring boot 运行 exec-maven-plugin 碰到的问题"></a>spring boot 运行 exec-maven-plugin 碰到的问题</h2><p>如果没有在<code>spring-boot</code>项目的<code>pom.xml</code>文件中指定<code>exec-maven-plugin</code>配置中<code>configuration</code>下<code>mainClass</code>的值，就会提示<code>mainClass</code>找不到的错误：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> clean compile <span class="built_in">exec</span>:java -Dexec.mainClass=<span class="string">"com.example.Main"</span></span><span class="line output">[ERROR] Failed to execute goal org.codehaus.mojo:<span class="built_in">exec</span>-maven-plugin:1.6.0:java (default-cli) on project spring-boot-shiro:</span><span class="line output">The parameters <span class="string">'mainClass'</span> <span class="keyword">for</span> goal org.codehaus.mojo:<span class="built_in">exec</span>-maven-plugin:1.6.0:java are missing or invalid -&gt; [Help 1]</span></pre></td></tr></table></figure>
+<p>这让人很奇怪，这个插件最基本的用法就是这样的，明确指定了<code>exec.mainClass</code>却提示参数没有设置，新建了干净的项目测试都是正常的，看来是<code>spring-boot</code>在这个插件上做了什么特定的配置。使用以下命令检查当前 Maven 项目的<code>effective pom</code>中此插件的配置情况：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> <span class="built_in">help</span>:effective-pom</span></pre></td></tr></table></figure>
+<p>以上命令运行输出中关于<code>exec-maven-plugin</code>插件的配置如下，可以从输出结果中看到<code>spring-boot</code>已经为此插件指定了<code>mainClass</code>，因为这个配置，所以程序运行的时候是去找名为<code>start-class</code>的系统变量，当然会抛出如上<code>missing or invalid</code>的错误。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;plugin&gt;</span><span class="line">    &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</span><span class="line">    &lt;artifactId&gt;<span class="built_in">exec</span>-maven-plugin&lt;/artifactId&gt;</span><span class="line">    &lt;version&gt;1.5.0&lt;/version&gt;</span><span class="line">    &lt;configuration&gt;</span><span class="line">        &lt;mainClass&gt;<span class="variable">$&#123;start-class&#125;</span>&lt;/mainClass&gt;</span><span class="line">    &lt;/configuration&gt;</span><span class="line">&lt;/plugin&gt;</span></pre></td></tr></table></figure>
+<h3 id="正确运行方法一"><a href="#正确运行方法一" class="headerlink" title="正确运行方法一"></a>正确运行方法一</h3><p>可以在<code>spring-boot</code>项目的<code>pom.xml</code>中设置<code>start-class</code>属性，指定要运行的<code>main</code>方法所在类的完全限定名：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">start-class</span>&gt;</span>com.example.Main<span class="tag">&lt;/<span class="name">start-class</span>&gt;</span></span><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span></pre></td></tr></table></figure>
+<h3 id="正确运行方法二"><a href="#正确运行方法二" class="headerlink" title="正确运行方法二"></a>正确运行方法二</h3><p>上面这样硬编码的方式非常不灵活，最好是在运行时再指定<code>start-class</code>这个系统变量：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> <span class="built_in">exec</span>:java -Dstart-class=<span class="string">"com.example.Main"</span></span></pre></td></tr></table></figure>
+<h2 id="问题原因说明"><a href="#问题原因说明" class="headerlink" title="问题原因说明"></a>问题原因说明</h2><p>原因上面也已经提到，因为<code>spring-boot</code>在插件依赖配置里已经为其指定了一个<code>mainClass</code>，而<code>exec-maven-plugin</code>这个插件如果配置过<code>mainClass</code>之后，命令行指定的<code>-Dexec.mainClass=com.example.Main</code>这个参数就没有用了，而运行时又找不到<code>start-class</code>这个系统属性，于是就抛出上面的错误。从这点来说，<code>exec-maven-plugin</code>命令行中的配置不能覆盖<code>pom.xml</code>中的插件配置，还是不够灵活些。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.mojohaus.org/exec-maven-plugin/usage.html" target="_blank" rel="noopener">Exec usage</a></li>
+<li><a href="https://stackoverflow.com/questions/27323104/spring-boot-and-maven-exec-plugin-issue" target="_blank" rel="noopener">Spring boot and maven exec plugin issue</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2018/04/05/linux-commands-dig.html" rel="next" title="linux 常用命令行之 dig">
+                <i class="fa fa-chevron-left"></i>
+                linux 常用命令行之 dig
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2018/04/07/the-best-commands-ssh.html" rel="prev" title="命令行神器之 ssh 篇">
+                <i class="fa fa-chevron-right"></i>
+                命令行神器之 ssh 篇
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#spring-boot-运行-exec-maven-plugin-碰到的问题"><span class="nav-number">1.</span> <span class="nav-text">spring boot 运行 exec-maven-plugin 碰到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正确运行方法一"><span class="nav-number">1.1.</span> <span class="nav-text">正确运行方法一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正确运行方法二"><span class="nav-number">1.2.</span> <span class="nav-text">正确运行方法二</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题原因说明"><span class="nav-number">2.</span> <span class="nav-text">问题原因说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

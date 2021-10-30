@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="在linux或者maxos上用git status查看项目状态时，发现中文文件名显示有问题，如下：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git status中文文件名显示问题">
-<meta property="og:url" content="https://www.4e00.com/linux/2015/04/28/git-chinese-charset-problem.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2015/04/28/git-chinese-charset-problem.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="在linux或者maxos上用git status查看项目状态时，发现中文文件名显示有问题，如下：">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.145Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.096Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git status中文文件名显示问题">
 <meta name="twitter:description" content="在linux或者maxos上用git status查看项目状态时，发现中文文件名显示有问题，如下：">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2015/04/28/git-chinese-charset-problem.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2015/04/28/git-chinese-charset-problem.html">
 
   <title> git status中文文件名显示问题 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -256,20 +256,20 @@
       
         <p>在linux或者maxos上用<code>git status</code>查看项目状态时，发现中文文件名显示有问题，如下：</p>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">modified:   &quot;public/\346\230\216\344\273\243\347\216\213\345\256\210/\347\216\213\345\256\210\350\241\214\344\271\246\345\274\240\346\241\202\345\262\251\345\242\223\345\277\227\351\223\255/info.json&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">modified:   &quot;public/\346\230\216\344\273\243\347\216\213\345\256\210/\347\216\213\345\256\210\350\241\214\344\271\246\345\274\240\346\241\202\345\262\251\345\242\223\345\277\227\351\223\255/info.json&quot;</span></pre></td></tr></table></figure>
 <p>上面中文文字被显示成<code>\xxx\xxx\xxx</code>，是因为git对<code>0x80</code>以上的字符进行<code>quote</code>造成的，<code>man git-config</code>官方文档说明如下。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">core.quotePath</div><div class="line"></div><div class="line">The commands that output paths (e.g. ls-files, diff), when not given the -z option, will quote &quot;unusual&quot; characters in the pathname by enclosing the pathname in a double-quote pair and with backslashes the same way strings in C source code are quoted. If this variable is set to false, the bytes higher than 0x80 are not quoted but output as verbatim. Note that double quote, backslash and control characters are always quoted without -z regardless of the setting of this variable.</div></pre></td></tr></table></figure>
-<h2 id="设置中文显示"><a href="#设置中文显示" class="headerlink" title="设置中文显示"></a>设置中文显示</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> config core.quotepath <span class="literal">false</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">core.quotePath</span><span class="line"></span><span class="line">The commands that output paths (e.g. ls-files, diff), when not given the -z option, will quote &quot;unusual&quot; characters in the pathname by enclosing the pathname in a double-quote pair and with backslashes the same way strings in C source code are quoted. If this variable is set to false, the bytes higher than 0x80 are not quoted but output as verbatim. Note that double quote, backslash and control characters are always quoted without -z regardless of the setting of this variable.</span></pre></td></tr></table></figure>
+<h2 id="设置中文显示"><a href="#设置中文显示" class="headerlink" title="设置中文显示"></a>设置中文显示</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> config core.quotepath <span class="literal">false</span></span></pre></td></tr></table></figure>
 <h3 id="设置git编辑器"><a href="#设置git编辑器" class="headerlink" title="设置git编辑器"></a>设置git编辑器</h3><p>默认会启用<code>shell</code>的环境变量<code>$EDITOR</code>所指定的软件，一般都是<code>vim</code>或<code>emacs</code>，也有些是<code>nano</code>。当然也可以使用<code>git config --global core.editor</code>命令设定你喜欢的编辑软件。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> config --global core.editor <span class="string">"vim"</span></div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">export</span> GIT_EDITOR=vim</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> config --global core.editor <span class="string">"vim"</span></span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">export</span> GIT_EDITOR=vim</span></pre></td></tr></table></figure>
 <p>使用<code>Sublime Text</code>则用以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> config --global core.editor <span class="string">"subl -n -w"</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> config --global core.editor <span class="string">"subl -n -w"</span></span></pre></td></tr></table></figure>
 <p>使用<code>TextMate</code>则用以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> config --global core.editor <span class="string">"mate -w"</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> config --global core.editor <span class="string">"mate -w"</span></span></pre></td></tr></table></figure>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://help.github.com/articles/associating-text-editors-with-git/" target="_blank" rel="external">Associating text editors with Git</a></li>
-<li><a href="https://www.kernel.org/pub/software/scm/git/docs/git-config.html" target="_blank" rel="external">git-config Manual Page</a></li>
+<li><a href="https://help.github.com/articles/associating-text-editors-with-git/" target="_blank" rel="noopener">Associating text editors with Git</a></li>
+<li><a href="https://www.kernel.org/pub/software/scm/git/docs/git-config.html" target="_blank" rel="noopener">git-config Manual Page</a></li>
 </ol>
 
       
@@ -297,7 +297,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/vim/2014/08/06/airline-settings-on-macvim.html" rel="next" title="在macvim中为vim-airline配色">
-                上一篇：在macvim中为vim-airline配色
+                <i class="fa fa-chevron-left"></i>
+                在macvim中为vim-airline配色
               </a>
             
           </div>
@@ -305,7 +306,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2015/05/06/bash-batch-rename-files.html" rel="prev" title="batch rename files using bash script">
-                下一篇：batch rename files using bash script
+                <i class="fa fa-chevron-right"></i>
+                batch rename files using bash script
               </a>
             
           </div>
@@ -354,7 +356,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -365,16 +367,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -456,10 +456,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

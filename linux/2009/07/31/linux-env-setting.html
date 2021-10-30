@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="export命令不带参数可以将系统的环境变量全部列出来，如果需要设置环境变量，可以在/etc/profile，~/.bash_profile，~/.bashrc文件中设置。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux环境变量显示和设置">
-<meta property="og:url" content="https://www.4e00.com/linux/2009/07/31/linux-env-setting.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2009/07/31/linux-env-setting.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="export命令不带参数可以将系统的环境变量全部列出来，如果需要设置环境变量，可以在/etc/profile，~/.bash_profile，~/.bashrc文件中设置。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.137Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.067Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux环境变量显示和设置">
 <meta name="twitter:description" content="export命令不带参数可以将系统的环境变量全部列出来，如果需要设置环境变量，可以在/etc/profile，~/.bash_profile，~/.bashrc文件中设置。">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2009/07/31/linux-env-setting.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2009/07/31/linux-env-setting.html">
 
   <title> linux环境变量显示和设置 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -256,9 +256,9 @@
       
         <p><code>export</code>命令不带参数可以将系统的环境变量全部列出来，如果需要设置环境变量，可以在<code>/etc/profile</code>，<code>~/.bash_profile</code>，<code>~/.bashrc</code>文件中设置。</p>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">export</span></div></pre></td></tr></table></figure>
-<h2 id="一些标准的环境变量"><a href="#一些标准的环境变量" class="headerlink" title="一些标准的环境变量"></a>一些标准的环境变量</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">SHELL 默认shell</div><div class="line">LANG 默认语言</div><div class="line">PATH linux寻找命令的默认路径，一般包括/bin，/usr/bin，/sbin，/usr/sbin，</div><div class="line">/usr/X11R6/bin， /opt/bin，/usr/local/bin等。用户可以自行添加，</div><div class="line">MANPATH man手册的默认路径</div><div class="line">INPUTRC 默认键盘映象，详见/etc/inputrc</div><div class="line">BASH_ENV bash shell的环境变量，通常在~/.bashrc中</div><div class="line">DISPLAY X窗口适用的控制台，DISPLAY=：0对应于控制台F7，DISPLAY=：1对应于</div><div class="line">控制台F8，DISPLAY=server：0向远程计算机发送 GUI应用程序。</div><div class="line">COLORTERM GUI中的默认终端，通常是gnome-terminal.</div><div class="line">USER 自动设置当前登陆用户的用户名。</div><div class="line">LONGNAME 通常设置为$USER</div><div class="line">MAIL 设置特定$USR的标准邮件目录</div><div class="line">HOSTNAME 设置为/bin/hostname的命令输出</div><div class="line">HISTSIZE 设置为history命令记住的命令数</div></pre></td></tr></table></figure>
-<h2 id="Mac-OSX下使用set查看"><a href="#Mac-OSX下使用set查看" class="headerlink" title="Mac OSX下使用set查看"></a>Mac OSX下使用set查看</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">set</span></div><div class="line">Apple_PubSub_Socket_Render=/tmp/launch-yJC1WH/Render</div><div class="line">BASH=/bin/bash</div><div class="line">BASH_ARGC=()</div><div class="line">BASH_ARGV=()</div><div class="line">BASH_LINENO=()</div><div class="line">BASH_SOURCE=()</div><div class="line">BASH_VERSINFO=([0]=<span class="string">"3"</span> [1]=<span class="string">"2"</span> [2]=<span class="string">"53"</span> [3]=<span class="string">"1"</span> [4]=<span class="string">"release"</span> [5]=<span class="string">"x86_64-apple-darwin13"</span>)</div><div class="line">BASH_VERSION=<span class="string">'3.2.53(1)-release'</span></div><div class="line">CLICOLOR=1</div><div class="line">COLUMNS=120</div><div class="line">DIRSTACK=()</div><div class="line">EUID=501</div><div class="line">GREP_COLOR=<span class="string">'1;35;40'</span></div><div class="line">GREP_OPTIONS=--color=auto</div><div class="line">GROUPS=()</div><div class="line">HISTFILE=/Users/yu/.bash_history</div><div class="line">HISTFILESIZE=500</div><div class="line">HISTSIZE=500</div><div class="line">HOME=/Users/yu</div><div class="line">HOSTNAME=MacBookPro.local</div><div class="line">HOSTTYPE=x86_64</div><div class="line">IFS=$<span class="string">' \t\n'</span></div><div class="line">JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8</div><div class="line">LANG=en_US.UTF-8</div><div class="line">LINES=36</div><div class="line">LOGNAME=yu</div><div class="line">LSCOLORS=GxFxCxDxBxegedabagaced</div><div class="line">MACHTYPE=x86_64-apple-darwin13</div><div class="line">MAILCHECK=60</div><div class="line">OLDPWD=/Users/yu/jekyll</div><div class="line">OPTERR=1</div><div class="line">OPTIND=1</div><div class="line">OSTYPE=darwin13</div><div class="line">PATH=/Users/yu/bin:/usr/<span class="built_in">local</span>/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/<span class="built_in">local</span>/bin</div><div class="line">PIPESTATUS=([0]=<span class="string">"0"</span>)</div><div class="line">PPID=6439</div><div class="line">PROMPT_COMMAND=<span class="string">'update_terminal_cwd; '</span></div><div class="line">PS1=<span class="string">'\h:\W \u\$ '</span></div><div class="line">PS2=<span class="string">'&gt; '</span></div><div class="line">PS4=<span class="string">'+ '</span></div><div class="line">PWD=/Users/yu/jekyll/_posts</div><div class="line">SHELL=/bin/bash</div><div class="line">SHELLOPTS=braceexpand:emacs:hashall:histextpand:<span class="built_in">history</span>:interactive-comments:monitor</div><div class="line">SHLVL=1</div><div class="line">SSH_AUTH_SOCK=/tmp/launch-wn7RDs/Listeners</div><div class="line">TERM=xterm-256color</div><div class="line">TERM_PROGRAM=Apple_Terminal</div><div class="line">TERM_PROGRAM_VERSION=326</div><div class="line">TERM_SESSION_ID=C8724B01-C3DF-4AC2-BEC4-49A1D767AE8A</div><div class="line">TMPDIR=/var/folders/_f/ty2vbxy160z0f43h3n07cglc0000gn/T/</div><div class="line">UID=501</div><div class="line">USER=yu</div><div class="line">_=../_site/</div><div class="line">__CF_USER_TEXT_ENCODING=0x1F5:0:0</div><div class="line">__CHECKFIX1436934=1</div><div class="line">update_terminal_cwd ()</div><div class="line">&#123;</div><div class="line">    <span class="built_in">local</span> SEARCH=<span class="string">' '</span>;</div><div class="line">    <span class="built_in">local</span> REPLACE=<span class="string">'%20'</span>;</div><div class="line">    <span class="built_in">local</span> PWD_URL=<span class="string">"file://<span class="variable">$HOSTNAME</span><span class="variable">$&#123;PWD//$SEARCH/$REPLACE&#125;</span>"</span>;</div><div class="line">    <span class="built_in">printf</span> <span class="string">'\e]7;%s\a'</span> <span class="string">"<span class="variable">$PWD_URL</span>"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">export</span></span></pre></td></tr></table></figure>
+<h2 id="一些标准的环境变量"><a href="#一些标准的环境变量" class="headerlink" title="一些标准的环境变量"></a>一些标准的环境变量</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SHELL 默认shell</span><span class="line">LANG 默认语言</span><span class="line">PATH linux寻找命令的默认路径，一般包括/bin，/usr/bin，/sbin，/usr/sbin，</span><span class="line">/usr/X11R6/bin， /opt/bin，/usr/local/bin等。用户可以自行添加，</span><span class="line">MANPATH man手册的默认路径</span><span class="line">INPUTRC 默认键盘映象，详见/etc/inputrc</span><span class="line">BASH_ENV bash shell的环境变量，通常在~/.bashrc中</span><span class="line">DISPLAY X窗口适用的控制台，DISPLAY=：0对应于控制台F7，DISPLAY=：1对应于</span><span class="line">控制台F8，DISPLAY=server：0向远程计算机发送 GUI应用程序。</span><span class="line">COLORTERM GUI中的默认终端，通常是gnome-terminal.</span><span class="line">USER 自动设置当前登陆用户的用户名。</span><span class="line">LONGNAME 通常设置为$USER</span><span class="line">MAIL 设置特定$USR的标准邮件目录</span><span class="line">HOSTNAME 设置为/bin/hostname的命令输出</span><span class="line">HISTSIZE 设置为history命令记住的命令数</span></pre></td></tr></table></figure>
+<h2 id="Mac-OSX下使用set查看"><a href="#Mac-OSX下使用set查看" class="headerlink" title="Mac OSX下使用set查看"></a>Mac OSX下使用set查看</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">set</span></span><span class="line">Apple_PubSub_Socket_Render=/tmp/launch-yJC1WH/Render</span><span class="line">BASH=/bin/bash</span><span class="line">BASH_ARGC=()</span><span class="line">BASH_ARGV=()</span><span class="line">BASH_LINENO=()</span><span class="line">BASH_SOURCE=()</span><span class="line">BASH_VERSINFO=([0]=<span class="string">"3"</span> [1]=<span class="string">"2"</span> [2]=<span class="string">"53"</span> [3]=<span class="string">"1"</span> [4]=<span class="string">"release"</span> [5]=<span class="string">"x86_64-apple-darwin13"</span>)</span><span class="line">BASH_VERSION=<span class="string">'3.2.53(1)-release'</span></span><span class="line">CLICOLOR=1</span><span class="line">COLUMNS=120</span><span class="line">DIRSTACK=()</span><span class="line">EUID=501</span><span class="line">GREP_COLOR=<span class="string">'1;35;40'</span></span><span class="line">GREP_OPTIONS=--color=auto</span><span class="line">GROUPS=()</span><span class="line">HISTFILE=/Users/yu/.bash_history</span><span class="line">HISTFILESIZE=500</span><span class="line">HISTSIZE=500</span><span class="line">HOME=/Users/yu</span><span class="line">HOSTNAME=MacBookPro.local</span><span class="line">HOSTTYPE=x86_64</span><span class="line">IFS=$<span class="string">' \t\n'</span></span><span class="line">JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8</span><span class="line">LANG=en_US.UTF-8</span><span class="line">LINES=36</span><span class="line">LOGNAME=yu</span><span class="line">LSCOLORS=GxFxCxDxBxegedabagaced</span><span class="line">MACHTYPE=x86_64-apple-darwin13</span><span class="line">MAILCHECK=60</span><span class="line">OLDPWD=/Users/yu/jekyll</span><span class="line">OPTERR=1</span><span class="line">OPTIND=1</span><span class="line">OSTYPE=darwin13</span><span class="line">PATH=/Users/yu/bin:/usr/<span class="built_in">local</span>/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/<span class="built_in">local</span>/bin</span><span class="line">PIPESTATUS=([0]=<span class="string">"0"</span>)</span><span class="line">PPID=6439</span><span class="line">PROMPT_COMMAND=<span class="string">'update_terminal_cwd; '</span></span><span class="line">PS1=<span class="string">'\h:\W \u\$ '</span></span><span class="line">PS2=<span class="string">'&gt; '</span></span><span class="line">PS4=<span class="string">'+ '</span></span><span class="line">PWD=/Users/yu/jekyll/_posts</span><span class="line">SHELL=/bin/bash</span><span class="line">SHELLOPTS=braceexpand:emacs:hashall:histextpand:<span class="built_in">history</span>:interactive-comments:monitor</span><span class="line">SHLVL=1</span><span class="line">SSH_AUTH_SOCK=/tmp/launch-wn7RDs/Listeners</span><span class="line">TERM=xterm-256color</span><span class="line">TERM_PROGRAM=Apple_Terminal</span><span class="line">TERM_PROGRAM_VERSION=326</span><span class="line">TERM_SESSION_ID=C8724B01-C3DF-4AC2-BEC4-49A1D767AE8A</span><span class="line">TMPDIR=/var/folders/_f/ty2vbxy160z0f43h3n07cglc0000gn/T/</span><span class="line">UID=501</span><span class="line">USER=yu</span><span class="line">_=../_site/</span><span class="line">__CF_USER_TEXT_ENCODING=0x1F5:0:0</span><span class="line">__CHECKFIX1436934=1</span><span class="line">update_terminal_cwd ()</span><span class="line">&#123;</span><span class="line">    <span class="built_in">local</span> SEARCH=<span class="string">' '</span>;</span><span class="line">    <span class="built_in">local</span> REPLACE=<span class="string">'%20'</span>;</span><span class="line">    <span class="built_in">local</span> PWD_URL=<span class="string">"file://<span class="variable">$HOSTNAME</span><span class="variable">$&#123;PWD//$SEARCH/$REPLACE&#125;</span>"</span>;</span><span class="line">    <span class="built_in">printf</span> <span class="string">'\e]7;%s\a'</span> <span class="string">"<span class="variable">$PWD_URL</span>"</span></span><span class="line">&#125;</span></pre></td></tr></table></figure>
 
       
     </div>
@@ -285,7 +285,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/javascript/2009/07/31/ie-tr-appendchild-table-problem.html" rel="next" title="ie中将tr appendchild到table的问题及解决方法">
-                上一篇：ie中将tr appendchild到table的问题及解决方法
+                <i class="fa fa-chevron-left"></i>
+                ie中将tr appendchild到table的问题及解决方法
               </a>
             
           </div>
@@ -293,7 +294,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2009/08/06/todo-list-app-on-linux.html" rel="prev" title="todo list app on ubuntu">
-                下一篇：todo list app on ubuntu
+                <i class="fa fa-chevron-right"></i>
+                todo list app on ubuntu
               </a>
             
           </div>
@@ -342,7 +344,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -353,16 +355,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -444,10 +444,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

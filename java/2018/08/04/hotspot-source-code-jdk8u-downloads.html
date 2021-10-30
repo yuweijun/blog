@@ -1,0 +1,568 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="hotspot 源码下载hotspot下载链接：http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/archive/tip.tar.gz 或者指定某个版本：http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/archive/1c0a59cee0e4.tar.gz 源码查看解压下载的文件，使用vscode打开解压后的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hotspot source code - jdk8u downloads">
+<meta property="og:url" content="http://www.4e00.com/java/2018/08/04/hotspot-source-code-jdk8u-downloads.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="hotspot 源码下载hotspot下载链接：http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/archive/tip.tar.gz 或者指定某个版本：http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/archive/1c0a59cee0e4.tar.gz 源码查看解压下载的文件，使用vscode打开解压后的">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.136Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hotspot source code - jdk8u downloads">
+<meta name="twitter:description" content="hotspot 源码下载hotspot下载链接：http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/archive/tip.tar.gz 或者指定某个版本：http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/archive/1c0a59cee0e4.tar.gz 源码查看解压下载的文件，使用vscode打开解压后的">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/08/04/hotspot-source-code-jdk8u-downloads.html">
+
+  <title> hotspot source code - jdk8u downloads | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                hotspot source code - jdk8u downloads
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-08-04T21:01:19+08:00" content="2018-08-04">
+              2018-08-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="hotspot-源码下载"><a href="#hotspot-源码下载" class="headerlink" title="hotspot 源码下载"></a>hotspot 源码下载</h2><p><code>hotspot</code>下载链接：<a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/archive/tip.tar.gz" target="_blank" rel="noopener">http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/archive/tip.tar.gz</a></p>
+<p>或者指定某个版本：<a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/archive/1c0a59cee0e4.tar.gz" target="_blank" rel="noopener">http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/archive/1c0a59cee0e4.tar.gz</a></p>
+<h2 id="源码查看"><a href="#源码查看" class="headerlink" title="源码查看"></a>源码查看</h2><p>解压下载的文件，使用<code>vscode</code>打开解压后的目录，按<code>vscode</code>提示安装<code>C/C++ for Visual Studio Code</code>插件。</p>
+<h2 id="jdk-源码下载"><a href="#jdk-源码下载" class="headerlink" title="jdk 源码下载"></a>jdk 源码下载</h2><p><code>jdk8u</code>下载链接：<a href="http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/archive/tip.tar.gz" target="_blank" rel="noopener">http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/archive/tip.tar.gz</a></p>
+<h2 id="java-native-方法查看"><a href="#java-native-方法查看" class="headerlink" title="java native 方法查看"></a>java native 方法查看</h2><p>在<code>vscode</code>中打开上面下载的<code>jdk8u</code>源代码，如 Java <code>String#intern()</code>方法的源码即为<code>share/native/java/lang</code>目录下的<code>Java_java_lang_String_intern</code>。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">JNIEXPORT jobject JNICALL</span><span class="line">Java_java_lang_String_intern(JNIEnv *env, jobject <span class="keyword">this</span>)</span><span class="line">&#123;</span><span class="line">    <span class="keyword">return</span> JVM_InternString(env, <span class="keyword">this</span>);</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>在<code>openjdk/hotspot/src/share/vm/prims/jvm.cpp</code>文件第<code>4058</code>行，找到<code>JVM_InternString</code>方法定义如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">4058</span><span class="line">4059</span><span class="line">4060</span><span class="line">4061</span><span class="line">4062</span><span class="line">4063</span><span class="line">4064</span><span class="line">4065</span><span class="line">4066</span><span class="line">4067</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// String support ///////////////////////////////////////////////////////////////////////////</span></span><span class="line"></span><span class="line">JVM_ENTRY(jstring, JVM_InternString(JNIEnv *env, jstring str))</span><span class="line">  JVMWrapper(<span class="string">"JVM_InternString"</span>);</span><span class="line">  JvmtiVMObjectAllocEventCollector oam;</span><span class="line">  <span class="keyword">if</span> (str == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><span class="line">  oop <span class="built_in">string</span> = JNIHandles::resolve_non_null(str);</span><span class="line">  oop result = StringTable::intern(<span class="built_in">string</span>, CHECK_NULL);</span><span class="line">  <span class="keyword">return</span> (jstring) JNIHandles::make_local(env, result);</span><span class="line">JVM_END</span></pre></td></tr></table></figure>
+<p>上面代码中的<code>StringTable::intern()</code>方法是关键代码，这个方法定义在<code>openjdk/hotspot/src/share/vm/classfile/symbolTable.cpp</code>第<code>730</code>行，代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">730</span><span class="line">731</span><span class="line">732</span><span class="line">733</span><span class="line">734</span><span class="line">735</span><span class="line">736</span><span class="line">737</span><span class="line">738</span><span class="line">739</span><span class="line">740</span><span class="line">741</span><span class="line">742</span><span class="line">743</span><span class="line">744</span><span class="line">745</span><span class="line">746</span><span class="line">747</span><span class="line">748</span><span class="line">749</span><span class="line">750</span><span class="line">751</span><span class="line">752</span><span class="line">753</span><span class="line">754</span><span class="line">755</span><span class="line">756</span><span class="line">757</span><span class="line">758</span><span class="line">759</span><span class="line">760</span><span class="line">761</span><span class="line">762</span><span class="line">763</span><span class="line">764</span><span class="line">765</span><span class="line">766</span><span class="line">767</span><span class="line">768</span><span class="line">769</span><span class="line">770</span><span class="line">771</span><span class="line">772</span><span class="line">773</span><span class="line">774</span><span class="line">775</span><span class="line">776</span><span class="line">777</span><span class="line">778</span><span class="line">779</span><span class="line">780</span><span class="line">781</span><span class="line">782</span><span class="line">783</span><span class="line">784</span><span class="line">785</span><span class="line">786</span><span class="line">787</span><span class="line">788</span><span class="line">789</span><span class="line">790</span><span class="line">791</span><span class="line">792</span><span class="line">793</span><span class="line">794</span><span class="line">795</span><span class="line">796</span><span class="line">797</span><span class="line">798</span><span class="line">799</span><span class="line">800</span><span class="line">801</span><span class="line">802</span><span class="line">803</span><span class="line">804</span><span class="line">805</span><span class="line">806</span><span class="line">807</span><span class="line">808</span><span class="line">809</span><span class="line">810</span><span class="line">811</span><span class="line">812</span><span class="line">813</span><span class="line">814</span><span class="line">815</span><span class="line">816</span><span class="line">817</span><span class="line">818</span><span class="line">819</span><span class="line">820</span><span class="line">821</span><span class="line">822</span><span class="line">823</span><span class="line">824</span><span class="line">825</span><span class="line">826</span><span class="line">827</span><span class="line">828</span><span class="line">829</span></pre></td><td class="code"><pre><span class="line"><span class="function">oop <span class="title">StringTable::lookup</span><span class="params">(jchar* name, <span class="keyword">int</span> len)</span> </span>&#123;</span><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> hash = hash_string(name, len);</span><span class="line">  <span class="keyword">int</span> index = the_table()-&gt;hash_to_index(hash);</span><span class="line">  oop <span class="built_in">string</span> = the_table()-&gt;lookup(index, name, len, hash);</span><span class="line"></span><span class="line">  ensure_string_alive(<span class="built_in">string</span>);</span><span class="line"></span><span class="line">  <span class="keyword">return</span> <span class="built_in">string</span>;</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="function">oop <span class="title">StringTable::intern</span><span class="params">(Handle string_or_null, jchar* name,</span></span></span><span class="line"><span class="function"><span class="params">                        <span class="keyword">int</span> len, TRAPS)</span> </span>&#123;</span><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> hashValue = hash_string(name, len);</span><span class="line">  <span class="keyword">int</span> index = the_table()-&gt;hash_to_index(hashValue);</span><span class="line">  oop found_string = the_table()-&gt;lookup(index, name, len, hashValue);</span><span class="line"></span><span class="line">  <span class="comment">// Found</span></span><span class="line">  <span class="keyword">if</span> (found_string != <span class="literal">NULL</span>) &#123;</span><span class="line">    ensure_string_alive(found_string);</span><span class="line">    <span class="keyword">return</span> found_string;</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  debug_only(StableMemoryChecker smc(name, len * <span class="keyword">sizeof</span>(name[<span class="number">0</span>])));</span><span class="line">  assert(!Universe::heap()-&gt;is_in_reserved(name),</span><span class="line">         <span class="string">"proposed name of symbol must be stable"</span>);</span><span class="line"></span><span class="line">  Handle <span class="built_in">string</span>;</span><span class="line">  <span class="comment">// try to reuse the string if possible</span></span><span class="line">  <span class="keyword">if</span> (!string_or_null.is_null()) &#123;</span><span class="line">    <span class="built_in">string</span> = string_or_null;</span><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><span class="line">    <span class="built_in">string</span> = java_lang_String::create_from_unicode(name, len, CHECK_NULL);</span><span class="line">  &#125;</span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">if</span> INCLUDE_ALL_GCS</span></span><span class="line">  <span class="keyword">if</span> (G1StringDedup::is_enabled()) &#123;</span><span class="line">    <span class="comment">// Deduplicate the string before it is interned. Note that we should never</span></span><span class="line">    <span class="comment">// deduplicate a string after it has been interned. Doing so will counteract</span></span><span class="line">    <span class="comment">// compiler optimizations done on e.g. interned string literals.</span></span><span class="line">    G1StringDedup::deduplicate(<span class="built_in">string</span>());</span><span class="line">  &#125;</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><span class="line"></span><span class="line">  <span class="comment">// Grab the StringTable_lock before getting the_table() because it could</span></span><span class="line">  <span class="comment">// change at safepoint.</span></span><span class="line">  oop added_or_found;</span><span class="line">  &#123;</span><span class="line">    <span class="function">MutexLocker <span class="title">ml</span><span class="params">(StringTable_lock, THREAD)</span></span>;</span><span class="line">    <span class="comment">// Otherwise, add to symbol to table</span></span><span class="line">    added_or_found = the_table()-&gt;basic_add(index, <span class="built_in">string</span>, name, len,</span><span class="line">                                  hashValue, CHECK_NULL);</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  ensure_string_alive(added_or_found);</span><span class="line"></span><span class="line">  <span class="keyword">return</span> added_or_found;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="function">oop <span class="title">StringTable::intern</span><span class="params">(Symbol* symbol, TRAPS)</span> </span>&#123;</span><span class="line">  <span class="keyword">if</span> (symbol == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><span class="line">  <span class="function">ResourceMark <span class="title">rm</span><span class="params">(THREAD)</span></span>;</span><span class="line">  <span class="keyword">int</span> length;</span><span class="line">  jchar* chars = symbol-&gt;as_unicode(length);</span><span class="line">  Handle <span class="built_in">string</span>;</span><span class="line">  oop result = intern(<span class="built_in">string</span>, chars, length, CHECK_NULL);</span><span class="line">  <span class="keyword">return</span> result;</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="function">oop <span class="title">StringTable::intern</span><span class="params">(oop <span class="built_in">string</span>, TRAPS)</span></span></span><span class="line"><span class="function"></span>&#123;</span><span class="line">  <span class="keyword">if</span> (<span class="built_in">string</span> == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><span class="line">  <span class="function">ResourceMark <span class="title">rm</span><span class="params">(THREAD)</span></span>;</span><span class="line">  <span class="keyword">int</span> length;</span><span class="line">  <span class="function">Handle <span class="title">h_string</span> <span class="params">(THREAD, <span class="built_in">string</span>)</span></span>;</span><span class="line">  jchar* chars = java_lang_String::as_unicode_string(<span class="built_in">string</span>, length, CHECK_NULL);</span><span class="line">  oop result = intern(h_string, chars, length, CHECK_NULL);</span><span class="line">  <span class="keyword">return</span> result;</span><span class="line">&#125;</span><span class="line"></span><span class="line"></span><span class="line"><span class="function">oop <span class="title">StringTable::intern</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* utf8_string, TRAPS)</span> </span>&#123;</span><span class="line">  <span class="keyword">if</span> (utf8_string == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><span class="line">  <span class="function">ResourceMark <span class="title">rm</span><span class="params">(THREAD)</span></span>;</span><span class="line">  <span class="keyword">int</span> length = UTF8::unicode_length(utf8_string);</span><span class="line">  jchar* chars = NEW_RESOURCE_ARRAY(jchar, length);</span><span class="line">  UTF8::convert_to_unicode(utf8_string, chars, length);</span><span class="line">  Handle <span class="built_in">string</span>;</span><span class="line">  oop result = intern(<span class="built_in">string</span>, chars, length, CHECK_NULL);</span><span class="line">  <span class="keyword">return</span> result;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StringTable::unlink_or_oops_do</span><span class="params">(BoolObjectClosure* is_alive, OopClosure* f, <span class="keyword">int</span>* processed, <span class="keyword">int</span>* removed)</span> </span>&#123;</span><span class="line">  BucketUnlinkContext context;</span><span class="line">  buckets_unlink_or_oops_do(is_alive, f, <span class="number">0</span>, the_table()-&gt;table_size(), &amp;context);</span><span class="line">  _the_table-&gt;bulk_free_entries(&amp;context);</span><span class="line">  *processed = context._num_processed;</span><span class="line">  *removed = context._num_removed;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/" target="_blank" rel="noopener">jdk8u / hotspot</a></li>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/archive/tip.tar.gz" target="_blank" rel="noopener">jdk8u/jdk</a></li>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/prims/jvm.cpp" target="_blank" rel="noopener">vm/prims/jvm.cpp</a></li>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/classfile/symbolTable.cpp" target="_blank" rel="noopener">vm/classfile/symbolTable.cpp</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/web/2018/06/26/wireshark-decrypt-https-request.html" rel="next" title="linux 上使用 wireshark 查看 https 请求的内容">
+                <i class="fa fa-chevron-left"></i>
+                linux 上使用 wireshark 查看 https 请求的内容
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/08/04/hotspot-source-code-jvm-create.html" rel="prev" title="hotspot source code - jvm create">
+                <i class="fa fa-chevron-right"></i>
+                hotspot source code - jvm create
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#hotspot-源码下载"><span class="nav-number">1.</span> <span class="nav-text">hotspot 源码下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码查看"><span class="nav-number">2.</span> <span class="nav-text">源码查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jdk-源码下载"><span class="nav-number">3.</span> <span class="nav-text">jdk 源码下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java-native-方法查看"><span class="nav-number">4.</span> <span class="nav-text">java native 方法查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

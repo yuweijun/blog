@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="为什么需要运行一个socks5代理服务器比如在免费wifi的地方上网，通过这个代理服务器连接出去的所有数据都是经过加密的，像用户名密码就不会在网络上明文传输，数据安全性会更有保障。也可用此方法访问google搜索引擎或者是facebook网站。 原理简单说明利用ssh命令在本地1080端口运行一个socks5服务，本地网络所有数据经过socks5代理加密之后，先通过ssh隧道，将数据传递到远程运行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一个命令建立socks5代理服务器">
-<meta property="og:url" content="https://www.4e00.com/linux/2015/12/06/simple-ssh-proxy-through-socks5.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2015/12/06/simple-ssh-proxy-through-socks5.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="为什么需要运行一个socks5代理服务器比如在免费wifi的地方上网，通过这个代理服务器连接出去的所有数据都是经过加密的，像用户名密码就不会在网络上明文传输，数据安全性会更有保障。也可用此方法访问google搜索引擎或者是facebook网站。 原理简单说明利用ssh命令在本地1080端口运行一个socks5服务，本地网络所有数据经过socks5代理加密之后，先通过ssh隧道，将数据传递到远程运行">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.100Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一个命令建立socks5代理服务器">
 <meta name="twitter:description" content="为什么需要运行一个socks5代理服务器比如在免费wifi的地方上网，通过这个代理服务器连接出去的所有数据都是经过加密的，像用户名密码就不会在网络上明文传输，数据安全性会更有保障。也可用此方法访问google搜索引擎或者是facebook网站。 原理简单说明利用ssh命令在本地1080端口运行一个socks5服务，本地网络所有数据经过socks5代理加密之后，先通过ssh隧道，将数据传递到远程运行">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2015/12/06/simple-ssh-proxy-through-socks5.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2015/12/06/simple-ssh-proxy-through-socks5.html">
 
   <title> 一个命令建立socks5代理服务器 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -258,15 +258,15 @@
 <h3 id="原理简单说明"><a href="#原理简单说明" class="headerlink" title="原理简单说明"></a>原理简单说明</h3><p>利用<code>ssh</code>命令在本地<code>1080</code>端口运行一个<code>socks5</code>服务，本地网络所有数据经过<code>socks5</code>代理加密之后，先通过ssh隧道，将数据传递到远程运行<code>sshd</code>服务的服务器上，然后再由此服务器发送请求到真正的目标网站，目标网站返回数据给此运行<code>sshd</code>服务的服务器，由ssh隧道返回给<code>socks5</code>代理，最后回到客户端。</p>
 <h3 id="建立socks5代理服务器的命令"><a href="#建立socks5代理服务器的命令" class="headerlink" title="建立socks5代理服务器的命令"></a>建立socks5代理服务器的命令</h3><p>当然这里需要有一台你信任的并运行<code>sshd</code>的远程服务器，假设ssh用户名为<code>ssh-user</code>，服务器ip地址为<code>ssh-server-ip</code>，运行如下命令即可。</p>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> -D 1080 -f -C -q -N -p 22 ssh-user@ssh-server-ip</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> -D 1080 -f -C -q -N -p 22 ssh-user@ssh-server-ip</span></pre></td></tr></table></figure>
 <p>如果要提供给局域网使用，则使用参数<code>-D HOST:PORT</code>格式：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> -D 192.168.31.101:1080 -f -C -q -N -p 22 ssh-user@ssh-server-ip</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> -D 192.168.31.101:1080 -f -C -q -N -p 22 ssh-user@ssh-server-ip</span></pre></td></tr></table></figure>
 <h3 id="socks5代理服务器使用"><a href="#socks5代理服务器使用" class="headerlink" title="socks5代理服务器使用"></a>socks5代理服务器使用</h3><p>本地<code>socks5</code>代理服务建立之后，还需要进行相应设置才能起作用。</p>
 <p>在Mac OS X上依次打开<code>Network</code> =&gt; <code>Advanced...</code> =&gt; <code>Proxies</code> =&gt; <code>SOCKS Proxy</code>，配置地址为<code>localhost:1080</code>即可。</p>
 <p>如果只是想为chrome浏览器单独配置<code>socks5</code>代理的话，可使用chrome浏览器的一个插件：<code>SwitchyOmega</code>，安装之后新建一个配置，使用<code>socks5</code>代理，服务器和端口配置为<code>localhost:1080</code>即可。</p>
-<p>最后可以访问这个<a href="https://www.baidu.com/s?wd=ip" target="_blank" rel="external">url</a>确认<code>socks5</code>代理是否生效，如果配置正确的话，这里显示的就是运行<code>sshd</code>的服务器ip地址。</p>
+<p>最后可以访问这个<a href="https://www.baidu.com/s?wd=ip" target="_blank" rel="noopener">url</a>确认<code>socks5</code>代理是否生效，如果配置正确的话，这里显示的就是运行<code>sshd</code>的服务器ip地址。</p>
 <h2 id="使用SSH隧道连接MYSQL"><a href="#使用SSH隧道连接MYSQL" class="headerlink" title="使用SSH隧道连接MYSQL"></a>使用SSH隧道连接MYSQL</h2><p>假设localhost是一台linux，则可以在该机器上执行如下命令，建立一个SSH隧道：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> -fCPN –L 3307:remote-mysql-server:3306 ssh-user@ssh-server-ip</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> -fCPN –L 3307:remote-mysql-server:3306 ssh-user@ssh-server-ip</span></pre></td></tr></table></figure>
 <p>命令说明：</p>
 <p>执行上面的shell语句，会在本地打开一个ssh的守护进程，该进程会监听本地的<code>3307</code>端口，这个端口为隧道的入口，当访问本地的<code>3307</code>端口时，数据包会通过ssh进程，经由<code>ssh-server-ip</code>发送到最终的mysql服务器地址<code>remote-mysql-server</code>的<code>3306</code>端口，通过ssh隧道使用localhost机器可以访问无法远程直接连接的数据库实例。</p>
 <h3 id="参数解释"><a href="#参数解释" class="headerlink" title="参数解释"></a>参数解释</h3><blockquote>
@@ -276,8 +276,8 @@
 <p>-N    不执行远程命令，该参数在只打开转发端口时很有用（V2版本SSH支持）。</p>
 </blockquote>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://thomashunter.name/blog/really-simple-ssh-proxy-socks5/" target="_blank" rel="external">Really simple SSH proxy - SOCKS5</a></li>
-<li><a href="http://mingxinglai.com/cn/2015/09/connect-mysql-via-ssh-tunnel/" target="_blank" rel="external">使用SSH隧道连接MYSQL</a></li>
+<li><a href="https://thomashunter.name/blog/really-simple-ssh-proxy-socks5/" target="_blank" rel="noopener">Really simple SSH proxy - SOCKS5</a></li>
+<li><a href="http://mingxinglai.com/cn/2015/09/connect-mysql-via-ssh-tunnel/" target="_blank" rel="noopener">使用SSH隧道连接MYSQL</a></li>
 </ol>
 
       
@@ -305,7 +305,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/nodejs/2015/12/05/node-version-management-n-and-nvm.html" rel="next" title="nodejs版本管理器n和nvm">
-                上一篇：nodejs版本管理器n和nvm
+                <i class="fa fa-chevron-left"></i>
+                nodejs版本管理器n和nvm
               </a>
             
           </div>
@@ -313,7 +314,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2015/12/07/ndp-git-cheatsheet-images.html" rel="prev" title="git环境各阶段命令及其关系图">
-                下一篇：git环境各阶段命令及其关系图
+                <i class="fa fa-chevron-right"></i>
+                git环境各阶段命令及其关系图
               </a>
             
           </div>
@@ -362,7 +364,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -373,16 +375,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -448,7 +448,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要运行一个socks5代理服务器"><span class="nav-number">1.</span> <span class="nav-text">为什么需要运行一个socks5代理服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理简单说明"><span class="nav-number">2.</span> <span class="nav-text">原理简单说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立socks5代理服务器的命令"><span class="nav-number">3.</span> <span class="nav-text">建立socks5代理服务器的命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#socks5代理服务器使用"><span class="nav-number">4.</span> <span class="nav-text">socks5代理服务器使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用SSH隧道连接MYSQL"><span class="nav-number"></span> <span class="nav-text">使用SSH隧道连接MYSQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数解释"><span class="nav-number">1.</span> <span class="nav-text">参数解释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number"></span> <span class="nav-text">References</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要运行一个socks5代理服务器"><span class="nav-number">1.</span> <span class="nav-text">为什么需要运行一个socks5代理服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理简单说明"><span class="nav-number">2.</span> <span class="nav-text">原理简单说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立socks5代理服务器的命令"><span class="nav-number">3.</span> <span class="nav-text">建立socks5代理服务器的命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#socks5代理服务器使用"><span class="nav-number">4.</span> <span class="nav-text">socks5代理服务器使用</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#使用SSH隧道连接MYSQL"><span class="nav-number"></span> <span class="nav-text">使用SSH隧道连接MYSQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数解释"><span class="nav-number">1.</span> <span class="nav-text">参数解释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number"></span> <span class="nav-text">References</span></a></li></div>
             
           </div>
         </section>
@@ -464,10 +464,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

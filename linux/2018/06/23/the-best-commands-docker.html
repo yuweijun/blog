@@ -1,0 +1,653 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="tldr docker tldr dockerManage Docker containers and images.- List currently running docker containers:    docker container ls- List all docker containers (running and stopped):    docker container ls">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令行神器之 docker 篇">
+<meta property="og:url" content="http://www.4e00.com/linux/2018/06/23/the-best-commands-docker.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="tldr docker tldr dockerManage Docker containers and images.- List currently running docker containers:    docker container ls- List all docker containers (running and stopped):    docker container ls">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/docker/docker-image-layers.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/docker/docker-filesystems-busyboxrw.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/docker/docker-portainer.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/docker/docker-container-vs-virtual-machines.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/docker/docker-commands.png">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.135Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="命令行神器之 docker 篇">
+<meta name="twitter:description" content="tldr docker tldr dockerManage Docker containers and images.- List currently running docker containers:    docker container ls- List all docker containers (running and stopped):    docker container ls">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/linux/docker/docker-image-layers.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2018/06/23/the-best-commands-docker.html">
+
+  <title> 命令行神器之 docker 篇 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                命令行神器之 docker 篇
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-06-23T06:46:32+08:00" content="2018-06-23">
+              2018-06-23
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="tldr-docker"><a href="#tldr-docker" class="headerlink" title="tldr docker"></a>tldr docker</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tldr</span> docker</span><span class="line"></span><span class="line output">Manage Docker containers and images.</span><span class="line output"></span><span class="line output">- List currently running docker containers:</span><span class="line">    docker container ls</span><span class="line output"></span><span class="line output">- List all docker containers (running and stopped):</span><span class="line">    docker container ls -a</span><span class="line output"></span><span class="line output">- Start a container:</span><span class="line">    docker container start container</span><span class="line output"></span><span class="line output">- Stop a container:</span><span class="line">    docker container stop container</span><span class="line output"></span><span class="line output">- Start a container from an image and get a shell inside of it:</span><span class="line">    docker container run -it image bash</span><span class="line output"></span><span class="line output">- Run a <span class="built_in">command</span> inside of an already running container:</span><span class="line">    docker container <span class="built_in">exec</span> container <span class="built_in">command</span></span><span class="line output"></span><span class="line output">- Remove a stopped container:</span><span class="line">    docker container rm container</span><span class="line output"></span><span class="line output">- Fetch and follow the logs of a container:</span><span class="line">    docker container logs -f container</span><span class="line output"></span></pre></td></tr></table></figure>
+<p>本文以实际操作为例，演示的<code>docker</code>的基本用法，操作示例如下：</p>
+<ul>
+<li>ubuntu</li>
+<li>mysql</li>
+<li>hexo</li>
+<li>portainer</li>
+</ul>
+<h2 id="ubuntu-on-docker"><a href="#ubuntu-on-docker" class="headerlink" title="ubuntu on docker"></a>ubuntu on docker</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> pull ubuntu</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> run --name ubuntu-1 -it ubuntu /bin/bash</span><span class="line">  root@c5bfcf6cf3ce:/<span class="comment"># uname -a</span></span><span class="line"><span class="comment output">Linux c5bfcf6cf3ce 4.9.87-linuxkit-aufs #1 SMP Wed Mar 14 15:12:16 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux</span></span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> run --name ubuntu-2 -it ubuntu /bin/bash</span><span class="line">  root@0e2ad964e587:/<span class="comment"># uname -a</span></span><span class="line"><span class="comment output">Linux 0e2ad964e587 4.9.87-linuxkit-aufs #1 SMP Wed Mar 14 15:12:16 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux</span></span></pre></td></tr></table></figure>
+<h3 id="docker-image-与-docker-container-的关系"><a href="#docker-image-与-docker-container-的关系" class="headerlink" title="docker image 与 docker container 的关系"></a>docker image 与 docker container 的关系</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> ps</span><span class="line"><span class="comment output">CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                    NAMES</span></span><span class="line"><span class="comment output">0e2ad964e587        ubuntu                "/bin/bash"              23 seconds ago      Up 23 seconds                                ubuntu-2</span></span><span class="line"><span class="comment output">c5bfcf6cf3ce        ubuntu                "/bin/bash"              41 seconds ago      Up 41 seconds                                ubuntu-1</span></span></pre></td></tr></table></figure>
+<p>从上面的<code>docker ps</code>结果可以看到，由同一个 IMAGE 通过<code>docker run</code>产生了2个独立的容器，一个容器内部文件修改不会影响另一个容器。IMAGE 和 CONTAINER 的关系，有点类似 Class 和其实例的关系，CONTAINER 只是 IMAGE 运行后的一个实例，可参考这篇关于<a href="http://seanlook.com/2014/12/18/docker-core-technology-preview/#AUFS" target="_blank" rel="noopener">AUFS</a>的文章和<a href="https://www.infoworld.com/article/3077875/linux/containers-101-docker-fundamentals.html" target="_blank" rel="noopener">Containers 101: Docker fundamentals</a>这篇介绍 docker 基本原理的文章，从文章中各选了一张图作为示例说明如下。</p>
+<h3 id="docker-image-和-docker-container-图例说明"><a href="#docker-image-和-docker-container-图例说明" class="headerlink" title="docker image 和 docker container 图例说明"></a>docker image 和 docker container 图例说明</h3><p>除了运行的容器这一层是可读写的，下面每一层(Layer)都是只读的，像运行 Dockerfile 中的每个<code>RUN</code>都会创建一个 IMAGE，IMAGE 下一层为其父 IMAGE，最下层无父 IMAGE 的称之为 BASE IMAGE。</p>
+<img src="/blog/img/linux/docker/docker-image-layers.png" class="image-md" title="[docker-image-layers]">
+<img src="/blog/img/linux/docker/docker-filesystems-busyboxrw.png" class="image-md" title="[docker-filesystems-busyboxrw]">
+<h3 id="在容器中增加新文件"><a href="#在容器中增加新文件" class="headerlink" title="在容器中增加新文件"></a>在容器中增加新文件</h3><p>退出当前的伪终端，同时退出容器。如果容器里有类似 MySQL 这样的服务在运行，退出伪终端并不会导致容器退出，如果需要停止此容器，需要运行<code>docker container stop CONTAINER</code>命令。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@0e2ad964e587:/<span class="comment"># echo test &gt; ~/test.txt</span></span><span class="line">root@0e2ad964e587:/<span class="comment"># exit</span></span></pre></td></tr></table></figure>
+<h3 id="docker-container-stop-关闭容器"><a href="#docker-container-stop-关闭容器" class="headerlink" title="docker container stop 关闭容器"></a>docker container stop 关闭容器</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> container stop ubuntu-2</span><span class="line output">ubuntu-2</span></pre></td></tr></table></figure>
+<h3 id="docker-container-start-启动容器"><a href="#docker-container-start-启动容器" class="headerlink" title="docker container start 启动容器"></a>docker container start 启动容器</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> container start ubuntu-2</span><span class="line output">ubuntu-2</span></pre></td></tr></table></figure>
+<h3 id="docker-exec-进入正在运行的容器"><a href="#docker-exec-进入正在运行的容器" class="headerlink" title="docker exec 进入正在运行的容器"></a>docker exec 进入正在运行的容器</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> <span class="built_in">exec</span> -it ubuntu-2 bash</span><span class="line output">ubuntu-2</span></pre></td></tr></table></figure>
+<h3 id="查看前面新增文件的内容"><a href="#查看前面新增文件的内容" class="headerlink" title="查看前面新增文件的内容"></a>查看前面新增文件的内容</h3><p>使用<code>docker container start CONTAINER</code>可以恢复此容器上次退出时的最后状态。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@0e2ad964e587:/<span class="comment"># cat ~/test.txt</span></span><span class="line"><span class="comment output">test</span></span><span class="line">root@0e2ad964e587:/<span class="comment">#</span></span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="mysql-5-7-22-on-docker"><a href="#mysql-5-7-22-on-docker" class="headerlink" title="mysql-5.7.22 on docker"></a>mysql-5.7.22 on docker</h2><h3 id="mysql-数据存储目录创建"><a href="#mysql-数据存储目录创建" class="headerlink" title="mysql 数据存储目录创建"></a>mysql 数据存储目录创建</h3><p>先在宿主机(host)上建立<code>MySQL</code>的数据存储目录，并会将此目录映射至 docker 容器中的<code>/var/lib/mysql</code>目录。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mkdir</span> -p /usr/<span class="built_in">local</span>/var/mysql-5.7.22/</span></pre></td></tr></table></figure>
+<h3 id="启动容器运行-mysql-server"><a href="#启动容器运行-mysql-server" class="headerlink" title="启动容器运行 mysql server"></a>启动容器运行 mysql server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> run -p 3306:3306 --rm -v /usr/<span class="built_in">local</span>/var/mysql-5.7.22:/var/lib/mysql \</span><span class="line">        -e MYSQL_ROOT_PASSWORD=test.root --name mysql-5.7.22 -d mysql:5.7.22 \</span><span class="line">        --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci \</span><span class="line">        --datadir=/var/lib/mysql --<span class="built_in">bind</span>-address=0.0.0.0</span><span class="line output">b6acb3be644d76f09eb10629bef370fc1fbd66ffbf11d4767e6bd497e4b07bc1</span></pre></td></tr></table></figure>
+<h3 id="docker-run-常用参数说明"><a href="#docker-run-常用参数说明" class="headerlink" title="docker run 常用参数说明"></a>docker run 常用参数说明</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-d, --detach           Run container in background and print container ID</span><span class="line">-e, --env list         Set environment variables</span><span class="line">-i, --interactive      Keep STDIN open even if not attached</span><span class="line">-p, --publish list     Publish a container&apos;s port(s) to the host (host-port:container-port)</span><span class="line">-t, --tty              Allocate a pseudo-TTY</span><span class="line">-v, --volume list      Bind mount a volume (host-dir:container-dir)</span><span class="line">    --name string      Assign a name to the container</span><span class="line">    --rm               Automatically remove the container when it exits</span></pre></td></tr></table></figure>
+<h3 id="docker-exec-进入运行中的容器"><a href="#docker-exec-进入运行中的容器" class="headerlink" title="docker exec 进入运行中的容器"></a>docker exec 进入运行中的容器</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> <span class="built_in">exec</span> -it mysql-5.7.22 bash</span></pre></td></tr></table></figure>
+<h3 id="docker-top-查看容器中的进程"><a href="#docker-top-查看容器中的进程" class="headerlink" title="docker top 查看容器中的进程"></a>docker top 查看容器中的进程</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> top mysql-5.7.22</span><span class="line output">PID                 USER                TIME                COMMAND</span><span class="line output">3861                999                 0:00                mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --datadir=/var/lib/mysql</span></pre></td></tr></table></figure>
+<h3 id="docker-container-操作容器"><a href="#docker-container-操作容器" class="headerlink" title="docker container 操作容器"></a>docker container 操作容器</h3><h4 id="stop-停止容器"><a href="#stop-停止容器" class="headerlink" title="stop 停止容器"></a>stop 停止容器</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> container stop mysql-5.7.22</span></pre></td></tr></table></figure>
+<h4 id="rm-删除容器"><a href="#rm-删除容器" class="headerlink" title="rm 删除容器"></a>rm 删除容器</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> container rm mysql-5.7.22</span></pre></td></tr></table></figure>
+<h3 id="mysql-docker-compose-yml-配置"><a href="#mysql-docker-compose-yml-配置" class="headerlink" title="mysql docker-compose.yml 配置"></a>mysql docker-compose.yml 配置</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.5'</span></span><span class="line"></span><span class="line"><span class="attr">services:</span></span><span class="line">  <span class="attr">mysql:</span></span><span class="line">    <span class="attr">image:</span> <span class="string">mysql:5.7.22</span></span><span class="line">    <span class="attr">command:</span> <span class="string">--character-set-server=utf8mb4</span> <span class="string">--collation-server=utf8mb4_unicode_ci</span> <span class="string">--datadir=/var/lib/mysql</span></span><span class="line">    <span class="attr">container_name:</span> <span class="string">mysql-5.7.22</span></span><span class="line">    <span class="attr">ports:</span></span><span class="line">      <span class="bullet">-</span> <span class="string">"3306:3306"</span></span><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><span class="line">    <span class="attr">volumes:</span></span><span class="line">      <span class="bullet">-</span> <span class="string">/usr/local/var/mysql-5.7.22:/var/lib/mysql</span></span><span class="line">    <span class="attr">environment:</span></span><span class="line">      <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">test.root</span></span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> container stop mysql-5.7.22</span><span class="line output">mysql-5.7.22</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> container rm mysql-5.7.22</span><span class="line output">mysql-5.7.22</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker-compose</span> up -d</span><span class="line"><span class="comment output">Creating network "57_default" with the default driver</span></span><span class="line"><span class="comment output">Creating mysql-5.7.22 ... done</span></span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> ps</span><span class="line output">CONTAINER ID        IMAGE                        COMMAND                  CREATED              STATUS              PORTS                    NAMES</span><span class="line output">2f62947ce66b        mysql:5.7.22                 <span class="string">"docker-entrypoint.s…"</span>   About a minute ago   Up 8 seconds        0.0.0.0:3306-&gt;3306/tcp   mysql-5.7.22</span><span class="line output">524f60344fb7        yuweijun/hexo-server:3.7.0   <span class="string">"docker-entrypoint.s…"</span>   3 hours ago          Up 3 hours          0.0.0.0:4000-&gt;4000/tcp   hexo-server</span></pre></td></tr></table></figure>
+<h2 id="hexo-3-7-0-on-docker"><a href="#hexo-3-7-0-on-docker" class="headerlink" title="hexo-3.7.0 on docker"></a>hexo-3.7.0 on docker</h2><h3 id="docker-pull-最新版本node"><a href="#docker-pull-最新版本node" class="headerlink" title="docker pull 最新版本node"></a>docker pull 最新版本node</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> pull node</span></pre></td></tr></table></figure>
+<h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> run --name node-10.5.0 -it node bash</span><span class="line">  root@ec3be3657e06:/<span class="comment"># npm i -g hexo</span></span><span class="line">  root@ec3be3657e06:/<span class="comment"># exit</span></span></pre></td></tr></table></figure>
+<h3 id="docker-commit-当前容器"><a href="#docker-commit-当前容器" class="headerlink" title="docker commit 当前容器"></a>docker commit 当前容器</h3><p><code>docker commit</code>会根据容器最后的状态制作一个新的 IMAGE。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> ps -a</span><span class="line"><span class="comment output">CONTAINER ID        IMAGE                 COMMAND                  CREATED              STATUS                      PORTS                    NAMES</span></span><span class="line"><span class="comment output">ec3be3657e06        node                  "bash"                   About a minute ago   Exited (0) 31 seconds ago                            node-10.5.0</span></span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> commit node-10.5.0 yuweijun/hexo</span><span class="line output">sha256:92166c083a4f82e368c1067fe8cd9dc313b24636918ba0ccab7f58bd57fd63cc</span></pre></td></tr></table></figure>
+<h3 id="docker-image-ls-查看当前-images"><a href="#docker-image-ls-查看当前-images" class="headerlink" title="docker image ls 查看当前 images"></a>docker image ls 查看当前 images</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> image ls</span><span class="line"><span class="comment output">REPOSITORY             TAG                 IMAGE ID            CREATED              SIZE</span></span><span class="line"><span class="comment output">yuweijun/hexo          latest              92166c083a4f        About a minute ago   703MB</span></span><span class="line"><span class="comment output">node                   latest              8753edeb1aa3        3 minutes ago        674MB</span></span></pre></td></tr></table></figure>
+<h3 id="通过容器启动-hexo-server"><a href="#通过容器启动-hexo-server" class="headerlink" title="通过容器启动 hexo server"></a>通过容器启动 hexo server</h3><p>以下示例命令中<code>hexo</code>应用的根目录为<code>/github.com/hexo</code>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> run --name hexo-server -p 4000:4000 -v <span class="variable">$HOME</span>/.ssh:/root/.ssh \</span><span class="line">  -v /github.com/hexo:/github.com/hexo -it yuweijun/hexo \</span><span class="line">  hexo --cwd /github.com/hexo server</span><span class="line output">INFO  Start processing</span><span class="line output">INFO  Hexo is running at http://localhost:4000/blog/. Press Ctrl+C to stop.</span></pre></td></tr></table></figure>
+<p>第一次运行之后生成了<code>hexo-server</code>容器，后面只要执行<code>docker container start CONTAINER</code>就可以启动<code>hexo server</code>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> container start hexo-server</span><span class="line output">hexo-server</span></pre></td></tr></table></figure>
+<h3 id="docker-container-start-i"><a href="#docker-container-start-i" class="headerlink" title="docker container start -i"></a>docker container start -i</h3><p>启动<code>hexo-server</code>容器可以运行<code>hexo server</code>，如果需要控制台输出日志，命令需要多传一个参数：</p>
+<blockquote>
+<p>-i    --interactive        Attach container’s STDIN</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> container start -i hexo-server</span><span class="line output">INFO  Start processing</span><span class="line output">INFO  Hexo is running at http://localhost:4000/blog/. Press Ctrl+C to stop.</span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> container ls</span><span class="line"><span class="comment output">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES</span></span><span class="line"><span class="comment output">1d46ae36a29a        yuweijun/hexo       "hexo --cwd /github.…"   14 minutes ago      Up 6 minutes        0.0.0.0:4000-&gt;4000/tcp   hexo-server</span></span><span class="line"><span class="comment output">0e2ad964e587        ubuntu              "/bin/bash"              6 hours ago         Up 5 hours                                   ubuntu-2</span></span><span class="line"><span class="comment output">c5bfcf6cf3ce        ubuntu              "/bin/bash"              6 hours ago         Up 6 hours                                   ubuntu-1</span></span><span class="line"><span class="comment output">b6acb3be644d        mysql:5.7.22        "docker-entrypoint.s…"   17 hours ago        Up 17 hours         0.0.0.0:3306-&gt;3306/tcp   mysql-5.7.22</span></span></pre></td></tr></table></figure>
+<h3 id="docker-logs-f-查看容器运行日志"><a href="#docker-logs-f-查看容器运行日志" class="headerlink" title="docker logs -f 查看容器运行日志"></a>docker logs -f 查看容器运行日志</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> logs -f hexo-server</span><span class="line output">INFO  Start processing</span><span class="line output">INFO  Hexo is running at http://localhost:4000/blog/. Press Ctrl+C to stop.</span></pre></td></tr></table></figure>
+<h3 id="通过容器执行-hexo-clean"><a href="#通过容器执行-hexo-clean" class="headerlink" title="通过容器执行 hexo clean"></a>通过容器执行 hexo clean</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> run --rm --name hexo-clean \</span><span class="line">  -v <span class="variable">$HOME</span>/.ssh:/root/.ssh -v /github.com/hexo:/github.com/hexo \</span><span class="line">  -it yuweijun/hexo hexo --cwd /github.com/hexo clean</span><span class="line output">INFO  Deleted database.</span><span class="line output">before exist</span></pre></td></tr></table></figure>
+<p>第一次运行之后生成了<code>hexo-clean</code>容器，后面只要执行<code>docker container start -i CONTAINER</code>就可以。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> container start -i hexo-clean</span><span class="line output">INFO  Deleted database.</span><span class="line output">before exist</span></pre></td></tr></table></figure>
+<h2 id="Dockerfile-文件配置"><a href="#Dockerfile-文件配置" class="headerlink" title="Dockerfile 文件配置"></a>Dockerfile 文件配置</h2><p><code>docker run</code>只接受一个命令，如果需要执行一系列命令时，最好是使用 Dockerfile 定制自己的镜像文件。</p>
+<h3 id="docker-启动脚本-docker-entrypoint-sh"><a href="#docker-启动脚本-docker-entrypoint-sh" class="headerlink" title="docker 启动脚本 docker-entrypoint.sh"></a>docker 启动脚本 docker-entrypoint.sh</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><span class="line"></span><span class="line"><span class="keyword">if</span> [ -e /github.com/hexo ]; <span class="keyword">then</span></span><span class="line">    <span class="built_in">cd</span> /github.com/hexo</span><span class="line">    <span class="keyword">if</span> [ ! -e /github.com/hexo/node_modules ]; <span class="keyword">then</span></span><span class="line">        npm install</span><span class="line">    <span class="keyword">fi</span></span><span class="line"></span><span class="line">    hexo clean</span><span class="line">    hexo server</span><span class="line"><span class="keyword">else</span></span><span class="line">    <span class="built_in">echo</span> <span class="string">'docker run --name hexo-server -p 4000:4000 -v $HOME/.ssh:/root/.ssh -v /github.com/hexo:/github.com/hexo -it yuweijun/hexo-server:3.7.0'</span></span><span class="line"><span class="keyword">fi</span></span></pre></td></tr></table></figure>
+<h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><figure class="highlight docker"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> yuweijun/hexo</span><span class="line"></span><span class="line"><span class="keyword">COPY</span><span class="bash"> docker-entrypoint.sh /usr/<span class="built_in">local</span>/bin/</span></span><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"docker-entrypoint.sh"</span>]</span></span><span class="line"></span><span class="line"><span class="keyword">EXPOSE</span> <span class="number">4000</span></span><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"/bin/bash"</span>]</span></span></pre></td></tr></table></figure>
+<p><code>docker-entrypoint.sh</code>文件和<code>Dockerfile</code>文件放在同一个目录下，并且控制台<code>cd</code>到这个目录下执行以下镜像构建命令：</p>
+<h3 id="docker-build-构建"><a href="#docker-build-构建" class="headerlink" title="docker build 构建"></a>docker build 构建</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> build -t yuweijun/hexo-server:3.7.0 .</span><span class="line"><span class="comment output">Sending build context to Docker daemon  3.072kB</span></span><span class="line"><span class="comment output">Step 1/5 : FROM yuweijun/hexo</span></span><span class="line"><span class="comment output"> ---&gt; ef20fe8ae205</span></span><span class="line"><span class="comment output">Step 2/5 : COPY docker-entrypoint.sh /usr/local/bin/</span></span><span class="line"><span class="comment output"> ---&gt; Using cache</span></span><span class="line"><span class="comment output"> ---&gt; cab9386a8e74</span></span><span class="line"><span class="comment output">Step 3/5 : ENTRYPOINT ["docker-entrypoint.sh"]</span></span><span class="line"><span class="comment output"> ---&gt; Using cache</span></span><span class="line"><span class="comment output"> ---&gt; e05e55eb54b1</span></span><span class="line"><span class="comment output">Step 4/5 : EXPOSE 4000</span></span><span class="line"><span class="comment output"> ---&gt; Using cache</span></span><span class="line"><span class="comment output"> ---&gt; d2517e6fc536</span></span><span class="line"><span class="comment output">Step 5/5 : CMD ["/bin/bash"]</span></span><span class="line"><span class="comment output"> ---&gt; Using cache</span></span><span class="line"><span class="comment output"> ---&gt; 8dc78ad81ca3</span></span><span class="line"><span class="comment output">Successfully built 8dc78ad81ca3</span></span><span class="line"><span class="comment output">Successfully tagged yuweijun/hexo-server:3.7.0</span></span></pre></td></tr></table></figure>
+<h3 id="Dockerfile-RUN-ENTRYPOINT-CMD-区别"><a href="#Dockerfile-RUN-ENTRYPOINT-CMD-区别" class="headerlink" title="Dockerfile RUN/ENTRYPOINT/CMD 区别"></a>Dockerfile RUN/ENTRYPOINT/CMD 区别</h3><p><code>Dockerfile</code>文件中的<code>RUN</code>、<code>CMD</code>和<code>ENTRYPOINT</code>这三个指令看上去功能很类似，都可以用来运行命令，下面简单说一下三者区别：</p>
+<ol>
+<li>RUN 执行命令并创建新的镜像层，RUN 经常用于安装软件包。</li>
+<li>CMD 设置容器启动后默认执行的命令及其参数，如果有多个 CMD，则只有最后一个生效，但 CMD 能够被<code>docker run</code>后面跟的命令行参数替换。</li>
+<li>ENTRYPOINT 配置容器启动时运行的命令，ENTRYPOINT 指令可让容器以应用程序或者服务的形式运行，与 CMD 不同的是，ENTRYPOINT 一定会被执行。</li>
+<li>如果 Docker 镜像的用途是运行应用程序或服务，比如运行一个 MySQL，应该优先使用 Exec 格式的 ENTRYPOINT 指令。</li>
+</ol>
+<h3 id="启动新版-hexo-server"><a href="#启动新版-hexo-server" class="headerlink" title="启动新版 hexo-server"></a>启动新版 hexo-server</h3><p>先删除前面生成的<code>hexo-server</code>容器。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> container rm hexo-server</span></pre></td></tr></table></figure>
+<p>启动新版<code>hexo-server</code>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> run --name hexo-server -p 4000:4000 \</span><span class="line">  -v <span class="variable">$HOME</span>/.ssh:/root/.ssh -v /github.com/hexo:/github.com/hexo \</span><span class="line">  -it yuweijun/hexo-server:3.7.0</span><span class="line output">INFO  Deleted database.</span><span class="line output">INFO  Start processing</span><span class="line output">INFO  Hexo is running at http://localhost:4000/blog/. Press Ctrl+C to stop.</span></pre></td></tr></table></figure>
+<h2 id="hexo-docker-compose-yml-配置"><a href="#hexo-docker-compose-yml-配置" class="headerlink" title="hexo docker-compose.yml 配置"></a>hexo docker-compose.yml 配置</h2><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.5'</span></span><span class="line"></span><span class="line"><span class="attr">services:</span></span><span class="line">  <span class="attr">hexo:</span></span><span class="line">    <span class="attr">image:</span> <span class="string">yuweijun/hexo-server:3.7.0</span></span><span class="line">    <span class="attr">container_name:</span> <span class="string">hexo-server</span></span><span class="line">    <span class="attr">ports:</span></span><span class="line">      <span class="bullet">-</span> <span class="string">"4000:4000"</span></span><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><span class="line">    <span class="attr">volumes:</span></span><span class="line">      <span class="bullet">-</span> <span class="string">$HOME/.ssh:/root/.ssh</span></span><span class="line">      <span class="bullet">-</span> <span class="string">/github.com/hexo:/github.com/hexo</span></span></pre></td></tr></table></figure>
+<p>使用<code>docker-compose</code>命令启动<code>hexo-server</code>服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> container rm hexo-server</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker-compose</span> up -d</span><span class="line output">Recreating c5e37b50081e_370_hexo_1 ... <span class="keyword">done</span></span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> container ls</span><span class="line"><span class="comment output">CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS              PORTS                    NAMES</span></span><span class="line"><span class="comment output">524f60344fb7        yuweijun/hexo-server:3.7.0   "docker-entrypoint.s…"   2 minutes ago       Up 11 seconds       0.0.0.0:4000-&gt;4000/tcp   hexo-server</span></span></pre></td></tr></table></figure>
+<h2 id="portainer-on-docker"><a href="#portainer-on-docker" class="headerlink" title="portainer on docker"></a>portainer on docker</h2><p><code>portainer</code>(基于 Go)是一个轻量级的 docker 管理工具。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> volume create portainer_data</span><span class="line output">portainer_data</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">docker</span> run -d -p 9000:9000 --name portainer \</span><span class="line">  --restart always -v /var/run/docker.sock:/var/run/docker.sock \</span><span class="line">  -v portainer_data:/data portainer/portainer</span><span class="line"><span class="comment output">Unable to find image 'portainer/portainer:latest' locally</span></span><span class="line"><span class="comment output">latest: Pulling from portainer/portainer</span></span><span class="line"><span class="comment output">d1e017099d17: Pull complete</span></span><span class="line"><span class="comment output">a8d2fd955b4d: Pull complete</span></span><span class="line"><span class="comment output">Digest: sha256:7affc7f6d02ebceaa4e0cd137ef3c784629e5ebfa2354c4776337f8bc42664a4</span></span><span class="line"><span class="comment output">Status: Downloaded newer image for portainer/portainer:latest</span></span><span class="line"><span class="comment output">699ab479af8316ac88c1dbdb1990f84d3b76a1f6deb3e35ad8f3a05b757d5080</span></span></pre></td></tr></table></figure>
+<img src="/blog/img/linux/docker/docker-portainer.png" class="image-md" title="[docker-portainer]">
+<h2 id="one-service-per-container"><a href="#one-service-per-container" class="headerlink" title="one service per container"></a>one service per container</h2><p>容器的主要是通过 Dockerfile 配置中最后的 ENTRYPOINT 和 CMD 运行进程，通常建议通过每个容器使用一项服务来分隔关注点。</p>
+<h2 id="Containers-vs-VMs"><a href="#Containers-vs-VMs" class="headerlink" title="Containers vs VMs"></a>Containers vs VMs</h2><p>二者区别简单来说就是，docker 的 IMAGE 或者 CONTAINER 没有 OS 内核，与宿主机共享内核。</p>
+<img src="/blog/img/linux/docker/docker-container-vs-virtual-machines.png" class="image-md" title="[docker-container-vs-virtual-machines]">
+<h2 id="docker-commands-diagram"><a href="#docker-commands-diagram" class="headerlink" title="docker commands diagram"></a>docker commands diagram</h2><img src="/blog/img/linux/docker/docker-commands.png" class="image-md" title="[docker-commands]">
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://docs.docker.com/get-started/" target="_blank" rel="noopener">get started - docker</a></li>
+<li><a href="https://docs.docker.com/config/containers/multi-service_container/" target="_blank" rel="noopener">Run multiple services in a containe</a></li>
+<li><a href="https://github.com/wsargent/docker-cheat-sheet" target="_blank" rel="noopener">docker cheat sheet</a></li>
+<li><a href="http://goinbigdata.com/docker-run-vs-cmd-vs-entrypoint/" target="_blank" rel="noopener">Docker RUN vs CMD vs ENTRYPOINT</a></li>
+<li><a href="http://paislee.io/how-to-automate-docker-deployments/" target="_blank" rel="noopener">How to Automate Docker Deployments</a></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/commit/" target="_blank" rel="noopener">docker commit</a></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/exec/" target="_blank" rel="noopener">docker exec</a></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/run/" target="_blank" rel="noopener">docker run</a></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/container_start/" target="_blank" rel="noopener">docker container start</a></li>
+<li><a href="https://portainer.readthedocs.io/en/latest/deployment.html" target="_blank" rel="noopener">portainer Deployment</a></li>
+<li><a href="https://docs.docker.com/compose/compose-file/" target="_blank" rel="noopener">docker compose version 3 reference</a></li>
+<li><a href="https://www.infoworld.com/article/3077875/linux/containers-101-docker-fundamentals.html" target="_blank" rel="noopener">Containers 101: Docker fundamentals</a></li>
+<li><a href="https://djangostars.com/blog/what-is-docker-and-how-to-use-it-with-python/" target="_blank" rel="noopener">What is Docker and How to Use it With Python</a></li>
+<li><a href="http://tiewei.github.io/cloud/Docker-Getting-Start/" target="_blank" rel="noopener">Docker Getting Start: Related Knowledge</a></li>
+<li><a href="https://container-solutions.com/understanding-volumes-docker/" target="_blank" rel="noopener">Understanding Volumes in Docker</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/06/15/gc-algorithms-implements.html" rel="next" title="gc algorithms: implementations">
+                <i class="fa fa-chevron-left"></i>
+                gc algorithms: implementations
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/web/2018/06/26/wireshark-decrypt-https-request.html" rel="prev" title="linux 上使用 wireshark 查看 https 请求的内容">
+                <i class="fa fa-chevron-right"></i>
+                linux 上使用 wireshark 查看 https 请求的内容
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tldr-docker"><span class="nav-number">1.</span> <span class="nav-text">tldr docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ubuntu-on-docker"><span class="nav-number">2.</span> <span class="nav-text">ubuntu on docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-image-与-docker-container-的关系"><span class="nav-number">2.1.</span> <span class="nav-text">docker image 与 docker container 的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-image-和-docker-container-图例说明"><span class="nav-number">2.2.</span> <span class="nav-text">docker image 和 docker container 图例说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在容器中增加新文件"><span class="nav-number">2.3.</span> <span class="nav-text">在容器中增加新文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-container-stop-关闭容器"><span class="nav-number">2.4.</span> <span class="nav-text">docker container stop 关闭容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-container-start-启动容器"><span class="nav-number">2.5.</span> <span class="nav-text">docker container start 启动容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-exec-进入正在运行的容器"><span class="nav-number">2.6.</span> <span class="nav-text">docker exec 进入正在运行的容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看前面新增文件的内容"><span class="nav-number">2.7.</span> <span class="nav-text">查看前面新增文件的内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql-5-7-22-on-docker"><span class="nav-number">3.</span> <span class="nav-text">mysql-5.7.22 on docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql-数据存储目录创建"><span class="nav-number">3.1.</span> <span class="nav-text">mysql 数据存储目录创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动容器运行-mysql-server"><span class="nav-number">3.2.</span> <span class="nav-text">启动容器运行 mysql server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-run-常用参数说明"><span class="nav-number">3.3.</span> <span class="nav-text">docker run 常用参数说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-exec-进入运行中的容器"><span class="nav-number">3.4.</span> <span class="nav-text">docker exec 进入运行中的容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-top-查看容器中的进程"><span class="nav-number">3.5.</span> <span class="nav-text">docker top 查看容器中的进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-container-操作容器"><span class="nav-number">3.6.</span> <span class="nav-text">docker container 操作容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#stop-停止容器"><span class="nav-number">3.6.1.</span> <span class="nav-text">stop 停止容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rm-删除容器"><span class="nav-number">3.6.2.</span> <span class="nav-text">rm 删除容器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql-docker-compose-yml-配置"><span class="nav-number">3.7.</span> <span class="nav-text">mysql docker-compose.yml 配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo-3-7-0-on-docker"><span class="nav-number">4.</span> <span class="nav-text">hexo-3.7.0 on docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-pull-最新版本node"><span class="nav-number">4.1.</span> <span class="nav-text">docker pull 最新版本node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装hexo"><span class="nav-number">4.2.</span> <span class="nav-text">安装hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-commit-当前容器"><span class="nav-number">4.3.</span> <span class="nav-text">docker commit 当前容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-image-ls-查看当前-images"><span class="nav-number">4.4.</span> <span class="nav-text">docker image ls 查看当前 images</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过容器启动-hexo-server"><span class="nav-number">4.5.</span> <span class="nav-text">通过容器启动 hexo server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-container-start-i"><span class="nav-number">4.6.</span> <span class="nav-text">docker container start -i</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-logs-f-查看容器运行日志"><span class="nav-number">4.7.</span> <span class="nav-text">docker logs -f 查看容器运行日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过容器执行-hexo-clean"><span class="nav-number">4.8.</span> <span class="nav-text">通过容器执行 hexo clean</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile-文件配置"><span class="nav-number">5.</span> <span class="nav-text">Dockerfile 文件配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-启动脚本-docker-entrypoint-sh"><span class="nav-number">5.1.</span> <span class="nav-text">docker 启动脚本 docker-entrypoint.sh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dockerfile"><span class="nav-number">5.2.</span> <span class="nav-text">Dockerfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-build-构建"><span class="nav-number">5.3.</span> <span class="nav-text">docker build 构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dockerfile-RUN-ENTRYPOINT-CMD-区别"><span class="nav-number">5.4.</span> <span class="nav-text">Dockerfile RUN/ENTRYPOINT/CMD 区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动新版-hexo-server"><span class="nav-number">5.5.</span> <span class="nav-text">启动新版 hexo-server</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo-docker-compose-yml-配置"><span class="nav-number">6.</span> <span class="nav-text">hexo docker-compose.yml 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#portainer-on-docker"><span class="nav-number">7.</span> <span class="nav-text">portainer on docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#one-service-per-container"><span class="nav-number">8.</span> <span class="nav-text">one service per container</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Containers-vs-VMs"><span class="nav-number">9.</span> <span class="nav-text">Containers vs VMs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-commands-diagram"><span class="nav-number">10.</span> <span class="nav-text">docker commands diagram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">11.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

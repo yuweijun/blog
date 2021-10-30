@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -56,7 +56,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="一">
-<meta property="og:url" content="https://www.4e00.com/page/11/index.html">
+<meta property="og:url" content="http://www.4e00.com/page/11/index.html">
 <meta property="og:site_name" content="一">
 <meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
@@ -81,7 +81,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/page/11/"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/page/11/">
 
   <title> 一 </title>
 </head>
@@ -114,7 +114,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -137,7 +137,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -147,7 +147,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -155,7 +155,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -182,7 +182,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -194,8 +194,8 @@
             
               
                 
-                <a class="post-title-link" href="/blog/java/2016/06/09/maven-resources-inheritance-problem.html" itemprop="url">
-                  maven resources inheritance problem
+                <a class="post-title-link" href="/blog/java/2018/01/26/java-lost-exception-stack-traces.html" itemprop="url">
+                  java lost exception stack traces
                 </a>
               
             
@@ -208,20 +208,20 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-06-09T14:12:33+08:00" content="2016-06-09">
-              2016-06-09
+            <time itemprop="dateCreated" datetime="2018-01-26T19:43:53+08:00" content="2018-01-26">
+              2018-01-26
             </time>
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -256,18 +256,13 @@
 
       
         
-          <p>如果maven项目中父项目pom.xml里的<code>build &gt; resources</code>项有配置，而子项目pom.xml中的<code>build &gt; resources</code>没有配置时，则子项目直接继承父项目的配置内容。</p>
-<p>如果子项目中有配置<code>build &gt; resources</code>，则会覆盖父项目中的全部配置，即父项目中pom.xml中关于<code>build &gt; resources</code>的配置就无效了，不会再被子项目继承，这不同于<code>dependencies &gt; dependence</code>和<code>build &gt; plugins &gt; plugin</code>，这二个会完整的继承父项目的设置，并且会覆盖相同的配置，合并不同的配置。</p>
-<p>所以maven<a href="https://issues.apache.org/jira/browse/MNG-2751" target="_blank" rel="external">官方JIRA</a>中很多人认为这是一个bug，因为这与继承的直观印象相左，很容易误用，不过这个问题并没有被进一步修正过，状态为CLOSED。</p>
-<p>以下就采用<a href="http://stackoverflow.com/questions/3008065/maven-2-resources-inheritance-parent-child-project" target="_blank" rel="external">stackoverflow.com</a>上用户的提问来简单说明一下：</p>
-<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>项目结构如下：</p>
+          <p>tomcat运行时报错，但查看日志时，只能看到一句NPE，却没有相关的异常栈信息。</p>
 <blockquote>
-<p>parent-pom.xml</p>
-<p>└── child-pom.xml</p>
+<p>java.lang.NullPointerException<br>java.lang.NullPointerException<br>java.lang.NullPointerException<br>java.lang.NullPointerException</p>
 </blockquote>
-<h3 id="parent-pom-xml"><a href="#parent-pom-xml" class="headerlink" title="parent-pom.xml"></a>parent-pom.xml</h3>
+<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NullPointerExceptionMissingStack</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><span class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</span><span class="line">        String x = <span class="keyword">null</span>;</span><span class="line">        <span class="keyword">while</span> (i++ &lt; <span class="number">1_000_000</span>) &#123;</span><span class="line">            <span class="keyword">try</span> &#123;</span><span class="line">                throwNPE(x);</span><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><span class="line">                <span class="keyword">int</span> length = e.getStackTrace().length;</span><span class="line">                e.printStackTrace();</span><span class="line">                <span class="keyword">if</span> (length == <span class="number">0</span>) &#123;</span><span class="line">                    j++;</span><span class="line">                    <span class="keyword">if</span> (j &gt; <span class="number">100</span>) &#123;</span><span class="line">                        System.out.println(i);</span><span class="line">                        System.out.println(j);</span><span class="line">                        <span class="keyword">return</span>;</span><span class="line">                    &#125;</span><span class="line">                &#125;</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line"></span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">throwNPE</span><span class="params">(String x)</span> </span>&#123;</span><span class="line">        x.toString();</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/blog/java/2016/06/09/maven-resources-inheritance-problem.html#more" rel="contents">
+            <a class="btn" href="/blog/java/2018/01/26/java-lost-exception-stack-traces.html#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -306,7 +301,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -318,8 +313,8 @@
             
               
                 
-                <a class="post-title-link" href="/blog/linux/2016/06/01/application-connections-configuration-spec.html" itemprop="url">
-                  application connections configuration using hosts
+                <a class="post-title-link" href="/blog/java/2018/01/25/statement-cancelled-due-to-timeout-or-client-request.html" itemprop="url">
+                  mysqltimeoutexception: statement cancelled due to timeout or client request
                 </a>
               
             
@@ -332,251 +327,20 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-06-01T10:08:34+08:00" content="2016-06-01">
-              2016-06-01
+            <time itemprop="dateCreated" datetime="2018-01-25T20:27:30+08:00" content="2018-01-25">
+              2018-01-25
             </time>
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>应用程序需要连接到其他服务器时，程序中就需要配置相应的连接信息，比如是mysql服务器，如果直接使用ip的话，发生变动就需要更新重启所有相关的应用，所以建议使用域名或者是主机别名来代替ip，并且使用相同的配置文件，就可以同时适用开发环境和生产环境。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/blog/linux/2016/06/01/application-connections-configuration-spec.html#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/blog/linux/2016/05/31/git-branch-and-log-graph.html" itemprop="url">
-                  git log查看版本历史
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-05-31T22:56:54+08:00" content="2016-05-31">
-              2016-05-31
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>以下脚本用于生成多分支的<code>git log</code>，通过<code>git log --oneline --decorate --graph --all</code>查看分支提交及合并示意图。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git config --global alias.co checkout</div><div class="line">git config --global alias.br branch</div><div class="line">git config --global alias.ci commit</div><div class="line">git config --global alias.st status</div><div class="line"></div><div class="line">[ -a git-branch-test.git ] &amp;&amp; rm -rf git-branch-test.git</div><div class="line">[ -a git-branch-logs ] &amp;&amp; rm -rf git-branch-logs</div><div class="line"></div><div class="line">git init --bare git-branch-test.git</div><div class="line">git <span class="built_in">clone</span> git-branch-test.git git-branch-logs</div><div class="line"></div><div class="line"><span class="built_in">cd</span> git-branch-logs</div><div class="line"></div><div class="line"><span class="built_in">echo</span> v1 &gt; v1.txt</div><div class="line">git add -A</div><div class="line">git commit -m v1-master</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout -b br1</div><div class="line">git branch</div><div class="line"><span class="built_in">echo</span> v2 &gt; v2.txt</div><div class="line">git add -A</div><div class="line">git commit -m v2-br1</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git branch</div><div class="line">git checkout -b br2</div><div class="line"><span class="built_in">echo</span> v3 &gt; v3.txt</div><div class="line">git commit -m v3-br2</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git add -A</div><div class="line">git commit -m v3-br2</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout -b br3</div><div class="line"><span class="built_in">echo</span> v4 &gt; v4.txt</div><div class="line">git add v4.txt</div><div class="line">git commit -m v4-br3</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout master</div><div class="line">git merge br3 -m <span class="string">"merge br3 into master"</span></div><div class="line">git checkout br3</div><div class="line"><span class="built_in">echo</span> v5 &gt; v5.txt</div><div class="line">git add -A</div><div class="line">git commit -m v5-br3</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout master</div><div class="line"><span class="built_in">echo</span> v6 &gt; v6.txt</div><div class="line">git add -A</div><div class="line">git commit -m v6-master</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout br1</div><div class="line"><span class="built_in">echo</span> v7 &gt; v7.txt</div><div class="line">git add -A</div><div class="line">git commit -m v7-br1</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout master</div><div class="line"><span class="built_in">echo</span> v8 &gt; v8.txt</div><div class="line">git add -A</div><div class="line">git commit -m v8-master</div><div class="line">sleep 2s</div><div class="line"></div><div class="line"><span class="built_in">echo</span> v9 &gt; v9.txt</div><div class="line">git add -A</div><div class="line">git commit -m v9-master</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout br2</div><div class="line"><span class="built_in">echo</span> v10 &gt; v10.txt</div><div class="line">git add -A</div><div class="line">git commit -m v10-br2</div><div class="line">sleep 2s</div><div class="line"></div><div class="line"><span class="built_in">echo</span> v11 &gt; v11.txt</div><div class="line">git add -A</div><div class="line">git commit -m v11-br2</div><div class="line">sleep 2s</div><div class="line"></div><div class="line"><span class="built_in">echo</span> v12 &gt; v12.txt</div><div class="line">git add -A</div><div class="line">git commit -m v12-br2</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout br3</div><div class="line"><span class="built_in">echo</span> v13 &gt; v13.txt</div><div class="line">git add -A</div><div class="line">git commit -m v13-br3</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout br1</div><div class="line"><span class="built_in">echo</span> v14 &gt; v14.txt</div><div class="line">git add -A</div><div class="line">git commit -m v14-br1</div><div class="line">sleep 2s</div><div class="line"></div><div class="line"><span class="built_in">echo</span> v15 &gt; v15.txt</div><div class="line">git add -A</div><div class="line">git commit -m v15-br1</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout master</div><div class="line">git merge br3 -m <span class="string">"merge br3 into master"</span></div><div class="line">git merge br1 -m <span class="string">"merge br1 into master"</span></div><div class="line">git merge br2 -m <span class="string">"merge br2 into master"</span></div><div class="line"></div><div class="line">git <span class="built_in">log</span> --oneline --decorate --graph --all</div></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/blog/linux/2016/05/31/git-branch-and-log-graph.html#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/blog/java/2016/05/31/java-keytool-usage.html" itemprop="url">
-                  java tool - keytool
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-05-31T12:51:40+08:00" content="2016-05-31">
-              2016-05-31
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -611,11 +375,14 @@
 
       
         
-          <p>以下http client 4.5版本实现https请求的<a href="https://hc.apache.org/httpcomponents-client-ga/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java" target="_blank" rel="external">例子</a>，实际运行过程中会碰到一些问题。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> org.apache.http.examples.client;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.net.ssl.SSLContext;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.http.HttpEntity;</div><div class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</div><div class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</div><div class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.SSLConnectionSocketFactory;</div><div class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.TrustSelfSignedStrategy;</div><div class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</div><div class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</div><div class="line"><span class="keyword">import</span> org.apache.http.ssl.SSLContexts;</div><div class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * This example demonstrates how to create secure connections with a custom SSL context.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientCustomSSL</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">// Trust own CA and all self-signed certs</span></div><div class="line">        SSLContext sslcontext = SSLContexts.custom().loadTrustMaterial(<span class="keyword">new</span> File(<span class="string">"my.keystore"</span>), <span class="string">"changeit"</span>.toCharArray(), <span class="keyword">new</span> TrustSelfSignedStrategy()).build();</div><div class="line">        <span class="comment">// Allow TLSv1 protocol only</span></div><div class="line">        SSLConnectionSocketFactory sslsf = <span class="keyword">new</span> SSLConnectionSocketFactory(sslcontext, <span class="keyword">new</span> String[] &#123; <span class="string">"TLSv1"</span> &#125;, <span class="keyword">null</span>, SSLConnectionSocketFactory.getDefaultHostnameVerifier());</div><div class="line">        CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line"></div><div class="line">            HttpGet httpget = <span class="keyword">new</span> HttpGet(<span class="string">"https://httpbin.org/"</span>);</div><div class="line">            System.out.println(<span class="string">"Executing request "</span> + httpget.getRequestLine());</div><div class="line">            CloseableHttpResponse response = httpclient.execute(httpget);</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                HttpEntity entity = response.getEntity();</div><div class="line"></div><div class="line">                System.out.println(<span class="string">"----------------------------------------"</span>);</div><div class="line">                System.out.println(response.getStatusLine());</div><div class="line">                EntityUtils.consume(entity);</div><div class="line">            &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                response.close();</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            httpclient.close();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以上代码中的<code>my.keystore</code>文件是使用java自带的工具<code>keytool</code>生成的，下面介绍一下这个工具其及使用方法。</p>
+          <h2 id="SQL-执行超时异常"><a href="#SQL-执行超时异常" class="headerlink" title="SQL 执行超时异常"></a>SQL 执行超时异常</h2><p>项目中有个 SQL 语句执行了 30 秒还没执行完成，最后抛出异常<code>MySQLTimeoutException: Statement cancelled due to timeout or client request</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2018-01-25 04:10:00.032 -INFO  --- [ Thread-34] com.example.test.task.CustomerTask : start execute task</span><span class="line">2018-01-25 04:10:30.062 -ERROR --- [ Thread-34] com.example.test.task.CustomerTask : execute task failure</span><span class="line">org.springframework.dao.QueryTimeoutException:</span><span class="line">### Error querying database. Cause: com.mysql.jdbc.exceptions.MySQLTimeoutException: Statement cancelled due to timeout or client request</span><span class="line">### Cause: com.mysql.jdbc.exceptions.MySQLTimeoutException: Statement cancelled due to timeout or client request; SQL []; Statement cancelled due to timeout or client request;</span><span class="line">nested exception is com.mysql.jdbc.exceptions.MySQLTimeoutException: Statement cancelled due to timeout or client request</span><span class="line">    at org.springframework.jdbc.support.SQLStateSQLExceptionTranslator.doTranslate(SQLStateSQLExceptionTranslator.java:118)</span><span class="line">    at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)</span><span class="line">    at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:82)</span><span class="line">    at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:82)</span><span class="line">    at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)</span><span class="line">    at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:446)</span><span class="line">    at com.sun.proxy.$Proxy142.selectOne(Unknown Source)</span><span class="line">    at org.mybatis.spring.SqlSessionTemplate.selectOne(SqlSessionTemplate.java:166)</span><span class="line">    at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)</span><span class="line">    at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:53)</span><span class="line">    at com.sun.proxy.$Proxy215.syncCoffeeStock(Unknown Source)</span></pre></td></tr></table></figure>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>在对应的 Service 方法上指定事务超时的时间为 120 秒：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Transactional</span>(timeout = <span class="number">120</span>)</span></pre></td></tr></table></figure>
+<p>或者是为某个 Service 中的方法打开新事务：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Transactional</span>(timeout = <span class="number">60</span>, propagation = Propagation.REQUIRES_NEW)</span></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/blog/java/2016/05/31/java-keytool-usage.html#more" rel="contents">
+            <a class="btn" href="/blog/java/2018/01/25/statement-cancelled-due-to-timeout-or-client-request.html#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -654,7 +421,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -666,8 +433,8 @@
             
               
                 
-                <a class="post-title-link" href="/blog/linux/2016/04/14/git-receive-deny-current-branch-error.html" itemprop="url">
-                  git remote error receive.denycurrentbranch
+                <a class="post-title-link" href="/blog/java/2018/01/21/java-names-shadowing-and-obscuring.html" itemprop="url">
+                  java names shadowing and obscuring
                 </a>
               
             
@@ -680,20 +447,285 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-04-14T16:50:42+08:00" content="2016-04-14">
-              2016-04-14
+            <time itemprop="dateCreated" datetime="2018-01-21T10:27:25+08:00" content="2018-01-21">
+              2018-01-21
             </time>
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>本文通过几个简单示例了解一下java局部变量定义的作用域<code>scope</code>，变量名字的遮蔽<code>shadowing</code>和简单名的遮掩<code>obscuring</code>，这2者具体区别下面会示例说明，先说一下规范里定义的2个名词：简单名和限定名。</p>
+<h2 id="Simple-Name-and-Qualified-Name"><a href="#Simple-Name-and-Qualified-Name" class="headerlink" title="Simple Name and Qualified Name"></a>Simple Name and Qualified Name</h2><p>java中的<code>name</code>可以被用来引用在程序中声明的实体<code>entity</code>，其有两种形式：简单名和限定名，即<code>Simple Name</code>和<code>Qualified Name</code>。</p>
+<ol>
+<li>简单名是单个的标识符。</li>
+<li>限定名是由一个名字，一个<code>.</code>号，再一个标识符组成。</li>
+</ol>
+<p>完全限定名为<code>Fully Qualified Name</code>，缩写即<code>FQN</code>，该名字在整个命名空间中具有唯一性，局部类没有完全限定名。</p>
+<blockquote>
+<p>Every primitive type, named package, top level class, and top level interface has a fully qualified name.</p>
+</blockquote>
+<h2 id="局部变量声明及其初始化"><a href="#局部变量声明及其初始化" class="headerlink" title="局部变量声明及其初始化"></a>局部变量声明及其初始化</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VariableNamesScope</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> x; <span class="comment">// 类加载之后 x 被初始化为0</span></span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        <span class="comment">// 类变量 x 已经被局部变量 x 遮蔽(shadowed)了</span></span><span class="line">        <span class="comment">// int x = x; // 编译错误</span></span><span class="line"></span><span class="line">        <span class="keyword">int</span> y;</span><span class="line">        y = <span class="number">2</span>;</span><span class="line">        y = y * <span class="number">3</span>;</span><span class="line">        System.out.println(<span class="string">"y = "</span> + y); <span class="comment">// y = 6</span></span><span class="line"></span><span class="line">        <span class="keyword">int</span> x = (x = <span class="number">2</span>) * <span class="number">3</span>, w = x * <span class="number">4</span>; <span class="comment">// 局部变量 x 在使用之前已经被赋值了</span></span><span class="line">        System.out.println(<span class="string">"x = "</span> + x); <span class="comment">// x = 6</span></span><span class="line">        System.out.println(<span class="string">"w = "</span> + w); <span class="comment">// w = 24</span></span><span class="line">        System.out.println(<span class="string">"VariableNamesScope.x = "</span> + VariableNamesScope.x);</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>上述代码运行后，结果如下：</p>
+<blockquote>
+<p>y = 6<br>x = 6<br>w = 24<br>VariableNamesScope.x = 0</p>
+</blockquote>
+<p>其中代码<code>int x = x;</code>这句编译错误，因为局部变量<code>x</code>已经遮蔽了类变量<code>x</code>，此时的<code>x</code>并没有被初始化，作为右值进行赋值是错误的。</p>
+<p>在某个块中的局部变量声明的作用域，是在该声明所在的块中的剩余部分，从它的初始化语句开始，包括变量声明语句中右侧出现的此变量声明。所以上述代码<code>int x = (x = 2) * 3</code>中的局部变量<code>x</code>在使用之前已经被初始化赋值为2，然后再乘以3，所以可以编译通过。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/java/2018/01/21/java-names-shadowing-and-obscuring.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/java/2017/12/07/spring-boot-guide.html" itemprop="url">
+                  spring boot guide
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-12-07T09:18:09+08:00" content="2017-12-07">
+              2017-12-07
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="当前Spring项目中的问题"><a href="#当前Spring项目中的问题" class="headerlink" title="当前Spring项目中的问题"></a>当前Spring项目中的问题</h2><ol>
+<li>大量的XML配置</li>
+<li>配置很重复</li>
+<li>配置很困难</li>
+<li>配置难维护</li>
+<li>复杂的依赖管理</li>
+</ol>
+<h2 id="Spring-Boot-解决方案"><a href="#Spring-Boot-解决方案" class="headerlink" title="Spring Boot 解决方案"></a>Spring Boot 解决方案</h2><ol>
+<li>约定大于配置（Convention over configuration）。</li>
+<li>默认配置及不同优先级的可覆盖配置。</li>
+</ol>
+<h2 id="Spring-Boot-目标和特性"><a href="#Spring-Boot-目标和特性" class="headerlink" title="Spring Boot 目标和特性"></a>Spring Boot 目标和特性</h2><ol>
+<li>快速创建独立部署的Spring应用程序。</li>
+<li>使用嵌入式Tomcat，Jetty容器，无需部署WAR包，直接运行jar包。</li>
+<li>简化Maven及Gradle配置。</li>
+<li>尽可能的自动化配置Spring。</li>
+<li>直接植入产品环境下的实用功能，比如度量指标、健康检查及扩展配置等。</li>
+<li>无需代码生成及XML配置。</li>
+</ol>
+<h3 id="Spring-Boot-项目结构示例"><a href="#Spring-Boot-项目结构示例" class="headerlink" title="Spring Boot 项目结构示例"></a>Spring Boot 项目结构示例</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">├─── src</span><span class="line">│    ├─── main</span><span class="line">│    │    ├─── java</span><span class="line">│    │    │    └─── com</span><span class="line">│    │    │         └─── example</span><span class="line">│    │    │              └─── myproject</span><span class="line">│    │    │                   ├─── Application.java</span><span class="line">│    │    │                   │</span><span class="line">│    │    │                   ├─── domain</span><span class="line">│    │    │                   │    ├─── Customer.java</span><span class="line">│    │    │                   │    └─── CustomerRepository.java</span><span class="line">│    │    │                   │</span><span class="line">│    │    │                   ├─── service</span><span class="line">│    │    │                   │    └─── CustomerService.java</span><span class="line">│    │    │                   │</span><span class="line">│    │    │                   └─── web</span><span class="line">│    │    │                        └─── CustomerController.java</span><span class="line">│    │    ├─── resources</span><span class="line">│    │    │    ├─── templates</span><span class="line">│    │    │    │</span><span class="line">│    │    │    ├─── static</span><span class="line">│    │    │    │    ├─── error</span><span class="line">│    │    │    │    │    ├─── 404.html</span><span class="line">│    │    │    │    │    └─── 500.html</span><span class="line">│    │    │    │    │</span><span class="line">│    │    │    │    └─── index.html</span><span class="line">│    │    │    │</span><span class="line">│    │    │    ├─── favicon.ico</span><span class="line">│    │    │    ├─── logback-spring.xml</span><span class="line">│    │    │    └─── application.properties</span><span class="line">│    │    │</span><span class="line">│    │    └─── webapp</span><span class="line">│    │         └─── WEB-INF</span><span class="line">│    │              └─── jsp</span><span class="line">│    │                   └─── index.jsp</span><span class="line">│    │</span><span class="line">│    └─── test</span><span class="line">│         ├─── java</span><span class="line">│         └─── resources</span><span class="line">│</span><span class="line">└─── pom.xml</span></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/java/2017/12/07/spring-boot-guide.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/linux/2017/10/11/byte-order-little-endian-and-big-endian.html" itemprop="url">
+                  byte order - little-endian and big-endian
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-10-11T21:01:42+08:00" content="2017-10-11">
+              2017-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -728,11 +760,21 @@
 
       
         
-          <p>在线上服务器已经有文件的目录里通过以下操作：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$&gt; git init</div><div class="line">$&gt; git add -A</div><div class="line">$&gt; git commit -m <span class="string">"create git repository by existing files"</span></div></pre></td></tr></table></figure>
-<p>初始化了一个git仓库，并将目录下面的文件全部加入仓库版本管理库中，然后远程切出此仓库，并修改内容后，通过<code>git push</code>命令上传到线上服务器时，报了以下错误：</p>
+          <h2 id="什么是-little-endian-和-big-endian"><a href="#什么是-little-endian-和-big-endian" class="headerlink" title="什么是 little-endian 和 big-endian"></a>什么是 little-endian 和 big-endian</h2><p><code>字节序</code>(<code>byte order</code>)又称端序或尾序(<code>Endianness</code>)，多字节对象都被存储为连续的字节序列，存储地址内的排列有两个通用规则：</p>
+<ol>
+<li>little-endian: 小端序，就是低位字节放在内存的起始地址，即最低有效位在最高有效位的前面。</li>
+<li>big-endian:    大端序，就是高位字节放在内存的起始地址，即最高有效位在最低有效位的前面。</li>
+</ol>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>比如 16 进制数字<code>0x12345678</code>(10 进制为<code>305419896</code>)在内存中的表示形式为：</p>
+<h4 id="大端模式"><a href="#大端模式" class="headerlink" title="大端模式"></a>大端模式</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">低地址     ------------------------&gt;  高地址</span><span class="line">0x12      |  0x34     |  0x56     |  0x78</span><span class="line">00010010  |  00110100 |  01010110 |  01111000</span></pre></td></tr></table></figure>
+<h4 id="小端模式"><a href="#小端模式" class="headerlink" title="小端模式"></a>小端模式</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">低地址     ------------------------&gt;  高地址</span><span class="line">0x78      |  0x56     |  0x34     |  0x12</span><span class="line">01111000  |  01010110 |  00110100 |  00010010</span></pre></td></tr></table></figure>
+<ol>
+<li>上面 2 者比较可见，大端模式和直接阅读数字的习惯一致。</li>
+<li>这 2 个模式中，共同点就是每个字节<code>byte</code>都是由<code>8bit</code>组成，而<code>bit</code>只有 2 个值，即<code>0</code>和<code>1</code>。</li>
+<li>比如上面<code>0x78</code>在内存中保存在一个字节中，其表现是一样的，其 8 个 bit 都是自右向左，和数学数字表示法一样，高位在左边，即<code>01111000</code>。</li>
+</ol>
           <div class="post-more-link text-center">
-            <a class="btn" href="/blog/linux/2016/04/14/git-receive-deny-current-branch-error.html#more" rel="contents">
+            <a class="btn" href="/blog/linux/2017/10/11/byte-order-little-endian-and-big-endian.html#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -766,7 +808,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/blog/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/89/">89</a><a class="extend next" rel="next" href="/blog/page/12/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/blog/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/99/">99</a><a class="extend next" rel="next" href="/blog/page/12/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -798,16 +840,14 @@
 
       <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -878,10 +918,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

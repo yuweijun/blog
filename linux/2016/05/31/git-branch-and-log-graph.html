@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,19 +57,19 @@
 <meta name="description" content="以下脚本用于生成多分支的git log，通过git log --oneline --decorate --graph --all查看分支提交及合并示意图。 git config --global alias.co checkoutgit config --global alias.br branchgit config --global alias.ci commitgit config --gl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git log查看版本历史">
-<meta property="og:url" content="https://www.4e00.com/linux/2016/05/31/git-branch-and-log-graph.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2016/05/31/git-branch-and-log-graph.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="以下脚本用于生成多分支的git log，通过git log --oneline --decorate --graph --all查看分支提交及合并示意图。 git config --global alias.co checkoutgit config --global alias.br branchgit config --global alias.ci commitgit config --gl">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://www.4e00.com/blog/img/linux/git/git-log.jpg">
-<meta property="og:image" content="https://www.4e00.com/blog/img/linux/git/git-log-gitk.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/linux/git/git-log-source-tree.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/linux/git/git-log-date-order.png">
-<meta property="og:updated_time" content="2017-09-01T03:40:08.486Z">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/git/git-log.jpg">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/git/git-log-gitk.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/git/git-log-source-tree.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/git/git-log-date-order.png">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.103Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git log查看版本历史">
 <meta name="twitter:description" content="以下脚本用于生成多分支的git log，通过git log --oneline --decorate --graph --all查看分支提交及合并示意图。 git config --global alias.co checkoutgit config --global alias.br branchgit config --global alias.ci commitgit config --gl">
-<meta name="twitter:image" content="https://www.4e00.com/blog/img/linux/git/git-log.jpg">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/linux/git/git-log.jpg">
 
 
 
@@ -90,7 +90,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2016/05/31/git-branch-and-log-graph.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2016/05/31/git-branch-and-log-graph.html">
 
   <title> git log查看版本历史 | 一 </title>
 </head>
@@ -121,7 +121,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -144,7 +144,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -154,7 +154,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -162,7 +162,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -189,7 +189,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -218,14 +218,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -260,7 +260,7 @@
 
       
         <p>以下脚本用于生成多分支的<code>git log</code>，通过<code>git log --oneline --decorate --graph --all</code>查看分支提交及合并示意图。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git config --global alias.co checkout</div><div class="line">git config --global alias.br branch</div><div class="line">git config --global alias.ci commit</div><div class="line">git config --global alias.st status</div><div class="line"></div><div class="line">[ -a git-branch-test.git ] &amp;&amp; rm -rf git-branch-test.git</div><div class="line">[ -a git-branch-logs ] &amp;&amp; rm -rf git-branch-logs</div><div class="line"></div><div class="line">git init --bare git-branch-test.git</div><div class="line">git <span class="built_in">clone</span> git-branch-test.git git-branch-logs</div><div class="line"></div><div class="line"><span class="built_in">cd</span> git-branch-logs</div><div class="line"></div><div class="line"><span class="built_in">echo</span> v1 &gt; v1.txt</div><div class="line">git add -A</div><div class="line">git commit -m v1-master</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout -b br1</div><div class="line">git branch</div><div class="line"><span class="built_in">echo</span> v2 &gt; v2.txt</div><div class="line">git add -A</div><div class="line">git commit -m v2-br1</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git branch</div><div class="line">git checkout -b br2</div><div class="line"><span class="built_in">echo</span> v3 &gt; v3.txt</div><div class="line">git commit -m v3-br2</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git add -A</div><div class="line">git commit -m v3-br2</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout -b br3</div><div class="line"><span class="built_in">echo</span> v4 &gt; v4.txt</div><div class="line">git add v4.txt</div><div class="line">git commit -m v4-br3</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout master</div><div class="line">git merge br3 -m <span class="string">"merge br3 into master"</span></div><div class="line">git checkout br3</div><div class="line"><span class="built_in">echo</span> v5 &gt; v5.txt</div><div class="line">git add -A</div><div class="line">git commit -m v5-br3</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout master</div><div class="line"><span class="built_in">echo</span> v6 &gt; v6.txt</div><div class="line">git add -A</div><div class="line">git commit -m v6-master</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout br1</div><div class="line"><span class="built_in">echo</span> v7 &gt; v7.txt</div><div class="line">git add -A</div><div class="line">git commit -m v7-br1</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout master</div><div class="line"><span class="built_in">echo</span> v8 &gt; v8.txt</div><div class="line">git add -A</div><div class="line">git commit -m v8-master</div><div class="line">sleep 2s</div><div class="line"></div><div class="line"><span class="built_in">echo</span> v9 &gt; v9.txt</div><div class="line">git add -A</div><div class="line">git commit -m v9-master</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout br2</div><div class="line"><span class="built_in">echo</span> v10 &gt; v10.txt</div><div class="line">git add -A</div><div class="line">git commit -m v10-br2</div><div class="line">sleep 2s</div><div class="line"></div><div class="line"><span class="built_in">echo</span> v11 &gt; v11.txt</div><div class="line">git add -A</div><div class="line">git commit -m v11-br2</div><div class="line">sleep 2s</div><div class="line"></div><div class="line"><span class="built_in">echo</span> v12 &gt; v12.txt</div><div class="line">git add -A</div><div class="line">git commit -m v12-br2</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout br3</div><div class="line"><span class="built_in">echo</span> v13 &gt; v13.txt</div><div class="line">git add -A</div><div class="line">git commit -m v13-br3</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout br1</div><div class="line"><span class="built_in">echo</span> v14 &gt; v14.txt</div><div class="line">git add -A</div><div class="line">git commit -m v14-br1</div><div class="line">sleep 2s</div><div class="line"></div><div class="line"><span class="built_in">echo</span> v15 &gt; v15.txt</div><div class="line">git add -A</div><div class="line">git commit -m v15-br1</div><div class="line">sleep 2s</div><div class="line"></div><div class="line">git checkout master</div><div class="line">git merge br3 -m <span class="string">"merge br3 into master"</span></div><div class="line">git merge br1 -m <span class="string">"merge br1 into master"</span></div><div class="line">git merge br2 -m <span class="string">"merge br2 into master"</span></div><div class="line"></div><div class="line">git <span class="built_in">log</span> --oneline --decorate --graph --all</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global alias.co checkout</span><span class="line">git config --global alias.br branch</span><span class="line">git config --global alias.ci commit</span><span class="line">git config --global alias.st status</span><span class="line"></span><span class="line">[ -a git-branch-test.git ] &amp;&amp; rm -rf git-branch-test.git</span><span class="line">[ -a git-branch-logs ] &amp;&amp; rm -rf git-branch-logs</span><span class="line"></span><span class="line">git init --bare git-branch-test.git</span><span class="line">git <span class="built_in">clone</span> git-branch-test.git git-branch-logs</span><span class="line"></span><span class="line"><span class="built_in">cd</span> git-branch-logs</span><span class="line"></span><span class="line"><span class="built_in">echo</span> v1 &gt; v1.txt</span><span class="line">git add -A</span><span class="line">git commit -m v1-master</span><span class="line">sleep 2s</span><span class="line"></span><span class="line">git checkout -b br1</span><span class="line">git branch</span><span class="line"><span class="built_in">echo</span> v2 &gt; v2.txt</span><span class="line">git add -A</span><span class="line">git commit -m v2-br1</span><span class="line">sleep 2s</span><span class="line"></span><span class="line">git branch</span><span class="line">git checkout -b br2</span><span class="line"><span class="built_in">echo</span> v3 &gt; v3.txt</span><span class="line">git commit -m v3-br2</span><span class="line">sleep 2s</span><span class="line"></span><span class="line">git add -A</span><span class="line">git commit -m v3-br2</span><span class="line">sleep 2s</span><span class="line"></span><span class="line">git checkout -b br3</span><span class="line"><span class="built_in">echo</span> v4 &gt; v4.txt</span><span class="line">git add v4.txt</span><span class="line">git commit -m v4-br3</span><span class="line">sleep 2s</span><span class="line"></span><span class="line">git checkout master</span><span class="line">git merge br3 -m <span class="string">"merge br3 into master"</span></span><span class="line">git checkout br3</span><span class="line"><span class="built_in">echo</span> v5 &gt; v5.txt</span><span class="line">git add -A</span><span class="line">git commit -m v5-br3</span><span class="line">sleep 2s</span><span class="line"></span><span class="line">git checkout master</span><span class="line"><span class="built_in">echo</span> v6 &gt; v6.txt</span><span class="line">git add -A</span><span class="line">git commit -m v6-master</span><span class="line">sleep 2s</span><span class="line"></span><span class="line">git checkout br1</span><span class="line"><span class="built_in">echo</span> v7 &gt; v7.txt</span><span class="line">git add -A</span><span class="line">git commit -m v7-br1</span><span class="line">sleep 2s</span><span class="line"></span><span class="line">git checkout master</span><span class="line"><span class="built_in">echo</span> v8 &gt; v8.txt</span><span class="line">git add -A</span><span class="line">git commit -m v8-master</span><span class="line">sleep 2s</span><span class="line"></span><span class="line"><span class="built_in">echo</span> v9 &gt; v9.txt</span><span class="line">git add -A</span><span class="line">git commit -m v9-master</span><span class="line">sleep 2s</span><span class="line"></span><span class="line">git checkout br2</span><span class="line"><span class="built_in">echo</span> v10 &gt; v10.txt</span><span class="line">git add -A</span><span class="line">git commit -m v10-br2</span><span class="line">sleep 2s</span><span class="line"></span><span class="line"><span class="built_in">echo</span> v11 &gt; v11.txt</span><span class="line">git add -A</span><span class="line">git commit -m v11-br2</span><span class="line">sleep 2s</span><span class="line"></span><span class="line"><span class="built_in">echo</span> v12 &gt; v12.txt</span><span class="line">git add -A</span><span class="line">git commit -m v12-br2</span><span class="line">sleep 2s</span><span class="line"></span><span class="line">git checkout br3</span><span class="line"><span class="built_in">echo</span> v13 &gt; v13.txt</span><span class="line">git add -A</span><span class="line">git commit -m v13-br3</span><span class="line">sleep 2s</span><span class="line"></span><span class="line">git checkout br1</span><span class="line"><span class="built_in">echo</span> v14 &gt; v14.txt</span><span class="line">git add -A</span><span class="line">git commit -m v14-br1</span><span class="line">sleep 2s</span><span class="line"></span><span class="line"><span class="built_in">echo</span> v15 &gt; v15.txt</span><span class="line">git add -A</span><span class="line">git commit -m v15-br1</span><span class="line">sleep 2s</span><span class="line"></span><span class="line">git checkout master</span><span class="line">git merge br3 -m <span class="string">"merge br3 into master"</span></span><span class="line">git merge br1 -m <span class="string">"merge br1 into master"</span></span><span class="line">git merge br2 -m <span class="string">"merge br2 into master"</span></span><span class="line"></span><span class="line">git <span class="built_in">log</span> --oneline --decorate --graph --all</span></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>以上脚本运行完成之后生成命令行的结果如图所示，可以通过结果来查看分支版本的合并衍进历史。</p>
 <img src="/blog/img/linux/git/git-log.jpg" title="[git log --graph]">
@@ -270,20 +270,20 @@
 <img src="/blog/img/linux/git/git-log-source-tree.png" title="[git log source tree graph]">
 <img src="/blog/img/linux/git/git-log-date-order.png" title="[git log date order graph]">
 <p>如果想按照提交时间顺序查看分支历史，可以使用以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">log</span> --oneline --decorate --graph --all --date-order</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">log</span> --oneline --decorate --graph --all --date-order</span></pre></td></tr></table></figure>
 <p>使用<code>git log</code>查看单个文件的提交历史并显示diff：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">log</span> -p filename</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">log</span> -p filename</span></pre></td></tr></table></figure>
 <p>或者使用下面这个命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">log</span> --follow -p -- filename</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">log</span> --follow -p -- filename</span></pre></td></tr></table></figure>
 <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ol>
 <li><code>--follow</code>可以跟踪文件的重命名。</li>
 <li><code>-p</code>可以跟踪文件内容变化。</li>
 </ol>
 <h2 id="常用别名配置"><a href="#常用别名配置" class="headerlink" title="常用别名配置"></a>常用别名配置</h2><p>在<code>~/.gitconfig</code>中加入以下配置，或者使用<code>git config --global alias.** &quot;***&quot;</code>命令修改配置：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">[<span class="built_in">alias</span>]</div><div class="line">  ls = <span class="built_in">log</span> --graph --pretty=format:<span class="string">'%C(cyan)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset'</span></div><div class="line">  ll = <span class="built_in">log</span> --pretty=format:<span class="string">'%C(yellow)%h %C(green)| %C(white)%ad %C(green)| %C(blue)%&gt;(15,trunc)%an %C(green)| %C(green)%d %C(reset)%s'</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[<span class="built_in">alias</span>]</span><span class="line">  ls = <span class="built_in">log</span> --graph --pretty=format:<span class="string">'%C(cyan)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset'</span></span><span class="line">  ll = <span class="built_in">log</span> --pretty=format:<span class="string">'%C(yellow)%h %C(green)| %C(white)%ad %C(green)| %C(blue)%&gt;(15,trunc)%an %C(green)| %C(green)%d %C(reset)%s'</span></span></pre></td></tr></table></figure>
 <p>然后使用<code>git ll</code>或者<code>git ls</code>查看日志历史，使用别名可以避免影响原来的<code>git log</code>命令的显示方式。</p>
 <h2 id="帮助手册"><a href="#帮助手册" class="headerlink" title="帮助手册"></a>帮助手册</h2><p><code>git log</code>命令手册：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">help</span> <span class="built_in">log</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">help</span> <span class="built_in">log</span></span></pre></td></tr></table></figure>
 
       
     </div>
@@ -309,8 +309,9 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/java/2016/05/31/java-keytool-usage.html" rel="next" title="java tool - keytool">
-                上一篇：java tool - keytool
+              <a href="/blog/java/2016/05/31/java-commands-keytool.html" rel="next" title="java 命令行工具之 keytool篇">
+                <i class="fa fa-chevron-left"></i>
+                java 命令行工具之 keytool篇
               </a>
             
           </div>
@@ -318,7 +319,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2016/06/01/application-connections-configuration-spec.html" rel="prev" title="application connections configuration using hosts">
-                下一篇：application connections configuration using hosts
+                <i class="fa fa-chevron-right"></i>
+                application connections configuration using hosts
               </a>
             
           </div>
@@ -367,7 +369,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -378,16 +380,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -453,7 +453,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用别名配置"><span class="nav-number"></span> <span class="nav-text">常用别名配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#帮助手册"><span class="nav-number"></span> <span class="nav-text">帮助手册</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#常用别名配置"><span class="nav-number"></span> <span class="nav-text">常用别名配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#帮助手册"><span class="nav-number"></span> <span class="nav-text">帮助手册</span></a></li></div>
             
           </div>
         </section>
@@ -469,10 +469,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

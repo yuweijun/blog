@@ -1,0 +1,766 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="Preflight request一个 CORS 预检请求是用于检查服务器是否支持 CORS 即跨域资源共享。 它一般是用了以下几个 HTTP 请求首部的 OPTIONS 请求：Access-Control-Request-Method 和 Access-Control-Request-Headers，以及一个 Origin 首部。 当有必要的时候，浏览器会自动发出一个预检请求；所以在正常情况下，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cross origin resource sharing - cors">
+<meta property="og:url" content="http://www.4e00.com/web/2019/04/09/http-cross-origin-resource-sharing-cors.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="Preflight request一个 CORS 预检请求是用于检查服务器是否支持 CORS 即跨域资源共享。 它一般是用了以下几个 HTTP 请求首部的 OPTIONS 请求：Access-Control-Request-Method 和 Access-Control-Request-Headers，以及一个 Origin 首部。 当有必要的时候，浏览器会自动发出一个预检请求；所以在正常情况下，">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/web/cors/cors-principle.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/web/cors/cors-simple-request.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/web/cors/cors-prelight.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/web/cors/cors-with-credentials-request.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/web/cors/cors-server-flowchart.png">
+<meta property="og:updated_time" content="2019-04-10T01:56:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cross origin resource sharing - cors">
+<meta name="twitter:description" content="Preflight request一个 CORS 预检请求是用于检查服务器是否支持 CORS 即跨域资源共享。 它一般是用了以下几个 HTTP 请求首部的 OPTIONS 请求：Access-Control-Request-Method 和 Access-Control-Request-Headers，以及一个 Origin 首部。 当有必要的时候，浏览器会自动发出一个预检请求；所以在正常情况下，">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/web/cors/cors-principle.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/web/2019/04/09/http-cross-origin-resource-sharing-cors.html">
+
+  <title> cross origin resource sharing - cors | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                cross origin resource sharing - cors
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-04-09T22:21:49+08:00" content="2019-04-09">
+              2019-04-09
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Preflight-request"><a href="#Preflight-request" class="headerlink" title="Preflight request"></a>Preflight request</h2><p>一个 CORS 预检请求是用于检查服务器是否支持 <a href="https://developer.mozilla.org/en-US/docs/Glossary/CORS" target="_blank" rel="noopener">CORS</a> 即跨域资源共享。</p>
+<p>它一般是用了以下几个 HTTP 请求首部的 OPTIONS 请求：Access-Control-Request-Method 和 Access-Control-Request-Headers，以及一个 Origin 首部。</p>
+<p>当有必要的时候，浏览器会自动发出一个预检请求；所以在正常情况下，前端开发者不需要自己去发这样的请求。</p>
+<p>这里先看个简单的例子，下文有详细说明预检请求过程，一个客户端可能会在实际发送一个 DELETE 请求之前，先向服务器发起一个预检请求，用于询问是否可以向服务器发起一个 DELETE 请求：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">OPTIONS /resource/foo</span><span class="line"><span class="attribute">Access-Control-Request-Method</span>: DELETE</span><span class="line"><span class="attribute">Access-Control-Request-Headers</span>: origin, x-requested-with</span><span class="line"><span class="attribute">Origin</span>: https://foo.bar.org</span></pre></td></tr></table></figure>
+<p>如果服务器允许，那么服务器就会响应这个预检请求，并且其响应首部 Access-Control-Allow-Methods 会将 DELETE 包含在其中：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><span class="line"><span class="attribute">Content-Length</span>: 0</span><span class="line"><span class="attribute">Connection</span>: keep-alive</span><span class="line"><span class="attribute">Access-Control-Allow-Origin</span>: https://foo.bar.org</span><span class="line"><span class="attribute">Access-Control-Allow-Methods</span>: POST, GET, OPTIONS, DELETE</span><span class="line"><span class="attribute">Access-Control-Max-Age</span>: 86400</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="跨域资源共享-CORS"><a href="#跨域资源共享-CORS" class="headerlink" title="跨域资源共享 - CORS"></a>跨域资源共享 - CORS</h2><p>跨域资源共享(CORS) 是一种机制，它使用额外的 HTTP 头来告诉浏览器，让运行在一个 origin (domain) 上的 Web 应用被准许访问来自不同源服务器上的指定的资源。当一个资源从与该资源本身所在的服务器不同的域、协议或端口请求一个资源时，资源会发起一个跨域 HTTP 请求。</p>
+<p>比如，站点 <a href="http://domain-a.com" target="_blank" rel="noopener">http://domain-a.com</a> 的某 HTML 页面通过 <code>&lt;img&gt;</code> 的 src 请求 <a href="http://domain-b.com/image.jpg" target="_blank" rel="noopener">http://domain-b.com/image.jpg</a> 。网络上的许多页面都会加载来自不同域的 CSS 样式表，图像和脚本等资源。</p>
+<p>出于安全原因，浏览器限制从脚本内发起的跨源 HTTP 请求（译者注：这段描述不准确，并不一定是浏览器限制了发起跨站请求，也可能是跨站请求可以正常发起，但是返回结果被浏览器拦截了）。例如，XMLHttpRequest 和 Fetch API 遵循同源策略。这意味着使用这些 API 的 Web 应用程序只能从加载应用程序的同一个域请求 HTTP 资源，除非响应报文包含了正确 CORS 响应头。</p>
+<img src="/blog/img/web/cors/cors-principle.png" class="image-md" title="[cors-principle.png]">
+<p>跨域资源共享（ CORS ）机制允许 Web 应用服务器进行跨域访问控制，从而使跨域数据传输得以安全进行。现代浏览器支持在 API 容器中（例如 XMLHttpRequest 或 Fetch）使用 CORS，以降低跨域 HTTP 请求所带来的风险。</p>
+<h2 id="什么情况下需要-CORS"><a href="#什么情况下需要-CORS" class="headerlink" title="什么情况下需要 CORS"></a>什么情况下需要 CORS</h2><p>跨域资源共享标准（ cross-origin sharing standard ）允许在下列场景中使用跨域 HTTP 请求：</p>
+<ol>
+<li>前文提到的由 XMLHttpRequest 或 Fetch 发起的跨域 HTTP 请求。</li>
+<li>Web 字体 (CSS 中通过 @font-face 使用跨域字体资源), 因此，网站就可以发布 TrueType 字体资源，并只允许已授权网站进行跨站调用。</li>
+<li>WebGL 贴图</li>
+<li>使用 drawImage 将 Images/video 画面绘制到 canvas</li>
+<li>样式表（使用 CSSOM）</li>
+</ol>
+<p>本文概述了跨域资源共享机制及其所涉及的 HTTP 头。</p>
+<h2 id="功能概述"><a href="#功能概述" class="headerlink" title="功能概述"></a>功能概述</h2><p>跨域资源共享标准新增了一组 HTTP 首部字段，允许服务器声明哪些源站通过浏览器有权限访问哪些资源。另外，规范要求，对那些可能对服务器数据产生副作用的 HTTP 请求方法（特别是 GET 以外的 HTTP 请求，或者搭配某些 MIME 类型的 POST 请求），浏览器必须首先使用 OPTIONS 方法发起一个预检请求（preflight request），从而获知服务端是否允许该跨域请求。服务器确认允许之后，才发起实际的 HTTP 请求。在预检请求的返回中，服务器端也可以通知客户端，是否需要携带身份凭证（包括 Cookies 和 HTTP 认证相关数据）。</p>
+<p>CORS 请求失败会产生错误，但是为了安全，在 JavaScript 代码层面是无法获知到底具体是哪里出了问题。你只能查看浏览器的控制台以得知具体是哪里出现了错误。</p>
+<p>接下来的内容将讨论相关场景，并剖析该机制所涉及的 HTTP 首部字段。</p>
+<h2 id="若干访问控制场景"><a href="#若干访问控制场景" class="headerlink" title="若干访问控制场景"></a>若干访问控制场景</h2><p>这里，我们使用三个场景来解释跨域资源共享机制的工作原理。这些例子都使用 XMLHttpRequest 对象。</p>
+<p>本文中的 JavaScript 代码片段都可以从 <a href="http://arunranga.com/examples/access-control/" target="_blank" rel="noopener">http://arunranga.com/examples/access-control/</a> 获得。另外，使用支持跨域  XMLHttpRequest 的浏览器访问该地址，可以看到代码的实际运行结果。</p>
+<p>关于服务端对跨域资源共享的支持的讨论，请参见这篇文章： Server-Side_Access_Control (CORS)。</p>
+<h2 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h2><p>某些请求不会触发 CORS 预检请求。本文称这样的请求为<code>简单请求</code>，请注意，该术语并不属于 Fetch （其中定义了 CORS）规范。若请求满足所有下述条件，则该请求可视为<code>简单请求</code>：</p>
+<p>使用下列方法之一：</p>
+<ol>
+<li>GET</li>
+<li>HEAD</li>
+<li>POST</li>
+</ol>
+<p>Fetch 规范定义了对 CORS 安全的首部字段集合，不得人为设置该集合之外的其他首部字段。该集合为：</p>
+<ol>
+<li>Accept</li>
+<li>Accept-Language</li>
+<li>Content-Language</li>
+<li>Content-Type （需要注意额外的限制）</li>
+<li>DPR</li>
+<li>Downlink</li>
+<li>Save-Data</li>
+<li>Viewport-Width</li>
+<li>Width</li>
+</ol>
+<p>Content-Type 的值仅限于下列三者之一：</p>
+<ol>
+<li>text/plain</li>
+<li>multipart/form-data</li>
+<li>application/x-www-form-urlencoded</li>
+</ol>
+<p>请求中的任意 XMLHttpRequestUpload 对象均没有注册任何事件监听器；XMLHttpRequestUpload 对象可以使用 XMLHttpRequest.upload 属性访问。</p>
+<p>请求中没有使用 ReadableStream 对象。</p>
+<blockquote>
+<p>注意: 这些跨域请求与浏览器发出的其他跨域请求并无二致。如果服务器未返回正确的响应首部，则请求方不会收到任何数据。因此，那些不允许跨域请求的网站无需为这一新的 HTTP 访问控制特性担心。</p>
+</blockquote>
+<blockquote>
+<p>注意: WebKit Nightly 和 Safari Technology Preview 为 Accept, Accept-Language, 和 Content-Language 首部字段的值添加了额外的限制。<br>如果这些首部字段的值是<code>非标准</code>的，WebKit/Safari 就不会将这些请求视为<code>简单请求</code>。<br>WebKit/Safari 并没有在文档中列出哪些值是<code>非标准</code>的，不过我们可以在这里找到相关讨论：<br>Require preflight for non-standard CORS-safelisted request headers Accept, Accept-Language, and Content-Language, Allow commas in Accept, Accept-Language, and Content-Language request headers for simple CORS, and Switch to a blacklist model for restricted Accept headers in simple CORS requests。<br>其它浏览器并不支持这些额外的限制，因为它们不属于规范的一部分。</p>
+</blockquote>
+<p>比如说，假如站点 <a href="http://foo.example" target="_blank" rel="noopener">http://foo.example</a> 的网页应用想要访问 <a href="http://bar.other" target="_blank" rel="noopener">http://bar.other</a> 的资源。<a href="http://foo.example" target="_blank" rel="noopener">http://foo.example</a> 的网页中可能包含类似于下面的 JavaScript 代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> invocation = <span class="keyword">new</span> XMLHttpRequest();</span><span class="line"><span class="keyword">var</span> url = <span class="string">'http://bar.other/resources/public-data/'</span>;</span><span class="line"></span><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callOtherDomain</span>(<span class="params"></span>) </span>&#123;</span><span class="line">  <span class="keyword">if</span>(invocation) &#123;</span><span class="line">    invocation.open(<span class="string">'GET'</span>, url, <span class="literal">true</span>);</span><span class="line">    invocation.onreadystatechange = handler;</span><span class="line">    invocation.send();</span><span class="line">  &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>客户端和服务器之间使用 CORS 首部字段来处理跨域权限：</p>
+<img src="/blog/img/web/cors/cors-simple-request.png" class="image-md" title="[cors-simple-request]">
+<p>分别检视请求报文和响应报文：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><span class="line">2</span><span class="line">3</span><span class="line">4</span><span class="line">5</span><span class="line">6</span><span class="line">7</span><span class="line">8</span><span class="line">9</span><span class="line">10</span><span class="line">11</span><span class="line">12</span><span class="line">13</span><span class="line">14</span><span class="line">15</span><span class="line">16</span><span class="line">17</span><span class="line">18</span><span class="line">19</span><span class="line">20</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/resources/public-data/</span> HTTP/1.1</span><span class="line"><span class="attribute">Host</span>: bar.other</span><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1b3pre) Gecko/20081130 Minefield/3.1b3pre</span><span class="line"><span class="attribute">Accept</span>: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><span class="line"><span class="attribute">Accept-Language</span>: en-us,en;q=0.5</span><span class="line"><span class="attribute">Accept-Encoding</span>: gzip,deflate</span><span class="line"><span class="attribute">Accept-Charset</span>: ISO-8859-1,utf-8;q=0.7,*;q=0.7</span><span class="line"><span class="attribute">Connection</span>: keep-alive</span><span class="line"><span class="attribute">Referer</span>: http://foo.example/examples/access-control/simpleXSInvocation.html</span><span class="line"><span class="attribute">Origin</span>: http://foo.example</span><span class="line"></span><span class="line"></span><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><span class="line"><span class="attribute">Date</span>: Mon, 01 Dec 2008 00:23:53 GMT</span><span class="line"><span class="attribute">Server</span>: Apache/2.0.61</span><span class="line"><span class="attribute">Access-Control-Allow-Origin</span>: *</span><span class="line"><span class="attribute">Keep-Alive</span>: timeout=2, max=100</span><span class="line"><span class="attribute">Connection</span>: Keep-Alive</span><span class="line"><span class="attribute">Transfer-Encoding</span>: chunked</span><span class="line"><span class="attribute">Content-Type</span>: application/xml</span></pre></td></tr></table></figure>
+<p>第 1~10 行是请求首部。第 10 行 的请求首部字段 Origin 表明该请求来源于 <a href="http://foo.exmaple" target="_blank" rel="noopener">http://foo.exmaple</a> 。</p>
+<p>第 13~22 行是来自于 <a href="http://bar.other" target="_blank" rel="noopener">http://bar.other</a> 的服务端响应。响应中携带了响应首部字段 Access-Control-Allow-Origin（第 16 行）。使用 Origin 和 Access-Control-Allow-Origin 就能完成最简单的访问控制。本例中，服务端返回的 Access-Control-Allow-Origin: * 表明，该资源可以被任意外域访问。如果服务端仅允许来自 <a href="http://foo.example" target="_blank" rel="noopener">http://foo.example</a> 的访问，该首部字段的内容如下：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Allow-Origin</span>: http://foo.example</span></pre></td></tr></table></figure>
+<p>现在，除了 <a href="http://foo.example" target="_blank" rel="noopener">http://foo.example</a> ，其它外域均不能访问该资源（该策略由请求首部中的 ORIGIN 字段定义，见第 10 行）。Access-Control-Allow-Origin 应当为 <code>*</code> 或者包含由 Origin 首部字段所指明的域名。</p>
+<h2 id="预检请求"><a href="#预检请求" class="headerlink" title="预检请求"></a>预检请求</h2><p>与前述简单请求不同，<code>需预检的请求</code> 要求必须首先使用 OPTIONS 方法发起一个预检请求到服务器，以获知服务器是否允许该实际请求。<code>预检请求</code> 的使用，可以避免跨域请求对服务器的用户数据产生未预期的影响。</p>
+<p>当请求满足下述任一条件时，即应首先发送预检请求：</p>
+<p>使用了下面任一 HTTP 方法：</p>
+<ol>
+<li>PUT</li>
+<li>DELETE</li>
+<li>CONNECT</li>
+<li>OPTIONS</li>
+<li>TRACE</li>
+<li>PATCH</li>
+</ol>
+<p>人为设置了对 CORS 安全的首部字段集合之外的其他首部字段。该集合为：</p>
+<ol>
+<li>Accept</li>
+<li>Accept-Language</li>
+<li>Content-Language</li>
+<li>Content-Type (需要注意额外的限制)</li>
+<li>DPR</li>
+<li>Downlink</li>
+<li>Save-Data</li>
+<li>Viewport-Width</li>
+<li>Width</li>
+</ol>
+<p>Content-Type 的值不属于下列之一:</p>
+<ol>
+<li>application/x-www-form-urlencoded</li>
+<li>multipart/form-data</li>
+<li>text/plain</li>
+</ol>
+<p>请求中的 XMLHttpRequestUpload 对象注册了任意多个事件监听器。</p>
+<p>请求中使用了 ReadableStream 对象。</p>
+<blockquote>
+<p>注意: WebKit Nightly 和 Safari Technology Preview 为 Accept, Accept-Language, 和 Content-Language 首部字段的值添加了额外的限制。<br>如果这些首部字段的值是<code>非标准</code>的，WebKit/Safari 就不会将这些请求视为<code>简单请求</code>。<br>WebKit/Safari 并没有在文档中列出哪些值是<code>非标准</code>的，不过我们可以在这里找到相关讨论：<br>Require preflight for non-standard CORS-safelisted request headers Accept, Accept-Language, and Content-Language, Allow commas in Accept, Accept-Language, and Content-Language request headers for simple CORS, and Switch to a blacklist model for restricted Accept headers in simple CORS requests。<br>其它浏览器并不支持这些额外的限制，因为它们不属于规范的一部分。</p>
+</blockquote>
+<p>如下是一个需要执行预检请求的 HTTP 请求：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> invocation = <span class="keyword">new</span> XMLHttpRequest();</span><span class="line"><span class="keyword">var</span> url = <span class="string">'http://bar.other/resources/post-here/'</span>;</span><span class="line"><span class="keyword">var</span> body = <span class="string">'&lt;?xml version="1.0"?&gt;&lt;person&gt;&lt;name&gt;Arun&lt;/name&gt;&lt;/person&gt;'</span>;</span><span class="line"></span><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callOtherDomain</span>(<span class="params"></span>)</span>&#123;</span><span class="line">  <span class="keyword">if</span>(invocation)</span><span class="line">    &#123;</span><span class="line">      invocation.open(<span class="string">'POST'</span>, url, <span class="literal">true</span>);</span><span class="line">      invocation.setRequestHeader(<span class="string">'X-PINGOTHER'</span>, <span class="string">'pingpong'</span>);</span><span class="line">      invocation.setRequestHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/xml'</span>);</span><span class="line">      invocation.onreadystatechange = handler;</span><span class="line">      invocation.send(body);</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span></pre></td></tr></table></figure>
+<p>上面的代码使用 POST 请求发送一个 XML 文档，该请求包含了一个自定义的请求首部字段（X-PINGOTHER: pingpong）。另外，该请求的 Content-Type 为 application/xml。因此，该请求需要首先发起<code>预检请求</code>。</p>
+<img src="/blog/img/web/cors/cors-prelight.png" class="image-md" title="[cors-prelight]">
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><span class="line">2</span><span class="line">3</span><span class="line">4</span><span class="line">5</span><span class="line">6</span><span class="line">7</span><span class="line">8</span><span class="line">9</span><span class="line">10</span><span class="line">11</span><span class="line">12</span><span class="line">13</span><span class="line">14</span><span class="line">15</span><span class="line">16</span><span class="line">17</span><span class="line">18</span><span class="line">19</span><span class="line">20</span><span class="line">21</span><span class="line">22</span><span class="line">23</span><span class="line">24</span><span class="line">25</span><span class="line">26</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">OPTIONS</span> <span class="string">/resources/post-here/</span> HTTP/1.1</span><span class="line"><span class="attribute">Host</span>: bar.other</span><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1b3pre) Gecko/20081130 Minefield/3.1b3pre</span><span class="line"><span class="attribute">Accept</span>: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><span class="line"><span class="attribute">Accept-Language</span>: en-us,en;q=0.5</span><span class="line"><span class="attribute">Accept-Encoding</span>: gzip,deflate</span><span class="line"><span class="attribute">Accept-Charset</span>: ISO-8859-1,utf-8;q=0.7,*;q=0.7</span><span class="line"><span class="attribute">Connection</span>: keep-alive</span><span class="line"><span class="attribute">Origin</span>: http://foo.example</span><span class="line"><span class="attribute">Access-Control-Request-Method</span>: POST</span><span class="line"><span class="attribute">Access-Control-Request-Headers</span>: X-PINGOTHER, Content-Type</span><span class="line"></span><span class="line"></span><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><span class="line"><span class="attribute">Date</span>: Mon, 01 Dec 2008 01:15:39 GMT</span><span class="line"><span class="attribute">Server</span>: Apache/2.0.61 (Unix)</span><span class="line"><span class="attribute">Access-Control-Allow-Origin</span>: http://foo.example</span><span class="line"><span class="attribute">Access-Control-Allow-Methods</span>: POST, GET, OPTIONS</span><span class="line"><span class="attribute">Access-Control-Allow-Headers</span>: X-PINGOTHER, Content-Type</span><span class="line"><span class="attribute">Access-Control-Max-Age</span>: 86400</span><span class="line"><span class="attribute">Vary</span>: Accept-Encoding, Origin</span><span class="line"><span class="attribute">Content-Encoding</span>: gzip</span><span class="line"><span class="attribute">Content-Length</span>: 0</span><span class="line"><span class="attribute">Keep-Alive</span>: timeout=2, max=100</span><span class="line"><span class="attribute">Connection</span>: Keep-Alive</span><span class="line"><span class="attribute">Content-Type</span>: text/plain</span></pre></td></tr></table></figure>
+<p>预检请求完成之后，发送实际请求：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><span class="line">2</span><span class="line">3</span><span class="line">4</span><span class="line">5</span><span class="line">6</span><span class="line">7</span><span class="line">8</span><span class="line">9</span><span class="line">10</span><span class="line">11</span><span class="line">12</span><span class="line">13</span><span class="line">14</span><span class="line">15</span><span class="line">16</span><span class="line">17</span><span class="line">18</span><span class="line">19</span><span class="line">20</span><span class="line">21</span><span class="line">22</span><span class="line">23</span><span class="line">24</span><span class="line">25</span><span class="line">26</span><span class="line">27</span><span class="line">28</span><span class="line">29</span><span class="line">30</span><span class="line">31</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/resources/post-here/</span> HTTP/1.1</span><span class="line"><span class="attribute">Host</span>: bar.other</span><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1b3pre) Gecko/20081130 Minefield/3.1b3pre</span><span class="line"><span class="attribute">Accept</span>: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><span class="line"><span class="attribute">Accept-Language</span>: en-us,en;q=0.5</span><span class="line"><span class="attribute">Accept-Encoding</span>: gzip,deflate</span><span class="line"><span class="attribute">Accept-Charset</span>: ISO-8859-1,utf-8;q=0.7,*;q=0.7</span><span class="line"><span class="attribute">Connection</span>: keep-alive</span><span class="line"><span class="attribute">X-PINGOTHER</span>: pingpong</span><span class="line"><span class="attribute">Content-Type</span>: text/xml; charset=UTF-8</span><span class="line"><span class="attribute">Referer</span>: http://foo.example/examples/preflightInvocation.html</span><span class="line"><span class="attribute">Content-Length</span>: 55</span><span class="line"><span class="attribute">Origin</span>: http://foo.example</span><span class="line"><span class="attribute">Pragma</span>: no-cache</span><span class="line"><span class="attribute">Cache-Control</span>: no-cache</span><span class="line"></span><span class="line">&lt;?xml version="1.0"?&gt;&lt;person&gt;&lt;name&gt;Arun&lt;/name&gt;&lt;/person&gt;</span><span class="line"></span><span class="line"></span><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><span class="line"><span class="attribute">Date</span>: Mon, 01 Dec 2008 01:15:40 GMT</span><span class="line"><span class="attribute">Server</span>: Apache/2.0.61 (Unix)</span><span class="line"><span class="attribute">Access-Control-Allow-Origin</span>: http://foo.example</span><span class="line"><span class="attribute">Vary</span>: Accept-Encoding, Origin</span><span class="line"><span class="attribute">Content-Encoding</span>: gzip</span><span class="line"><span class="attribute">Content-Length</span>: 235</span><span class="line"><span class="attribute">Keep-Alive</span>: timeout=2, max=99</span><span class="line"><span class="attribute">Connection</span>: Keep-Alive</span><span class="line"><span class="attribute">Content-Type</span>: text/plain</span><span class="line"></span><span class="line">[Some GZIP'd payload]</span></pre></td></tr></table></figure>
+<p>浏览器检测到，从 JavaScript 中发起的请求需要被预检。从上面的报文中，我们看到，第 1~12 行发送了一个使用 OPTIONS 方法的<code>预检请求</code>。 OPTIONS 是 HTTP/1.1 协议中定义的方法，用以从服务器获取更多信息。该方法不会对服务器资源产生影响。 预检请求中同时携带了下面两个首部字段：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Request-Method</span>: POST</span><span class="line"><span class="attribute">Access-Control-Request-Headers</span>: X-PINGOTHER, Content-Type</span></pre></td></tr></table></figure>
+<p>首部字段 Access-Control-Request-Method 告知服务器，实际请求将使用 POST 方法。首部字段 Access-Control-Request-Headers 告知服务器，实际请求将携带两个自定义请求首部字段：X-PINGOTHER 与 Content-Type。服务器据此决定，该实际请求是否被允许。</p>
+<p>第 14~26 行为预检请求的响应，表明服务器将接受后续的实际请求。重点看第 17~20 行：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Allow-Origin</span>: http://foo.example</span><span class="line"><span class="attribute">Access-Control-Allow-Methods</span>: POST, GET, OPTIONS</span><span class="line"><span class="attribute">Access-Control-Allow-Headers</span>: X-PINGOTHER, Content-Type</span><span class="line"><span class="attribute">Access-Control-Max-Age</span>: 86400</span></pre></td></tr></table></figure>
+<p>首部字段 Access-Control-Allow-Methods 表明服务器允许客户端使用 POST, GET 和 OPTIONS 方法发起请求。该字段与 <code>HTTP/1.1</code> 的 <code>Allow: response header</code> 类似，但仅限于在需要访问控制的场景中使用。</p>
+<p>首部字段 Access-Control-Allow-Headers 表明服务器允许请求中携带字段 X-PINGOTHER 与 Content-Type。与 Access-Control-Allow-Methods 一样，Access-Control-Allow-Headers 的值为逗号分割的列表。</p>
+<p>最后，首部字段 Access-Control-Max-Age 表明该响应的有效时间为 86400 秒，也就是 24 小时。在有效时间内，浏览器无须为同一请求再次发起预检请求。请注意，浏览器自身维护了一个最大有效时间，如果该首部字段的值超过了最大有效时间，将不会生效。</p>
+<h2 id="预检请求与重定向"><a href="#预检请求与重定向" class="headerlink" title="预检请求与重定向"></a>预检请求与重定向</h2><p>大多数浏览器不支持针对于预检请求的重定向。如果一个预检请求发生了重定向，浏览器将报告错误：</p>
+<blockquote>
+<p>The request was redirected to &#39;<a href="https://example.com/foo&#39;" target="_blank" rel="noopener">https://example.com/foo&#39;</a>, which is disallowed for cross-origin requests that require preflight</p>
+<p>Request requires preflight, which is disallowed to follow cross-origin redirect</p>
+</blockquote>
+<p>CORS 最初要求该行为，不过在后续的修订中废弃了这一要求。</p>
+<p>在浏览器的实现跟上规范之前，有两种方式规避上述报错行为：</p>
+<ol>
+<li>在服务端去掉对预检请求的重定向；</li>
+<li>将实际请求变成一个简单请求。</li>
+</ol>
+<p>如果上面两种方式难以做到，我们仍有其他办法：</p>
+<ol>
+<li>发出一个简单请求（使用  Response.url 或 XHR.responseURL）以判断真正的预检请求会返回什么地址。</li>
+<li>发出另一个请求（真正的请求），使用在上一步通过 Response.url 或 XMLHttpRequest.responseURL 获得的 URL。</li>
+</ol>
+<p>不过，如果请求是由于存在 Authorization 字段而引发了预检请求，则这一方法将无法使用。这种情况只能由服务端进行更改。</p>
+<h2 id="附带身份凭证的请求"><a href="#附带身份凭证的请求" class="headerlink" title="附带身份凭证的请求"></a>附带身份凭证的请求</h2><p>Fetch 与 CORS 的一个有趣的特性是，可以基于  HTTP cookies 和 HTTP 认证信息发送身份凭证。一般而言，对于跨域 XMLHttpRequest 或 Fetch 请求，浏览器不会发送身份凭证信息。如果要发送凭证信息，需要设置 XMLHttpRequest 的某个特殊标志位。</p>
+<p>本例中，<a href="http://foo.example" target="_blank" rel="noopener">http://foo.example</a> 的某脚本向 <a href="http://bar.other" target="_blank" rel="noopener">http://bar.other</a> 发起一个 GET 请求，并设置 Cookies：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><span class="line">2</span><span class="line">3</span><span class="line">4</span><span class="line">5</span><span class="line">6</span><span class="line">7</span><span class="line">8</span><span class="line">9</span><span class="line">10</span><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> invocation = <span class="keyword">new</span> XMLHttpRequest();</span><span class="line"><span class="keyword">var</span> url = <span class="string">'http://bar.other/resources/credentialed-content/'</span>;</span><span class="line"></span><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callOtherDomain</span>(<span class="params"></span>)</span>&#123;</span><span class="line">  <span class="keyword">if</span>(invocation) &#123;</span><span class="line">    invocation.open(<span class="string">'GET'</span>, url, <span class="literal">true</span>);</span><span class="line">    invocation.withCredentials = <span class="literal">true</span>;</span><span class="line">    invocation.onreadystatechange = handler;</span><span class="line">    invocation.send();</span><span class="line">  &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>第 7 行将 XMLHttpRequest 的 withCredentials 标志设置为 true，从而向服务器发送 Cookies。因为这是一个简单 GET 请求，所以浏览器不会对其发起<code>预检请求</code>。但是，如果服务器端的响应中未携带 Access-Control-Allow-Credentials: true ，浏览器将不会把响应内容返回给请求的发送者。</p>
+<img src="/blog/img/web/cors/cors-with-credentials-request.png" class="image-md" title="[cors-with-credentials-request]">
+<p>客户端与服务器端交互示例如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><span class="line">2</span><span class="line">3</span><span class="line">4</span><span class="line">5</span><span class="line">6</span><span class="line">7</span><span class="line">8</span><span class="line">9</span><span class="line">10</span><span class="line">11</span><span class="line">12</span><span class="line">13</span><span class="line">14</span><span class="line">15</span><span class="line">16</span><span class="line">17</span><span class="line">18</span><span class="line">19</span><span class="line">20</span><span class="line">21</span><span class="line">22</span><span class="line">23</span><span class="line">24</span><span class="line">25</span><span class="line">26</span><span class="line">27</span><span class="line">28</span><span class="line">29</span><span class="line">30</span><span class="line">31</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/resources/access-control-with-credentials/</span> HTTP/1.1</span><span class="line"><span class="attribute">Host</span>: bar.other</span><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1b3pre) Gecko/20081130 Minefield/3.1b3pre</span><span class="line"><span class="attribute">Accept</span>: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><span class="line"><span class="attribute">Accept-Language</span>: en-us,en;q=0.5</span><span class="line"><span class="attribute">Accept-Encoding</span>: gzip,deflate</span><span class="line"><span class="attribute">Accept-Charset</span>: ISO-8859-1,utf-8;q=0.7,*;q=0.7</span><span class="line"><span class="attribute">Connection</span>: keep-alive</span><span class="line"><span class="attribute">Referer</span>: http://foo.example/examples/credential.html</span><span class="line"><span class="attribute">Origin</span>: http://foo.example</span><span class="line"><span class="attribute">Cookie</span>: pageAccess=2</span><span class="line"></span><span class="line"></span><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><span class="line"><span class="attribute">Date</span>: Mon, 01 Dec 2008 01:34:52 GMT</span><span class="line"><span class="attribute">Server</span>: Apache/2.0.61 (Unix) PHP/4.4.7 mod_ssl/2.0.61 OpenSSL/0.9.7e mod_fastcgi/2.4.2 DAV/2 SVN/1.4.2</span><span class="line"><span class="attribute">X-Powered-By</span>: PHP/5.2.6</span><span class="line"><span class="attribute">Access-Control-Allow-Origin</span>: http://foo.example</span><span class="line"><span class="attribute">Access-Control-Allow-Credentials</span>: true</span><span class="line"><span class="attribute">Cache-Control</span>: no-cache</span><span class="line"><span class="attribute">Pragma</span>: no-cache</span><span class="line"><span class="attribute">Set-Cookie</span>: pageAccess=3; expires=Wed, 31-Dec-2008 01:34:53 GMT</span><span class="line"><span class="attribute">Vary</span>: Accept-Encoding, Origin</span><span class="line"><span class="attribute">Content-Encoding</span>: gzip</span><span class="line"><span class="attribute">Content-Length</span>: 106</span><span class="line"><span class="attribute">Keep-Alive</span>: timeout=2, max=100</span><span class="line"><span class="attribute">Connection</span>: Keep-Alive</span><span class="line"><span class="attribute">Content-Type</span>: text/plain</span><span class="line"></span><span class="line"></span><span class="line">[text/plain payload]</span></pre></td></tr></table></figure>
+<p>即使第 11 行指定了 Cookie 的相关信息，但是，如果 bar.other 的响应中缺失 Access-Control-Allow-Credentials: true（第 19 行），则响应内容不会返回给请求的发起者。</p>
+<h3 id="附带身份凭证的请求与通配符"><a href="#附带身份凭证的请求与通配符" class="headerlink" title="附带身份凭证的请求与通配符"></a>附带身份凭证的请求与通配符</h3><p>对于附带身份凭证的请求，服务器 <strong>不能</strong> 设置 Access-Control-Allow-Origin 的值为<code>*</code>。</p>
+<p>这是因为请求的首部中携带了 Cookie 信息，如果 Access-Control-Allow-Origin 的值为<code>*</code>，请求将会失败。而将 Access-Control-Allow-Origin 的值设置为 <a href="http://foo.example" target="_blank" rel="noopener">http://foo.example</a> ，则请求将成功执行。</p>
+<p>另外，响应首部中也携带了 Set-Cookie 字段，尝试对 Cookie 进行修改。如果操作失败，将会抛出异常。</p>
+<h2 id="HTTP-响应首部字段"><a href="#HTTP-响应首部字段" class="headerlink" title="HTTP 响应首部字段"></a>HTTP 响应首部字段</h2><p>本节列出了规范所定义的响应首部字段。上一小节中，我们已经看到了这些首部字段在实际场景中是如何工作的。</p>
+<h3 id="Access-Control-Allow-Origin"><a href="#Access-Control-Allow-Origin" class="headerlink" title="Access-Control-Allow-Origin"></a>Access-Control-Allow-Origin</h3><p>响应首部中可以携带一个 Access-Control-Allow-Origin 字段，其语法如下:</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Allow-Origin</span>: &lt;origin&gt; | *</span></pre></td></tr></table></figure>
+<p>其中，origin 参数的值指定了允许访问该资源的外域 URI。对于不需要携带身份凭证的请求，服务器可以指定该字段的值为通配符，表示允许来自所有域的请求。</p>
+<p>例如，下面的字段值将允许来自 <a href="http://mozilla.com" target="_blank" rel="noopener">http://mozilla.com</a> 的请求：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Allow-Origin</span>: http://mozilla.com</span></pre></td></tr></table></figure>
+<p>如果服务端指定了具体的域名而非<code>*</code>，那么响应首部中的 Vary 字段的值必须包含 Origin。这将告诉客户端：服务器对不同的源站返回不同的内容。</p>
+<h3 id="Access-Control-Expose-Headers"><a href="#Access-Control-Expose-Headers" class="headerlink" title="Access-Control-Expose-Headers"></a>Access-Control-Expose-Headers</h3><p>译者注：在跨域访问时，XMLHttpRequest 对象的 getResponseHeader()方法只能拿到一些最基本的响应头，Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma，如果要访问其他头，则需要服务器设置本响应头。</p>
+<p>Access-Control-Expose-Headers 头让服务器把允许浏览器访问的头放入白名单，例如：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Expose-Headers</span>: X-My-Custom-Header, X-Another-Custom-Header</span></pre></td></tr></table></figure>
+<p>这样浏览器就能够通过 getResponseHeader 访问 X-My-Custom-Header 和 X-Another-Custom-Header 响应头了。</p>
+<h3 id="Access-Control-Max-Age"><a href="#Access-Control-Max-Age" class="headerlink" title="Access-Control-Max-Age"></a>Access-Control-Max-Age</h3><p>Access-Control-Max-Age 头指定了 preflight 请求的结果能够被缓存多久，请参考本文在前面提到的 preflight 例子。</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Max-Age</span>: &lt;delta-seconds&gt;</span></pre></td></tr></table></figure>
+<p>delta-seconds 参数表示 preflight 请求的结果在多少秒内有效。</p>
+<h3 id="Access-Control-Allow-Credentials"><a href="#Access-Control-Allow-Credentials" class="headerlink" title="Access-Control-Allow-Credentials"></a>Access-Control-Allow-Credentials</h3><p>Access-Control-Allow-Credentials 头指定了当浏览器的 credentials 设置为 true 时是否允许浏览器读取 response 的内容。当用在对 preflight 预检测请求的响应中时，它指定了实际的请求是否可以使用 credentials。</p>
+<blockquote>
+<p>请注意：简单 GET 请求不会被预检；<br>如果对此类请求的响应中不包含该字段，这个响应将被忽略掉，并且浏览器也不会将相应内容返回给网页。</p>
+</blockquote>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Allow-Credentials</span>: true</span></pre></td></tr></table></figure>
+<p>上文已经讨论了附带身份凭证的请求。</p>
+<h3 id="Access-Control-Allow-Methods"><a href="#Access-Control-Allow-Methods" class="headerlink" title="Access-Control-Allow-Methods"></a>Access-Control-Allow-Methods</h3><p>Access-Control-Allow-Methods 首部字段用于预检请求的响应。其指明了实际请求所允许使用的 HTTP 方法。</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Allow-Methods</span>: &lt;method&gt;[, &lt;method&gt;]*</span></pre></td></tr></table></figure>
+<h3 id="Access-Control-Allow-Headers"><a href="#Access-Control-Allow-Headers" class="headerlink" title="Access-Control-Allow-Headers"></a>Access-Control-Allow-Headers</h3><p>Access-Control-Allow-Headers 首部字段用于预检请求的响应。其指明了实际请求中允许携带的首部字段。</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Allow-Headers</span>: &lt;field-name&gt;[, &lt;field-name&gt;]*</span></pre></td></tr></table></figure>
+<h2 id="HTTP-请求首部字段"><a href="#HTTP-请求首部字段" class="headerlink" title="HTTP 请求首部字段"></a>HTTP 请求首部字段</h2><p>本节列出了可用于发起跨域请求的首部字段。请注意，这些首部字段无须手动设置。 当开发者使用 XMLHttpRequest 对象发起跨域请求时，它们已经被设置就绪。</p>
+<h3 id="Origin"><a href="#Origin" class="headerlink" title="Origin"></a>Origin</h3><p>Origin 首部字段表明预检请求或实际请求的源站。</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Origin</span>: &lt;origin&gt;</span></pre></td></tr></table></figure>
+<p>origin 参数的值为源站 URI。它不包含任何路径信息，只是服务器名称。</p>
+<p>Note: 有时候将该字段的值设置为空字符串是有用的，例如，当源站是一个 data URL 时。</p>
+<blockquote>
+<p>注意，不管是否为跨域请求，ORIGIN 字段总是被发送。</p>
+</blockquote>
+<h3 id="Access-Control-Request-Method"><a href="#Access-Control-Request-Method" class="headerlink" title="Access-Control-Request-Method"></a>Access-Control-Request-Method</h3><p>Access-Control-Request-Method 首部字段用于预检请求。其作用是，将实际请求所使用的 HTTP 方法告诉服务器。</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Request-Method</span>: &lt;method&gt;</span></pre></td></tr></table></figure>
+<h3 id="Access-Control-Request-Headers"><a href="#Access-Control-Request-Headers" class="headerlink" title="Access-Control-Request-Headers"></a>Access-Control-Request-Headers</h3><p>Access-Control-Request-Headers 首部字段用于预检请求。其作用是，将实际请求所携带的首部字段告诉服务器。</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Request-Headers</span>: &lt;field-name&gt;[, &lt;field-name&gt;]*</span></pre></td></tr></table></figure>
+<h2 id="server-CORS-process-flowchart"><a href="#server-CORS-process-flowchart" class="headerlink" title="server CORS process flowchart"></a>server CORS process flowchart</h2><img src="/blog/img/web/cors/cors-server-flowchart.png" class="image-lg" title="[cors-server-flowchart]">
+<h2 id="CORS-POST-example"><a href="#CORS-POST-example" class="headerlink" title="CORS POST example"></a>CORS POST example</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">fetch(<span class="string">'https://httpbin.org/post'</span>,</span><span class="line">        &#123;<span class="attr">method</span>: <span class="string">'POST'</span>, <span class="attr">headers</span>: <span class="keyword">new</span> Headers(&#123;<span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>&#125;), <span class="attr">body</span>: <span class="built_in">JSON</span>.stringify(&#123;<span class="attr">a</span>: <span class="number">1</span>&#125;)&#125;)</span><span class="line">    .then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><span class="line">    .then(<span class="function"><span class="params">json</span> =&gt;</span> <span class="built_in">console</span>.log(json));</span></pre></td></tr></table></figure>
+<p>上述请求可在浏览器控制台测试，OPTIONS 请求头如下：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Request-Headers</span>: content-type</span><span class="line"><span class="attribute">Access-Control-Request-Method</span>: POST</span><span class="line"><span class="attribute">DNT</span>: 1</span><span class="line"><span class="attribute">Origin</span>: http://test.4e00.com</span><span class="line"><span class="attribute">Referer</span>: http://test.4e00.com/blog/web/2019/04/09/http-cross-origin-resource-sharing-cors.html</span><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36</span></pre></td></tr></table></figure>
+<p>OPTIONS 请求服务器回响应头如下：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Allow-Credentials</span>: true</span><span class="line"><span class="attribute">Access-Control-Allow-Headers</span>: content-type</span><span class="line"><span class="attribute">Access-Control-Allow-Methods</span>: GET, POST, PUT, DELETE, PATCH, OPTIONS</span><span class="line"><span class="attribute">Access-Control-Allow-Origin</span>: http://test.4e00.com</span><span class="line"><span class="attribute">Access-Control-Max-Age</span>: 3600</span><span class="line"><span class="attribute">Allow</span>: POST, OPTIONS</span><span class="line"><span class="attribute">Connection</span>: keep-alive</span><span class="line"><span class="attribute">Content-Length</span>: 0</span><span class="line"><span class="attribute">Content-Type</span>: text/html; charset=utf-8</span><span class="line"><span class="attribute">Date</span>: Wed, 09 Apr 2019 11:29:49 GMT</span><span class="line"><span class="attribute">Server</span>: nginx</span></pre></td></tr></table></figure>
+<p>OPTIONS 预检请求合法，然后发起的 HTTP POST 请求头如下：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">content-type</span>: application/json</span><span class="line"><span class="attribute">DNT</span>: 1</span><span class="line"><span class="attribute">Origin</span>: http://test.4e00.com</span><span class="line"><span class="attribute">Referer</span>: http://test.4e00.com/blog/web/2019/04/09/http-cross-origin-resource-sharing-cors.html</span><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36</span></pre></td></tr></table></figure>
+<p>返回结果如下：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><span class="line">  <span class="attr">"args"</span>: &#123;&#125;,</span><span class="line">  <span class="attr">"data"</span>: <span class="string">"&#123;\"a\":1&#125;"</span>,</span><span class="line">  <span class="attr">"files"</span>: &#123;&#125;,</span><span class="line">  <span class="attr">"form"</span>: &#123;&#125;,</span><span class="line">  <span class="attr">"headers"</span>: &#123;</span><span class="line">    <span class="attr">"Accept"</span>: <span class="string">"*/*"</span>,</span><span class="line">    <span class="attr">"Accept-Encoding"</span>: <span class="string">"gzip, deflate, br"</span>,</span><span class="line">    <span class="attr">"Accept-Language"</span>: <span class="string">"en-US,en;q=0.9,zh;q=0.8,zh-CN;q=0.7,zh-TW;q=0.6,ja;q=0.5,sv;q=0.4,hu;q=0.3,fr;q=0.2,sn;q=0.1,pt;q=0.1"</span>,</span><span class="line">    <span class="attr">"Content-Length"</span>: <span class="string">"7"</span>,</span><span class="line">    <span class="attr">"Content-Type"</span>: <span class="string">"application/json"</span>,</span><span class="line">    <span class="attr">"Dnt"</span>: <span class="string">"1"</span>,</span><span class="line">    <span class="attr">"Host"</span>: <span class="string">"httpbin.org"</span>,</span><span class="line">    <span class="attr">"Origin"</span>: <span class="string">"http://test.4e00.com"</span>,</span><span class="line">    <span class="attr">"Referer"</span>: <span class="string">"http://test.4e00.com/blog/web/2019/04/09/http-cross-origin-resource-sharing-cors.html"</span>,</span><span class="line">    <span class="attr">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36"</span></span><span class="line">  &#125;,</span><span class="line">  <span class="attr">"json"</span>: &#123;</span><span class="line">    <span class="attr">"a"</span>: <span class="number">1</span></span><span class="line">  &#125;,</span><span class="line">  <span class="attr">"origin"</span>: <span class="string">"10.87.121.107"</span>,</span><span class="line">  <span class="attr">"url"</span>: <span class="string">"https://httpbin.org/post"</span></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="Spring-boot-application-return-403-for-CORS-OPTIONS"><a href="#Spring-boot-application-return-403-for-CORS-OPTIONS" class="headerlink" title="Spring boot application return 403 for CORS OPTIONS"></a>Spring boot application return 403 for CORS OPTIONS</h2><p>一个跨域 POST 请求至后端 nginx，然后转发给 spring boot 应用，浏览器控制台抛错如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">OPTIONS http://www.example.com/cors/post/request net::ERR_ABORTED 403</span><span class="line">Access to XMLHttpRequest at &apos;http://www.example.com/cors/post/request&apos; from origin &apos;http://test.4e00.com&apos; has been blocked by CORS policy:</span><span class="line">Response to preflight request doesn&apos;t pass access control check: No &apos;Access-Control-Allow-Origin&apos; header is present on the requested resource.</span></pre></td></tr></table></figure>
+<h3 id="Tomcat-log"><a href="#Tomcat-log" class="headerlink" title="Tomcat log"></a>Tomcat log</h3><p>spring boot 应用的 tomcat 日志 localhost-access.log 中可以看到返回的状态码就是 403，因为 OPTIONS 的 preflight 请求失败了，所以后面的 POST 请求并没有实际发送给服务器。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">127.0.0.1 - - [09/Apr/2019:16:48:48 +0800] &quot;OPTIONS /partner/login HTTP/1.0&quot; 403 20 &quot;http://test.4e00.com&quot;</span><span class="line">&quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36&quot; 55</span></pre></td></tr></table></figure>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>这个问题一般来说是通过配置 spring boot 应用本身的设置，以达到跨域访问的效果，解决方法可参考 <a href="https://stackoverflow.com/questions/38507370/cors-preflight-request-fails-due-to-a-standard-header" target="_blank" rel="noopener">CORS preflight request fails due to a standard header</a> 这个帖子。</p>
+<p>我这里只是测试使用，因为中间是经过 nginx 反向代理的，所以直接通过 nginx 配置覆盖 spring boot tomcat 返回的 403 状态，绕过这个问题，即允许所有的跨域请求，包括数据修改的 POST 请求，nginx 配置部分如下：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">location</span> / &#123;</span><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8080/;</span><span class="line"></span><span class="line">    <span class="attribute">add_header</span> Access-Control-Allow-Origin <span class="variable">$http_origin</span>;</span><span class="line">    <span class="attribute">add_header</span> Access-Control-Allow-Methods GET,POST,OPTIONS;</span><span class="line">    <span class="attribute">add_header</span> Access-Control-Allow-Credentials <span class="literal">true</span>;</span><span class="line">    <span class="attribute">add_header</span> Access-Control-Allow-Headers DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type;</span><span class="line"></span><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><span class="line"></span><span class="line">    <span class="attribute">if</span> (<span class="variable">$request_method</span> = OPTIONS) &#123;</span><span class="line">        <span class="attribute">return</span> <span class="number">204</span>; <span class="comment"># 用这里覆盖 spring boot tomcat 返回的 403 状态</span></span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="noopener">HTTP 访问控制 - CORS</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank" rel="noopener">Cross-Origin Resource Sharing - CORS</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Preflight_request" target="_blank" rel="noopener">Preflight request</a></li>
+<li><a href="https://stackoverflow.com/questions/29954037/why-is-an-options-request-sent-and-can-i-disable-it" target="_blank" rel="noopener">Why is an OPTIONS request sent and can I disable it</a></li>
+<li><a href="https://stackoverflow.com/questions/38507370/cors-preflight-request-fails-due-to-a-standard-header" target="_blank" rel="noopener">CORS preflight request fails due to a standard header</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2019/03/27/tcp-option-so-linger.html" rel="next" title="tcp 参数 so_linger 说明及测试">
+                <i class="fa fa-chevron-left"></i>
+                tcp 参数 so_linger 说明及测试
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2019/04/28/openjdk-asmtools-usage-examples.html" rel="prev" title="openjdk asmtools usage examples">
+                <i class="fa fa-chevron-right"></i>
+                openjdk asmtools usage examples
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Preflight-request"><span class="nav-number">1.</span> <span class="nav-text">Preflight request</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨域资源共享-CORS"><span class="nav-number">2.</span> <span class="nav-text">跨域资源共享 - CORS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么情况下需要-CORS"><span class="nav-number">3.</span> <span class="nav-text">什么情况下需要 CORS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能概述"><span class="nav-number">4.</span> <span class="nav-text">功能概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#若干访问控制场景"><span class="nav-number">5.</span> <span class="nav-text">若干访问控制场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单请求"><span class="nav-number">6.</span> <span class="nav-text">简单请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预检请求"><span class="nav-number">7.</span> <span class="nav-text">预检请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预检请求与重定向"><span class="nav-number">8.</span> <span class="nav-text">预检请求与重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附带身份凭证的请求"><span class="nav-number">9.</span> <span class="nav-text">附带身份凭证的请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#附带身份凭证的请求与通配符"><span class="nav-number">9.1.</span> <span class="nav-text">附带身份凭证的请求与通配符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-响应首部字段"><span class="nav-number">10.</span> <span class="nav-text">HTTP 响应首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Access-Control-Allow-Origin"><span class="nav-number">10.1.</span> <span class="nav-text">Access-Control-Allow-Origin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Access-Control-Expose-Headers"><span class="nav-number">10.2.</span> <span class="nav-text">Access-Control-Expose-Headers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Access-Control-Max-Age"><span class="nav-number">10.3.</span> <span class="nav-text">Access-Control-Max-Age</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Access-Control-Allow-Credentials"><span class="nav-number">10.4.</span> <span class="nav-text">Access-Control-Allow-Credentials</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Access-Control-Allow-Methods"><span class="nav-number">10.5.</span> <span class="nav-text">Access-Control-Allow-Methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Access-Control-Allow-Headers"><span class="nav-number">10.6.</span> <span class="nav-text">Access-Control-Allow-Headers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-请求首部字段"><span class="nav-number">11.</span> <span class="nav-text">HTTP 请求首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Origin"><span class="nav-number">11.1.</span> <span class="nav-text">Origin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Access-Control-Request-Method"><span class="nav-number">11.2.</span> <span class="nav-text">Access-Control-Request-Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Access-Control-Request-Headers"><span class="nav-number">11.3.</span> <span class="nav-text">Access-Control-Request-Headers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#server-CORS-process-flowchart"><span class="nav-number">12.</span> <span class="nav-text">server CORS process flowchart</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CORS-POST-example"><span class="nav-number">13.</span> <span class="nav-text">CORS POST example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-boot-application-return-403-for-CORS-OPTIONS"><span class="nav-number">14.</span> <span class="nav-text">Spring boot application return 403 for CORS OPTIONS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomcat-log"><span class="nav-number">14.1.</span> <span class="nav-text">Tomcat log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法"><span class="nav-number">14.2.</span> <span class="nav-text">解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">15.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

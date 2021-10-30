@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="以nodejs和request为基础写的一个google网页搜索结果的代理服务器。 package.json">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nodejs implements spider proxy server for google">
-<meta property="og:url" content="https://www.4e00.com/nodejs/2015/11/19/google-nodejs-proxy-server.html">
+<meta property="og:url" content="http://www.4e00.com/nodejs/2015/11/19/google-nodejs-proxy-server.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="以nodejs和request为基础写的一个google网页搜索结果的代理服务器。 package.json">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.097Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nodejs implements spider proxy server for google">
 <meta name="twitter:description" content="以nodejs和request为基础写的一个google网页搜索结果的代理服务器。 package.json">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/nodejs/2015/11/19/google-nodejs-proxy-server.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/nodejs/2015/11/19/google-nodejs-proxy-server.html">
 
   <title> nodejs implements spider proxy server for google | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/nodejs/" itemprop="url" rel="index">
                     <span itemprop="name">nodejs</span>
                   </a>
@@ -256,12 +256,12 @@
       
         <p>以nodejs和request为基础写的一个google网页搜索结果的代理服务器。</p>
 <h2 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h2><a id="more"></a>
-<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"google-hk"</span>,</div><div class="line">    <span class="attr">"version"</span>: <span class="string">"0.2.1"</span>,</div><div class="line">    <span class="attr">"private"</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">"scripts"</span>: &#123;</div><div class="line">        <span class="attr">"start"</span>: <span class="string">"node ./google-hk"</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"dependencies"</span>: &#123;</div><div class="line">        <span class="attr">"pm2"</span>: <span class="string">"~0.12.16"</span>,</div><div class="line">        <span class="attr">"request"</span>: <span class="string">"~2.67.0"</span>,</div><div class="line">        <span class="attr">"iconv-lite"</span>: <span class="string">"~0.4.13"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="pm2-google-json"><a href="#pm2-google-json" class="headerlink" title="pm2-google.json"></a>pm2-google.json</h2><figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"apps"</span>: [&#123;</div><div class="line">        <span class="attr">"name"</span>: <span class="string">"google-hk"</span>,</div><div class="line">        <span class="attr">"script"</span>: <span class="string">"google-hk"</span>,</div><div class="line">        <span class="attr">"log_date_format"</span>: <span class="string">"YYYY-MM-DD HH:mm Z"</span>,</div><div class="line">        <span class="attr">"ignore_watch"</span>: [<span class="string">"[\\/\\\\]\\./"</span>, <span class="string">"node_modules"</span>],</div><div class="line">        <span class="attr">"watch"</span>: <span class="literal">false</span>,</div><div class="line">        <span class="attr">"vizion"</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">"autorestart"</span>: <span class="literal">true</span></div><div class="line">    &#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="spider-proxy-to-www-google-com-hk"><a href="#spider-proxy-to-www-google-com-hk" class="headerlink" title="spider proxy to www.google.com.hk"></a>spider proxy to www.google.com.hk</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env node</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</div><div class="line"><span class="keyword">var</span> proxy = <span class="built_in">require</span>(<span class="string">"request"</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">request, response</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(request.url);</div><div class="line">    request.headers.host = <span class="string">"www.google.com.hk"</span>;</div><div class="line">    <span class="keyword">var</span> url = <span class="string">"https://www.google.com.hk"</span> + request.url;</div><div class="line">    request.pipe(proxy(url)).pipe(response);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">server.listen(<span class="number">8000</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"google search page spider server is listening on 8000"</span>);</div><div class="line"></div></pre></td></tr></table></figure>
-<h2 id="运行server"><a href="#运行server" class="headerlink" title="运行server"></a>运行server</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">node_modules</span>/pm2/bin/pm2 start pm2-google.json</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><span class="line">    <span class="attr">"name"</span>: <span class="string">"google-hk"</span>,</span><span class="line">    <span class="attr">"version"</span>: <span class="string">"0.2.1"</span>,</span><span class="line">    <span class="attr">"private"</span>: <span class="literal">true</span>,</span><span class="line">    <span class="attr">"scripts"</span>: &#123;</span><span class="line">        <span class="attr">"start"</span>: <span class="string">"node ./google-hk"</span></span><span class="line">    &#125;,</span><span class="line">    <span class="attr">"dependencies"</span>: &#123;</span><span class="line">        <span class="attr">"pm2"</span>: <span class="string">"~0.12.16"</span>,</span><span class="line">        <span class="attr">"request"</span>: <span class="string">"~2.67.0"</span>,</span><span class="line">        <span class="attr">"iconv-lite"</span>: <span class="string">"~0.4.13"</span></span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="pm2-google-json"><a href="#pm2-google-json" class="headerlink" title="pm2-google.json"></a>pm2-google.json</h2><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><span class="line">    <span class="attr">"apps"</span>: [&#123;</span><span class="line">        <span class="attr">"name"</span>: <span class="string">"google-hk"</span>,</span><span class="line">        <span class="attr">"script"</span>: <span class="string">"google-hk"</span>,</span><span class="line">        <span class="attr">"log_date_format"</span>: <span class="string">"YYYY-MM-DD HH:mm Z"</span>,</span><span class="line">        <span class="attr">"ignore_watch"</span>: [<span class="string">"[\\/\\\\]\\./"</span>, <span class="string">"node_modules"</span>],</span><span class="line">        <span class="attr">"watch"</span>: <span class="literal">false</span>,</span><span class="line">        <span class="attr">"vizion"</span>: <span class="literal">true</span>,</span><span class="line">        <span class="attr">"autorestart"</span>: <span class="literal">true</span></span><span class="line">    &#125;]</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="spider-proxy-to-www-google-com-hk"><a href="#spider-proxy-to-www-google-com-hk" class="headerlink" title="spider proxy to www.google.com.hk"></a>spider proxy to <a href="http://www.google.com.hk" target="_blank" rel="noopener">www.google.com.hk</a></h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><span class="line"></span><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</span><span class="line"><span class="keyword">var</span> proxy = <span class="built_in">require</span>(<span class="string">"request"</span>);</span><span class="line"></span><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">request, response</span>) </span>&#123;</span><span class="line">    <span class="built_in">console</span>.log(request.url);</span><span class="line">    request.headers.host = <span class="string">"www.google.com.hk"</span>;</span><span class="line">    <span class="keyword">var</span> url = <span class="string">"https://www.google.com.hk"</span> + request.url;</span><span class="line">    request.pipe(proxy(url)).pipe(response);</span><span class="line">&#125;);</span><span class="line"></span><span class="line">server.listen(<span class="number">8000</span>);</span><span class="line"><span class="built_in">console</span>.log(<span class="string">"google search page spider server is listening on 8000"</span>);</span><span class="line"></span></pre></td></tr></table></figure>
+<h2 id="运行server"><a href="#运行server" class="headerlink" title="运行server"></a>运行server</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">node_modules</span>/pm2/bin/pm2 start pm2-google.json</span></pre></td></tr></table></figure>
 <p>另外写了个手动抓取到内容，再返回给客户端的版本：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env node</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</div><div class="line"><span class="keyword">var</span> httpClient = <span class="built_in">require</span>(<span class="string">"request"</span>);</div><div class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">"url"</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">request, response</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> google = <span class="string">"https://www.google.com.hk"</span>;</div><div class="line">    <span class="keyword">var</span> u = url.parse(request.url, <span class="literal">true</span>);</div><div class="line">    <span class="keyword">var</span> pathname = u.pathname;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="regexp">/^\/url/</span>.test(pathname)) &#123;</div><div class="line">        response.writeHead(<span class="number">302</span>, &#123;</div><div class="line">            <span class="string">"location"</span>: u.query.q</div><div class="line">        &#125;);</div><div class="line">        response.end();</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(request.url);</div><div class="line">        <span class="keyword">var</span> headers = &#123;</div><div class="line">            <span class="string">"user-agent"</span>: request.headers[<span class="string">"user-agent"</span>]</div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">var</span> options = &#123;</div><div class="line">            url: google + request.url,</div><div class="line">            encoding: <span class="literal">null</span>,</div><div class="line">            headers: headers</div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">var</span> handler = <span class="function"><span class="keyword">function</span>(<span class="params">err, res, body</span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (err) &#123;</div><div class="line">                response.write(<span class="string">"http client error: "</span> + err.message);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                response.writeHead(res.statusCode, res.headers);</div><div class="line">                response.write(body);</div><div class="line">            &#125;</div><div class="line">            response.end();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        httpClient(options, handler);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">server.listen(<span class="number">8000</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"google search page spider server is listening on 8000"</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><span class="line"></span><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</span><span class="line"><span class="keyword">var</span> httpClient = <span class="built_in">require</span>(<span class="string">"request"</span>);</span><span class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">"url"</span>);</span><span class="line"></span><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">request, response</span>) </span>&#123;</span><span class="line">    <span class="keyword">var</span> google = <span class="string">"https://www.google.com.hk"</span>;</span><span class="line">    <span class="keyword">var</span> u = url.parse(request.url, <span class="literal">true</span>);</span><span class="line">    <span class="keyword">var</span> pathname = u.pathname;</span><span class="line"></span><span class="line">    <span class="keyword">if</span> (<span class="regexp">/^\/url/</span>.test(pathname)) &#123;</span><span class="line">        response.writeHead(<span class="number">302</span>, &#123;</span><span class="line">            <span class="string">"location"</span>: u.query.q</span><span class="line">        &#125;);</span><span class="line">        response.end();</span><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><span class="line">        <span class="built_in">console</span>.log(request.url);</span><span class="line">        <span class="keyword">var</span> headers = &#123;</span><span class="line">            <span class="string">"user-agent"</span>: request.headers[<span class="string">"user-agent"</span>]</span><span class="line">        &#125;;</span><span class="line">        <span class="keyword">var</span> options = &#123;</span><span class="line">            url: google + request.url,</span><span class="line">            encoding: <span class="literal">null</span>,</span><span class="line">            headers: headers</span><span class="line">        &#125;;</span><span class="line">        <span class="keyword">var</span> handler = <span class="function"><span class="keyword">function</span>(<span class="params">err, res, body</span>) </span>&#123;</span><span class="line">            <span class="keyword">if</span> (err) &#123;</span><span class="line">                response.write(<span class="string">"http client error: "</span> + err.message);</span><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><span class="line">                response.writeHead(res.statusCode, res.headers);</span><span class="line">                response.write(body);</span><span class="line">            &#125;</span><span class="line">            response.end();</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        httpClient(options, handler);</span><span class="line">    &#125;</span><span class="line">&#125;);</span><span class="line"></span><span class="line">server.listen(<span class="number">8000</span>);</span><span class="line"><span class="built_in">console</span>.log(<span class="string">"google search page spider server is listening on 8000"</span>);</span></pre></td></tr></table></figure>
 
       
     </div>
@@ -287,16 +287,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/web/2015/11/17/ie6-text-3px-offset-bug.html" rel="next" title="ie6下3px文本偏移bug">
-                上一篇：ie6下3px文本偏移bug
+              <a href="/blog/nodejs/2015/11/19/nodejs-google-spider.html" rel="next" title="nodejs实现google网页抓取">
+                <i class="fa fa-chevron-left"></i>
+                nodejs实现google网页抓取
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/nodejs/2015/11/19/nodejs-google-spider.html" rel="prev" title="nodejs实现google网页抓取">
-                下一篇：nodejs实现google网页抓取
+              <a href="/blog/web/2015/11/22/html-canonical-link-element-for-search-engine.html" rel="prev" title="html canonical link element">
+                <i class="fa fa-chevron-right"></i>
+                html canonical link element
               </a>
             
           </div>
@@ -345,7 +347,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -356,16 +358,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -447,10 +447,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

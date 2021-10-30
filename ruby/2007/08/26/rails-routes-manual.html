@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="Rails Routes控制台测试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="rails routes 详解">
-<meta property="og:url" content="https://www.4e00.com/ruby/2007/08/26/rails-routes-manual.html">
+<meta property="og:url" content="http://www.4e00.com/ruby/2007/08/26/rails-routes-manual.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="Rails Routes控制台测试">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.133Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="rails routes 详解">
 <meta name="twitter:description" content="Rails Routes控制台测试">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/ruby/2007/08/26/rails-routes-manual.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/ruby/2007/08/26/rails-routes-manual.html">
 
   <title> rails routes 详解 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/ruby/" itemprop="url" rel="index">
                     <span itemprop="name">ruby</span>
                   </a>
@@ -255,23 +255,23 @@
 
       
         <h2 id="Rails-Routes控制台测试"><a href="#Rails-Routes控制台测试" class="headerlink" title="Rails Routes控制台测试"></a>Rails Routes控制台测试</h2><a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> RubyOnRails/app/path</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> script/console</div><div class="line output">&gt; rs = ActionController::Routing::Routes</div><div class="line output">&gt; puts rs.routes</div><div class="line">ANY /:controller/service.wsdl/ &#123;:action=&gt;<span class="string">"wsdl"</span>&#125;</div><div class="line">ANY /:controller/:action/:id.:format/ &#123;&#125;</div><div class="line">ANY /:controller/:action/:id/ &#123;&#125;</div><div class="line">=&gt;nil</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> RubyOnRails/app/path</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> script/console</span><span class="line output">&gt; rs = ActionController::Routing::Routes</span><span class="line output">&gt; puts rs.routes</span><span class="line">ANY /:controller/service.wsdl/ &#123;:action=&gt;<span class="string">"wsdl"</span>&#125;</span><span class="line">ANY /:controller/:action/:id.:format/ &#123;&#125;</span><span class="line">ANY /:controller/:action/:id/ &#123;&#125;</span><span class="line">=&gt;nil</span></pre></td></tr></table></figure>
 <p>修改config/routes.rb文件，添加一行</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">map.connect <span class="string">'modules/controller/:action/*other'</span>, <span class="symbol">:controller</span> =&gt; <span class="string">'modules/controller'</span></div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">map.connect <span class="string">'modules/controller/:action/*other'</span>, <span class="symbol">:controller</span> =&gt; <span class="string">'modules/controller'</span></span></pre></td></tr></table></figure>
 <p>回到console</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line output">&gt; rs.reload</div><div class="line output">&gt; puts rs.routes</div><div class="line">ANY /:controller/service.wsdl/ &#123;:action=&gt;<span class="string">"wsdl"</span>&#125;</div><div class="line">ANY /:controller/:action/:id.:format/ &#123;&#125;</div><div class="line">ANY /:controller/:action/:id/ &#123;&#125;</div><div class="line">ANY /modules/controller/:action/:other/ &#123;:controller=&gt;<span class="string">"modules/controller"</span>&#125;</div><div class="line">=&gt;nil</div><div class="line output">&gt; rs.recognize_path <span class="string">'/modules/controller/test/2?x=1'</span></div><div class="line">=&gt; &#123;:action=&gt;<span class="string">"test"</span>, :other=&gt;[<span class="string">"2?x=1"</span>], :controller=&gt;<span class="string">"modules/controller"</span>&#125;</div><div class="line output">&gt; rs.recognize_path <span class="string">'/test/action/1'</span></div><div class="line">=&gt; &#123;:action=&gt;<span class="string">"action"</span>, :id=&gt;<span class="string">"1"</span>, :controller=&gt;<span class="string">"test"</span>&#125;</div><div class="line output">&gt; rs.add_route(<span class="string">'/x/y/z'</span>, &#123;:controller =&gt; <span class="string">'test'</span>, :action =&gt; <span class="string">'index'</span>, :id =&gt; 0&#125;)=&gt; <span class="comment">#&gt;&gt;puts rs.routes</span></div><div class="line">ANY /:controller/service.wsdl/ &#123;:action=&gt;<span class="string">"wsdl"</span>&#125;</div><div class="line">ANY /:controller/:action/:id.:format/ &#123;&#125;</div><div class="line">ANY /:controller/:action/:id/ &#123;&#125;</div><div class="line">ANY /modules/controller/:action/:other/ &#123;:controller=&gt;<span class="string">"modules/controller"</span>&#125;</div><div class="line">ANY /x/y/z/ &#123;:action=&gt;<span class="string">"index"</span>, :id=&gt;0, :controller=&gt;<span class="string">"test"</span>&#125;</div><div class="line">=&gt; nil</div><div class="line output">&gt; rs.draw <span class="keyword">do</span> |map|</div><div class="line">?&gt; map.connect <span class="string">'/blog/:id'</span>, :controller =&gt; <span class="string">'blog'</span>, :action =&gt; <span class="string">'list'</span></div><div class="line output">&gt; end</div><div class="line">=&gt; [ActionController::Base, ActionView::Base]</div><div class="line output">&gt; puts rs.routes</div><div class="line">ANY /blog/:id/ &#123;:action=&gt;<span class="string">"list"</span>, :controller=&gt;<span class="string">"blog"</span>&#125;</div><div class="line">=&gt; nil</div><div class="line output">&gt; rs.recognize_path <span class="string">'/blog/1'</span></div><div class="line">=&gt; &#123;:action=&gt;<span class="string">"list"</span>, :id=&gt;<span class="string">"1"</span>, :controller=&gt;<span class="string">"blog"</span>&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line output">&gt; rs.reload</span><span class="line output">&gt; puts rs.routes</span><span class="line">ANY /:controller/service.wsdl/ &#123;:action=&gt;<span class="string">"wsdl"</span>&#125;</span><span class="line">ANY /:controller/:action/:id.:format/ &#123;&#125;</span><span class="line">ANY /:controller/:action/:id/ &#123;&#125;</span><span class="line">ANY /modules/controller/:action/:other/ &#123;:controller=&gt;<span class="string">"modules/controller"</span>&#125;</span><span class="line">=&gt;nil</span><span class="line output">&gt; rs.recognize_path <span class="string">'/modules/controller/test/2?x=1'</span></span><span class="line">=&gt; &#123;:action=&gt;<span class="string">"test"</span>, :other=&gt;[<span class="string">"2?x=1"</span>], :controller=&gt;<span class="string">"modules/controller"</span>&#125;</span><span class="line output">&gt; rs.recognize_path <span class="string">'/test/action/1'</span></span><span class="line">=&gt; &#123;:action=&gt;<span class="string">"action"</span>, :id=&gt;<span class="string">"1"</span>, :controller=&gt;<span class="string">"test"</span>&#125;</span><span class="line output">&gt; rs.add_route(<span class="string">'/x/y/z'</span>, &#123;:controller =&gt; <span class="string">'test'</span>, :action =&gt; <span class="string">'index'</span>, :id =&gt; 0&#125;)=&gt; <span class="comment output">&gt;puts rs.routes</span></span><span class="line">ANY /:controller/service.wsdl/ &#123;:action=&gt;<span class="string">"wsdl"</span>&#125;</span><span class="line">ANY /:controller/:action/:id.:format/ &#123;&#125;</span><span class="line">ANY /:controller/:action/:id/ &#123;&#125;</span><span class="line">ANY /modules/controller/:action/:other/ &#123;:controller=&gt;<span class="string">"modules/controller"</span>&#125;</span><span class="line">ANY /x/y/z/ &#123;:action=&gt;<span class="string">"index"</span>, :id=&gt;0, :controller=&gt;<span class="string">"test"</span>&#125;</span><span class="line">=&gt; nil</span><span class="line output">&gt; rs.draw <span class="keyword">do</span> |map|</span><span class="line">?&gt; map.connect <span class="string">'/blog/:id'</span>, :controller =&gt; <span class="string">'blog'</span>, :action =&gt; <span class="string">'list'</span></span><span class="line output">&gt; end</span><span class="line">=&gt; [ActionController::Base, ActionView::Base]</span><span class="line output">&gt; puts rs.routes</span><span class="line">ANY /blog/:id/ &#123;:action=&gt;<span class="string">"list"</span>, :controller=&gt;<span class="string">"blog"</span>&#125;</span><span class="line">=&gt; nil</span><span class="line output">&gt; rs.recognize_path <span class="string">'/blog/1'</span></span><span class="line">=&gt; &#123;:action=&gt;<span class="string">"list"</span>, :id=&gt;<span class="string">"1"</span>, :controller=&gt;<span class="string">"blog"</span>&#125;</span></pre></td></tr></table></figure>
 <p>这里发现原来的routes全部不见了，只有这个新建的routes了，因为draw方法内部实现为：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span></span></div><div class="line">    clear!</div><div class="line">    <span class="keyword">yield</span> Mapper.new(<span class="keyword">self</span>)</div><div class="line">    named_routes.install</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span></span></span><span class="line">    clear!</span><span class="line">    <span class="keyword">yield</span> Mapper.new(<span class="keyword">self</span>)</span><span class="line">    named_routes.install</span><span class="line"><span class="keyword">end</span></span></pre></td></tr></table></figure>
 <p>draw方法块里的map对象里method_missing方法就是用来实现具名路由named routes的。先看下源码如下：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">method_missing</span><span class="params">(route_name, *args, &amp;proc)</span></span></div><div class="line">  <span class="keyword">super</span> <span class="keyword">unless</span> args.length &gt;= <span class="number">1</span> &amp;&amp; proc.<span class="literal">nil</span>?</div><div class="line">  @set.add_named_route(route_name, *args)</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">method_missing</span><span class="params">(route_name, *args, &amp;proc)</span></span></span><span class="line">  <span class="keyword">super</span> <span class="keyword">unless</span> args.length &gt;= <span class="number">1</span> &amp;&amp; proc.<span class="literal">nil</span>?</span><span class="line">  @set.add_named_route(route_name, *args)</span><span class="line"><span class="keyword">end</span></span></pre></td></tr></table></figure>
 <p>上面对实例变量@set就是前面的rs对象，那么就看一下rs.add_named_route方法吧</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line output">&gt; rs.clear!</div><div class="line output">&gt; rs.add_named_route(<span class="string">'index'</span>, <span class="string">'user/index'</span>, :controller =&gt; <span class="string">'user'</span>, :action =&gt; <span class="string">'index'</span>)</div><div class="line">puts rs.named_routes</div><div class="line"><span class="comment">#</span></div><div class="line">=&gt; nil</div><div class="line output">&gt; puts rs.routes</div><div class="line">ANY /user/index/ &#123;:action=&gt;<span class="string">"index"</span>, :controller=&gt;<span class="string">"user"</span>&#125;</div><div class="line">=&gt; nil</div><div class="line output">&gt; puts rs.named_routes.routes</div><div class="line">indexANY /user/index/ &#123;:action=&gt;<span class="string">"index"</span>, :controller=&gt;<span class="string">"user"</span>&#125;</div><div class="line">=&gt; nil</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line output">&gt; rs.clear!</span><span class="line output">&gt; rs.add_named_route(<span class="string">'index'</span>, <span class="string">'user/index'</span>, :controller =&gt; <span class="string">'user'</span>, :action =&gt; <span class="string">'index'</span>)</span><span class="line">puts rs.named_routes</span><span class="line"><span class="comment">#</span></span><span class="line">=&gt; nil</span><span class="line output">&gt; puts rs.routes</span><span class="line">ANY /user/index/ &#123;:action=&gt;<span class="string">"index"</span>, :controller=&gt;<span class="string">"user"</span>&#125;</span><span class="line">=&gt; nil</span><span class="line output">&gt; puts rs.named_routes.routes</span><span class="line">indexANY /user/index/ &#123;:action=&gt;<span class="string">"index"</span>, :controller=&gt;<span class="string">"user"</span>&#125;</span><span class="line">=&gt; nil</span></pre></td></tr></table></figure>
 <p>定义了具名路后就可以在controller/view中像url_for一样调用，只要在route name后面加上_url就可以，url_for在console里不能调试，可以用rs.generate(request)方法测试。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"># In addition to providing url_for, named routes are also accessible after including UrlWriter.</div><div class="line">url_for(:<span class="function"><span class="params">controller</span> =&gt;</span> <span class="string">'signup'</span>, action =&gt; <span class="string">'index'</span>, :<span class="function"><span class="params">token</span> =&gt;</span> token)</div><div class="line">index_url(:<span class="function"><span class="params">id</span> =&gt;</span> <span class="number">1</span>)</div><div class="line">#=&gt; http://localhost/user/index?id=1</div><div class="line output">&gt; rs.generate(:<span class="function"><span class="params">controller</span> =&gt;</span> <span class="string">'test'</span>, :<span class="function"><span class="params">action</span> =&gt;</span> <span class="string">'index'</span>, :<span class="function"><span class="params">id</span> =&gt;</span> <span class="number">3</span>)</div><div class="line">=&gt; <span class="string">"/test/index/3"</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"># In addition to providing url_for, named routes are also accessible after including UrlWriter.</span><span class="line">url_for(:<span class="function"><span class="params">controller</span> =&gt;</span> <span class="string">'signup'</span>, action =&gt; <span class="string">'index'</span>, :<span class="function"><span class="params">token</span> =&gt;</span> token)</span><span class="line">index_url(:<span class="function"><span class="params">id</span> =&gt;</span> <span class="number">1</span>)</span><span class="line">#=&gt; http://localhost/user/index?id=1</span><span class="line output">&gt; rs.generate(:<span class="function"><span class="params">controller</span> =&gt;</span> <span class="string">'test'</span>, :<span class="function"><span class="params">action</span> =&gt;</span> <span class="string">'index'</span>, :<span class="function"><span class="params">id</span> =&gt;</span> <span class="number">3</span>)</span><span class="line">=&gt; <span class="string">"/test/index/3"</span></span></pre></td></tr></table></figure>
 <p>另外在map这个对象里有个方法root可以给根目录定义路径，用法如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line output">&gt; rs.draw <span class="keyword">do</span> |map|</div><div class="line">?&gt;   map.root :controller =&gt; <span class="string">'test'</span>, :action =&gt; <span class="string">'list'</span></div><div class="line output">&gt; end</div><div class="line">ArgumentError: Illegal route: the :controller must be specified!</div><div class="line">        from /usr/<span class="built_in">local</span>/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:965:<span class="keyword">in</span> `build<span class="string">'</span></div><div class="line"><span class="string">        from /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1172:in `add_route'</span></div><div class="line">        from /usr/<span class="built_in">local</span>/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1178:<span class="keyword">in</span> `add_named_route<span class="string">'</span></div><div class="line"><span class="string">        from /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:997:in `root_without_deprecation'</span></div><div class="line">        from /usr/<span class="built_in">local</span>/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/deprecation.rb:94:<span class="keyword">in</span> `root<span class="string">'</span></div><div class="line"><span class="string">        from (irb):60</span></div><div class="line"><span class="string">        from /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1139:in `draw'</span></div><div class="line">        from (irb):59</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># Added deprecation notice for anyone who already added a named route called "root".</span></div><div class="line"><span class="comment"># It'll be used as a shortcut for map.connect '' in Rails 2.0.</span></div><div class="line"><span class="comment"># def root(*args, &amp;proc)</span></div><div class="line"><span class="comment">#   super unless args.length &gt;= 1 &amp;&amp; proc.nil?</span></div><div class="line"><span class="comment">#   @set.add_named_route("root", *args)</span></div><div class="line"><span class="comment"># end</span></div><div class="line"><span class="comment"># deprecate :root =&gt; "(as the the label for a named route) will become a shortcut for map.connect '', so find another name"</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line output">&gt; rs.draw <span class="keyword">do</span> |map|</span><span class="line">?&gt;   map.root :controller =&gt; <span class="string">'test'</span>, :action =&gt; <span class="string">'list'</span></span><span class="line output">&gt; end</span><span class="line">ArgumentError: Illegal route: the :controller must be specified!</span><span class="line">        from /usr/<span class="built_in">local</span>/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:965:<span class="keyword">in</span> `build<span class="string">'</span></span><span class="line"><span class="string">        from /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1172:in `add_route'</span></span><span class="line">        from /usr/<span class="built_in">local</span>/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1178:<span class="keyword">in</span> `add_named_route<span class="string">'</span></span><span class="line"><span class="string">        from /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:997:in `root_without_deprecation'</span></span><span class="line">        from /usr/<span class="built_in">local</span>/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/deprecation.rb:94:<span class="keyword">in</span> `root<span class="string">'</span></span><span class="line"><span class="string">        from (irb):60</span></span><span class="line"><span class="string">        from /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1139:in `draw'</span></span><span class="line">        from (irb):59</span><span class="line"></span><span class="line"></span><span class="line"><span class="comment"># Added deprecation notice for anyone who already added a named route called "root".</span></span><span class="line"><span class="comment"># It'll be used as a shortcut for map.connect '' in Rails 2.0.</span></span><span class="line"><span class="comment"># def root(*args, &amp;proc)</span></span><span class="line"><span class="comment">#   super unless args.length &gt;= 1 &amp;&amp; proc.nil?</span></span><span class="line"><span class="comment">#   @set.add_named_route("root", *args)</span></span><span class="line"><span class="comment"># end</span></span><span class="line"><span class="comment"># deprecate :root =&gt; "(as the the label for a named route) will become a shortcut for map.connect '', so find another name"</span></span></pre></td></tr></table></figure>
 <p>Rails2.0才会引进此方法，所以Rails建议用户不要使用此具名路由，如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line output">&gt; rs.draw <span class="keyword">do</span> |map|</div><div class="line">?&gt; map.root <span class="string">''</span>, :controller =&gt; <span class="string">'test'</span>, :action =&gt; <span class="string">'list'</span></div><div class="line output">&gt; end</div><div class="line">=&gt; [ActionController::Base, ActionView::Base]</div><div class="line output">&gt; puts rs.routes</div><div class="line">ANY / &#123;:action=&gt;<span class="string">"list"</span>, :controller=&gt;<span class="string">"test"</span>&#125;</div><div class="line">=&gt; nil</div><div class="line output">&gt; puts rs.named_routes.routes</div><div class="line">rootANY / &#123;:action=&gt;<span class="string">"list"</span>, :controller=&gt;<span class="string">"test"</span>&#125;</div><div class="line">=&gt; nil</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line output">&gt; rs.draw <span class="keyword">do</span> |map|</span><span class="line">?&gt; map.root <span class="string">''</span>, :controller =&gt; <span class="string">'test'</span>, :action =&gt; <span class="string">'list'</span></span><span class="line output">&gt; end</span><span class="line">=&gt; [ActionController::Base, ActionView::Base]</span><span class="line output">&gt; puts rs.routes</span><span class="line">ANY / &#123;:action=&gt;<span class="string">"list"</span>, :controller=&gt;<span class="string">"test"</span>&#125;</span><span class="line">=&gt; nil</span><span class="line output">&gt; puts rs.named_routes.routes</span><span class="line">rootANY / &#123;:action=&gt;<span class="string">"list"</span>, :controller=&gt;<span class="string">"test"</span>&#125;</span><span class="line">=&gt; nil</span></pre></td></tr></table></figure>
 <p>这个写法其实就是做了个具名路由，而不是调用map.root方法，调用的是method_missing方法。</p>
 
       
@@ -299,7 +299,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/ruby/2007/08/26/rails-activerecord-observer-usage.html" rel="next" title="rails activerecord observer usage">
-                上一篇：rails activerecord observer usage
+                <i class="fa fa-chevron-left"></i>
+                rails activerecord observer usage
               </a>
             
           </div>
@@ -307,7 +308,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/ruby/2007/09/02/net-smtp-for-gmail.html" rel="prev" title="net::smtp for gmail">
-                下一篇：net::smtp for gmail
+                <i class="fa fa-chevron-right"></i>
+                net::smtp for gmail
               </a>
             
           </div>
@@ -356,7 +358,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -367,16 +369,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -458,10 +458,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

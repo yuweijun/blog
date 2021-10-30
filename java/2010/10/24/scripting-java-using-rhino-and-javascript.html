@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="通过rhino可以使javascript调用java的标准类库，这使得javascript的编程能力得以强化，在服务器端已经有javascript的mvc框架，一般也是基于rhino的。 首先在ubuntu上可以通过命令安装rhino:">
 <meta property="og:type" content="article">
 <meta property="og:title" content="scripting java using rhino and javascript">
-<meta property="og:url" content="https://www.4e00.com/java/2010/10/24/scripting-java-using-rhino-and-javascript.html">
+<meta property="og:url" content="http://www.4e00.com/java/2010/10/24/scripting-java-using-rhino-and-javascript.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="通过rhino可以使javascript调用java的标准类库，这使得javascript的编程能力得以强化，在服务器端已经有javascript的mvc框架，一般也是基于rhino的。 首先在ubuntu上可以通过命令安装rhino:">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.074Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="scripting java using rhino and javascript">
 <meta name="twitter:description" content="通过rhino可以使javascript调用java的标准类库，这使得javascript的编程能力得以强化，在服务器端已经有javascript的mvc框架，一般也是基于rhino的。 首先在ubuntu上可以通过命令安装rhino:">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/java/2010/10/24/scripting-java-using-rhino-and-javascript.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2010/10/24/scripting-java-using-rhino-and-javascript.html">
 
   <title> scripting java using rhino and javascript | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -257,26 +257,26 @@
         <p>通过rhino可以使javascript调用java的标准类库，这使得javascript的编程能力得以强化，在服务器端已经有javascript的mvc框架，一般也是基于rhino的。</p>
 <p>首先在ubuntu上可以通过命令安装rhino:</p>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt-get install rhino</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt-get install rhino</span></pre></td></tr></table></figure>
 <p>安装完成后，在命令行中输入js或者rhino:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">js</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">rhino</span></div><div class="line">Rhino 1.7 release 2 2010 09 15</div><div class="line">js&gt; new Date()</div><div class="line">Sun Oct 24 2010 17:24:27 GMT+0800 (CST)</div><div class="line">js&gt; /^\d+$/.<span class="built_in">test</span>(<span class="string">"369"</span>);</div><div class="line"><span class="literal">true</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">js</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">rhino</span></span><span class="line">Rhino 1.7 release 2 2010 09 15</span><span class="line">js&gt; new Date()</span><span class="line">Sun Oct 24 2010 17:24:27 GMT+0800 (CST)</span><span class="line">js&gt; /^\d+$/.<span class="built_in">test</span>(<span class="string">"369"</span>);</span><span class="line"><span class="literal">true</span></span></pre></td></tr></table></figure>
 <p>就可以进入javascript的控制台。</p>
 <p>另外一种方式就是从网上下载rhino 1.5r4.1版本，在命令行中用java运行，下面的代码在命令行的rhino1.7版本中不能运行，因为无法导入<code>java.awt.*</code>的包:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">java</span> -jar rhino-1.5R4.1.jar</div><div class="line">Rhino 1.5 release 4.1 2003 04 21</div><div class="line">js&gt; importPackage(java.awt);</div><div class="line">js&gt; frame = new Frame(<span class="string">"JavaScript"</span>)</div><div class="line">js&gt; frame.show()</div><div class="line">js&gt; button = new Button(<span class="string">"OK"</span>)</div><div class="line">js&gt; frame.add(button)</div><div class="line">js&gt; frame.show()</div><div class="line">js&gt; <span class="keyword">function</span> <span class="function"><span class="title">printDate</span></span>() &#123; <span class="built_in">print</span>(new Date()) &#125;</div><div class="line">js&gt; o = &#123; actionPerformed: printDate &#125;</div><div class="line">js&gt; buttonListener = java.awt.event.ActionListener(o)</div><div class="line">js&gt; button.addActionListener(buttonListener)</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">java</span> -jar rhino-1.5R4.1.jar</span><span class="line">Rhino 1.5 release 4.1 2003 04 21</span><span class="line">js&gt; importPackage(java.awt);</span><span class="line">js&gt; frame = new Frame(<span class="string">"JavaScript"</span>)</span><span class="line">js&gt; frame.show()</span><span class="line">js&gt; button = new Button(<span class="string">"OK"</span>)</span><span class="line">js&gt; frame.add(button)</span><span class="line">js&gt; frame.show()</span><span class="line">js&gt; <span class="keyword">function</span> <span class="function"><span class="title">printDate</span></span>() &#123; <span class="built_in">print</span>(new Date()) &#125;</span><span class="line">js&gt; o = &#123; actionPerformed: printDate &#125;</span><span class="line">js&gt; buttonListener = java.awt.event.ActionListener(o)</span><span class="line">js&gt; button.addActionListener(buttonListener)</span></pre></td></tr></table></figure>
 <h2 id="javascript访问java的包和class"><a href="#javascript访问java的包和class" class="headerlink" title="javascript访问java的包和class"></a>javascript访问java的包和class</h2><p>java中所有的代码都是class包装了的，而class又是在package下的，rhino为此封装了一个全局对象Packages，通过Packages可以引入所有的java类，如<code>Package.java.lang</code>，<code>Packages.java.io</code>等:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">js&gt; Packages.java.io.File</div><div class="line">[JavaClass java.io.File]</div><div class="line">js&gt; importPackage(java.io)</div><div class="line">js&gt; File</div><div class="line">[JavaClass java.io.File]</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">js&gt; Packages.java.io.File</span><span class="line">[JavaClass java.io.File]</span><span class="line">js&gt; importPackage(java.io)</span><span class="line">js&gt; File</span><span class="line">[JavaClass java.io.File]</span></pre></td></tr></table></figure>
 <p><code>importPackage(java.io)</code>的效果类似java代码中的<code>import java.io.*</code>。</p>
 <p>java中的第三方类库也可以通过<code>importClass</code>和<code>importPackage</code>引入，如:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">js&gt; importPackage(Packages.org.mozilla.javascript);</div><div class="line">js&gt; Context.currentContext</div><div class="line">org.mozilla.javascript.Context@1bc887b</div><div class="line">js&gt; importClass(java.awt.List)</div><div class="line">js&gt; List</div><div class="line">[JavaClass java.awt.List]</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">js&gt; importPackage(Packages.org.mozilla.javascript);</span><span class="line">js&gt; Context.currentContext</span><span class="line">org.mozilla.javascript.Context@1bc887b</span><span class="line">js&gt; importClass(java.awt.List)</span><span class="line">js&gt; List</span><span class="line">[JavaClass java.awt.List]</span></pre></td></tr></table></figure>
 <p>在引入了java的类库之后，就可以在javascript中使用这些类库了，如:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">js&gt; new java.util.Date()</div><div class="line">Sun Oct 24 17:46:50 CST 2010</div><div class="line">js&gt; new Date()</div><div class="line">Sun Oct 24 2010 17:46:54 GMT+0800 (CST)</div><div class="line">js&gt; var f = new java.io.File(<span class="string">"/etc/hosts"</span>);</div><div class="line">js&gt; f.exists();</div><div class="line"><span class="literal">true</span></div><div class="line">js&gt; f.getName();</div><div class="line">hosts</div><div class="line">js&gt; java.lang.Math.PI</div><div class="line">3.141592653589793</div><div class="line">js&gt; java.lang.Math.cos(0)</div><div class="line">1</div><div class="line">js&gt; <span class="keyword">for</span> (i <span class="keyword">in</span> f) &#123; <span class="built_in">print</span>(i) &#125;</div><div class="line">getAbsoluteFile</div><div class="line">setReadOnly</div><div class="line">listFiles</div><div class="line">setReadable</div><div class="line">writable</div><div class="line">hashCode</div><div class="line"><span class="built_in">wait</span></div><div class="line">setExecutable</div><div class="line">usableSpace</div><div class="line">file</div><div class="line">canonicalPath</div><div class="line">getUsableSpace</div><div class="line">notifyAll</div><div class="line">equals</div><div class="line">getParent</div><div class="line">mkdirs</div><div class="line">parent</div><div class="line">class</div><div class="line">compareTo</div><div class="line">freeSpace</div><div class="line">getTotalSpace</div><div class="line">createNewFile</div><div class="line">toString</div><div class="line">toURI</div><div class="line">toURL</div><div class="line">getCanonicalPath</div><div class="line">getCanonicalFile</div><div class="line">canonicalFile</div><div class="line">renameTo</div><div class="line">getParentFile</div><div class="line">executable</div><div class="line">getFreeSpace</div><div class="line">absolute</div><div class="line">deleteOnExit</div><div class="line">canWrite</div><div class="line">name</div><div class="line">notify</div><div class="line">path</div><div class="line">canRead</div><div class="line">getPath</div><div class="line">delete</div><div class="line">length</div><div class="line">getClass</div><div class="line">readable</div><div class="line">totalSpace</div><div class="line">absoluteFile</div><div class="line">lastModified</div><div class="line">absolutePath</div><div class="line">isAbsolute</div><div class="line">list</div><div class="line">mkdir</div><div class="line">setWritable</div><div class="line">isHidden</div><div class="line">readOnly</div><div class="line">canExecute</div><div class="line">isDirectory</div><div class="line">hidden</div><div class="line">directory</div><div class="line">isFile</div><div class="line">getName</div><div class="line">getAbsolutePath</div><div class="line">exists</div><div class="line">parentFile</div><div class="line">setLastModified</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">js&gt; new java.util.Date()</span><span class="line">Sun Oct 24 17:46:50 CST 2010</span><span class="line">js&gt; new Date()</span><span class="line">Sun Oct 24 2010 17:46:54 GMT+0800 (CST)</span><span class="line">js&gt; var f = new java.io.File(<span class="string">"/etc/hosts"</span>);</span><span class="line">js&gt; f.exists();</span><span class="line"><span class="literal">true</span></span><span class="line">js&gt; f.getName();</span><span class="line">hosts</span><span class="line">js&gt; java.lang.Math.PI</span><span class="line">3.141592653589793</span><span class="line">js&gt; java.lang.Math.cos(0)</span><span class="line">1</span><span class="line">js&gt; <span class="keyword">for</span> (i <span class="keyword">in</span> f) &#123; <span class="built_in">print</span>(i) &#125;</span><span class="line">getAbsoluteFile</span><span class="line">setReadOnly</span><span class="line">listFiles</span><span class="line">setReadable</span><span class="line">writable</span><span class="line">hashCode</span><span class="line"><span class="built_in">wait</span></span><span class="line">setExecutable</span><span class="line">usableSpace</span><span class="line">file</span><span class="line">canonicalPath</span><span class="line">getUsableSpace</span><span class="line">notifyAll</span><span class="line">equals</span><span class="line">getParent</span><span class="line">mkdirs</span><span class="line">parent</span><span class="line">class</span><span class="line">compareTo</span><span class="line">freeSpace</span><span class="line">getTotalSpace</span><span class="line">createNewFile</span><span class="line">toString</span><span class="line">toURI</span><span class="line">toURL</span><span class="line">getCanonicalPath</span><span class="line">getCanonicalFile</span><span class="line">canonicalFile</span><span class="line">renameTo</span><span class="line">getParentFile</span><span class="line">executable</span><span class="line">getFreeSpace</span><span class="line">absolute</span><span class="line">deleteOnExit</span><span class="line">canWrite</span><span class="line">name</span><span class="line">notify</span><span class="line">path</span><span class="line">canRead</span><span class="line">getPath</span><span class="line">delete</span><span class="line">length</span><span class="line">getClass</span><span class="line">readable</span><span class="line">totalSpace</span><span class="line">absoluteFile</span><span class="line">lastModified</span><span class="line">absolutePath</span><span class="line">isAbsolute</span><span class="line">list</span><span class="line">mkdir</span><span class="line">setWritable</span><span class="line">isHidden</span><span class="line">readOnly</span><span class="line">canExecute</span><span class="line">isDirectory</span><span class="line">hidden</span><span class="line">directory</span><span class="line">isFile</span><span class="line">getName</span><span class="line">getAbsolutePath</span><span class="line">exists</span><span class="line">parentFile</span><span class="line">setLastModified</span></pre></td></tr></table></figure>
 <p>在上面列出的File的方法中，还包括了其从<code>java.lang.Object</code>中继承的所有方法。对于java的重载方法，javascript调用需要用特别的方式。</p>
 <h2 id="用javascript实现java的接口"><a href="#用javascript实现java的接口" class="headerlink" title="用javascript实现java的接口"></a>用javascript实现java的接口</h2><p>如要实现<code>Runnable</code>接口，按以下方式操作:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">js&gt; var obj = &#123; run: <span class="function"><span class="title">function</span></span> () &#123; <span class="built_in">print</span>(<span class="string">"\nrunning"</span>); &#125; &#125;</div><div class="line">js&gt; obj.run()</div><div class="line"></div><div class="line">running</div><div class="line">js&gt; var r = new java.lang.Runnable(obj);</div><div class="line">js&gt; r.getClass()</div><div class="line">class adapter1</div><div class="line">js&gt; var t = new java.lang.Thread(r)</div><div class="line">Thread[Thread-1,5,main]</div><div class="line">js&gt; t.start();</div><div class="line">js&gt;</div><div class="line">running</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">js&gt; var obj = &#123; run: <span class="function"><span class="title">function</span></span> () &#123; <span class="built_in">print</span>(<span class="string">"\nrunning"</span>); &#125; &#125;</span><span class="line">js&gt; obj.run()</span><span class="line"></span><span class="line">running</span><span class="line">js&gt; var r = new java.lang.Runnable(obj);</span><span class="line">js&gt; r.getClass()</span><span class="line">class adapter1</span><span class="line">js&gt; var t = new java.lang.Thread(r)</span><span class="line">Thread[Thread-1,5,main]</span><span class="line">js&gt; t.start();</span><span class="line">js&gt;</span><span class="line">running</span></pre></td></tr></table></figure>
 <h2 id="用javascript创建java的数组对象"><a href="#用javascript创建java的数组对象" class="headerlink" title="用javascript创建java的数组对象"></a>用javascript创建java的数组对象</h2><p>一般直接用javascript创建数组就可以，转为java对象时，rhino会处理类型转换，也可以用以下方法直接创建java数组:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">js&gt; var arr = java.lang.reflect.Array.newInstance(java.lang.String, 5); arr[0] = arr[1] = arr[2] = arr[3] = arr[4] = <span class="string">'create java array using javascript.'</span></div><div class="line">create java array using javascript.</div><div class="line">js&gt; arr</div><div class="line">[Ljava.lang.String;@1e97f9f</div><div class="line">js&gt; arr[1]</div><div class="line">create java array using javascript.</div><div class="line">js&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">js&gt; var arr = java.lang.reflect.Array.newInstance(java.lang.String, 5); arr[0] = arr[1] = arr[2] = arr[3] = arr[4] = <span class="string">'create java array using javascript.'</span></span><span class="line">create java array using javascript.</span><span class="line">js&gt; arr</span><span class="line">[Ljava.lang.String;@1e97f9f</span><span class="line">js&gt; arr[1]</span><span class="line">create java array using javascript.</span><span class="line">js&gt;</span></pre></td></tr></table></figure>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://www.mozilla.org/rhino/scriptjava.html" target="_blank" rel="external">http://www.mozilla.org/rhino/scriptjava.html</a></li>
+<li><a href="http://www.mozilla.org/rhino/scriptjava.html" target="_blank" rel="noopener">http://www.mozilla.org/rhino/scriptjava.html</a></li>
 </ol>
 
       
@@ -304,7 +304,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/vim/2010/10/23/vim-tidy-html-valid.html" rel="next" title="在vim中如何使用tidy为html验证并格式化内容">
-                上一篇：在vim中如何使用tidy为html验证并格式化内容
+                <i class="fa fa-chevron-left"></i>
+                在vim中如何使用tidy为html验证并格式化内容
               </a>
             
           </div>
@@ -312,7 +313,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/web/2010/11/05/get-xpath-of-html-element.html" rel="prev" title="get xpath of html element">
-                下一篇：get xpath of html element
+                <i class="fa fa-chevron-right"></i>
+                get xpath of html element
               </a>
             
           </div>
@@ -361,7 +363,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -372,16 +374,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -463,10 +463,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

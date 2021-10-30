@@ -1,0 +1,608 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="vim-space.vimvim 中处理空格相关的工具集。  git clone https://github.com/yuweijun/vim-space.git 安装使用vundle管理安装如下： set nocompatiblefiletype offset rtp+=~/.vim/bundle/Vundle.vimcall vundle#begin()&quot; Plugin ...Plugin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim plugin vim-space doc">
+<meta property="og:url" content="http://www.4e00.com/linux/2019/03/23/vim-plugin-vim-space-doc.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="vim-space.vimvim 中处理空格相关的工具集。  git clone https://github.com/yuweijun/vim-space.git 安装使用vundle管理安装如下： set nocompatiblefiletype offset rtp+=~/.vim/bundle/Vundle.vimcall vundle#begin()&quot; Plugin ...Plugin">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-26T13:15:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vim plugin vim-space doc">
+<meta name="twitter:description" content="vim-space.vimvim 中处理空格相关的工具集。  git clone https://github.com/yuweijun/vim-space.git 安装使用vundle管理安装如下： set nocompatiblefiletype offset rtp+=~/.vim/bundle/Vundle.vimcall vundle#begin()&quot; Plugin ...Plugin">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2019/03/23/vim-plugin-vim-space-doc.html">
+
+  <title> vim plugin vim-space doc | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                vim plugin vim-space doc
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-03-23T12:27:14+08:00" content="2019-03-23">
+              2019-03-23
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="vim-space-vim"><a href="#vim-space-vim" class="headerlink" title="vim-space.vim"></a>vim-space.vim</h2><p>vim 中处理空格相关的工具集。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">clone</span> https://github.com/yuweijun/vim-space.git</span></pre></td></tr></table></figure>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>使用<code>vundle</code>管理安装如下：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> nocompatible</span><span class="line"><span class="keyword">filetype</span> off</span><span class="line"></span><span class="line"><span class="keyword">set</span> rtp+=~/.<span class="keyword">vim</span>/bundle/Vundle.<span class="keyword">vim</span></span><span class="line"></span><span class="line"><span class="keyword">call</span> vundle#begin()</span><span class="line"><span class="comment">" Plugin ...</span></span><span class="line">Plugin <span class="string">'yuweijun/vim-space'</span></span><span class="line"><span class="keyword">call</span> vundle#end()</span><span class="line"></span><span class="line"><span class="keyword">filetype</span> plugin <span class="built_in">indent</span> <span class="keyword">on</span></span></pre></td></tr></table></figure>
+<p>使用<code>vim-plug</code>管理安装的配置如下：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">call</span> plug#begin(<span class="string">'~/.local/share/nvim/plugged'</span>)</span><span class="line"><span class="comment">" Plug ...</span></span><span class="line">Plug <span class="string">'yuweijun/vim-space'</span></span><span class="line"><span class="keyword">call</span> plug#end()</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="插件功能"><a href="#插件功能" class="headerlink" title="插件功能"></a>插件功能</h2><ol>
+<li>在中文字符和英文字符相接位置插入一个<code>空格</code>，快捷键为<code>&lt;leader&gt;sa</code></li>
+<li>删除中文字符和英文字符相接位置的<code>空格</code>，快捷键为<code>&lt;leader&gt;sd</code></li>
+<li>以<code>//</code>开始的注释行，在斜杠后面加入一个<code>空格</code>，快捷键为<code>&lt;leader&gt;sc</code></li>
+<li>替换<code>U+00A0</code>不可中断空格为普通空格<code>U+0020</code>，快捷键为<code>&lt;leader&gt;sr</code></li>
+</ol>
+<h2 id="U-00A0-不可中断空格说明"><a href="#U-00A0-不可中断空格说明" class="headerlink" title="U+00A0 不可中断空格说明"></a>U+00A0 不可中断空格说明</h2><h3 id="英语原文及缩写"><a href="#英语原文及缩写" class="headerlink" title="英语原文及缩写"></a>英语原文及缩写</h3><ol>
+<li>NON-BREAKING SPACE</li>
+<li>HTML 中用<code>&amp;nbsp;</code>来表示，实际上就是不可中断空格的英文缩写</li>
+<li>HTML 中也可以用<code>&amp;#160;</code>或者<code>&amp;#xA0;</code>来表示</li>
+<li>UNICODE 码为<code>U+00A0</code></li>
+<li>UTF-8 编码为<code>C2 A0</code></li>
+</ol>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>有些数字字母的组合，如<code>100 km</code>，希望排版时将之视为一个整体，不要在空格的位置将<code>100</code>和<code>km</code>分离开，就用<code>U+00A0</code>这个特殊的空格来将之连接在一起。</p>
+<h3 id="不可中断空格变体"><a href="#不可中断空格变体" class="headerlink" title="不可中断空格变体"></a>不可中断空格变体</h3><ol>
+<li><code>U+2007</code></li>
+<li><code>U+202F</code></li>
+</ol>
+<h3 id="输出不可中断空格"><a href="#输出不可中断空格" class="headerlink" title="输出不可中断空格"></a>输出不可中断空格</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">System/application</th>
+<th style="text-align:left">method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Windows</td>
+<td style="text-align:left"><kbd>Alt+0160</kbd></td>
+</tr>
+<tr>
+<td style="text-align:left">MacOS</td>
+<td style="text-align:left"><kbd>⌥ Opt+Space</kbd></td>
+</tr>
+<tr>
+<td style="text-align:left">Vim</td>
+<td style="text-align:left"><kbd>Ctrl+K, Space, Space</kbd> 或者 <kbd>Ctrl+V, U00A0</kbd></td>
+</tr>
+<tr>
+<td style="text-align:left">Emacs</td>
+<td style="text-align:left"><kbd>Ctrl+X, 8 Space</kbd></td>
+</tr>
+</tbody>
+</table>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://github.com/yuweijun/vim-space" target="_blank" rel="noopener">vim-space.vim</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Non-breaking_space" target="_blank" rel="noopener">Non-breaking space</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/unicode-programming-language/index.html" target="_blank" rel="noopener">Unicode 及编码方式概述</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/vim/2019/03/20/vim-killer-plugin-vim-easy-align.html" rel="next" title="vim killer plugin - vim easy align">
+                <i class="fa fa-chevron-left"></i>
+                vim killer plugin - vim easy align
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2019/03/27/tcp-option-so-linger.html" rel="prev" title="tcp 参数 so_linger 说明及测试">
+                <i class="fa fa-chevron-right"></i>
+                tcp 参数 so_linger 说明及测试
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vim-space-vim"><span class="nav-number">1.</span> <span class="nav-text">vim-space.vim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件功能"><span class="nav-number">3.</span> <span class="nav-text">插件功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#U-00A0-不可中断空格说明"><span class="nav-number">4.</span> <span class="nav-text">U+00A0 不可中断空格说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#英语原文及缩写"><span class="nav-number">4.1.</span> <span class="nav-text">英语原文及缩写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景"><span class="nav-number">4.2.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不可中断空格变体"><span class="nav-number">4.3.</span> <span class="nav-text">不可中断空格变体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出不可中断空格"><span class="nav-number">4.4.</span> <span class="nav-text">输出不可中断空格</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

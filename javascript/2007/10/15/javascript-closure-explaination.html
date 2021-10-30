@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="javascript函数是将要执行的代码以及执行这些代码的作用域和作用域的arguments一起构成的一个综合体，即使函数包含相同的javascript代码，并且每段代码都是从相同的作用域调用的，还是可以返回不同的结果的。 因为javascript中的函数是在当时定义它们的作用域里运行的，而不是在执行它们的作用域里运行的。 这种代码和作用域的综合体叫闭包。所有的javascript函数都是闭包。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="javascript中的闭包closures简单说明">
-<meta property="og:url" content="https://www.4e00.com/javascript/2007/10/15/javascript-closure-explaination.html">
+<meta property="og:url" content="http://www.4e00.com/javascript/2007/10/15/javascript-closure-explaination.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="javascript函数是将要执行的代码以及执行这些代码的作用域和作用域的arguments一起构成的一个综合体，即使函数包含相同的javascript代码，并且每段代码都是从相同的作用域调用的，还是可以返回不同的结果的。 因为javascript中的函数是在当时定义它们的作用域里运行的，而不是在执行它们的作用域里运行的。 这种代码和作用域的综合体叫闭包。所有的javascript函数都是闭包。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.133Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.030Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript中的闭包closures简单说明">
 <meta name="twitter:description" content="javascript函数是将要执行的代码以及执行这些代码的作用域和作用域的arguments一起构成的一个综合体，即使函数包含相同的javascript代码，并且每段代码都是从相同的作用域调用的，还是可以返回不同的结果的。 因为javascript中的函数是在当时定义它们的作用域里运行的，而不是在执行它们的作用域里运行的。 这种代码和作用域的综合体叫闭包。所有的javascript函数都是闭包。">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2007/10/15/javascript-closure-explaination.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/javascript/2007/10/15/javascript-closure-explaination.html">
 
   <title> javascript中的闭包closures简单说明 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/javascript/" itemprop="url" rel="index">
                     <span itemprop="name">javascript</span>
                   </a>
@@ -258,12 +258,12 @@
 <p>因为javascript中的函数是在当时定义它们的作用域里运行的，而不是在执行它们的作用域里运行的。</p>
 <p>这种代码和作用域的综合体叫<code>闭包</code>。所有的javascript函数都是<code>闭包</code>。</p>
 <a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">uniqueID = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// The call object of this function holds our value</span></div><div class="line">    <span class="keyword">var</span> id = <span class="number">0</span>;</div><div class="line">    <span class="comment">// This is the private persistent value</span></div><div class="line">    <span class="comment">// The outer function returns a nested function that has access</span></div><div class="line">    <span class="comment">// to the persistent value.  It is this nested function we're storing</span></div><div class="line">    <span class="comment">// in the variable uniqueID above.</span></div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> id++; &#125;;</div><div class="line">    <span class="comment">// Return and increment</span></div><div class="line">&#125;)();</div><div class="line"><span class="comment">// Invoke the outer function after defining it, and return a function: function() &#123; return id++; &#125;</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(uniqueID());</div><div class="line"><span class="comment">// alert(function() &#123; return id++; &#125;());</span></div><div class="line"><span class="built_in">console</span>.log(uniqueID());</div><div class="line"><span class="built_in">console</span>.log(uniqueID());</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">uniqueID = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">    <span class="comment">// The call object of this function holds our value</span></span><span class="line">    <span class="keyword">var</span> id = <span class="number">0</span>;</span><span class="line">    <span class="comment">// This is the private persistent value</span></span><span class="line">    <span class="comment">// The outer function returns a nested function that has access</span></span><span class="line">    <span class="comment">// to the persistent value.  It is this nested function we're storing</span></span><span class="line">    <span class="comment">// in the variable uniqueID above.</span></span><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> id++; &#125;;</span><span class="line">    <span class="comment">// Return and increment</span></span><span class="line">&#125;)();</span><span class="line"><span class="comment">// Invoke the outer function after defining it, and return a function: function() &#123; return id++; &#125;</span></span><span class="line"></span><span class="line"><span class="built_in">console</span>.log(uniqueID());</span><span class="line"><span class="comment">// alert(function() &#123; return id++; &#125;());</span></span><span class="line"><span class="built_in">console</span>.log(uniqueID());</span><span class="line"><span class="built_in">console</span>.log(uniqueID());</span></pre></td></tr></table></figure>
 <p>当一个嵌套函数被导出到它所定义的作用域外时，这种<code>闭包</code>才有意思。当一个嵌套的函数以这种方式使用时，通常被明确的叫做一个<code>闭包</code>。</p>
 <p>uniqueID的函数体为<code>function() { return id++; }</code>，它是从一个function literal中返回得到，并包含了导出后的作用域，包含了变量名和值等，也就是从这个匿名函数是返回了一个<code>闭包</code>。</p>
 <p>在uniqueID被<code>函数运算符()</code>调用时，已经在函数定义的作用域外，所有调用操作会影响<code>闭包</code>内的变量并仍会被此<code>闭包</code>继续保存。</p>
 <p>Ruby和Perl中有个lambda方法也可以生成一个<code>闭包</code>。</p>
-<p>更多关于javascript的闭包说明请查看<a href="http://yuweijun.blogspot.com/2010/06/javascript-closures-lexical-scope-and.html" target="_blank" rel="external">此处</a></p>
+<p>更多关于javascript的闭包说明请查看<a href="http://yuweijun.blogspot.com/2010/06/javascript-closures-lexical-scope-and.html" target="_blank" rel="noopener">此处</a></p>
 
       
     </div>
@@ -290,7 +290,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/javascript/2007/10/15/javascript-function-explaination.html" rel="next" title="javascript中函数function说明">
-                上一篇：javascript中函数function说明
+                <i class="fa fa-chevron-left"></i>
+                javascript中函数function说明
               </a>
             
           </div>
@@ -298,7 +299,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2007/10/17/wget-tips.html" rel="prev" title="wget使用技巧">
-                下一篇：wget使用技巧
+                <i class="fa fa-chevron-right"></i>
+                wget使用技巧
               </a>
             
           </div>
@@ -347,7 +349,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -358,16 +360,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -449,10 +449,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="使用telnet进行http模拟请求。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="http request and response headers examples using telnet">
-<meta property="og:url" content="https://www.4e00.com/web/2008/04/08/http-request-and-response-headers-examples-using-telnet.html">
+<meta property="og:url" content="http://www.4e00.com/web/2008/04/08/http-request-and-response-headers-examples-using-telnet.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="使用telnet进行http模拟请求。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.133Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.038Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="http request and response headers examples using telnet">
 <meta name="twitter:description" content="使用telnet进行http模拟请求。">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/web/2008/04/08/http-request-and-response-headers-examples-using-telnet.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/web/2008/04/08/http-request-and-response-headers-examples-using-telnet.html">
 
   <title> http request and response headers examples using telnet | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/web/" itemprop="url" rel="index">
                     <span itemprop="name">web</span>
                   </a>
@@ -256,11 +256,11 @@
       
         <p>使用telnet进行http模拟请求。</p>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">telnet</span> www.google.com 80</div><div class="line">Trying 64.233.189.99...</div><div class="line">Connected to www.l.google.com.</div><div class="line">Escape character is <span class="string">'^]'</span>.</div><div class="line">GET /intl/en_ALL/images/logo.gif HTTP/1.1</div><div class="line">Host: www.google.com</div><div class="line">User-Agent: Mozilla/5.0(Robots) Gecko/20061206 Firefox/1.5.0.9</div><div class="line">Accept-Encoding: gzip,deflate</div><div class="line"></div><div class="line">HTTP/1.1 200 OK</div><div class="line">Content-Type: image/gif</div><div class="line">Last-Modified: Wed, 07 Jun 2006 19:38:24 GMT</div><div class="line">Expires: Sun, 17 Jan 2038 19:14:07 GMT</div><div class="line">Server: gws</div><div class="line">Content-Length: 8558</div><div class="line">Age: 13</div><div class="line">Date: Sun, 06 Apr 2008 06:51:56 GMT</div><div class="line"></div><div class="line">GIF89an.....</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">telnet</span> www.google.com 80</div><div class="line">Trying 64.233.189.104...</div><div class="line">Connected to www.l.google.com.</div><div class="line">Escape character is <span class="string">'^]'</span>.</div><div class="line">GET /intl/en_ALL/images/logo.gif HTTP/1.1</div><div class="line">Host: www.google.com</div><div class="line">User-Agent: Mozilla/5.0(Robots) Gecko/20061206 Firefox/1.5.0.9</div><div class="line">Accept-Encoding: gzip,deflate</div><div class="line">If-Modified-Since: Wed, 07 Jun 2006 19:38:24 GMT</div><div class="line"></div><div class="line">HTTP/1.1 304 Not Modified</div><div class="line">Date: Sun, 06 Apr 2008 06:53:10 GMT</div><div class="line">Server: GFE/1.3</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">telnet</span> l.yimg.com 80</div><div class="line">Trying 203.209.246.249...</div><div class="line">Connected to geoycs-l.yahoo8.akadns.net.</div><div class="line">Escape character is <span class="string">'^]'</span>.</div><div class="line">GET /a/i/ww/news/2008/04/04/crocodile-sm.jpg HTTP/1.1</div><div class="line">Host: l.yimg.com</div><div class="line">User-Agent: Mozilla/5.0(Robots) Gecko/20061206 Firefox/1.5.0.9</div><div class="line">Accept-Encoding: gzip,deflate</div><div class="line">Connection: keep-alive</div><div class="line"></div><div class="line">HTTP/1.1 200 OK</div><div class="line">Date: Sat, 05 Apr 2008 00:14:27 GMT</div><div class="line">Cache-Control: max-age=315360000</div><div class="line">Expires: Tue, 03 Apr 2018 00:14:27 GMT</div><div class="line">Last-Modified: Fri, 04 Apr 2008 17:49:26 GMT</div><div class="line">Accept-Ranges: bytes</div><div class="line">Content-Length: 860</div><div class="line">Content-Type: image/jpeg</div><div class="line">Age: 133250</div><div class="line">Connection: keep-alive</div><div class="line">Server: YTS/1.16.0</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">Connection closed by foreign host.</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">telnet</span> www.google.com 80</span><span class="line">Trying 64.233.189.99...</span><span class="line">Connected to www.l.google.com.</span><span class="line">Escape character is <span class="string">'^]'</span>.</span><span class="line">GET /intl/en_ALL/images/logo.gif HTTP/1.1</span><span class="line">Host: www.google.com</span><span class="line">User-Agent: Mozilla/5.0(Robots) Gecko/20061206 Firefox/1.5.0.9</span><span class="line">Accept-Encoding: gzip,deflate</span><span class="line"></span><span class="line">HTTP/1.1 200 OK</span><span class="line">Content-Type: image/gif</span><span class="line">Last-Modified: Wed, 07 Jun 2006 19:38:24 GMT</span><span class="line">Expires: Sun, 17 Jan 2038 19:14:07 GMT</span><span class="line">Server: gws</span><span class="line">Content-Length: 8558</span><span class="line">Age: 13</span><span class="line">Date: Sun, 06 Apr 2008 06:51:56 GMT</span><span class="line"></span><span class="line">GIF89an.....</span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">telnet</span> www.google.com 80</span><span class="line">Trying 64.233.189.104...</span><span class="line">Connected to www.l.google.com.</span><span class="line">Escape character is <span class="string">'^]'</span>.</span><span class="line">GET /intl/en_ALL/images/logo.gif HTTP/1.1</span><span class="line">Host: www.google.com</span><span class="line">User-Agent: Mozilla/5.0(Robots) Gecko/20061206 Firefox/1.5.0.9</span><span class="line">Accept-Encoding: gzip,deflate</span><span class="line">If-Modified-Since: Wed, 07 Jun 2006 19:38:24 GMT</span><span class="line"></span><span class="line">HTTP/1.1 304 Not Modified</span><span class="line">Date: Sun, 06 Apr 2008 06:53:10 GMT</span><span class="line">Server: GFE/1.3</span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">telnet</span> l.yimg.com 80</span><span class="line">Trying 203.209.246.249...</span><span class="line">Connected to geoycs-l.yahoo8.akadns.net.</span><span class="line">Escape character is <span class="string">'^]'</span>.</span><span class="line">GET /a/i/ww/news/2008/04/04/crocodile-sm.jpg HTTP/1.1</span><span class="line">Host: l.yimg.com</span><span class="line">User-Agent: Mozilla/5.0(Robots) Gecko/20061206 Firefox/1.5.0.9</span><span class="line">Accept-Encoding: gzip,deflate</span><span class="line">Connection: keep-alive</span><span class="line"></span><span class="line">HTTP/1.1 200 OK</span><span class="line">Date: Sat, 05 Apr 2008 00:14:27 GMT</span><span class="line">Cache-Control: max-age=315360000</span><span class="line">Expires: Tue, 03 Apr 2018 00:14:27 GMT</span><span class="line">Last-Modified: Fri, 04 Apr 2008 17:49:26 GMT</span><span class="line">Accept-Ranges: bytes</span><span class="line">Content-Length: 860</span><span class="line">Content-Type: image/jpeg</span><span class="line">Age: 133250</span><span class="line">Connection: keep-alive</span><span class="line">Server: YTS/1.16.0</span><span class="line"></span><span class="line"></span><span class="line"></span><span class="line">Connection closed by foreign host.</span></pre></td></tr></table></figure>
 <p>In HTTP/1.1 the ETag and If-None-Match headers are another way to make conditional GET requests.</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">alt</span>=<span class="string">"red star"</span> <span class="attr">src</span>=<span class="string">"data:image/gif;base64,R0lGODlhDAAMALMLAPN8ffBiYvWW</span></span></div><div class="line"><span class="tag"><span class="string">lvrKy/FvcPewsO9VVfajo+w6O/zl5estLv/8/AAAAAAAAAAAAAAAACH5BAEA</span></span></div><div class="line"><span class="tag"><span class="string">AAsALAAAAAAMAAwAAAQzcElZyryTEHyTUgknHd9xGV+qKsYirKkwDYiKDBia</span></span></div><div class="line"><span class="tag"><span class="string">tt2H1KBLQRFIJAIKywRgmhwAIlEEADs="</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">alt</span>=<span class="string">"red star"</span> <span class="attr">src</span>=<span class="string">"data:image/gif;base64,R0lGODlhDAAMALMLAPN8ffBiYvWW</span></span></span><span class="line"><span class="tag"><span class="string">lvrKy/FvcPewsO9VVfajo+w6O/zl5estLv/8/AAAAAAAAAAAAAAAACH5BAEA</span></span></span><span class="line"><span class="tag"><span class="string">AAsALAAAAAAMAAwAAAQzcElZyryTEHyTUgknHd9xGV+qKsYirKkwDYiKDBia</span></span></span><span class="line"><span class="tag"><span class="string">tt2H1KBLQRFIJAIKywRgmhwAIlEEADs="</span>&gt;</span></span></pre></td></tr></table></figure>
 
       
     </div>
@@ -287,7 +287,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/linux/2008/04/08/apache2-mod-headers-using-to-modify-http-response-headers.html" rel="next" title="apache2 mod_headers using to modify http response headers">
-                上一篇：apache2 mod_headers using to modify http response headers
+                <i class="fa fa-chevron-left"></i>
+                apache2 mod_headers using to modify http response headers
               </a>
             
           </div>
@@ -295,7 +296,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/javascript/2008/04/16/ie6-innerhtml-limit.html" rel="prev" title="ie6中innerhtml的局限性">
-                下一篇：ie6中innerhtml的局限性
+                <i class="fa fa-chevron-right"></i>
+                ie6中innerhtml的局限性
               </a>
             
           </div>
@@ -344,7 +346,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -355,16 +357,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -446,10 +446,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

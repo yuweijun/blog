@@ -1,0 +1,565 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="下面这个示例代码基本都是从Doug Lea的这个 PPT，Scalable IO in Java 中复制的，只是简单做了修改，以便这个Server能够初步可以运行起来。 以下为这个示例的源代码： ReactorMain.javapackage com.example.nio.reactor.pattern;import org.slf4j.Logger;import org.slf4j.Logge">
+<meta property="og:type" content="article">
+<meta property="og:title" content="reactor pattern skeleton example">
+<meta property="og:url" content="http://www.4e00.com/java/2019/03/16/reactor-pattern-skeleton-example.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="下面这个示例代码基本都是从Doug Lea的这个 PPT，Scalable IO in Java 中复制的，只是简单做了修改，以便这个Server能够初步可以运行起来。 以下为这个示例的源代码： ReactorMain.javapackage com.example.nio.reactor.pattern;import org.slf4j.Logger;import org.slf4j.Logge">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.142Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="reactor pattern skeleton example">
+<meta name="twitter:description" content="下面这个示例代码基本都是从Doug Lea的这个 PPT，Scalable IO in Java 中复制的，只是简单做了修改，以便这个Server能够初步可以运行起来。 以下为这个示例的源代码： ReactorMain.javapackage com.example.nio.reactor.pattern;import org.slf4j.Logger;import org.slf4j.Logge">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2019/03/16/reactor-pattern-skeleton-example.html">
+
+  <title> reactor pattern skeleton example | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                reactor pattern skeleton example
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-03-16T04:24:14+08:00" content="2019-03-16">
+              2019-03-16
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>下面这个示例代码基本都是从<code>Doug Lea</code>的这个 PPT，<a href="http://gee.cs.oswego.edu/dl/cpjslides/nio.pdf" target="_blank" rel="noopener">Scalable IO in Java</a> 中复制的，只是简单做了修改，以便这个<code>Server</code>能够初步可以运行起来。</p>
+<p>以下为这个示例的源代码：</p>
+<h2 id="ReactorMain-java"><a href="#ReactorMain-java" class="headerlink" title="ReactorMain.java"></a>ReactorMain.java</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.nio.reactor.pattern;</span><span class="line"></span><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><span class="line"></span><span class="line"><span class="keyword">import</span> java.io.IOException;</span><span class="line"></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReactorMain</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(ReactorMain<span class="class">.<span class="keyword">class</span>)</span>;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><span class="line">        Reactor reactor = <span class="keyword">new</span> Reactor(<span class="number">8080</span>);</span><span class="line">        Thread thread = <span class="keyword">new</span> Thread(reactor);</span><span class="line">        thread.setName(<span class="string">"MAIN-REACTOR"</span>);</span><span class="line">        thread.start();</span><span class="line">        LOGGER.info(<span class="string">"reactor start on port : 8080"</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span><span class="line"></span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="Handler-java"><a href="#Handler-java" class="headerlink" title="Handler.java"></a>Handler.java</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.nio.reactor.pattern;</span><span class="line"></span><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><span class="line"></span><span class="line"><span class="keyword">import</span> java.io.IOException;</span><span class="line"><span class="keyword">import</span> java.nio.ByteBuffer;</span><span class="line"><span class="keyword">import</span> java.nio.channels.SelectionKey;</span><span class="line"><span class="keyword">import</span> java.nio.channels.Selector;</span><span class="line"><span class="keyword">import</span> java.nio.channels.SocketChannel;</span><span class="line"><span class="keyword">import</span> java.util.concurrent.*;</span><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><span class="line"></span><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Handler</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(Handler<span class="class">.<span class="keyword">class</span>)</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> AtomicInteger IO_WORKER_NUMBER = <span class="keyword">new</span> AtomicInteger(<span class="number">1</span>);</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ExecutorService IO_WORKER_POOL =</span><span class="line">            <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">2</span>, <span class="number">4</span>, <span class="number">60</span>, TimeUnit.SECONDS,</span><span class="line">                    <span class="keyword">new</span> LinkedBlockingQueue&lt;&gt;(), <span class="keyword">new</span> ThreadFactory() &#123;</span><span class="line">                <span class="meta">@Override</span></span><span class="line">                <span class="function"><span class="keyword">public</span> Thread <span class="title">newThread</span><span class="params">(Runnable r)</span> </span>&#123;</span><span class="line">                    Thread thread = <span class="keyword">new</span> Thread(r);</span><span class="line">                    thread.setName(<span class="string">"IO-WORKER-"</span> + IO_WORKER_NUMBER.getAndIncrement());</span><span class="line">                    <span class="keyword">return</span> thread;</span><span class="line">                &#125;</span><span class="line">            &#125;, <span class="keyword">new</span> ThreadPoolExecutor.CallerRunsPolicy());</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_IN = <span class="number">1024</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_OUT = <span class="number">1024</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> READING = <span class="number">0</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SENDING = <span class="number">1</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PROCESSING = <span class="number">3</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> ByteBuffer input = ByteBuffer.allocate(MAX_IN);</span><span class="line"></span><span class="line">    <span class="keyword">private</span> ByteBuffer output = ByteBuffer.allocate(MAX_OUT);</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> state = READING;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> SocketChannel socketChannel;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> SelectionKey selectionKey;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Selector selector, SocketChannel socketChannel)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><span class="line">        <span class="keyword">this</span>.socketChannel = socketChannel;</span><span class="line">        socketChannel.configureBlocking(<span class="keyword">false</span>);</span><span class="line"></span><span class="line">        <span class="comment">// Optionally try first read now</span></span><span class="line">        selectionKey = <span class="keyword">this</span>.socketChannel.register(selector, <span class="number">0</span>);</span><span class="line">        selectionKey.attach(<span class="keyword">this</span>);</span><span class="line">        selectionKey.interestOps(SelectionKey.OP_READ);</span><span class="line">        selector.wakeup();</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">inputIsComplete</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">outputIsComplete</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">process</span><span class="params">()</span> </span>&#123;</span><span class="line">        LOGGER.info(<span class="string">"process ..."</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="meta">@Override</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">try</span> &#123;</span><span class="line">            <span class="keyword">if</span> (state == READING) &#123;</span><span class="line">                read();</span><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (state == SENDING) &#123;</span><span class="line">                send();</span><span class="line">            &#125;</span><span class="line">        &#125; <span class="keyword">catch</span> (IOException ex) &#123;</span><span class="line">            ex.printStackTrace();</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><span class="line">        socketChannel.read(input);</span><span class="line">        <span class="keyword">if</span> (inputIsComplete()) &#123;</span><span class="line">            <span class="comment">// for single IO process thread</span></span><span class="line">            <span class="comment">// process();</span></span><span class="line">            <span class="comment">// state = SENDING;</span></span><span class="line">            <span class="comment">// Normally also do first write now</span></span><span class="line">            <span class="comment">// selectionKey.interestOps(SelectionKey.OP_WRITE);</span></span><span class="line">            state = PROCESSING;</span><span class="line">            IO_WORKER_POOL.execute(<span class="keyword">new</span> Processor());</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">processAndHandOff</span><span class="params">()</span> </span>&#123;</span><span class="line">        process();</span><span class="line">        state = SENDING; <span class="comment">// or rebind attachment including data for response</span></span><span class="line">        selectionKey.interestOps(SelectionKey.OP_WRITE);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Processor</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line">        <span class="meta">@Override</span></span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">            processAndHandOff();</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">send</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><span class="line">        socketChannel.write(output);</span><span class="line">        <span class="keyword">if</span> (outputIsComplete()) selectionKey.cancel();</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="Reactor-java"><a href="#Reactor-java" class="headerlink" title="Reactor.java"></a>Reactor.java</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.nio.reactor.pattern;</span><span class="line"></span><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><span class="line"></span><span class="line"><span class="keyword">import</span> java.io.IOException;</span><span class="line"><span class="keyword">import</span> java.net.InetSocketAddress;</span><span class="line"><span class="keyword">import</span> java.nio.channels.SelectionKey;</span><span class="line"><span class="keyword">import</span> java.nio.channels.Selector;</span><span class="line"><span class="keyword">import</span> java.nio.channels.ServerSocketChannel;</span><span class="line"><span class="keyword">import</span> java.nio.channels.SocketChannel;</span><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><span class="line"><span class="keyword">import</span> java.util.Set;</span><span class="line"><span class="keyword">import</span> java.util.concurrent.*;</span><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><span class="line"></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Reactor</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(Reactor<span class="class">.<span class="keyword">class</span>)</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SIZE = <span class="number">2</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Selector[] selectors = <span class="keyword">new</span> Selector[SIZE];</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> next = <span class="number">0</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ServerSocketChannel serverSocketChannel;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> AtomicInteger SUB_REACTOR_THREAD_NUMBER = <span class="keyword">new</span> AtomicInteger(<span class="number">1</span>);</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ExecutorService SUB_REACTOR_THREAD_POOL =</span><span class="line">            <span class="keyword">new</span> ThreadPoolExecutor(SIZE, SIZE, <span class="number">60</span>, TimeUnit.SECONDS, <span class="keyword">new</span> LinkedBlockingQueue&lt;&gt;(), <span class="keyword">new</span> ThreadFactory() &#123;</span><span class="line">                <span class="meta">@Override</span></span><span class="line">                <span class="function"><span class="keyword">public</span> Thread <span class="title">newThread</span><span class="params">(Runnable r)</span> </span>&#123;</span><span class="line">                    Thread thread = <span class="keyword">new</span> Thread(r);</span><span class="line">                    thread.setName(<span class="string">"SUB-REACTOR-"</span> + SUB_REACTOR_THREAD_NUMBER.getAndIncrement());</span><span class="line">                    <span class="keyword">return</span> thread;</span><span class="line">                &#125;</span><span class="line">            &#125;, <span class="keyword">new</span> ThreadPoolExecutor.CallerRunsPolicy());</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> AtomicInteger HANDLER_THREAD_NUMBER = <span class="keyword">new</span> AtomicInteger(<span class="number">1</span>);</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ExecutorService HANDLER_THREAD_POOL =</span><span class="line">            <span class="keyword">new</span> ThreadPoolExecutor(SIZE, SIZE, <span class="number">60</span>, TimeUnit.SECONDS, <span class="keyword">new</span> LinkedBlockingQueue&lt;&gt;(), <span class="keyword">new</span> ThreadFactory() &#123;</span><span class="line">                <span class="meta">@Override</span></span><span class="line">                <span class="function"><span class="keyword">public</span> Thread <span class="title">newThread</span><span class="params">(Runnable r)</span> </span>&#123;</span><span class="line">                    Thread thread = <span class="keyword">new</span> Thread(r);</span><span class="line">                    thread.setName(<span class="string">"HANDLER-"</span> + HANDLER_THREAD_NUMBER.getAndIncrement());</span><span class="line">                    <span class="keyword">return</span> thread;</span><span class="line">                &#125;</span><span class="line">            &#125;, <span class="keyword">new</span> ThreadPoolExecutor.CallerRunsPolicy());</span><span class="line"></span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Selector selector;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Reactor</span><span class="params">(<span class="keyword">int</span> port)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><span class="line">        selector = Selector.open();</span><span class="line">        serverSocketChannel = ServerSocketChannel.open();</span><span class="line">        serverSocketChannel.socket().bind(<span class="keyword">new</span> InetSocketAddress(port));</span><span class="line">        serverSocketChannel.configureBlocking(<span class="keyword">false</span>);</span><span class="line">        SelectionKey selectionKey = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);</span><span class="line">        selectionKey.attach(<span class="keyword">new</span> Acceptor());</span><span class="line"></span><span class="line">        startSubReactors();</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">startSubReactors</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; selectors.length; i++) &#123;</span><span class="line">            selectors[i] = Selector.open();</span><span class="line">            <span class="keyword">final</span> Selector subSelector = selectors[i];</span><span class="line">            SUB_REACTOR_THREAD_POOL.submit(() -&gt; &#123;</span><span class="line">                <span class="keyword">while</span> (!Thread.interrupted()) &#123;</span><span class="line">                    <span class="keyword">try</span> &#123;</span><span class="line">                        <span class="keyword">int</span> select = subSelector.select(<span class="number">1000L</span>);</span><span class="line">                        <span class="keyword">if</span> (select == <span class="number">0</span>) &#123;</span><span class="line">                            <span class="keyword">synchronized</span> (subSelector) &#123;</span><span class="line">                                <span class="comment">// release selector.publicKeys object monitor</span></span><span class="line">                                subSelector.wait(<span class="number">10L</span>);</span><span class="line">                            &#125;</span><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><span class="line">                            Set&lt;SelectionKey&gt; selectionKeys = subSelector.selectedKeys();</span><span class="line">                            Iterator&lt;SelectionKey&gt; iterator = selectionKeys.iterator();</span><span class="line">                            <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><span class="line">                                SelectionKey selectionKey = iterator.next();</span><span class="line">                                handle(selectionKey);</span><span class="line">                            &#125;</span><span class="line">                            selectionKeys.clear();</span><span class="line">                        &#125;</span><span class="line">                    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><span class="line">                        e.printStackTrace();</span><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><span class="line">                        Thread.currentThread().interrupt();</span><span class="line">                        LOGGER.info(<span class="string">"sub reactor selector wait interrupted"</span>, e);</span><span class="line">                    &#125;</span><span class="line">                &#125;</span><span class="line">            &#125;);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(SelectionKey selectionKey)</span> </span>&#123;</span><span class="line">        Runnable attachment = (Runnable) selectionKey.attachment();</span><span class="line">        <span class="keyword">if</span> (attachment != <span class="keyword">null</span>) &#123;</span><span class="line">            <span class="comment">// attachment is Handler</span></span><span class="line">            HANDLER_THREAD_POOL.submit(attachment);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="meta">@Override</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">try</span> &#123;</span><span class="line">            <span class="keyword">while</span> (!Thread.interrupted()) &#123;</span><span class="line">                selector.select();</span><span class="line">                Set selected = selector.selectedKeys();</span><span class="line">                Iterator it = selected.iterator();</span><span class="line">                <span class="keyword">while</span> (it.hasNext()) &#123;</span><span class="line">                    dispatch((SelectionKey) it.next());</span><span class="line">                &#125;</span><span class="line">                selected.clear();</span><span class="line">            &#125;</span><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><span class="line">            LOGGER.error(<span class="string">"main reactor exception"</span>, e);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dispatch</span><span class="params">(SelectionKey selectionKey)</span> </span>&#123;</span><span class="line">        Runnable attachment = (Runnable) (selectionKey.attachment());</span><span class="line">        <span class="keyword">if</span> (attachment != <span class="keyword">null</span>) &#123;</span><span class="line">            <span class="comment">// attachment is Reactor$Acceptor</span></span><span class="line">            LOGGER.info(<span class="string">"&#123;&#125; accept &#123;&#125; new socket connection"</span>, selectionKey, selectionKey.channel());</span><span class="line">            attachment.run();</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * run in main reactor thread</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Acceptor</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line">        <span class="meta">@Override</span></span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">            <span class="keyword">try</span> &#123;</span><span class="line">                SocketChannel socketChannel = serverSocketChannel.accept();</span><span class="line">                <span class="keyword">if</span> (socketChannel != <span class="keyword">null</span>) &#123;</span><span class="line">                    <span class="keyword">new</span> Handler(selectors[next], socketChannel);</span><span class="line">                &#125;</span><span class="line">                <span class="keyword">if</span> (++next == selectors.length) &#123;</span><span class="line">                    next = <span class="number">0</span>;</span><span class="line">                &#125;</span><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><span class="line">                LOGGER.error(<span class="string">"acceptor exception"</span>, e);</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="logback-xml"><a href="#logback-xml" class="headerlink" title="logback.xml"></a>logback.xml</h2><p>为了方便查看线程运行情况，加入<code>logback</code>依赖及其配置文件，内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><span class="line"></span><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"CONSOLE_LOG_PATTERN"</span></span></span><span class="line"><span class="tag">              <span class="attr">value</span>=<span class="string">"%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; %highlight(-%5p) --- [%15.15thread] %cyan(%-40.40logger&#123;39&#125; [%5line] :) %m%n%ex"</span>/&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"CONSOLE"</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.ConsoleAppender"</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">encoder</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>$&#123;CONSOLE_LOG_PATTERN&#125;<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">charset</span>&gt;</span>utf8<span class="tag">&lt;/<span class="name">charset</span>&gt;</span></span><span class="line">        <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><span class="line"></span><span class="line">    <span class="tag">&lt;<span class="name">root</span> <span class="attr">level</span>=<span class="string">"DEBUG"</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"CONSOLE"</span>/&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span></pre></td></tr></table></figure>
+<h2 id="selector-publicKeys-对象锁竞争问题"><a href="#selector-publicKeys-对象锁竞争问题" class="headerlink" title="selector.publicKeys 对象锁竞争问题"></a>selector.publicKeys 对象锁竞争问题</h2><p>线程在运行<code>selector.select(1000)</code>时此会一直执有<code>selector.publicKeys</code>对象锁，<code>Handler</code>中注册<code>socketChannel</code>时，获取不到<code>selector.publicKeys</code>对象锁而被一直阻塞，因此需要在运行<code>selector.select(1000)</code>多路复用器阻塞的线程中释放一下执有的<code>selector.publicKeys</code>对象锁才能让<code>Handler</code>构造方法中<code>socketChannel</code>注册完成。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><span class="line"><span class="comment"> * &lt;pre&gt;</span></span><span class="line"><span class="comment"> * ///////////////////////////////////////////////////////////////////////////////////////////////////////////</span></span><span class="line"><span class="comment"> * // SelectorImpl 类的 register() 这个方法中会同步这个 selector.publicKeys 属性，就是 selector.keys() 返回的</span></span><span class="line"><span class="comment"> * // 对象，如果在 Acceptor 中注册 socketChannel 到 SubReactor 中时，SubReactor 线程因为执有 publicKeys 对象锁并一直</span></span><span class="line"><span class="comment"> * // while(true) 循环，从而 Acceptor 中的 socketChannel.register() 就被 BLOCK 了，线程栈如下：</span></span><span class="line"><span class="comment"> * ///////////////////////////////////////////////////////////////////////////////////////////////////////////</span></span><span class="line"><span class="comment"> * // java.lang.Thread.State: BLOCKED (on object monitor)</span></span><span class="line"><span class="comment"> * //     at sun.nio.ch.SelectorImpl.register(SelectorImpl.java:132)</span></span><span class="line"><span class="comment"> * //     - waiting to lock &lt;0x000000076e8c7390&gt; (a java.util.Collections$UnmodifiableSet)</span></span><span class="line"><span class="comment"> * ///////////////////////////////////////////////////////////////////////////////////////////////////////////</span></span><span class="line"><span class="comment"> * // SelectorImpl 中关于同步 publicKeys 对象的代码如下</span></span><span class="line"><span class="comment"> * ///////////////////////////////////////////////////////////////////////////////////////////////////////////</span></span><span class="line"><span class="comment"> * // protected final SelectionKey register(AbstractSelectableChannel var1, int var2, Object var3) &#123;</span></span><span class="line"><span class="comment"> * //     if (!(var1 instanceof SelChImpl)) &#123;</span></span><span class="line"><span class="comment"> * //         throw new IllegalSelectorException();</span></span><span class="line"><span class="comment"> * //     &#125; else &#123;</span></span><span class="line"><span class="comment"> * //         SelectionKeyImpl var4 = new SelectionKeyImpl((SelChImpl)var1, this);</span></span><span class="line"><span class="comment"> * //         var4.attach(var3);</span></span><span class="line"><span class="comment"> * //         synchronized(this.publicKeys) &#123;</span></span><span class="line"><span class="comment"> * //             this.implRegister(var4);</span></span><span class="line"><span class="comment"> * //         &#125;</span></span><span class="line"><span class="comment"> * //</span></span><span class="line"><span class="comment"> * //         var4.interestOps(var2);</span></span><span class="line"><span class="comment"> * //         return var4;</span></span><span class="line"><span class="comment"> * //     &#125;</span></span><span class="line"><span class="comment"> * // &#125;</span></span><span class="line"><span class="comment"> * ///////////////////////////////////////////////////////////////////////////////////////////////////////////</span></span><span class="line"><span class="comment"> * &lt;/pre&gt;</span></span><span class="line"><span class="comment"> */</span></span><span class="line"><span class="keyword">int</span> select = subSelector.select(<span class="number">1000L</span>);</span><span class="line"><span class="keyword">if</span> (select == <span class="number">0</span>) &#123;</span><span class="line">    <span class="keyword">synchronized</span> (subSelector) &#123;</span><span class="line">        <span class="comment">// release selector.publicKeys object monitor</span></span><span class="line">        subSelector.wait(<span class="number">10L</span>);</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://gee.cs.oswego.edu/dl/cpjslides/nio.pdf" target="_blank" rel="noopener">Scalable IO in Java</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2019/03/15/doug-lea-scalable-io-in-java.html" rel="next" title="doug lea - scalable io in java">
+                <i class="fa fa-chevron-left"></i>
+                doug lea - scalable io in java
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2019/03/16/reactor-pattern-time-server-example.html" rel="prev" title="reactor pattern time server example">
+                <i class="fa fa-chevron-right"></i>
+                reactor pattern time server example
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ReactorMain-java"><span class="nav-number">1.</span> <span class="nav-text">ReactorMain.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Handler-java"><span class="nav-number">2.</span> <span class="nav-text">Handler.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor-java"><span class="nav-number">3.</span> <span class="nav-text">Reactor.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logback-xml"><span class="nav-number">4.</span> <span class="nav-text">logback.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#selector-publicKeys-对象锁竞争问题"><span class="nav-number">5.</span> <span class="nav-text">selector.publicKeys 对象锁竞争问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

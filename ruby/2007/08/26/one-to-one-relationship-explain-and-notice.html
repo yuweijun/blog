@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="以Agile Web Development with Rails书中关于has_one关系的order和invoice关系做个例子，其中设了一个total_price字段在invoice表中，不能为空，当做以下操作时：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="one_to_one relationship explain and notice">
-<meta property="og:url" content="https://www.4e00.com/ruby/2007/08/26/one-to-one-relationship-explain-and-notice.html">
+<meta property="og:url" content="http://www.4e00.com/ruby/2007/08/26/one-to-one-relationship-explain-and-notice.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="以Agile Web Development with Rails书中关于has_one关系的order和invoice关系做个例子，其中设了一个total_price字段在invoice表中，不能为空，当做以下操作时：">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.133Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="one_to_one relationship explain and notice">
 <meta name="twitter:description" content="以Agile Web Development with Rails书中关于has_one关系的order和invoice关系做个例子，其中设了一个total_price字段在invoice表中，不能为空，当做以下操作时：">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/ruby/2007/08/26/one-to-one-relationship-explain-and-notice.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/ruby/2007/08/26/one-to-one-relationship-explain-and-notice.html">
 
   <title> one_to_one relationship explain and notice | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/ruby/" itemprop="url" rel="index">
                     <span itemprop="name">ruby</span>
                   </a>
@@ -256,23 +256,23 @@
       
         <p>以Agile Web Development with Rails书中关于<code>has_one</code>关系的order和invoice关系做个例子，其中设了一个total_price字段在invoice表中，不能为空，当做以下操作时：</p>
 <a id="more"></a>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">o = Order.find(<span class="number">1</span>)</div><div class="line">i = Invoice.new</div><div class="line">o.invoice = i</div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">o = Order.find(<span class="number">1</span>)</span><span class="line">i = Invoice.new</span><span class="line">o.invoice = i</span></pre></td></tr></table></figure>
 <p>这个时候Rails会自动保存i这个Invoice对象，保存过和书里有插图说明，先将原来记录的order_id置为NULL,再插入些记录。而此记录在数据库里是设定了非空，所以不会插入成功。<br>得到的log如下：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">Order <span class="keyword">Load</span> (<span class="number">0.002154</span>)   <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> orders <span class="keyword">WHERE</span> (orders.<span class="string">`id`</span> = <span class="number">1</span>)</div><div class="line">Invoice <span class="keyword">Load</span> (<span class="number">0.002144</span>)   <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> invoices <span class="keyword">WHERE</span> (invoices.order_id = <span class="number">1</span>) <span class="keyword">LIMIT</span> <span class="number">1</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.000859</span>)   <span class="keyword">BEGIN</span></div><div class="line">Invoice <span class="keyword">Update</span> (<span class="number">0.002496</span>)   <span class="keyword">UPDATE</span> invoices <span class="keyword">SET</span> <span class="string">`created_at`</span> = <span class="string">'2007-08-26 17:21:30'</span>, <span class="string">`total_price`</span> = <span class="string">'9.0'</span>, <span class="string">`order_id`</span> = <span class="literal">NULL</span> <span class="keyword">WHERE</span> <span class="string">`id`</span> = <span class="number">1</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.003602</span>)   <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.000605</span>)   <span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.000000</span>)   Mysql::<span class="keyword">Error</span>: <span class="keyword">Column</span> <span class="string">'total_price'</span> cannot be <span class="literal">null</span>: <span class="keyword">INSERT</span> <span class="keyword">INTO</span> invoices (<span class="string">`order_id`</span>, <span class="string">`total_price`</span>, <span class="string">`created_at`</span>) <span class="keyword">VALUES</span>(<span class="number">1</span>, <span class="literal">NULL</span>, <span class="string">'2007-08-26 18:07:21'</span>)</div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.000865</span>)   <span class="keyword">ROLLBACK</span></div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">Order <span class="keyword">Load</span> (<span class="number">0.002154</span>)   <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> orders <span class="keyword">WHERE</span> (orders.<span class="string">`id`</span> = <span class="number">1</span>)</span><span class="line">Invoice <span class="keyword">Load</span> (<span class="number">0.002144</span>)   <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> invoices <span class="keyword">WHERE</span> (invoices.order_id = <span class="number">1</span>) <span class="keyword">LIMIT</span> <span class="number">1</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.000859</span>)   <span class="keyword">BEGIN</span></span><span class="line">Invoice <span class="keyword">Update</span> (<span class="number">0.002496</span>)   <span class="keyword">UPDATE</span> invoices <span class="keyword">SET</span> <span class="string">`created_at`</span> = <span class="string">'2007-08-26 17:21:30'</span>, <span class="string">`total_price`</span> = <span class="string">'9.0'</span>, <span class="string">`order_id`</span> = <span class="literal">NULL</span> <span class="keyword">WHERE</span> <span class="string">`id`</span> = <span class="number">1</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.003602</span>)   <span class="keyword">COMMIT</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.000605</span>)   <span class="keyword">BEGIN</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.000000</span>)   Mysql::<span class="keyword">Error</span>: <span class="keyword">Column</span> <span class="string">'total_price'</span> cannot be <span class="literal">null</span>: <span class="keyword">INSERT</span> <span class="keyword">INTO</span> invoices (<span class="string">`order_id`</span>, <span class="string">`total_price`</span>, <span class="string">`created_at`</span>) <span class="keyword">VALUES</span>(<span class="number">1</span>, <span class="literal">NULL</span>, <span class="string">'2007-08-26 18:07:21'</span>)</span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.000865</span>)   <span class="keyword">ROLLBACK</span></span></pre></td></tr></table></figure>
 <p>这就造成了数据问题，在这里是数据库做限制，所以程序出错还可以知道出错，如果是通过validate或者before_save过滤器过滤的话，就很难查觉数据没有写入库中，所以这种写法书里不推荐，而是先强制保存子对象i再保存父对象o。<br>或者写入事务中：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">Order.transaction <span class="keyword">do</span></div><div class="line">   o.invoice = i</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">Order.transaction <span class="keyword">do</span></span><span class="line">   o.invoice = i</span><span class="line"><span class="keyword">end</span></span></pre></td></tr></table></figure>
 <p>程序还是会报错，因为数据库写不进去的。可以再begin..end捕获错误。</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;</span> o = Order.new do <span class="params">|x|</span></div><div class="line"><span class="meta">?&gt;</span> x.name = <span class="string">'a'</span></div><div class="line"><span class="meta">&gt;&gt;</span> x.email = <span class="string">'a@test.com'</span></div><div class="line"><span class="meta">&gt;&gt;</span> x.address = <span class="string">'Shanghai'</span></div><div class="line"><span class="meta">&gt;&gt;</span> end</div><div class="line">=&gt; <span class="comment">#"a", "updated_at"=&gt;nil, "pay_type"=&gt;nil, "address"=&gt;"Shanghai", "created_at"=&gt;nil, "email"=&gt;"a<span class="doctag">@test</span>.com"&#125;&gt;</span></div><div class="line"><span class="meta">&gt;&gt;</span> i = Invoice.new</div><div class="line">=&gt; <span class="comment">#nil, "total_price"=&gt;nil, "created_at"=&gt;nil&#125;&gt;</span></div><div class="line"><span class="meta">&gt;&gt;</span> i.order = o</div><div class="line">=&gt; <span class="comment">#"a", "updated_at"=&gt;nil, "pay_type"=&gt;nil, "address"=&gt;"Shanghai", "created_at"=&gt;nil, "email"=&gt;"a<span class="doctag">@test</span>.com"&#125;&gt;</span></div><div class="line"><span class="meta">&gt;&gt;</span> i.save</div><div class="line">ActiveRecord::<span class="symbol">StatementInvalid:</span> Mysql::<span class="symbol">Error:</span> Column <span class="string">'total_price'</span> cannot be <span class="symbol">null:</span> INSERT INTO invoices (<span class="string">`order_id`</span>, <span class="string">`total_price`</span>, <span class="string">`created_at`</span>) VALUES(<span class="number">5</span>, NULL, <span class="string">'2007-08-26 18:36:24'</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;</span> o = Order.new do <span class="params">|x|</span></span><span class="line"><span class="meta">?&gt;</span> x.name = <span class="string">'a'</span></span><span class="line"><span class="meta">&gt;&gt;</span> x.email = <span class="string">'a@test.com'</span></span><span class="line"><span class="meta">&gt;&gt;</span> x.address = <span class="string">'Shanghai'</span></span><span class="line"><span class="meta">&gt;&gt;</span> end</span><span class="line">=&gt; <span class="comment">#"a", "updated_at"=&gt;nil, "pay_type"=&gt;nil, "address"=&gt;"Shanghai", "created_at"=&gt;nil, "email"=&gt;"a<span class="doctag">@test</span>.com"&#125;&gt;</span></span><span class="line"><span class="meta">&gt;&gt;</span> i = Invoice.new</span><span class="line">=&gt; <span class="comment">#nil, "total_price"=&gt;nil, "created_at"=&gt;nil&#125;&gt;</span></span><span class="line"><span class="meta">&gt;&gt;</span> i.order = o</span><span class="line">=&gt; <span class="comment">#"a", "updated_at"=&gt;nil, "pay_type"=&gt;nil, "address"=&gt;"Shanghai", "created_at"=&gt;nil, "email"=&gt;"a<span class="doctag">@test</span>.com"&#125;&gt;</span></span><span class="line"><span class="meta">&gt;&gt;</span> i.save</span><span class="line">ActiveRecord::<span class="symbol">StatementInvalid:</span> Mysql::<span class="symbol">Error:</span> Column <span class="string">'total_price'</span> cannot be <span class="symbol">null:</span> INSERT INTO invoices (<span class="string">`order_id`</span>, <span class="string">`total_price`</span>, <span class="string">`created_at`</span>) VALUES(<span class="number">5</span>, NULL, <span class="string">'2007-08-26 18:36:24'</span>)</span></pre></td></tr></table></figure>
 <p>one_to_one relationship中保存子对象i时会先保存其父对象o，而保存父对象o则子对象不会一起保存。以上例子产生的log如下:</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">SQL (0.000750)   <span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.080562</span>)   <span class="keyword">INSERT</span> <span class="keyword">INTO</span> orders (<span class="string">`name`</span>, <span class="string">`updated_at`</span>, <span class="string">`pay_type`</span>, <span class="string">`address`</span>, <span class="string">`created_at`</span>, <span class="string">`email`</span>) <span class="keyword">VALUES</span>(<span class="string">'a'</span>, <span class="string">'2007-08-26 18:36:23'</span>, <span class="literal">NULL</span>, <span class="string">'Shanghai'</span>, <span class="string">'2007-08-26 18:36:23'</span>, <span class="string">'a@test.com'</span>)</div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.000000</span>)   Mysql::<span class="keyword">Error</span>: <span class="keyword">Column</span> <span class="string">'total_price'</span> cannot be <span class="literal">null</span>: <span class="keyword">INSERT</span> <span class="keyword">INTO</span> invoices (<span class="string">`order_id`</span>, <span class="string">`total_price`</span>, <span class="string">`created_at`</span>) <span class="keyword">VALUES</span>(<span class="number">5</span>, <span class="literal">NULL</span>, <span class="string">'2007-08-26 18:36:24'</span>)</div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.005971</span>)   <span class="keyword">ROLLBACK</span></div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">SQL (0.000750)   <span class="keyword">BEGIN</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.080562</span>)   <span class="keyword">INSERT</span> <span class="keyword">INTO</span> orders (<span class="string">`name`</span>, <span class="string">`updated_at`</span>, <span class="string">`pay_type`</span>, <span class="string">`address`</span>, <span class="string">`created_at`</span>, <span class="string">`email`</span>) <span class="keyword">VALUES</span>(<span class="string">'a'</span>, <span class="string">'2007-08-26 18:36:23'</span>, <span class="literal">NULL</span>, <span class="string">'Shanghai'</span>, <span class="string">'2007-08-26 18:36:23'</span>, <span class="string">'a@test.com'</span>)</span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.000000</span>)   Mysql::<span class="keyword">Error</span>: <span class="keyword">Column</span> <span class="string">'total_price'</span> cannot be <span class="literal">null</span>: <span class="keyword">INSERT</span> <span class="keyword">INTO</span> invoices (<span class="string">`order_id`</span>, <span class="string">`total_price`</span>, <span class="string">`created_at`</span>) <span class="keyword">VALUES</span>(<span class="number">5</span>, <span class="literal">NULL</span>, <span class="string">'2007-08-26 18:36:24'</span>)</span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.005971</span>)   <span class="keyword">ROLLBACK</span></span></pre></td></tr></table></figure>
 <p>Rails 是将其包装在一个事务里处理的，所以不会生成一条新的order记录。</p>
 <p>BTW:<br>在has_many关系中与上面has_one是相反的，当保存了父对象之后会遍历父对象中的全部子对象并保存，如果父对象和子对象都是新建对象，不能先保存子对象，因为无法取到父对象的id。如下例子说明：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">order = Order.new</div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].each <span class="keyword">do</span> |prd_id|</div><div class="line">  product = Product.find(prd_id)</div><div class="line">  order.line_items &lt;&lt; LineItem.new(:<span class="function"><span class="params">product</span> =&gt;</span>product, :<span class="function"><span class="params">quantity</span> =&gt;</span> <span class="number">2</span>, :<span class="function"><span class="params">total_price</span> =&gt;</span> <span class="number">3.22</span>)</div><div class="line">end</div><div class="line">order.save</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">order = Order.new</span><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].each <span class="keyword">do</span> |prd_id|</span><span class="line">  product = Product.find(prd_id)</span><span class="line">  order.line_items &lt;&lt; LineItem.new(:<span class="function"><span class="params">product</span> =&gt;</span>product, :<span class="function"><span class="params">quantity</span> =&gt;</span> <span class="number">2</span>, :<span class="function"><span class="params">total_price</span> =&gt;</span> <span class="number">3.22</span>)</span><span class="line">end</span><span class="line">order.save</span></pre></td></tr></table></figure>
 <p>产生Log如下：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">Product <span class="keyword">Load</span> (<span class="number">0.002137</span>)   <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> products <span class="keyword">WHERE</span> (products.<span class="string">`id`</span> = <span class="number">1</span>)</div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.023867</span>)   <span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.002860</span>)   <span class="keyword">COMMIT</span></div><div class="line">Product <span class="keyword">Load</span> (<span class="number">0.001754</span>)   <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> products <span class="keyword">WHERE</span> (products.<span class="string">`id`</span> = <span class="number">2</span>)</div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.066274</span>)   <span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.001553</span>)   <span class="keyword">COMMIT</span></div><div class="line">Product <span class="keyword">Load</span> (<span class="number">0.002514</span>)   <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> products <span class="keyword">WHERE</span> (products.<span class="string">`id`</span> = <span class="number">3</span>)</div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.001669</span>)   <span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.000442</span>)   <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.000661</span>)   <span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.003558</span>)   <span class="keyword">INSERT</span> <span class="keyword">INTO</span> orders (<span class="string">`name`</span>, <span class="string">`updated_at`</span>, <span class="string">`pay_type`</span>, <span class="string">`address`</span>, <span class="string">`created_at`</span>, <span class="string">`email`</span>) <span class="keyword">VALUES</span>(<span class="literal">NULL</span>, <span class="string">'2007-08-26 19:30:18'</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="string">'2007-08-26 19:30:18'</span>, <span class="literal">NULL</span>)</div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.002258</span>)   <span class="keyword">INSERT</span> <span class="keyword">INTO</span> line_items (<span class="string">`order_id`</span>, <span class="string">`updated_at`</span>, <span class="string">`total_price`</span>, <span class="string">`product_id`</span>, <span class="string">`quantity`</span>, <span class="string">`created_at`</span>) <span class="keyword">VALUES</span>(<span class="number">9</span>, <span class="string">'2007-08-26 19:30:18'</span>, <span class="string">'3.22'</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="string">'2007-08-26 19:30:18'</span>)</div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.002302</span>)   <span class="keyword">INSERT</span> <span class="keyword">INTO</span> line_items (<span class="string">`order_id`</span>, <span class="string">`updated_at`</span>, <span class="string">`total_price`</span>, <span class="string">`product_id`</span>, <span class="string">`quantity`</span>, <span class="string">`created_at`</span>) <span class="keyword">VALUES</span>(<span class="number">9</span>, <span class="string">'2007-08-26 19:30:18'</span>, <span class="string">'3.22'</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="string">'2007-08-26 19:30:18'</span>)</div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.004991</span>)   <span class="keyword">INSERT</span> <span class="keyword">INTO</span> line_items (<span class="string">`order_id`</span>, <span class="string">`updated_at`</span>, <span class="string">`total_price`</span>, <span class="string">`product_id`</span>, <span class="string">`quantity`</span>, <span class="string">`created_at`</span>) <span class="keyword">VALUES</span>(<span class="number">9</span>, <span class="string">'2007-08-26 19:30:18'</span>, <span class="string">'3.22'</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="string">'2007-08-26 19:30:18'</span>)</div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.069437</span>)   <span class="keyword">COMMIT</span></div></pre></td></tr></table></figure>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">order = Order.new</div><div class="line">product = Product.find(<span class="number">1</span>)</div><div class="line">li = LineItem.new(<span class="symbol">:product</span> =&gt;product, <span class="symbol">:quantity</span> =&gt; <span class="number">2</span>, <span class="symbol">:total_price</span> =&gt; <span class="number">3.22</span>)</div><div class="line">order.line_items &lt;&lt; li</div><div class="line">li.save</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">Product <span class="keyword">Load</span> (<span class="number">0.002137</span>)   <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> products <span class="keyword">WHERE</span> (products.<span class="string">`id`</span> = <span class="number">1</span>)</span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.023867</span>)   <span class="keyword">BEGIN</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.002860</span>)   <span class="keyword">COMMIT</span></span><span class="line">Product <span class="keyword">Load</span> (<span class="number">0.001754</span>)   <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> products <span class="keyword">WHERE</span> (products.<span class="string">`id`</span> = <span class="number">2</span>)</span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.066274</span>)   <span class="keyword">BEGIN</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.001553</span>)   <span class="keyword">COMMIT</span></span><span class="line">Product <span class="keyword">Load</span> (<span class="number">0.002514</span>)   <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> products <span class="keyword">WHERE</span> (products.<span class="string">`id`</span> = <span class="number">3</span>)</span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.001669</span>)   <span class="keyword">BEGIN</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.000442</span>)   <span class="keyword">COMMIT</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.000661</span>)   <span class="keyword">BEGIN</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.003558</span>)   <span class="keyword">INSERT</span> <span class="keyword">INTO</span> orders (<span class="string">`name`</span>, <span class="string">`updated_at`</span>, <span class="string">`pay_type`</span>, <span class="string">`address`</span>, <span class="string">`created_at`</span>, <span class="string">`email`</span>) <span class="keyword">VALUES</span>(<span class="literal">NULL</span>, <span class="string">'2007-08-26 19:30:18'</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="string">'2007-08-26 19:30:18'</span>, <span class="literal">NULL</span>)</span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.002258</span>)   <span class="keyword">INSERT</span> <span class="keyword">INTO</span> line_items (<span class="string">`order_id`</span>, <span class="string">`updated_at`</span>, <span class="string">`total_price`</span>, <span class="string">`product_id`</span>, <span class="string">`quantity`</span>, <span class="string">`created_at`</span>) <span class="keyword">VALUES</span>(<span class="number">9</span>, <span class="string">'2007-08-26 19:30:18'</span>, <span class="string">'3.22'</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="string">'2007-08-26 19:30:18'</span>)</span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.002302</span>)   <span class="keyword">INSERT</span> <span class="keyword">INTO</span> line_items (<span class="string">`order_id`</span>, <span class="string">`updated_at`</span>, <span class="string">`total_price`</span>, <span class="string">`product_id`</span>, <span class="string">`quantity`</span>, <span class="string">`created_at`</span>) <span class="keyword">VALUES</span>(<span class="number">9</span>, <span class="string">'2007-08-26 19:30:18'</span>, <span class="string">'3.22'</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="string">'2007-08-26 19:30:18'</span>)</span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.004991</span>)   <span class="keyword">INSERT</span> <span class="keyword">INTO</span> line_items (<span class="string">`order_id`</span>, <span class="string">`updated_at`</span>, <span class="string">`total_price`</span>, <span class="string">`product_id`</span>, <span class="string">`quantity`</span>, <span class="string">`created_at`</span>) <span class="keyword">VALUES</span>(<span class="number">9</span>, <span class="string">'2007-08-26 19:30:18'</span>, <span class="string">'3.22'</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="string">'2007-08-26 19:30:18'</span>)</span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.069437</span>)   <span class="keyword">COMMIT</span></span></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">order = Order.new</span><span class="line">product = Product.find(<span class="number">1</span>)</span><span class="line">li = LineItem.new(<span class="symbol">:product</span> =&gt;product, <span class="symbol">:quantity</span> =&gt; <span class="number">2</span>, <span class="symbol">:total_price</span> =&gt; <span class="number">3.22</span>)</span><span class="line">order.line_items &lt;&lt; li</span><span class="line">li.save</span></pre></td></tr></table></figure>
 <p>产生Log如下：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">Product <span class="keyword">Load</span> (<span class="number">0.002695</span>)   <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> products <span class="keyword">WHERE</span> (products.<span class="string">`id`</span> = <span class="number">1</span>)</div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.023173</span>)   <span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.000987</span>)   <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.000777</span>)   <span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.000000</span>)   Mysql::<span class="keyword">Error</span>: <span class="keyword">Column</span> <span class="string">'order_id'</span> cannot be <span class="literal">null</span>: <span class="keyword">INSERT</span> <span class="keyword">INTO</span> line_items (<span class="string">`order_id`</span>, <span class="string">`updated_at`</span>, <span class="string">`total_price`</span>, <span class="string">`product_id`</span>, <span class="string">`quantity`</span>, <span class="string">`created_at`</span>) <span class="keyword">VALUES</span>(<span class="literal">NULL</span>, <span class="string">'2007-08-26 19:34:15'</span>, <span class="string">'3.22'</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="string">'2007-08-26 19:34:15'</span>)</div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.002174</span>)   <span class="keyword">ROLLBACK</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.003055</span>)   <span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">SQL</span> (<span class="number">0.001734</span>)   <span class="keyword">COMMIT</span></div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">Product <span class="keyword">Load</span> (<span class="number">0.002695</span>)   <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> products <span class="keyword">WHERE</span> (products.<span class="string">`id`</span> = <span class="number">1</span>)</span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.023173</span>)   <span class="keyword">BEGIN</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.000987</span>)   <span class="keyword">COMMIT</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.000777</span>)   <span class="keyword">BEGIN</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.000000</span>)   Mysql::<span class="keyword">Error</span>: <span class="keyword">Column</span> <span class="string">'order_id'</span> cannot be <span class="literal">null</span>: <span class="keyword">INSERT</span> <span class="keyword">INTO</span> line_items (<span class="string">`order_id`</span>, <span class="string">`updated_at`</span>, <span class="string">`total_price`</span>, <span class="string">`product_id`</span>, <span class="string">`quantity`</span>, <span class="string">`created_at`</span>) <span class="keyword">VALUES</span>(<span class="literal">NULL</span>, <span class="string">'2007-08-26 19:34:15'</span>, <span class="string">'3.22'</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="string">'2007-08-26 19:34:15'</span>)</span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.002174</span>)   <span class="keyword">ROLLBACK</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.003055</span>)   <span class="keyword">BEGIN</span></span><span class="line"><span class="keyword">SQL</span> (<span class="number">0.001734</span>)   <span class="keyword">COMMIT</span></span></pre></td></tr></table></figure>
 
       
     </div>
@@ -299,7 +299,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/ruby/2007/08/24/ruby-metaprogramming-example.html" rel="next" title="ruby metaprogramming example">
-                上一篇：ruby metaprogramming example
+                <i class="fa fa-chevron-left"></i>
+                ruby metaprogramming example
               </a>
             
           </div>
@@ -307,7 +308,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/ruby/2007/08/26/rails-activerecord-observer-usage.html" rel="prev" title="rails activerecord observer usage">
-                下一篇：rails activerecord observer usage
+                <i class="fa fa-chevron-right"></i>
+                rails activerecord observer usage
               </a>
             
           </div>
@@ -356,7 +358,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -367,16 +369,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -458,10 +458,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

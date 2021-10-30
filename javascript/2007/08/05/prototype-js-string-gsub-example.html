@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="prototype.js中String.gsub源码学习。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="prototype.js string.gsub example">
-<meta property="og:url" content="https://www.4e00.com/javascript/2007/08/05/prototype-js-string-gsub-example.html">
+<meta property="og:url" content="http://www.4e00.com/javascript/2007/08/05/prototype-js-string-gsub-example.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="prototype.js中String.gsub源码学习。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.133Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.024Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="prototype.js string.gsub example">
 <meta name="twitter:description" content="prototype.js中String.gsub源码学习。">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2007/08/05/prototype-js-string-gsub-example.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/javascript/2007/08/05/prototype-js-string-gsub-example.html">
 
   <title> prototype.js string.gsub example | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/javascript/" itemprop="url" rel="index">
                     <span itemprop="name">javascript</span>
                   </a>
@@ -256,8 +256,8 @@
       
         <p>prototype.js中<code>String.gsub</code>源码学习。</p>
 <a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Ruby String.gsub</span></div><div class="line"><span class="comment">// In the block form, the current match is passed in as a parameter,</span></div><div class="line"><span class="comment">// and variables such as $1, $2, $`, $&amp;, and $' will be set appropriately.</span></div><div class="line"><span class="comment">// The value returned by the block will be substituted for the match on each call.</span></div><div class="line"><span class="built_in">Object</span>.extend(<span class="built_in">String</span>.prototype, &#123;</div><div class="line">    gsub: <span class="function"><span class="keyword">function</span>(<span class="params">pattern, replacement</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> result = <span class="string">''</span>,</div><div class="line">            source = <span class="keyword">this</span>,</div><div class="line">            match;</div><div class="line">        replacement = <span class="built_in">arguments</span>.callee.prepareReplacement(replacement);</div><div class="line">        <span class="built_in">console</span>.log(replacement);</div><div class="line">        <span class="keyword">while</span> (source.length &gt; <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (match = source.match(pattern)) &#123;</div><div class="line">                result += source.slice(<span class="number">0</span>, match.index);</div><div class="line">                result += <span class="built_in">String</span>.interpret(replacement(match));</div><div class="line">                <span class="comment">// pass match (object) to replacement(function),</span></div><div class="line">                <span class="comment">// return value replace match[0]...</span></div><div class="line">                <span class="comment">// origin Template.evaluate function recursive invoke String.gsub function</span></div><div class="line">                source = source.slice(match.index + match[<span class="number">0</span>].length);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                result += source, source = <span class="string">''</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    sub: <span class="function"><span class="keyword">function</span>(<span class="params">pattern, replacement, count</span>) </span>&#123;</div><div class="line">        replacement = <span class="keyword">this</span>.gsub.prepareReplacement(replacement);</div><div class="line">        count = count === <span class="literal">undefined</span> ? <span class="number">1</span> : count;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.gsub(pattern, <span class="function"><span class="keyword">function</span>(<span class="params">match</span>) </span>&#123;</div><div class="line">            <span class="comment">//alert(match.index);</span></div><div class="line">            <span class="comment">//alert(match[0]);</span></div><div class="line">            <span class="keyword">if</span> (--count &lt; <span class="number">0</span>) <span class="keyword">return</span> match[<span class="number">0</span>];</div><div class="line">            <span class="keyword">return</span> replacement(match);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">String</span>.prototype.gsub.prepareReplacement = <span class="function"><span class="keyword">function</span>(<span class="params">replacement</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> replacement == <span class="string">'function'</span>) <span class="keyword">return</span> replacement;</div><div class="line">    <span class="keyword">var</span> template = <span class="keyword">new</span> Template(replacement);</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">match</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> template.evaluate(match)</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="example"><a href="#example" class="headerlink" title="example"></a>example</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> Template = Class.create();</div><div class="line">Template.prototype = &#123;</div><div class="line">    initialize: <span class="function"><span class="keyword">function</span>(<span class="params">template, pattern</span>) </span>&#123;</div><div class="line">        alert(template.toString());</div><div class="line">        <span class="keyword">this</span>.template = template.toString();</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    evaluate: <span class="function"><span class="keyword">function</span>(<span class="params">match_object</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">'&lt;font color="red"&gt;'</span> + <span class="keyword">this</span>.template + <span class="string">'&lt;/font&gt;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> str = <span class="string">'ThereAreTest1AndTest2AndTest3.'</span>;</div><div class="line"><span class="keyword">var</span> txt = str.gsub(<span class="regexp">/test/i</span>, <span class="string">'Text'</span>);</div><div class="line"><span class="built_in">console</span>.log(txt);</div><div class="line"></div><div class="line"><span class="keyword">var</span> txt2 = str.sub(<span class="regexp">/test/i</span>, <span class="string">'Text'</span>, <span class="number">2</span>);</div><div class="line"><span class="built_in">console</span>.log(txt2);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Ruby String.gsub</span></span><span class="line"><span class="comment">// In the block form, the current match is passed in as a parameter,</span></span><span class="line"><span class="comment">// and variables such as $1, $2, $`, $&amp;, and $' will be set appropriately.</span></span><span class="line"><span class="comment">// The value returned by the block will be substituted for the match on each call.</span></span><span class="line"><span class="built_in">Object</span>.extend(<span class="built_in">String</span>.prototype, &#123;</span><span class="line">    gsub: <span class="function"><span class="keyword">function</span>(<span class="params">pattern, replacement</span>) </span>&#123;</span><span class="line">        <span class="keyword">var</span> result = <span class="string">''</span>,</span><span class="line">            source = <span class="keyword">this</span>,</span><span class="line">            match;</span><span class="line">        replacement = <span class="built_in">arguments</span>.callee.prepareReplacement(replacement);</span><span class="line">        <span class="built_in">console</span>.log(replacement);</span><span class="line">        <span class="keyword">while</span> (source.length &gt; <span class="number">0</span>) &#123;</span><span class="line">            <span class="keyword">if</span> (match = source.match(pattern)) &#123;</span><span class="line">                result += source.slice(<span class="number">0</span>, match.index);</span><span class="line">                result += <span class="built_in">String</span>.interpret(replacement(match));</span><span class="line">                <span class="comment">// pass match (object) to replacement(function),</span></span><span class="line">                <span class="comment">// return value replace match[0]...</span></span><span class="line">                <span class="comment">// origin Template.evaluate function recursive invoke String.gsub function</span></span><span class="line">                source = source.slice(match.index + match[<span class="number">0</span>].length);</span><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><span class="line">                result += source, source = <span class="string">''</span>;</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line">        <span class="keyword">return</span> result;</span><span class="line">    &#125;,</span><span class="line"></span><span class="line">    sub: <span class="function"><span class="keyword">function</span>(<span class="params">pattern, replacement, count</span>) </span>&#123;</span><span class="line">        replacement = <span class="keyword">this</span>.gsub.prepareReplacement(replacement);</span><span class="line">        count = count === <span class="literal">undefined</span> ? <span class="number">1</span> : count;</span><span class="line"></span><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.gsub(pattern, <span class="function"><span class="keyword">function</span>(<span class="params">match</span>) </span>&#123;</span><span class="line">            <span class="comment">//alert(match.index);</span></span><span class="line">            <span class="comment">//alert(match[0]);</span></span><span class="line">            <span class="keyword">if</span> (--count &lt; <span class="number">0</span>) <span class="keyword">return</span> match[<span class="number">0</span>];</span><span class="line">            <span class="keyword">return</span> replacement(match);</span><span class="line">        &#125;);</span><span class="line">    &#125;</span><span class="line">&#125;);</span><span class="line"></span><span class="line"><span class="built_in">String</span>.prototype.gsub.prepareReplacement = <span class="function"><span class="keyword">function</span>(<span class="params">replacement</span>) </span>&#123;</span><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> replacement == <span class="string">'function'</span>) <span class="keyword">return</span> replacement;</span><span class="line">    <span class="keyword">var</span> template = <span class="keyword">new</span> Template(replacement);</span><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">match</span>) </span>&#123;</span><span class="line">        <span class="keyword">return</span> template.evaluate(match)</span><span class="line">    &#125;;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="example"><a href="#example" class="headerlink" title="example"></a>example</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> Template = Class.create();</span><span class="line">Template.prototype = &#123;</span><span class="line">    initialize: <span class="function"><span class="keyword">function</span>(<span class="params">template, pattern</span>) </span>&#123;</span><span class="line">        alert(template.toString());</span><span class="line">        <span class="keyword">this</span>.template = template.toString();</span><span class="line">    &#125;,</span><span class="line"></span><span class="line">    evaluate: <span class="function"><span class="keyword">function</span>(<span class="params">match_object</span>) </span>&#123;</span><span class="line">        <span class="keyword">return</span> <span class="string">'&lt;font color="red"&gt;'</span> + <span class="keyword">this</span>.template + <span class="string">'&lt;/font&gt;'</span>;</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="keyword">var</span> str = <span class="string">'ThereAreTest1AndTest2AndTest3.'</span>;</span><span class="line"><span class="keyword">var</span> txt = str.gsub(<span class="regexp">/test/i</span>, <span class="string">'Text'</span>);</span><span class="line"><span class="built_in">console</span>.log(txt);</span><span class="line"></span><span class="line"><span class="keyword">var</span> txt2 = str.sub(<span class="regexp">/test/i</span>, <span class="string">'Text'</span>, <span class="number">2</span>);</span><span class="line"><span class="built_in">console</span>.log(txt2);</span></pre></td></tr></table></figure>
 
       
     </div>
@@ -284,7 +284,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/javascript/2007/08/05/prototype-js-object-extend-example.html" rel="next" title="prototype.js object.extend example">
-                上一篇：prototype.js object.extend example
+                <i class="fa fa-chevron-left"></i>
+                prototype.js object.extend example
               </a>
             
           </div>
@@ -292,7 +293,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/ruby/2007/08/09/ruby-quiz-author-currying-explain.html" rel="prev" title="ruby quiz author's currying explain">
-                下一篇：ruby quiz author's currying explain
+                <i class="fa fa-chevron-right"></i>
+                ruby quiz author's currying explain
               </a>
             
           </div>
@@ -341,7 +343,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -352,16 +354,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -443,10 +443,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

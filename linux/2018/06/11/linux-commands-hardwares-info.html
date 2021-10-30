@@ -1,0 +1,582 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="Linux 查看硬件信息的命令 hwinfo lshw lscpu lspci lsscsi lsblk df fdisk free dmidecode  lshw -short lshw -shortH/W path        Device      Class      Description=================================================">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 常用命令之 硬件查看命令">
+<meta property="og:url" content="http://www.4e00.com/linux/2018/06/11/linux-commands-hardwares-info.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="Linux 查看硬件信息的命令 hwinfo lshw lscpu lspci lsscsi lsblk df fdisk free dmidecode  lshw -short lshw -shortH/W path        Device      Class      Description=================================================">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 常用命令之 硬件查看命令">
+<meta name="twitter:description" content="Linux 查看硬件信息的命令 hwinfo lshw lscpu lspci lsscsi lsblk df fdisk free dmidecode  lshw -short lshw -shortH/W path        Device      Class      Description=================================================">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2018/06/11/linux-commands-hardwares-info.html">
+
+  <title> linux 常用命令之 硬件查看命令 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux 常用命令之 硬件查看命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-06-11T22:49:43+08:00" content="2018-06-11">
+              2018-06-11
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Linux-查看硬件信息的命令"><a href="#Linux-查看硬件信息的命令" class="headerlink" title="Linux 查看硬件信息的命令"></a>Linux 查看硬件信息的命令</h2><ul>
+<li>hwinfo</li>
+<li>lshw</li>
+<li>lscpu</li>
+<li>lspci</li>
+<li>lsscsi</li>
+<li>lsblk</li>
+<li>df</li>
+<li>fdisk</li>
+<li>free</li>
+<li>dmidecode</li>
+</ul>
+<h3 id="lshw-short"><a href="#lshw-short" class="headerlink" title="lshw -short"></a>lshw -short</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">lshw</span> -short</span><span class="line output">H/W path        Device      Class      Description</span><span class="line output">==================================================</span><span class="line output">                            system     Standard PC (i440FX + PIIX, 1996)</span><span class="line output">/0                          bus        Motherboard</span><span class="line output">/0/0                        memory     96KiB BIOS</span><span class="line output">/0/400                      processor  Virtual CPU 714389bda930</span><span class="line output">/0/1000                     memory     512MiB System Memory</span><span class="line output">/0/1000/0                   memory     512MiB DIMM RAM</span><span class="line output">/0/100                      bridge     440FX - 82441FX PMC [Natoma]</span><span class="line output">/0/100/1                    bridge     82371SB PIIX3 ISA [Natoma/Triton II]</span><span class="line output">/0/100/1.1                  storage    82371SB PIIX3 IDE [Natoma/Triton II]</span><span class="line output">/0/100/1.2                  bus        82371SB PIIX3 USB [Natoma/Triton II]</span><span class="line output">/0/100/1.2/1    usb1        bus        UHCI Host Controller</span><span class="line output">/0/100/1.2/1/1              input      QEMU USB Tablet</span><span class="line output">/0/100/1.3                  bridge     82371AB/EB/MB PIIX4 ACPI</span><span class="line output">/0/100/2                    display    GD 5446</span><span class="line output">/0/100/3                    network    Virtio network device</span><span class="line output">/0/100/3/0      ens3        network    Ethernet interface</span><span class="line output">/0/100/4                    storage    Virtio block device</span><span class="line output">/0/100/4/0      /dev/vda    disk       21GB Virtual I/O device</span><span class="line output">/0/100/4/0/1    /dev/vda1   volume     19GiB EXT4 volume</span><span class="line output">/0/100/5                    generic    Virtio memory balloon</span><span class="line output">/0/100/5/0                  generic    Virtual I/O device</span><span class="line output">/0/100/6                    generic    Virtio RNG</span><span class="line output">/0/100/6/0                  generic    Virtual I/O device</span><span class="line output">/0/1            scsi1       storage</span><span class="line output">/0/1/0.0.0      /dev/cdrom  disk       QEMU DVD-ROM</span></pre></td></tr></table></figure>
+<h3 id="hwinfo-short"><a href="#hwinfo-short" class="headerlink" title="hwinfo --short"></a>hwinfo --short</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">hwinfo</span> --short</span><span class="line output">cpu:</span><span class="line output">                       Virtual CPU 714389bda930, 2400 MHz</span><span class="line output">keyboard:</span><span class="line output">  /dev/input/event1    AT Translated Set 2 keyboard</span><span class="line output">mouse:</span><span class="line output">  /dev/input/mice      Adomax QEMU USB Tablet</span><span class="line output">  /dev/input/mice      VirtualPS/2 VMware VMMouse</span><span class="line output">  /dev/input/mice      VirtualPS/2 VMware VMMouse</span><span class="line output">graphics card:</span><span class="line output">                       Red Hat QEMU Virtual Machine</span><span class="line output">storage:</span><span class="line output">                       Floppy disk controller</span><span class="line output">                       Red Hat Qemu virtual machine</span><span class="line output">                       Virtio Storage 0</span><span class="line output">network:</span><span class="line output">  ens3                 Virtio Ethernet Card 0</span><span class="line output">network interface:</span><span class="line output">  ens3                 Ethernet network interface</span><span class="line output">  lo                   Loopback network interface</span><span class="line output">disk:</span><span class="line output">  /dev/vda             Disk</span><span class="line output">partition:</span><span class="line output">  /dev/vda1            Partition</span><span class="line output">cdrom:</span><span class="line output">  /dev/sr0             QEMU DVD-ROM</span><span class="line output">usb controller:</span><span class="line output">                       Red Hat QEMU Virtual Machine</span><span class="line output">bios:</span><span class="line output">                       BIOS</span><span class="line output">bridge:</span><span class="line output">                       Red Hat Qemu virtual machine</span><span class="line output">                       Red Hat Qemu virtual machine</span><span class="line output">                       Red Hat Qemu virtual machine</span><span class="line output">hub:</span><span class="line output">                       Linux Foundation 1.1 root hub</span><span class="line output">memory:</span><span class="line output">                       Main Memory</span><span class="line output">unknown:</span><span class="line output">                       FPU</span><span class="line output">                       DMA controller</span><span class="line output">                       PIC</span><span class="line output">                       Keyboard controller</span><span class="line output">                       PS/2 Controller</span><span class="line output">                       Red Hat Virtio network device</span><span class="line output">                       Red Hat Virtio RNG</span><span class="line output">                       Red Hat Virtio memory balloon</span><span class="line output">                       Red Hat Virtio block device</span><span class="line output">                       Virtio Unclassified device</span><span class="line output">                       Virtio Unclassified device</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="lscpu"><a href="#lscpu" class="headerlink" title="lscpu"></a>lscpu</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">lscpu</span></span><span class="line output">Architecture:        x86_64</span><span class="line output">CPU op-mode(s):      32-bit, 64-bit</span><span class="line output">Byte Order:          Little Endian</span><span class="line output">CPU(s):              1</span><span class="line output">On-line CPU(s) list: 0</span><span class="line output">Thread(s) per core:  1</span><span class="line output">Core(s) per socket:  1</span><span class="line output">Socket(s):           1</span><span class="line output">NUMA node(s):        1</span><span class="line output">Vendor ID:           GenuineIntel</span><span class="line output">CPU family:          6</span><span class="line output">Model:               60</span><span class="line output">Model name:          Virtual CPU 714389bda930</span><span class="line output">Stepping:            1</span><span class="line output">CPU MHz:             2399.996</span><span class="line output">BogoMIPS:            4799.99</span><span class="line output">Hypervisor vendor:   KVM</span><span class="line output">Virtualization <span class="built_in">type</span>: full</span><span class="line output">L1d cache:           32K</span><span class="line output">L1i cache:           32K</span><span class="line output">L2 cache:            4096K</span><span class="line output">L3 cache:            16384K</span><span class="line output">NUMA node0 CPU(s):   0</span><span class="line output">Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx rdtscp lm constant_tsc rep_good nopl xtopology cpuid pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm invpcid_single pti fsgsbase bmi1 avx2 smep bmi2 erms invpcid xsaveopt arat</span></pre></td></tr></table></figure>
+<h3 id="lspci"><a href="#lspci" class="headerlink" title="lspci"></a>lspci</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">lspci</span></span><span class="line output">00:00.0 Host bridge: Intel Corporation 440FX - 82441FX PMC [Natoma] (rev 02)</span><span class="line output">00:01.0 ISA bridge: Intel Corporation 82371SB PIIX3 ISA [Natoma/Triton II]</span><span class="line output">00:01.1 IDE interface: Intel Corporation 82371SB PIIX3 IDE [Natoma/Triton II]</span><span class="line output">00:01.2 USB controller: Intel Corporation 82371SB PIIX3 USB [Natoma/Triton II] (rev 01)</span><span class="line output">00:01.3 Bridge: Intel Corporation 82371AB/EB/MB PIIX4 ACPI (rev 03)</span><span class="line output">00:02.0 VGA compatible controller: Cirrus Logic GD 5446</span><span class="line output">00:03.0 Ethernet controller: Red Hat, Inc Virtio network device</span><span class="line output">00:04.0 SCSI storage controller: Red Hat, Inc Virtio block device</span><span class="line output">00:05.0 Unclassified device [00ff]: Red Hat, Inc Virtio memory balloon</span><span class="line output">00:06.0 Unclassified device [00ff]: Red Hat, Inc Virtio RNG</span></pre></td></tr></table></figure>
+<h3 id="lsscsi"><a href="#lsscsi" class="headerlink" title="lsscsi"></a>lsscsi</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">lsscsi</span></span><span class="line output">[1:0:0:0]    <span class="built_in">cd</span>/dvd  QEMU     QEMU DVD-ROM     2.5+  /dev/sr0</span></pre></td></tr></table></figure>
+<h3 id="lsblk"><a href="#lsblk" class="headerlink" title="lsblk"></a>lsblk</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">lsblk</span></span><span class="line output">NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><span class="line output">sr0     11:0    1 1024M  0 rom</span><span class="line output">vda    252:0    0   20G  0 disk</span><span class="line output">└─vda1 252:1    0   20G  0 part /</span></pre></td></tr></table></figure>
+<h3 id="df-H"><a href="#df-H" class="headerlink" title="df -H"></a>df -H</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">df</span> -H</span><span class="line output">Filesystem      Size  Used Avail Use% Mounted on</span><span class="line output">udev            222M     0  222M   0% /dev</span><span class="line output">tmpfs            51M  1.9M   49M   4% /run</span><span class="line output">/dev/vda1        22G  7.7G   13G  39% /</span><span class="line output">tmpfs           253M     0  253M   0% /dev/shm</span><span class="line output">tmpfs           5.3M     0  5.3M   0% /run/lock</span><span class="line output">tmpfs           253M     0  253M   0% /sys/fs/cgroup</span><span class="line output">tmpfs            51M     0   51M   0% /run/user/1000</span><span class="line output">tmpfs            51M     0   51M   0% /run/user/0</span></pre></td></tr></table></figure>
+<h3 id="fdisk-l"><a href="#fdisk-l" class="headerlink" title="fdisk -l"></a>fdisk -l</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">fdisk</span> -l</span><span class="line output">Disk /dev/vda: 20 GiB, 21474836480 bytes, 41943040 sectors</span><span class="line output">Units: sectors of 1 * 512 = 512 bytes</span><span class="line output">Sector size (logical/physical): 512 bytes / 512 bytes</span><span class="line output">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><span class="line output">Disklabel <span class="built_in">type</span>: dos</span><span class="line output">Disk identifier: 0x28892bb4</span><span class="line output"></span><span class="line output">Device     Boot Start      End  Sectors Size Id Type</span><span class="line output">/dev/vda1  *     2048 41942917 41940870  20G 83 Linux</span></pre></td></tr></table></figure>
+<h3 id="free-m"><a href="#free-m" class="headerlink" title="free -m"></a>free -m</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">free</span> -m</span><span class="line output">              total        used        free      shared  buff/cache   available</span><span class="line output">Mem:            481         208          84           1         188         252</span><span class="line output">Swap:             0           0           0</span></pre></td></tr></table></figure>
+<h3 id="dmidecode"><a href="#dmidecode" class="headerlink" title="dmidecode"></a>dmidecode</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">dmidecode</span> -t processor</span><span class="line output"><span class="comment"># dmidecode 3.1</span></span><span class="line output">Getting SMBIOS data from sysfs.</span><span class="line output">SMBIOS 2.8 present.</span><span class="line output"></span><span class="line output">Handle 0x0400, DMI <span class="built_in">type</span> 4, 42 bytes</span><span class="line output">Processor Information</span><span class="line output">        Socket Designation: CPU 0</span><span class="line output">        Type: Central Processor</span><span class="line output">        Family: Other</span><span class="line output">        Manufacturer: QEMU</span><span class="line output">        ID: C1 06 03 00 FF FB 8B 07</span><span class="line output">        Version: pc-i440fx-2.11</span><span class="line output">        Voltage: Unknown</span><span class="line output">        External Clock: Unknown</span><span class="line output">        Max Speed: 2000 MHz</span><span class="line output">        Current Speed: 2000 MHz</span><span class="line output">        Status: Populated, Enabled</span><span class="line output">        Upgrade: Other</span><span class="line output">        L1 Cache Handle: Not Provided</span><span class="line output">        L2 Cache Handle: Not Provided</span><span class="line output">        L3 Cache Handle: Not Provided</span><span class="line output">        Serial Number: Not Specified</span><span class="line output">        Asset Tag: Not Specified</span><span class="line output">        Part Number: Not Specified</span><span class="line output">        Core Count: 1</span><span class="line output">        Core Enabled: 1</span><span class="line output">        Thread Count: 1</span><span class="line output">        Characteristics: None</span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">dmidecode</span> -t memory</span><span class="line output"><span class="comment"># dmidecode 3.1</span></span><span class="line output">Getting SMBIOS data from sysfs.</span><span class="line output">SMBIOS 2.8 present.</span><span class="line output"></span><span class="line output">Handle 0x1000, DMI <span class="built_in">type</span> 16, 23 bytes</span><span class="line output">Physical Memory Array</span><span class="line output">        Location: Other</span><span class="line output">        Use: System Memory</span><span class="line output">        Error Correction Type: Multi-bit ECC</span><span class="line output">        Maximum Capacity: 512 MB</span><span class="line output">        Error Information Handle: Not Provided</span><span class="line output">        Number Of Devices: 1</span><span class="line output"></span><span class="line output">Handle 0x1100, DMI <span class="built_in">type</span> 17, 40 bytes</span><span class="line output">Memory Device</span><span class="line output">        Array Handle: 0x1000</span><span class="line output">        Error Information Handle: Not Provided</span><span class="line output">        Total Width: Unknown</span><span class="line output">        Data Width: Unknown</span><span class="line output">        Size: 512 MB</span><span class="line output">        Form Factor: DIMM</span><span class="line output">        Set: None</span><span class="line output">        Locator: DIMM 0</span><span class="line output">        Bank Locator: Not Specified</span><span class="line output">        Type: RAM</span><span class="line output">        Type Detail: Other</span><span class="line output">        Speed: Unknown</span><span class="line output">        Manufacturer: QEMU</span><span class="line output">        Serial Number: Not Specified</span><span class="line output">        Asset Tag: Not Specified</span><span class="line output">        Part Number: Not Specified</span><span class="line output">        Rank: Unknown</span><span class="line output">        Configured Clock Speed: Unknown</span><span class="line output">        Minimum Voltage: Unknown</span><span class="line output">        Maximum Voltage: Unknown</span><span class="line output">        Configured Voltage: Unknown</span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">dmidecode</span> -t bios</span><span class="line output"><span class="comment"># dmidecode 3.1</span></span><span class="line output">Getting SMBIOS data from sysfs.</span><span class="line output">SMBIOS 2.8 present.</span><span class="line output"></span><span class="line output">Handle 0x0000, DMI <span class="built_in">type</span> 0, 24 bytes</span><span class="line output">BIOS Information</span><span class="line output">        Vendor: SeaBIOS</span><span class="line output">        Version: rel-1.11.0-0-g63451fca13-prebuilt.qemu-project.org</span><span class="line output">        Release Date: 04/01/2014</span><span class="line output">        Address: 0xE8000</span><span class="line output">        Runtime Size: 96 kB</span><span class="line output">        ROM Size: 64 kB</span><span class="line output">        Characteristics:</span><span class="line output">                BIOS characteristics not supported</span><span class="line output">                Targeted content distribution is supported</span><span class="line output">        BIOS Revision: 0.0</span></pre></td></tr></table></figure>
+<h3 id="cat-proc-info"><a href="#cat-proc-info" class="headerlink" title="cat /proc/*info"></a>cat /proc/*info</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cat</span> /proc/cpuinfo</span><span class="line output">processor       : 0</span><span class="line output">vendor_id       : GenuineIntel</span><span class="line output">cpu family      : 6</span><span class="line output">model           : 60</span><span class="line output">model name      : Virtual CPU 714389bda930</span><span class="line output">stepping        : 1</span><span class="line output">microcode       : 0x1</span><span class="line output">cpu MHz         : 2399.996</span><span class="line output">cache size      : 16384 KB</span><span class="line output">physical id     : 0</span><span class="line output">siblings        : 1</span><span class="line output">core id         : 0</span><span class="line output">cpu cores       : 1</span><span class="line output">apicid          : 0</span><span class="line output">initial apicid  : 0</span><span class="line output">fpu             : yes</span><span class="line output">fpu_exception   : yes</span><span class="line output">cpuid level     : 13</span><span class="line output">wp              : yes</span><span class="line output">flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx rdtscp lm constant_tsc rep_good nopl xtopology cpuid pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm invpcid_single pti fsgsbase bmi1 avx2 smep bmi2 erms invpcid xsaveopt arat</span><span class="line output">bugs            : cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass</span><span class="line output">bogomips        : 4799.99</span><span class="line output">clflush size    : 64</span><span class="line output">cache_alignment : 64</span><span class="line output">address sizes   : 40 bits physical, 48 bits virtual</span><span class="line output">power management:</span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cat</span> /proc/meminfo</span><span class="line output">MemTotal:         492952 kB</span><span class="line output">MemFree:           80048 kB</span><span class="line output">MemAvailable:     258908 kB</span><span class="line output">Buffers:           13988 kB</span><span class="line output">Cached:           153836 kB</span><span class="line output">SwapCached:            0 kB</span><span class="line output">Active:           284324 kB</span><span class="line output">Inactive:          30576 kB</span><span class="line output">Active(anon):     155100 kB</span><span class="line output">Inactive(anon):      148 kB</span><span class="line output">Active(file):     129224 kB</span><span class="line output">Inactive(file):    30428 kB</span><span class="line output">Unevictable:       12164 kB</span><span class="line output">Mlocked:           12164 kB</span><span class="line output">SwapTotal:             0 kB</span><span class="line output">SwapFree:              0 kB</span><span class="line output">Dirty:                12 kB</span><span class="line output">Writeback:             0 kB</span><span class="line output">AnonPages:        159260 kB</span><span class="line output">Mapped:            31708 kB</span><span class="line output">Shmem:              1860 kB</span><span class="line output">Slab:              57180 kB</span><span class="line output">SReclaimable:      31344 kB</span><span class="line output">SUnreclaim:        25836 kB</span><span class="line output">KernelStack:        2176 kB</span><span class="line output">PageTables:         6564 kB</span><span class="line output">NFS_Unstable:          0 kB</span><span class="line output">Bounce:                0 kB</span><span class="line output">WritebackTmp:          0 kB</span><span class="line output">CommitLimit:      246476 kB</span><span class="line output">Committed_AS:     606604 kB</span><span class="line output">VmallocTotal:   34359738367 kB</span><span class="line output">VmallocUsed:           0 kB</span><span class="line output">VmallocChunk:          0 kB</span><span class="line output">HardwareCorrupted:     0 kB</span><span class="line output">AnonHugePages:         0 kB</span><span class="line output">ShmemHugePages:        0 kB</span><span class="line output">ShmemPmdMapped:        0 kB</span><span class="line output">CmaTotal:              0 kB</span><span class="line output">CmaFree:               0 kB</span><span class="line output">HugePages_Total:       0</span><span class="line output">HugePages_Free:        0</span><span class="line output">HugePages_Rsvd:        0</span><span class="line output">HugePages_Surp:        0</span><span class="line output">Hugepagesize:       2048 kB</span><span class="line output">DirectMap4k:      229232 kB</span><span class="line output">DirectMap2M:      294912 kB</span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cat</span> /proc/version</span><span class="line output">Linux version 4.15.0-22-generic (buildd@lgw01-amd64-013) (gcc version 7.3.0 (Ubuntu 7.3.0-16ubuntu3)) <span class="comment">#24-Ubuntu SMP Wed May 16 12:15:17 UTC 2018</span></span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cat</span> /proc/scsi/scsi</span><span class="line output">Attached devices:</span><span class="line output">Host: scsi1 Channel: 00 Id: 00 Lun: 00</span><span class="line output">  Vendor: QEMU     Model: QEMU DVD-ROM     Rev: 2.5+</span><span class="line output">  Type:   CD-ROM                           ANSI  SCSI revision: 05</span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cat</span> /proc/partitions</span><span class="line output">major minor  <span class="comment">#blocks  name</span></span><span class="line output"></span><span class="line output">  11        0    1048575 sr0</span><span class="line output"> 252        0   20971520 vda</span><span class="line output"> 252        1   20970435 vda1</span></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2018/06/10/linux-commands-ps.html" rel="next" title="linux 常用命令之 ps">
+                <i class="fa fa-chevron-left"></i>
+                linux 常用命令之 ps
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2018/06/14/linux-commands-chmod.html" rel="prev" title="linux 常用命令之 chmod 设置特殊权限">
+                <i class="fa fa-chevron-right"></i>
+                linux 常用命令之 chmod 设置特殊权限
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-查看硬件信息的命令"><span class="nav-number">1.</span> <span class="nav-text">Linux 查看硬件信息的命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lshw-short"><span class="nav-number">1.1.</span> <span class="nav-text">lshw -short</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hwinfo-short"><span class="nav-number">1.2.</span> <span class="nav-text">hwinfo --short</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lscpu"><span class="nav-number">1.3.</span> <span class="nav-text">lscpu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lspci"><span class="nav-number">1.4.</span> <span class="nav-text">lspci</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lsscsi"><span class="nav-number">1.5.</span> <span class="nav-text">lsscsi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lsblk"><span class="nav-number">1.6.</span> <span class="nav-text">lsblk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#df-H"><span class="nav-number">1.7.</span> <span class="nav-text">df -H</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fdisk-l"><span class="nav-number">1.8.</span> <span class="nav-text">fdisk -l</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#free-m"><span class="nav-number">1.9.</span> <span class="nav-text">free -m</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dmidecode"><span class="nav-number">1.10.</span> <span class="nav-text">dmidecode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cat-proc-info"><span class="nav-number">1.11.</span> <span class="nav-text">cat /proc/*info</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

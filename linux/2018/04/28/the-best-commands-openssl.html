@@ -1,0 +1,706 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="tldr openssl tldr opensslOpenSSL cryptographic toolkit.- Generate a 2048bit RSA private key and save it to a file:      openssl genrsa -out filename.key 2048- Generate a certificate signing request to">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令行神器之 openssl 篇">
+<meta property="og:url" content="http://www.4e00.com/linux/2018/04/28/the-best-commands-openssl.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="tldr openssl tldr opensslOpenSSL cryptographic toolkit.- Generate a 2048bit RSA private key and save it to a file:      openssl genrsa -out filename.key 2048- Generate a certificate signing request to">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/web/ssl-handshake-rsa.jpg">
+<meta property="og:image" content="http://www.4e00.com/blog/img/web/https-ssl-stream.png">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.131Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="命令行神器之 openssl 篇">
+<meta name="twitter:description" content="tldr openssl tldr opensslOpenSSL cryptographic toolkit.- Generate a 2048bit RSA private key and save it to a file:      openssl genrsa -out filename.key 2048- Generate a certificate signing request to">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/web/ssl-handshake-rsa.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2018/04/28/the-best-commands-openssl.html">
+
+  <title> 命令行神器之 openssl 篇 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                命令行神器之 openssl 篇
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-04-28T20:47:55+08:00" content="2018-04-28">
+              2018-04-28
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="tldr-openssl"><a href="#tldr-openssl" class="headerlink" title="tldr openssl"></a>tldr openssl</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tldr</span> openssl</span><span class="line output">OpenSSL cryptographic toolkit.</span><span class="line output"></span><span class="line output">- Generate a 2048bit RSA private key and save it to a file:</span><span class="line">      openssl genrsa -out filename.key 2048</span><span class="line output"></span><span class="line output">- Generate a certificate signing request to be sent to a certificate authority:</span><span class="line">      openssl req -new -sha256 -key filename.key -out filename.csr</span><span class="line output"></span><span class="line output">- Generate a self-signed certificate from a certificate signing request valid <span class="keyword">for</span> some number of days:</span><span class="line">      openssl x509 -req -days days -<span class="keyword">in</span> filename.csr -signkey filename.key -out filename.crt</span><span class="line output"></span><span class="line output">- Display certificate information:</span><span class="line">      openssl x509 -<span class="keyword">in</span> filename.crt -noout -text</span><span class="line output"></span><span class="line output">- Display the start and expiry dates <span class="keyword">for</span> a domain certificate:</span><span class="line">      openssl s_client -connect host:port 2&gt;/dev/null | openssl x509 -noout -dates</span><span class="line output"></span><span class="line output">- Display the certificate presented by an SSL/TLS server:</span><span class="line">      openssl s_client -connect host:port &lt;/dev/null</span><span class="line output"></span><span class="line output">- Display the complete certificate chain of an HTTPS server:</span><span class="line">      openssl s_client -connect host:443 -showcerts &lt;/dev/null</span></pre></td></tr></table></figure>
+<h2 id="OpenSSL"><a href="#OpenSSL" class="headerlink" title="OpenSSL"></a>OpenSSL</h2><p>OpenSSL 是一个开放源代码的软件库包，其主要库是以 C 语言所写成，实现了基本的加密功能，实现了 SSL 与 TLS 协议。</p>
+<h3 id="OpenSSL-功能组成"><a href="#OpenSSL-功能组成" class="headerlink" title="OpenSSL 功能组成"></a>OpenSSL 功能组成</h3><p>OpenSSL 整个软件包大概可以分成三个主要的功能部分：</p>
+<ol>
+<li>libcryto，这是一个具有通用功能的加密库，里面实现了众多的加密库。</li>
+<li>libssl，这个是实现ssl机制的，它是用于实现TLS/SSL的功能。</li>
+<li>openssl，是个多功能命令行工具，它可以实现加密解密，甚至还可以当CA来用，可以让你创建证书、吊销证书。</li>
+</ol>
+<h3 id="OpenSSL-基本功能"><a href="#OpenSSL-基本功能" class="headerlink" title="OpenSSL 基本功能"></a>OpenSSL 基本功能</h3><ol>
+<li>Creation and management of private keys, public keys and parameters</li>
+<li>Public key cryptographic operations</li>
+<li>Creation of X.509 certificates, CSRs and CRLs</li>
+<li>Calculation of Message Digests</li>
+<li>Encryption and Decryption with Ciphers</li>
+<li>SSL/TLS Client and Server Tests</li>
+<li>Handling of S/MIME signed or encrypted mail</li>
+<li>Time Stamp requests, generation and verification</li>
+</ol>
+<h3 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h3><p>OpenSSL 一共提供了8种对称加密算法，其中7种是分组加密算法，仅有的一种流加密算法是 RC4。</p>
+<p>这7种分组加密算法分别是：</p>
+<ol>
+<li>AES</li>
+<li>DES</li>
+<li>Blowfish</li>
+<li>CAST</li>
+<li>IDEA</li>
+<li>RC2</li>
+<li>RC5</li>
+</ol>
+<p>都支持电子密码本模式（ECB）、加密分组链接模式（CBC）、加密反馈模式（CFB）和输出反馈模式（OFB）四种常用的分组密码加密模式。其中，AES使用的加密反馈模式（CFB）和输出反馈模式（OFB）分组长度是128位，其它算法使用的则是64位。事实上，DES算法里面不仅仅是常用的DES算法，还支持三个密钥和两个密钥3DES算法。</p>
+<h3 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h3><p>OpenSSL 一共实现了4种非对称加密算法，包括DH算法、RSA算法、DSA算法和椭圆曲线算法（EC）。DH 算法一般用于密钥交换。RSA 算法既可以用于密钥交换，也可以用于数字签名，当然，如果你能够忍受其缓慢的速度，那么也可以用于数据加密。DSA 算法则一般只用于数字签名。</p>
+<h3 id="信息摘要"><a href="#信息摘要" class="headerlink" title="信息摘要"></a>信息摘要</h3><p>OpenSSL实现了5种信息摘要算法，分别是MD2、MD5、MDC2、SHA（SHA1）和RIPEMD。SHA算法事实上包括了SHA和SHA1两种信息摘要算法。此外，OpenSSL还实现了DSS标准中规定的两种信息摘要算法DSS和DSS1。</p>
+<a id="more"></a>
+<h2 id="SSL"><a href="#SSL" class="headerlink" title="SSL"></a>SSL</h2><p>SSL 是Secure Sockets Layer（安全套接层协议）的缩写，可以在Internet上提供秘密性传输。</p>
+<p>SSL包含记录层（Record Layer）和传输层，记录层协议确定传输层数据的封装格式。传输层安全协议使用<code>X.509</code>认证，之后利用非对称加密演算来对通信方做身份认证，之后交换对称密钥作为会谈密钥（Session key）。这个会谈密钥是用来将通信两方交换的数据做加密，保证两个应用间通信的保密性和可靠性，使客户与服务器应用之间的通信不被攻击者窃听。</p>
+<h2 id="TLS"><a href="#TLS" class="headerlink" title="TLS"></a>TLS</h2><p>传输层安全性协议（英语：Transport Layer Security，缩写作 TLS），及其前身安全套接层（Secure Sockets Layer，缩写作 SSL）是一种安全协议，目的是为互联网通信，提供安全及数据完整性保障。</p>
+<p>TLS 协议的优势是与高层的应用层协议（如HTTP、FTP、Telnet等）无耦合，应用层协议能透明地运行在 TLS 协议之上，由 TLS 协议进行创建加密通道需要的协商和认证，应用层协议传送的数据在通过 TLS 协议时都会被加密，从而保证通信的私密性。</p>
+<p>一旦客户端和服务器都同意使用 TLS 协议，他们通过使用一个握手过程协商出一个有状态的连接以传输数据。通过握手，客户端和服务器协商各种参数用于创建安全连接：</p>
+<ol>
+<li>当客户端连接到支持 TLS 协议的服务器要求创建安全连接，并发送客户端支持的加密算法和哈希算法，以及用于生成密钥的随机数，握手开始。</li>
+<li>服务器从该列表中决定加密和散列函数，并生成服务器端的随机数，通知客户端，并且一起发回服务器数字证书(X.509 数字证书)，此证书通常包含服务器的名称、受信任的证书颁发 CA 机构和<strong>服务器的公钥</strong>。</li>
+<li>客户端通过<strong>CA 机构的公钥</strong>(已默认安装在浏览器中)，确认服务器证书的有效性。同时客户端使用服务器的公钥加密随机生成的密钥，并将其发送到服务器。</li>
+<li>服务器收到客户端公钥加密的密钥，使用自己的私钥解密，获得密钥。</li>
+<li>利用第1个客户端生成的随机数，第2个服务端的随机数，加上最后一个客户端生成的密钥，双方通过算法生成用于加密和解密的对称密钥。</li>
+</ol>
+<p>这就是 TLS 协议的握手，握手完毕后的连接是安全的，直到连接（被）关闭。如果上述任何一个步骤失败，TLS 握手过程就会失败，并且断开所有的连接。</p>
+<h3 id="SSL-RSA-handshake"><a href="#SSL-RSA-handshake" class="headerlink" title="SSL RSA handshake"></a>SSL RSA handshake</h3><img src="/blog/img/web/ssl-handshake-rsa.jpg" class="image-lg" title="[ssl handshake rsa]">
+<h3 id="wireshark-SSL-stream"><a href="#wireshark-SSL-stream" class="headerlink" title="wireshark SSL stream"></a>wireshark SSL stream</h3><img src="/blog/img/web/https-ssl-stream.png" class="image-full" title="[https-ssl-stream.png]">
+<h3 id="TLS包含三个基本阶段"><a href="#TLS包含三个基本阶段" class="headerlink" title="TLS包含三个基本阶段"></a>TLS包含三个基本阶段</h3><ol>
+<li>对等协商支持的密钥算法</li>
+<li>基于非对称密钥的信息传输加密和身份认证、基于PKI证书的身份认证</li>
+<li>基于对称密钥的数据传输保密</li>
+</ol>
+<p>在第一阶段，客户端与服务器协商所用密码算法，当前广泛实现的算法选择如下：</p>
+<ol>
+<li>公钥私钥非对称密钥保密系统：RSA、Diffie-Hellman、DSA</li>
+<li>对称密钥保密系统：RC2、RC4、IDEA、DES、Triple DES、AES以及Camellia</li>
+<li>单向散列函数：MD5、SHA1以及SHA256</li>
+</ol>
+<p>TLS/SSL有多样的安全保护措施：</p>
+<ol>
+<li>所有的记录层数据均被编号，用于消息验证码校验</li>
+</ol>
+<h2 id="OpenSSL-特性"><a href="#OpenSSL-特性" class="headerlink" title="OpenSSL 特性"></a>OpenSSL 特性</h2><h3 id="数据保密性"><a href="#数据保密性" class="headerlink" title="数据保密性"></a>数据保密性</h3><p>信息加密就是把明码的输入文件用加密算法转换成加密的文件以实现数据的保密。加密的过程需要用到密钥来加密数据然后再解密。没有了密钥，就无法解开加密的数据。数据加密之后，只有密钥要用一个安全的方法传送。加密过的数据可以公开地传送。</p>
+<h3 id="数据完整性"><a href="#数据完整性" class="headerlink" title="数据完整性"></a>数据完整性</h3><p>加密也能保证数据的一致性。例如：消息验证码（MAC），能够校验用户提供的加密信息，接收者可以用MAC来校验加密数据，保证数据在传输过程中没有被篡改过。</p>
+<h3 id="安全验证"><a href="#安全验证" class="headerlink" title="安全验证"></a>安全验证</h3><p>加密的另外一个用途是用来作为个人的标识，用户的密钥可以作为他的安全验证的标识。SSL是利用公开密钥的加密技术（RSA）来作为用户端与服务器端在传送机密资料时的加密通讯协定。<br>OpenSSL 包含一个命令行工具用来完成 OpenSSL 库中的所有功能，更好的是，它可能已经安装到你的系统中了。<br>OpenSSL 是一个强大的安全套接字层密码库，Apache 使用它加密 HTTPS，OpenSSH 使用它加密 SSH，但是，你不应该只将其作为一个库来使用，它还是一个多用途的、跨平台的密码工具。</p>
+<h2 id="OpenSSL-SYNOPSIS"><a href="#OpenSSL-SYNOPSIS" class="headerlink" title="OpenSSL SYNOPSIS"></a>OpenSSL SYNOPSIS</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openssl command [ command_opts ] [ command_args ]</span><span class="line">openssl [ list-standard-commands | list-message-digest-commands | list-cipher-commands | list-cipher-algorithms | list-message-digest-algorithms | list-public-key-algorithms]</span></pre></td></tr></table></figure>
+<h3 id="openssl-commands-list"><a href="#openssl-commands-list" class="headerlink" title="openssl commands list"></a>openssl commands list</h3><p>在新版本<code>openssl-1.1.0</code>版本中新加了一个子命令<a href="https://www.openssl.org/docs/man1.1.0/apps/list.html" target="_blank" rel="noopener">list</a>，可以显示所有子命令，以及加密算法和哈希算法。在<code>1.0.2</code>版本中没有这个子命令。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> version</span><span class="line output">OpenSSL 1.0.2g  1 Mar 2016</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> list</span><span class="line output">openssl:Error: <span class="string">'list'</span> is an invalid <span class="built_in">command</span>.</span><span class="line output"></span><span class="line output">Standard commands</span><span class="line output">asn1parse         ca                certhash          ciphers</span><span class="line output">crl               crl2pkcs7         dgst              dh</span><span class="line output">dhparam           dsa               dsaparam          ec</span><span class="line output">ecparam           enc               engine            errstr</span><span class="line output">gendh             gendsa            genpkey           genrsa</span><span class="line output">nseq              ocsp              passwd            pkcs12</span><span class="line output">pkcs7             pkcs8             pkey              pkeyparam</span><span class="line output">pkeyutl           prime             rand              req</span><span class="line output">rsa               rsautl            s_client          s_server</span><span class="line output">s_time            sess_id           smime             speed</span><span class="line output">spkac             ts                verify            version</span><span class="line output">x509</span><span class="line output"></span><span class="line output">Message Digest commands (see the `dgst` <span class="built_in">command</span> <span class="keyword">for</span> more details)</span><span class="line output">gost-mac          md4               md5               md_gost94</span><span class="line output">ripemd160         sha               sha1              sha224</span><span class="line output">sha256            sha384            sha512            streebog256</span><span class="line output">streebog512       whirlpool</span><span class="line output"></span><span class="line output">Cipher commands (see the `enc` <span class="built_in">command</span> <span class="keyword">for</span> more details)</span><span class="line output">aes-128-cbc       aes-128-ecb       aes-192-cbc       aes-192-ecb</span><span class="line output">aes-256-cbc       aes-256-ecb       base64            bf</span><span class="line output">bf-cbc            bf-cfb            bf-ecb            bf-ofb</span><span class="line output">camellia-128-cbc  camellia-128-ecb  camellia-192-cbc  camellia-192-ecb</span><span class="line output">camellia-256-cbc  camellia-256-ecb  cast              cast-cbc</span><span class="line output">cast5-cbc         cast5-cfb         cast5-ecb         cast5-ofb</span><span class="line output">chacha            des               des-cbc           des-cfb</span><span class="line output">des-ecb           des-ede           des-ede-cbc       des-ede-cfb</span><span class="line output">des-ede-ofb       des-ede3          des-ede3-cbc      des-ede3-cfb</span><span class="line output">des-ede3-ofb      des-ofb           des3              desx</span><span class="line output">rc2               rc2-40-cbc        rc2-64-cbc        rc2-cbc</span><span class="line output">rc2-cfb           rc2-ecb           rc2-ofb           rc4</span><span class="line output">rc4-40</span></pre></td></tr></table></figure>
+<h2 id="OpenSSL-genrsa-创建密钥和-OpenSSL-req-生成-CSR-请求证书"><a href="#OpenSSL-genrsa-创建密钥和-OpenSSL-req-生成-CSR-请求证书" class="headerlink" title="OpenSSL genrsa 创建密钥和 OpenSSL req 生成 CSR 请求证书"></a>OpenSSL genrsa 创建密钥和 OpenSSL req 生成 CSR 请求证书</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mkdir</span> -p ca</span></pre></td></tr></table></figure>
+<h3 id="创建私钥"><a href="#创建私钥" class="headerlink" title="创建私钥"></a>创建私钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> genrsa -out ca/key.pem 2048</span><span class="line output">Generating RSA private key, 2048 bit long modulus</span><span class="line output">..............+++</span><span class="line output">..................+++</span><span class="line output">e is 65537 (0x10001)</span></pre></td></tr></table></figure>
+<h3 id="创建证书请求"><a href="#创建证书请求" class="headerlink" title="创建证书请求"></a>创建证书请求</h3><p>最后密码输入时可以不用密码，直接回车。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> req -new -out ca/req.csr -key ca/key.pem</span><span class="line output">You are about to be asked to enter information that will be incorporated</span><span class="line output">into your certificate request.</span><span class="line output">What you are about to enter is what is called a Distinguished Name or a DN.</span><span class="line output">There are quite a few fields but you can leave some blank</span><span class="line output">For some fields there will be a default value,</span><span class="line output">If you enter <span class="string">'.'</span>, the field will be left blank.</span><span class="line output">-----</span><span class="line output">Country Name (2 letter code) []:CN</span><span class="line output">State or Province Name (full name) []:SH</span><span class="line output">Locality Name (eg, city) []:SH</span><span class="line output">Organization Name (eg, company) []:TEST</span><span class="line output">Organizational Unit Name (eg, section) []:YU</span><span class="line output">Common Name (eg, fully qualified host name) []:example.com</span><span class="line output">Email Address []:test.yu@example.com</span><span class="line output"></span><span class="line output">Please enter the following <span class="string">'extra'</span> attributes</span><span class="line output">to be sent with your certificate request</span><span class="line output">A challenge password []:</span></pre></td></tr></table></figure>
+<h3 id="自签署证书"><a href="#自签署证书" class="headerlink" title="自签署证书"></a>自签署证书</h3><p>如果是在公网上使用的证书，一般是将<code>req.csr</code>交给权威的 CA 机构进行认证，并由 CA 机构发放<code>cert.pem</code>给申请一方。另外如果是内部使用则可以采用以下这种自签署证书的方式。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> x509 -req -<span class="keyword">in</span> ca/req.csr -out ca/cert.pem -signkey ca/key.pem -days 3650</span><span class="line output">Signature ok</span><span class="line output">subject=/C=CN/ST=SH/L=SH/O=TEST/OU=YU/CN=example.com/emailAddress=test.yu@example.com</span><span class="line output">Getting Private key</span></pre></td></tr></table></figure>
+<h3 id="一步生成私钥和公用证书"><a href="#一步生成私钥和公用证书" class="headerlink" title="一步生成私钥和公用证书"></a>一步生成私钥和公用证书</h3><p>上面的几个命令可以用下面的命令一步完成，导出自签名证书<code>cert.pem</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> req -newkey rsa:2048 -nodes -keyout ca/key.pem -x509 -days 365 -out ca/cert.pem</span></pre></td></tr></table></figure>
+<h3 id="将密钥和证书组合在-PKCS-12-P12-文件中"><a href="#将密钥和证书组合在-PKCS-12-P12-文件中" class="headerlink" title="将密钥和证书组合在 PKCS#12 (P12)文件中"></a>将密钥和证书组合在 PKCS#12 (P12)文件中</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> pkcs12 -<span class="built_in">export</span> -<span class="keyword">in</span> ca/cert.pem -inkey ca/key.pem -out ca/cert.p12</span></pre></td></tr></table></figure>
+<h3 id="导出-p12格式客户端证书"><a href="#导出-p12格式客户端证书" class="headerlink" title="导出.p12格式客户端证书"></a>导出.p12格式客户端证书</h3><p>下面只导出客户端证书，因为前面生成请求证书时没有加密码，下面输入密码时直接回车即可。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> pkcs12 -<span class="built_in">export</span> -clcerts -<span class="keyword">in</span> ca/cert.pem -inkey ca/key.pem -out ca/cacert.p12</span><span class="line output">Enter Export Password:</span><span class="line output">Verifying - Enter Export Password:</span></pre></td></tr></table></figure>
+<h3 id="检查已创建的CA证书"><a href="#检查已创建的CA证书" class="headerlink" title="检查已创建的CA证书"></a>检查已创建的CA证书</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> x509 -text -noout -<span class="keyword">in</span> ca/cert.pem</span></pre></td></tr></table></figure>
+<h3 id="验证-p12-文件"><a href="#验证-p12-文件" class="headerlink" title="验证 p12 文件"></a>验证 p12 文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> pkcs12 -noout -info -<span class="keyword">in</span> ca/cert.p12</span></pre></td></tr></table></figure>
+<h2 id="OpenSSL-pkcs-命令"><a href="#OpenSSL-pkcs-命令" class="headerlink" title="OpenSSL pkcs 命令"></a>OpenSSL pkcs 命令</h2><h3 id="pkcs-12-文件"><a href="#pkcs-12-文件" class="headerlink" title="pkcs#12 文件"></a>pkcs#12 文件</h3><p>在密码学中，<a href="https://tools.ietf.org/html/rfc7292" target="_blank" rel="noopener">PKCS #12</a>定义了一种存档文件格式，用于实现存储许多加密对象在一个单独的文件中。通常用它来打包一个私钥及有关的<code>X.509</code>证书，或者打包信任链的全部项目。</p>
+<ol>
+<li>PKCS #12 是 RSA 实验室发布的公钥密码学标准之中的一员</li>
+<li>PKCS #12 文件扩展名为<code>.p12</code>或者<code>.pfx</code></li>
+<li>PKCS #12 是微软 PFX 文件的替代者</li>
+<li>PKCS #12 文件通常使用 OpenSSL 来创建，OpenSSL 只支持在命令行界面使用单个私钥</li>
+<li>这些文件可以通过使用 OpenSSL <code>pkcs12</code> 命令被创建、解析并读出</li>
+</ol>
+<h3 id="OpenSSL-pkcs12-命令参数"><a href="#OpenSSL-pkcs12-命令参数" class="headerlink" title="OpenSSL pkcs12 命令参数"></a>OpenSSL pkcs12 命令参数</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> pkcs12 -</span><span class="line">Usage: pkcs12 [options]</span><span class="line">where options are</span><span class="line">-export       output PKCS12 file</span><span class="line">-chain        add certificate chain</span><span class="line">-inkey file   private key if not infile</span><span class="line">-certfile f   add all certs in f</span><span class="line">-CApath arg   - PEM format directory of CA&apos;s</span><span class="line">-CAfile arg   - PEM format file of CA&apos;s</span><span class="line">-name &quot;name&quot;  use name as friendly name</span><span class="line">-caname &quot;nm&quot;  use nm as CA friendly name (can be used more than once).</span><span class="line">-in  infile   input filename</span><span class="line">-out outfile  output filename</span><span class="line">-noout        don&apos;t output anything, just verify.</span><span class="line">-nomacver     don&apos;t verify MAC.</span><span class="line">-nocerts      don&apos;t output certificates.</span><span class="line">-clcerts      only output client certificates.</span><span class="line">-cacerts      only output CA certificates.</span><span class="line">-nokeys       don&apos;t output private keys.</span><span class="line">-info         give info about PKCS#12 structure.</span><span class="line">-des          encrypt private keys with DES</span><span class="line">-des3         encrypt private keys with triple DES (default)</span><span class="line">-aes128, -aes192, -aes256</span><span class="line">              encrypt PEM output with cbc aes</span><span class="line">-camellia128, -camellia192, -camellia256</span><span class="line">              encrypt PEM output with cbc camellia</span><span class="line">-nodes        don&apos;t encrypt private keys</span><span class="line">-noiter       don&apos;t use encryption iteration</span><span class="line">-nomaciter    don&apos;t use MAC iteration</span><span class="line">-maciter      use MAC iteration</span><span class="line">-nomac        don&apos;t generate MAC</span><span class="line">-twopass      separate MAC, encryption passwords</span><span class="line">-descert      encrypt PKCS#12 certificates with triple DES (default RC2-40)</span><span class="line">-certpbe alg  specify certificate PBE algorithm (default RC2-40)</span><span class="line">-keypbe alg   specify private key PBE algorithm (default 3DES)</span><span class="line">-macalg alg   digest algorithm used in MAC (default SHA1)</span><span class="line">-keyex        set MS key exchange type</span><span class="line">-keysig       set MS key signature type</span><span class="line">-password p   set import/export password source</span><span class="line">-passin p     input file pass phrase source</span><span class="line">-passout p    output file pass phrase source</span><span class="line">-engine e     use engine e, possibly a hardware device.</span><span class="line">-CSP name     Microsoft CSP name</span><span class="line">-LMK          Add local machine keyset attribute to private key</span></pre></td></tr></table></figure>
+<h3 id="OpenSSL-pkcs12-命令示例"><a href="#OpenSSL-pkcs12-命令示例" class="headerlink" title="OpenSSL pkcs12 命令示例"></a>OpenSSL pkcs12 命令示例</h3><p>更多详细说明和示例可参考<a href="https://www.openssl.org/docs/man1.1.0/apps/pkcs12.html" target="_blank" rel="noopener">官方文档</a>。</p>
+<h4 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> pkcs12 -<span class="keyword">in</span> ca/cert.p12 -out ca/out-cert.pem</span></pre></td></tr></table></figure>
+<h4 id="输出客户端证书"><a href="#输出客户端证书" class="headerlink" title="输出客户端证书"></a>输出客户端证书</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> pkcs12 -<span class="keyword">in</span> ca/cert.p12 -clcerts -out ca/cl-cert.pem</span></pre></td></tr></table></figure>
+<h4 id="输出不加密私钥文件"><a href="#输出不加密私钥文件" class="headerlink" title="输出不加密私钥文件"></a>输出不加密私钥文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> pkcs12 -<span class="keyword">in</span> ca/cert.p12 -out ca/nodes-cert.pem -nodes</span></pre></td></tr></table></figure>
+<h2 id="OpenSSL-s-client-和-s-server-命令"><a href="#OpenSSL-s-client-和-s-server-命令" class="headerlink" title="OpenSSL s_client 和 s_server 命令"></a>OpenSSL s_client 和 s_server 命令</h2><p>OpenSSL提供了简单的client和server工具，可以用来模拟SSL连接，做测试使用。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">usage: s_client args</span><span class="line"></span><span class="line"> -4            - Force IPv4</span><span class="line"> -6            - Force IPv6</span><span class="line"> -host host     - use -connect instead</span><span class="line"> -port port     - use -connect instead</span><span class="line"> -connect host:port - who to connect to (default is localhost:4433)</span><span class="line"> -proxy host:port - connect to http proxy</span><span class="line"> -verify arg   - turn on peer certificate verification</span><span class="line"> -cert arg     - certificate file to use, PEM format assumed</span><span class="line"> -certform arg - certificate format (PEM or DER) PEM default</span><span class="line"> -key arg      - Private key file to use, in cert file if</span><span class="line">                 not specified but cert file is.</span><span class="line"> -keyform arg  - key format (PEM or DER) PEM default</span><span class="line"> -pass arg     - private key file pass phrase source</span><span class="line"> -CApath arg   - PEM format directory of CA&apos;s</span><span class="line"> -CAfile arg   - PEM format file of CA&apos;s</span><span class="line"> -reconnect    - Drop and re-make the connection with the same Session-ID</span><span class="line"> -pause        - sleep(1) after each read(2) and write(2) system call</span><span class="line"> -showcerts    - show all certificates in the chain</span><span class="line"> -debug        - extra output</span><span class="line"> -msg          - Show protocol messages</span><span class="line"> -nbio_test    - more ssl protocol testing</span><span class="line"> -state        - print the &apos;ssl&apos; states</span><span class="line"> -nbio         - Run with non-blocking IO</span><span class="line"> -crlf         - convert LF from terminal into CRLF</span><span class="line"> -quiet        - no s_client output</span><span class="line"> -ign_eof      - ignore input eof (default when -quiet)</span><span class="line"> -no_ign_eof   - don&apos;t ignore input eof</span><span class="line"> -tls1_2       - just use TLSv1.2</span><span class="line"> -tls1_1       - just use TLSv1.1</span><span class="line"> -tls1         - just use TLSv1</span><span class="line"> -dtls1        - just use DTLSv1</span><span class="line"> -mtu          - set the link layer MTU</span><span class="line"> -no_tls1_2/-no_tls1_1/-no_tls1/-no_ssl3/-no_ssl2 - turn off that protocol</span><span class="line"> -bugs         - Switch on all SSL implementation bug workarounds</span><span class="line"> -cipher       - preferred cipher to use, use the &apos;openssl ciphers&apos;</span><span class="line">                 command to see what is available</span><span class="line"> -starttls prot - use the STARTTLS command before starting TLS</span><span class="line">                 for those protocols that support it, where</span><span class="line">                 &apos;prot&apos; defines which one to assume.  Currently,</span><span class="line">                 only &quot;smtp&quot;, &quot;lmtp&quot;, &quot;pop3&quot;, &quot;imap&quot;, &quot;ftp&quot; and &quot;xmpp&quot;</span><span class="line">                 are supported.</span><span class="line"> -engine id    - Initialise and use the specified engine</span><span class="line"> -sess_out arg - file to write SSL session to</span><span class="line"> -sess_in arg  - file to read SSL session from</span><span class="line"> -servername host  - Set TLS extension servername in ClientHello</span><span class="line"> -tlsextdebug      - hex dump of all TLS extensions received</span><span class="line"> -status           - request certificate status from server</span><span class="line"> -no_ticket        - disable use of RFC4507bis session tickets</span><span class="line"> -nextprotoneg arg - enable NPN extension, considering named protocols supported (comma-separated list)</span><span class="line"> -alpn arg         - enable ALPN extension, considering named protocols supported (comma-separated list)</span><span class="line"> -use_srtp profiles - Offer SRTP key management with a colon-separated profile list</span><span class="line"> -keymatexport label   - Export keying material using label</span><span class="line"> -keymatexportlen len  - Export len bytes of keying material (default 20)</span></pre></td></tr></table></figure>
+<h3 id="OpenSSL-查看服务端的根证书"><a href="#OpenSSL-查看服务端的根证书" class="headerlink" title="OpenSSL 查看服务端的根证书"></a>OpenSSL 查看服务端的根证书</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> s_client -showcerts -connect github.com:443</span></pre></td></tr></table></figure>
+<h3 id="OpenSSL-获取服务端根证书"><a href="#OpenSSL-获取服务端根证书" class="headerlink" title="OpenSSL 获取服务端根证书"></a>OpenSSL 获取服务端根证书</h3><p><code>.der</code>、<code>.cer</code>和<code>.crt</code>通常被用于二进制的<code>DER</code>文件格式。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> s_client -connect github.com:443 &lt;/dev/null 2&gt;/dev/null | openssl x509 -outform DER &gt; github.com.cer</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> s_client -connect github.com:443 &lt;/dev/null 2&gt;/dev/null | sed -ne <span class="string">'/-begin certificate-/,/-end certificate-/p'</span> &gt; github.com.pem</span></pre></td></tr></table></figure>
+<h3 id="验证服务端根证书"><a href="#验证服务端根证书" class="headerlink" title="验证服务端根证书"></a>验证服务端根证书</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> verify github.com.pem</span><span class="line output">github.com.pem: businessCategory = Private Organization, 1.3.6.1.4.1.311.60.2.1.3 = US, 1.3.6.1.4.1.311.60.2.1.2 = Delaware, serialNumber = 5157550, street = <span class="string">"88 Colin P Kelly, Jr Street"</span>, postalCode = 94107, C = US, ST = California, L = San Francisco, O = <span class="string">"GitHub, Inc."</span>, CN = github.com</span></pre></td></tr></table></figure>
+<h3 id="解码服务端根证书"><a href="#解码服务端根证书" class="headerlink" title="解码服务端根证书"></a>解码服务端根证书</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> x509 -text -<span class="keyword">in</span> github.com.pem</span><span class="line output">Certificate:</span><span class="line output">    Data:</span><span class="line output">        Version: 3 (0x2)</span><span class="line output">        Serial Number:</span><span class="line output">            0b:fd:b4:09:0a:d7:b5:e6:40:c3:0b:16:c9:52:9a:27</span><span class="line output">    Signature Algorithm: sha256WithRSAEncryption</span><span class="line output">        Issuer: C=US, O=DigiCert Inc, OU=www.digicert.com, CN=DigiCert SHA2 Extended Validation Server CA</span><span class="line output">        Validity</span><span class="line output">            Not Before: Mar 10 00:00:00 2016 GMT</span><span class="line output">            Not After : May 17 12:00:00 2018 GMT</span><span class="line output">        Subject: businessCategory=Private Organization/1.3.6.1.4.1.311.60.2.1.3=US/1.3.6.1.4.1.311.60.2.1.2=Delaware/serialNumber=5157550/street=88 Colin P Kelly, Jr Street/postalCode=94107, C=US, ST=California, L=San Francisco, O=GitHub, Inc., CN=github.com</span><span class="line output">        Subject Public Key Info:</span><span class="line output">            Public Key Algorithm: rsaEncryption</span><span class="line output">                Public-Key: (2048 bit)</span></pre></td></tr></table></figure>
+<h3 id="连接到远程服务器"><a href="#连接到远程服务器" class="headerlink" title="连接到远程服务器"></a>连接到远程服务器</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> s_client -connect www.github.com:443</span></pre></td></tr></table></figure>
+<h3 id="模拟的-HTTPS-服务"><a href="#模拟的-HTTPS-服务" class="headerlink" title="模拟的 HTTPS 服务"></a>模拟的 HTTPS 服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> openssl s_server -accept 443 -cert ca/cert.pem -key ca/key.pem -www</span><span class="line output">Using auto DH parameters</span><span class="line output">Using default temp ECDH parameters</span><span class="line output">ACCEPT</span></pre></td></tr></table></figure>
+<h4 id="使用-nc-连接本地-443-端口"><a href="#使用-nc-连接本地-443-端口" class="headerlink" title="使用 nc 连接本地 443 端口"></a>使用 nc 连接本地 443 端口</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nc</span> -vz localhost 443</span><span class="line output">Connection to localhost port 443 [tcp/https] succeeded!</span></pre></td></tr></table></figure>
+<h4 id="OpenSSL-s-client-连接-443-端口"><a href="#OpenSSL-s-client-连接-443-端口" class="headerlink" title="OpenSSL s_client 连接 443 端口"></a>OpenSSL s_client 连接 443 端口</h4><p>下面这个命令会输出 SSL 连接建立过程中的很多信息，包括服务端根证书，使用的协议，加密算法等。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> s_client -state -connect localhost:443</span><span class="line"><span class="comment output">CONNECTED(00000005)</span></span><span class="line"><span class="comment output">SSL_connect:before/connect initialization</span></span><span class="line"><span class="comment output">SSL_connect:unknown state</span></span><span class="line"><span class="comment output">SSL_connect:SSLv3 read server hello A</span></span><span class="line"><span class="comment output">depth=0 C = CN, ST = SH, L = XH, O = TEST, OU = YU, CN = example.com, emailAddress = test.yu@example.com</span></span><span class="line"><span class="comment output">verify error:num=18:self signed certificate</span></span><span class="line"><span class="comment output">verify return:1</span></span><span class="line"><span class="comment output">depth=0 C = CN, ST = SH, L = XH, O = TEST, OU = YU, CN = example.com, emailAddress = test.yu@example.com</span></span><span class="line"><span class="comment output">verify return:1</span></span><span class="line"><span class="comment output">SSL_connect:SSLv3 read server certificate A</span></span><span class="line"><span class="comment output">SSL_connect:SSLv3 read server key exchange A</span></span><span class="line"><span class="comment output">SSL_connect:SSLv3 read server done A</span></span><span class="line"><span class="comment output">SSL_connect:SSLv3 write client key exchange A</span></span><span class="line"><span class="comment output">SSL_connect:SSLv3 write change cipher spec A</span></span><span class="line"><span class="comment output">SSL_connect:SSLv3 write finished A</span></span><span class="line"><span class="comment output">SSL_connect:SSLv3 flush data</span></span><span class="line"><span class="comment output">SSL_connect:SSLv3 read server session ticket A</span></span><span class="line"><span class="comment output">SSL_connect:SSLv3 read finished A</span></span><span class="line"><span class="comment output">---</span></span><span class="line"><span class="comment output">Certificate chain</span></span><span class="line"><span class="comment output"> 0 s:/C=CN/ST=SH/L=XH/O=TEST/OU=YU/CN=example.com/emailAddress=test.yu@example.com</span></span><span class="line"><span class="comment output">   i:/C=CN/ST=SH/L=XH/O=TEST/OU=YU/CN=example.com/emailAddress=test.yu@example.com</span></span><span class="line"><span class="comment output">---</span></span><span class="line"><span class="comment output">Server certificate</span></span><span class="line"><span class="comment output">-----BEGIN CERTIFICATE-----</span></span><span class="line"><span class="comment output">MIIDdjCCAl4CCQDqY6bYvZkBPzANBgkqhkiG9w0BAQsFADB9MQswCQYDVQQGEwJD</span></span><span class="line"><span class="comment output">TjELMAkGA1UECAwCU0gxCzAJBgNVBAcMAlhIMQ0wCwYDVQQKDARURVNUMQswCQYD</span></span><span class="line"><span class="comment output">VQQLDAJZVTEUMBIGA1UEAwwLZXhhbXBsZS5jb20xIjAgBgkqhkiG9w0BCQEWE3Rl</span></span><span class="line"><span class="comment output">c3QueXVAZXhhbXBsZS5jb20wHhcNMTgwNTA2MDgzODQwWhcNMTkwNTA2MDgzODQw</span></span><span class="line"><span class="comment output">WjB9MQswCQYDVQQGEwJDTjELMAkGA1UECAwCU0gxCzAJBgNVBAcMAlhIMQ0wCwYD</span></span><span class="line"><span class="comment output">VQQKDARURVNUMQswCQYDVQQLDAJZVTEUMBIGA1UEAwwLZXhhbXBsZS5jb20xIjAg</span></span><span class="line"><span class="comment output">BgkqhkiG9w0BCQEWE3Rlc3QueXVAZXhhbXBsZS5jb20wggEiMA0GCSqGSIb3DQEB</span></span><span class="line"><span class="comment output">AQUAA4IBDwAwggEKAoIBAQCjdfg3cXBHnn59wynyV8H4VjA0yyF+7fd3MFAY6Hsw</span></span><span class="line"><span class="comment output">54Sb3icxB1HTkLCWg6pTRIcjGJgIyeZOdrxwrOQ9jSLkA7jiZMQEzdiZda2/0o0P</span></span><span class="line"><span class="comment output">k4fFJZunmrA8QbXBAkb1vcpX56boea0D7PKQVsPzYRU5+8AE6K4SM0NAObIAnabD</span></span><span class="line"><span class="comment output">x3WFI8opCLX72kDQS9YEGUvc2Ypf50VFpJcMYdK4LWsPDXMT1HZ0fTOHlCzt3RsN</span></span><span class="line"><span class="comment output">HBfQ/IQX20OBEOlg+7/6RHwKP578IaSuQ41X6hCrGM+f54iq0mx45z9xugprzztM</span></span><span class="line"><span class="comment output">M1s8ZLyAsx6rVkpx1o3HxMBrGPGWMZlVnC2TyjV0eRuLAgMBAAEwDQYJKoZIhvcN</span></span><span class="line"><span class="comment output">AQELBQADggEBADxDOhHXWoxATGFiWMAeOGDCAInnHc7VNp5W9euo744GghkM24UC</span></span><span class="line"><span class="comment output">i8Azd+0u9Kf9WI2HkP1v+4PFtYuzOabucEq/qJ2rb22kJT/jNxfrVqiZabPevJbx</span></span><span class="line"><span class="comment output">gUTBEzpuODw+DERxBAv5aCE63RtoZAp0PF/UzYGnR8kdwAguBYXSHYQiJgkoP4vS</span></span><span class="line"><span class="comment output">YwIOagcXhkZTylxYxk9TbpjTYuC00kJ99aGwrm3RBHONqlLZotSPTe45ZtBLvUAj</span></span><span class="line"><span class="comment output">WtZ2BJXqAGH0qx5nZI8w6u+IcV2vzaFZFwrje1b/234wMqKUFfvQO2BDS7T4ljyA</span></span><span class="line"><span class="comment output">C9FPHKxkybk0GgaMFi3x0+pluVtqPwJijxA=</span></span><span class="line"><span class="comment output">-----END CERTIFICATE-----</span></span><span class="line"><span class="comment output">subject=/C=CN/ST=SH/L=XH/O=TEST/OU=YU/CN=example.com/emailAddress=test.yu@example.com</span></span><span class="line"><span class="comment output">issuer=/C=CN/ST=SH/L=XH/O=TEST/OU=YU/CN=example.com/emailAddress=test.yu@example.com</span></span><span class="line"><span class="comment output">---</span></span><span class="line"><span class="comment output">No client certificate CA names sent</span></span><span class="line"><span class="comment output">---</span></span><span class="line"><span class="comment output">SSL handshake has read 1536 bytes and written 436 bytes</span></span><span class="line"><span class="comment output">---</span></span><span class="line"><span class="comment output">New, TLSv1/SSLv3, Cipher is ECDHE-RSA-CHACHA20-POLY1305</span></span><span class="line"><span class="comment output">Server public key is 2048 bit</span></span><span class="line"><span class="comment output">Secure Renegotiation IS supported</span></span><span class="line"><span class="comment output">Compression: NONE</span></span><span class="line"><span class="comment output">Expansion: NONE</span></span><span class="line"><span class="comment output">No ALPN negotiated</span></span><span class="line"><span class="comment output">SSL-Session:</span></span><span class="line"><span class="comment output">    Protocol  : TLSv1.2</span></span><span class="line"><span class="comment output">    Cipher    : ECDHE-RSA-CHACHA20-POLY1305</span></span><span class="line"><span class="comment output">    Session-ID: C220F8F280BE5EBED4CA498D45FE114064063FCF628290F8E0304EFE227423DD</span></span><span class="line"><span class="comment output">    Session-ID-ctx:</span></span><span class="line"><span class="comment output">    Master-Key: 3FB9259C9FFF7E1263A3A55C535BC1E9D7229A5CD3F8EBB3C348304F915073BFDCD8345D722D6A5ECDC17429143AA205</span></span><span class="line"><span class="comment output">    TLS session ticket lifetime hint: 300 (seconds)</span></span><span class="line"><span class="comment output">    TLS session ticket:</span></span><span class="line"><span class="comment output">    0000 - 27 c4 2e df e6 27 6a 23-71 d0 cd 5d 91 3c 21 73   '....'j#q..].&lt;!s</span></span><span class="line"><span class="comment output">    0010 - ef f7 0d c2 e3 24 ad 94-64 2d 3c b1 aa 78 e3 dc   .....$..d-&lt;..x..</span></span><span class="line"><span class="comment output">    0020 - 7b 68 c0 02 c5 23 2b 8f-55 65 6b 89 91 a4 dd 01   &#123;h...#+.Uek.....</span></span><span class="line"><span class="comment output">    0030 - 13 68 12 8c fd 5c 7b ef-4f 33 7e eb 94 ac ec ba   .h...\&#123;.O3~.....</span></span><span class="line"><span class="comment output">    0040 - 78 66 ad c0 7c c4 33 8b-a1 72 7d 24 3c 72 e9 89   xf..|.3..r&#125;$&lt;r..</span></span><span class="line"><span class="comment output">    0050 - be 4d 15 1f a0 cc f2 e0-2f 0e 6f 8d 57 1c 7d 9e   .M....../.o.W.&#125;.</span></span><span class="line"><span class="comment output">    0060 - e9 91 66 df 49 23 5b ef-44 c2 36 9b 30 96 48 fc   ..f.I#[.D.6.0.H.</span></span><span class="line"><span class="comment output">    0070 - a2 ab 92 07 2d 32 b7 7b-db 90 00 2b e5 79 da 17   ....-2.&#123;...+.y..</span></span><span class="line"><span class="comment output">    0080 - aa 17 c0 12 29 78 a0 14-14 e2 a6 3a 16 19 ab af   ....)x.....:....</span></span><span class="line"><span class="comment output">    0090 - 45 b7 e5 4e d6 9d 09 02-f2 eb 6f 7c 00 65 28 f2   E..N......o|.e(.</span></span><span class="line"><span class="comment output"></span></span><span class="line"><span class="comment output">    Start Time: 1525621137</span></span><span class="line"><span class="comment output">    Timeout   : 300 (sec)</span></span><span class="line"><span class="comment output">    Verify return code: 18 (self signed certificate)</span></span><span class="line"><span class="comment output">---</span></span></pre></td></tr></table></figure>
+<h2 id="OpenSSL-x509-命令"><a href="#OpenSSL-x509-命令" class="headerlink" title="OpenSSL x509 命令"></a>OpenSSL x509 命令</h2><p><code>X.509</code>是密码学里公钥证书的格式标准。<code>X.509</code>证书己应用在包括<code>TSL/SSL</code>在内的众多Intenet协议里。<code>X.509</code>证书里含有公钥、身份信息(比如网络主机名，组织的名称或个体名称等)和签名信息（可以是证书签发机构CA的签名，也可以是自签名）。对于一份经由可信的证书签发机构签名或者可以通过其它方式验证的证书，证书的拥有者就可以用证书及相应的私钥来创建安全的通信，对文档进行数字签名。</p>
+<h3 id="OpenSSL-x509-命令参数"><a href="#OpenSSL-x509-命令参数" class="headerlink" title="OpenSSL x509 命令参数"></a>OpenSSL x509 命令参数</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">usage: x509 args</span><span class="line"> -inform arg     - input format - default PEM (one of DER, NET or PEM)</span><span class="line"> -outform arg    - output format - default PEM (one of DER, NET or PEM)</span><span class="line"> -keyform arg    - private key format - default PEM</span><span class="line"> -CAform arg     - CA format - default PEM</span><span class="line"> -CAkeyform arg  - CA key format - default PEM</span><span class="line"> -in arg         - input file - default stdin</span><span class="line"> -out arg        - output file - default stdout</span><span class="line"> -passin arg     - private key password source</span><span class="line"> -serial         - print serial number value</span><span class="line"> -subject_hash   - print subject hash value</span><span class="line"> -subject_hash_old   - print old-style (MD5) subject hash value</span><span class="line"> -issuer_hash    - print issuer hash value</span><span class="line"> -issuer_hash_old    - print old-style (MD5) issuer hash value</span><span class="line"> -hash           - synonym for -subject_hash</span><span class="line"> -subject        - print subject DN</span><span class="line"> -issuer         - print issuer DN</span><span class="line"> -email          - print email address(es)</span><span class="line"> -startdate      - notBefore field</span><span class="line"> -enddate        - notAfter field</span><span class="line"> -purpose        - print out certificate purposes</span><span class="line"> -dates          - both Before and After dates</span><span class="line"> -modulus        - print the RSA key modulus</span><span class="line"> -pubkey         - output the public key</span><span class="line"> -fingerprint    - print the certificate fingerprint</span><span class="line"> -alias          - output certificate alias</span><span class="line"> -noout          - no certificate output</span><span class="line"> -ocspid         - print OCSP hash values for the subject name and public key</span><span class="line"> -ocsp_uri       - print OCSP Responder URL(s)</span><span class="line"> -trustout       - output a &quot;trusted&quot; certificate</span><span class="line"> -clrtrust       - clear all trusted purposes</span><span class="line"> -clrreject      - clear all rejected purposes</span><span class="line"> -addtrust arg   - trust certificate for a given purpose</span><span class="line"> -addreject arg  - reject certificate for a given purpose</span><span class="line"> -setalias arg   - set certificate alias</span><span class="line"> -days arg       - How long till expiry of a signed certificate - def 30 days</span><span class="line"> -checkend arg   - check whether the cert expires in the next arg seconds</span><span class="line">                   exit 1 if so, 0 if not</span><span class="line"> -signkey arg    - self sign cert with arg</span><span class="line"> -x509toreq      - output a certification request object</span><span class="line"> -req            - input is a certificate request, sign and output.</span><span class="line"> -CA arg         - set the CA certificate, must be PEM format.</span><span class="line"> -CAkey arg      - set the CA key, must be PEM format</span><span class="line">                   missing, it is assumed to be in the CA file.</span><span class="line"> -CAcreateserial - create serial number file if it does not exist</span><span class="line"> -CAserial arg   - serial file</span><span class="line"> -set_serial     - serial number to use</span><span class="line"> -text           - print the certificate in text form</span><span class="line"> -C              - print out C code forms</span><span class="line"> -md2/-md5/-sha1 - digest to use</span><span class="line"> -extfile        - configuration file with X509V3 extensions to add</span><span class="line"> -extensions     - section from config file with X509V3 extensions to add</span><span class="line"> -clrext         - delete extensions before signing and input certificate</span><span class="line"> -nameopt arg    - various certificate name options</span><span class="line"> -engine e       - use engine e, possibly a hardware device.</span><span class="line"> -certopt arg    - various certificate text options</span></pre></td></tr></table></figure>
+<h3 id="显示站点证书信息"><a href="#显示站点证书信息" class="headerlink" title="显示站点证书信息"></a>显示站点证书信息</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> x509 -inform der -noout -text -<span class="keyword">in</span> github.com.cer</span><span class="line output">Certificate:</span><span class="line output">    Data:</span><span class="line output">        Version: 3 (0x2)</span><span class="line output">        Serial Number:</span><span class="line output">            0b:fd:b4:09:0a:d7:b5:e6:40:c3:0b:16:c9:52:9a:27</span><span class="line output">    Signature Algorithm: sha256WithRSAEncryption</span><span class="line output">        Issuer: C=US, O=DigiCert Inc, OU=www.digicert.com, CN=DigiCert SHA2 Extended Validation Server CA</span><span class="line output">        Validity</span><span class="line output">            Not Before: Mar 10 00:00:00 2016 GMT</span><span class="line output">            Not After : May 17 12:00:00 2018 GMT</span><span class="line output">        Subject: businessCategory=Private Organization/1.3.6.1.4.1.311.60.2.1.3=US/1.3.6.1.4.1.311.60.2.1.2=Delaware/serialNumber=5157550/street=88 Colin P Kelly, Jr Street/postalCode=94107, C=US, ST=California, L=San Francisco, O=GitHub, Inc., CN=github.com</span><span class="line output">        Subject Public Key Info:</span><span class="line output">            Public Key Algorithm: rsaEncryption</span><span class="line output">                Public-Key: (2048 bit)</span></pre></td></tr></table></figure>
+<h3 id="显示站点证书的主题"><a href="#显示站点证书的主题" class="headerlink" title="显示站点证书的主题"></a>显示站点证书的主题</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> x509 -inform der -noout -subject -<span class="keyword">in</span> github.com.cer</span><span class="line output">subject= /businessCategory=Private Organization/1.3.6.1.4.1.311.60.2.1.3=US/1.3.6.1.4.1.311.60.2.1.2=Delaware/serialNumber=5157550/street=88 Colin P Kelly, Jr Street/postalCode=94107/C=US/ST=California/L=San Francisco/O=GitHub, Inc./CN=github.com</span></pre></td></tr></table></figure>
+<h3 id="显示-HTTPS-证书的有效期"><a href="#显示-HTTPS-证书的有效期" class="headerlink" title="显示 HTTPS 证书的有效期"></a>显示 HTTPS 证书的有效期</h3><p>可以根据下面这个命令，写个脚本监控服务器 https 证书的过期时间。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> x509 -inform der -noout -startdate -enddate -<span class="keyword">in</span> github.com.cer</span><span class="line output">notBefore=Mar 10 00:00:00 2016 GMT</span><span class="line output">notAfter=May 17 12:00:00 2018 GMT</span></pre></td></tr></table></figure>
+<h2 id="OpenSSL-公私钥加解密操作"><a href="#OpenSSL-公私钥加解密操作" class="headerlink" title="OpenSSL 公私钥加解密操作"></a>OpenSSL 公私钥加解密操作</h2><p>可以用<code>openssl</code>的子命令<code>rsautl</code>测试公私钥之间的加解密、签名、验证等操作，无论是使用公钥加密还是私钥加密，RSA 每次能够加密的数据长度不能超过 RSA 密钥长度，并且根据具体的补齐方式不同输入的加密数据最大长度也不一样，而输出长度则总是跟 RSA 密钥长度相等。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> rsautl -</span><span class="line output">Usage: rsautl [options]</span><span class="line output">-in file        input file</span><span class="line output">-out file       output file</span><span class="line output">-inkey file     input key</span><span class="line output">-keyform arg    private key format - default PEM</span><span class="line output">-pubin          input is an RSA public</span><span class="line output">-certin         input is a certificate carrying an RSA public key</span><span class="line output">-ssl            use SSL v2 padding</span><span class="line output">-raw            use no padding</span><span class="line output">-pkcs           use PKCS#1 v1.5 padding (default)</span><span class="line output">-oaep           use PKCS#1 OAEP</span><span class="line output">-sign           sign with private key</span><span class="line output">-verify         verify with public key</span><span class="line output">-encrypt        encrypt with public key</span><span class="line output">-decrypt        decrypt with private key</span><span class="line output">-hexdump        hex dump output</span><span class="line output">-engine e       use engine e, possibly a hardware device.</span><span class="line output">-passin arg     pass phrase source</span></pre></td></tr></table></figure>
+<h3 id="查看密钥内容"><a href="#查看密钥内容" class="headerlink" title="查看密钥内容"></a>查看密钥内容</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> rsa -noout -text -<span class="keyword">in</span> ca/key.pem</span></pre></td></tr></table></figure>
+<h3 id="从私钥中分离出公钥"><a href="#从私钥中分离出公钥" class="headerlink" title="从私钥中分离出公钥"></a>从私钥中分离出公钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> rsa -<span class="keyword">in</span> ca/key.pem -pubout -out ca/pubkey.pem</span><span class="line output">writing RSA key</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cat</span> ca/pubkey.pem</span><span class="line output">-----BEGIN PUBLIC KEY-----</span><span class="line output">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo3X4N3FwR55+fcMp8lfB</span><span class="line output">+FYwNMshfu33dzBQGOh7MOeEm94nMQdR05CwloOqU0SHIxiYCMnmTna8cKzkPY0i</span><span class="line output">5AO44mTEBM3YmXWtv9KND5OHxSWbp5qwPEG1wQJG9b3KV+em6HmtA+zykFbD82EV</span><span class="line output">OfvABOiuEjNDQDmyAJ2mw8d1hSPKKQi1+9pA0EvWBBlL3NmKX+dFRaSXDGHSuC1r</span><span class="line output">Dw1zE9R2dH0zh5Qs7d0bDRwX0PyEF9tDgRDpYPu/+kR8Cj+e/CGkrkONV+oQqxjP</span><span class="line output">n+eIqtJseOc/cboKa887TDNbPGS8gLMeq1ZKcdaNx8TAaxjxljGZVZwtk8o1dHkb</span><span class="line output">iwIDAQAB</span><span class="line output">-----END PUBLIC KEY-----</span></pre></td></tr></table></figure>
+<h3 id="加解密测试文件内容"><a href="#加解密测试文件内容" class="headerlink" title="加解密测试文件内容"></a>加解密测试文件内容</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">echo</span> 1234567890 &gt; <span class="built_in">test</span></span></pre></td></tr></table></figure>
+<h3 id="签名验证"><a href="#签名验证" class="headerlink" title="签名验证"></a>签名验证</h3><p>用私钥签名，公钥验签，可以理解为用私钥加密，然后用公钥解密。</p>
+<h4 id="用私钥对文件签名"><a href="#用私钥对文件签名" class="headerlink" title="用私钥对文件签名"></a>用私钥对文件签名</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> rsautl -sign -inkey ca/key.pem -in test -hexdump</span><span class="line output">0000 - 66 2b 1a a1 5e 35 b3 19-2b 12 9a 3d 80 44 83 42   f+..^5..+..=.D.B</span><span class="line output">0010 - dc 57 ba e3 57 be 51 50-f4 26 11 a0 93 e8 5a 8f   .W..W.QP.&amp;....Z.</span><span class="line output">0020 - ea ac fd fd 62 e3 c5 58-71 8e d3 8d 04 7a 9a 7a   ....b..Xq....z.z</span><span class="line output">0030 - 7d a1 ce a7 e0 27 a5 be-7a 86 97 9a ff e0 93 54   &#125;....&apos;..z......T</span><span class="line output">0040 - a8 b2 6f 01 3c f7 8d 46-40 d9 e2 c4 56 93 71 4d   ..o.&lt;..F@...V.qM</span><span class="line output">0050 - 7f 69 0f 10 94 cf ce 12-79 e4 d1 6d bb 63 63 88   .i......y..m.cc.</span><span class="line output">0060 - 8e f1 dc e7 20 d4 91 a6-2d 18 cb 91 a8 2b 36 eb   .... ...-....+6.</span><span class="line output">0070 - dc 7f 46 b1 59 22 13 45-ca 96 f9 c7 0b 08 86 2c   ..F.Y&quot;.E.......,</span><span class="line output">0080 - 95 ee 33 11 f4 b1 59 b9-1d 34 9a 5e 49 18 84 16   ..3...Y..4.^I...</span><span class="line output">0090 - 50 d1 2a 42 76 ed c2 a1-f2 f8 d7 02 f1 0a 1d 11   P.*Bv...........</span><span class="line output">00a0 - 5e 22 0a 3e 0d 27 61 59-85 3d 8c 31 c6 d1 34 eb   ^&quot;.&gt;.&apos;aY.=.1..4.</span><span class="line output">00b0 - 2a 52 86 f2 65 05 ab 17-03 50 e4 9d 79 94 ab e2   *R..e....P..y...</span><span class="line output">00c0 - c4 60 e1 f3 8a dc 23 4f-90 42 1d 7f ab 26 33 42   .`....#O.B...&amp;3B</span><span class="line output">00d0 - 1d aa a2 af 0e d3 f3 4d-c5 56 7f ef 75 fb 9f 61   .......M.V..u..a</span><span class="line output">00e0 - d4 f4 2e d1 4c 5a f4 0b-e1 e8 f7 4e f0 21 40 17   ....LZ.....N.!@.</span><span class="line output">00f0 - 35 e5 f4 0c da 18 5e 75-24 8c 7d 33 1e 4c b3      5.....^u$.&#125;3.L.</span><span class="line output">0100 - &lt;SPACES/NULS&gt;</span></pre></td></tr></table></figure>
+<h4 id="保存私钥签名文件"><a href="#保存私钥签名文件" class="headerlink" title="保存私钥签名文件"></a>保存私钥签名文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> rsautl -sign -inkey ca/key.pem -<span class="keyword">in</span> <span class="built_in">test</span> -out test.sig</span></pre></td></tr></table></figure>
+<h4 id="查看签名文件内容"><a href="#查看签名文件内容" class="headerlink" title="查看签名文件内容"></a>查看签名文件内容</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">xxd</span> test.sig</span><span class="line">00000000: 662b 1aa1 5e35 b319 2b12 9a3d 8044 8342  f+..^5..+..=.D.B</span><span class="line">00000010: dc57 bae3 57be 5150 f426 11a0 93e8 5a8f  .W..W.QP.&amp;....Z.</span><span class="line">00000020: eaac fdfd 62e3 c558 718e d38d 047a 9a7a  ....b..Xq....z.z</span><span class="line">00000030: 7da1 cea7 e027 a5be 7a86 979a ffe0 9354  &#125;....&apos;..z......T</span><span class="line">00000040: a8b2 6f01 3cf7 8d46 40d9 e2c4 5693 714d  ..o.&lt;..F@...V.qM</span><span class="line">00000050: 7f69 0f10 94cf ce12 79e4 d16d bb63 6388  .i......y..m.cc.</span><span class="line">00000060: 8ef1 dce7 20d4 91a6 2d18 cb91 a82b 36eb  .... ...-....+6.</span><span class="line">00000070: dc7f 46b1 5922 1345 ca96 f9c7 0b08 862c  ..F.Y&quot;.E.......,</span><span class="line">00000080: 95ee 3311 f4b1 59b9 1d34 9a5e 4918 8416  ..3...Y..4.^I...</span><span class="line">00000090: 50d1 2a42 76ed c2a1 f2f8 d702 f10a 1d11  P.*Bv...........</span><span class="line">000000a0: 5e22 0a3e 0d27 6159 853d 8c31 c6d1 34eb  ^&quot;.&gt;.&apos;aY.=.1..4.</span><span class="line">000000b0: 2a52 86f2 6505 ab17 0350 e49d 7994 abe2  *R..e....P..y...</span><span class="line">000000c0: c460 e1f3 8adc 234f 9042 1d7f ab26 3342  .`....#O.B...&amp;3B</span><span class="line">000000d0: 1daa a2af 0ed3 f34d c556 7fef 75fb 9f61  .......M.V..u..a</span><span class="line">000000e0: d4f4 2ed1 4c5a f40b e1e8 f74e f021 4017  ....LZ.....N.!@.</span><span class="line">000000f0: 35e5 f40c da18 5e75 248c 7d33 1e4c b300  5.....^u$.&#125;3.L..</span></pre></td></tr></table></figure>
+<h4 id="公钥验证"><a href="#公钥验证" class="headerlink" title="公钥验证"></a>公钥验证</h4><p>相当于是公钥解密私钥加密的文件。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> rsautl -verify -<span class="keyword">in</span> test.sig -out test.vfy -inkey ca/pubkey.pem -pubin</span></pre></td></tr></table></figure>
+<h4 id="比较-test-和-test-vfy-二个文件的内容"><a href="#比较-test-和-test-vfy-二个文件的内容" class="headerlink" title="比较 test 和 test.vfy 二个文件的内容"></a>比较 test 和 test.vfy 二个文件的内容</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">diff</span> <span class="built_in">test</span> test.vfy</span></pre></td></tr></table></figure>
+<h3 id="公钥加密私钥解密"><a href="#公钥加密私钥解密" class="headerlink" title="公钥加密私钥解密"></a>公钥加密私钥解密</h3><p>公钥加密之后只能用私钥解密，公钥不能解密公钥加密的内容，而私钥可以解密私钥自己加密的内容。</p>
+<h4 id="私钥加密"><a href="#私钥加密" class="headerlink" title="私钥加密"></a>私钥加密</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> rsautl -encrypt -<span class="keyword">in</span> <span class="built_in">test</span> -out test.enc -inkey ca/key.pem</span></pre></td></tr></table></figure>
+<h4 id="公钥加密"><a href="#公钥加密" class="headerlink" title="公钥加密"></a>公钥加密</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> rsautl -encrypt -<span class="keyword">in</span> <span class="built_in">test</span> -out test.pub.enc -inkey ca/pubkey.pem -pubin</span></pre></td></tr></table></figure>
+<h4 id="私钥解密私钥加密的文件"><a href="#私钥解密私钥加密的文件" class="headerlink" title="私钥解密私钥加密的文件"></a>私钥解密私钥加密的文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> rsautl -decrypt -<span class="keyword">in</span> test.enc -out test.dec -inkey ca/key.pem</span></pre></td></tr></table></figure>
+<h4 id="私钥解密公钥加密的文件"><a href="#私钥解密公钥加密的文件" class="headerlink" title="私钥解密公钥加密的文件"></a>私钥解密公钥加密的文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> rsautl -decrypt -<span class="keyword">in</span> test.pub.enc -out test.pub.dec -inkey ca/key.pem</span></pre></td></tr></table></figure>
+<h4 id="比较-test-test-dec-test-pub-dec-三个文件的内容"><a href="#比较-test-test-dec-test-pub-dec-三个文件的内容" class="headerlink" title="比较 test/test.dec/test.pub.dec 三个文件的内容"></a>比较 test/test.dec/test.pub.dec 三个文件的内容</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">diff</span> <span class="built_in">test</span> test.dec test.pub.dec</span></pre></td></tr></table></figure>
+<h2 id="OpenSSL-dgst-命令"><a href="#OpenSSL-dgst-命令" class="headerlink" title="OpenSSL dgst 命令"></a>OpenSSL dgst 命令</h2><h3 id="OpenSSL-dgst-参数说明"><a href="#OpenSSL-dgst-参数说明" class="headerlink" title="OpenSSL dgst 参数说明"></a>OpenSSL dgst 参数说明</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-c              to output the digest with separating colons</span><span class="line">-r              to output the digest in coreutils format</span><span class="line">-d              to output debug info</span><span class="line">-hex            output as hex dump</span><span class="line">-binary         output in binary form</span><span class="line">-sign   file    sign digest using private key in file</span><span class="line">-verify file    verify a signature using public key in file</span><span class="line">-prverify file  verify a signature using private key in file</span><span class="line">-keyform arg    key file format (PEM or ENGINE)</span><span class="line">-out filename   output to filename rather than stdout</span><span class="line">-signature file signature to verify</span><span class="line">-sigopt nm:v    signature parameter</span><span class="line">-hmac key       create hashed MAC with key</span><span class="line">-mac algorithm  create MAC (not neccessarily HMAC)</span><span class="line">-macopt nm:v    MAC algorithm parameters or key</span><span class="line">-engine e       use engine e, possibly a hardware device.</span><span class="line">-gost-mac       to use the gost-mac message digest algorithm</span><span class="line">-streebog512    to use the streebog512 message digest algorithm</span><span class="line">-streebog256    to use the streebog256 message digest algorithm</span><span class="line">-md_gost94      to use the md_gost94 message digest algorithm</span><span class="line">-md4            to use the md4 message digest algorithm</span><span class="line">-md5            to use the md5 message digest algorithm</span><span class="line">-ripemd160      to use the ripemd160 message digest algorithm</span><span class="line">-sha            to use the sha message digest algorithm</span><span class="line">-sha1           to use the sha1 message digest algorithm</span><span class="line">-sha224         to use the sha224 message digest algorithm</span><span class="line">-sha256         to use the sha256 message digest algorithm</span><span class="line">-sha384         to use the sha384 message digest algorithm</span><span class="line">-sha512         to use the sha512 message digest algorithm</span><span class="line">-whirlpool      to use the whirlpool message digest algorithm</span></pre></td></tr></table></figure>
+<h3 id="MD5-digest"><a href="#MD5-digest" class="headerlink" title="MD5 digest"></a>MD5 digest</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> dgst -md5 filename</span></pre></td></tr></table></figure>
+<h3 id="SHA1-digest"><a href="#SHA1-digest" class="headerlink" title="SHA1 digest"></a>SHA1 digest</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">openssl</span> dgst -sha1 filename</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://www.openssl.org/docs/man1.1.0/apps/openssl.html" target="_blank" rel="noopener">OpenSSL - manpage</a></li>
+<li><a href="https://github.com/openssl/openssl" target="_blank" rel="noopener">github.com - TLS/SSL and crypto library</a></li>
+<li><a href="https://www.openssl.org/" target="_blank" rel="noopener">OpenSSL - Cryptography and SSL/TLS Toolkit</a></li>
+<li><a href="http://www.4e00.com/manpages/man1/openssl.1ssl.html">OPENSSL - manpage</a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/OpenSSL" target="_blank" rel="noopener">OpenSSL - 维基百科</a></li>
+<li><a href="https://tools.ietf.org/html/rfc7292" target="_blank" rel="noopener">PKCS 12 - RFC7292</a></li>
+<li><a href="https://www.openssl.org/docs/manmaster/man1/pkcs12.html" target="_blank" rel="noopener">PKCS 12 - manpage</a></li>
+<li><a href="https://www.openssl.org/docs/man1.1.0/apps/ca.html" target="_blank" rel="noopener">OpenSSL - ca</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/PKCS_12" target="_blank" rel="noopener">PKCS 12 - 维基百科</a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/%E5%82%B3%E8%BC%B8%E5%B1%A4%E5%AE%89%E5%85%A8%E6%80%A7%E5%8D%94%E5%AE%9A" target="_blank" rel="noopener">TLS - 传输层安全性协议 - 维基百科</a></li>
+<li><a href="https://www.cnblogs.com/littleatp/p/5878763.html" target="_blank" rel="noopener">使用 OpenSSL 生成证书</a></li>
+<li><a href="http://seanlook.com/2015/01/07/tls-ssl/" target="_blank" rel="noopener">SSL/TLS原理详解</a></li>
+<li><a href="http://seanlook.com/2015/01/15/openssl-certificate-encryption/" target="_blank" rel="noopener">OpenSSL 与 SSL 数字证书概念贴</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/linux/l-cn-sclient/index.html" target="_blank" rel="noopener">应用 OpenSSL 工具进行 SSL 故障分析</a></li>
+<li><a href="https://blog.cloudflare.com/keyless-ssl-the-nitty-gritty-technical-details/" target="_blank" rel="noopener">Keyless SSL: The Nitty Gritty Technical Details</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/04/21/percent-encoding-in-rfc1738-rfc2396-and-rfc3986.html" rel="next" title="percent encoding in rfc1738 rfc2396 and rfc3986">
+                <i class="fa fa-chevron-left"></i>
+                percent encoding in rfc1738 rfc2396 and rfc3986
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2018/06/06/linux-commands-top.html" rel="prev" title="linux 常用命令之 top">
+                <i class="fa fa-chevron-right"></i>
+                linux 常用命令之 top
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tldr-openssl"><span class="nav-number">1.</span> <span class="nav-text">tldr openssl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenSSL"><span class="nav-number">2.</span> <span class="nav-text">OpenSSL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenSSL-功能组成"><span class="nav-number">2.1.</span> <span class="nav-text">OpenSSL 功能组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenSSL-基本功能"><span class="nav-number">2.2.</span> <span class="nav-text">OpenSSL 基本功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对称加密"><span class="nav-number">2.3.</span> <span class="nav-text">对称加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非对称加密"><span class="nav-number">2.4.</span> <span class="nav-text">非对称加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息摘要"><span class="nav-number">2.5.</span> <span class="nav-text">信息摘要</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSL"><span class="nav-number">3.</span> <span class="nav-text">SSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TLS"><span class="nav-number">4.</span> <span class="nav-text">TLS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL-RSA-handshake"><span class="nav-number">4.1.</span> <span class="nav-text">SSL RSA handshake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wireshark-SSL-stream"><span class="nav-number">4.2.</span> <span class="nav-text">wireshark SSL stream</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TLS包含三个基本阶段"><span class="nav-number">4.3.</span> <span class="nav-text">TLS包含三个基本阶段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenSSL-特性"><span class="nav-number">5.</span> <span class="nav-text">OpenSSL 特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据保密性"><span class="nav-number">5.1.</span> <span class="nav-text">数据保密性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据完整性"><span class="nav-number">5.2.</span> <span class="nav-text">数据完整性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全验证"><span class="nav-number">5.3.</span> <span class="nav-text">安全验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenSSL-SYNOPSIS"><span class="nav-number">6.</span> <span class="nav-text">OpenSSL SYNOPSIS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#openssl-commands-list"><span class="nav-number">6.1.</span> <span class="nav-text">openssl commands list</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenSSL-genrsa-创建密钥和-OpenSSL-req-生成-CSR-请求证书"><span class="nav-number">7.</span> <span class="nav-text">OpenSSL genrsa 创建密钥和 OpenSSL req 生成 CSR 请求证书</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建私钥"><span class="nav-number">7.1.</span> <span class="nav-text">创建私钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建证书请求"><span class="nav-number">7.2.</span> <span class="nav-text">创建证书请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自签署证书"><span class="nav-number">7.3.</span> <span class="nav-text">自签署证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一步生成私钥和公用证书"><span class="nav-number">7.4.</span> <span class="nav-text">一步生成私钥和公用证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将密钥和证书组合在-PKCS-12-P12-文件中"><span class="nav-number">7.5.</span> <span class="nav-text">将密钥和证书组合在 PKCS#12 (P12)文件中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导出-p12格式客户端证书"><span class="nav-number">7.6.</span> <span class="nav-text">导出.p12格式客户端证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查已创建的CA证书"><span class="nav-number">7.7.</span> <span class="nav-text">检查已创建的CA证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证-p12-文件"><span class="nav-number">7.8.</span> <span class="nav-text">验证 p12 文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenSSL-pkcs-命令"><span class="nav-number">8.</span> <span class="nav-text">OpenSSL pkcs 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pkcs-12-文件"><span class="nav-number">8.1.</span> <span class="nav-text">pkcs#12 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenSSL-pkcs12-命令参数"><span class="nav-number">8.2.</span> <span class="nav-text">OpenSSL pkcs12 命令参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenSSL-pkcs12-命令示例"><span class="nav-number">8.3.</span> <span class="nav-text">OpenSSL pkcs12 命令示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#输出文件"><span class="nav-number">8.3.1.</span> <span class="nav-text">输出文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输出客户端证书"><span class="nav-number">8.3.2.</span> <span class="nav-text">输出客户端证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输出不加密私钥文件"><span class="nav-number">8.3.3.</span> <span class="nav-text">输出不加密私钥文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenSSL-s-client-和-s-server-命令"><span class="nav-number">9.</span> <span class="nav-text">OpenSSL s_client 和 s_server 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenSSL-查看服务端的根证书"><span class="nav-number">9.1.</span> <span class="nav-text">OpenSSL 查看服务端的根证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenSSL-获取服务端根证书"><span class="nav-number">9.2.</span> <span class="nav-text">OpenSSL 获取服务端根证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证服务端根证书"><span class="nav-number">9.3.</span> <span class="nav-text">验证服务端根证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解码服务端根证书"><span class="nav-number">9.4.</span> <span class="nav-text">解码服务端根证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接到远程服务器"><span class="nav-number">9.5.</span> <span class="nav-text">连接到远程服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模拟的-HTTPS-服务"><span class="nav-number">9.6.</span> <span class="nav-text">模拟的 HTTPS 服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-nc-连接本地-443-端口"><span class="nav-number">9.6.1.</span> <span class="nav-text">使用 nc 连接本地 443 端口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OpenSSL-s-client-连接-443-端口"><span class="nav-number">9.6.2.</span> <span class="nav-text">OpenSSL s_client 连接 443 端口</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenSSL-x509-命令"><span class="nav-number">10.</span> <span class="nav-text">OpenSSL x509 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenSSL-x509-命令参数"><span class="nav-number">10.1.</span> <span class="nav-text">OpenSSL x509 命令参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示站点证书信息"><span class="nav-number">10.2.</span> <span class="nav-text">显示站点证书信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示站点证书的主题"><span class="nav-number">10.3.</span> <span class="nav-text">显示站点证书的主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示-HTTPS-证书的有效期"><span class="nav-number">10.4.</span> <span class="nav-text">显示 HTTPS 证书的有效期</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenSSL-公私钥加解密操作"><span class="nav-number">11.</span> <span class="nav-text">OpenSSL 公私钥加解密操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看密钥内容"><span class="nav-number">11.1.</span> <span class="nav-text">查看密钥内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从私钥中分离出公钥"><span class="nav-number">11.2.</span> <span class="nav-text">从私钥中分离出公钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加解密测试文件内容"><span class="nav-number">11.3.</span> <span class="nav-text">加解密测试文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#签名验证"><span class="nav-number">11.4.</span> <span class="nav-text">签名验证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用私钥对文件签名"><span class="nav-number">11.4.1.</span> <span class="nav-text">用私钥对文件签名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#保存私钥签名文件"><span class="nav-number">11.4.2.</span> <span class="nav-text">保存私钥签名文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看签名文件内容"><span class="nav-number">11.4.3.</span> <span class="nav-text">查看签名文件内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#公钥验证"><span class="nav-number">11.4.4.</span> <span class="nav-text">公钥验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比较-test-和-test-vfy-二个文件的内容"><span class="nav-number">11.4.5.</span> <span class="nav-text">比较 test 和 test.vfy 二个文件的内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公钥加密私钥解密"><span class="nav-number">11.5.</span> <span class="nav-text">公钥加密私钥解密</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#私钥加密"><span class="nav-number">11.5.1.</span> <span class="nav-text">私钥加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#公钥加密"><span class="nav-number">11.5.2.</span> <span class="nav-text">公钥加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#私钥解密私钥加密的文件"><span class="nav-number">11.5.3.</span> <span class="nav-text">私钥解密私钥加密的文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#私钥解密公钥加密的文件"><span class="nav-number">11.5.4.</span> <span class="nav-text">私钥解密公钥加密的文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比较-test-test-dec-test-pub-dec-三个文件的内容"><span class="nav-number">11.5.5.</span> <span class="nav-text">比较 test/test.dec/test.pub.dec 三个文件的内容</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenSSL-dgst-命令"><span class="nav-number">12.</span> <span class="nav-text">OpenSSL dgst 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenSSL-dgst-参数说明"><span class="nav-number">12.1.</span> <span class="nav-text">OpenSSL dgst 参数说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MD5-digest"><span class="nav-number">12.2.</span> <span class="nav-text">MD5 digest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA1-digest"><span class="nav-number">12.3.</span> <span class="nav-text">SHA1 digest</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">13.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

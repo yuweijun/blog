@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="liqid中有二种标签类型：  1. 一种是输出，格式为`{{ }}`。 2. 另一种主要是控制输出的标签`{% %}`。  普通输出文本或者变量">
 <meta property="og:type" content="article">
 <meta property="og:title" content="liquid模板使用简介">
-<meta property="og:url" content="https://www.4e00.com/ruby/2015/11/22/liquid-template-for-designers.html">
+<meta property="og:url" content="http://www.4e00.com/ruby/2015/11/22/liquid-template-for-designers.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="liqid中有二种标签类型：  1. 一种是输出，格式为`{{ }}`。 2. 另一种主要是控制输出的标签`{% %}`。  普通输出文本或者变量">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.098Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="liquid模板使用简介">
 <meta name="twitter:description" content="liqid中有二种标签类型：  1. 一种是输出，格式为`{{ }}`。 2. 另一种主要是控制输出的标签`{% %}`。  普通输出文本或者变量">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/ruby/2015/11/22/liquid-template-for-designers.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/ruby/2015/11/22/liquid-template-for-designers.html">
 
   <title> liquid模板使用简介 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/ruby/" itemprop="url" rel="index">
                     <span itemprop="name">ruby</span>
                   </a>
@@ -260,15 +260,15 @@
 2. 另一种主要是控制输出的标签`{% %}`。
 
 <h2 id="普通输出文本或者变量"><a href="#普通输出文本或者变量" class="headerlink" title="普通输出文本或者变量"></a>普通输出文本或者变量</h2><a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">Hello &#123;&#123;name&#125;&#125;</div><div class="line">Hello &#123;&#123;user.name&#125;&#125;</div><div class="line">Hello &#123;&#123; &apos;tobi&apos; &#125;&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><span class="line">Hello &#123;&#123;name&#125;&#125;</span><span class="line">Hello &#123;&#123;user.name&#125;&#125;</span><span class="line">Hello &#123;&#123; &apos;tobi&apos; &#125;&#125;</span><span class="line"></span></pre></td></tr></table></figure>
 <h2 id="filter的使用"><a href="#filter的使用" class="headerlink" title="filter的使用"></a>filter的使用</h2><p>管道符<code>|</code>左侧的内容输出，做为右边filter方法的第一个参数输入，这与linux和管道符设计比较相似。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">Hello &#123;&#123; &apos;tobi&apos; | upcase &#125;&#125;</div><div class="line">Hello tobi has &#123;&#123; &apos;tobi&apos; | size &#125;&#125; letters!</div><div class="line">Hello &#123;&#123; &apos;*tobi*&apos; | textilize | upcase &#125;&#125;</div><div class="line">Hello &#123;&#123; &apos;now&apos; | date: &quot;%Y %h&quot; &#125;&#125;</div><div class="line"></div></pre></td></tr></table></figure>
-<h2 id="Standard-Filters"><a href="#Standard-Filters" class="headerlink" title="Standard Filters"></a>Standard Filters</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">date - reformat a date (syntax reference)</div><div class="line">capitalize - capitalize words in the input sentence</div><div class="line">downcase - convert an input string to lowercase</div><div class="line">upcase - convert an input string to uppercase</div><div class="line">first - get the first element of the passed in array</div><div class="line">last - get the last element of the passed in array</div><div class="line">join - join elements of the array with certain character between them</div><div class="line">sort - sort elements of the array</div><div class="line">map - map/collect an array on a given property</div><div class="line">size - return the size of an array or string</div><div class="line">escape - escape a string</div><div class="line">escape_once - returns an escaped version of html without affecting existing escaped entities</div><div class="line">strip_html - strip html from string</div><div class="line">strip_newlines - strip all newlines (\n) from string</div><div class="line">newline_to_br - replace each newline (\n) with html break</div><div class="line">replace - replace each occurrence e.g. &#123;&#123; &apos;foofoo&apos; | replace:&apos;foo&apos;,&apos;bar&apos; &#125;&#125; #=&gt; &apos;barbar&apos;</div><div class="line">replace_first - replace the first occurrence e.g. &#123;&#123; &apos;barbar&apos; | replace_first:&apos;bar&apos;,&apos;foo&apos; &#125;&#125; #=&gt; &apos;foobar&apos;</div><div class="line">remove - remove each occurrence e.g. &#123;&#123; &apos;foobarfoobar&apos; | remove:&apos;foo&apos; &#125;&#125; #=&gt; &apos;barbar&apos;</div><div class="line">remove_first - remove the first occurrence e.g. &#123;&#123; &apos;barbar&apos; | remove_first:&apos;bar&apos; &#125;&#125; #=&gt; &apos;bar&apos;</div><div class="line">truncate - truncate a string down to x characters. It also accepts a second parameter that will append to the string e.g. &#123;&#123; &apos;foobarfoobar&apos; | truncate: 5, &apos;.&apos; &#125;&#125; #=&gt; &apos;foob.&apos;</div><div class="line">truncatewords - truncate a string down to x words</div><div class="line">prepend - prepend a string e.g. &#123;&#123; &apos;bar&apos; | prepend:&apos;foo&apos; &#125;&#125; #=&gt; &apos;foobar&apos;</div><div class="line">append - append a string e.g. &#123;&#123; &apos;foo&apos; | append:&apos;bar&apos; &#125;&#125; #=&gt; &apos;foobar&apos;</div><div class="line">slice - slice a string. Takes an offset and length, e.g. &#123;&#123; &quot;hello&quot; | slice: -3, 3 &#125;&#125; #=&gt; llo</div><div class="line">minus - subtraction e.g. &#123;&#123; 4 | minus:2 &#125;&#125; #=&gt; 2</div><div class="line">plus - addition e.g. &#123;&#123; &apos;1&apos; | plus:&apos;1&apos; &#125;&#125; #=&gt; 2, &#123;&#123; 1 | plus:1 &#125;&#125; #=&gt; 2</div><div class="line">times - multiplication e.g &#123;&#123; 5 | times:4 &#125;&#125; #=&gt; 20</div><div class="line">divided_by - integer division e.g. &#123;&#123; 10 | divided_by:3 &#125;&#125; #=&gt; 3</div><div class="line">round - rounds input to the nearest integer or specified number of decimals</div><div class="line">split - split a string on a matching pattern e.g. &#123;&#123; &quot;a~b&quot; | split:&quot;~&quot; &#125;&#125; #=&gt; [&apos;a&apos;,&apos;b&apos;]</div><div class="line">modulo - remainder, e.g. &#123;&#123; 3 | modulo:2 &#125;&#125; #=&gt; 1</div><div class="line"></div></pre></td></tr></table></figure>
-<h2 id="逻辑控制"><a href="#逻辑控制" class="headerlink" title="逻辑控制"></a>逻辑控制</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">assign - Assigns some value to a variable</div><div class="line">capture - Block tag that captures text into a variable</div><div class="line">case - Block tag, its the standard case...when block</div><div class="line">comment - Block tag, comments out the text in the block</div><div class="line">cycle - Cycle is usually used within a loop to alternate between values, like colors or DOM classes.</div><div class="line">for - For loop</div><div class="line">break - Exits a for loop</div><div class="line">continue Skips the remaining code in the current for loop and continues with the next loop</div><div class="line">if - Standard if/else block</div><div class="line">include - Includes another template; useful for partials</div><div class="line">raw - temporarily disable tag processing to avoid syntax conflicts.</div><div class="line">unless - Mirror of if statement</div></pre></td></tr></table></figure>
-<h2 id="jekyll-filters"><a href="#jekyll-filters" class="headerlink" title="jekyll filters"></a>jekyll filters</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">&#123;&#123; site.time | date_to_xmlschema &#125;&#125;</div><div class="line">&#123;&#123; site.time | date_to_rfc822 &#125;&#125;</div><div class="line">&#123;&#123; site.time | date_to_string &#125;&#125;</div><div class="line">&#123;&#123; site.time | date_to_long_string &#125;&#125;</div><div class="line">&#123;&#123; site.members | where:&quot;graduation_year&quot;,&quot;2014&quot; &#125;&#125;</div><div class="line">&#123;&#123; site.members | group_by:&quot;graduation_year&quot; &#125;&#125;</div><div class="line">&#123;&#123; page.content | xml_escape &#125;&#125;</div><div class="line">&#123;&#123; &quot;foo,bar;baz?&quot; | cgi_escape &#125;&#125;</div><div class="line">&#123;&#123; &quot;foo, bar \baz?&quot; | uri_escape &#125;&#125;</div><div class="line">&#123;&#123; page.content | number_of_words &#125;&#125;</div><div class="line">&#123;&#123; page.tags | array_to_sentence_string &#125;&#125;</div><div class="line">&#123;&#123; page.excerpt | markdownify &#125;&#125;</div><div class="line">&#123;&#123; some_scss | scssify &#125;&#125; &#123;&#123; some_sass | sassify &#125;&#125;</div><div class="line">&#123;&#123; &quot;The _config.yml file&quot; | slugify &#125;&#125;</div><div class="line">&#123;&#123; &quot;The _config.yml file&quot; | slugify: &apos;pretty&apos; &#125;&#125;</div><div class="line">&#123;&#123; site.data.projects | jsonify &#125;&#125;</div><div class="line">&#123;&#123; page.tags | sort &#125;&#125;</div><div class="line">&#123;&#123; site.posts | sort: &apos;author&apos; &#125;&#125;</div><div class="line">&#123;&#123; site.pages | sort: &apos;title&apos;, &apos;last&apos; &#125;&#125;</div><div class="line"></div></pre></td></tr></table></figure>
-<h2 id="jekyll-tags"><a href="#jekyll-tags" class="headerlink" title="jekyll tags"></a>jekyll tags</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">&#123;% include footer.html %&#125;</div><div class="line">&#123;% include footer.html param=&quot;value&quot; variable-param=page.variable %&#125;</div><div class="line">&#123;&#123; include.param &#125;&#125;</div><div class="line">&#123;% include_relative somedir/footer.html %&#125;</div><div class="line">&#123;% codeblock lang:ruby %&#125;</div><div class="line">&#123;% codeblock lang:ruby linenos %&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><span class="line">Hello &#123;&#123; &apos;tobi&apos; | upcase &#125;&#125;</span><span class="line">Hello tobi has &#123;&#123; &apos;tobi&apos; | size &#125;&#125; letters!</span><span class="line">Hello &#123;&#123; &apos;*tobi*&apos; | textilize | upcase &#125;&#125;</span><span class="line">Hello &#123;&#123; &apos;now&apos; | date: &quot;%Y %h&quot; &#125;&#125;</span><span class="line"></span></pre></td></tr></table></figure>
+<h2 id="Standard-Filters"><a href="#Standard-Filters" class="headerlink" title="Standard Filters"></a>Standard Filters</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><span class="line">date - reformat a date (syntax reference)</span><span class="line">capitalize - capitalize words in the input sentence</span><span class="line">downcase - convert an input string to lowercase</span><span class="line">upcase - convert an input string to uppercase</span><span class="line">first - get the first element of the passed in array</span><span class="line">last - get the last element of the passed in array</span><span class="line">join - join elements of the array with certain character between them</span><span class="line">sort - sort elements of the array</span><span class="line">map - map/collect an array on a given property</span><span class="line">size - return the size of an array or string</span><span class="line">escape - escape a string</span><span class="line">escape_once - returns an escaped version of html without affecting existing escaped entities</span><span class="line">strip_html - strip html from string</span><span class="line">strip_newlines - strip all newlines (\n) from string</span><span class="line">newline_to_br - replace each newline (\n) with html break</span><span class="line">replace - replace each occurrence e.g. &#123;&#123; &apos;foofoo&apos; | replace:&apos;foo&apos;,&apos;bar&apos; &#125;&#125; #=&gt; &apos;barbar&apos;</span><span class="line">replace_first - replace the first occurrence e.g. &#123;&#123; &apos;barbar&apos; | replace_first:&apos;bar&apos;,&apos;foo&apos; &#125;&#125; #=&gt; &apos;foobar&apos;</span><span class="line">remove - remove each occurrence e.g. &#123;&#123; &apos;foobarfoobar&apos; | remove:&apos;foo&apos; &#125;&#125; #=&gt; &apos;barbar&apos;</span><span class="line">remove_first - remove the first occurrence e.g. &#123;&#123; &apos;barbar&apos; | remove_first:&apos;bar&apos; &#125;&#125; #=&gt; &apos;bar&apos;</span><span class="line">truncate - truncate a string down to x characters. It also accepts a second parameter that will append to the string e.g. &#123;&#123; &apos;foobarfoobar&apos; | truncate: 5, &apos;.&apos; &#125;&#125; #=&gt; &apos;foob.&apos;</span><span class="line">truncatewords - truncate a string down to x words</span><span class="line">prepend - prepend a string e.g. &#123;&#123; &apos;bar&apos; | prepend:&apos;foo&apos; &#125;&#125; #=&gt; &apos;foobar&apos;</span><span class="line">append - append a string e.g. &#123;&#123; &apos;foo&apos; | append:&apos;bar&apos; &#125;&#125; #=&gt; &apos;foobar&apos;</span><span class="line">slice - slice a string. Takes an offset and length, e.g. &#123;&#123; &quot;hello&quot; | slice: -3, 3 &#125;&#125; #=&gt; llo</span><span class="line">minus - subtraction e.g. &#123;&#123; 4 | minus:2 &#125;&#125; #=&gt; 2</span><span class="line">plus - addition e.g. &#123;&#123; &apos;1&apos; | plus:&apos;1&apos; &#125;&#125; #=&gt; 2, &#123;&#123; 1 | plus:1 &#125;&#125; #=&gt; 2</span><span class="line">times - multiplication e.g &#123;&#123; 5 | times:4 &#125;&#125; #=&gt; 20</span><span class="line">divided_by - integer division e.g. &#123;&#123; 10 | divided_by:3 &#125;&#125; #=&gt; 3</span><span class="line">round - rounds input to the nearest integer or specified number of decimals</span><span class="line">split - split a string on a matching pattern e.g. &#123;&#123; &quot;a~b&quot; | split:&quot;~&quot; &#125;&#125; #=&gt; [&apos;a&apos;,&apos;b&apos;]</span><span class="line">modulo - remainder, e.g. &#123;&#123; 3 | modulo:2 &#125;&#125; #=&gt; 1</span><span class="line"></span></pre></td></tr></table></figure>
+<h2 id="逻辑控制"><a href="#逻辑控制" class="headerlink" title="逻辑控制"></a>逻辑控制</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">assign - Assigns some value to a variable</span><span class="line">capture - Block tag that captures text into a variable</span><span class="line">case - Block tag, its the standard case...when block</span><span class="line">comment - Block tag, comments out the text in the block</span><span class="line">cycle - Cycle is usually used within a loop to alternate between values, like colors or DOM classes.</span><span class="line">for - For loop</span><span class="line">break - Exits a for loop</span><span class="line">continue Skips the remaining code in the current for loop and continues with the next loop</span><span class="line">if - Standard if/else block</span><span class="line">include - Includes another template; useful for partials</span><span class="line">raw - temporarily disable tag processing to avoid syntax conflicts.</span><span class="line">unless - Mirror of if statement</span></pre></td></tr></table></figure>
+<h2 id="jekyll-filters"><a href="#jekyll-filters" class="headerlink" title="jekyll filters"></a>jekyll filters</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><span class="line">&#123;&#123; site.time | date_to_xmlschema &#125;&#125;</span><span class="line">&#123;&#123; site.time | date_to_rfc822 &#125;&#125;</span><span class="line">&#123;&#123; site.time | date_to_string &#125;&#125;</span><span class="line">&#123;&#123; site.time | date_to_long_string &#125;&#125;</span><span class="line">&#123;&#123; site.members | where:&quot;graduation_year&quot;,&quot;2014&quot; &#125;&#125;</span><span class="line">&#123;&#123; site.members | group_by:&quot;graduation_year&quot; &#125;&#125;</span><span class="line">&#123;&#123; page.content | xml_escape &#125;&#125;</span><span class="line">&#123;&#123; &quot;foo,bar;baz?&quot; | cgi_escape &#125;&#125;</span><span class="line">&#123;&#123; &quot;foo, bar \baz?&quot; | uri_escape &#125;&#125;</span><span class="line">&#123;&#123; page.content | number_of_words &#125;&#125;</span><span class="line">&#123;&#123; page.tags | array_to_sentence_string &#125;&#125;</span><span class="line">&#123;&#123; page.excerpt | markdownify &#125;&#125;</span><span class="line">&#123;&#123; some_scss | scssify &#125;&#125; &#123;&#123; some_sass | sassify &#125;&#125;</span><span class="line">&#123;&#123; &quot;The _config.yml file&quot; | slugify &#125;&#125;</span><span class="line">&#123;&#123; &quot;The _config.yml file&quot; | slugify: &apos;pretty&apos; &#125;&#125;</span><span class="line">&#123;&#123; site.data.projects | jsonify &#125;&#125;</span><span class="line">&#123;&#123; page.tags | sort &#125;&#125;</span><span class="line">&#123;&#123; site.posts | sort: &apos;author&apos; &#125;&#125;</span><span class="line">&#123;&#123; site.pages | sort: &apos;title&apos;, &apos;last&apos; &#125;&#125;</span><span class="line"></span></pre></td></tr></table></figure>
+<h2 id="jekyll-tags"><a href="#jekyll-tags" class="headerlink" title="jekyll tags"></a>jekyll tags</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><span class="line">&#123;% include footer.html %&#125;</span><span class="line">&#123;% include footer.html param=&quot;value&quot; variable-param=page.variable %&#125;</span><span class="line">&#123;&#123; include.param &#125;&#125;</span><span class="line">&#123;% include_relative somedir/footer.html %&#125;</span><span class="line">&#123;% codeblock lang:ruby %&#125;</span><span class="line">&#123;% codeblock lang:ruby linenos %&#125;</span><span class="line"></span></pre></td></tr></table></figure>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://github.com/Shopify/liquid/wiki/Liquid-for-Designers" target="_blank" rel="external">Liquid for Designers</a></li>
+<li><a href="https://github.com/Shopify/liquid/wiki/Liquid-for-Designers" target="_blank" rel="noopener">Liquid for Designers</a></li>
 </ol>
 
       
@@ -296,7 +296,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/ruby/2015/11/22/ruby-code-highlighter-rouge.html" rel="next" title="rouge - syntax highlighter">
-                上一篇：rouge - syntax highlighter
+                <i class="fa fa-chevron-left"></i>
+                rouge - syntax highlighter
               </a>
             
           </div>
@@ -304,7 +305,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/nodejs/2015/11/22/http-proxy-for-nodejs.html" rel="prev" title="node-http-proxy usage example">
-                下一篇：node-http-proxy usage example
+                <i class="fa fa-chevron-right"></i>
+                node-http-proxy usage example
               </a>
             
           </div>
@@ -353,7 +355,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -364,16 +366,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -455,10 +455,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

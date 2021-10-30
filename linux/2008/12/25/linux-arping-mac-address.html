@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="arping usage">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用arping查询得到局域网里其他机器的mac地址">
-<meta property="og:url" content="https://www.4e00.com/linux/2008/12/25/linux-arping-mac-address.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2008/12/25/linux-arping-mac-address.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="arping usage">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.137Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.060Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用arping查询得到局域网里其他机器的mac地址">
 <meta name="twitter:description" content="arping usage">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2008/12/25/linux-arping-mac-address.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2008/12/25/linux-arping-mac-address.html">
 
   <title> 使用arping查询得到局域网里其他机器的mac地址 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -255,7 +255,7 @@
 
       
         <h2 id="arping-usage"><a href="#arping-usage" class="headerlink" title="arping usage"></a>arping usage</h2><a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="comment"># 使用arping查询得到mac地址</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `seq 254` ; <span class="keyword">do</span></div><div class="line">    sudo /sbin/arping -c2 192.168.1.<span class="variable">$i</span> | awk <span class="string">'/Unicast reply from/&#123;print $4,$5&#125;'</span> | sed <span class="string">'s/\[//'</span> | sed <span class="string">'s/\]//'</span></div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="keyword">for</span> ((i = 1; i &lt; 254; i++))</div><div class="line"><span class="keyword">do</span></div><div class="line">    sudo /sbin/arping -i eth0 192.168.1.<span class="variable">$i</span> -c 1</div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line">/sbin/arp -a &gt; mac_table</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><span class="line"><span class="comment"># 使用arping查询得到mac地址</span></span><span class="line"></span><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `seq 254` ; <span class="keyword">do</span></span><span class="line">    sudo /sbin/arping -c2 192.168.1.<span class="variable">$i</span> | awk <span class="string">'/Unicast reply from/&#123;print $4,$5&#125;'</span> | sed <span class="string">'s/\[//'</span> | sed <span class="string">'s/\]//'</span></span><span class="line"><span class="keyword">done</span></span><span class="line"></span><span class="line"><span class="meta">#!/bin/bash</span></span><span class="line"><span class="keyword">for</span> ((i = 1; i &lt; 254; i++))</span><span class="line"><span class="keyword">do</span></span><span class="line">    sudo /sbin/arping -i eth0 192.168.1.<span class="variable">$i</span> -c 1</span><span class="line"><span class="keyword">done</span></span><span class="line"></span><span class="line">/sbin/arp -a &gt; mac_table</span></pre></td></tr></table></figure>
 
       
     </div>
@@ -282,7 +282,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/web/2008/12/23/ie6-ie7-ajax-charset-encoding-bug.html" rel="next" title="ie6/ie7上ajax请求的一个bug">
-                上一篇：ie6/ie7上ajax请求的一个bug
+                <i class="fa fa-chevron-left"></i>
+                ie6/ie7上ajax请求的一个bug
               </a>
             
           </div>
@@ -290,7 +291,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2008/12/27/apache2-deflate-gzip-module.html" rel="prev" title="添加deflate gzip模块到apache2服务器">
-                下一篇：添加deflate gzip模块到apache2服务器
+                <i class="fa fa-chevron-right"></i>
+                添加deflate gzip模块到apache2服务器
               </a>
             
           </div>
@@ -339,7 +341,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -350,16 +352,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -441,10 +441,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

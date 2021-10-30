@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="jQuery.fn.width()和jQuery.fn.css(&amp;quot;width&amp;quot;)的区别注意jQuery.fn.width()方法返回的是不带px单位的纯宽度数值，而jQuery.fn.css(&amp;quot;width&amp;quot;)方法返回的则是通过style计算得到的是带px单位的字符串，并且在chrome/safari中，这二个方法返回的数值也会因为DOM对象出现滚动条而不一样">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jquery-1.4.2 dimensions部分源码分析">
-<meta property="og:url" content="https://www.4e00.com/jquery/2014/07/31/jquery-src-dimensions.html">
+<meta property="og:url" content="http://www.4e00.com/jquery/2014/07/31/jquery-src-dimensions.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="jQuery.fn.width()和jQuery.fn.css(&amp;quot;width&amp;quot;)的区别注意jQuery.fn.width()方法返回的是不带px单位的纯宽度数值，而jQuery.fn.css(&amp;quot;width&amp;quot;)方法返回的则是通过style计算得到的是带px单位的字符串，并且在chrome/safari中，这二个方法返回的数值也会因为DOM对象出现滚动条而不一样">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.145Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.093Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jquery-1.4.2 dimensions部分源码分析">
 <meta name="twitter:description" content="jQuery.fn.width()和jQuery.fn.css(&amp;quot;width&amp;quot;)的区别注意jQuery.fn.width()方法返回的是不带px单位的纯宽度数值，而jQuery.fn.css(&amp;quot;width&amp;quot;)方法返回的则是通过style计算得到的是带px单位的字符串，并且在chrome/safari中，这二个方法返回的数值也会因为DOM对象出现滚动条而不一样">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/jquery/2014/07/31/jquery-src-dimensions.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/jquery/2014/07/31/jquery-src-dimensions.html">
 
   <title> jquery-1.4.2 dimensions部分源码分析 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/jquery/" itemprop="url" rel="index">
                     <span itemprop="name">jquery</span>
                   </a>
@@ -257,7 +257,7 @@
         <h2 id="jQuery-fn-width-和jQuery-fn-css-quot-width-quot-的区别"><a href="#jQuery-fn-width-和jQuery-fn-css-quot-width-quot-的区别" class="headerlink" title="jQuery.fn.width()和jQuery.fn.css(&quot;width&quot;)的区别"></a>jQuery.fn.width()和jQuery.fn.css(&quot;width&quot;)的区别</h2><p>注意jQuery.fn.width()方法返回的是不带px单位的纯宽度数值，而jQuery.fn.css(&quot;width&quot;)方法返回的则是通过style计算得到的是带px单位的字符串，并且在chrome/safari中，这二个方法返回的数值也会因为DOM对象出现滚动条而不一样：jQuery.fn.width()是通过offsetWidth减去border和padding的宽度得到的，所以不会受滚动条的影响，而jQuery.fn.css(&quot;width&quot;)是由window.getComputedStyle()方法计算得到。</p>
 <p>这二个方法运行结果的差异可以从<code>jQuery.fn.offset()</code>源码阅读笔记中查看。</p>
 <a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Create innerHeight, innerWidth, outerHeight and outerWidth methods</span></div><div class="line">jQuery.each([ <span class="string">"Height"</span>, <span class="string">"Width"</span> ], <span class="function"><span class="keyword">function</span>(<span class="params"> i, name </span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> type = name.toLowerCase();</div><div class="line"></div><div class="line">    <span class="comment">// 因为jQuery.curCSS()方法中的elem.ownerDocument.defaultView这一行代码的约束，使得innerHeight, innerWidth, outerHeight, outerWidth这四个方法不能用于window/document二个对象上，使用width/height代替之</span></div><div class="line">    <span class="comment">// Get the current computed height for the first element in the set of matched elements, including padding but not border.</span></div><div class="line">    <span class="comment">// 计算包括padding在内的元素宽高的像素值(对比clientHeight/clientWidth，如果没有滚动条出现，clientWidth和innerWidth这二个值是相同的)</span></div><div class="line">    <span class="comment">// innerHeight and innerWidth</span></div><div class="line">    jQuery.fn[<span class="string">"inner"</span> + name] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>[<span class="number">0</span>] ?</div><div class="line">            <span class="comment">// 计算jQuery匹配到的第一个元素</span></div><div class="line">            jQuery.css( <span class="keyword">this</span>[<span class="number">0</span>], type, <span class="literal">false</span>, <span class="string">"padding"</span> ) :</div><div class="line">            <span class="literal">null</span>;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// Get the current computed height for the first element in the set of matched elements, including padding and border.</span></div><div class="line">    <span class="comment">// 计算包括padding和border的元素宽高像素值(参考offsetWidth/offsetHeight)</span></div><div class="line">    <span class="comment">// 如果传入的margin为true，则计算包括margin的宽高</span></div><div class="line">    <span class="comment">// outerHeight and outerWidth</span></div><div class="line">    jQuery.fn[<span class="string">"outer"</span> + name] = <span class="function"><span class="keyword">function</span>(<span class="params"> margin </span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>[<span class="number">0</span>] ?</div><div class="line">            <span class="comment">// 通过jQuery.css和jQuery.curCSS方法计算第一个匹配元素的宽高</span></div><div class="line">            jQuery.css( <span class="keyword">this</span>[<span class="number">0</span>], type, <span class="literal">false</span>, margin ? <span class="string">"margin"</span> : <span class="string">"border"</span> ) :</div><div class="line">            <span class="literal">null</span>;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// 区别jQuery.fn.css('height')和jQuery.fn.height()方法：</span></div><div class="line">    <span class="comment">// The difference between .css('height') and .height() is that the latter returns a unit-less pixel value (for example, 400) while the former returns a value with units intact (for example, 400px).</span></div><div class="line">    <span class="comment">// The .height() method is recommended when an element's height needs to be used in a mathematical calculation.</span></div><div class="line">    <span class="comment">// $(window).width();   // returns width of browser viewport</span></div><div class="line">    <span class="comment">// $(document).width(); // returns width of HTML document</span></div><div class="line">    <span class="comment">// $(window).height();   // returns height of browser viewport</span></div><div class="line">    <span class="comment">// $(document).height(); // returns height of HTML document</span></div><div class="line">    <span class="comment">// 参数size: 可以传一个function(index, height)方法作为size参数</span></div><div class="line">    jQuery.fn[ type ] = <span class="function"><span class="keyword">function</span>(<span class="params"> size </span>) </span>&#123;</div><div class="line">        <span class="comment">// Get window width or height</span></div><div class="line">        <span class="keyword">var</span> elem = <span class="keyword">this</span>[<span class="number">0</span>];</div><div class="line">        <span class="keyword">if</span> ( !elem ) &#123;</div><div class="line">            <span class="comment">// $().heigth()</span></div><div class="line">            <span class="keyword">return</span> size == <span class="literal">null</span> ? <span class="literal">null</span> : <span class="keyword">this</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( jQuery.isFunction( size ) ) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params"> i </span>) </span>&#123;</div><div class="line">                <span class="keyword">var</span> self = jQuery( <span class="keyword">this</span> );</div><div class="line">                <span class="comment">// 如果size是方法，则以function(index, oldHeigthValue)形式调用此方法，将产生的结果作为新值赋给height</span></div><div class="line">                self[ type ]( size.call( <span class="keyword">this</span>, i, self[ type ]() ) );</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 这个返回值用了3个3目运算符</span></div><div class="line">        <span class="keyword">return</span> (<span class="string">"scrollTo"</span> <span class="keyword">in</span> elem &amp;&amp; elem.document) ? <span class="comment">// does it walk and quack like a window?</span></div><div class="line">            <span class="comment">// Everyone else use document.documentElement or document.body depending on Quirks vs Standards mode</span></div><div class="line">            elem.document.compatMode === <span class="string">"CSS1Compat"</span> &amp;&amp; elem.document.documentElement[ <span class="string">"client"</span> + name ] ||</div><div class="line">            elem.document.body[ <span class="string">"client"</span> + name ]</div><div class="line">            <span class="comment">// 当elem为window对象时，并且为标准模型下，返回Document.documentElement.clientHeight，即当前的window窗口高度</span></div><div class="line">            <span class="comment">// 如果当前文档处于怪异模型下，则返回Document.body.clientHeight，这个值在标准模型中返回的是文件document.body的高度，在怪异模型中返回window窗口高度</span></div><div class="line">            :</div><div class="line">            <span class="comment">// Get document width or height</span></div><div class="line">            (elem.nodeType === <span class="number">9</span>) ? <span class="comment">// is it a document</span></div><div class="line">                <span class="comment">// Either scroll[Width/Height] or offset[Width/Height], whichever is greater</span></div><div class="line">                <span class="built_in">Math</span>.max(</div><div class="line">                    elem.documentElement[<span class="string">"client"</span> + name],</div><div class="line">                    elem.body[<span class="string">"scroll"</span> + name], elem.documentElement[<span class="string">"scroll"</span> + name],</div><div class="line">                    elem.body[<span class="string">"offset"</span> + name], elem.documentElement[<span class="string">"offset"</span> + name]</div><div class="line">                )</div><div class="line">                <span class="comment">// 如果是计算document文档的高度，则从</span></div><div class="line">                <span class="comment">// Document.documentElement.clientHeight,</span></div><div class="line">                <span class="comment">// Document.documentElement.scrollHeight, Document.documentElement.offsetHeight,</span></div><div class="line">                <span class="comment">// Document.body.scrollHeight, Document.body.offsetHeight中取最大值</span></div><div class="line">                :</div><div class="line">                <span class="comment">// Get or set width or height on the element</span></div><div class="line">                size === <span class="literal">undefined</span> ?</div><div class="line">                    <span class="comment">// Get width or height on the element</span></div><div class="line">                    jQuery.css( elem, type )</div><div class="line">                    <span class="comment">// 如果是计算elem的宽高，调用jQuery.css()方法并返回值</span></div><div class="line">                    :</div><div class="line">                    <span class="comment">// 如果是设置elem的宽高属性，则调用jQuery.fn.css()方法并返回jquery对象</span></div><div class="line">                    <span class="comment">// Set the width or height on the element (default to pixels if value is unitless)</span></div><div class="line">                    <span class="keyword">this</span>.css( type, <span class="keyword">typeof</span> size === <span class="string">"string"</span> ? size : size + <span class="string">"px"</span> );</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Create innerHeight, innerWidth, outerHeight and outerWidth methods</span></span><span class="line">jQuery.each([ <span class="string">"Height"</span>, <span class="string">"Width"</span> ], <span class="function"><span class="keyword">function</span>(<span class="params"> i, name </span>) </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">var</span> type = name.toLowerCase();</span><span class="line"></span><span class="line">    <span class="comment">// 因为jQuery.curCSS()方法中的elem.ownerDocument.defaultView这一行代码的约束，使得innerHeight, innerWidth, outerHeight, outerWidth这四个方法不能用于window/document二个对象上，使用width/height代替之</span></span><span class="line">    <span class="comment">// Get the current computed height for the first element in the set of matched elements, including padding but not border.</span></span><span class="line">    <span class="comment">// 计算包括padding在内的元素宽高的像素值(对比clientHeight/clientWidth，如果没有滚动条出现，clientWidth和innerWidth这二个值是相同的)</span></span><span class="line">    <span class="comment">// innerHeight and innerWidth</span></span><span class="line">    jQuery.fn[<span class="string">"inner"</span> + name] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>[<span class="number">0</span>] ?</span><span class="line">            <span class="comment">// 计算jQuery匹配到的第一个元素</span></span><span class="line">            jQuery.css( <span class="keyword">this</span>[<span class="number">0</span>], type, <span class="literal">false</span>, <span class="string">"padding"</span> ) :</span><span class="line">            <span class="literal">null</span>;</span><span class="line">    &#125;;</span><span class="line"></span><span class="line">    <span class="comment">// Get the current computed height for the first element in the set of matched elements, including padding and border.</span></span><span class="line">    <span class="comment">// 计算包括padding和border的元素宽高像素值(参考offsetWidth/offsetHeight)</span></span><span class="line">    <span class="comment">// 如果传入的margin为true，则计算包括margin的宽高</span></span><span class="line">    <span class="comment">// outerHeight and outerWidth</span></span><span class="line">    jQuery.fn[<span class="string">"outer"</span> + name] = <span class="function"><span class="keyword">function</span>(<span class="params"> margin </span>) </span>&#123;</span><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>[<span class="number">0</span>] ?</span><span class="line">            <span class="comment">// 通过jQuery.css和jQuery.curCSS方法计算第一个匹配元素的宽高</span></span><span class="line">            jQuery.css( <span class="keyword">this</span>[<span class="number">0</span>], type, <span class="literal">false</span>, margin ? <span class="string">"margin"</span> : <span class="string">"border"</span> ) :</span><span class="line">            <span class="literal">null</span>;</span><span class="line">    &#125;;</span><span class="line"></span><span class="line">    <span class="comment">// 区别jQuery.fn.css('height')和jQuery.fn.height()方法：</span></span><span class="line">    <span class="comment">// The difference between .css('height') and .height() is that the latter returns a unit-less pixel value (for example, 400) while the former returns a value with units intact (for example, 400px).</span></span><span class="line">    <span class="comment">// The .height() method is recommended when an element's height needs to be used in a mathematical calculation.</span></span><span class="line">    <span class="comment">// $(window).width();   // returns width of browser viewport</span></span><span class="line">    <span class="comment">// $(document).width(); // returns width of HTML document</span></span><span class="line">    <span class="comment">// $(window).height();   // returns height of browser viewport</span></span><span class="line">    <span class="comment">// $(document).height(); // returns height of HTML document</span></span><span class="line">    <span class="comment">// 参数size: 可以传一个function(index, height)方法作为size参数</span></span><span class="line">    jQuery.fn[ type ] = <span class="function"><span class="keyword">function</span>(<span class="params"> size </span>) </span>&#123;</span><span class="line">        <span class="comment">// Get window width or height</span></span><span class="line">        <span class="keyword">var</span> elem = <span class="keyword">this</span>[<span class="number">0</span>];</span><span class="line">        <span class="keyword">if</span> ( !elem ) &#123;</span><span class="line">            <span class="comment">// $().heigth()</span></span><span class="line">            <span class="keyword">return</span> size == <span class="literal">null</span> ? <span class="literal">null</span> : <span class="keyword">this</span>;</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="keyword">if</span> ( jQuery.isFunction( size ) ) &#123;</span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params"> i </span>) </span>&#123;</span><span class="line">                <span class="keyword">var</span> self = jQuery( <span class="keyword">this</span> );</span><span class="line">                <span class="comment">// 如果size是方法，则以function(index, oldHeigthValue)形式调用此方法，将产生的结果作为新值赋给height</span></span><span class="line">                self[ type ]( size.call( <span class="keyword">this</span>, i, self[ type ]() ) );</span><span class="line">            &#125;);</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="comment">// 这个返回值用了3个3目运算符</span></span><span class="line">        <span class="keyword">return</span> (<span class="string">"scrollTo"</span> <span class="keyword">in</span> elem &amp;&amp; elem.document) ? <span class="comment">// does it walk and quack like a window?</span></span><span class="line">            <span class="comment">// Everyone else use document.documentElement or document.body depending on Quirks vs Standards mode</span></span><span class="line">            elem.document.compatMode === <span class="string">"CSS1Compat"</span> &amp;&amp; elem.document.documentElement[ <span class="string">"client"</span> + name ] ||</span><span class="line">            elem.document.body[ <span class="string">"client"</span> + name ]</span><span class="line">            <span class="comment">// 当elem为window对象时，并且为标准模型下，返回Document.documentElement.clientHeight，即当前的window窗口高度</span></span><span class="line">            <span class="comment">// 如果当前文档处于怪异模型下，则返回Document.body.clientHeight，这个值在标准模型中返回的是文件document.body的高度，在怪异模型中返回window窗口高度</span></span><span class="line">            :</span><span class="line">            <span class="comment">// Get document width or height</span></span><span class="line">            (elem.nodeType === <span class="number">9</span>) ? <span class="comment">// is it a document</span></span><span class="line">                <span class="comment">// Either scroll[Width/Height] or offset[Width/Height], whichever is greater</span></span><span class="line">                <span class="built_in">Math</span>.max(</span><span class="line">                    elem.documentElement[<span class="string">"client"</span> + name],</span><span class="line">                    elem.body[<span class="string">"scroll"</span> + name], elem.documentElement[<span class="string">"scroll"</span> + name],</span><span class="line">                    elem.body[<span class="string">"offset"</span> + name], elem.documentElement[<span class="string">"offset"</span> + name]</span><span class="line">                )</span><span class="line">                <span class="comment">// 如果是计算document文档的高度，则从</span></span><span class="line">                <span class="comment">// Document.documentElement.clientHeight,</span></span><span class="line">                <span class="comment">// Document.documentElement.scrollHeight, Document.documentElement.offsetHeight,</span></span><span class="line">                <span class="comment">// Document.body.scrollHeight, Document.body.offsetHeight中取最大值</span></span><span class="line">                :</span><span class="line">                <span class="comment">// Get or set width or height on the element</span></span><span class="line">                size === <span class="literal">undefined</span> ?</span><span class="line">                    <span class="comment">// Get width or height on the element</span></span><span class="line">                    jQuery.css( elem, type )</span><span class="line">                    <span class="comment">// 如果是计算elem的宽高，调用jQuery.css()方法并返回值</span></span><span class="line">                    :</span><span class="line">                    <span class="comment">// 如果是设置elem的宽高属性，则调用jQuery.fn.css()方法并返回jquery对象</span></span><span class="line">                    <span class="comment">// Set the width or height on the element (default to pixels if value is unitless)</span></span><span class="line">                    <span class="keyword">this</span>.css( type, <span class="keyword">typeof</span> size === <span class="string">"string"</span> ? size : size + <span class="string">"px"</span> );</span><span class="line">    &#125;;</span><span class="line"></span><span class="line">&#125;);</span></pre></td></tr></table></figure>
 
       
     </div>
@@ -284,7 +284,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/jquery/2014/07/31/jquery-src-deferred.html" rel="next" title="jquery-1.5 deferred部分源码分析">
-                上一篇：jquery-1.5 deferred部分源码分析
+                <i class="fa fa-chevron-left"></i>
+                jquery-1.5 deferred部分源码分析
               </a>
             
           </div>
@@ -292,7 +293,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/jquery/2014/07/31/jquery-src-event.html" rel="prev" title="jquery-1.4.2 event部分源码分析">
-                下一篇：jquery-1.4.2 event部分源码分析
+                <i class="fa fa-chevron-right"></i>
+                jquery-1.4.2 event部分源码分析
               </a>
             
           </div>
@@ -341,7 +343,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -352,16 +354,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -427,7 +427,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery-fn-width-和jQuery-fn-css-quot-width-quot-的区别"><span class="nav-number">1.</span> <span class="nav-text">jQuery.fn.width()和jQuery.fn.css("width")的区别</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery-fn-width-和jQuery-fn-css-quot-width-quot-的区别"><span class="nav-number">1.</span> <span class="nav-text">jQuery.fn.width()和jQuery.fn.css(&quot;width&quot;)的区别</span></a></li></ol></div>
             
           </div>
         </section>
@@ -443,10 +443,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

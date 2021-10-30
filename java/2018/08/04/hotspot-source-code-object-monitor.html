@@ -1,0 +1,561 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="vm/runtime/objectMonitor.hpp 第61行，定义ObjectMonitor，源码如下： 616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112// WARNING://   This is a v">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hotspot source code - object monitor">
+<meta property="og:url" content="http://www.4e00.com/java/2018/08/04/hotspot-source-code-object-monitor.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="vm/runtime/objectMonitor.hpp 第61行，定义ObjectMonitor，源码如下： 616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112// WARNING://   This is a v">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.137Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hotspot source code - object monitor">
+<meta name="twitter:description" content="vm/runtime/objectMonitor.hpp 第61行，定义ObjectMonitor，源码如下： 616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112// WARNING://   This is a v">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/08/04/hotspot-source-code-object-monitor.html">
+
+  <title> hotspot source code - object monitor | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                hotspot source code - object monitor
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-08-04T23:23:12+08:00" content="2018-08-04">
+              2018-08-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/runtime/objectMonitor.hpp#61" target="_blank" rel="noopener">vm/runtime/objectMonitor.hpp</a> 第<code>61</code>行，定义<code>ObjectMonitor</code>，源码如下：</p>
+<figure class="highlight hpp"><table><tr><td class="gutter"><pre><span class="line">61</span><span class="line">62</span><span class="line">63</span><span class="line">64</span><span class="line">65</span><span class="line">66</span><span class="line">67</span><span class="line">68</span><span class="line">69</span><span class="line">70</span><span class="line">71</span><span class="line">72</span><span class="line">73</span><span class="line">74</span><span class="line">75</span><span class="line">76</span><span class="line">77</span><span class="line">78</span><span class="line">79</span><span class="line">80</span><span class="line">81</span><span class="line">82</span><span class="line">83</span><span class="line">84</span><span class="line">85</span><span class="line">86</span><span class="line">87</span><span class="line">88</span><span class="line">89</span><span class="line">90</span><span class="line">91</span><span class="line">92</span><span class="line">93</span><span class="line">94</span><span class="line">95</span><span class="line">96</span><span class="line">97</span><span class="line">98</span><span class="line">99</span><span class="line">100</span><span class="line">101</span><span class="line">102</span><span class="line">103</span><span class="line">104</span><span class="line">105</span><span class="line">106</span><span class="line">107</span><span class="line">108</span><span class="line">109</span><span class="line">110</span><span class="line">111</span><span class="line">112</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// WARNING:</span></span><span class="line"><span class="comment">//   This is a very sensitive and fragile class. DO NOT make any</span></span><span class="line"><span class="comment">// change unless you are fully aware of the underlying semantics.</span></span><span class="line"></span><span class="line"><span class="comment">//   This class can not inherit from any other class, because I have</span></span><span class="line"><span class="comment">// to let the displaced header be the very first word. Otherwise I</span></span><span class="line"><span class="comment">// have to let markOop include this file, which would export the</span></span><span class="line"><span class="comment">// monitor data structure to everywhere.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// The ObjectMonitor class is used to implement JavaMonitors which have</span></span><span class="line"><span class="comment">// transformed from the lightweight structure of the thread stack to a</span></span><span class="line"><span class="comment">// heavy weight lock due to contention</span></span><span class="line"></span><span class="line"><span class="comment">// It is also used as RawMonitor by the JVMTI</span></span><span class="line"></span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ObjectMonitor</span> &#123;</span></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="keyword">enum</span> &#123;</span><span class="line">    OM_OK,                    <span class="comment">// no error</span></span><span class="line">    OM_SYSTEM_ERROR,          <span class="comment">// operating system error</span></span><span class="line">    OM_ILLEGAL_MONITOR_STATE, <span class="comment">// IllegalMonitorStateException</span></span><span class="line">    OM_INTERRUPTED,           <span class="comment">// Thread.interrupt()</span></span><span class="line">    OM_TIMED_OUT              <span class="comment">// Object.wait() timed out</span></span><span class="line">  &#125;;</span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="comment">// TODO-<span class="doctag">FIXME:</span> the "offset" routines should return a type of off_t instead of int ...</span></span><span class="line">  <span class="comment">// ByteSize would also be an appropriate type.</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">header_offset_in_bytes</span><span class="params">()</span>      </span>&#123; <span class="keyword">return</span> offset_of(ObjectMonitor, _header);     &#125;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">object_offset_in_bytes</span><span class="params">()</span>      </span>&#123; <span class="keyword">return</span> offset_of(ObjectMonitor, _object);     &#125;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">owner_offset_in_bytes</span><span class="params">()</span>       </span>&#123; <span class="keyword">return</span> offset_of(ObjectMonitor, _owner);      &#125;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">count_offset_in_bytes</span><span class="params">()</span>       </span>&#123; <span class="keyword">return</span> offset_of(ObjectMonitor, _count);      &#125;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">recursions_offset_in_bytes</span><span class="params">()</span>  </span>&#123; <span class="keyword">return</span> offset_of(ObjectMonitor, _recursions); &#125;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">cxq_offset_in_bytes</span><span class="params">()</span>         </span>&#123; <span class="keyword">return</span> offset_of(ObjectMonitor, _cxq) ;       &#125;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">succ_offset_in_bytes</span><span class="params">()</span>        </span>&#123; <span class="keyword">return</span> offset_of(ObjectMonitor, _succ) ;      &#125;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">EntryList_offset_in_bytes</span><span class="params">()</span>   </span>&#123; <span class="keyword">return</span> offset_of(ObjectMonitor, _EntryList);  &#125;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">FreeNext_offset_in_bytes</span><span class="params">()</span>    </span>&#123; <span class="keyword">return</span> offset_of(ObjectMonitor, FreeNext);    &#125;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">WaitSet_offset_in_bytes</span><span class="params">()</span>     </span>&#123; <span class="keyword">return</span> offset_of(ObjectMonitor, _WaitSet) ;   &#125;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Responsible_offset_in_bytes</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> offset_of(ObjectMonitor, _Responsible);&#125;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Spinner_offset_in_bytes</span><span class="params">()</span>     </span>&#123; <span class="keyword">return</span> offset_of(ObjectMonitor, _Spinner);    &#125;</span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="comment">// Eventaully we'll make provisions for multiple callbacks, but</span></span><span class="line">  <span class="comment">// now one will suffice.</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="title">int</span> <span class="params">(*SpinCallbackFunction)</span><span class="params">(<span class="keyword">intptr_t</span>, <span class="keyword">int</span>)</span> </span>;</span><span class="line">  <span class="keyword">static</span> <span class="keyword">intptr_t</span> SpinCallbackArgument ;</span><span class="line"></span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="function">markOop   <span class="title">header</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">void</span>      <span class="title">set_header</span><span class="params">(markOop hdr)</span></span>;</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/runtime/objectMonitor.cpp#186" target="_blank" rel="noopener">vm/runtime/objectMonitor.cpp</a> 第<code>186</code>行，关于线程获取对象锁相关的一些说明备注内容，源码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">186</span><span class="line">187</span><span class="line">188</span><span class="line">189</span><span class="line">190</span><span class="line">191</span><span class="line">192</span><span class="line">193</span><span class="line">194</span><span class="line">195</span><span class="line">196</span><span class="line">197</span><span class="line">198</span><span class="line">199</span><span class="line">200</span><span class="line">201</span><span class="line">202</span><span class="line">203</span><span class="line">204</span><span class="line">205</span><span class="line">206</span><span class="line">207</span><span class="line">208</span><span class="line">209</span><span class="line">210</span><span class="line">211</span><span class="line">212</span><span class="line">213</span><span class="line">214</span><span class="line">215</span><span class="line">216</span><span class="line">217</span><span class="line">218</span><span class="line">219</span><span class="line">220</span><span class="line">221</span><span class="line">222</span><span class="line">223</span><span class="line">224</span><span class="line">225</span><span class="line">226</span><span class="line">227</span><span class="line">228</span><span class="line">229</span><span class="line">230</span><span class="line">231</span><span class="line">232</span><span class="line">233</span><span class="line">234</span><span class="line">235</span><span class="line">236</span><span class="line">237</span><span class="line">238</span><span class="line">239</span><span class="line">240</span><span class="line">241</span><span class="line">242</span><span class="line">243</span><span class="line">244</span><span class="line">245</span><span class="line">246</span><span class="line">247</span><span class="line">248</span><span class="line">249</span><span class="line">250</span><span class="line">251</span><span class="line">252</span><span class="line">253</span><span class="line">254</span><span class="line">255</span><span class="line">256</span><span class="line">257</span><span class="line">258</span><span class="line">259</span><span class="line">260</span><span class="line">261</span><span class="line">262</span><span class="line">263</span><span class="line">264</span><span class="line">265</span><span class="line">266</span><span class="line">267</span><span class="line">268</span><span class="line">269</span><span class="line">270</span><span class="line">271</span><span class="line">272</span><span class="line">273</span><span class="line">274</span><span class="line">275</span><span class="line">276</span><span class="line">277</span><span class="line">278</span><span class="line">279</span><span class="line">280</span><span class="line">281</span><span class="line">282</span><span class="line">283</span><span class="line">284</span><span class="line">285</span><span class="line">286</span><span class="line">287</span><span class="line">288</span><span class="line">289</span><span class="line">290</span><span class="line">291</span><span class="line">292</span><span class="line">293</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// -----------------------------------------------------------------------------</span></span><span class="line"><span class="comment">// Theory of operations -- Monitors lists, thread residency, etc:</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * A thread acquires ownership of a monitor by successfully</span></span><span class="line"><span class="comment">//   CAS()ing the _owner field from null to non-null.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * Invariant: A thread appears on at most one monitor list --</span></span><span class="line"><span class="comment">//   cxq, EntryList or WaitSet -- at any one time.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * Contending threads "push" themselves onto the cxq with CAS</span></span><span class="line"><span class="comment">//   and then spin/park.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * After a contending thread eventually acquires the lock it must</span></span><span class="line"><span class="comment">//   dequeue itself from either the EntryList or the cxq.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * The exiting thread identifies and unparks an "heir presumptive"</span></span><span class="line"><span class="comment">//   tentative successor thread on the EntryList.  Critically, the</span></span><span class="line"><span class="comment">//   exiting thread doesn't unlink the successor thread from the EntryList.</span></span><span class="line"><span class="comment">//   After having been unparked, the wakee will recontend for ownership of</span></span><span class="line"><span class="comment">//   the monitor.   The successor (wakee) will either acquire the lock or</span></span><span class="line"><span class="comment">//   re-park itself.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//   Succession is provided for by a policy of competitive handoff.</span></span><span class="line"><span class="comment">//   The exiting thread does _not_ grant or pass ownership to the</span></span><span class="line"><span class="comment">//   successor thread.  (This is also referred to as "handoff" succession").</span></span><span class="line"><span class="comment">//   Instead the exiting thread releases ownership and possibly wakes</span></span><span class="line"><span class="comment">//   a successor, so the successor can (re)compete for ownership of the lock.</span></span><span class="line"><span class="comment">//   If the EntryList is empty but the cxq is populated the exiting</span></span><span class="line"><span class="comment">//   thread will drain the cxq into the EntryList.  It does so by</span></span><span class="line"><span class="comment">//   by detaching the cxq (installing null with CAS) and folding</span></span><span class="line"><span class="comment">//   the threads from the cxq into the EntryList.  The EntryList is</span></span><span class="line"><span class="comment">//   doubly linked, while the cxq is singly linked because of the</span></span><span class="line"><span class="comment">//   CAS-based "push" used to enqueue recently arrived threads (RATs).</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * Concurrency invariants:</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//   -- only the monitor owner may access or mutate the EntryList.</span></span><span class="line"><span class="comment">//      The mutex property of the monitor itself protects the EntryList</span></span><span class="line"><span class="comment">//      from concurrent interference.</span></span><span class="line"><span class="comment">//   -- Only the monitor owner may detach the cxq.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * The monitor entry list operations avoid locks, but strictly speaking</span></span><span class="line"><span class="comment">//   they're not lock-free.  Enter is lock-free, exit is not.</span></span><span class="line"><span class="comment">//   For a description of 'Methods and apparatus providing non-blocking access</span></span><span class="line"><span class="comment">//   to a resource,' see U.S. Pat. No. 7844973.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * The cxq can have multiple concurrent "pushers" but only one concurrent</span></span><span class="line"><span class="comment">//   detaching thread.  This mechanism is immune from the ABA corruption.</span></span><span class="line"><span class="comment">//   More precisely, the CAS-based "push" onto cxq is ABA-oblivious.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * Taken together, the cxq and the EntryList constitute or form a</span></span><span class="line"><span class="comment">//   single logical queue of threads stalled trying to acquire the lock.</span></span><span class="line"><span class="comment">//   We use two distinct lists to improve the odds of a constant-time</span></span><span class="line"><span class="comment">//   dequeue operation after acquisition (in the ::enter() epilog) and</span></span><span class="line"><span class="comment">//   to reduce heat on the list ends.  (c.f. Michael Scott's "2Q" algorithm).</span></span><span class="line"><span class="comment">//   A key desideratum is to minimize queue &amp; monitor metadata manipulation</span></span><span class="line"><span class="comment">//   that occurs while holding the monitor lock -- that is, we want to</span></span><span class="line"><span class="comment">//   minimize monitor lock holds times.  Note that even a small amount of</span></span><span class="line"><span class="comment">//   fixed spinning will greatly reduce the # of enqueue-dequeue operations</span></span><span class="line"><span class="comment">//   on EntryList|cxq.  That is, spinning relieves contention on the "inner"</span></span><span class="line"><span class="comment">//   locks and monitor metadata.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//   Cxq points to the the set of Recently Arrived Threads attempting entry.</span></span><span class="line"><span class="comment">//   Because we push threads onto _cxq with CAS, the RATs must take the form of</span></span><span class="line"><span class="comment">//   a singly-linked LIFO.  We drain _cxq into EntryList  at unlock-time when</span></span><span class="line"><span class="comment">//   the unlocking thread notices that EntryList is null but _cxq is != null.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//   The EntryList is ordered by the prevailing queue discipline and</span></span><span class="line"><span class="comment">//   can be organized in any convenient fashion, such as a doubly-linked list or</span></span><span class="line"><span class="comment">//   a circular doubly-linked list.  Critically, we want insert and delete operations</span></span><span class="line"><span class="comment">//   to operate in constant-time.  If we need a priority queue then something akin</span></span><span class="line"><span class="comment">//   to Solaris' sleepq would work nicely.  Viz.,</span></span><span class="line"><span class="comment">//   http://agg.eng/ws/on10_nightly/source/usr/src/uts/common/os/sleepq.c.</span></span><span class="line"><span class="comment">//   Queue discipline is enforced at ::exit() time, when the unlocking thread</span></span><span class="line"><span class="comment">//   drains the cxq into the EntryList, and orders or reorders the threads on the</span></span><span class="line"><span class="comment">//   EntryList accordingly.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//   Barring "lock barging", this mechanism provides fair cyclic ordering,</span></span><span class="line"><span class="comment">//   somewhat similar to an elevator-scan.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * The monitor synchronization subsystem avoids the use of native</span></span><span class="line"><span class="comment">//   synchronization primitives except for the narrow platform-specific</span></span><span class="line"><span class="comment">//   park-unpark abstraction.  See the comments in os_solaris.cpp regarding</span></span><span class="line"><span class="comment">//   the semantics of park-unpark.  Put another way, this monitor implementation</span></span><span class="line"><span class="comment">//   depends only on atomic operations and park-unpark.  The monitor subsystem</span></span><span class="line"><span class="comment">//   manages all RUNNING-&gt;BLOCKED and BLOCKED-&gt;READY transitions while the</span></span><span class="line"><span class="comment">//   underlying OS manages the READY&lt;-&gt;RUN transitions.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * Waiting threads reside on the WaitSet list -- wait() puts</span></span><span class="line"><span class="comment">//   the caller onto the WaitSet.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * notify() or notifyAll() simply transfers threads from the WaitSet to</span></span><span class="line"><span class="comment">//   either the EntryList or cxq.  Subsequent exit() operations will</span></span><span class="line"><span class="comment">//   unpark the notifyee.  Unparking a notifee in notify() is inefficient -</span></span><span class="line"><span class="comment">//   it's likely the notifyee would simply impale itself on the lock held</span></span><span class="line"><span class="comment">//   by the notifier.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * An interesting alternative is to encode cxq as (List,LockByte) where</span></span><span class="line"><span class="comment">//   the LockByte is 0 iff the monitor is owned.  _owner is simply an auxiliary</span></span><span class="line"><span class="comment">//   variable, like _recursions, in the scheme.  The threads or Events that form</span></span><span class="line"><span class="comment">//   the list would have to be aligned in 256-byte addresses.  A thread would</span></span><span class="line"><span class="comment">//   try to acquire the lock or enqueue itself with CAS, but exiting threads</span></span><span class="line"><span class="comment">//   could use a 1-0 protocol and simply STB to set the LockByte to 0.</span></span><span class="line"><span class="comment">//   Note that is is *not* word-tearing, but it does presume that full-word</span></span><span class="line"><span class="comment">//   CAS operations are coherent with intermix with STB operations.  That's true</span></span><span class="line"><span class="comment">//   on most common processors.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// * See also http://blogs.sun.com/dave</span></span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/runtime/objectMonitor.hpp#61" target="_blank" rel="noopener">vm/runtime/objectMonitor.hpp</a></li>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/runtime/objectMonitor.cpp#186" target="_blank" rel="noopener">vm/runtime/objectMonitor.cpp</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/08/04/hotspot-source-code-mark-word.html" rel="next" title="hotspot source code - mark word">
+                <i class="fa fa-chevron-left"></i>
+                hotspot source code - mark word
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/08/05/hotspot-source-code-java-method-calls.html" rel="prev" title="hotspot source code - java method calls">
+                <i class="fa fa-chevron-right"></i>
+                hotspot source code - java method calls
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

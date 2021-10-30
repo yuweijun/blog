@@ -1,0 +1,772 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="Java Genericjava泛型是java 1.5版本中增加的最重要特性，虽然在java语法本身上增加了非常高的复杂度，却为开发者带来极大的便利，尤其是在容器相关的使用中。它为代码提供了编译时检查，减少了手动的类型强转，在很大程度上，提高了代码的类型安全。由于java泛型是通过擦除来实现的，对于JVM而言，并不知道泛型的存在，也就是说java泛型实际上是一种java的语法糖，与java的内部类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java generic terminology explanation">
+<meta property="og:url" content="http://www.4e00.com/java/2018/03/17/java-generic-terminology-explanation.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="Java Genericjava泛型是java 1.5版本中增加的最重要特性，虽然在java语法本身上增加了非常高的复杂度，却为开发者带来极大的便利，尤其是在容器相关的使用中。它为代码提供了编译时检查，减少了手动的类型强转，在很大程度上，提高了代码的类型安全。由于java泛型是通过擦除来实现的，对于JVM而言，并不知道泛型的存在，也就是说java泛型实际上是一种java的语法糖，与java的内部类">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-generics-inheritance.png">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.128Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java generic terminology explanation">
+<meta name="twitter:description" content="Java Genericjava泛型是java 1.5版本中增加的最重要特性，虽然在java语法本身上增加了非常高的复杂度，却为开发者带来极大的便利，尤其是在容器相关的使用中。它为代码提供了编译时检查，减少了手动的类型强转，在很大程度上，提高了代码的类型安全。由于java泛型是通过擦除来实现的，对于JVM而言，并不知道泛型的存在，也就是说java泛型实际上是一种java的语法糖，与java的内部类">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/java/java-generics-inheritance.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/03/17/java-generic-terminology-explanation.html">
+
+  <title> java generic terminology explanation | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java generic terminology explanation
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-03-17T12:40:49+08:00" content="2018-03-17">
+              2018-03-17
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Java-Generic"><a href="#Java-Generic" class="headerlink" title="Java Generic"></a>Java Generic</h2><p>java泛型是java 1.5版本中增加的最重要特性，虽然在java语法本身上增加了非常高的复杂度，却为开发者带来极大的便利，尤其是在容器相关的使用中。它为代码提供了编译时检查，减少了手动的类型强转，在很大程度上，提高了代码的类型安全。由于java泛型是通过擦除来实现的，对于JVM而言，并不知道泛型的存在，也就是说java泛型实际上是一种java的语法糖，与java的内部类，受检异常，枚举，注解等一样。</p>
+<h2 id="Java-Generic-相关的术语说明"><a href="#Java-Generic-相关的术语说明" class="headerlink" title="Java Generic 相关的术语说明"></a>Java Generic 相关的术语说明</h2><ol>
+<li>Type Parameter: 类型参数，泛型类、泛型构造器、泛型方法和泛型接口<strong>声明</strong>中的类型变量(<code>type variable</code>)，如<code>Iterable&lt;T&gt;</code>中的标识符<code>T</code>和<code>List&lt;E&gt;</code>中的标识符<code>E</code>，这个<code>E</code>即是类型参数(<code>type parameter</code>)。</li>
+<li>Type Argument: 类型参数，不同于<code>type parameter</code>，在<strong>表达式</strong>中替换泛型类、泛型构造器、泛型方法和泛型接口中声明的<code>type parameter</code>，可以使用<code>通配符</code>(即<code>?</code>)，也可是<code>完全限定标识符</code>，如<code>List&lt;?&gt;</code>和<code>List&lt;java.lang.String&gt;</code>。</li>
+<li>Type Variable: 类型变量，是在泛型类、泛型构造器、泛型方法和泛型接口中用作类型的<code>非限定标识符</code>，如<code>&lt;E extends T&gt;</code>中的<code>T</code>，即为类型变量(<code>type variable</code>)，类型变量有<strong>交集类型</strong>，如<code>&lt;T extends C &amp; I&gt;</code>中的<code>C &amp; I</code>，除了交集类型的类型变量，<code>type variable</code>必须是一个<code>非限定标识符</code>，类型变量即可以出现在泛型类和泛型接口的<strong>声明</strong>中，也可出现在<strong>表达式</strong>中。</li>
+<li>Generic Type: 泛型类型，是通过类型参数化的类或接口。</li>
+<li>Raw Type: 原生类型，将参数化类型擦除之后的类型，如将<code>List&lt;String&gt;</code>的类型参数擦除之后，使用余下的原生类型<code>List</code>与遗留系统进行交互，非泛型类和非泛型接口则不是<code>raw type</code>，如<code>String</code>和<code>int</code>。</li>
+<li>Parameterized Type: 参数化类型，泛型类或者泛型接口的声明定义了一个参数化类型集，如泛型接口<code>List&lt;E&gt;</code>的参数化类型<code>List&lt;String&gt;</code>，其中<code>List</code>是泛型名，而<code>&lt;String&gt;</code>是表示此泛型的特定参数化形式的类型变量列表。</li>
+<li>Generic Class: 泛型类，一个类声明的同时，也声明了一个或者多个类型变量，如<code>ArrayList&lt;E&gt;</code>。</li>
+<li>Generic Interface: 泛型接口，与泛型类定义相似，如<code>Comparable&lt;T&gt;</code>和<code>Map&lt;K, V&gt;</code>。</li>
+<li>Generic Method: 泛型方法，一个方法为自己引入了类型变量，这些类型变量也就是此方法的类型参数，静态方法和非静态方法都可以声明为泛型方法。</li>
+<li>Generic Constructor: 泛型构造器，与泛型方法类似，不管是否是在泛型类中，构造器可以引入自身的类型变量。</li>
+<li>Generic and Subtypes: 通过<code>extends</code>和<code>implements</code>泛型类和泛型接口，创建子类型，如<code>List&lt;E&gt; extends Collection&lt;E&gt;</code>，只要不改变<code>类型参数</code>，继承关系就仍然存在，如<code>List&lt;String&gt;</code>就是<code>Collection&lt;String&gt;</code>的子类型，但是<code>List&lt;String&gt;</code>和<code>List&lt;Object&gt;</code>却是二个完全不同的类型，并不存在继承关系，除了共同的父类<code>List&lt;?&gt;</code>和<code>Object</code>。</li>
+<li>Bounded Type Parameters: 有界类型参数，限制类型参数在某个指定范围内，如类型参数<code>&lt;E extends Number&gt;</code>，表示类型变量<code>E</code>必须是<code>Number</code>或者其子类型。</li>
+<li>Type Inference: 类型推断，JVM在编译期根据方法调用和其类型参数的声明，来推断传入的<code>type arguments</code>是什么类型，从而使方法调用是正确的。</li>
+<li>Wildcards: 通配符，在泛型中使用问号<code>?</code>来表示<code>type argument</code>，代表了某个未知类型，通配符不能用在泛型类和泛型接口的声明中。</li>
+<li>Upper Bounded Wildcards: 上界通配符，通过上界通配符放宽对类型参数的限制，如方法参数类型<code>List&lt;? extends Number&gt;</code>，使得<code>List&lt;Integer&gt;</code>，<code>List&lt;Double&gt;</code>和<code>List&lt;Number&gt;</code>都可以符合方法的参数要求。</li>
+<li>Unbounded Wildcards: 无界通配符，如<code>List&lt;?&gt;</code>，称之为<code>未知类型的List</code>(a list of unknown type)。</li>
+<li>Lower Bounded Wildcards: 下界通配符，指定类型参数为某个指定类型的父类，如<code>List&lt;? super Integer&gt;</code>。</li>
+<li>Wildcards and Subtyping: <code>List&lt;Integer&gt;</code>和<code>List&lt;Number&gt;</code>这2个参数化类型的除了泛型名都是<code>List</code>之外就并无关系，而带有通配符的参数化类型<code>List&lt;? extends Integer&gt;</code>则是<code>List&lt;? extends Number&gt;</code>的子类型。</li>
+<li>Wildcard Capture: 通配符捕获，在某些情况下，编译器会推断通配符的类型。 例如，当评估表达式<code>List&lt;?&gt;</code>时，编译器会从代码中，为<code>?</code>推断出一个特定的类型，并在编译器内部以<code>CAP#1</code>或者<code>capture#1</code>这种形式标示通配符<code>?</code>，这种情况被称为<code>通配符捕获</code>。</li>
+<li>Heap Pollution: 堆污染，当<code>参数化类型</code>的变量引用不是该<code>参数类型</code>的对象时，会发生堆污染，如在接受可变长的类型参数时就可能发生堆污染，<code>void faultyMethod(List&lt;String&gt;... list)</code>，泛型数组可能发生<code>Heap Pollution</code>。</li>
+<li>Recursive Type Bound: 递归式类型绑定，类型参数中的类型变量以递归方式表示，如<code>java.lang.Enum</code>类中的类型参数<code>&lt;E extends Enum&lt;E&gt;&gt;</code>和泛型方法<code>java.util.Collections#min(Collection&lt;? extends T&gt;)</code>中的类型参数<code>&lt;T extends Object &amp; Comparable&lt;? super T&gt;&gt;</code>。</li>
+<li>Type Erasure: 类型擦除，Java通过<code>Erasure</code>擦除来实现泛型，这个实现在Java界也是备受质疑，它提供了编译期的类型安全检查，避免了一些类型强转及导致的<code>ClassCastException</code>运行时异常，并且在运行期没有实际产生大量的泛型类，从而减少了运行时的开销。</li>
+<li>Reifiable Types: 可具化类型，因为泛型实现是通过类型擦除实现的，因此并非所有类型信息在运行时都可用，在运行时完全可用的类型称为可具化类型<code>reifiable type</code>，如<code>String</code>、<code>Integer</code>、<code>int</code>、<code>int[]</code>和<code>List&lt;?&gt;</code>。</li>
+<li>non-Reifiable Types: 相对于<code>reifiable type</code>而言，如<code>List&lt;? extends Number&gt;</code>和<code>List&lt;? extends C &amp; T&gt;</code>就是不可具化类型。</li>
+<li>Covariant: 协变，指方法调用的协变返回，当子类重写父类的方法时，放宽了返回类型的限制，可以精细化返回结果，返回原来返回类型的子类型。泛型不是协变的，而数组却是协变的，<code>Integer[]</code>是<code>Number[]</code>，<code>List&lt;Integer&gt;</code>却不是<code>List&lt;Number&gt;</code>。</li>
+<li>PECS: 从<code>容器</code>的角度来观察其中元素的操作，如果只是从容器中获取元素，容器此时就扮演了生产者<code>Producer</code>的角色，这时候就使用上界通配符<code>&lt;? extends T&gt;</code>；反之只是往容器里放元素进去，而不需要取出来，此时容器相当于一个消费者<code>Consumer</code>，就使用下界通配符<code>&lt;? super T&gt;</code>，为方便记忆，<code>Josh Bloch</code>将之简单归纳在一起作为一个助记符号，就是<code>PECS</code>，也有些人归纳为<code>Get/Put Priciple</code>。如果即要往容器里放元素，同要往外取元素，那就不要使用通配符<code>&lt;T&gt;</code>。</li>
+</ol>
+<a id="more"></a>
+<h2 id="Java-泛型术语英文说明及示例"><a href="#Java-泛型术语英文说明及示例" class="headerlink" title="Java 泛型术语英文说明及示例"></a>Java 泛型术语英文说明及示例</h2><h3 id="Type-Variables"><a href="#Type-Variables" class="headerlink" title="Type Variables"></a>Type Variables</h3><p>A <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.4" target="_blank" rel="noopener">type variable</a> is an unqualified identifier used as a type in class, interface, method, and constructor bodies.</p>
+<p>A type variable is introduced by the declaration of a type parameter of a generic class, interface, method, or constructor.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">TypeParameter:</span><span class="line">    &#123;TypeParameterModifier&#125; Identifier [TypeBound]</span><span class="line">TypeParameterModifier:</span><span class="line">    Annotation</span><span class="line">TypeBound:</span><span class="line">    extends TypeVariable</span><span class="line">    extends ClassOrInterfaceType &#123;AdditionalBound&#125;</span><span class="line">AdditionalBound:</span><span class="line">    &amp; InterfaceType</span></pre></td></tr></table></figure>
+<p>The scope of a type variable declared as a type parameter is specified in Generic Classes and Type Parameters.</p>
+<p>Every type variable declared as a type parameter has a bound. If no bound is declared for a type variable, <code>Object</code> is assumed. If a bound is declared, it consists of either:</p>
+<ol>
+<li>a single type variable <code>T</code>, or</li>
+<li>a class or interface type <code>T</code> possibly followed by interface types <code>I1 &amp; ... &amp; In</code>.</li>
+</ol>
+<h3 id="Generic-Classes-and-Type-Parameters"><a href="#Generic-Classes-and-Type-Parameters" class="headerlink" title="Generic Classes and Type Parameters"></a>Generic Classes and Type Parameters</h3><p>A class is generic if it declares one or more <code>Type Variables</code>.</p>
+<p>These <code>type variables</code> are known as the <code>type parameters</code> of the class. The type parameter section follows the class name and is delimited by angle brackets(<code>&lt;&gt;</code>).</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">TypeParameters:</span><span class="line">    &lt; TypeParameterList &gt;</span><span class="line">TypeParameterList:</span><span class="line">    TypeParameter &#123;, TypeParameter&#125;</span></pre></td></tr></table></figure>
+<p>In a class&#39;s type parameter section, a type variable T directly depends on a type variable S if S is the bound of T, while T depends on S if either T directly depends on S or T directly depends on a type variable U that depends on S (using this definition recursively). It is a compile-time error if a type variable in a class&#39;s type parameter section depends on itself.</p>
+<p>A generic class declaration defines a set of parameterized types, one for each possible parameterization of the type parameter section by type arguments. All of these parameterized types share the same class at run time.</p>
+<p>For instance, executing the code:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Vector&lt;String&gt;  x = <span class="keyword">new</span> Vector&lt;String&gt;();</span><span class="line">Vector&lt;Integer&gt; y = <span class="keyword">new</span> Vector&lt;Integer&gt;();</span><span class="line"><span class="keyword">boolean</span> b = x.getClass() == y.getClass();</span></pre></td></tr></table></figure>
+<p>will result in the variable <code>b</code> holding the value <code>true</code>.</p>
+<p>It is a compile-time error if a generic class is a direct or indirect subclass of <code>Throwable</code>. This restriction is needed since the catch mechanism of the Java Virtual Machine works only with non-generic classes.</p>
+<h3 id="Type-Parameter-and-Type-Argument-Terminology"><a href="#Type-Parameter-and-Type-Argument-Terminology" class="headerlink" title="Type Parameter and Type Argument Terminology"></a>Type Parameter and Type Argument Terminology</h3><p>Type Parameter and Type Argument Terminology: Many developers use the terms <code>type parameter</code> and <code>type argument</code> interchangeably, but these terms are not the same. When coding, one provides <code>type arguments</code> in order to create a <code>parameterized type</code>. Therefore, the <code>T</code> in <code>Foo&lt;T&gt;</code> is a <code>type parameter</code> and the <code>String</code> in <code>Foo&lt;String&gt; f</code> is a <code>type argument</code>.</p>
+<h3 id="Generic-Type"><a href="#Generic-Type" class="headerlink" title="Generic Type"></a>Generic Type</h3><p>A generic type is a generic class or interface that is parameterized over types, such as:</p>
+<ol>
+<li><code>List&lt;String&gt;</code></li>
+<li><code>List&lt;integer&gt;</code></li>
+<li><code>Set&lt;int[]&gt;</code></li>
+</ol>
+<h3 id="Raw-Types"><a href="#Raw-Types" class="headerlink" title="Raw Types"></a>Raw Types</h3><p>A raw type is the name of a generic class or interface without any type arguments, such as:</p>
+<ol>
+<li><code>List</code></li>
+<li><code>List[]</code></li>
+</ol>
+<p>To facilitate interfacing with non-generic legacy code, it is possible to use as a type the erasure of a parameterized type or the erasure of an array type whose element type is a parameterized type. Such a type is called a <code>raw type</code>.</p>
+<p>More precisely, a raw type is defined to be one of:</p>
+<ol>
+<li>The reference type that is formed by taking the name of a generic type declaration without an accompanying type argument list.</li>
+<li>An array type whose element type is a raw type.</li>
+<li>A non-static member type of a raw type <code>R</code> that is not inherited from a superclass or superinterface of <code>R</code>.</li>
+</ol>
+<p>A non-generic class or interface type is not a raw type.</p>
+<h3 id="Parameterized-Types"><a href="#Parameterized-Types" class="headerlink" title="Parameterized Types"></a>Parameterized Types</h3><p>A class or interface declaration that is generic defines a set of parameterized types, such as:</p>
+<ol>
+<li><code>List&lt;String&gt;</code></li>
+<li><code>List&lt;Integer&gt;</code></li>
+<li><code>List&lt;Long&gt;</code></li>
+</ol>
+<h3 id="Generic-Methods"><a href="#Generic-Methods" class="headerlink" title="Generic Methods"></a>Generic Methods</h3><p>A method is generic if it declares one or more type variables. These type variables are known as the type parameters of the method. The form of the type parameter section of a generic method is identical to the type parameter section of a generic class.</p>
+<p>Generic methods are methods that introduce their own type parameters. This is similar to declaring a generic type, but the type parameter&#39;s scope is limited to the method where it is declared. Static and non-static generic methods are allowed, as well as generic class constructors.</p>
+<p>The syntax for a generic method includes a list of type parameters, inside angle brackets, which appears before the method&#39;s return type. For static generic methods, the type parameter section must appear before the method&#39;s return type.</p>
+<h3 id="Generics-Inheritance-and-Subtypes"><a href="#Generics-Inheritance-and-Subtypes" class="headerlink" title="Generics, Inheritance, and Subtypes"></a>Generics, Inheritance, and Subtypes</h3><p>As you already know, it is possible to assign an object of one type to an object of another type provided that the types are compatible. For example, you can assign an <code>Integer</code> to an <code>Object</code>, since <code>Object</code> is one of Integer&#39;s supertypes:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Object someObject = <span class="keyword">new</span> Object();</span><span class="line">Integer someInteger = <span class="keyword">new</span> Integer(<span class="number">10</span>);</span><span class="line">someObject = someInteger;   <span class="comment">// OK</span></span></pre></td></tr></table></figure>
+<p>In object-oriented terminology, this is called an <code>is a</code> relationship. Since an <code>Integer</code> is a kind of <code>Object</code>, the assignment is allowed. But <code>Integer</code> is also a kind of <code>Number</code>, so the following code is valid as well:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Box&lt;Number&gt; box = <span class="keyword">new</span> Box&lt;Number&gt;();</span><span class="line">box.add(<span class="keyword">new</span> Integer(<span class="number">10</span>));   <span class="comment">// OK</span></span><span class="line">box.add(<span class="keyword">new</span> Double(<span class="number">10.1</span>));  <span class="comment">// OK</span></span></pre></td></tr></table></figure>
+<blockquote>
+<p>Note: Given two concrete types <code>A</code> and <code>B</code> (for example, <code>Number</code> and <code>Integer</code>), <code>MyClass&lt;A&gt;</code> has no relationship to <code>MyClass&lt;B&gt;</code>, regardless of whether or not <code>A</code> and <code>B</code> are related. The common parent of <code>MyClass&lt;A&gt;</code> and <code>MyClass&lt;B&gt;</code> is <code>Object</code>.</p>
+</blockquote>
+<p>For information on how to create a subtype-like relationship between two generic classes when the type parameters are related, see Wildcards and Subtyping.</p>
+<h3 id="Generic-Classes-and-Subtyping"><a href="#Generic-Classes-and-Subtyping" class="headerlink" title="Generic Classes and Subtyping"></a>Generic Classes and Subtyping</h3><p>The subtype and supertype relations are binary relations on types.</p>
+<p>Subtyping does not extend through parameterized types: <code>T</code> is subtype of <code>S</code> does not imply that <code>C&lt;T&gt;</code> is subtype of <code>C&lt;S&gt;</code>.</p>
+<p>You can subtype a generic class or interface by extending or implementing it. The relationship between the type parameters of one class or interface and the type parameters of another are determined by the extends and implements clauses.</p>
+<p>Using the Collections classes as an example, <code>ArrayList&lt;E&gt;</code> implements <code>List&lt;E&gt;</code>, and <code>List&lt;E&gt;</code> extends <code>Collection&lt;E&gt;</code>. So <code>ArrayList&lt;String&gt;</code> is a subtype of <code>List&lt;String&gt;</code>, which is a subtype of <code>Collection&lt;String&gt;</code>. So long as you do not vary the type argument, the subtyping relationship is preserved between the types.</p>
+<h3 id="Bounded-Type-Parameters"><a href="#Bounded-Type-Parameters" class="headerlink" title="Bounded Type Parameters"></a>Bounded Type Parameters</h3><p>There may be times when you want to restrict the types that can be used as type arguments in a parameterized type. For example, a method that operates on numbers might only want to accept instances of <code>Number</code> or its subclasses. This is what bounded type parameters are for.</p>
+<p>To declare a bounded type parameter, list the type parameter&#39;s name, followed by the <code>extends</code> keyword, followed by its upper bound, which in this example is <code>Number</code>. Note that, in this context, <code>extends</code> is used in a general sense to mean either &quot;extends&quot; (as in classes) or &quot;implements&quot; (as in interfaces): <code>&lt;N extends Number&gt;</code></p>
+<h4 id="Multiple-Bounds"><a href="#Multiple-Bounds" class="headerlink" title="Multiple Bounds"></a>Multiple Bounds</h4><p>The preceding example illustrates the use of a type parameter with a single bound, but a type parameter can have multiple bounds: <code>&lt;T extends B1 &amp; B2 &amp; B3&gt;</code></p>
+<h3 id="Type-Inference"><a href="#Type-Inference" class="headerlink" title="Type Inference"></a>Type Inference</h3><p>Type inference is a Java compiler&#39;s ability to look at each method invocation and corresponding declaration to determine the type argument (or arguments) that make the invocation applicable. The inference algorithm determines the types of the arguments and, if available, the type that the result is being assigned, or returned. Finally, the inference algorithm tries to find the most specific type that works with all of the arguments.</p>
+<p>To illustrate this last point, in the following example, inference determines that the second argument being passed to the pick method is of type <code>Serializable</code>:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">pick</span><span class="params">(T a1, T a2)</span> </span>&#123; <span class="keyword">return</span> a2; &#125;</span><span class="line">Serializable s = pick(<span class="string">"d"</span>, <span class="keyword">new</span> ArrayList&lt;String&gt;());</span></pre></td></tr></table></figure>
+<h3 id="Wildcards"><a href="#Wildcards" class="headerlink" title="Wildcards"></a>Wildcards</h3><p>In generic code, the question mark (<code>?</code>), called <code>the wildcard</code>, represents <code>an unknown type</code>. The wildcard can be used in a variety of situations: <code>as the type of a parameter</code>, <code>field</code>, or <code>local variable</code>; sometimes as a <code>return type</code> (though it is better programming practice to be more specific). The wildcard is <code>never</code> used as a type argument for a generic method invocation, a generic class instance creation, or a supertype.</p>
+<p>The following sections discuss wildcards in more detail, including upper bounded wildcards, lower bounded wildcards, and wildcard capture.</p>
+<h3 id="Unbounded-Wildcards"><a href="#Unbounded-Wildcards" class="headerlink" title="Unbounded Wildcards"></a>Unbounded Wildcards</h3><p>The unbounded wildcard type is specified using the wildcard character (<code>?</code>), for example, <code>List&lt;?&gt;</code>. This is called <code>a list of unknown type</code>. There are two scenarios where an unbounded wildcard is a useful approach:</p>
+<ol>
+<li>If you are writing a method that can be implemented using functionality provided in the <code>Object</code> class.</li>
+<li>When the code is using methods in the generic class that don&#39;t depend on the type parameter. For example, <code>List.size</code> or <code>List.clear</code>. In fact, <code>Class&lt;?&gt;</code> is so often used because most of the methods in <code>Class&lt;T&gt;</code> do not depend on <code>T</code>.</li>
+</ol>
+<h3 id="Upper-Bounded-Wildcards"><a href="#Upper-Bounded-Wildcards" class="headerlink" title="Upper Bounded Wildcards"></a>Upper Bounded Wildcards</h3><p>You can use an <code>upper bounded wildcard</code> to relax the restrictions on a variable. For example, say you want to write a method that works on <code>List&lt;Integer&gt;</code>, <code>List&lt;Double&gt;</code>, and <code>List&lt;Number&gt;</code>; you can achieve this by using an upper bounded wildcard.</p>
+<p>To declare an upper-bounded wildcard, use the wildcard character (<code>?</code>), followed by the <code>extends</code> keyword, followed by its upper bound. Note that, in this context, <code>extends</code> is used in a general sense to mean either &quot;extends&quot; (as in classes) or &quot;implements&quot; (as in interfaces).</p>
+<p>To write the method that works on lists of <code>Number</code> and the subtypes of <code>Number</code>, such as <code>Integer</code>, <code>Double</code>, and <code>Float</code>, you would specify <code>List&lt;? extends Number&gt;</code>. The term <code>List&lt;Number&gt;</code> is more restrictive than <code>List&lt;? extends Number&gt;</code> because the former matches a list of type <code>Number</code> only, whereas the latter matches a list of type <code>Number</code> or <code>any of its subclasses</code>.</p>
+<p>Consider the following process method:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">process</span><span class="params">(List&lt;? extends Foo&gt; list)</span> </span>&#123; <span class="comment">/* ... */</span> &#125;</span></pre></td></tr></table></figure>
+<p>The upper bounded wildcard, <code>&lt;? extends Foo&gt;</code>, where <code>Foo</code> is any type, matches <code>Foo</code> and <code>any subtype of Foo</code>. The process method can access the list elements as type <code>Foo</code>:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">process</span><span class="params">(List&lt;? extends Foo&gt; list)</span> </span>&#123;</span><span class="line">    <span class="keyword">for</span> (Foo elem : list) &#123;</span><span class="line">        <span class="comment">// ...</span></span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>In the foreach clause, the elem variable iterates over each element in the list. Any method defined in the Foo class can now be used on elem.</p>
+<p><code>List&lt;? extends Shape&gt;</code> is an example of a bounded wildcard. The <code>?</code> stands for <code>an unknown type</code>, just like the wildcards we saw earlier. However, in this case, we know that this unknown type is in fact <code>a subtype of Shape</code>. (Note: It could be <code>Shape</code> itself, or some subclass; it need not literally extend <code>Shape</code>.) We say that <code>Shape</code> is the upper bound of the wildcard.</p>
+<h3 id="Lower-Bounded-Wildcards"><a href="#Lower-Bounded-Wildcards" class="headerlink" title="Lower Bounded Wildcards"></a>Lower Bounded Wildcards</h3><p>The Upper Bounded Wildcards section shows that an upper bounded wildcard restricts the unknown type to be a specific type or a subtype of that type and is represented using the <code>extends</code> keyword. In a similar way, a lower bounded wildcard restricts the unknown type to be a specific type or a <code>super type</code> of that type.</p>
+<p>A lower bounded wildcard is expressed using the wildcard character (<code>?</code>), following by the <code>super</code> keyword, followed by its lower bound: <code>&lt;? super A&gt;</code>.</p>
+<blockquote>
+<p>Note: You can specify an upper bound for a wildcard, or you can specify a lower bound, but you cannot specify both.</p>
+</blockquote>
+<h3 id="Wildcards-and-Subtyping"><a href="#Wildcards-and-Subtyping" class="headerlink" title="Wildcards and Subtyping"></a>Wildcards and Subtyping</h3><p>As described in Generics, Inheritance, and Subtypes, generic classes or interfaces are not related merely because there is a relationship between their types. However, you can use wildcards to create a relationship between generic classes or interfaces.</p>
+<p>Given the following two regular (non-generic) classes:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123; <span class="comment">/* ... */</span> &#125;</span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span> </span>&#123; <span class="comment">/* ... */</span> &#125;</span></pre></td></tr></table></figure>
+<p>It would be reasonable to write the following code:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">B b = <span class="keyword">new</span> B();</span><span class="line">A a = b;</span></pre></td></tr></table></figure>
+<p>This example shows that inheritance of regular classes follows this rule of subtyping: class <code>B</code> is a subtype of class <code>A</code> if <code>B extends A</code>. This rule does <strong>not</strong> apply to generic types:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;B&gt; lb = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><span class="line">List&lt;A&gt; la = lb;  <span class="comment">// compile-time error</span></span></pre></td></tr></table></figure>
+<p>Although <code>Integer</code> is a subtype of <code>Number</code>, <code>List&lt;Integer&gt;</code> is not a subtype of <code>List&lt;Number&gt;</code> and, in fact, these two types are <strong>not</strong> related. The common parent of <code>List&lt;Number&gt;</code> and <code>List&lt;Integer&gt;</code> is <code>List&lt;?&gt;</code>.</p>
+<p>In order to create a relationship between these classes so that the code can access <code>Number&#39;s</code> methods through <code>List&lt;Integer&gt;&#39;s</code> elements, use an upper bounded wildcard:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;? extends Integer&gt; intList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><span class="line">List&lt;? extends Number&gt;  numList = intList;  <span class="comment">// OK. List&lt;? extends Integer&gt; is a subtype of List&lt;? extends Number&gt;</span></span></pre></td></tr></table></figure>
+<p>Because <code>Integer</code> is a subtype of<code>Number</code>, and <code>numList</code> is a list of <code>Number</code> objects, a relationship now exists between <code>intList</code> (a list of <code>Integer</code> objects) and<code>numList</code>. The following diagram shows the relationships between several List classes declared with both upper and lower bounded wildcards.</p>
+<img src="/blog/img/java/java-generics-inheritance.png" class="image-md" title="[java generics inheritance]">
+<h3 id="Wildcard-Capture-and-Helper-Methods"><a href="#Wildcard-Capture-and-Helper-Methods" class="headerlink" title="Wildcard Capture and Helper Methods"></a>Wildcard Capture and Helper Methods</h3><p>In some cases, the compiler infers the type of a wildcard. For example, a list may be defined as <code>List&lt;?&gt;</code> but, when evaluating an expression, the compiler infers a particular type from the code. This scenario is known as <code>wildcard capture</code>.</p>
+<p>For the most part, you don&#39;t need to worry about wildcard capture, except when you see an error message that contains the phrase &quot;capture of&quot;.</p>
+<p>The <code>WildcardError</code> example produces a capture error when compiled:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.List;</span><span class="line"></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WildcardError</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(List&lt;?&gt; i)</span> </span>&#123;</span><span class="line">        i.set(<span class="number">0</span>, i.get(<span class="number">0</span>));</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>In this example, the compiler processes the <code>i</code> input parameter as being of type <code>Object</code>. When the <code>foo</code> method invokes <code>List.set(int, E)</code>, the compiler is not able to confirm the type of object that is being inserted into the list, and an error is produced. When this type of error occurs it typically means that the compiler believes that you are assigning the wrong type to a variable. Generics were added to the Java language for this reason — to enforce type safety at compile time.</p>
+<p>The <code>WildcardError</code> example generates the following error when compiled by Oracle&#39;s JDK 8 <code>javac</code> implementation:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">javac</span> WildcardError.java</span><span class="line"></span><span class="line output">WildcardError.java:6: error: incompatible types: Object cannot be converted to CAP<span class="comment">#1</span></span><span class="line output">        i.set(0, i.get(0));</span><span class="line output">                      ^</span><span class="line output">  <span class="built_in">where</span> CAP<span class="comment">#1 is a fresh type-variable:</span></span><span class="line output">    CAP<span class="comment">#1 extends Object from capture of ?</span></span><span class="line output">Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output</span><span class="line output">1 error</span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">javac</span> -Xdiags:verbose WildcardError.java</span><span class="line"></span><span class="line output">WildcardError.java:11: error: class, interface, or enum expected</span><span class="line output">javac WildcardError.java</span><span class="line output">^</span><span class="line output">WildcardError.java:12: error: illegal character: <span class="string">'#'</span></span><span class="line output">WildcardError.java:6: error: incompatible types: Object cannot be converted to CAP<span class="comment">#1</span></span><span class="line output">                                                                                    ^</span><span class="line output">WildcardError.java:14: error: class, interface, or enum expected</span><span class="line output">                      ^</span><span class="line output">WildcardError.java:15: error: illegal character: <span class="string">'#'</span></span><span class="line output">  <span class="built_in">where</span> CAP<span class="comment">#1 is a fresh type-variable:</span></span><span class="line output">          ^</span><span class="line output">WildcardError.java:16: error: illegal character: <span class="string">'#'</span></span><span class="line output">    CAP<span class="comment">#1 extends Object from capture of ?</span></span><span class="line output">      ^</span><span class="line output">WildcardError.java:17: error: class, interface, or enum expected</span><span class="line output">Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output</span><span class="line output">                                          ^</span><span class="line output">6 errors</span></pre></td></tr></table></figure>
+<blockquote>
+<p>The method <code>set(int, capture#1-of ?)</code> in the type <code>List&lt;capture#1-of ?&gt;</code> is not applicable for the arguments <code>(int, capture#2-of ?)</code>.</p>
+<p><code>capture#1-of ?</code> 表示什么？当编译器遇到一个在其类型中带有通配符的变量，比如<code>rebox()</code>的<code>box</code>参数，它认识到必然有一些<code>T</code>，对这些<code>T</code>而言<code>box</code>是<code>Box&lt;T&gt;</code>。它不知道<code>T</code>代表什么类型，但它可以为该类型创建一个占位符来指代<code>T</code>的类型。占位符被称为这个特殊通配符的捕获（capture）。这种情况下，编译器将名称<code>capture#1-of ?</code>以<code>box</code>类型分配给通配符。每个变量声明中每出现1个通配符都将获得1个不同的捕获，因此在泛型声明<code>foo(Pair&lt;?, ?&gt; x, Pair&lt;?, ?&gt; y)</code>中，编译器将给这4个通配符<code>?</code>的捕获分配4个不同的名称，因为任意未知的类型参数之间没有关系。</p>
+<p>错误消息告诉我们不能调用<code>put()</code>，因为它不能检验<code>put()</code>的实参类型与其形参类型是否兼容，因为形参的类型是<strong>未知</strong>的。在这种情况下，由于<code>?</code>实际表示<code>? extends Object</code>，编译器已经推断出<code>box.get()</code>的类型是<code>Object</code>，而不是<code>capture#1-of ?</code>。它不能静态地检验对由占位符<code>capture#1-of ?</code>所识别的类型而言，<code>Object</code>是否是一个可接受的值。</p>
+</blockquote>
+<p>In this example, the code is attempting to perform a safe operation, so how can you work around the compiler error? You can fix it by writing a private <code>helper method</code> which captures the wildcard. In this case, you can work around the problem by creating the private helper method, <code>fooHelper</code>, as shown in <code>WildcardFixed</code>:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WildcardFixed</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(List&lt;?&gt; i)</span> </span>&#123;</span><span class="line">        fooHelper(i);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Helper method created so that the wildcard can be captured through type inference.</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="keyword">private</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">fooHelper</span><span class="params">(List&lt;T&gt; l)</span> </span>&#123;</span><span class="line">        l.set(<span class="number">0</span>, l.get(<span class="number">0</span>));</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>Thanks to the helper method, the compiler uses inference to determine that <code>T</code> is <code>CAP#1</code>, the capture variable, in the invocation. The example now compiles successfully.</p>
+<p>By convention, helper methods are generally named <code>originalMethodNameHelper</code>.</p>
+<h3 id="Type-Erasure"><a href="#Type-Erasure" class="headerlink" title="Type Erasure"></a>Type Erasure</h3><p>Generics were introduced to the Java language to provide tighter type checks at compile time and to support generic programming. To implement generics, the Java compiler applies <code>type erasure</code> to:</p>
+<ol>
+<li>Replace all type parameters in generic types with their bounds or Object if the type parameters are unbounded. The produced bytecode, therefore, contains only ordinary classes, interfaces, and methods.</li>
+<li>Insert type casts if necessary to preserve type safety.</li>
+<li>Generate bridge methods to preserve polymorphism in extended generic types.</li>
+</ol>
+<p>Type erasure ensures that no new classes are created for parameterized types; consequently, generics incur no runtime overhead.</p>
+<h3 id="Reifiable-Types"><a href="#Reifiable-Types" class="headerlink" title="Reifiable Types"></a>Reifiable Types</h3><p>Because some type information is erased during compilation, not all types are available at run time. Types that are completely available at run time are known as reifiable types.<br>A type is reifiable if and only if one of the following holds:</p>
+<ol>
+<li>It refers to a <code>non-generic</code> class or interface type declaration.</li>
+<li>It is a parameterized type in which all type arguments are <code>unbounded wildcards</code>.</li>
+<li>It is a <code>raw type</code>.</li>
+<li>It is a <code>primitive type</code>.</li>
+<li>It is an array type whose element type is reifiable.</li>
+<li>It is a nested type where, for each type <code>T</code> separated by a <code>.</code>, <code>T</code> itself is reifiable.</li>
+</ol>
+<p>For example, if a generic class <code>X&lt;T&gt;</code> has a generic member class <code>Y&lt;N&gt;</code>, then the type <code>X&lt;?&gt;.Y&lt;?&gt;</code> is reifiable because <code>X&lt;?&gt;</code> is reifiable and <code>Y&lt;?&gt;</code> is reifiable. The type <code>X&lt;?&gt;.Y&lt;Object&gt;</code> is not reifiable because <code>Y&lt;Object&gt;</code> is not reifiable.<br>An intersection type is not reifiable, such as <code>&lt;T extends C &amp; I&gt;</code>.</p>
+<h4 id="Mutually-Recursive-Type-Variable-Bounds"><a href="#Mutually-Recursive-Type-Variable-Bounds" class="headerlink" title="Mutually Recursive Type Variable Bounds"></a>Mutually Recursive Type Variable Bounds</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ConvertibleTo</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><span class="line">    <span class="function">T <span class="title">convert</span><span class="params">()</span></span>;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReprChange</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">ConvertibleTo</span>&lt;<span class="title">S</span>&gt;, <span class="title">S</span> <span class="keyword">extends</span> <span class="title">ConvertibleTo</span>&lt;<span class="title">T</span>&gt;&gt; </span>&#123;</span><span class="line">    T t;</span><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(S s)</span> </span>&#123; t = s.convert();    &#125;</span><span class="line">    <span class="function">S <span class="title">get</span><span class="params">()</span>       </span>&#123; <span class="keyword">return</span> t.convert(); &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h4 id="Nested-Generic-Classes"><a href="#Nested-Generic-Classes" class="headerlink" title="Nested Generic Classes"></a>Nested Generic Classes</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Seq</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><span class="line">    T      head;</span><span class="line">    Seq&lt;T&gt; tail;</span><span class="line"></span><span class="line">    Seq() &#123; <span class="keyword">this</span>(<span class="keyword">null</span>, <span class="keyword">null</span>); &#125;</span><span class="line">    Seq(T head, Seq&lt;T&gt; tail) &#123;</span><span class="line">        <span class="keyword">this</span>.head = head;</span><span class="line">        <span class="keyword">this</span>.tail = tail;</span><span class="line">    &#125;</span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> tail == <span class="keyword">null</span>; &#125;</span><span class="line"></span><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Zipper</span>&lt;<span class="title">S</span>&gt; </span>&#123;</span><span class="line">        Seq&lt;Pair&lt;T,S&gt;&gt; zip(Seq&lt;S&gt; that) &#123;</span><span class="line">            <span class="keyword">if</span> (isEmpty() || that.isEmpty()) &#123;</span><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> Seq&lt;Pair&lt;T,S&gt;&gt;();</span><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><span class="line">                Seq&lt;T&gt;.Zipper&lt;S&gt; tailZipper = tail.<span class="keyword">new</span> Zipper&lt;S&gt;();</span><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> Seq&lt;Pair&lt;T,S&gt;&gt;(</span><span class="line">                    <span class="keyword">new</span> Pair&lt;T,S&gt;(head, that.head), tailZipper.zip(that.tail));</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pair</span>&lt;<span class="title">T</span>, <span class="title">S</span>&gt; </span>&#123;</span><span class="line">    T fst; S snd;</span><span class="line">    Pair(T f, S s) &#123; fst = f; snd = s; &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestNestedGenericClasses</span> </span>&#123;</span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        Seq&lt;String&gt; strs =</span><span class="line">            <span class="keyword">new</span> Seq&lt;String&gt;(</span><span class="line">                <span class="string">"a"</span>,</span><span class="line">                <span class="keyword">new</span> Seq&lt;String&gt;(<span class="string">"b"</span>,</span><span class="line">                                <span class="keyword">new</span> Seq&lt;String&gt;()));</span><span class="line">        Seq&lt;Number&gt; nums =</span><span class="line">            <span class="keyword">new</span> Seq&lt;Number&gt;(</span><span class="line">                <span class="keyword">new</span> Integer(<span class="number">1</span>),</span><span class="line">                <span class="keyword">new</span> Seq&lt;Number&gt;(<span class="keyword">new</span> Double(<span class="number">1.5</span>),</span><span class="line">                                <span class="keyword">new</span> Seq&lt;Number&gt;()));</span><span class="line"></span><span class="line">        Seq&lt;String&gt;.Zipper&lt;Number&gt; zipper =</span><span class="line">            strs.<span class="keyword">new</span> Zipper&lt;Number&gt;();</span><span class="line"></span><span class="line">        Seq&lt;Pair&lt;String,Number&gt;&gt; combined =</span><span class="line">            zipper.zip(nums);</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="Covariant-in-Overriding"><a href="#Covariant-in-Overriding" class="headerlink" title="Covariant in Overriding"></a>Covariant in Overriding</h3><p>If a method declaration d1 with return type R1 overrides or hides the declaration of another method d2 with return type R2, then d1 must be return-type-substitutable for d2, or a compile-time error occurs.</p>
+<p>This rule allows for covariant return types - refining the return type of a method when overriding it.</p>
+<h4 id="Covariant-Return-Types"><a href="#Covariant-Return-Types" class="headerlink" title="Covariant Return Types"></a>Covariant Return Types</h4><p>The following declarations are legal in the Java programming language from Java SE 5.0 onwards:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><span class="line">    <span class="function">C <span class="title">copy</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><span class="line">        <span class="keyword">return</span> (C)clone();</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">D</span> <span class="keyword">extends</span> <span class="title">C</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><span class="line">    <span class="function">D <span class="title">copy</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><span class="line">        <span class="keyword">return</span> (D)clone();</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="Class-Instance-Creation-Expressions"><a href="#Class-Instance-Creation-Expressions" class="headerlink" title="Class Instance Creation Expressions"></a>Class Instance Creation Expressions</h2><p>15.9. Class Instance Creation Expressions</p>
+<p>A class instance creation expression is used to create new objects that are instances of classes.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ClassInstanceCreationExpression:</span><span class="line">    UnqualifiedClassInstanceCreationExpression</span><span class="line">    ExpressionName . UnqualifiedClassInstanceCreationExpression</span><span class="line">    Primary . UnqualifiedClassInstanceCreationExpression</span><span class="line">UnqualifiedClassInstanceCreationExpression:</span><span class="line">    new [TypeArguments] ClassOrInterfaceTypeToInstantiate ( [ArgumentList] ) [ClassBody]</span><span class="line">ClassOrInterfaceTypeToInstantiate:</span><span class="line">    &#123;Annotation&#125; Identifier &#123;. &#123;Annotation&#125; Identifier&#125; [TypeArgumentsOrDiamond]</span><span class="line">TypeArgumentsOrDiamond:</span><span class="line">    TypeArguments</span><span class="line">    &lt;&gt;</span></pre></td></tr></table></figure>
+<p>The following production is shown here for convenience:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ArgumentList:</span><span class="line">    Expression &#123;, Expression&#125;</span></pre></td></tr></table></figure>
+<p>A class instance creation expression specifies a class to be instantiated, possibly followed by type arguments or a diamond (<code>&lt;&gt;</code>) if the class being instantiated is generic, followed by (a possibly empty) list of actual value arguments to the constructor.</p>
+<p>If the type argument list to the class is empty — the diamond form <code>&lt;&gt;</code> — the type arguments of the class are inferred. It is legal, though strongly discouraged as a matter of style, to have white space between the <code>&lt;</code> and <code>&gt;</code> of a diamond.</p>
+<p>If the constructor is generic, the type arguments to the constructor may similarly either be inferred or passed explicitly. If passed explicitly, the type arguments to the constructor immediately follow the keyword new.</p>
+<p>It is a compile-time error if a class instance creation expression provides type arguments to a constructor but uses the diamond form for type arguments to the class.</p>
+<p>This rule is introduced because inference of a generic class&#39;s type arguments may influence the constraints on a generic constructor&#39;s type arguments.</p>
+<p>If <code>TypeArguments</code> is present immediately after <code>new</code>, or immediately before <code>(</code>, then it is a compile-time error if any of the type arguments are wildcards.</p>
+<h2 id="Java-Generic-and-Exception"><a href="#Java-Generic-and-Exception" class="headerlink" title="Java Generic and Exception"></a>Java Generic and Exception</h2><p>利用泛型擦除特性，骗过编译器，使受检异常抛出却不会编译报错。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SneakyThrowable</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Sneaky throw any type of Throwable.</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sneakyThrow</span><span class="params">(Throwable throwable)</span> </span>&#123;</span><span class="line">        <span class="comment">// 利用java泛型擦除</span></span><span class="line">        <span class="comment">// 使用运行时异常来欺骗编译器</span></span><span class="line">        SneakyThrowable.&lt;RuntimeException&gt;sneakyThrow0(throwable);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Sneaky throw any type of Throwable.</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><span class="line">    <span class="keyword">static</span> &lt;E extends Throwable&gt; <span class="function"><span class="keyword">void</span> <span class="title">sneakyThrow0</span><span class="params">(Throwable throwable)</span> <span class="keyword">throws</span> E </span>&#123;</span><span class="line">        <span class="comment">// JVM 中并没有受检异常</span></span><span class="line">        <span class="comment">// 受检异常只对编译器有用</span></span><span class="line">        <span class="keyword">throw</span> (E) throwable;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        <span class="comment">// Compiler doesn't see that checked Exception is being thrown</span></span><span class="line">        sneakyThrow(<span class="keyword">new</span> Exception());</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>这里定义了一个泛型声明为<code>&lt;E extends Throwable&gt;</code>方法，在内部将传入的<code>Throwable</code>强转为<code>E</code>之后再抛出，<code>E</code>的具体类型取决于调用这个方法时指定的类型参数。在这里，只要将类型参数指定为<code>RuntimeException</code>，然后不管传入一个什么异常，都可以直接抛出去，而不用<code>throws</code>声明。</p>
+<p>由于类型擦除的存在，<code>sneakyThrow0</code>在被调用的时候，<code>E</code>在运行时实际上是擦除为<code>Throwable</code>类型，从<code>IOException</code>转成<code>Throwable</code>一点问题都不会有。因此基于类型擦除的泛型和受检异常的设计实际上是冲突的。</p>
+<h2 id="Heap-Pollution"><a href="#Heap-Pollution" class="headerlink" title="Heap Pollution"></a>Heap Pollution</h2><p>在接受可变长的类型参数<code>(T... args)</code>和使用泛型数组<code>T[]</code>时就可能发生堆污染，并且为了类型安全，Java 中不能直接创建一个泛型数组，如下示例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><span class="line"><span class="comment"> * warning: [varargs] Possible heap pollution from parameterized vararg type</span></span><span class="line"><span class="comment"> */</span></span><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">faultyMethod</span><span class="params">(List&lt;String&gt;... lists)</span> </span>&#123;</span><span class="line">    Object[] objectArray = lists;     <span class="comment">// Valid</span></span><span class="line">    <span class="comment">// List[] objectArray = lists;    // Valid</span></span><span class="line">    objectArray[<span class="number">0</span>] = Arrays.asList(<span class="number">42</span>);</span><span class="line">    String s = lists[<span class="number">0</span>].get(<span class="number">0</span>);       <span class="comment">// ClassCastException thrown here</span></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>使用原生的集合类也可能产生堆污染：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rawTypeHeapPollution</span><span class="params">()</span> </span>&#123;</span><span class="line">    List&lt;String&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><span class="line">    list1.add(<span class="string">"a"</span>);</span><span class="line">    List list2 = list1;</span><span class="line">    list2.add(<span class="number">0</span>, <span class="number">1</span>);                  <span class="comment">// Unchecked call to add(int, E) as a member of raw type of List</span></span><span class="line">    System.out.println(list1.size()); <span class="comment">// 2</span></span><span class="line">    System.out.println(list2.size()); <span class="comment">// 2</span></span><span class="line">    System.out.println(list1.get(<span class="number">1</span>)); <span class="comment">// a</span></span><span class="line">    System.out.println(list1.get(<span class="number">0</span>)); <span class="comment">// java.lang.ClassCastException:</span></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="Generic-Array-Creation"><a href="#Generic-Array-Creation" class="headerlink" title="Generic Array Creation"></a>Generic Array Creation</h2><p>一般很少会使用到泛型数组<code>T[]</code>，主要是可以用<code>List&lt;T&gt;</code>替代，并且能更好的提供类型安全，如果想使用以下方式直接创建泛型数组会抛出编译错误：</p>
+<h3 id="compile-error-example-1"><a href="#compile-error-example-1" class="headerlink" title="compile error example 1"></a>compile error example 1</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt;[] listArray = <span class="keyword">new</span> ArrayList&lt;String&gt;[]&#123;&#125;; <span class="comment">// compile error: generic array creation</span></span></pre></td></tr></table></figure>
+<h3 id="compile-error-example-2"><a href="#compile-error-example-2" class="headerlink" title="compile error example 2"></a>compile error example 2</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericArrayError</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> E[] a;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GenericArrayError</span><span class="params">(Class&lt;E&gt; c, <span class="keyword">int</span> s)</span> </span>&#123;</span><span class="line">        <span class="comment">// Type parameter 'E' can not initialized directly</span></span><span class="line">        <span class="keyword">this</span>.a = <span class="keyword">new</span> E[]&#123;&#125;; <span class="comment">// compile error: generic array creation</span></span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>编译以上代码，加入编译参数<code>-g</code>和<code>-Xlint:unchecked</code>，查看编译警告信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">javac</span> -g -Xlint:unchecked GenericArrayError.java</span><span class="line"></span><span class="line output">com/example/<span class="built_in">test</span>/lang/generic/GenericArrayError.java:12: error: generic array creation</span><span class="line output">        this.a = new E[]&#123;&#125;; // error: generic array creation</span><span class="line output">                 ^</span><span class="line output">1 error</span></pre></td></tr></table></figure>
+<p>为了创建泛型数组，需要用一些特别的方式来创建，如下代码所示，更详细的说明可参考<a href="https://stackoverflow.com/questions/529085/how-to-create-a-generic-array-in-java" target="_blank" rel="noopener">stackoverflow</a>的这个问题。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Array;</span><span class="line"><span class="keyword">import</span> java.util.function.Supplier;</span><span class="line"></span><span class="line"><span class="comment">/**</span></span><span class="line"><span class="comment"> * T[] array = (T[])Array.newInstance(cls, d1);</span></span><span class="line"><span class="comment"> * T[][] array = (T[][])Array.newInstance(cls, d1, d2);</span></span><span class="line"><span class="comment"> * T[][][] array = (T[][][])Array.newInstance(cls, d1, d2, d3);</span></span><span class="line"><span class="comment"> * T[][][][] array = (T[][][][])Array.newInstance(cls, d1, d2, d3, d4);</span></span><span class="line"><span class="comment"> * T[][][][][] array = (T[][][][][])Array.newInstance(cls, d1, d2, d3, d4, d5);</span></span><span class="line"><span class="comment"> *</span></span><span class="line"><span class="comment"> * <span class="doctag">@author</span> yuweijun 2018-03-23.</span></span><span class="line"><span class="comment"> */</span></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericArrayByArrayNewInstance</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> E[] a;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GenericArrayByArrayNewInstance</span><span class="params">(Class&lt;E&gt; c, <span class="keyword">int</span> s)</span> </span>&#123;</span><span class="line">        <span class="comment">// found:    Object</span></span><span class="line">        <span class="comment">// where T is a type-variable:</span></span><span class="line">        <span class="comment">// T extends Object declared in method &lt;T&gt;build(Class&lt;T&gt;)</span></span><span class="line">        <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>) <span class="keyword">final</span> E[] a = (E[]) Array.newInstance(c, s);</span><span class="line">        <span class="keyword">this</span>.a = a;</span><span class="line">        <span class="comment">// Type parameter 'E' can not initialized directly</span></span><span class="line">        <span class="comment">// this.a = new E[]&#123;&#125;; // error: generic array creation</span></span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function">E <span class="title">get</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><span class="line">        <span class="keyword">return</span> a[i];</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment">/**</span></span><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> java.util.Collections#zeroLengthArray(Class)&#125;</span></span><span class="line"><span class="comment"> */</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZeroLengthGenericArray</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">static</span> &lt;T&gt; T[] build(Class&lt;T&gt; type) &#123;</span><span class="line">        <span class="keyword">return</span> (T[]) Array.newInstance(type, <span class="number">0</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        System.out.println(ZeroLengthGenericArray.build(String<span class="class">.<span class="keyword">class</span>).<span class="title">length</span>)</span>;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment">/**</span></span><span class="line"><span class="comment"> * Unchecked: weak typing. No type checking is actually done on any of the objects passed as argument.</span></span><span class="line"><span class="comment"> *</span></span><span class="line"><span class="comment"> * <span class="doctag">@param</span> &lt;E&gt;</span></span><span class="line"><span class="comment"> */</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UncheckedGenericeArray</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> Object[] a;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UncheckedGenericeArray</span><span class="params">(<span class="keyword">int</span> s)</span> </span>&#123;</span><span class="line">        a = <span class="keyword">new</span> Object[s];</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function">E <span class="title">get</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><span class="line">        <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>) <span class="keyword">final</span> E e = (E) a[i];</span><span class="line">        <span class="keyword">return</span> e;</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment">/**</span></span><span class="line"><span class="comment"> * This is one of the suggested ways of implementing a generic collection in Effective Java; Item 26.</span></span><span class="line"><span class="comment"> */</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> E[] elements;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">16</span>;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Stack</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>) <span class="keyword">final</span> E[] elements = (E[]) <span class="keyword">new</span> Object[DEFAULT_INITIAL_CAPACITY];</span><span class="line">        <span class="keyword">this</span>.elements = elements;</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment">/**</span></span><span class="line"><span class="comment"> * Here's how to use generics to get an array of precisely the type you’re looking for while preserving type safety</span></span><span class="line"><span class="comment"> * (as opposed to the other answers, which will either give you back an Object array or result in warnings at compile time)</span></span><span class="line"><span class="comment"> *</span></span><span class="line"><span class="comment"> * <span class="doctag">@param</span> &lt;E&gt;</span></span><span class="line"><span class="comment"> */</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateGenericArrayUsingClassLiteral</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> E[] a;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CreateGenericArrayUsingClassLiteral</span><span class="params">(Class&lt;E[]&gt; clazz, <span class="keyword">int</span> length)</span> </span>&#123;</span><span class="line">        a = clazz.cast(Array.newInstance(clazz.getComponentType(), length));</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T[] newArray(Class&lt;T[]&gt; type, <span class="keyword">int</span> size) &#123;</span><span class="line">        <span class="keyword">return</span> type.cast(Array.newInstance(type.getComponentType(), size));</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        CreateGenericArrayUsingClassLiteral&lt;String&gt; cs = <span class="keyword">new</span> CreateGenericArrayUsingClassLiteral&lt;&gt;(String[]<span class="class">.<span class="keyword">class</span>, 16)</span>;</span><span class="line">        System.out.println(cs.a.length);</span><span class="line"></span><span class="line">        String[] ns = CreateGenericArrayUsingClassLiteral.newArray(String[]<span class="class">.<span class="keyword">class</span>, 16)</span>;</span><span class="line">        System.out.println(ns.length);</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment">/**</span></span><span class="line"><span class="comment"> * In Java 8, we can do a kind of generic array creation using a lambda or method reference.</span></span><span class="line"><span class="comment"> * This is similar to the reflective approach (which passes a Class), but here we aren't using reflection.</span></span><span class="line"><span class="comment"> * &lt;p&gt;</span></span><span class="line"><span class="comment"> * For example, this is used by &lt;A&gt; A[] Stream.toArray(IntFunction&lt;A[]&gt;).</span></span><span class="line"><span class="comment"> */</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateGenericArrayUsingSupplier</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><span class="line"></span><span class="line">    <span class="meta">@FunctionalInterface</span></span><span class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">ArraySupplier</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><span class="line">        E[] get(<span class="keyword">int</span> length);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> E[] array;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CreateGenericArrayUsingSupplier</span><span class="params">(ArraySupplier&lt;E&gt; supplier)</span> </span>&#123;</span><span class="line">        <span class="keyword">this</span>.array = supplier.get(<span class="number">16</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CreateGenericArrayUsingSupplier</span><span class="params">(Supplier&lt;E[]&gt; supplier)</span> </span>&#123;</span><span class="line">        <span class="keyword">this</span>.array = supplier.get();</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        CreateGenericArrayUsingSupplier&lt;String&gt; ss = <span class="keyword">new</span> CreateGenericArrayUsingSupplier&lt;&gt;(() -&gt; <span class="keyword">new</span> String[<span class="number">16</span>]);</span><span class="line">        System.out.println(ss.array.length);</span><span class="line"></span><span class="line">        CreateGenericArrayUsingSupplier&lt;Double&gt; ds = <span class="keyword">new</span> CreateGenericArrayUsingSupplier&lt;&gt;(Double[]::<span class="keyword">new</span>);</span><span class="line">        System.out.println(ds.array.length);</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="PECS-原则"><a href="#PECS-原则" class="headerlink" title="PECS 原则"></a>PECS 原则</h2><p>这个原则主要就是定义了 Java 泛型中的通配符<code>?</code>的使用场景：</p>
+<ol>
+<li>如果只是从容器里获取元素，可以使用上界通配符<code>&lt;? extends T&gt;</code>，其缺点就是除了<code>null</code>之外，不能放入其他新元素，包括<code>T</code>本身。</li>
+<li>如果只是放元素进容器，则可以使用下界通配符<code>&lt;? super T&gt;</code>，其缺点是取出来时都是<code>Object</code>，失去类型信息。</li>
+<li>如果即需要读取，又需要放入元素，则不要使用通配符<code>&lt;T&gt;</code>。</li>
+</ol>
+<h3 id="通配符的协变性"><a href="#通配符的协变性" class="headerlink" title="通配符的协变性"></a>通配符的协变性</h3><ol>
+<li>通配符<code>&lt;?&gt;</code>和<code>&lt;? extends Object&gt;</code>能匹配所有类型。</li>
+<li>上界通配符<code>&lt;? extends T&gt;</code>可以匹配所有<code>T</code>的子类型。</li>
+<li>下界通配符<code>&lt;? super T&gt;</code>可以匹配所有<code>T</code>的父类型。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericCoVariance</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f1</span><span class="params">(List&lt;Fruit&gt; a)</span> </span>&#123;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f2</span><span class="params">(List&lt;? extends Fruit&gt; list)</span> </span>&#123;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f3</span><span class="params">(List&lt;?&gt; a, List&lt;? extends Object&gt; b)</span> </span>&#123;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f4</span><span class="params">(List&lt;? <span class="keyword">super</span> Apple&gt; a)</span> </span>&#123;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f5</span><span class="params">(List&lt;Object&gt; c)</span></span>&#123;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f6</span><span class="params">(List w)</span> </span>&#123;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        <span class="comment">// f1(new ArrayList&lt;Apple&gt;()); // compile error</span></span><span class="line">        f2(<span class="keyword">new</span> ArrayList&lt;Apple&gt;());</span><span class="line">        f3(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(), <span class="keyword">new</span> ArrayList&lt;String&gt;());</span><span class="line">        f4(<span class="keyword">new</span> ArrayList&lt;Fruit&gt;());</span><span class="line">        <span class="comment">// f5(new ArrayList&lt;Fruit&gt;()); // compile error</span></span><span class="line">        f6(<span class="keyword">new</span> ArrayList&lt;Fruit&gt;());</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fruit</span> </span>&#123;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Apple</span> <span class="keyword">extends</span> <span class="title">Fruit</span> </span>&#123;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://docs.oracle.com/javase/tutorial/java/generics/index.html" target="_blank" rel="noopener">The Java™ Tutorials - Generics</a></li>
+<li><a href="https://docs.oracle.com/javase/tutorial/extra/generics/index.html" target="_blank" rel="noopener">The Java™ Tutorials - Generics extra tutorial</a></li>
+<li><a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-8.html#jls-8.1.2" target="_blank" rel="noopener">8.1.2. Generic Classes and Type Parameters</a></li>
+<li><a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.4" target="_blank" rel="noopener">4.4. Type Variables</a></li>
+<li><a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-9.html#jls-9.1.2" target="_blank" rel="noopener">9.1.2. Generic Interfaces and Type Parameters</a></li>
+<li><a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.9" target="_blank" rel="noopener">15.9. Class Instance Creation Expressions</a></li>
+<li><a href="/blog/java/2012/10/10/java-generic-type.html">java泛型相关知识点</a></li>
+<li><a href="https://www.liuwj.me/2017/12/16/throwing-checked-exceptions-anywhere/index.html" target="_blank" rel="noopener">绕过 Java 编译器检查，在任何地方抛出受检异常</a></li>
+<li><a href="https://stackoverflow.com/questions/529085/how-to-create-a-generic-array-in-java" target="_blank" rel="noopener">How to create a generic array in Java</a></li>
+<li><a href="https://stackoverflow.com/questions/2723397/what-is-pecs-producer-extends-consumer-super" target="_blank" rel="noopener">What is PECS</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/01/26/java-lost-exception-stack-traces.html" rel="next" title="java lost exception stack traces">
+                <i class="fa fa-chevron-left"></i>
+                java lost exception stack traces
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2018/04/05/install-node-and-npm-using-nvm.html" rel="prev" title="install node and npm using nvm">
+                <i class="fa fa-chevron-right"></i>
+                install node and npm using nvm
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-Generic"><span class="nav-number">1.</span> <span class="nav-text">Java Generic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-Generic-相关的术语说明"><span class="nav-number">2.</span> <span class="nav-text">Java Generic 相关的术语说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-泛型术语英文说明及示例"><span class="nav-number">3.</span> <span class="nav-text">Java 泛型术语英文说明及示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Type-Variables"><span class="nav-number">3.1.</span> <span class="nav-text">Type Variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generic-Classes-and-Type-Parameters"><span class="nav-number">3.2.</span> <span class="nav-text">Generic Classes and Type Parameters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Type-Parameter-and-Type-Argument-Terminology"><span class="nav-number">3.3.</span> <span class="nav-text">Type Parameter and Type Argument Terminology</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generic-Type"><span class="nav-number">3.4.</span> <span class="nav-text">Generic Type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Raw-Types"><span class="nav-number">3.5.</span> <span class="nav-text">Raw Types</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parameterized-Types"><span class="nav-number">3.6.</span> <span class="nav-text">Parameterized Types</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generic-Methods"><span class="nav-number">3.7.</span> <span class="nav-text">Generic Methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generics-Inheritance-and-Subtypes"><span class="nav-number">3.8.</span> <span class="nav-text">Generics, Inheritance, and Subtypes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generic-Classes-and-Subtyping"><span class="nav-number">3.9.</span> <span class="nav-text">Generic Classes and Subtyping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bounded-Type-Parameters"><span class="nav-number">3.10.</span> <span class="nav-text">Bounded Type Parameters</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Multiple-Bounds"><span class="nav-number">3.10.1.</span> <span class="nav-text">Multiple Bounds</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Type-Inference"><span class="nav-number">3.11.</span> <span class="nav-text">Type Inference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wildcards"><span class="nav-number">3.12.</span> <span class="nav-text">Wildcards</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Unbounded-Wildcards"><span class="nav-number">3.13.</span> <span class="nav-text">Unbounded Wildcards</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Upper-Bounded-Wildcards"><span class="nav-number">3.14.</span> <span class="nav-text">Upper Bounded Wildcards</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lower-Bounded-Wildcards"><span class="nav-number">3.15.</span> <span class="nav-text">Lower Bounded Wildcards</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wildcards-and-Subtyping"><span class="nav-number">3.16.</span> <span class="nav-text">Wildcards and Subtyping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wildcard-Capture-and-Helper-Methods"><span class="nav-number">3.17.</span> <span class="nav-text">Wildcard Capture and Helper Methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Type-Erasure"><span class="nav-number">3.18.</span> <span class="nav-text">Type Erasure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reifiable-Types"><span class="nav-number">3.19.</span> <span class="nav-text">Reifiable Types</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Mutually-Recursive-Type-Variable-Bounds"><span class="nav-number">3.19.1.</span> <span class="nav-text">Mutually Recursive Type Variable Bounds</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Nested-Generic-Classes"><span class="nav-number">3.19.2.</span> <span class="nav-text">Nested Generic Classes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Covariant-in-Overriding"><span class="nav-number">3.20.</span> <span class="nav-text">Covariant in Overriding</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Covariant-Return-Types"><span class="nav-number">3.20.1.</span> <span class="nav-text">Covariant Return Types</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Instance-Creation-Expressions"><span class="nav-number">4.</span> <span class="nav-text">Class Instance Creation Expressions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-Generic-and-Exception"><span class="nav-number">5.</span> <span class="nav-text">Java Generic and Exception</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Heap-Pollution"><span class="nav-number">6.</span> <span class="nav-text">Heap Pollution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generic-Array-Creation"><span class="nav-number">7.</span> <span class="nav-text">Generic Array Creation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#compile-error-example-1"><span class="nav-number">7.1.</span> <span class="nav-text">compile error example 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#compile-error-example-2"><span class="nav-number">7.2.</span> <span class="nav-text">compile error example 2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PECS-原则"><span class="nav-number">8.</span> <span class="nav-text">PECS 原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通配符的协变性"><span class="nav-number">8.1.</span> <span class="nav-text">通配符的协变性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">9.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

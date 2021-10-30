@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="在服务器端/etc/ssh/sshd_config文件里添加以下3行配置:">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ssh不操作自动掉线问题">
-<meta property="og:url" content="https://www.4e00.com/linux/2012/10/10/ssh-client-connection-broken.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2012/10/10/ssh-client-connection-broken.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="在服务器端/etc/ssh/sshd_config文件里添加以下3行配置:">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.082Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ssh不操作自动掉线问题">
 <meta name="twitter:description" content="在服务器端/etc/ssh/sshd_config文件里添加以下3行配置:">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2012/10/10/ssh-client-connection-broken.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2012/10/10/ssh-client-connection-broken.html">
 
   <title> ssh不操作自动掉线问题 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -256,10 +256,10 @@
       
         <p>在服务器端<code>/etc/ssh/sshd_config</code>文件里添加以下3行配置:</p>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">TCPKeepAlive yes</div><div class="line">ClientAliveInterval 15</div><div class="line">ClientAliveCountMax 45</div></pre></td></tr></table></figure>
-<h2 id="重启sshd服务"><a href="#重启sshd服务" class="headerlink" title="重启sshd服务"></a>重启sshd服务</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> /etc/init.d/sshd restart</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">TCPKeepAlive yes</span><span class="line">ClientAliveInterval 15</span><span class="line">ClientAliveCountMax 45</span></pre></td></tr></table></figure>
+<h2 id="重启sshd服务"><a href="#重启sshd服务" class="headerlink" title="重启sshd服务"></a>重启sshd服务</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> /etc/init.d/sshd restart</span></pre></td></tr></table></figure>
 <p>如果仍有问题，修改客户端<code>~/.ssh/config</code>配置文件，添加如下一行配置：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ServerAliveInterval 60</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ServerAliveInterval 60</span></pre></td></tr></table></figure>
 <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ol>
 <li><code>ClientAliveInterval</code>：设置一个以秒记的时长，如果超过这么长时间没有收到客户端的任何数据，<code>sshd</code>将通过安全通道向客户端发送一个<code>alive</code>消息，并等候应答。默认值<code>0</code>表示不发送<code>alive</code>消息。这个选项仅对SSH-2有效。</li>
 <li><code>ClientAliveCountMax</code>：sshd在未收到任何客户端回应前最多允许发送多少个<code>alive</code>消息。默认值是<code>3</code>。<br>到达这个上限后，sshd将强制断开连接、关闭会话。</li>
@@ -268,7 +268,7 @@
 <li>如果<code>ClientAliveInterval</code>被设为<code>15</code>并且将<code>ClientAliveCountMax</code>保持为默认值，那么无应答的客户端大约会在<code>45秒</code>后被强制断开。这个指令仅可以用于SSH-2协议.</li>
 </ol>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://blog.tarotoast.com/2008/04/20/433/" target="_blank" rel="external">http://blog.tarotoast.com/2008/04/20/433/</a></li>
+<li><a href="http://blog.tarotoast.com/2008/04/20/433/" target="_blank" rel="noopener">http://blog.tarotoast.com/2008/04/20/433/</a></li>
 </ol>
 
       
@@ -296,7 +296,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/linux/2012/10/10/ubuntu-11.04-remove-indicator-from-panel.html" rel="next" title="ubuntu-11.04删除面板上的信封图标和帐号标志">
-                上一篇：ubuntu-11.04删除面板上的信封图标和帐号标志
+                <i class="fa fa-chevron-left"></i>
+                ubuntu-11.04删除面板上的信封图标和帐号标志
               </a>
             
           </div>
@@ -304,7 +305,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2012/10/10/ubuntu-11.04-update-rc.d-usage.html" rel="prev" title="ubuntu中update-rc.d命令使用说明">
-                下一篇：ubuntu中update-rc.d命令使用说明
+                <i class="fa fa-chevron-right"></i>
+                ubuntu中update-rc.d命令使用说明
               </a>
             
           </div>
@@ -353,7 +355,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -364,16 +366,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -455,10 +455,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

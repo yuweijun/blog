@@ -1,0 +1,586 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="初始化本地 git 仓库的脚本git init --bare spring-boot-debug.gitgit clone spring-boot-debug.gitcd spring-boot-debugmkdir -p src/main/java/com/example/boot/controllermkdir -p src/main/resources### create pom.xml a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring boot debug using maven">
+<meta property="og:url" content="http://www.4e00.com/java/2018/04/05/spring-boot-debug-using-maven.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="初始化本地 git 仓库的脚本git init --bare spring-boot-debug.gitgit clone spring-boot-debug.gitcd spring-boot-debugmkdir -p src/main/java/com/example/boot/controllermkdir -p src/main/resources### create pom.xml a">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/vscode-spring-boot-debug.png">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.129Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring boot debug using maven">
+<meta name="twitter:description" content="初始化本地 git 仓库的脚本git init --bare spring-boot-debug.gitgit clone spring-boot-debug.gitcd spring-boot-debugmkdir -p src/main/java/com/example/boot/controllermkdir -p src/main/resources### create pom.xml a">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/java/vscode-spring-boot-debug.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/04/05/spring-boot-debug-using-maven.html">
+
+  <title> spring boot debug using maven | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                spring boot debug using maven
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-04-05T12:15:55+08:00" content="2018-04-05">
+              2018-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="初始化本地-git-仓库的脚本"><a href="#初始化本地-git-仓库的脚本" class="headerlink" title="初始化本地 git 仓库的脚本"></a>初始化本地 git 仓库的脚本</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git init --bare spring-boot-debug.git</span><span class="line">git <span class="built_in">clone</span> spring-boot-debug.git</span><span class="line"><span class="built_in">cd</span> spring-boot-debug</span><span class="line">mkdir -p src/main/java/com/example/boot/controller</span><span class="line">mkdir -p src/main/resources</span><span class="line"></span><span class="line"><span class="comment">### create pom.xml and java files ###</span></span><span class="line">touch pom.xml</span><span class="line">touch src/main/java/com/example/boot/SpringBootDebugApplication.java</span><span class="line">touch src/main/java/com/example/boot/controller/DebugController.java</span><span class="line">git add -A :/</span><span class="line">git commit -am <span class="string">"init spring boot application"</span></span><span class="line">git push</span></pre></td></tr></table></figure>
+<h3 id="spring-boot-项目的-pom-xml"><a href="#spring-boot-项目的-pom-xml" class="headerlink" title="spring boot 项目的 pom.xml"></a>spring boot 项目的 pom.xml</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><span class="line"><span class="tag">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><span class="line"></span><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.5.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><span class="line"></span><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.example.spring<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-debug<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>$&#123;project.artifactId&#125;<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><span class="line"></span><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><span class="line"></span><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><span class="line"></span><span class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>$&#123;project.artifactId&#125;<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;project.parent.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><span class="line">                <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><span class="line">                    <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><span class="line">                        <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><span class="line">                            <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build-info<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><span class="line">                            <span class="tag">&lt;<span class="name">goal</span>&gt;</span>repackage<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><span class="line">                        <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><span class="line">                    <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><span class="line">                <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>pl.project13.maven<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>git-commit-id-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><span class="line">                <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><span class="line">                    <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><span class="line">                        <span class="tag">&lt;<span class="name">id</span>&gt;</span>get-the-git-infos<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><span class="line">                        <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><span class="line">                            <span class="tag">&lt;<span class="name">goal</span>&gt;</span>revision<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><span class="line">                        <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><span class="line">                    <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><span class="line">                <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><span class="line">                    <span class="tag">&lt;<span class="name">generateGitPropertiesFile</span>&gt;</span>true<span class="tag">&lt;/<span class="name">generateGitPropertiesFile</span>&gt;</span></span><span class="line">                    <span class="tag">&lt;<span class="name">dotGitDirectory</span>&gt;</span>$&#123;project.basedir&#125;/.git<span class="tag">&lt;/<span class="name">dotGitDirectory</span>&gt;</span></span><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><span class="line"></span><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span></pre></td></tr></table></figure>
+<h3 id="spring-boot-应用程序-SpringBootDebugApplication"><a href="#spring-boot-应用程序-SpringBootDebugApplication" class="headerlink" title="spring boot 应用程序 SpringBootDebugApplication"></a>spring boot 应用程序 SpringBootDebugApplication</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.boot;</span><span class="line"></span><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><span class="line"><span class="keyword">import</span> org.springframework.boot.builder.SpringApplicationBuilder;</span><span class="line"></span><span class="line"><span class="meta">@SpringBootApplication</span></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringBootDebugApplication</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        <span class="keyword">new</span> SpringApplicationBuilder(SpringBootDebugApplication<span class="class">.<span class="keyword">class</span>).<span class="title">run</span>(<span class="title">args</span>)</span>;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="测试的-DebugController"><a href="#测试的-DebugController" class="headerlink" title="测试的 DebugController"></a>测试的 DebugController</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><span class="line">2</span><span class="line">3</span><span class="line">4</span><span class="line">5</span><span class="line">6</span><span class="line">7</span><span class="line">8</span><span class="line">9</span><span class="line">10</span><span class="line">11</span><span class="line">12</span><span class="line">13</span><span class="line">14</span><span class="line">15</span><span class="line">16</span><span class="line">17</span><span class="line">18</span><span class="line">19</span><span class="line">20</span><span class="line">21</span><span class="line">22</span><span class="line">23</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.boot.controller;</span><span class="line"></span><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><span class="line"></span><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><span class="line"></span><span class="line"><span class="meta">@RestController</span></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DebugController</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(DebugController<span class="class">.<span class="keyword">class</span>)</span>;</span><span class="line"></span><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"index"</span>)</span><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">(HttpServletRequest httpServletRequest)</span> </span>&#123;</span><span class="line">        String host = httpServletRequest.getRemoteHost();</span><span class="line">        <span class="keyword">int</span> port = httpServletRequest.getRemotePort();</span><span class="line">        LOGGER.info(<span class="string">"add breakpoint at this line, host is &#123;&#125;, and port is &#123;&#125;"</span>, host, port);</span><span class="line">        <span class="keyword">return</span> host;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="mvnDebug-spring-boot-run"><a href="#mvnDebug-spring-boot-run" class="headerlink" title="mvnDebug spring-boot:run"></a>mvnDebug spring-boot:run</h2><p>如下方式运行项目，虽然这里提示在<code>8000</code>端口监听客户端的连接，并且可以使用<code>jdb</code>连接调试，也可以用<code>vscode</code>连接调试，但使用<code>IDEA</code>开发工具<code>Attach to Local Process...</code>时，并没有发现待调试程序在<code>8000</code>端口上运行。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mvnDebug</span> spring-boot:run</span><span class="line output">Preparing to execute Maven <span class="keyword">in</span> debug mode</span><span class="line output">Listening <span class="keyword">for</span> transport dt_socket at address: 8000</span></pre></td></tr></table></figure>
+<h3 id="jdb-attach"><a href="#jdb-attach" class="headerlink" title="jdb attach"></a>jdb attach</h3><p><code>jdb</code>是基于命令行的工具，设置好断点，再访问<code>http://localhost:8080/index</code>页面，就会进入断点。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">jdb</span> -attach 8000</span><span class="line output">Set uncaught java.lang.Throwable</span><span class="line output">Set deferred uncaught java.lang.Throwable</span><span class="line output">Initializing jdb ...</span><span class="line output">&gt;</span><span class="line output">VM Started: No frames on the current call stack</span><span class="line">  main[1] run</span><span class="line">  &gt; stop at com.example.boot.controller.DebugController:19</span><span class="line output">Set breakpoint com.example.boot.controller.DebugController:19</span><span class="line output"></span><span class="line output">Breakpoint hit: <span class="string">"thread=http-nio-8080-exec-2"</span>, com.example.boot.controller.DebugController.index(), line=19 bci=14</span><span class="line output"></span><span class="line">  http-nio-8080-exec-2[1] <span class="built_in">print</span> port</span><span class="line output"> port = 60249</span></pre></td></tr></table></figure>
+<h3 id="vscode-attach"><a href="#vscode-attach" class="headerlink" title="vscode attach"></a>vscode attach</h3><p><code>vscode</code>中的<code>launch.json</code>内容如下，在<code>DebugController</code>第19行打上断点，按<code>F5</code>运行程序，访问<code>http://localhost:8080/index</code>即可进入断点。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><span class="line">    <span class="attr">"version"</span>: <span class="string">"0.2.0"</span>,</span><span class="line">    <span class="attr">"configurations"</span>: [</span><span class="line">        &#123;</span><span class="line">            <span class="attr">"type"</span>: <span class="string">"java"</span>,</span><span class="line">            <span class="attr">"name"</span>: <span class="string">"Debug (Attach) SpringBootDebugApplication"</span>,</span><span class="line">            <span class="attr">"request"</span>: <span class="string">"attach"</span>,</span><span class="line">            <span class="attr">"hostName"</span>: <span class="string">"localhost"</span>,</span><span class="line">            <span class="attr">"port"</span>: <span class="number">8000</span></span><span class="line">        &#125;</span><span class="line">    ]</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<img src="/blog/img/java/vscode-spring-boot-debug.png" title="[vscode-spring-boot-debug]">
+<h2 id="mvnDebug-exec-java-Dstart-class-quot-quot"><a href="#mvnDebug-exec-java-Dstart-class-quot-quot" class="headerlink" title="mvnDebug exec:java -Dstart-class=&quot;...&quot;"></a>mvnDebug exec:java -Dstart-class=&quot;...&quot;</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mvnDebug</span> <span class="built_in">exec</span>:java -Dstart-class=<span class="string">"com.example.boot.SpringBootDebugApplication"</span></span><span class="line">Preparing to execute Maven <span class="keyword">in</span> debug mode</span><span class="line">Listening <span class="keyword">for</span> transport dt_socket at address: 8000</span></pre></td></tr></table></figure>
+<p>与前面一样，在<code>jdb</code>和<code>vscode</code>中是可以连接调试的，在<code>IDEA</code>中不行。</p>
+<h2 id="mvn-spring-boot-run-Drun-jvmArguments-quot-agentlib-jdwp-quot"><a href="#mvn-spring-boot-run-Drun-jvmArguments-quot-agentlib-jdwp-quot" class="headerlink" title="mvn spring-boot:run -Drun.jvmArguments=&quot;-agentlib:jdwp=...&quot;"></a>mvn spring-boot:run -Drun.jvmArguments=&quot;-agentlib:jdwp=...&quot;</h2><p><a href="https://docs.spring.io/spring-boot/docs/2.0.1.RELEASE/maven-plugin/examples/run-debug.html" target="_blank" rel="noopener">官方文档</a>推荐使用插件<code>spring-boot-maven-plugin</code>的目标<code>spring-boot:run</code>运行<code>spring-boot</code>应用，如果有设置<code>jvmArguments</code>参数，就会自动派生新的 Java 进程来运行<code>spring-boot</code>中的<code>main</code>方法，所以可以用<code>-Drun.jvmArguments</code>把参数传给派生的 Java 进程，如下示例。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> spring-boot:run -Drun.jvmArguments=<span class="string">"-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000"</span></span><span class="line output">[INFO] Scanning <span class="keyword">for</span> projects...</span><span class="line output">[INFO]</span><span class="line output">[INFO] ----------------&lt; com.example.spring:spring-boot-debug &gt;----------------</span><span class="line output">[INFO] Building spring-boot-debug 0.0.1-SNAPSHOT</span><span class="line output">[INFO] --------------------------------[ jar ]---------------------------------</span><span class="line output">[INFO]</span><span class="line output">[INFO] &gt;&gt;&gt; spring-boot-maven-plugin:1.5.9.RELEASE:run (default-cli) &gt; <span class="built_in">test</span>-compile @ spring-boot-debug &gt;&gt;&gt;</span><span class="line output">[INFO]</span><span class="line output">[INFO] --- spring-boot-maven-plugin:1.5.9.RELEASE:build-info (default) @ spring-boot-debug ---</span><span class="line output">[INFO]</span><span class="line output">[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ spring-boot-debug ---</span><span class="line output">[INFO] Using <span class="string">'UTF-8'</span> encoding to copy filtered resources.</span><span class="line output">[INFO] Copying 0 resource</span><span class="line output">[INFO] Copying 0 resource</span><span class="line output">[INFO]</span><span class="line output">[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ spring-boot-debug ---</span><span class="line output">[INFO] Nothing to compile - all classes are up to date</span><span class="line output">[INFO]</span><span class="line output">[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ spring-boot-debug ---</span><span class="line output">[INFO] Using <span class="string">'UTF-8'</span> encoding to copy filtered resources.</span><span class="line output">[INFO] skip non existing resourceDirectory /<span class="built_in">test</span>/spring-boot-debug/src/<span class="built_in">test</span>/resources</span><span class="line output">[INFO]</span><span class="line output">[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ spring-boot-debug ---</span><span class="line output">[INFO] No sources to compile</span><span class="line output">[INFO]</span><span class="line output">[INFO] &lt;&lt;&lt; spring-boot-maven-plugin:1.5.9.RELEASE:run (default-cli) &lt; <span class="built_in">test</span>-compile @ spring-boot-debug &lt;&lt;&lt;</span><span class="line output">[INFO]</span><span class="line output">[INFO]</span><span class="line output">[INFO] --- spring-boot-maven-plugin:1.5.9.RELEASE:run (default-cli) @ spring-boot-debug ---</span><span class="line output">[INFO] Attaching agents: []</span><span class="line output">Listening <span class="keyword">for</span> transport dt_socket at address: 8000</span></pre></td></tr></table></figure>
+<p>程序启动的前一部分<code>[INFO]</code>日志是由主进程输出的，派生的子进程启动<code>spring-boot</code>应用，因为调试参数<code>suspend=y</code>，因此在<code>8000</code>端口等待客户端连接，这时一共启动了2个 Java 进程，如下所示，其中<code>84974</code>这个进程就是<code>84952</code>这个进程<code>fork</code>出来的子进程：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -ef | grep java</span><span class="line">  501 84952  1177   0 11:15PM ttys001    0:07.06 /Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/bin/java -classpath /usr/<span class="built_in">local</span>/Cellar/maven/3.5.3/libexec/boot/plexus-classworlds-2.5.2.jar -Dclassworlds.conf=/usr/<span class="built_in">local</span>/Cellar/maven/3.5.3/libexec/bin/m2.conf -Dmaven.home=/usr/<span class="built_in">local</span>/Cellar/maven/3.5.3/libexec -Dlibrary.jansi.path=/usr/<span class="built_in">local</span>/Cellar/maven/3.5.3/libexec/lib/jansi-native -Dmaven.multiModuleProjectDirectory=/github.com/<span class="built_in">test</span>/spring-boot-debug org.codehaus.plexus.classworlds.launcher.Launcher spring-boot:run -Drun.jvmArguments=-agentlib:jdwp=transport=dt_socket,server=y,<span class="built_in">suspend</span>=y,address=8000</span><span class="line">  501 84974 84952   0 11:15PM ttys001    0:00.07 /Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/jre/bin/java -agentlib:jdwp=transport=dt_socket,server=y,<span class="built_in">suspend</span>=y,address=8000 -cp /<span class="built_in">test</span>/spring-boot-debug/target/classes:...:~/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.8.10/jackson-databind-2.8.10.jar com.example.boot.SpringBootDebugApplication</span></pre></td></tr></table></figure>
+<h3 id="jdb-attach-1"><a href="#jdb-attach-1" class="headerlink" title="jdb attach"></a>jdb attach</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">jdb</span> -attach 8000</span><span class="line output">Set uncaught java.lang.Throwable</span><span class="line output">Set deferred uncaught java.lang.Throwable</span><span class="line output">Initializing jdb ...</span><span class="line output">&gt;</span><span class="line output">VM Started: No frames on the current call stack</span><span class="line output"></span><span class="line">  main[1] stop at com.example.boot.controller.DebugController:19</span><span class="line output">Deferring breakpoint com.example.boot.controller.DebugController:19.</span><span class="line output">It will be <span class="built_in">set</span> after the class is loaded.</span><span class="line">  main[1] run</span><span class="line output">&gt; Set deferred breakpoint com.example.boot.controller.DebugController:19</span><span class="line output"></span><span class="line output">Breakpoint hit: <span class="string">"thread=http-nio-8080-exec-2"</span>, com.example.boot.controller.DebugController.index(), line=19 bci=14</span><span class="line output"></span><span class="line">  http-nio-8080-exec-2[1] <span class="built_in">print</span> host</span><span class="line output"> host = <span class="string">"0:0:0:0:0:0:0:1"</span></span><span class="line">  http-nio-8080-exec-2[1] <span class="built_in">print</span> port</span><span class="line output"> port = 58781</span><span class="line">  http-nio-8080-exec-2[1] <span class="built_in">print</span> httpServletRequest</span><span class="line output"> httpServletRequest = <span class="string">"org.apache.catalina.connector.RequestFacade@7d5cdff"</span></span><span class="line">  http-nio-8080-exec-2[1] <span class="built_in">print</span> httpServletRequest.getHeader(<span class="string">"user-agent"</span>)</span><span class="line output"> httpServletRequest.getHeader(<span class="string">"user-agent"</span>) = <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36"</span></span><span class="line">  http-nio-8080-exec-2[1] cont</span></pre></td></tr></table></figure>
+<h3 id="使用-IDEA-客户端连接"><a href="#使用-IDEA-客户端连接" class="headerlink" title="使用 IDEA 客户端连接"></a>使用 IDEA 客户端连接</h3><p><code>jdb</code>与 IDE 相比还是不方便的，可以使用 <code>IntelliJ IDEA</code> 和 <code>Eclipse</code> 之类的工具进行 debug，<code>vscode</code>的调试功能也很不错，以<code>IDEA</code>为例，<code>IDEA - Run - Attach to Local Process...</code>，可以看到运行中的调试程序，点击连接之后，客户端提示如下，并且主程序会继续启动<code>spring-boot</code>应用。</p>
+<blockquote>
+<p>Connected to the target VM, address: &#39;127.0.0.1:8000&#39;, transport: &#39;socket&#39;</p>
+</blockquote>
+<h2 id="java-cp-quot-quot-agentlib-jdwp-quot-quot"><a href="#java-cp-quot-quot-agentlib-jdwp-quot-quot" class="headerlink" title="java -cp &quot;...&quot; -agentlib:jdwp=&quot;...&quot;"></a>java -cp &quot;...&quot; -agentlib:jdwp=&quot;...&quot;</h2><p>下面用最基本的<code>java</code>命令来启动<code>main</code>方法所在的应用程序进行调试。</p>
+<p>在<code>pom.xml</code>文件所在目录下运行以下命令得到项目依赖的<code>classpath</code>，并将<code>target/classes</code>目录加入<code>classpath</code>中，然后运行<code>main</code>方法所在应用程序<code>SpringBootDebugApplication</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> dependency:build-classpath | grep -v <span class="string">"INFO\|WARN"</span></span><span class="line output">maven project classpath output here ......</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">java</span> -cp <span class="string">"target/classes:<span class="variable">$(mvn dependency:build-classpath | grep -v "INFO\|WARN")</span>"</span> -agentlib:jdwp=transport=dt_socket,server=y,<span class="built_in">suspend</span>=y,address=8000 com.example.boot.SpringBootDebugApplication</span><span class="line output">Listening <span class="keyword">for</span> transport dt_socket at address: 8000</span></pre></td></tr></table></figure>
+<p>然后用<code>IDEA</code>连接<code>8000</code>端口后开始调试代码。</p>
+<h2 id="spring-boot-2-0-参数变化"><a href="#spring-boot-2-0-参数变化" class="headerlink" title="spring-boot 2.0 参数变化"></a>spring-boot 2.0 参数变化</h2><p>在<code>spring-boot 2.x</code>版本中，需要注意<code>-Drun.jvmArguments</code>被调整为<code>-Dspring.boot.run.jvmArguments</code>。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://docs.oracle.com/javase/7/docs/technotes/tools/windows/jdb.html" target="_blank" rel="noopener">jdb - The Java Debugger</a></li>
+<li><a href="https://docs.spring.io/spring-boot/docs/2.0.1.RELEASE/maven-plugin/examples/run-debug.html" target="_blank" rel="noopener">Spring Boot Maven Plugin</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2018/04/05/nodemon-monitor-file-change-and-execute-command.html" rel="next" title="nodemon - monitor file change and execute command">
+                <i class="fa fa-chevron-left"></i>
+                nodemon - monitor file change and execute command
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/04/05/jrebel-configuration-and-usage-with-maven.html" rel="prev" title="jrebel configuration and usage with maven">
+                <i class="fa fa-chevron-right"></i>
+                jrebel configuration and usage with maven
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化本地-git-仓库的脚本"><span class="nav-number">1.</span> <span class="nav-text">初始化本地 git 仓库的脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spring-boot-项目的-pom-xml"><span class="nav-number">1.1.</span> <span class="nav-text">spring boot 项目的 pom.xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spring-boot-应用程序-SpringBootDebugApplication"><span class="nav-number">1.2.</span> <span class="nav-text">spring boot 应用程序 SpringBootDebugApplication</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试的-DebugController"><span class="nav-number">1.3.</span> <span class="nav-text">测试的 DebugController</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mvnDebug-spring-boot-run"><span class="nav-number">2.</span> <span class="nav-text">mvnDebug spring-boot:run</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jdb-attach"><span class="nav-number">2.1.</span> <span class="nav-text">jdb attach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vscode-attach"><span class="nav-number">2.2.</span> <span class="nav-text">vscode attach</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mvnDebug-exec-java-Dstart-class-quot-quot"><span class="nav-number">3.</span> <span class="nav-text">mvnDebug exec:java -Dstart-class=&quot;...&quot;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mvn-spring-boot-run-Drun-jvmArguments-quot-agentlib-jdwp-quot"><span class="nav-number">4.</span> <span class="nav-text">mvn spring-boot:run -Drun.jvmArguments=&quot;-agentlib:jdwp=...&quot;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jdb-attach-1"><span class="nav-number">4.1.</span> <span class="nav-text">jdb attach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-IDEA-客户端连接"><span class="nav-number">4.2.</span> <span class="nav-text">使用 IDEA 客户端连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java-cp-quot-quot-agentlib-jdwp-quot-quot"><span class="nav-number">5.</span> <span class="nav-text">java -cp &quot;...&quot; -agentlib:jdwp=&quot;...&quot;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring-boot-2-0-参数变化"><span class="nav-number">6.</span> <span class="nav-text">spring-boot 2.0 参数变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

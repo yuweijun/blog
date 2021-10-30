@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="QuestionFor a project we having a bunch of data that always have the same structure and is not linked together. There are two approaches to save the data:  Creating a new database for every pool (abou">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql: many tables or many databases?">
-<meta property="og:url" content="https://www.4e00.com/mysql/2010/05/24/mysql-many-tables-or-many-databases.html">
+<meta property="og:url" content="http://www.4e00.com/mysql/2010/05/24/mysql-many-tables-or-many-databases.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="QuestionFor a project we having a bunch of data that always have the same structure and is not linked together. There are two approaches to save the data:  Creating a new database for every pool (abou">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.071Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql: many tables or many databases?">
 <meta name="twitter:description" content="QuestionFor a project we having a bunch of data that always have the same structure and is not linked together. There are two approaches to save the data:  Creating a new database for every pool (abou">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/mysql/2010/05/24/mysql-many-tables-or-many-databases.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/mysql/2010/05/24/mysql-many-tables-or-many-databases.html">
 
   <title> mysql: many tables or many databases? | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/mysql/" itemprop="url" rel="index">
                     <span itemprop="name">mysql</span>
                   </a>
@@ -264,12 +264,12 @@
 <p>In MySQL, databases (standard SQL uses the term &quot;schema&quot; for this) serve chiefly as a namespace for tables. A database has only a few attributes, e.g. the default character set and collation. And that usage of GRANT makes it convenient to control access privileges per database, but that has nothing to do with performance.</p>
 <p>You can access tables in any database from a single connection (provided they are managed by the same instance of MySQL Server). You just have to qualify the table name:</p>
 <a id="more"></a>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> database17.accounts_table;</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> database17.accounts_table;</span></pre></td></tr></table></figure>
 <p>This is purely a syntactical difference. It should have no effect on performance.</p>
 <p>Regarding storage, you can&#39;t organize tables into a file-per-database as @Chris speculates. With the MyISAM storage engine, you always have a file per table. With the InnoDB storage engine, you either have a single set of storage files that amalgamate all tables, or else you have a file per table (this is configured for the whole MySQL server, not per database). In either case, there&#39;s no performance advantage or disadvantage to creating the tables in a single database versus many databases.</p>
 <p>There aren&#39;t many MySQL configuration parameters that work per database. Most parameters that affect server performance are server-wide in scope.</p>
 <p>Regarding backups, you can specify a subset of tables as arguments to the mysqldump command. It may be more convenient to back up logical sets of tables per database, without having to name all the tables on the command-line. But it should make no difference to performance, only convenience for you as you enter the backup command.</p>
-<p>-- Bill Karwin (the author of <a href="http://www.pragprog.com/titles/bksqla/sql-antipatterns" target="_blank" rel="external">SQL Antipatterns</a> from Pragmatic Bookshelf)</p>
+<p>-- Bill Karwin (the author of <a href="http://www.pragprog.com/titles/bksqla/sql-antipatterns" target="_blank" rel="noopener">SQL Antipatterns</a> from Pragmatic Bookshelf)</p>
 
       
     </div>
@@ -296,7 +296,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/linux/2010/05/24/linux-show-specified-lines-in-text-file.html" rel="next" title="linux命令行显示指定行号的内容">
-                上一篇：linux命令行显示指定行号的内容
+                <i class="fa fa-chevron-left"></i>
+                linux命令行显示指定行号的内容
               </a>
             
           </div>
@@ -304,7 +305,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2010/05/24/centos-enable-apache2-mod-ssl-module.html" rel="prev" title="在centos5中开启apache2的mod_ssl模块">
-                下一篇：在centos5中开启apache2的mod_ssl模块
+                <i class="fa fa-chevron-right"></i>
+                在centos5中开启apache2的mod_ssl模块
               </a>
             
           </div>
@@ -353,7 +355,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -364,16 +366,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -455,10 +455,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

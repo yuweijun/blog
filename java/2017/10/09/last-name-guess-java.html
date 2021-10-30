@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -56,14 +56,14 @@
 
 <meta name="description" content="猜姓氏一般的都是127个姓之内，以下代码中一共包括400多个姓氏，这个猜姓氏的算法就是将每个姓氏对应一个独一无二的2进制编码。然后按2进制数不同bit位置上是1的进行分组，这样每组开头的数分别是1，2，4，8，16，32，64，128和256，将姓氏出现的那个组的第1个数字加在一起，得到的编号就是对应的姓。 import com.google.common.collect.Lists;import">
 <meta property="og:type" content="article">
-<meta property="og:title" content="猜姓氏java版">
-<meta property="og:url" content="https://www.4e00.com/java/2017/10/09/last-name-guess-java.html">
+<meta property="og:title" content="猜姓氏 java 实现">
+<meta property="og:url" content="http://www.4e00.com/java/2017/10/09/last-name-guess-java.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="猜姓氏一般的都是127个姓之内，以下代码中一共包括400多个姓氏，这个猜姓氏的算法就是将每个姓氏对应一个独一无二的2进制编码。然后按2进制数不同bit位置上是1的进行分组，这样每组开头的数分别是1，2，4，8，16，32，64，128和256，将姓氏出现的那个组的第1个数字加在一起，得到的编号就是对应的姓。 import com.google.common.collect.Lists;import">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-10-16T01:54:04.726Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.125Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="猜姓氏java版">
+<meta name="twitter:title" content="猜姓氏 java 实现">
 <meta name="twitter:description" content="猜姓氏一般的都是127个姓之内，以下代码中一共包括400多个姓氏，这个猜姓氏的算法就是将每个姓氏对应一个独一无二的2进制编码。然后按2进制数不同bit位置上是1的进行分组，这样每组开头的数分别是1，2，4，8，16，32，64，128和256，将姓氏出现的那个组的第1个数字加在一起，得到的编号就是对应的姓。 import com.google.common.collect.Lists;import">
 
 
@@ -85,9 +85,9 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/java/2017/10/09/last-name-guess-java.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2017/10/09/last-name-guess-java.html">
 
-  <title> 猜姓氏java版 | 一 </title>
+  <title> 猜姓氏 java 实现 | 一 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="default">
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -195,7 +195,7 @@
             
             
               
-                猜姓氏java版
+                猜姓氏 java 实现
               
             
           </h1>
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -255,7 +255,7 @@
 
       
         <p>猜姓氏一般的都是127个姓之内，以下代码中一共包括400多个姓氏，这个猜姓氏的算法就是将每个姓氏对应一个独一无二的2进制编码。然后按2进制数不同bit位置上是1的进行分组，这样每组开头的数分别是1，2，4，8，16，32，64，128和256，将姓氏出现的那个组的第1个数字加在一起，得到的编号就是对应的姓。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> com.google.common.collect.Lists;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LastNameGuessing</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String[] LAST_NAMES = (<span class="string">"王,李,张,刘,陈,杨,黄,吴,赵,周,徐,孙,马,朱,胡,林,郭,何,高,罗,郑,梁,"</span> +</div><div class="line">            <span class="string">"谢,宋,唐,许,邓,冯,韩,曹,曾,彭,萧,蔡,潘,田,董,袁,于,余,叶,蒋,杜,苏,魏,程,吕,丁,沈,任,姚,卢,傅,钟,姜,"</span> +</div><div class="line">            <span class="string">"崔,谭,廖,范,汪,陆,金,石,戴,贾,韦,夏,邱,方,侯,邹,熊,孟,秦,白,江,阎,薛,尹,段,雷,黎,史,龙,陶,贺,顾,毛,"</span> +</div><div class="line">            <span class="string">"郝,龚,邵,万,钱,严,赖,覃,洪,武,莫,孔,汤,向,常,温,康,施,文,牛,樊,葛,邢,安,齐,易,乔,伍,庞,颜,倪,庄,聂,"</span> +</div><div class="line">            <span class="string">"章,鲁,岳,翟,殷,詹,申,欧,耿,关,兰,焦,俞,左,柳,甘,祝,包,宁,尚,符,舒,阮,柯,纪,梅,童,凌,毕,单,季,裴,霍,"</span> +</div><div class="line">            <span class="string">"涂,成,苗,谷,盛,曲,翁,冉,骆,蓝,路,游,辛,靳,欧阳,管,柴,蒙,鲍,华,喻,祁,蒲,房,滕,屈,饶,解,牟,艾,尤,阳,"</span> +</div><div class="line">            <span class="string">"时,穆,农,司,卓,古,吉,缪,简,车,项,连,芦,麦,褚,娄,窦,戚,岑,景,党,宫,费,卜,冷,晏,席,卫,米,柏,宗,瞿,桂,"</span> +</div><div class="line">            <span class="string">"全,佟,应,臧,闵,苟,邬,边,卞,姬,师,和,仇,栾,隋,商,刁,沙,荣,巫,寇,桑,郎,甄,丛,仲,虞,敖,巩,明,佘,池,查,"</span> +</div><div class="line">            <span class="string">"麻,苑,迟,邝,官,封,谈,匡,鞠,惠,荆,乐,冀,郁,胥,南,班,储,原,栗,燕,楚,鄢,劳,谌,奚,皮,粟,冼,蔺,楼,盘,满,"</span> +</div><div class="line">            <span class="string">"闻,位,厉,仝,区,郜,海,阚,花,权,强,帅,屠,豆,朴,盖,练,廉,禹,井,祖,漆,巴,丰,支,卿,国,狄,平,计,索,宣,晋,"</span> +</div><div class="line">            <span class="string">"相,初,门,雲,容,敬,来,扈,晁,芮,都,普,阙,浦,戈,伏,鹿,薄,邸,雍,辜,羊,阿,乌,母,裘,亓,修,邰,赫,杭,况,那,"</span> +</div><div class="line">            <span class="string">"宿,鲜,印,逯,隆,茹,诸,战,慕,危,玉,银,亢,嵇,公,哈,湛,宾,戎,勾,茅,利,於,呼,居,揭,干,但,尉,冶,斯,元,束,"</span> +</div><div class="line">            <span class="string">"檀,衣,信,展,阴,昝,智,幸,奉,植,衡,富,尧,闭,由,伊,万俟,司马,上官,夏侯,诸葛,东方,赫连,皇甫,尉迟,公羊,"</span> +</div><div class="line">            <span class="string">"澹台,公冶,宗政,濮阳,淳于,单于,太叔,申屠,公孙,仲孙,轩辕,令狐,钟离,宇文,长孙,慕容,鲜于,闾丘,司徒,司空,"</span> +</div><div class="line">            <span class="string">"亓官,司寇,子车,颛孙,端木,巫马,公西,漆雕,乐正,壤驷,公良,拓跋,夹谷,宰父,谷梁,段干,百里,东郭,南门,呼延,"</span> +</div><div class="line">            <span class="string">"羊舌,微生,梁丘,左丘,东门,西门,南宫"</span>).split(<span class="string">","</span>);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> MAX = LAST_NAMES.length; <span class="comment">// 255 or 127，一般的就算127个姓</span></div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> List&lt;List&lt;LastName&gt;&gt; GROUPS = init();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">log</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> base)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>) Math.ceil(Math.log(x) / Math.log(base));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> List&lt;List&lt;LastName&gt;&gt; init() &#123;</div><div class="line">        <span class="keyword">int</span> size = log(MAX + <span class="number">1</span>, <span class="number">2</span>);</div><div class="line">        List&lt;LastName&gt; data = getData();</div><div class="line">        List&lt;LastName&gt; list = data.subList(<span class="number">0</span>, MAX);</div><div class="line">        List&lt;List&lt;LastName&gt;&gt; groups = Lists.newArrayList();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</div><div class="line">            List&lt;LastName&gt; group = Lists.newArrayList();</div><div class="line">            groups.add(group);</div><div class="line">            <span class="keyword">for</span> (LastName t : list) &#123;</div><div class="line">                <span class="keyword">int</span> id = t.getId();</div><div class="line">                <span class="keyword">int</span> b = (id &gt;&gt; i) &amp; <span class="number">0x1</span>; <span class="comment">// 高位取０</span></div><div class="line">                <span class="keyword">if</span> (b == <span class="number">1</span>) &#123;</div><div class="line">                    group.add(t);</div><div class="line">                    String lastName = t.getLastName();</div><div class="line">                    System.out.printf(<span class="string">"%3d\t%s\t"</span>, id, lastName);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            System.out.println(<span class="string">"\n"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> groups;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;LastName&gt; <span class="title">getData</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> length = LAST_NAMES.length;</div><div class="line">        List&lt;LastName&gt; lastNames = Lists.newArrayList();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</div><div class="line">            String s = LAST_NAMES[i];</div><div class="line">            LastName lastName = <span class="keyword">new</span> LastName();</div><div class="line">            lastName.setId(i + <span class="number">1</span>);</div><div class="line">            lastName.setLastName(s);</div><div class="line">            lastNames.add(lastName);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> lastNames;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">query</span><span class="params">(String q)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> size = log(MAX + <span class="number">1</span>, <span class="number">2</span>);</div><div class="line">        String result = <span class="string">""</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</div><div class="line">            List&lt;LastName&gt; group = GROUPS.get(i);</div><div class="line">            <span class="keyword">boolean</span> found = <span class="keyword">false</span>;</div><div class="line">            <span class="keyword">for</span> (LastName g : group) &#123;</div><div class="line">                String lastName = g.getLastName();</div><div class="line">                <span class="keyword">if</span> (lastName.equals(q)) &#123;</div><div class="line">                    found = <span class="keyword">true</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (found) &#123;</div><div class="line">                result = <span class="string">"1"</span> + result;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                result = <span class="string">"0"</span> + result;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        System.out.printf(<span class="string">"%-10s-&gt;%4d:%s%n"</span>, result, Integer.parseInt(result, <span class="number">2</span>), q); <span class="comment">// 10000110 -&gt; 134</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">LastName</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String lastName;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getLastName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> lastName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLastName</span><span class="params">(String lastName)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.lastName = lastName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.google.common.collect.Lists;</span><span class="line"><span class="keyword">import</span> java.util.List;</span><span class="line"></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LastNameGuessing</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String[] LAST_NAMES = (<span class="string">"王,李,张,刘,陈,杨,黄,吴,赵,周,徐,孙,马,朱,胡,林,郭,何,高,罗,郑,梁,"</span> +</span><span class="line">            <span class="string">"谢,宋,唐,许,邓,冯,韩,曹,曾,彭,萧,蔡,潘,田,董,袁,于,余,叶,蒋,杜,苏,魏,程,吕,丁,沈,任,姚,卢,傅,钟,姜,"</span> +</span><span class="line">            <span class="string">"崔,谭,廖,范,汪,陆,金,石,戴,贾,韦,夏,邱,方,侯,邹,熊,孟,秦,白,江,阎,薛,尹,段,雷,黎,史,龙,陶,贺,顾,毛,"</span> +</span><span class="line">            <span class="string">"郝,龚,邵,万,钱,严,赖,覃,洪,武,莫,孔,汤,向,常,温,康,施,文,牛,樊,葛,邢,安,齐,易,乔,伍,庞,颜,倪,庄,聂,"</span> +</span><span class="line">            <span class="string">"章,鲁,岳,翟,殷,詹,申,欧,耿,关,兰,焦,俞,左,柳,甘,祝,包,宁,尚,符,舒,阮,柯,纪,梅,童,凌,毕,单,季,裴,霍,"</span> +</span><span class="line">            <span class="string">"涂,成,苗,谷,盛,曲,翁,冉,骆,蓝,路,游,辛,靳,欧阳,管,柴,蒙,鲍,华,喻,祁,蒲,房,滕,屈,饶,解,牟,艾,尤,阳,"</span> +</span><span class="line">            <span class="string">"时,穆,农,司,卓,古,吉,缪,简,车,项,连,芦,麦,褚,娄,窦,戚,岑,景,党,宫,费,卜,冷,晏,席,卫,米,柏,宗,瞿,桂,"</span> +</span><span class="line">            <span class="string">"全,佟,应,臧,闵,苟,邬,边,卞,姬,师,和,仇,栾,隋,商,刁,沙,荣,巫,寇,桑,郎,甄,丛,仲,虞,敖,巩,明,佘,池,查,"</span> +</span><span class="line">            <span class="string">"麻,苑,迟,邝,官,封,谈,匡,鞠,惠,荆,乐,冀,郁,胥,南,班,储,原,栗,燕,楚,鄢,劳,谌,奚,皮,粟,冼,蔺,楼,盘,满,"</span> +</span><span class="line">            <span class="string">"闻,位,厉,仝,区,郜,海,阚,花,权,强,帅,屠,豆,朴,盖,练,廉,禹,井,祖,漆,巴,丰,支,卿,国,狄,平,计,索,宣,晋,"</span> +</span><span class="line">            <span class="string">"相,初,门,雲,容,敬,来,扈,晁,芮,都,普,阙,浦,戈,伏,鹿,薄,邸,雍,辜,羊,阿,乌,母,裘,亓,修,邰,赫,杭,况,那,"</span> +</span><span class="line">            <span class="string">"宿,鲜,印,逯,隆,茹,诸,战,慕,危,玉,银,亢,嵇,公,哈,湛,宾,戎,勾,茅,利,於,呼,居,揭,干,但,尉,冶,斯,元,束,"</span> +</span><span class="line">            <span class="string">"檀,衣,信,展,阴,昝,智,幸,奉,植,衡,富,尧,闭,由,伊,万俟,司马,上官,夏侯,诸葛,东方,赫连,皇甫,尉迟,公羊,"</span> +</span><span class="line">            <span class="string">"澹台,公冶,宗政,濮阳,淳于,单于,太叔,申屠,公孙,仲孙,轩辕,令狐,钟离,宇文,长孙,慕容,鲜于,闾丘,司徒,司空,"</span> +</span><span class="line">            <span class="string">"亓官,司寇,子车,颛孙,端木,巫马,公西,漆雕,乐正,壤驷,公良,拓跋,夹谷,宰父,谷梁,段干,百里,东郭,南门,呼延,"</span> +</span><span class="line">            <span class="string">"羊舌,微生,梁丘,左丘,东门,西门,南宫"</span>).split(<span class="string">","</span>);</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> MAX = LAST_NAMES.length; <span class="comment">// 255 or 127，一般的就算127个姓</span></span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> List&lt;List&lt;LastName&gt;&gt; GROUPS = init();</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">log</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> base)</span> </span>&#123;</span><span class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>) Math.ceil(Math.log(x) / Math.log(base));</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> List&lt;List&lt;LastName&gt;&gt; init() &#123;</span><span class="line">        <span class="keyword">int</span> size = log(MAX + <span class="number">1</span>, <span class="number">2</span>);</span><span class="line">        List&lt;LastName&gt; data = getData();</span><span class="line">        List&lt;LastName&gt; list = data.subList(<span class="number">0</span>, MAX);</span><span class="line">        List&lt;List&lt;LastName&gt;&gt; groups = Lists.newArrayList();</span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><span class="line">            List&lt;LastName&gt; group = Lists.newArrayList();</span><span class="line">            groups.add(group);</span><span class="line">            <span class="keyword">for</span> (LastName t : list) &#123;</span><span class="line">                <span class="keyword">int</span> id = t.getId();</span><span class="line">                <span class="keyword">int</span> b = (id &gt;&gt; i) &amp; <span class="number">0x1</span>; <span class="comment">// 高位取０</span></span><span class="line">                <span class="keyword">if</span> (b == <span class="number">1</span>) &#123;</span><span class="line">                    group.add(t);</span><span class="line">                    String lastName = t.getLastName();</span><span class="line">                    System.out.printf(<span class="string">"%3d\t%s\t"</span>, id, lastName);</span><span class="line">                &#125;</span><span class="line">            &#125;</span><span class="line">            System.out.println(<span class="string">"\n"</span>);</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="keyword">return</span> groups;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;LastName&gt; <span class="title">getData</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">int</span> length = LAST_NAMES.length;</span><span class="line">        List&lt;LastName&gt; lastNames = Lists.newArrayList();</span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><span class="line">            String s = LAST_NAMES[i];</span><span class="line">            LastName lastName = <span class="keyword">new</span> LastName();</span><span class="line">            lastName.setId(i + <span class="number">1</span>);</span><span class="line">            lastName.setLastName(s);</span><span class="line">            lastNames.add(lastName);</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="keyword">return</span> lastNames;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">query</span><span class="params">(String q)</span> </span>&#123;</span><span class="line">        <span class="keyword">int</span> size = log(MAX + <span class="number">1</span>, <span class="number">2</span>);</span><span class="line">        String result = <span class="string">""</span>;</span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><span class="line">            List&lt;LastName&gt; group = GROUPS.get(i);</span><span class="line">            <span class="keyword">boolean</span> found = <span class="keyword">false</span>;</span><span class="line">            <span class="keyword">for</span> (LastName g : group) &#123;</span><span class="line">                String lastName = g.getLastName();</span><span class="line">                <span class="keyword">if</span> (lastName.equals(q)) &#123;</span><span class="line">                    found = <span class="keyword">true</span>;</span><span class="line">                    <span class="keyword">break</span>;</span><span class="line">                &#125;</span><span class="line">            &#125;</span><span class="line">            <span class="keyword">if</span> (found) &#123;</span><span class="line">                result = <span class="string">"1"</span> + result;</span><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><span class="line">                result = <span class="string">"0"</span> + result;</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        System.out.printf(<span class="string">"%-10s-&gt;%4d:%s%n"</span>, result, Integer.parseInt(result, <span class="number">2</span>), q); <span class="comment">// 10000110 -&gt; 134</span></span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LastName</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> String lastName;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">return</span> id;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><span class="line">        <span class="keyword">this</span>.id = id;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getLastName</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">return</span> lastName;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLastName</span><span class="params">(String lastName)</span> </span>&#123;</span><span class="line">        <span class="keyword">this</span>.lastName = lastName;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>运行<code>main</code>方法之后，输出生成的姓氏分组如下：</p>
 <table>
@@ -344,7 +344,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/linux/2017/10/01/linux-performance-tools.html" rel="next" title="linux performance tools">
-                上一篇：linux performance tools
+                <i class="fa fa-chevron-left"></i>
+                linux performance tools
               </a>
             
           </div>
@@ -352,7 +353,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2017/10/11/byte-order-little-endian-and-big-endian.html" rel="prev" title="byte order - little-endian and big-endian">
-                下一篇：byte order - little-endian and big-endian
+                <i class="fa fa-chevron-right"></i>
+                byte order - little-endian and big-endian
               </a>
             
           </div>
@@ -401,7 +403,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -412,16 +414,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -503,10 +503,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

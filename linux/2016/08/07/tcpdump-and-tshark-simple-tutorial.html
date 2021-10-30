@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,38 +33,41 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
 
 
-<meta name="description" content="tcpdump和tshark是网络抓包的工具，解包可以使用wireshark来查看抓包结果，以下命令需要管理员权限。 tcpdump命令使用举例以下命令中部分参数说明：  -D: 显示网络接口列表。 -i: 设置抓包的网络接口，不设置则默认为第一个非自环接口。 -w: 写入文件，再使用wireshark打开文件，进行解包分析。 -r: 读取之前的使用-w写入的文件。 -c: 抓取的packet数，">
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="tcpdump和tshark是网络抓包的工具，解包可以使用wireshark来查看抓包结果，以下命令需要管理员权限。 tcpdump 命令使用举例以下命令中部分参数说明：  -D: 显示网络接口列表。 -i: 设置抓包的网络接口，不设置则默认为第一个非自环接口。 -w: 写入文件，再使用wireshark打开文件，进行解包分析。 -r: 读取之前的使用-w写入的文件。 -c: 抓取的 packet">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tcpdump and tshark simple tutorial">
-<meta property="og:url" content="https://www.4e00.com/linux/2016/08/07/tcpdump-and-tshark-simple-tutorial.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2016/08/07/tcpdump-and-tshark-simple-tutorial.html">
 <meta property="og:site_name" content="一">
-<meta property="og:description" content="tcpdump和tshark是网络抓包的工具，解包可以使用wireshark来查看抓包结果，以下命令需要管理员权限。 tcpdump命令使用举例以下命令中部分参数说明：  -D: 显示网络接口列表。 -i: 设置抓包的网络接口，不设置则默认为第一个非自环接口。 -w: 写入文件，再使用wireshark打开文件，进行解包分析。 -r: 读取之前的使用-w写入的文件。 -c: 抓取的packet数，">
+<meta property="og:description" content="tcpdump和tshark是网络抓包的工具，解包可以使用wireshark来查看抓包结果，以下命令需要管理员权限。 tcpdump 命令使用举例以下命令中部分参数说明：  -D: 显示网络接口列表。 -i: 设置抓包的网络接口，不设置则默认为第一个非自环接口。 -w: 写入文件，再使用wireshark打开文件，进行解包分析。 -r: 读取之前的使用-w写入的文件。 -c: 抓取的 packet">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/tcp/tcpdump-tcp.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/tcp/tshark-tcp.png">
+<meta property="og:updated_time" content="2019-03-26T13:25:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tcpdump and tshark simple tutorial">
-<meta name="twitter:description" content="tcpdump和tshark是网络抓包的工具，解包可以使用wireshark来查看抓包结果，以下命令需要管理员权限。 tcpdump命令使用举例以下命令中部分参数说明：  -D: 显示网络接口列表。 -i: 设置抓包的网络接口，不设置则默认为第一个非自环接口。 -w: 写入文件，再使用wireshark打开文件，进行解包分析。 -r: 读取之前的使用-w写入的文件。 -c: 抓取的packet数，">
+<meta name="twitter:description" content="tcpdump和tshark是网络抓包的工具，解包可以使用wireshark来查看抓包结果，以下命令需要管理员权限。 tcpdump 命令使用举例以下命令中部分参数说明：  -D: 显示网络接口列表。 -i: 设置抓包的网络接口，不设置则默认为第一个非自环接口。 -w: 写入文件，再使用wireshark打开文件，进行解包分析。 -r: 读取之前的使用-w写入的文件。 -c: 抓取的 packet">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/linux/tcp/tcpdump-tcp.png">
 
 
 
@@ -85,7 +88,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2016/08/07/tcpdump-and-tshark-simple-tutorial.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2016/08/07/tcpdump-and-tshark-simple-tutorial.html">
 
   <title> tcpdump and tshark simple tutorial | 一 </title>
 </head>
@@ -116,7 +119,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +142,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +152,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +160,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +187,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +216,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -255,40 +258,44 @@
 
       
         <p><code>tcpdump</code>和<code>tshark</code>是网络抓包的工具，解包可以使用<code>wireshark</code>来查看抓包结果，以下命令需要管理员权限。</p>
-<h2 id="tcpdump命令使用举例"><a href="#tcpdump命令使用举例" class="headerlink" title="tcpdump命令使用举例"></a>tcpdump命令使用举例</h2><p>以下命令中部分参数说明：</p>
+<h2 id="tcpdump-命令使用举例"><a href="#tcpdump-命令使用举例" class="headerlink" title="tcpdump 命令使用举例"></a>tcpdump 命令使用举例</h2><p>以下命令中部分参数说明：</p>
 <ol>
 <li><code>-D</code>: 显示网络接口列表。</li>
 <li><code>-i</code>: 设置抓包的网络接口，不设置则默认为第一个非自环接口。</li>
 <li><code>-w</code>: 写入文件，再使用<code>wireshark</code>打开文件，进行解包分析。</li>
 <li><code>-r</code>: 读取之前的使用<code>-w</code>写入的文件。</li>
-<li><code>-c</code>: 抓取的packet数，在处理一定数量的packet后，停止抓取并退出程序。</li>
+<li><code>-c</code>: 抓取的 packet 数，在处理一定数量的 packet 后，停止抓取并退出程序。</li>
 <li><code>-n</code>: 禁止所有地址名字解析。</li>
-<li><code>-s</code>: 设置每个抓包的大小，默认为65535，多于这个大小的数据将不会被程序记入内存、写入文件。</li>
-<li><code>-nn</code>: 第1个<code>n</code>表示以IP地址的方式显示主机名，第2个<code>n</code>是以端口数字的形式代替服务名。</li>
+<li><code>-s</code>: 设置每个抓包的大小，默认为 65535，多于这个大小的数据将不会被程序记入内存、写入文件。</li>
+<li><code>-nn</code>: 第 1 个<code>n</code>表示以 IP 地址的方式显示主机名，第 2 个<code>n</code>是以端口数字的形式代替服务名。</li>
 <li><code>-XX</code>: 使用<code>HEX</code>和<code>ASCII</code>显示封包的内容。</li>
 <li><code>-vv</code>: 比较详细的输出封包信息。</li>
 </ol>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -D</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nS</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nnvvS</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nnvvXS</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> host 1.2.3.4</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> src 2.3.4.5</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> dst 3.4.5.6</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> net 1.2.3.0/24</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> port 3306</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> src port 1025</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> dst port 389</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> src port 1025 and tcp</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> udp and src port 53</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nvX src net 192.168.0.0/16 and dst net 10.0.0.0/8 or 172.16.0.0/16</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nvvXSs 1514 dst 192.168.31.231 and src net and not icmp</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -i eth0 dst 192.168.31.231 and port 80</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -XX -i eth0</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nn -vv -i eth0 tcp src or dst 192.168.31.231 and port 80</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nn -i eth0 tcp and host 192.168.1.163 and port 80</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nn -vv -i eth0 src and dst 192.168.31.231 and port 80</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -s 1514 port 80 -w file.pcap</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nn -i eth0 -w ~/packets.dump tcp and dst 192.168.31.231 and port 22</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> <span class="string">'src 10.0.2.4 and (dst port 3389 or 22)'</span></div></pre></td></tr></table></figure>
-<p>linux下使用<code>tcpdump</code>监控<code>MySQL</code>的网络请求：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -i eth0 -s 0 -l -w - dst port 3306 | strings | perl -e <span class="string">'</span></div><div class="line"><span class="string">while(&lt;&gt;) &#123; chomp; next if /^[^ ]+[ ]*$/;</span></div><div class="line"><span class="string">    if(/^(SELECT|UPDATE|DELETE|INSERT|SET|COMMIT|ROLLBACK|CREATE|DROP|ALTER)/i) &#123;</span></div><div class="line"><span class="string">        if (defined $q) &#123; print "$q\n"; &#125;</span></div><div class="line"><span class="string">        $q=$_;</span></div><div class="line"><span class="string">    &#125; else &#123;</span></div><div class="line"><span class="string">        $_ =~ s/^[ \t]+//; $q.=" $_";</span></div><div class="line"><span class="string">    &#125;</span></div><div class="line"><span class="string">&#125;'</span></div></pre></td></tr></table></figure>
-<h2 id="tcpflow监控MySQL的网络请求"><a href="#tcpflow监控MySQL的网络请求" class="headerlink" title="tcpflow监控MySQL的网络请求"></a>tcpflow监控MySQL的网络请求</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> install tcpflow</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpflow</span> -c -p -i lo0 dst port 3306 | grep -i -E <span class="string">"select|insert|update|delete|replace"</span></div><div class="line"></div><div class="line"><span class="comment"># below command is not work on Mac OS</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpflow</span> -c -p -i any dst port 3306 | grep -i -E <span class="string">"select|insert|update|delete|replace"</span> | sed <span class="string">'s/\(.*\)\([.]\&#123;4\&#125;\)\(.*\)/\3/'</span></div></pre></td></tr></table></figure>
-<h2 id="tshark命令使用举例"><a href="#tshark命令使用举例" class="headerlink" title="tshark命令使用举例"></a>tshark命令使用举例</h2><p><code>tshark</code>的参数很多与<code>tcpdump</code>一样，其他部分参数说明：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -D</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nS</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nnvvS</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nnvvXS</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> host 1.2.3.4</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> src 2.3.4.5</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> dst 3.4.5.6</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> net 1.2.3.0/24</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> port 3306</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> src port 1025</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> dst port 389</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> src port 1025 and tcp</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> udp and src port 53</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nvX src net 192.168.0.0/16 and dst net 10.0.0.0/8 or 172.16.0.0/16</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nvvXSs 1514 dst 192.168.31.231 and src net and not icmp</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -i eth0 dst 192.168.31.231 and port 80</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -XX -i eth0</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nn -vv -i eth0 tcp src or dst 192.168.31.231 and port 80</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nn -i eth0 tcp and host 192.168.1.163 and port 80</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nn -vv -i eth0 src and dst 192.168.31.231 and port 80</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -s 1514 port 80 -w file.pcap</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -nn -i eth0 -w ~/packets.dump tcp and dst 192.168.31.231 and port 22</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> <span class="string">'src 10.0.2.4 and (dst port 3389 or 22)'</span></span></pre></td></tr></table></figure>
+<h3 id="2019-年更新示例"><a href="#2019-年更新示例" class="headerlink" title="2019 年更新示例"></a>2019 年更新示例</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -n -i eth0 host www.ffe5.cn and port 80</span></pre></td></tr></table></figure>
+<img src="/blog/img/linux/tcp/tcpdump-tcp.png" class="image-hg">
+<h3 id="tcpdump-mysql-query"><a href="#tcpdump-mysql-query" class="headerlink" title="tcpdump mysql query"></a>tcpdump mysql query</h3><p>Linux 下使用<code>tcpdump</code>监控<code>MySQL</code>的网络请求：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpdump</span> -i eth0 -s 0 -l -w - dst port 3306 | strings | perl -e <span class="string">'</span></span><span class="line"><span class="string">while(&lt;&gt;) &#123; chomp; next if /^[^ ]+[ ]*$/;</span></span><span class="line"><span class="string">    if(/^(SELECT|UPDATE|DELETE|INSERT|SET|COMMIT|ROLLBACK|CREATE|DROP|ALTER)/i) &#123;</span></span><span class="line"><span class="string">        if (defined $q) &#123; print "$q\n"; &#125;</span></span><span class="line"><span class="string">        $q=$_;</span></span><span class="line"><span class="string">    &#125; else &#123;</span></span><span class="line"><span class="string">        $_ =~ s/^[ \t]+//; $q.=" $_";</span></span><span class="line"><span class="string">    &#125;</span></span><span class="line"><span class="string">&#125;'</span></span></pre></td></tr></table></figure>
+<h2 id="tcpflow-监控-MySQL-的网络请求"><a href="#tcpflow-监控-MySQL-的网络请求" class="headerlink" title="tcpflow 监控 MySQL 的网络请求"></a>tcpflow 监控 MySQL 的网络请求</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> install tcpflow</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpflow</span> -c -p -i lo0 dst port 3306 | grep -i -E <span class="string">"select|insert|update|delete|replace"</span></span><span class="line"></span><span class="line"><span class="comment"># below command is not work on Mac OS</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tcpflow</span> -c -p -i any dst port 3306 | grep -i -E <span class="string">"select|insert|update|delete|replace"</span> | sed <span class="string">'s/\(.*\)\([.]\&#123;4\&#125;\)\(.*\)/\3/'</span></span></pre></td></tr></table></figure>
+<h2 id="tshark-命令使用举例"><a href="#tshark-命令使用举例" class="headerlink" title="tshark 命令使用举例"></a>tshark 命令使用举例</h2><p><code>tshark</code>的参数很多与<code>tcpdump</code>一样，其他部分参数说明：</p>
 <ol>
 <li><code>-f</code>: 设定抓包过滤表达式<code>capture filter expression</code>。</li>
-<li><code>-T</code>: fields|pdml|ps|psml|text，设置解码结果输出的格式，默认为text，设置为fields时，必须使用<code>-e field</code>指定输出字段，如<code>-e frame.number -e ip.addr -e udp</code>。</li>
-<li><code>-Y</code>: 设置显示的过滤表达式。</li>
-<li><code>-F</code>: 设置输出raw数据的格式，默认为libpcap。</li>
-<li><code>-x</code>: 设置在解码输出结果中，每个packet后面以HEX dump的方式显示具体数据。</li>
+<li><code>-T</code>: fields|pdml|ps|psml|text，设置解码结果输出的格式，默认为 text，设置为 fields 时，必须使用<code>-e field</code>指定输出字段，如<code>-e frame.number -e ip.addr -e udp</code>。</li>
+<li><code>-Y</code>: 设置显示的过滤表达式，这里注意<code>Capture filter is not a display filter</code>。</li>
+<li><code>-F</code>: 设置输出 raw 数据的格式，默认为 libpcap。</li>
+<li><code>-x</code>: 设置在解码输出结果中，每个 packet 后面以 HEX dump 的方式显示具体数据。</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -v</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -D</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i eth0 -d tcp.port==3306,mysql -Y <span class="string">'mysql.query'</span> -T fields -e mysql.query</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i eth0 -n -d tcp.port==3306,mysql -Y <span class="string">'mysql.query'</span> -T fields -e mysql.query <span class="string">'port 3306'</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -r tcpdump.out -d tcp.port==3306,mysql -T fields -e mysql.query &gt; query_log.out</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -r login.tcpdump -T fields -e frame.number -e frame.time_relative -e ip.src -e ip.dst -e frame.protocols -e frame.len -E header=y -E quote=n -E occurrence=f</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -r ~/net.pcap -T fields -e ip.src | sort | sed <span class="string">'/^\s*$/d'</span> | uniq -c | sort -rn | awk &#123;<span class="string">'print $2 " " $1'</span>&#125; | head</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -nr ~/var/http.pcap -qz <span class="string">"io,phs"</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -s 512 -i eth0 -n -f <span class="string">'tcp dst port 80'</span> -R <span class="string">'http.host and http.request.uri'</span> -T fields -e http.host -e http.request.uri -l | tr -d <span class="string">'\t'</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> <span class="string">'tcp port 80 and (((ip[2:2] - ((ip[0]&amp;0xf)&lt;&lt;2)) - ((tcp[12]&amp;0xf0)&gt;&gt;2)) != 0)'</span> -R <span class="string">'http.request.method == "GET" || http.request.method == "HEAD"'</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i eth0 -aduration:60 -d tcp.port==3306,mysql -T fields -e mysql.query <span class="string">'port 3306'</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i wlan0 -w capture-output.pcap</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -r capture-output.pcap</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i wlan0 -Y http.request -T fields -e http.host -e http.user_agent</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i wlan0 -f <span class="string">"src port 53"</span> -n -T fields -e dns.qry.name -e dns.resp.addr</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i wlan0 -f <span class="string">"src port 53"</span> -n -T fields -e frame.time -e ip.src -e ip.dst -e dns.qry.name -e dns.resp.addr</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i wlan0 -Y <span class="string">'http.request.method == POST and tcp contains "password"'</span> | grep password</div></pre></td></tr></table></figure>
-<p>监控本地<code>MySQL</code>服务器的网络请求中的SQL，客户端<code>mysql</code>命令需要指定<code>--host=127.0.0.1</code>或者<code>-h 127.0.0.1</code>，而不能指定<code>-h localhost</code>，使用<code>localhost</code>时，<code>mysql</code>客户端会使用<code>UNIX socket</code>连接本地的服务器，而没有通过网络设备<code>lo0</code>，因此不能监控到网络数据包，更详细的信息可查看<a href="http://dev.mysql.com/doc/refman/5.6/en/connecting.html" target="_blank" rel="external">官方文档</a>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -v</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -D</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i eth0 -d tcp.port==3306,mysql -Y <span class="string">'mysql.query'</span> -T fields -e mysql.query</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i eth0 -n -d tcp.port==3306,mysql -Y <span class="string">'mysql.query'</span> -T fields -e mysql.query <span class="string">'port 3306'</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -r tcpdump.out -d tcp.port==3306,mysql -T fields -e mysql.query &gt; query_log.out</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -r login.tcpdump -T fields -e frame.number -e frame.time_relative -e ip.src -e ip.dst -e frame.protocols -e frame.len -E header=y -E quote=n -E occurrence=f</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -r ~/net.pcap -T fields -e ip.src | sort | sed <span class="string">'/^\s*$/d'</span> | uniq -c | sort -rn | awk &#123;<span class="string">'print $2 " " $1'</span>&#125; | head</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -nr ~/var/http.pcap -qz <span class="string">"io,phs"</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -s 512 -i eth0 -n -f <span class="string">'tcp dst port 80'</span> -R <span class="string">'http.host and http.request.uri'</span> -T fields -e http.host -e http.request.uri -l | tr -d <span class="string">'\t'</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> <span class="string">'tcp port 80 and (((ip[2:2] - ((ip[0]&amp;0xf)&lt;&lt;2)) - ((tcp[12]&amp;0xf0)&gt;&gt;2)) != 0)'</span> -R <span class="string">'http.request.method == "GET" || http.request.method == "HEAD"'</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i eth0 -aduration:60 -d tcp.port==3306,mysql -T fields -e mysql.query <span class="string">'port 3306'</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i wlan0 -w capture-output.pcap</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -r capture-output.pcap</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i wlan0 -Y http.request -T fields -e http.host -e http.user_agent</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i wlan0 -f <span class="string">"src port 53"</span> -n -T fields -e dns.qry.name -e dns.resp.addr</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i wlan0 -f <span class="string">"src port 53"</span> -n -T fields -e frame.time -e ip.src -e ip.dst -e dns.qry.name -e dns.resp.addr</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i wlan0 -Y <span class="string">'http.request.method == POST and tcp contains "password"'</span> | grep password</span></pre></td></tr></table></figure>
+<h3 id="2019-年更新示例-1"><a href="#2019-年更新示例-1" class="headerlink" title="2019 年更新示例"></a>2019 年更新示例</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tshark</span> -i eth0 -n -f <span class="string">'tcp port 80 and host www.ffe5.cn'</span></span></pre></td></tr></table></figure>
+<img src="/blog/img/linux/tcp/tshark-tcp.png" class="image-hg">
+<h3 id="tshark-dump-mysql-query"><a href="#tshark-dump-mysql-query" class="headerlink" title="tshark dump mysql query"></a>tshark dump mysql query</h3><p>监控本地<code>MySQL</code>服务器的网络请求中的 SQL，客户端<code>mysql</code>命令需要指定<code>--host=127.0.0.1</code>或者<code>-h 127.0.0.1</code>，而不能指定<code>-h localhost</code>，使用<code>localhost</code>时，<code>mysql</code>客户端会使用<code>UNIX socket</code>连接本地的服务器，而没有通过网络设备<code>lo0</code>，因此不能监控到网络数据包，更详细的信息可查看<a href="http://dev.mysql.com/doc/refman/5.6/en/connecting.html" target="_blank" rel="noopener">官方文档</a>。</p>
 <p>启动<code>tshark</code>监听<code>3306</code>端口：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> tshark -s 512 -i lo0 -n -f <span class="string">'tcp dst port 3306'</span> -Y <span class="string">'mysql.query'</span> -T fields -e mysql.query</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> tshark -s 512 -i lo0 -n -f <span class="string">'tcp dst port 3306'</span> -Y <span class="string">'mysql.query'</span> -T fields -e mysql.query</span></pre></td></tr></table></figure>
 <p>在另外一个命令行中运行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mysql</span> -uroot -p <span class="built_in">test</span> -h 127.0.0.1</div></pre></td></tr></table></figure>
-<p>在命令行中执行SQL语句如下：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span>;</div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mysql</span> -uroot -p <span class="built_in">test</span> -h 127.0.0.1</span></pre></td></tr></table></figure>
+<p>在命令行中执行 SQL 语句如下：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span>;</span><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span>;</span></pre></td></tr></table></figure>
 <p>前面开启<code>tshark</code>监控的窗口中输出如下：</p>
 <blockquote>
 <p>Capturing on &#39;Loopback&#39;</p>
@@ -299,11 +306,12 @@
 <p>select * from user where id = 1</p>
 </blockquote>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://www.wireshark.org/docs/man-pages/tshark.html" target="_blank" rel="external">tshark man pages</a></li>
-<li><a href="https://danielmiessler.com/study/tcpdump/" target="_blank" rel="external">a tcpdump tutorial and primer with examples</a></li>
-<li><a href="https://hackertarget.com/tshark-tutorial-and-filter-examples/" target="_blank" rel="external">tshark tutorial and filter examples</a></li>
-<li><a href="https://www.wireshark.org/docs/man-pages/wireshark-filter.html" target="_blank" rel="external">wireshark filter</a></li>
-<li><a href="http://www.tecmint.com/12-tcpdump-commands-a-network-sniffer-tool/" target="_blank" rel="external">tcpdump commands – a network sniffer tool</a></li>
+<li><a href="https://www.wireshark.org/docs/man-pages/tshark.html" target="_blank" rel="noopener">tshark man pages</a></li>
+<li><a href="https://danielmiessler.com/study/tcpdump/" target="_blank" rel="noopener">a tcpdump tutorial and primer with examples</a></li>
+<li><a href="https://hackertarget.com/tshark-tutorial-and-filter-examples/" target="_blank" rel="noopener">tshark tutorial and filter examples</a></li>
+<li><a href="https://www.wireshark.org/docs/man-pages/wireshark-filter.html" target="_blank" rel="noopener">wireshark filter</a></li>
+<li><a href="https://wiki.wireshark.org/CaptureFilters" target="_blank" rel="noopener">CaptureFilters</a></li>
+<li><a href="http://www.tecmint.com/12-tcpdump-commands-a-network-sniffer-tool/" target="_blank" rel="noopener">tcpdump commands – a network sniffer tool</a></li>
 </ol>
 
       
@@ -331,15 +339,17 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/linux/2016/08/06/tcp-open-and-close.html" rel="next" title="tcp connection open and close">
-                上一篇：tcp connection open and close
+                <i class="fa fa-chevron-left"></i>
+                tcp connection open and close
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/linux/2016/08/08/iptables-tutorial.html" rel="prev" title="iptables tutorial">
-                下一篇：iptables tutorial
+              <a href="/blog/linux/2016/08/08/linux-commands-iptables.html" rel="prev" title="linux 命令之 iptables 篇">
+                <i class="fa fa-chevron-right"></i>
+                linux 命令之 iptables 篇
               </a>
             
           </div>
@@ -388,7 +398,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -399,16 +409,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -474,7 +482,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tcpdump命令使用举例"><span class="nav-number">1.</span> <span class="nav-text">tcpdump命令使用举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcpflow监控MySQL的网络请求"><span class="nav-number">2.</span> <span class="nav-text">tcpflow监控MySQL的网络请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tshark命令使用举例"><span class="nav-number">3.</span> <span class="nav-text">tshark命令使用举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tcpdump-命令使用举例"><span class="nav-number">1.</span> <span class="nav-text">tcpdump 命令使用举例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2019-年更新示例"><span class="nav-number">1.1.</span> <span class="nav-text">2019 年更新示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcpdump-mysql-query"><span class="nav-number">1.2.</span> <span class="nav-text">tcpdump mysql query</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcpflow-监控-MySQL-的网络请求"><span class="nav-number">2.</span> <span class="nav-text">tcpflow 监控 MySQL 的网络请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tshark-命令使用举例"><span class="nav-number">3.</span> <span class="nav-text">tshark 命令使用举例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2019-年更新示例-1"><span class="nav-number">3.1.</span> <span class="nav-text">2019 年更新示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tshark-dump-mysql-query"><span class="nav-number">3.2.</span> <span class="nav-text">tshark dump mysql query</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
             
           </div>
         </section>
@@ -490,10 +498,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

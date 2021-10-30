@@ -1,0 +1,613 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="SQL 执行超时异常项目中有个 SQL 语句执行了 30 秒还没执行完成，最后抛出异常MySQLTimeoutException: Statement cancelled due to timeout or client request： 2018-01-25 04:10:00.032 -INFO  --- [ Thread-34] com.example.test.task.CustomerTa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysqltimeoutexception: statement cancelled due to timeout or client request">
+<meta property="og:url" content="http://www.4e00.com/java/2018/01/25/statement-cancelled-due-to-timeout-or-client-request.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="SQL 执行超时异常项目中有个 SQL 语句执行了 30 秒还没执行完成，最后抛出异常MySQLTimeoutException: Statement cancelled due to timeout or client request： 2018-01-25 04:10:00.032 -INFO  --- [ Thread-34] com.example.test.task.CustomerTa">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/jdbc/timeout-class-was-dbms-communication.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/jdbc/timeout-for-each-levels.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/jdbc/query-timeout-execution-process-for-mysql-statement.png">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.127Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysqltimeoutexception: statement cancelled due to timeout or client request">
+<meta name="twitter:description" content="SQL 执行超时异常项目中有个 SQL 语句执行了 30 秒还没执行完成，最后抛出异常MySQLTimeoutException: Statement cancelled due to timeout or client request： 2018-01-25 04:10:00.032 -INFO  --- [ Thread-34] com.example.test.task.CustomerTa">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/java/jdbc/timeout-class-was-dbms-communication.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/01/25/statement-cancelled-due-to-timeout-or-client-request.html">
+
+  <title> mysqltimeoutexception: statement cancelled due to timeout or client request | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                mysqltimeoutexception: statement cancelled due to timeout or client request
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-01-25T20:27:30+08:00" content="2018-01-25">
+              2018-01-25
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="SQL-执行超时异常"><a href="#SQL-执行超时异常" class="headerlink" title="SQL 执行超时异常"></a>SQL 执行超时异常</h2><p>项目中有个 SQL 语句执行了 30 秒还没执行完成，最后抛出异常<code>MySQLTimeoutException: Statement cancelled due to timeout or client request</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2018-01-25 04:10:00.032 -INFO  --- [ Thread-34] com.example.test.task.CustomerTask : start execute task</span><span class="line">2018-01-25 04:10:30.062 -ERROR --- [ Thread-34] com.example.test.task.CustomerTask : execute task failure</span><span class="line">org.springframework.dao.QueryTimeoutException:</span><span class="line">### Error querying database. Cause: com.mysql.jdbc.exceptions.MySQLTimeoutException: Statement cancelled due to timeout or client request</span><span class="line">### Cause: com.mysql.jdbc.exceptions.MySQLTimeoutException: Statement cancelled due to timeout or client request; SQL []; Statement cancelled due to timeout or client request;</span><span class="line">nested exception is com.mysql.jdbc.exceptions.MySQLTimeoutException: Statement cancelled due to timeout or client request</span><span class="line">    at org.springframework.jdbc.support.SQLStateSQLExceptionTranslator.doTranslate(SQLStateSQLExceptionTranslator.java:118)</span><span class="line">    at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)</span><span class="line">    at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:82)</span><span class="line">    at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:82)</span><span class="line">    at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)</span><span class="line">    at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:446)</span><span class="line">    at com.sun.proxy.$Proxy142.selectOne(Unknown Source)</span><span class="line">    at org.mybatis.spring.SqlSessionTemplate.selectOne(SqlSessionTemplate.java:166)</span><span class="line">    at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)</span><span class="line">    at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:53)</span><span class="line">    at com.sun.proxy.$Proxy215.syncCoffeeStock(Unknown Source)</span></pre></td></tr></table></figure>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>在对应的 Service 方法上指定事务超时的时间为 120 秒：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Transactional</span>(timeout = <span class="number">120</span>)</span></pre></td></tr></table></figure>
+<p>或者是为某个 Service 中的方法打开新事务：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Transactional</span>(timeout = <span class="number">60</span>, propagation = Propagation.REQUIRES_NEW)</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="spring-相关源码简单说明"><a href="#spring-相关源码简单说明" class="headerlink" title="spring 相关源码简单说明"></a>spring 相关源码简单说明</h2><p>上面这个事务超时时间是此方法调用中包括的所有查询的总时间，并不等同于<code>Statement#setQueryTimeout(int)</code>设置的时间，如果事务里只有一个 SQL，那二者会接近，但仍不等同，下面会摘录 spring 的相关源码简单说明。</p>
+<h3 id="DataSourceTransactionManager-doBegin-Object-transaction-TransactionDefinition-definition"><a href="#DataSourceTransactionManager-doBegin-Object-transaction-TransactionDefinition-definition" class="headerlink" title="DataSourceTransactionManager#doBegin(Object transaction, TransactionDefinition definition)"></a>DataSourceTransactionManager#doBegin(Object transaction, TransactionDefinition definition)</h3><p>以<code>DataSourceTransactionManager</code>为例，摘录其中与<code>timeout</code>相关的代码如下，在<code>txObject.getConnectionHolder().setTimeoutInSeconds(timeout)</code>这一个方法调用中设置超时时间：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourceTransactionManager</span> <span class="keyword">extends</span> <span class="title">AbstractPlatformTransactionManager</span></span></span><span class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">ResourceTransactionManager</span>, <span class="title">InitializingBean</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> DataSource dataSource;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * This implementation sets the isolation level but ignores the timeout.</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="meta">@Override</span></span><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doBegin</span><span class="params">(Object transaction, TransactionDefinition definition)</span> </span>&#123;</span><span class="line">        DataSourceTransactionObject txObject = (DataSourceTransactionObject) transaction;</span><span class="line">        Connection con = <span class="keyword">null</span>;</span><span class="line"></span><span class="line">        <span class="keyword">try</span> &#123;</span><span class="line">            <span class="keyword">if</span> (!txObject.hasConnectionHolder() || txObject.getConnectionHolder().isSynchronizedWithTransaction()) &#123;</span><span class="line">                Connection newCon = <span class="keyword">this</span>.dataSource.getConnection();</span><span class="line">                txObject.setConnectionHolder(<span class="keyword">new</span> ConnectionHolder(newCon), <span class="keyword">true</span>);</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            txObject.getConnectionHolder().setSynchronizedWithTransaction(<span class="keyword">true</span>);</span><span class="line">            con = txObject.getConnectionHolder().getConnection();</span><span class="line"></span><span class="line">            Integer previousIsolationLevel = DataSourceUtils.prepareConnectionForTransaction(con, definition);</span><span class="line">            txObject.setPreviousIsolationLevel(previousIsolationLevel);</span><span class="line"></span><span class="line">            <span class="comment">// Switch to manual commit if necessary. This is very expensive in some JDBC drivers,</span></span><span class="line">            <span class="comment">// so we don't want to do it unnecessarily (for example if we've explicitly</span></span><span class="line">            <span class="comment">// configured the connection pool to set it already).</span></span><span class="line">            <span class="keyword">if</span> (con.getAutoCommit()) &#123;</span><span class="line">                txObject.setMustRestoreAutoCommit(<span class="keyword">true</span>);</span><span class="line">                <span class="comment">// 关闭事务的自动提交</span></span><span class="line">                con.setAutoCommit(<span class="keyword">false</span>);</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            prepareTransactionalConnection(con, definition);</span><span class="line">            txObject.getConnectionHolder().setTransactionActive(<span class="keyword">true</span>);</span><span class="line"></span><span class="line">            <span class="comment">// 从事务定义中得到 timeout 的设置，如 timeout=90，这里开启的事务定义的属性就是</span></span><span class="line">            <span class="keyword">int</span> timeout = determineTimeout(definition);</span><span class="line">            <span class="keyword">if</span> (timeout != TransactionDefinition.TIMEOUT_DEFAULT) &#123;</span><span class="line">                <span class="comment">// 在 ResourceHolderSupport 中设置事务超时时间</span></span><span class="line">                txObject.getConnectionHolder().setTimeoutInSeconds(timeout);</span><span class="line">            &#125;</span><span class="line">        &#125; <span class="keyword">catch</span> (Throwable ex) &#123;</span><span class="line">            <span class="keyword">if</span> (txObject.isNewConnectionHolder()) &#123;</span><span class="line">                DataSourceUtils.releaseConnection(con, <span class="keyword">this</span>.dataSource);</span><span class="line">                txObject.setConnectionHolder(<span class="keyword">null</span>, <span class="keyword">false</span>);</span><span class="line">            &#125;</span><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> CannotCreateTransactionException(<span class="string">"Could not open JDBC Connection for transaction"</span>, ex);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="ResourceHolderSupport-setTimeoutInSeconds-int"><a href="#ResourceHolderSupport-setTimeoutInSeconds-int" class="headerlink" title="ResourceHolderSupport#setTimeoutInSeconds(int)"></a>ResourceHolderSupport#setTimeoutInSeconds(int)</h3><p><code>ResourceHolderSupport#setTimeoutInSeconds(int)</code>这个方法调用的相关代码如下，并注意这个时间设置进去被转化为一个<code>Date</code>对象<code>deadline</code>，以供事务超时控制方法<code>getTimeToLiveInSeconds()</code>和<code>checkTransactionTimeout(boolean)</code>使用：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ResourceHolderSupport</span> <span class="keyword">implements</span> <span class="title">ResourceHolder</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> synchronizedWithTransaction = <span class="keyword">false</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> rollbackOnly = <span class="keyword">false</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> Date deadline;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Set the timeout for this object in seconds.</span></span><span class="line"><span class="comment">     * <span class="doctag">@param</span> seconds number of seconds until expiration</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTimeoutInSeconds</span><span class="params">(<span class="keyword">int</span> seconds)</span> </span>&#123;</span><span class="line">        setTimeoutInMillis(seconds * <span class="number">1000</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Set the timeout for this object in milliseconds.</span></span><span class="line"><span class="comment">     * <span class="doctag">@param</span> millis number of milliseconds until expiration</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTimeoutInMillis</span><span class="params">(<span class="keyword">long</span> millis)</span> </span>&#123;</span><span class="line">        <span class="keyword">this</span>.deadline = <span class="keyword">new</span> Date(System.currentTimeMillis() + millis);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Return whether this object has an associated timeout.</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasTimeout</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">return</span> (<span class="keyword">this</span>.deadline != <span class="keyword">null</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Return the expiration deadline of this object.</span></span><span class="line"><span class="comment">     * <span class="doctag">@return</span> the deadline as Date object</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">public</span> Date <span class="title">getDeadline</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.deadline;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Return the time to live for this object in seconds.</span></span><span class="line"><span class="comment">     * Rounds up eagerly, e.g. 9.00001 still to 10.</span></span><span class="line"><span class="comment">     * <span class="doctag">@return</span> number of seconds until expiration</span></span><span class="line"><span class="comment">     * <span class="doctag">@throws</span> TransactionTimedOutException if the deadline has already been reached</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getTimeToLiveInSeconds</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">double</span> diff = ((<span class="keyword">double</span>) getTimeToLiveInMillis()) / <span class="number">1000</span>;</span><span class="line">        <span class="keyword">int</span> secs = (<span class="keyword">int</span>) Math.ceil(diff);</span><span class="line">        checkTransactionTimeout(secs &lt;= <span class="number">0</span>);</span><span class="line">        <span class="keyword">return</span> secs;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Return the time to live for this object in milliseconds.</span></span><span class="line"><span class="comment">     * <span class="doctag">@return</span> number of millseconds until expiration</span></span><span class="line"><span class="comment">     * <span class="doctag">@throws</span> TransactionTimedOutException if the deadline has already been reached</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getTimeToLiveInMillis</span><span class="params">()</span> <span class="keyword">throws</span> TransactionTimedOutException</span>&#123;</span><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.deadline == <span class="keyword">null</span>) &#123;</span><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"No timeout specified for this resource holder"</span>);</span><span class="line">        &#125;</span><span class="line">        <span class="keyword">long</span> timeToLive = <span class="keyword">this</span>.deadline.getTime() - System.currentTimeMillis();</span><span class="line">        checkTransactionTimeout(timeToLive &lt;= <span class="number">0</span>);</span><span class="line">        <span class="keyword">return</span> timeToLive;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Set the transaction rollback-only if the deadline has been reached,</span></span><span class="line"><span class="comment">     * and throw a TransactionTimedOutException.</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">checkTransactionTimeout</span><span class="params">(<span class="keyword">boolean</span> deadlineReached)</span> <span class="keyword">throws</span> TransactionTimedOutException </span>&#123;</span><span class="line">        <span class="keyword">if</span> (deadlineReached) &#123;</span><span class="line">            setRollbackOnly();</span><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> TransactionTimedOutException(<span class="string">"Transaction timed out: deadline was "</span> + <span class="keyword">this</span>.deadline);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="DataSourceUtils-applyTimeout-Statement-stmt-DataSource-dataSource-int-timeout"><a href="#DataSourceUtils-applyTimeout-Statement-stmt-DataSource-dataSource-int-timeout" class="headerlink" title="DataSourceUtils#applyTimeout(Statement stmt, DataSource dataSource, int timeout)"></a>DataSourceUtils#applyTimeout(Statement stmt, DataSource dataSource, int timeout)</h3><p><code>ResourceHolderSupport#getTimeToLiveInSeconds(int)</code>这个方法在外部有一个关键的调用位置，<code>DataSourceUtils#applyTimeout(Statement, DataSource, int)</code>，相关源码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourceUtils</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Apply the current transaction timeout, if any,</span></span><span class="line"><span class="comment">     * to the given JDBC Statement object.</span></span><span class="line"><span class="comment">     * <span class="doctag">@param</span> stmt the JDBC Statement object</span></span><span class="line"><span class="comment">     * <span class="doctag">@param</span> dataSource the DataSource that the Connection was obtained from</span></span><span class="line"><span class="comment">     * <span class="doctag">@throws</span> SQLException if thrown by JDBC methods</span></span><span class="line"><span class="comment">     * <span class="doctag">@see</span> java.sql.Statement#setQueryTimeout</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">applyTransactionTimeout</span><span class="params">(Statement stmt, DataSource dataSource)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><span class="line">        applyTimeout(stmt, dataSource, -<span class="number">1</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Apply the specified timeout - overridden by the current transaction timeout,</span></span><span class="line"><span class="comment">     * if any - to the given JDBC Statement object.</span></span><span class="line"><span class="comment">     * <span class="doctag">@param</span> stmt the JDBC Statement object</span></span><span class="line"><span class="comment">     * <span class="doctag">@param</span> dataSource the DataSource that the Connection was obtained from</span></span><span class="line"><span class="comment">     * <span class="doctag">@param</span> timeout the timeout to apply (or 0 for no timeout outside of a transaction)</span></span><span class="line"><span class="comment">     * <span class="doctag">@throws</span> SQLException if thrown by JDBC methods</span></span><span class="line"><span class="comment">     * <span class="doctag">@see</span> java.sql.Statement#setQueryTimeout</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">applyTimeout</span><span class="params">(Statement stmt, DataSource dataSource, <span class="keyword">int</span> timeout)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><span class="line">        Assert.notNull(stmt, <span class="string">"No Statement specified"</span>);</span><span class="line">        ConnectionHolder holder = <span class="keyword">null</span>;</span><span class="line">        <span class="keyword">if</span> (dataSource != <span class="keyword">null</span>) &#123;</span><span class="line">            holder = (ConnectionHolder) TransactionSynchronizationManager.getResource(dataSource);</span><span class="line">        &#125;</span><span class="line">        <span class="comment">// 下面这几句代码是 spring 中，SQL 语句执行超时设置的关键代码</span></span><span class="line">        <span class="comment">// 这也是为何事务的超时为何不能等同与 statement.queryTimeout 的原因</span></span><span class="line">        <span class="keyword">if</span> (holder != <span class="keyword">null</span> &amp;&amp; holder.hasTimeout()) &#123;</span><span class="line">            <span class="comment">// Remaining transaction timeout overrides specified value.</span></span><span class="line">            stmt.setQueryTimeout(holder.getTimeToLiveInSeconds());</span><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (timeout &gt;= <span class="number">0</span>) &#123;</span><span class="line">            <span class="comment">// No current transaction timeout -&gt; apply specified value.</span></span><span class="line">            stmt.setQueryTimeout(timeout);</span><span class="line">        &#125;</span><span class="line">        <span class="comment">// 同时这里没有默认的 else 子句，也就是即没有事务超时设置，也没有在类似 JdbcTemplate 中设置 queryTimeout，那么 timeout 默认值就是-1</span></span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="JdbcTemplate-setQueryTimeout-int"><a href="#JdbcTemplate-setQueryTimeout-int" class="headerlink" title="JdbcTemplate#setQueryTimeout(int)"></a>JdbcTemplate#setQueryTimeout(int)</h3><p><code>JdbcTemplate#setQueryTimeout(int)</code>中关于<code>timeout</code>相关说明，其中指出了事务运行的剩余超时时间会覆盖这个值，另外<code>jdbcTemplate</code>这个 bean 在 spring 容器内一般都是单例的，所以<code>JdbcTemplate#setQueryTimeout(int)</code>方法设置需要注意一下，必要时可以使用<code>new JdbcTemplate(DataSource dataSource)</code>构建特定的<code>jdbcTemplate</code>实例后再设置其<code>queryTimeout</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JdbcTemplate</span> <span class="keyword">extends</span> <span class="title">JdbcAccessor</span> <span class="keyword">implements</span> <span class="title">JdbcOperations</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Construct a new JdbcTemplate, given a DataSource to obtain connections from.</span></span><span class="line"><span class="comment">     * &lt;p&gt;Note: This will not trigger initialization of the exception translator.</span></span><span class="line"><span class="comment">     * <span class="doctag">@param</span> dataSource the JDBC DataSource to obtain connections from</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">JdbcTemplate</span><span class="params">(DataSource dataSource)</span> </span>&#123;</span><span class="line">        setDataSource(dataSource);</span><span class="line">        afterPropertiesSet();</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Set the query timeout for statements that this JdbcTemplate executes.</span></span><span class="line"><span class="comment">     * &lt;p&gt;Default is -1, indicating to use the JDBC driver's default</span></span><span class="line"><span class="comment">     * (i.e. to not pass a specific query timeout setting on the driver).</span></span><span class="line"><span class="comment">     * &lt;p&gt;Note: Any timeout specified here will be overridden by the remaining</span></span><span class="line"><span class="comment">     * transaction timeout when executing within a transaction that has a</span></span><span class="line"><span class="comment">     * timeout specified at the transaction level.</span></span><span class="line"><span class="comment">     * <span class="doctag">@see</span> java.sql.Statement#setQueryTimeout</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setQueryTimeout</span><span class="params">(<span class="keyword">int</span> queryTimeout)</span> </span>&#123;</span><span class="line">        <span class="keyword">this</span>.queryTimeout = queryTimeout;</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="Statement-setQueryTimeout-int"><a href="#Statement-setQueryTimeout-int" class="headerlink" title="Statement#setQueryTimeout(int)"></a>Statement#setQueryTimeout(int)</h3><p>最后执行的相关接口和实现类，部分代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Statement</span> <span class="keyword">extends</span> <span class="title">Wrapper</span>, <span class="title">AutoCloseable</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Sets the number of seconds the driver will wait for a</span></span><span class="line"><span class="comment">     * &lt;code&gt;Statement&lt;/code&gt; object to execute to the given number of seconds.</span></span><span class="line"><span class="comment">     *By default there is no limit on the amount of time allowed for a running</span></span><span class="line"><span class="comment">     * statement to complete. If the limit is exceeded, an</span></span><span class="line"><span class="comment">     * &lt;code&gt;SQLTimeoutException&lt;/code&gt; is thrown.</span></span><span class="line"><span class="comment">     * A JDBC driver must apply this limit to the &lt;code&gt;execute&lt;/code&gt;,</span></span><span class="line"><span class="comment">     * &lt;code&gt;executeQuery&lt;/code&gt; and &lt;code&gt;executeUpdate&lt;/code&gt; methods.</span></span><span class="line"><span class="comment">     * &lt;p&gt;</span></span><span class="line"><span class="comment">     * &lt;strong&gt;Note:&lt;/strong&gt; JDBC driver implementations may also apply this</span></span><span class="line"><span class="comment">     * limit to &#123;<span class="doctag">@code</span> ResultSet&#125; methods</span></span><span class="line"><span class="comment">     * (consult your driver vendor documentation for details).</span></span><span class="line"><span class="comment">     * &lt;p&gt;</span></span><span class="line"><span class="comment">     * &lt;strong&gt;Note:&lt;/strong&gt; In the case of &#123;<span class="doctag">@code</span> Statement&#125; batching, it is</span></span><span class="line"><span class="comment">     * implementation defined as to whether the time-out is applied to</span></span><span class="line"><span class="comment">     * individual SQL commands added via the &#123;<span class="doctag">@code</span> addBatch&#125; method or to</span></span><span class="line"><span class="comment">     * the entire batch of SQL commands invoked by the &#123;<span class="doctag">@code</span> executeBatch&#125;</span></span><span class="line"><span class="comment">     * method (consult your driver vendor documentation for details).</span></span><span class="line"><span class="comment">     *</span></span><span class="line"><span class="comment">     * <span class="doctag">@param</span> seconds the new query timeout limit in seconds; zero means</span></span><span class="line"><span class="comment">     *        there is no limit</span></span><span class="line"><span class="comment">     * <span class="doctag">@exception</span> SQLException if a database access error occurs,</span></span><span class="line"><span class="comment">     * this method is called on a closed &lt;code&gt;Statement&lt;/code&gt;</span></span><span class="line"><span class="comment">     *            or the condition &#123;<span class="doctag">@code</span> seconds &gt;= 0&#125; is not satisfied</span></span><span class="line"><span class="comment">     * <span class="doctag">@see</span> #getQueryTimeout</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setQueryTimeout</span><span class="params">(<span class="keyword">int</span> seconds)</span> <span class="keyword">throws</span> SQLException</span>;</span><span class="line"></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StatementImpl</span> <span class="keyword">implements</span> <span class="title">Statement</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Sets the queryTimeout limit</span></span><span class="line"><span class="comment">     *</span></span><span class="line"><span class="comment">     * <span class="doctag">@param</span> seconds</span></span><span class="line"><span class="comment">     *            -</span></span><span class="line"><span class="comment">     *            the new query timeout limit in seconds</span></span><span class="line"><span class="comment">     *</span></span><span class="line"><span class="comment">     * <span class="doctag">@exception</span> SQLException</span></span><span class="line"><span class="comment">     *                if a database access error occurs</span></span><span class="line"><span class="comment">     */</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setQueryTimeout</span><span class="params">(<span class="keyword">int</span> seconds)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><span class="line">        <span class="keyword">synchronized</span> (checkClosed().getConnectionMutex()) &#123;</span><span class="line">            <span class="keyword">if</span> (seconds &lt; <span class="number">0</span>) &#123;</span><span class="line">                <span class="keyword">throw</span> SQLError.createSQLException(Messages.getString(<span class="string">"Statement.21"</span>), SQLError.SQL_STATE_ILLEGAL_ARGUMENT, getExceptionInterceptor());</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">this</span>.timeoutInMillis = seconds * <span class="number">1000</span>;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="AbstractPlatformTransactionManager-defaultTimeout"><a href="#AbstractPlatformTransactionManager-defaultTimeout" class="headerlink" title="AbstractPlatformTransactionManager#defaultTimeout"></a>AbstractPlatformTransactionManager#defaultTimeout</h3><p><code>AbstractPlatformTransactionManager#defaultTimeout</code>属性可以设置应用中事务超时的默认值，相关代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractPlatformTransactionManager</span> <span class="keyword">implements</span> <span class="title">PlatformTransactionManager</span>, <span class="title">Serializable</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> defaultTimeout = TransactionDefinition.TIMEOUT_DEFAULT;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="管理超时的计时器线程"><a href="#管理超时的计时器线程" class="headerlink" title="管理超时的计时器线程"></a>管理超时的计时器线程</h2><p>有设置<code>queryTimeout</code>属性的 Statement 执行时，会启动一个<code>Cancellation Timer</code>线程，负责管理这个 SQL 执行的<code>timeout</code>处理，线程栈如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;MySQL Statement Cancellation Timer@10671&quot; daemon prio=5 tid=0x46 nid=NA waiting</span><span class="line">  java.lang.Thread.State: WAITING</span><span class="line">     at java.lang.Object.wait(Object.java:-1)</span><span class="line">     at java.lang.Object.wait(Object.java:502)</span><span class="line">     at java.util.TimerThread.mainLoop(Timer.java:526)</span><span class="line">     at java.util.TimerThread.run(Timer.java:505)</span></pre></td></tr></table></figure>
+<p><code>Cancellation Timer</code>线程启动和执行<code>KILL QUERY</code>相关代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PreparedStatement</span> <span class="keyword">extends</span> <span class="title">com</span>.<span class="title">mysql</span>.<span class="title">jdbc</span>.<span class="title">StatementImpl</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">sql</span>.<span class="title">PreparedStatement</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">protected</span> ResultSetInternalMethods <span class="title">executeInternal</span><span class="params">(<span class="keyword">int</span> maxRowsToRetrieve, Buffer sendPacket, <span class="keyword">boolean</span> createStreamingResultSet,</span></span></span><span class="line"><span class="function"><span class="params">            <span class="keyword">boolean</span> queryIsSelectOnly, Field[] metadataFromCache, <span class="keyword">boolean</span> isBatch)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><span class="line">        MySQLConnection locallyScopedConn = checkClosed();</span><span class="line">        CancelTask timeoutTask = <span class="keyword">null</span>;</span><span class="line">        <span class="keyword">if</span> (locallyScopedConnection.getEnableQueryTimeouts() &amp;&amp; <span class="keyword">this</span>.timeoutInMillis != <span class="number">0</span> &amp;&amp; locallyScopedConnection.versionMeetsMinimum(<span class="number">5</span>, <span class="number">0</span>, <span class="number">0</span>)) &#123;</span><span class="line">            <span class="comment">// 在此启动 Timer 线程</span></span><span class="line">            timeoutTask = <span class="keyword">new</span> CancelTask(<span class="keyword">this</span>);</span><span class="line">            locallyScopedConnection.getCancelTimer().schedule(timeoutTask, <span class="keyword">this</span>.timeoutInMillis);</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        statementBegins();</span><span class="line"></span><span class="line">        <span class="comment">// timeout 发生之后，就在这里执行 KILL QUERY 指令</span></span><span class="line">        rs = locallyScopedConn.execSQL(<span class="keyword">this</span>, sql, <span class="keyword">this</span>.maxRows, <span class="keyword">null</span>, <span class="keyword">this</span>.resultSetType, <span class="keyword">this</span>.resultSetConcurrency, createStreamingResultSet(),</span><span class="line">            <span class="keyword">this</span>.currentCatalog, cachedFields);</span><span class="line"></span><span class="line">        <span class="keyword">if</span> (timeoutTask != <span class="keyword">null</span>) &#123;</span><span class="line">            <span class="keyword">if</span> (timeoutTask.caughtWhileCancelling != <span class="keyword">null</span>) &#123;</span><span class="line">                <span class="keyword">throw</span> timeoutTask.caughtWhileCancelling;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            timeoutTask.cancel();</span><span class="line">            locallyScopedConn.getCancelTimer().purge();</span><span class="line">            timeoutTask = <span class="keyword">null</span>;</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>.cancelTimeoutMutex) &#123;</span><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.wasCancelled) &#123;</span><span class="line">                SQLException cause = <span class="keyword">null</span>;</span><span class="line"></span><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.wasCancelledByTimeout) &#123;</span><span class="line">                    <span class="comment">// SQL 执行超时，在此抛出超时异常</span></span><span class="line">                    cause = <span class="keyword">new</span> MySQLTimeoutException();</span><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><span class="line">                    cause = <span class="keyword">new</span> MySQLStatementCancelledException();</span><span class="line">                &#125;</span><span class="line"></span><span class="line">                resetCancelledState();</span><span class="line"></span><span class="line">                <span class="keyword">throw</span> cause;</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span></pre></td></tr></table></figure>
+<p><code>MySQLConnection</code>的实现类<code>ConnectionImpl</code>相关代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConnectionImpl</span> <span class="keyword">extends</span> <span class="title">ConnectionPropertiesImpl</span> <span class="keyword">implements</span> <span class="title">MySQLConnection</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> Timer <span class="title">getCancelTimer</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">synchronized</span> (getConnectionMutex()) &#123;</span><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.cancelTimer == <span class="keyword">null</span>) &#123;</span><span class="line">                <span class="keyword">this</span>.cancelTimer = <span class="keyword">new</span> Timer(<span class="string">"MySQL Statement Cancellation Timer"</span>, <span class="keyword">true</span>);</span><span class="line">            &#125;</span><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.cancelTimer;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="JDBC-timeout-相关示意图"><a href="#JDBC-timeout-相关示意图" class="headerlink" title="JDBC timeout 相关示意图"></a>JDBC timeout 相关示意图</h2><img src="/blog/img/java/jdbc/timeout-class-was-dbms-communication.png" title="[timeout-class-was-dbms-communication]">
+<p>上图展示了简化的<code>WAS</code>(web application server)和<code>DBMS</code>数据库通信时的超时层次。更上层的超时依赖于下层的超时，只有当较低层的超时机制正常工作，上层的超时才会正常。如果<code>JDBC</code>驱动程序的<code>socket</code>超时工作不正常，那么更上层的超时比如<code>Statement</code>超时和事务超时都不会正常工作。</p>
+<p>不推荐使用<code>socket</code>超时来限制一个<code>Statement</code>的执行时间，因此<code>socket</code>超时的值必须要高于<code>Statement</code>的超时时间，否则<code>socket</code>超时将会先生效，这样<code>Statement</code>超时就没有意义，也无法生效。</p>
+<p>示意图中的各种不同的<code>timeout</code>值与<code>DBMS</code>本身并没有直接关系，除了建立的数据库连接会受<code>DBMS</code>的系统设置<code>wait_timeout</code>影响，MySQL 中这个值默认为<code>86400</code>，即 8 小时，连接闲置 8 小时会被 MySQL 服务器断开。</p>
+<img src="/blog/img/java/jdbc/timeout-for-each-levels.png" title="[timeout-for-each-levels]">
+<p><code>DBCP</code>连接池位于上图的左边。你会发现各种层面的超时与<code>DBCP</code>是分开的。<code>DBCP</code>负责数据库连接的创建和管理，并不涉及超时的处理。当在<code>DBCP</code>中创建了一个数据库连接或发送了一条查询校验的 SQL 语句用于检查连接有效性时，<code>socket</code>超时会影响这些过程的处理，但并不直接影响应用程序。另外有一个从<code>DBCP</code>获取数据库连接的超时设置，即在应用程序中调用<code>DBCP</code>的<code>getConnection()</code>方法时，你能指定应用程序获取数据库连接的超时时间，但这和<code>JDBC</code>的连接超时无关。</p>
+<h3 id="MySQL-中的-Statement-超时处理"><a href="#MySQL-中的-Statement-超时处理" class="headerlink" title="MySQL 中的 Statement 超时处理"></a>MySQL 中的 Statement 超时处理</h3><img src="/blog/img/java/jdbc/query-timeout-execution-process-for-mysql-statement.png" title="[query-timeout-execution-process-for-mysql-statement]">
+<ol>
+<li>调用<code>Connection#createStatement()</code>方法创建一个<code>Statement</code>对象</li>
+<li>调用<code>Statement#executeQuery()</code>方法</li>
+<li><code>Statement</code>通过内部的<code>Connection</code>将查询命令传输到<code>MySqlServer</code>数据库</li>
+<li><code>Statement</code>创建一个新的超时执行线程<code>Cancellation Timer</code>来处理超时</li>
+<li>MySQL-5.1 以上版本改为每个连接分配一个线程</li>
+<li>向<code>Cancellation Timer</code>线程注册当前的<code>Statement</code></li>
+<li>发生超时</li>
+<li><code>Cancellation Timer</code>线程创建一个相同配置的<code>Connection</code></li>
+<li>用新创建的<code>Connection</code>发送取消查询的命令，MySQL-5.1.9 中新增加了一个参数<code>queryTimeoutKillsConnection</code>，默认为<code>false</code>，如果为<code>true</code>则会将连接关闭，而不是发送<code>KILL QUERY</code>指令</li>
+</ol>
+<h3 id="取消查询的相关代码"><a href="#取消查询的相关代码" class="headerlink" title="取消查询的相关代码"></a>取消查询的相关代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StatementImpl</span> <span class="keyword">implements</span> <span class="title">Statement</span> </span>&#123;</span><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">CancelTask</span> <span class="keyword">extends</span> <span class="title">TimerTask</span> </span>&#123;</span><span class="line">        <span class="meta">@Override</span></span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line"></span><span class="line">            Thread cancelThread = <span class="keyword">new</span> Thread() &#123;</span><span class="line"></span><span class="line">                <span class="meta">@Override</span></span><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">                    <span class="comment">// ......</span></span><span class="line">                    <span class="comment">// 省略前面的代码</span></span><span class="line">                    <span class="keyword">synchronized</span> (StatementImpl.<span class="keyword">this</span>.cancelTimeoutMutex) &#123;</span><span class="line">                        <span class="keyword">if</span> (CancelTask.<span class="keyword">this</span>.origConnURL.equals(physicalConn.getURL())) &#123;</span><span class="line">                            <span class="comment">// All's fine</span></span><span class="line">                            <span class="comment">// 在这里复制当前连接，并发送 KILL QUERY 指令</span></span><span class="line">                            cancelConn = physicalConn.duplicate();</span><span class="line">                            cancelStmt = cancelConn.createStatement();</span><span class="line">                            cancelStmt.execute(<span class="string">"KILL QUERY "</span> + physicalConn.getId());</span><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><span class="line">                            <span class="keyword">try</span> &#123;</span><span class="line">                                cancelConn = (Connection) DriverManager.getConnection(CancelTask.<span class="keyword">this</span>.origConnURL, CancelTask.<span class="keyword">this</span>.origConnProps);</span><span class="line">                                cancelStmt = cancelConn.createStatement();</span><span class="line">                                cancelStmt.execute(<span class="string">"KILL QUERY "</span> + CancelTask.<span class="keyword">this</span>.origConnId);</span><span class="line">                            &#125; <span class="keyword">catch</span> (NullPointerException npe) &#123;</span><span class="line">                                <span class="comment">// Log this? "Failed to connect to " + origConnURL + " and KILL query"</span></span><span class="line">                            &#125;</span><span class="line">                        &#125;</span><span class="line">                        CancelTask.<span class="keyword">this</span>.toCancel.wasCancelled = <span class="keyword">true</span>;</span><span class="line">                        CancelTask.<span class="keyword">this</span>.toCancel.wasCancelledByTimeout = <span class="keyword">true</span>;</span><span class="line">                    &#125;</span><span class="line">                    <span class="comment">// ......</span></span><span class="line">                &#125;</span><span class="line">            &#125;;</span><span class="line">            cancelThread.start();</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="异常重现"><a href="#异常重现" class="headerlink" title="异常重现"></a>异常重现</h2><p>重现异常<code>MySQLTimeoutException: Statement cancelled due to timeout or client request</code>。</p>
+<h3 id="简单示例一"><a href="#简单示例一" class="headerlink" title="简单示例一"></a>简单示例一</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><span class="line">    Connection connection = <span class="keyword">null</span>;</span><span class="line">    Statement statement = <span class="keyword">null</span>;</span><span class="line">    <span class="keyword">try</span> &#123;</span><span class="line">        Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><span class="line">        connection = DriverManager.getConnection(<span class="string">"jdbc:mysql://localhost/test"</span>, <span class="string">"dbusername"</span>, <span class="string">"dbpassword"</span>);</span><span class="line">        statement = connection.createStatement();</span><span class="line">        <span class="comment">// statement.setQueryTimeout(3);</span></span><span class="line">        <span class="comment">// statement.execute("select 1 from dual");</span></span><span class="line"></span><span class="line">        <span class="comment">// debugger break point</span></span><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> java.lang.Exception(<span class="keyword">new</span> com.mysql.jdbc.exceptions.MySQLTimeoutException());</span><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><span class="line">        e.printStackTrace();</span><span class="line">        <span class="keyword">try</span> &#123;</span><span class="line">            <span class="keyword">if</span> (connection != <span class="keyword">null</span>) &#123;</span><span class="line">                connection.close();</span><span class="line">            &#125;</span><span class="line">            <span class="keyword">if</span> (statement != <span class="keyword">null</span>) &#123;</span><span class="line">                statement.close();</span><span class="line">            &#125;</span><span class="line">        &#125; <span class="keyword">catch</span> (SQLException sqlException) &#123;</span><span class="line">            sqlException.printStackTrace();</span><span class="line">        &#125;</span><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><span class="line">        <span class="comment">// debugger break point</span></span><span class="line">        System.out.println(<span class="string">"finally"</span>);</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>程序运行之后输出如下异常信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java.lang.Exception: com.mysql.jdbc.exceptions.MySQLTimeoutException: Statement cancelled due to timeout or client request</span><span class="line">    at com.example.spring.jdbc.dao.JdbcStatementTest.test1(JdbcStatementTest.java:27)</span><span class="line">Caused by: com.mysql.jdbc.exceptions.MySQLTimeoutException: Statement cancelled due to timeout or client request</span><span class="line">    ... 23 more</span></pre></td></tr></table></figure>
+<h3 id="简单示例二"><a href="#简单示例二" class="headerlink" title="简单示例二"></a>简单示例二</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><span class="line">    Connection connection = <span class="keyword">null</span>;</span><span class="line">    Statement statement = <span class="keyword">null</span>;</span><span class="line">    <span class="keyword">try</span> &#123;</span><span class="line">        Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><span class="line">        <span class="comment">// connection = DriverManager.getConnection("jdbc:mysql://localhost/jdbc?queryTimeoutKillsConnection=true", "dbuser", "dbpass");</span></span><span class="line">        connection = DriverManager.getConnection(<span class="string">"jdbc:mysql://localhost/jdbc"</span>, <span class="string">"dbuser"</span>, <span class="string">"dbpass"</span>);</span><span class="line">        statement = connection.createStatement();</span><span class="line">        statement.setQueryTimeout(<span class="number">3</span>);</span><span class="line">        System.out.println(<span class="string">"Start Time: "</span> + System.currentTimeMillis());</span><span class="line">        <span class="comment">// DB will wait for 10 Seconds</span></span><span class="line">        statement.executeQuery(<span class="string">"SELECT SLEEP(10)"</span>);</span><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><span class="line">        System.out.println(<span class="string">"End   Time: "</span> + System.currentTimeMillis());</span><span class="line">        e.printStackTrace();</span><span class="line">        <span class="keyword">try</span> &#123;</span><span class="line">            <span class="keyword">if</span> (connection != <span class="keyword">null</span>) &#123;</span><span class="line">                connection.close();</span><span class="line">            &#125;</span><span class="line">            <span class="keyword">if</span> (statement != <span class="keyword">null</span>) &#123;</span><span class="line">                statement.close();</span><span class="line">            &#125;</span><span class="line">        &#125; <span class="keyword">catch</span> (SQLException sqlException) &#123;</span><span class="line">            sqlException.printStackTrace();</span><span class="line">        &#125;</span><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><span class="line">        <span class="comment">// debugger break point</span></span><span class="line">        System.out.println(<span class="string">"finally"</span>);</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>程序运行之后输出如下异常信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Start Time: 1516887672140</span><span class="line">End   Time: 1516887675154</span><span class="line">com.mysql.jdbc.exceptions.MySQLTimeoutException: Statement cancelled due to timeout or client request</span><span class="line">    at com.mysql.jdbc.StatementImpl.executeQuery(StatementImpl.java:1401)</span><span class="line">    at com.example.spring.jdbc.dao.JdbcStatementTest.test2(JdbcStatementTest.java:92)</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://www.cubrid.org/blog/understanding-jdbc-internals-and-timeout-configuration" target="_blank" rel="noopener">Understanding JDBC Internals &amp; Timeout Configuration</a></li>
+<li><a href="https://www.jianshu.com/p/2deaf51bf715" target="_blank" rel="noopener">深入理解 JDBC 的超时</a></li>
+<li><a href="http://deepakmodi2006.blogspot.com/2017/05/mysqltimeoutexception-statement.html" target="_blank" rel="noopener">MySQLTimeoutException: Statement cancelled due to timeout or client request</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/01/21/java-names-shadowing-and-obscuring.html" rel="next" title="java names shadowing and obscuring">
+                <i class="fa fa-chevron-left"></i>
+                java names shadowing and obscuring
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/01/26/java-lost-exception-stack-traces.html" rel="prev" title="java lost exception stack traces">
+                <i class="fa fa-chevron-right"></i>
+                java lost exception stack traces
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL-执行超时异常"><span class="nav-number">1.</span> <span class="nav-text">SQL 执行超时异常</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法"><span class="nav-number">1.1.</span> <span class="nav-text">解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring-相关源码简单说明"><span class="nav-number">2.</span> <span class="nav-text">spring 相关源码简单说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DataSourceTransactionManager-doBegin-Object-transaction-TransactionDefinition-definition"><span class="nav-number">2.1.</span> <span class="nav-text">DataSourceTransactionManager#doBegin(Object transaction, TransactionDefinition definition)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ResourceHolderSupport-setTimeoutInSeconds-int"><span class="nav-number">2.2.</span> <span class="nav-text">ResourceHolderSupport#setTimeoutInSeconds(int)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DataSourceUtils-applyTimeout-Statement-stmt-DataSource-dataSource-int-timeout"><span class="nav-number">2.3.</span> <span class="nav-text">DataSourceUtils#applyTimeout(Statement stmt, DataSource dataSource, int timeout)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JdbcTemplate-setQueryTimeout-int"><span class="nav-number">2.4.</span> <span class="nav-text">JdbcTemplate#setQueryTimeout(int)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Statement-setQueryTimeout-int"><span class="nav-number">2.5.</span> <span class="nav-text">Statement#setQueryTimeout(int)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AbstractPlatformTransactionManager-defaultTimeout"><span class="nav-number">2.6.</span> <span class="nav-text">AbstractPlatformTransactionManager#defaultTimeout</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理超时的计时器线程"><span class="nav-number">3.</span> <span class="nav-text">管理超时的计时器线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDBC-timeout-相关示意图"><span class="nav-number">4.</span> <span class="nav-text">JDBC timeout 相关示意图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL-中的-Statement-超时处理"><span class="nav-number">4.1.</span> <span class="nav-text">MySQL 中的 Statement 超时处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取消查询的相关代码"><span class="nav-number">4.2.</span> <span class="nav-text">取消查询的相关代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常重现"><span class="nav-number">5.</span> <span class="nav-text">异常重现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单示例一"><span class="nav-number">5.1.</span> <span class="nav-text">简单示例一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单示例二"><span class="nav-number">5.2.</span> <span class="nav-text">简单示例二</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,760 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="本文是关于iptables使用的一些简单说明以及例子，更详细的使用可参考鸟哥的私房菜和这篇iptables指南。 iptables数据包处理流程示意图 iptables的一些基本概念 tables: raw/filter/nat/mangle/security，与本机最有关系的就是filter表，filter表是用于存放所有与防火墙相关操作的默认表。 chains: 表由链组成，链是一些按顺序排列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 命令之 iptables 篇">
+<meta property="og:url" content="http://www.4e00.com/linux/2016/08/08/linux-commands-iptables.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="本文是关于iptables使用的一些简单说明以及例子，更详细的使用可参考鸟哥的私房菜和这篇iptables指南。 iptables数据包处理流程示意图 iptables的一些基本概念 tables: raw/filter/nat/mangle/security，与本机最有关系的就是filter表，filter表是用于存放所有与防火墙相关操作的默认表。 chains: 表由链组成，链是一些按顺序排列">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/iptables/iptables-chain-en.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/iptables/iptables-flow-simple.png">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.108Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 命令之 iptables 篇">
+<meta name="twitter:description" content="本文是关于iptables使用的一些简单说明以及例子，更详细的使用可参考鸟哥的私房菜和这篇iptables指南。 iptables数据包处理流程示意图 iptables的一些基本概念 tables: raw/filter/nat/mangle/security，与本机最有关系的就是filter表，filter表是用于存放所有与防火墙相关操作的默认表。 chains: 表由链组成，链是一些按顺序排列">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/linux/iptables/iptables-chain-en.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2016/08/08/linux-commands-iptables.html">
+
+  <title> linux 命令之 iptables 篇 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux 命令之 iptables 篇
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-08-08T21:57:49+08:00" content="2016-08-08">
+              2016-08-08
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是关于<code>iptables</code>使用的一些简单说明以及例子，更详细的使用可参考<a href="http://linux.vbird.org/linux_server/0250simple_firewall.php" target="_blank" rel="noopener">鸟哥的私房菜</a>和这篇<a href="https://www.frozentux.net/iptables-tutorial/cn/iptables-tutorial-cn-1.1.19.html" target="_blank" rel="noopener">iptables指南</a>。</p>
+<h2 id="iptables数据包处理流程示意图"><a href="#iptables数据包处理流程示意图" class="headerlink" title="iptables数据包处理流程示意图"></a>iptables数据包处理流程示意图</h2><img src="/blog/img/linux/iptables/iptables-chain-en.png" title="[iptables-chain-en]">
+<h2 id="iptables的一些基本概念"><a href="#iptables的一些基本概念" class="headerlink" title="iptables的一些基本概念"></a>iptables的一些基本概念</h2><ol>
+<li>tables: raw/filter/nat/mangle/security，与本机最有关系的就是filter表，filter表是用于存放所有与防火墙相关操作的默认表。</li>
+<li>chains: 表由链组成，链是一些按顺序排列的规则的列表。默认的filter表包含<code>INPUT</code>，<code>OUTPUT</code>和<code>FORWARD</code>3条内建的链，这3条链作用于数据包过滤过程中的不同时间点，如上流程图所示。</li>
+<li>rules: 数据包的过滤基于rule。rule由一个target目标（数据包匹配所有条件后的动作）和很多匹配（导致该规则可以应用的数据包所需要满足的条件）指定。</li>
+<li>targe: 目标使用<code>-j</code>或者<code>--jump</code>选项指定，target常用的是<code>ACCEPT</code>，<code>DROP</code>，<code>REJECT</code>和<code>LOG</code>。</li>
+</ol>
+<p>如果目标是<code>REJECT</code>，数据包的命运会被立刻决定，并且当前表的数据包的处理过程会停止，也就是说<code>REJECT</code>会拦阻该数据包，并返回数据包通知对方，可以返回的数据包有几个选择：<code>ICMP port-unreachable</code>、<code>ICMP echo-reply</code>或是<code>tcp-reset</code>（这个数据包会要求对方关闭连接），进行完此处理动作后，将不再比对其它规则，直接中断过滤程序。</p>
+<h2 id="iptables常用参数说明"><a href="#iptables常用参数说明" class="headerlink" title="iptables常用参数说明"></a>iptables常用参数说明</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">-P  --policy</td>
+<td style="text-align:left">定义默认策略</td>
+</tr>
+<tr>
+<td style="text-align:left">-L  --list</td>
+<td style="text-align:left">查看iptables规则列表</td>
+</tr>
+<tr>
+<td style="text-align:left">-A  --append</td>
+<td style="text-align:left">在规则列表的最后增加1条规则</td>
+</tr>
+<tr>
+<td style="text-align:left">-I  --insert</td>
+<td style="text-align:left">在指定的位置插入1条规则</td>
+</tr>
+<tr>
+<td style="text-align:left">-D  --delete</td>
+<td style="text-align:left">从规则列表中删除1条规则</td>
+</tr>
+<tr>
+<td style="text-align:left">-R  --replace</td>
+<td style="text-align:left">替换规则列表中的某条规则</td>
+</tr>
+<tr>
+<td style="text-align:left">-F  --flush</td>
+<td style="text-align:left">删除表中所有规则</td>
+</tr>
+<tr>
+<td style="text-align:left">-Z  --zero</td>
+<td style="text-align:left">将表中数据包计数器和流量计数器归零</td>
+</tr>
+<tr>
+<td style="text-align:left">-X  --delete-chain</td>
+<td style="text-align:left">删除自定义链</td>
+</tr>
+<tr>
+<td style="text-align:left">-v  --verbose</td>
+<td style="text-align:left">与-L他命令一起使用显示更多更详细的信息</td>
+</tr>
+</tbody>
+</table>
+<h2 id="rules匹配参数说明"><a href="#rules匹配参数说明" class="headerlink" title="rules匹配参数说明"></a>rules匹配参数说明</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">匹配参数</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">-i --in-interface</td>
+<td style="text-align:left">指定数据包从哪个网络接口进入</td>
+</tr>
+<tr>
+<td style="text-align:left">-o --out-interface</td>
+<td style="text-align:left">指定数据包从哪个网络接口输出</td>
+</tr>
+<tr>
+<td style="text-align:left">-p --proto</td>
+<td style="text-align:left">指定数据包匹配的协议，如TCP、UDP和ICMP等</td>
+</tr>
+<tr>
+<td style="text-align:left">-s --source</td>
+<td style="text-align:left">指定数据包匹配的源地址</td>
+</tr>
+<tr>
+<td style="text-align:left">--sport</td>
+<td style="text-align:left">指定数据包匹配的源端口号，结合参数<code>-p</code>使用</td>
+</tr>
+<tr>
+<td style="text-align:left">--dport</td>
+<td style="text-align:left">指定数据包匹配的目的端口号</td>
+</tr>
+<tr>
+<td style="text-align:left">-m --match</td>
+<td style="text-align:left">指定数据包规则所使用的过滤模块，如state</td>
+</tr>
+<tr>
+<td style="text-align:left">--state</td>
+<td style="text-align:left">数据包的状态，如ESTABLISHED</td>
+</tr>
+<tr>
+<td style="text-align:left">--icmp-type</td>
+<td style="text-align:left">后面必须要接ICMP的数据包类型，例如8</td>
+</tr>
+</tbody>
+</table>
+<p>因为只有<code>tcp</code>和<code>udp</code>的数据包才有端口号，因此要使用<code>--sport</code>和<code>--dport</code>时，要加上<code>-p tcp</code>或<code>-p udp</code>参数才可执行。</p>
+<p>过滤模块<code>-m</code>最常用的方式为：</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT</span></pre></td></tr></table></figure>
+<p><code>iptables</code>包括一个模块，它允许管理员使用<code>connection tracking</code>方法来检查和限制到内部网络中可用服务的连接，连接跟踪把所有连接都保存在一个表格内，它令管理员能够根据以下连接状态来允许或拒绝连接：</p>
+<ol>
+<li>NEW - 请求新连接的分组，如 HTTP 请求。</li>
+<li>ESTABLISHED - 属于当前连接的一部分的分组。</li>
+<li>RELATED - 请求新连接的分组，但是它也是当前连接的一部分，如被动模式的 FTP 连接，其连接端口是 20，但是其传输端口却是 1024 以上的未使用端口。</li>
+<li>INVALID - 不属于连接跟踪表内任何连接的分组。</li>
+</ol>
+<p>你可以和任何网络协议一起使用 iptables 连接跟踪的状态功能，即便协议本身可能是无状态的（如 UDP）。</p>
+<h2 id="iptables命令行使用示例"><a href="#iptables命令行使用示例" class="headerlink" title="iptables命令行使用示例"></a>iptables命令行使用示例</h2><p>上述提到<code>iptables</code>的5个表，最常用的是<code>filter</code>表，以下命令不指定参数<code>-t</code>，都是针对<code>filter</code>表操作。</p>
+<p>使用以下命令查看当前规则和匹配数：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -nvL</span></pre></td></tr></table></figure>
+<p>本机操作可将<code>INPUT</code>链的策略设置为<code>DROP</code>，如下指令，远程SSH操作服务器测试时，使用下面那个指令。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -P INPUT DROP</span></pre></td></tr></table></figure>
+<p>如果在远程服务器上测试<code>iptables</code>时，将<code>INPUT</code>链过滤数据包的默认策略改成<code>ACCEPT</code>，表示<code>filter</code>表的<code>INPUT</code>链默认接受一切请求。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -P INPUT ACCEPT</span></pre></td></tr></table></figure>
+<p>将<code>iptables</code>计数器置0：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -Z</span></pre></td></tr></table></figure>
+<p>没有任何参数的<code>-F</code>命令在当前表中刷新所有链，在SSH远程服务器上测试这个命令时要注意<code>INPUT</code>默认策略不要是<code>DROP</code>，会被服务器关在防火墙外的，同样的，<code>-X</code>命令删除表中所有非默认链，使用这些命令刷新和重置<code>iptables</code>到默认状态：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -X</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -F</span></pre></td></tr></table></figure>
+<p>允许来自于<code>lo</code>接口的数据包，如果没有此规则，你将不能通过<code>127.0.0.1</code>访问本地服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A INPUT -i lo -j ACCEPT</span></pre></td></tr></table></figure>
+<p>开放ssh端口和web端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A INPUT -p tcp --dport 22 -j ACCEPT</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A INPUT -p tcp --dport 80 -j ACCEPT</span></pre></td></tr></table></figure>
+<p>允许内网访问mysql的3306端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A INPUT -p tcp -s 192.168.1.0/24 --dport 3306 -j ACCEPT</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A INPUT -p tcp -s 10.0.0.0/8 --dport 3306 -j ACCEPT</span></pre></td></tr></table></figure>
+<p>允许<code>icmp</code>包通过,也就是允许<code>ping</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT</span></pre></td></tr></table></figure>
+<p>允许所有已经建立的和相关的连接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT</span></pre></td></tr></table></figure>
+<p>上述命令在新版本中写法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT</span></pre></td></tr></table></figure>
+<p>所有其他不符合上述规则的数据包全部拒绝：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A INPUT -p tcp -j REJECT --reject-with tcp-reset</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A INPUT -j REJECT --reject-with icmp-proto-unreachable</span></pre></td></tr></table></figure>
+<p>注意: 这里使用<code>REJECT</code>而不是<code>DROP</code>，因为<code>RFC 1122 3.3.8</code>要求主机尽可能返回<code>ICMP</code>错误而不是<code>DROP</code>数据包。</p>
+<blockquote>
+<p>3.3.8  Error Reporting</p>
+<p>Wherever practical, hosts MUST return ICMP error datagrams on</p>
+<p>detection of an error, except in those cases where returning an</p>
+<p>ICMP error message is specifically prohibited.</p>
+<p>DISCUSSION:</p>
+<p>A common phenomenon in datagram networks is the &quot;black</p>
+<p>hole disease&quot;: datagrams are sent out, but nothing comes</p>
+<p>back.  Without any error datagrams, it is difficult for</p>
+<p>the user to figure out what the problem is.</p>
+</blockquote>
+<h2 id="iptables相关的其他命令"><a href="#iptables相关的其他命令" class="headerlink" title="iptables相关的其他命令"></a>iptables相关的其他命令</h2><p><code>iptables</code>是一个<code>Systemd</code>服务，因此可以这样启动：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">systemctl</span> <span class="built_in">enable</span> iptables.service</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">systemctl</span> start iptables.service</span></pre></td></tr></table></figure>
+<p>通过命令行添加规则，配置文件不会自动改变，所以必须手动保存：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables-save</span> &gt; /etc/iptables/iptables.rules</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">service</span> iptables save</span></pre></td></tr></table></figure>
+<p>修改配置文件后，需要重新加载服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">systemctl</span> reload iptables</span></pre></td></tr></table></figure>
+<p>或者通过<code>iptables</code>直接加载：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables-restore</span> &lt; /etc/iptables/iptables.rules</span></pre></td></tr></table></figure>
+<h2 id="iptables示例脚本一"><a href="#iptables示例脚本一" class="headerlink" title="iptables示例脚本一"></a>iptables示例脚本一</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -P INPUT DROP</span><span class="line">iptables -P OUTPUT ACCEPT</span><span class="line">iptables -P FORWARD ACCEPT</span><span class="line">iptables -F</span><span class="line">iptables -X</span><span class="line">iptables -Z</span><span class="line"></span><span class="line">iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT</span><span class="line">iptables -A INPUT -p icmp -j ACCEPT</span><span class="line">iptables -A INPUT -i lo -j ACCEPT</span><span class="line"></span><span class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT</span><span class="line">iptables -A INPUT -p tcp --dport 80 -j ACCEPT</span><span class="line">iptables -A INPUT -p tcp --dport 443 -j ACCEPT</span><span class="line">iptables -A INPUT -p tcp --dport 3306 -j ACCEPT</span><span class="line"></span><span class="line">iptables -A INPUT -p tcp -s 192.168.1.0/24 -j ACCEPT</span><span class="line">iptables -A INPUT -p tcp -s 10.0.0.0/8 -j ACCEPT</span><span class="line"></span><span class="line">iptables -A INPUT -j REJECT --reject-with icmp-host-prohibited</span><span class="line">iptables -A FORWARD -j REJECT --reject-with icmp-host-prohibited</span></pre></td></tr></table></figure>
+<h2 id="iptables示例脚本二"><a href="#iptables示例脚本二" class="headerlink" title="iptables示例脚本二"></a>iptables示例脚本二</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#! /bin/sh</span></span><span class="line">iptables -F</span><span class="line">iptables -X</span><span class="line">iptables -t nat -F</span><span class="line">iptables -t nat -X</span><span class="line">iptables -P INPUT DROP</span><span class="line">iptables -P OUTPUT ACCEPT</span><span class="line">iptables -P FORWARD ACCEPT</span><span class="line"></span><span class="line">iptables -A INPUT -i lo -j ACCEPT</span><span class="line">iptables -A INPUT -p icmp -j ACCEPT</span><span class="line">iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT</span><span class="line">iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT</span><span class="line">iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 1723 -j ACCEPT</span><span class="line">iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT</span><span class="line">iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 8388 -j ACCEPT</span><span class="line">iptables -t nat -A POSTROUTING -o eth1 -s 192.168.0.0/24 -j SNAT --to-source 200.88.88.188</span><span class="line"></span><span class="line">iptables -I FORWARD -p tcp --syn -i ppp+ -j TCPMSS --<span class="built_in">set</span>-mss 1356</span><span class="line"></span><span class="line">iptables -A INPUT -j REJECT --reject-with icmp-host-prohibited</span></pre></td></tr></table></figure>
+<p>上面<code>FORWARD</code>接口设备<code>ppp+</code>(如ppp0)指令后面不能<code>REJECT FORWARD</code>，否则这个转发就不生效了。</p>
+<h2 id="etc-sysconfit-iptables示例"><a href="#etc-sysconfit-iptables示例" class="headerlink" title="/etc/sysconfit/iptables示例"></a>/etc/sysconfit/iptables示例</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">*filter</span><span class="line">:INPUT DROP [0:0]</span><span class="line">:FORWARD DROP [0:0]</span><span class="line">:OUTPUT ACCEPT [0:0]</span><span class="line">:TCP - [0:0]</span><span class="line">:UDP - [0:0]</span><span class="line">-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT</span><span class="line">-A INPUT -i lo -j ACCEPT</span><span class="line">-A INPUT -m conntrack --ctstate INVALID -j DROP</span><span class="line">-A INPUT -p icmp -m icmp --icmp-type 8 -m conntrack --ctstate NEW -j ACCEPT</span><span class="line">-A TCP -p tcp --dport 80 -j ACCEPT</span><span class="line">-A TCP -p tcp --dport 443 -j ACCEPT</span><span class="line">-A TCP -p tcp --dport 22 -j ACCEPT</span><span class="line">-A INPUT -p udp -m conntrack --ctstate NEW -j UDP</span><span class="line">-A INPUT -p tcp --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j TCP</span><span class="line">-A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable</span><span class="line">-A INPUT -p tcp -j REJECT --reject-with tcp-reset</span><span class="line">-A INPUT -j REJECT --reject-with icmp-proto-unreachable</span><span class="line">COMMIT</span></pre></td></tr></table></figure>
+<h2 id="FORWARD-and-NAT"><a href="#FORWARD-and-NAT" class="headerlink" title="FORWARD and NAT"></a>FORWARD and NAT</h2><p>按照默认设置，Linux内核中的<code>IPv4</code>策略禁用了对IP转发的支持，要启用IP转发，请运行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sysctl</span> -w net.ipv4.ip_forward=1</span><span class="line"><span class="comment"># echo 1 &gt; /proc/sys/net/ipv4/ip_forward</span></span></pre></td></tr></table></figure>
+<p>如果该命令是通过shell运行的，那么其设置在系统重启后就失效，可以通过编辑<code>/etc/sysctl.conf</code>文件来保存转发设置。</p>
+<p><code>Network Address Translation - NAT</code>一般情况下分为：</p>
+<ol>
+<li><code>SNAT</code>: 源地址转换，是指在数据包从网卡发送出去的时候，把数据包中的源地址部分替换为指定的IP，这样接收方就认为数据包的来源是被替换的那个IP的主机，MASQUERADE，即俗称的IP欺骗，是用发送数据的网卡上的IP来替换源IP，主要用于内部共享IP访问外部。</li>
+<li><code>DNAT</code>: 目的地址转换，就是指数据包从网卡进来的时候，修改数据包中的目的IP，转发给内网其他服务器，主要用于内部服务对外发布。</li>
+</ol>
+<p>参考下图，因为路由发生在<code>PREROUTING</code>和<code>FORWARD</code>之间，并且路由是按目的地址来选择的，因此目标地址转换<code>DNAT</code>必然是在<code>PREROUTING</code>链上来进行的，而<code>SNAT</code>是在数据包发送出去的时候才进行，因此是在<code>POSTROUTING</code>链上进行的，更详细的说明可参考<a href="http://linux.vbird.org/linux_server/0250simple_firewall.php#nat_what" target="_blank" rel="noopener">鸟哥的私房菜</a>，其中画有数据包流向和处理示意图，并且关于<code>NAT</code>服务器与路由器的区别也讲得很清楚。</p>
+<img src="/blog/img/linux/iptables/iptables-flow-simple.png" title="[iptables-flow-simple.png]">
+<p>把HTTP请求转发到<code>172.31.0.23</code>上的HTTP服务器，运行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to 172.31.0.23:80</span></pre></td></tr></table></figure>
+<p>如果<code>FORWARD</code>链的数据包处理的默认策略是<code>DROP</code>，就必须再加一条规则来允许转发进入的HTTP请求，运行以下命令可以达到这个目的：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -A FORWARD -i eth0 -p tcp --dport 80 -d 172.31.0.23 -j ACCEPT</span></pre></td></tr></table></figure>
+<p>把访问<code>172.31.0.23</code>的访问转发到<code>192.168.0.2</code>上：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -t nat -A PREROUTING -d 172.31.0.23 -j DNAT --to-destination 192.168.0.2</span></pre></td></tr></table></figure>
+<p>把即将要流出本机的数据的<code>source ip address</code>修改为本机的外网地址<code>200.88.88.188</code>，数据包在达到目的机器以后，目的机器会将响应包返回到<code>200.88.88.188</code>也就是本机。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -t nat -A POSTROUTING -s 192.168.0.0/24 -j SNAT --to-source 200.88.88.188</span></pre></td></tr></table></figure>
+<p>示例，利用端口转发功能实现访问位于线上内网的MYSQL服务器。假设公网可以访问服务器<code>test.domain.com</code>服务器的<code>3306</code>端口，其内网地址为<code>192.168.1.3</code>，数据库内网地址为<code>192.168.1.2</code>，并且不能通过外网访问其<code>3306</code>端口。</p>
+<p>在<code>192.168.1.3</code>这台服务器上执行如下命令打开端口转发功能。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -t nat -A PREROUTING -p tcp --dport 3306 -j DNAT --to-destination 192.168.1.2:3306</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">iptables</span> -t nat -A POSTROUTING -d 192.168.1.2 -p tcp --dport 3306 -j SNAT --to 192.168.1.3</span></pre></td></tr></table></figure>
+<p>打开端口转发之后，当然也要打开<code>ip_forward</code>功能，可以在外网使用以下命令访问数据库。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mysql</span> -h test.domain.com -P 3306 -u user -p</span></pre></td></tr></table></figure>
+<h2 id="iptables指令参考示例"><a href="#iptables指令参考示例" class="headerlink" title="iptables指令参考示例"></a>iptables指令参考示例</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -A INPUT -p icmp -j ACCEPT</span><span class="line">iptables -A INPUT -i lo -p all -j ACCEPT</span><span class="line">iptables -A INPUT -p tcp -s 192.168.10.1 -j DROP</span><span class="line">iptables -A OUTPUT -p tcp --sport 31337 -j DROP</span><span class="line">iptables -A OUTPUT -p tcp --dport 31337 -j DROP</span><span class="line">iptables -A INPUT -s 192.168.10.1 -p tcp --dport 22 -j ACCEPT</span><span class="line">iptables -A INPUT -s 192.168.10.0/24 -p tcp --dport 22 -j ACCEPT</span><span class="line">iptables -A OUTPUT -o eth0 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT</span><span class="line">iptables -A INPUT -i eth0 -p tcp -s 192.168.10.0/24 --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT</span><span class="line">iptables -A OUTPUT -o eth0 -p tcp --sport 22 -m state --state NEW,ESTABLISHED -j ACCEPT</span><span class="line">iptables -A INPUT -m state --state INVALID -j DROP</span><span class="line">iptables -A OUTPUT -m state --state INVALID -j DROP</span><span class="line"></span><span class="line">iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT</span><span class="line">iptables -A FORWARD -s 192.168.1.0/24 -i eth0 -j DROP</span><span class="line">iptables -A FORWARD -p TCP ! --syn -m state --state NEW -j DROP</span><span class="line">iptables -A FORWARD -f -m <span class="built_in">limit</span> --<span class="built_in">limit</span> 100/s --<span class="built_in">limit</span>-burst 100 -j ACCEPT</span><span class="line">iptables -A FORWARD -p icmp -m <span class="built_in">limit</span> --<span class="built_in">limit</span> 1/s --<span class="built_in">limit</span>-burst 10 -j ACCEPT</span><span class="line">iptables -A FORWARD -m state --state INVALID -j DROP</span><span class="line"></span><span class="line">iptables -t nat -A PREROUTING -i eth0 -s 10.0.0.0/8 -j DROP</span><span class="line">iptables -t nat -A PREROUTING -i eth0 -s 172.16.0.0/12 -j DROP</span><span class="line">iptables -t nat -A PREROUTING -i eth0 -s 192.168.0.0/16 -j DROP</span><span class="line">iptables -t nat -A PREROUTING -d 192.168.10.1 -j DROP</span><span class="line">iptables -t nat -A PREROUTING -p tcp --dport 80 -j DROP</span><span class="line">iptables -t nat -A PREROUTING -p tcp --dport 21 -d 192.168.10.1 -j DROP</span><span class="line">iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</span><span class="line">iptables -t nat -A POSTROUTING -o eth1 -s 192.168.0.0/24 -j SNAT --to-source 200.88.88.188</span></pre></td></tr></table></figure>
+<h2 id="iptables数据包处理流程图参考"><a href="#iptables数据包处理流程图参考" class="headerlink" title="iptables数据包处理流程图参考"></a>iptables数据包处理流程图参考</h2><ol>
+<li><a href="/blog/img/linux/iptables/iptables-flow-chart.png">iptables-flow-chart.png</a></li>
+<li><a href="/blog/img/linux/iptables/iptables-flow-cn.png">iptables-flow-cn.png</a></li>
+<li><a href="/blog/img/linux/iptables/iptables-packet-flow.gif">iptables-packet-flow.gif</a></li>
+<li><a href="/blog/img/linux/iptables/iptables-process-flow.png">iptables-process-flow.png</a></li>
+<li><a href="/blog/img/linux/iptables/iptables-nat-snat.png">iptables-nat-snat.png</a></li>
+<li><a href="/blog/img/linux/iptables/iptables-nat-dnat.png">iptables-nat-dnat.png</a></li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://linux.vbird.org/linux_server/0250simple_firewall.php" target="_blank" rel="noopener">鸟哥的Linux私房菜 - 防火墙与NAT伺服器</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Iptables" target="_blank" rel="noopener">iptables</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Simple_stateful_firewall" target="_blank" rel="noopener">Simple stateful firewall</a></li>
+<li><a href="https://tools.ietf.org/html/rfc1122#page-69" target="_blank" rel="noopener">Requirements for Internet Hosts -- Communication Layers</a></li>
+<li><a href="http://man.chinaunix.net/linux/redhat/rhel-sg-zh_cn-4/s1-firewall-ipt-fwd.html" target="_blank" rel="noopener">FORWARD 和 NAT 规则</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2016/08/07/tcpdump-and-tshark-simple-tutorial.html" rel="next" title="tcpdump and tshark simple tutorial">
+                <i class="fa fa-chevron-left"></i>
+                tcpdump and tshark simple tutorial
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2016/08/20/java-tool-jstack.html" rel="prev" title="java tool - jstack">
+                <i class="fa fa-chevron-right"></i>
+                java tool - jstack
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables数据包处理流程示意图"><span class="nav-number">1.</span> <span class="nav-text">iptables数据包处理流程示意图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables的一些基本概念"><span class="nav-number">2.</span> <span class="nav-text">iptables的一些基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables常用参数说明"><span class="nav-number">3.</span> <span class="nav-text">iptables常用参数说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rules匹配参数说明"><span class="nav-number">4.</span> <span class="nav-text">rules匹配参数说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables命令行使用示例"><span class="nav-number">5.</span> <span class="nav-text">iptables命令行使用示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables相关的其他命令"><span class="nav-number">6.</span> <span class="nav-text">iptables相关的其他命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables示例脚本一"><span class="nav-number">7.</span> <span class="nav-text">iptables示例脚本一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables示例脚本二"><span class="nav-number">8.</span> <span class="nav-text">iptables示例脚本二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-sysconfit-iptables示例"><span class="nav-number">9.</span> <span class="nav-text">/etc/sysconfit/iptables示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FORWARD-and-NAT"><span class="nav-number">10.</span> <span class="nav-text">FORWARD and NAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables指令参考示例"><span class="nav-number">11.</span> <span class="nav-text">iptables指令参考示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables数据包处理流程图参考"><span class="nav-number">12.</span> <span class="nav-text">iptables数据包处理流程图参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">13.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="先安装php和xdebug，并配置php.ini文件。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="configure php xdebug in ubuntu-11.04">
-<meta property="og:url" content="https://www.4e00.com/php/2011/05/18/configure-php-xdebug-in-ubuntu.html">
+<meta property="og:url" content="http://www.4e00.com/php/2011/05/18/configure-php-xdebug-in-ubuntu.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="先安装php和xdebug，并配置php.ini文件。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.076Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="configure php xdebug in ubuntu-11.04">
 <meta name="twitter:description" content="先安装php和xdebug，并配置php.ini文件。">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/php/2011/05/18/configure-php-xdebug-in-ubuntu.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/php/2011/05/18/configure-php-xdebug-in-ubuntu.html">
 
   <title> configure php xdebug in ubuntu-11.04 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/php/" itemprop="url" rel="index">
                     <span itemprop="name">php</span>
                   </a>
@@ -256,25 +256,25 @@
       
         <p>先安装php和xdebug，并配置php.ini文件。</p>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt-get install apache2 php5 xdebug</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> vi /etc/php5/apache2/php.ini</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt-get install apache2 php5 xdebug</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> vi /etc/php5/apache2/php.ini</span></pre></td></tr></table></figure>
 <p>在php.ini文件最后面添加下面3行内容，其他如<code>zend_extension</code>的值ubuntu在xdebug安装完会自动在<code>/etc/php5/conf.d/xdebug.ini</code>中设置:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Xdebug]</div><div class="line">xdebug.remote_autostart=On</div><div class="line">xdebug.remote_enable=On</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Xdebug]</span><span class="line">xdebug.remote_autostart=On</span><span class="line">xdebug.remote_enable=On</span></pre></td></tr></table></figure>
 <p>然后从eclipse.org官网下载eclipse for php版本：</p>
 <p>我的电脑是<code>ubuntu-11.04 64位</code>的机器，所以下载64位的版本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">wget</span> http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/helios/SR2/eclipse-cpp-helios-SR2-linux-gtk-x86_64.tar.gz&amp;url=http://mirrors.ustc.edu.cn/eclipse/technology/epp/downloads/release/helios/SR2/eclipse-cpp-helios-SR2-linux-gtk-x86_64.tar.gz&amp;mirror_id=1093</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">wget</span> http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/helios/SR2/eclipse-cpp-helios-SR2-linux-gtk-x86_64.tar.gz&amp;url=http://mirrors.ustc.edu.cn/eclipse/technology/epp/downloads/release/helios/SR2/eclipse-cpp-helios-SR2-linux-gtk-x86_64.tar.gz&amp;mirror_id=1093</span></pre></td></tr></table></figure>
 <p>打开eclipse之后，进入<code>window-Performances-PHP-Debug</code>设置面板，在右边的<code>PHP Debuger</code>中选择Xdebug，然后点击<code>Xdebug</code>的Configure，再选择其中的<code>Xdebug</code>进行编辑，将<code>Accept remote session(JIT)</code>的值设置为<code>localhost</code>，(默认值为off时，是不会开启xdebug调试功能的)，这个设置和<code>php.ini</code>设置必须要都做到才会开启debug功能。</p>
 <p>这样配置就完成了，可以打开浏览器访问PHP页面，在eclipse中的PHP源码，如果有设置断点就会进入Debug模式。</p>
-<p>在Debug模式中的Server就使用默认的<a href="http://localhost，&quot;PHP" target="_blank" rel="external">http://localhost，&quot;PHP</a> Executeable&quot;原来是&quot;None Defined&quot;，这个没有关系，也可以手动设置一个值，如<code>/usr/bin/php5</code>，这个不影响debug功能。</p>
-<p>抄录部分xdebug远程调试相关的参数说明，官网可参考<a href="http://xdebug.org/docs/remote中的说明。" target="_blank" rel="external">http://xdebug.org/docs/remote中的说明。</a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">xdebug.remote_autostart</div><div class="line">类型：布尔型 默认值：0</div></pre></td></tr></table></figure>
+<p>在Debug模式中的Server就使用默认的<a href="http://localhost，&quot;PHP" target="_blank" rel="noopener">http://localhost，&quot;PHP</a> Executeable&quot;原来是&quot;None Defined&quot;，这个没有关系，也可以手动设置一个值，如<code>/usr/bin/php5</code>，这个不影响debug功能。</p>
+<p>抄录部分xdebug远程调试相关的参数说明，官网可参考<a href="http://xdebug.org/docs/remote中的说明。" target="_blank" rel="noopener">http://xdebug.org/docs/remote中的说明。</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xdebug.remote_autostart</span><span class="line">类型：布尔型 默认值：0</span></pre></td></tr></table></figure>
 <p>一般来说，你需要使用明确的HTTP GET/POST变量来开启远程debug。而当这个参数设置为On，xdebug将经常试图去开启一个远程debug session并试图去连接客户端，即使GET/POST/COOKIE变量不是当前的。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">xdebug.remote_enable</div><div class="line">类型：布尔型 默认值：0</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xdebug.remote_enable</span><span class="line">类型：布尔型 默认值：0</span></pre></td></tr></table></figure>
 <p>这个开关控制xdebug是否应该试着去连接一个按照xdebug.remote_host和xdebug.remote_port来设置监听主机和端口的debug客户端。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">xdebug.remote_host</div><div class="line">类型：字符串 默认值：localhost</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xdebug.remote_host</span><span class="line">类型：字符串 默认值：localhost</span></pre></td></tr></table></figure>
 <p>选择debug客户端正在运行的主机，你不仅可以使用主机名还可以使用IP地址</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">xdebug.remote_port</div><div class="line">类型：整型 默认值：9000</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xdebug.remote_port</span><span class="line">类型：整型 默认值：9000</span></pre></td></tr></table></figure>
 <p>这个端口是xdebug试着去连接远程主机的。9000是一般客户端和被绑定的debug客户端默认的端口。许多客户端都使用这个端口数字，最好不要去修改这个设置。</p>
-<p>Windows的设置可以参考下面这个链接中说明：<a href="http://be-evil.org/post-70.html" target="_blank" rel="external">http://be-evil.org/post-70.html</a></p>
+<p>Windows的设置可以参考下面这个链接中说明：<a href="http://be-evil.org/post-70.html" target="_blank" rel="noopener">http://be-evil.org/post-70.html</a></p>
 <p>Mac OSX中可以下载一个<code>MacGDBp</code>，这个用来调试php，非常好用，与ide就完全脱离关系了。</p>
 
       
@@ -302,7 +302,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/javascript/2011/04/19/get-window-scroll-bar-width.html" rel="next" title="get window scroll bar width">
-                上一篇：get window scroll bar width
+                <i class="fa fa-chevron-left"></i>
+                get window scroll bar width
               </a>
             
           </div>
@@ -310,7 +311,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/ruby/2011/07/02/rails-3.0.7-ubuntu-11.04-install-problem.html" rel="prev" title="rails-3.0.7 在ubuntu-11.04中安装问题">
-                下一篇：rails-3.0.7 在ubuntu-11.04中安装问题
+                <i class="fa fa-chevron-right"></i>
+                rails-3.0.7 在ubuntu-11.04中安装问题
               </a>
             
           </div>
@@ -359,7 +361,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -370,16 +372,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -461,10 +461,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

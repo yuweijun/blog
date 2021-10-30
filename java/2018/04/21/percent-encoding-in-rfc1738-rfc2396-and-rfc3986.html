@@ -1,0 +1,615 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="URI &amp;amp;&amp;amp; URLURI（统一资源标识）定义在RFC 3986中，URL（统一资源地址）是URI的一种特殊形式，提供了资源的网络位置。URL最初的标准RFC 1738已经废弃，其中定义了URL，域名，IP地址，application/x-www-form-urlencoded格式。 encode &amp;amp;&amp;amp; decode URIencode是将URI根据RFC规范定义的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="percent encoding in rfc1738 rfc2396 and rfc3986">
+<meta property="og:url" content="http://www.4e00.com/java/2018/04/21/percent-encoding-in-rfc1738-rfc2396-and-rfc3986.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="URI &amp;amp;&amp;amp; URLURI（统一资源标识）定义在RFC 3986中，URL（统一资源地址）是URI的一种特殊形式，提供了资源的网络位置。URL最初的标准RFC 1738已经废弃，其中定义了URL，域名，IP地址，application/x-www-form-urlencoded格式。 encode &amp;amp;&amp;amp; decode URIencode是将URI根据RFC规范定义的">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.131Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="percent encoding in rfc1738 rfc2396 and rfc3986">
+<meta name="twitter:description" content="URI &amp;amp;&amp;amp; URLURI（统一资源标识）定义在RFC 3986中，URL（统一资源地址）是URI的一种特殊形式，提供了资源的网络位置。URL最初的标准RFC 1738已经废弃，其中定义了URL，域名，IP地址，application/x-www-form-urlencoded格式。 encode &amp;amp;&amp;amp; decode URIencode是将URI根据RFC规范定义的">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/04/21/percent-encoding-in-rfc1738-rfc2396-and-rfc3986.html">
+
+  <title> percent encoding in rfc1738 rfc2396 and rfc3986 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                percent encoding in rfc1738 rfc2396 and rfc3986
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-04-21T13:14:43+08:00" content="2018-04-21">
+              2018-04-21
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="URI-amp-amp-URL"><a href="#URI-amp-amp-URL" class="headerlink" title="URI &amp;&amp; URL"></a>URI &amp;&amp; URL</h2><p><code>URI</code>（统一资源标识）定义在<code>RFC 3986</code>中，<code>URL</code>（统一资源地址）是<code>URI</code>的一种特殊形式，提供了资源的网络位置。<code>URL</code>最初的标准<code>RFC 1738</code>已经废弃，其中定义了<code>URL</code>，域名，<code>IP</code>地址，<code>application/x-www-form-urlencoded</code>格式。</p>
+<h3 id="encode-amp-amp-decode-URI"><a href="#encode-amp-amp-decode-URI" class="headerlink" title="encode &amp;&amp; decode URI"></a>encode &amp;&amp; decode URI</h3><p><code>encode</code>是将<code>URI</code>根据<code>RFC</code>规范定义的<code>reserved</code>和<code>unreserved</code>之外的所有字符都<code>percent-encoding</code>转义，避免解析时产生岐义和错误。比如，一个用户可能会输入<code>Thyme &amp;time=again</code>作为 comment 变量的一部分。如果不使用<code>encodeURIComponent</code>对此内容进行转义，服务器得到的将是<code>comment=Thyme%20&amp;time=again</code>。请注意，<code>&amp;</code>符号和<code>=</code>符号产生了一个新的键值对，所以服务器得到两个键值对（一个键值对是<code>comment=Thyme</code>，另一个则是<code>time=again</code>），而不是一个键值对。</p>
+<p><code>encode</code>和<code>decode</code>一般是配对使用，比如表单 POST 提交的内容是按<code>application/x-www-form-urlencoded</code>编码提交到后台的，可以用 PHP 的<code>urldecode</code>方法解码，在 Java 中则可以用<code>java.net.URLDecode.decode(String s, String enc)</code>方法来解码。如果前端使用<code>encodeURIComponent</code>编码后 ajax POST 到后端，则需要用 PHP 中的<code>rawurlencode</code>解码，在 Java 中则可以用 spring 的工具类<code>org.springframework.web.util.UriUtils.decode(String source, String encoding)</code>解码。</p>
+<h3 id="application-x-www-form-urlencoded-编码规则"><a href="#application-x-www-form-urlencoded-编码规则" class="headerlink" title="application/x-www-form-urlencoded 编码规则"></a>application/x-www-form-urlencoded 编码规则</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">5.2. application/x-www-form-urlencoded serializing</span><span class="line">The application/x-www-form-urlencoded byte serializer takes a byte sequence input and then runs these steps:</span><span class="line"></span><span class="line">Let output be the empty string.</span><span class="line"></span><span class="line">For each byte in input, depending on byte:</span><span class="line"></span><span class="line">0x20 (SP)</span><span class="line">Append U+002B (+) to output.</span><span class="line"></span><span class="line">0x2A (*)</span><span class="line">0x2D (-)</span><span class="line">0x2E (.)</span><span class="line">0x30 (0) to 0x39 (9)</span><span class="line">0x41 (A) to 0x5A (Z)</span><span class="line">0x5F (_)</span><span class="line">0x61 (a) to 0x7A (z)</span><span class="line">Append a code point whose value is byte to output.</span><span class="line"></span><span class="line">Otherwise</span><span class="line">Append byte, percent encoded, to output.</span><span class="line"></span><span class="line">Return output.</span></pre></td></tr></table></figure>
+<p>如上<code>application/x-www-form-urlencoded</code>编码规则，<code>alphanumeric</code>、<code>*</code>、<code>-</code>、<code>.</code>、<code>_</code>不进行编码，空格则编码成<code>+</code>，其他字符全部需要编码，这就是为什么 Google 搜索时空格在<code>URL</code>上会变成<code>+</code>而不是<code>%20</code>。</p>
+<h2 id="RFC-3986-中字符定义"><a href="#RFC-3986-中字符定义" class="headerlink" title="RFC 3986 中字符定义"></a>RFC 3986 中字符定义</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">RFC 3986                   URI Generic Syntax               January 2005</span><span class="line"></span><span class="line">2.1.  Percent-Encoding</span><span class="line"></span><span class="line">   A percent-encoding mechanism is used to represent a data octet in a</span><span class="line">   component when that octet&apos;s corresponding character is outside the</span><span class="line">   allowed set or is being used as a delimiter of, or within, the</span><span class="line">   component.  A percent-encoded octet is encoded as a character</span><span class="line">   triplet, consisting of the percent character &quot;%&quot; followed by the two</span><span class="line">   hexadecimal digits representing that octet&apos;s numeric value.  For</span><span class="line">   example, &quot;%20&quot; is the percent-encoding for the binary octet</span><span class="line">   &quot;00100000&quot; (ABNF: %x20), which in US-ASCII corresponds to the space</span><span class="line">   character (SP).  Section 2.4 describes when percent-encoding and</span><span class="line">   decoding is applied.</span><span class="line"></span><span class="line">      pct-encoded = &quot;%&quot; HEXDIG HEXDIG</span><span class="line"></span><span class="line">   The uppercase hexadecimal digits &apos;A&apos; through &apos;F&apos; are equivalent to</span><span class="line">   the lowercase digits &apos;a&apos; through &apos;f&apos;, respectively.  If two URIs</span><span class="line">   differ only in the case of hexadecimal digits used in percent-encoded</span><span class="line">   octets, they are equivalent.  For consistency, URI producers and</span><span class="line">   normalizers should use uppercase hexadecimal digits for all percent-</span><span class="line">   encodings.</span><span class="line"></span><span class="line">2.2.  Reserved Characters</span><span class="line"></span><span class="line">   URIs include components and subcomponents that are delimited by</span><span class="line">   characters in the &quot;reserved&quot; set.  These characters are called</span><span class="line">   &quot;reserved&quot; because they may (or may not) be defined as delimiters by</span><span class="line">   the generic syntax, by each scheme-specific syntax, or by the</span><span class="line">   implementation-specific syntax of a URI&apos;s dereferencing algorithm.</span><span class="line">   If data for a URI component would conflict with a reserved</span><span class="line">   character&apos;s purpose as a delimiter, then the conflicting data must be</span><span class="line">   percent-encoded before the URI is formed.</span><span class="line"></span><span class="line">  reserved    = gen-delims / sub-delims</span><span class="line"></span><span class="line">      gen-delims  = &quot;:&quot; / &quot;/&quot; / &quot;?&quot; / &quot;#&quot; / &quot;[&quot; / &quot;]&quot; / &quot;@&quot;</span><span class="line"></span><span class="line">      sub-delims  = &quot;!&quot; / &quot;$&quot; / &quot;&amp;&quot; / &quot;&apos;&quot; / &quot;(&quot; / &quot;)&quot;</span><span class="line">                  / &quot;*&quot; / &quot;+&quot; / &quot;,&quot; / &quot;;&quot; / &quot;=&quot;</span><span class="line"></span><span class="line">2.3.  Unreserved Characters</span><span class="line"></span><span class="line">   Characters that are allowed in a URI but do not have a reserved</span><span class="line">   purpose are called unreserved.  These include uppercase and lowercase</span><span class="line">   letters, decimal digits, hyphen, period, underscore, and tilde.</span><span class="line"></span><span class="line">      unreserved  = ALPHA / DIGIT / &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;~&quot;</span></pre></td></tr></table></figure>
+<h2 id="RFC-2396-中的部分字符定义"><a href="#RFC-2396-中的部分字符定义" class="headerlink" title="RFC 2396 中的部分字符定义"></a>RFC 2396 中的部分字符定义</h2><p>Javascript 中的<code>encodeURI</code>方法对于<code>rfc2396</code>中定义的<code>reserved</code>和<code>unreserved</code>这2个字符集中的字符都不会进行转义。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2.2. Reserved Characters</span><span class="line"></span><span class="line">      reserved    = &quot;;&quot; | &quot;/&quot; | &quot;?&quot; | &quot;:&quot; | &quot;@&quot; | &quot;&amp;&quot; | &quot;=&quot; | &quot;+&quot; |</span><span class="line">                    &quot;$&quot; | &quot;,&quot;</span><span class="line"></span><span class="line">2.3. Unreserved Characters</span><span class="line"></span><span class="line">      unreserved  = alphanum | mark</span><span class="line"></span><span class="line">      mark        = &quot;-&quot; | &quot;_&quot; | &quot;.&quot; | &quot;!&quot; | &quot;~&quot; | &quot;*&quot; | &quot;&apos;&quot; | &quot;(&quot; | &quot;)&quot;</span></pre></td></tr></table></figure>
+<h2 id="RFC-1738-中部分字符定义"><a href="#RFC-1738-中部分字符定义" class="headerlink" title="RFC 1738 中部分字符定义"></a>RFC 1738 中部分字符定义</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">RFC 1738            Uniform Resource Locators (URL)        December 1994</span><span class="line"></span><span class="line">safe           = &quot;$&quot; | &quot;-&quot; | &quot;_&quot; | &quot;.&quot; | &quot;+&quot;</span><span class="line">extra          = &quot;!&quot; | &quot;*&quot; | &quot;&apos;&quot; | &quot;(&quot; | &quot;)&quot; | &quot;,&quot;</span><span class="line"></span><span class="line">reserved       = &quot;;&quot; | &quot;/&quot; | &quot;?&quot; | &quot;:&quot; | &quot;@&quot; | &quot;&amp;&quot; | &quot;=&quot;</span><span class="line">hex            = digit | &quot;A&quot; | &quot;B&quot; | &quot;C&quot; | &quot;D&quot; | &quot;E&quot; | &quot;F&quot; |</span><span class="line">                 &quot;a&quot; | &quot;b&quot; | &quot;c&quot; | &quot;d&quot; | &quot;e&quot; | &quot;f&quot;</span><span class="line">escape         = &quot;%&quot; hex hex</span><span class="line"></span><span class="line">unreserved     = alpha | digit | safe | extra</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="encodeURI"><a href="#encodeURI" class="headerlink" title="encodeURI"></a>encodeURI</h2><p><code>encodeURI</code>不转义的字符如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">A-Z a-z 0-9 ; , / ? : @ &amp; = + $ - _ . ! ~ * &apos; ( ) #</span></pre></td></tr></table></figure>
+<p>除上述对 URI 有特殊含义的保留字符，<code>encodeURI</code>会转义其他所有字符，对于 GET/POST 请求中有特殊含义的<code>&amp;</code>、<code>+</code>和<code>=</code>，<code>encodeURI</code>并不会进行转义，会造成不正确的GET/POST 请求，可以使用<code>encodeURIComponent</code>方法进行转义这些字符。</p>
+<h2 id="encodeURIComponent"><a href="#encodeURIComponent" class="headerlink" title="encodeURIComponent"></a>encodeURIComponent</h2><p>javascript 中对 URI 编码一般是使用<code>encodeURI</code>、<code>decodeURI</code>、<code>encodeURIComponent</code>和<code>decodeURIComponent</code>这4个方法，而不使用<code>escape</code>和<code>unescape</code>方法。</p>
+<blockquote>
+<p>Another interesting consideration for Global methods is the escaping of strings provided by <code>escape()</code> and <code>unescape()</code>. Primarily, we see this done on the Web in order to create URL safe strings. You probably have seen this when working with forms.  While these methods would be extremely useful, the ECMAScript specification suggests that <code>escape()</code> and <code>unescape()</code> are deprecated in favor of the more aptly named <code>encodeURI()</code>, <code>encodeURIComponent()</code>, <code>decodeURI()</code>, and <code>decodeURIComponent()</code>.</p>
+</blockquote>
+<p><code>encodeURIComponent</code>不转义的字符如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">A-Z a-z 0-9 - _ . ~ ! * &apos; ( )</span></pre></td></tr></table></figure>
+<p><code>encodeURIComponent</code>转义除了上述字符之外的所有字符。</p>
+<p><code>!&#39;()*</code>这几个字符虽然是<code>rfc3986</code>的保留字，但是没有真正在<code>URI</code>中作为分隔字符使用，可以与 PHP 中的<code>rawurlencode</code>一样，将这几个字符也进行编码。</p>
+<h3 id="定义-Javascript-版本的-rawurlencode"><a href="#定义-Javascript-版本的-rawurlencode" class="headerlink" title="定义 Javascript 版本的 rawurlencode"></a>定义 Javascript 版本的 rawurlencode</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rawurlencode</span>(<span class="params">str</span>) </span>&#123;</span><span class="line">    <span class="keyword">return</span> <span class="built_in">encodeURIComponent</span>(str).replace(<span class="regexp">/[!'()*]/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">c</span>) </span>&#123;</span><span class="line">        <span class="keyword">return</span> <span class="string">'%'</span> + c.charCodeAt(<span class="number">0</span>).toString(<span class="number">16</span>).toUpperCase();</span><span class="line">    &#125;);</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">node</span></span><span class="line">  &gt; rawurlencode(<span class="string">"+|`^!'()*~-_.09azAZ"</span>)</span><span class="line output"><span class="string">"%2B%7C%60%5E%21%27%28%29%2A~-_.09azAZ"</span></span><span class="line">  &gt; encodeURI(<span class="string">"+|`^!'()*~-_.09azAZ"</span>)</span><span class="line output"><span class="string">"+%7C%60%5E!'()*~-_.09azAZ"</span></span></pre></td></tr></table></figure>
+<h3 id="decodeURIComponent"><a href="#decodeURIComponent" class="headerlink" title="decodeURIComponent"></a>decodeURIComponent</h3><p>如果 URL 里字符串包含<code>%</code>符号而后面没有2个16进制数字的话，再调用<code>decodeURI</code>，<code>decodeURIComponent</code>会报错误<code>misformed error</code>或者<code>URI malformed</code>，如果需要表示百分号本身<code>%</code>，必须编码为<code>%25</code>。</p>
+<blockquote>
+<p>@exception IllegalArgumentException if a &#39;%&#39; character is not followed by a valid 2-digit hexadecimal number</p>
+</blockquote>
+<h2 id="rawurlencode-in-PHP"><a href="#rawurlencode-in-PHP" class="headerlink" title="rawurlencode in PHP"></a>rawurlencode in PHP</h2><p>Javascript 中的<code>decodeURIComponent</code>和 PHP 中的<code>rawurlencode</code>，如果不包括<code>!*&#39;()</code>这些字符，那产生的结果是一致的，二者对<code>-_.~</code>这些字符都不会处理（<code>~</code>这个字符在 PHP-5.3.0 之前版本的<code>rawurlencode</code>中也会被转义）。</p>
+<h3 id="测试代码-rawurlencode-php"><a href="#测试代码-rawurlencode-php" class="headerlink" title="测试代码 rawurlencode.php"></a>测试代码 rawurlencode.php</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><span class="line">    <span class="keyword">echo</span> rawurlencode(<span class="string">"+|`^!'()*~-_.09azAZ"</span>);</span><span class="line"><span class="meta">?&gt;</span></span></pre></td></tr></table></figure>
+<h3 id="运行结果-1"><a href="#运行结果-1" class="headerlink" title="运行结果"></a>运行结果</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">php</span> -f rawurlencode.php</span><span class="line output">%2B%7C%60%5E%21%27%28%29%2A~-_.09azAZ</span></pre></td></tr></table></figure>
+<h2 id="urlencode-in-PHP"><a href="#urlencode-in-PHP" class="headerlink" title="urlencode in PHP"></a>urlencode in PHP</h2><p><code>urlencode</code>方法返回字符串，此字符串中除了<code>-_.</code>之外的所有非字母数字字符都将被替换成百分号<code>%</code>后跟两位十六进制数，<code>空格</code>则编码为加号<code>+</code>。此编码与 WWW 表单 POST 数据的编码方式是一样的，同时与<code>application/x-www-form-urlencoded</code>的媒体类型编码方式一样。由于历史原因，此编码在将<code>空格</code>编码为加号<code>+</code>方面与<code>rfc3896</code>编码不同。</p>
+<h2 id="quot-quot-字符编码和解码时碰到的问题"><a href="#quot-quot-字符编码和解码时碰到的问题" class="headerlink" title="&quot;+&quot;字符编码和解码时碰到的问题"></a>&quot;+&quot;字符编码和解码时碰到的问题</h2><p>编码解码中最容易出问题的字符就是<code>+</code>，上面提到前端编码可以产生以下结果：</p>
+<ol>
+<li>在<code>application/x-www-form-urlencoded</code>编码规则中，会将<code>空格</code>编码为<code>+</code>。</li>
+<li><code>encodeURI</code>中<code>+</code>是保留字，并不会被编码，结果仍然是<code>+</code>自身。</li>
+<li><code>encodeURIComponent</code>会将<code>+</code>编码为<code>%2B</code>。</li>
+</ol>
+<p>后端可能收到的编码内容如下：</p>
+<ol>
+<li>收到的是<code>%2B</code>。</li>
+<li>收到的是<code>+</code>本身。</li>
+</ol>
+<p>对于<code>%2B</code>解码为<code>+</code>，不会有疑义，但是如果后端收到的是<code>+</code>，这就可能有岐义了，用 PHP 的<code>urldecode</code>和 Java 的<code>java.net.URLDecode.decode(String s, String enc)</code>方法解码，则会将<code>+</code>解码为<code>空格</code>，而<code>rawurlencode</code>解码之后仍然是<code>+</code>，这可能会造成解码的结果与编码前的内容不一致，所以前端应该使用<code>encodeURIComponent</code>方法将参数编码后传给后端程序处理。</p>
+<h3 id="urldecode-php-文件"><a href="#urldecode-php-文件" class="headerlink" title="urldecode.php 文件"></a>urldecode.php 文件</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><span class="line">    <span class="keyword">echo</span> urldecode(<span class="string">"+"</span>);    <span class="comment">// 输出一个空格' '</span></span><span class="line">    <span class="keyword">echo</span> rawurldecode(<span class="string">"+"</span>); <span class="comment">// 输出加号自身'+'</span></span><span class="line"><span class="meta">?&gt;</span></span></pre></td></tr></table></figure>
+<h2 id="tomcat-请求中的字符问题"><a href="#tomcat-请求中的字符问题" class="headerlink" title="tomcat 请求中的字符问题"></a>tomcat 请求中的字符问题</h2><p>在 tomcat 请求日志中有时可以看到如下错误：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Apr 21, 2018 9:19:15 AM org.apache.coyote.http11.Http11Processor service</span><span class="line">INFO: Error parsing HTTP request header</span><span class="line">Note: further occurrences of HTTP header parsing errors will be logged at DEBUG level.</span><span class="line">java.lang.IllegalArgumentException: Invalid character found in the request target. The valid characters are defined in RFC 7230 and RFC 3986</span><span class="line">    at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:476)</span><span class="line">    at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:687)</span><span class="line">    at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)</span><span class="line">    at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)</span><span class="line">    at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1459)</span><span class="line">    at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)</span><span class="line">    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)</span><span class="line">    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)</span><span class="line">    at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)</span><span class="line">    at java.lang.Thread.run(Thread.java:748)</span></pre></td></tr></table></figure>
+<p><code>org.apache.tomcat.util.http.parser.HttpParser</code>文件第 100 行左右的代码如下，在这里定义了哪些字符不能在 URL 中出现：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Not valid for request target.</span></span><span class="line"><span class="comment">// Combination of multiple rules from RFC7230 and RFC 3986. Must be</span></span><span class="line"><span class="comment">// ASCII, no controls plus a few additional characters excluded</span></span><span class="line"><span class="keyword">if</span> (IS_CONTROL[i] || i &gt; <span class="number">127</span> ||</span><span class="line">        i == <span class="string">' '</span> || i == <span class="string">'\"'</span> || i == <span class="string">'#'</span> || i == <span class="string">'&lt;'</span> || i == <span class="string">'&gt;'</span> || i == <span class="string">'\\'</span> ||</span><span class="line">        i == <span class="string">'^'</span> || i == <span class="string">'`'</span>  || i == <span class="string">'&#123;'</span> || i == <span class="string">'|'</span> || i == <span class="string">'&#125;'</span>) &#123;</span><span class="line"></span><span class="line">        IS_NOT_REQUEST_TARGET[i] = <span class="keyword">true</span>;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 错误的请求如下</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">curl</span> <span class="string">"http://localhost:8080/hello?a=&gt;"</span></span><span class="line"></span><span class="line"><span class="comment"># 编码之后正确的请求如下</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">curl</span> <span class="string">"http://localhost:8080/hello?a=%3E"</span></span></pre></td></tr></table></figure>
+<h2 id="相关-RFC-规范"><a href="#相关-RFC-规范" class="headerlink" title="相关 RFC 规范"></a>相关 RFC 规范</h2><ol>
+<li><a href="https://www.ietf.org/rfc/rfc1738" target="_blank" rel="noopener">RFC 1738</a></li>
+<li><a href="https://www.ietf.org/rfc/rfc2396" target="_blank" rel="noopener">RFC 2396</a></li>
+<li><a href="https://www.ietf.org/rfc/rfc2616" target="_blank" rel="noopener">RFC 2616</a></li>
+<li><a href="https://www.ietf.org/rfc/rfc3986" target="_blank" rel="noopener">RFC 3986</a></li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://php.net/manual/zh/function.rawurlencode.php" target="_blank" rel="noopener">php rawurlencode</a></li>
+<li><a href="http://php.net/manual/zh/function.urlencode.php" target="_blank" rel="noopener">php urlencode</a></li>
+<li><a href="https://url.spec.whatwg.org/#urlencoded-serializing" target="_blank" rel="noopener">application/x-www-form-urlencoded serializing</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent" target="_blank" rel="noopener">encodeURIComponent</a></li>
+<li><a href="http://harttle.land/2017/05/23/percentage-encoding.html" target="_blank" rel="noopener">百分号编码与 encodeURIComponent</a></li>
+<li><a href="https://blog.toright.com/posts/2937/%E6%B7%BA%E8%AB%87-http-url-%E8%A6%8F%E7%AF%84-%E5%96%84%E7%94%A8-javascript-encodeuricomponent-%E8%88%87-php-rawurlencode-%E4%BE%86%E9%80%B2%E8%A1%8C-url-%E7%B7%A8%E7%A2%BC.html" target="_blank" rel="noopener">浅谈 HTTP URL 规范</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/mysql/2018/04/13/the-best-commands-mycli.html" rel="next" title="命令行神器之 mycli 篇">
+                <i class="fa fa-chevron-left"></i>
+                命令行神器之 mycli 篇
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2018/04/28/the-best-commands-openssl.html" rel="prev" title="命令行神器之 openssl 篇">
+                <i class="fa fa-chevron-right"></i>
+                命令行神器之 openssl 篇
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#URI-amp-amp-URL"><span class="nav-number">1.</span> <span class="nav-text">URI &amp;&amp; URL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#encode-amp-amp-decode-URI"><span class="nav-number">1.1.</span> <span class="nav-text">encode &amp;&amp; decode URI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#application-x-www-form-urlencoded-编码规则"><span class="nav-number">1.2.</span> <span class="nav-text">application/x-www-form-urlencoded 编码规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RFC-3986-中字符定义"><span class="nav-number">2.</span> <span class="nav-text">RFC 3986 中字符定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RFC-2396-中的部分字符定义"><span class="nav-number">3.</span> <span class="nav-text">RFC 2396 中的部分字符定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RFC-1738-中部分字符定义"><span class="nav-number">4.</span> <span class="nav-text">RFC 1738 中部分字符定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#encodeURI"><span class="nav-number">5.</span> <span class="nav-text">encodeURI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#encodeURIComponent"><span class="nav-number">6.</span> <span class="nav-text">encodeURIComponent</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-Javascript-版本的-rawurlencode"><span class="nav-number">6.1.</span> <span class="nav-text">定义 Javascript 版本的 rawurlencode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行结果"><span class="nav-number">6.2.</span> <span class="nav-text">运行结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#decodeURIComponent"><span class="nav-number">6.3.</span> <span class="nav-text">decodeURIComponent</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rawurlencode-in-PHP"><span class="nav-number">7.</span> <span class="nav-text">rawurlencode in PHP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#测试代码-rawurlencode-php"><span class="nav-number">7.1.</span> <span class="nav-text">测试代码 rawurlencode.php</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行结果-1"><span class="nav-number">7.2.</span> <span class="nav-text">运行结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#urlencode-in-PHP"><span class="nav-number">8.</span> <span class="nav-text">urlencode in PHP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#quot-quot-字符编码和解码时碰到的问题"><span class="nav-number">9.</span> <span class="nav-text">&quot;+&quot;字符编码和解码时碰到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#urldecode-php-文件"><span class="nav-number">9.1.</span> <span class="nav-text">urldecode.php 文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tomcat-请求中的字符问题"><span class="nav-number">10.</span> <span class="nav-text">tomcat 请求中的字符问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">10.1.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关-RFC-规范"><span class="nav-number">11.</span> <span class="nav-text">相关 RFC 规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">12.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="vim中查找替换使用的正则表达式与一般的编程语言如javascript/ruby/perl不一样，尤其是在进行非贪婪匹配时，下面主要是分析在vim中怎么进行非贪婪匹配的。 在vim手册中有这样的说明">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vim正则表达式说明">
-<meta property="og:url" content="https://www.4e00.com/vim/2010/10/19/vim-regular-expression.html">
+<meta property="og:url" content="http://www.4e00.com/vim/2010/10/19/vim-regular-expression.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="vim中查找替换使用的正则表达式与一般的编程语言如javascript/ruby/perl不一样，尤其是在进行非贪婪匹配时，下面主要是分析在vim中怎么进行非贪婪匹配的。 在vim手册中有这样的说明">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.074Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vim正则表达式说明">
 <meta name="twitter:description" content="vim中查找替换使用的正则表达式与一般的编程语言如javascript/ruby/perl不一样，尤其是在进行非贪婪匹配时，下面主要是分析在vim中怎么进行非贪婪匹配的。 在vim手册中有这样的说明">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/vim/2010/10/19/vim-regular-expression.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/vim/2010/10/19/vim-regular-expression.html">
 
   <title> vim正则表达式说明 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/vim/" itemprop="url" rel="index">
                     <span itemprop="name">vim</span>
                   </a>
@@ -256,24 +256,24 @@
       
         <p>vim中查找替换使用的正则表达式与一般的编程语言如javascript/ruby/perl不一样，尤其是在进行非贪婪匹配时，下面主要是分析在vim中怎么进行非贪婪匹配的。</p>
 <h2 id="在vim手册中有这样的说明"><a href="#在vim手册中有这样的说明" class="headerlink" title="在vim手册中有这样的说明"></a>在vim手册中有这样的说明</h2><a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">If a character is taken literally or not depends on the &apos;magic&apos; option and the items mentioned next.</div><div class="line">It is recommended to always keep the &apos;magic&apos; option at the default setting, which is &apos;magic&apos;. This avoids portability problems.</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">If a character is taken literally or not depends on the &apos;magic&apos; option and the items mentioned next.</span><span class="line">It is recommended to always keep the &apos;magic&apos; option at the default setting, which is &apos;magic&apos;. This avoids portability problems.</span></pre></td></tr></table></figure>
 <p>就是说默认的搜索替换是按magic模式进行查找的，如果有字符用反斜杠<code>\</code>转义的话，是会在magic模式中检查其对应转义后含意。</p>
 <p>并且在vim配置文件中尽量保持使用magic模式。</p>
 <p>vim中有4种正则匹配模式，可以用<code>:h /magic</code>查看帮助文档的说明，简单说就是有<code>\m</code>，<code>\M</code>，<code>\v</code>，<code>\V</code>这四种，最常用的是默认的<code>\m</code>，其次<code>\v</code>在进行分组捕获时也非常有用，因为不需要像在<code>\m</code>模式下那样对小括号进行转义，写起来比较麻烦，另二个模式用得较少些。</p>
 <p>在帮助手册中对<code>\v</code>的说明如下:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Use of &apos;\v&apos; means that in the pattern after it all ASCII characters except &apos;0-9&apos;, &apos;a-z&apos;, &apos;A-Z&apos; and &apos;_&apos; have a special meaning. &apos;very magic&apos;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Use of &apos;\v&apos; means that in the pattern after it all ASCII characters except &apos;0-9&apos;, &apos;a-z&apos;, &apos;A-Z&apos; and &apos;_&apos; have a special meaning. &apos;very magic&apos;</span></pre></td></tr></table></figure>
 <p>也就是除了<code>0-9</code>，<code>a-z</code>，<code>A-Z</code>和下划线<code>_</code>之外的其他ASCII字符都有特殊含义，如<code>(</code>，<code>)</code>，<code>|</code>，<code>$</code>，<code>^</code>，<code>[</code>，<code>]</code>，<code>{</code>，<code>}</code>，<code>:</code>，<code>!</code>，<code>.</code>，<code>*</code>，<code>?</code>，<code>+</code>，<code>&lt;</code>，<code>&gt;</code>等，这与其他的如javascript的正则更接近一些，在这些字符用得比较多的时候，就考虑用<code>\v</code>模式，可以少打好多反斜杠，更像其他语言中的正则表达式，更容易看得明白，所以<code>\v</code>模式很好用。</p>
 <p>关于<code>\m</code>，<code>\v</code>二种模式的比较说明，摘自帮助手册，移除了<code>\M</code>，<code>\V</code>部分，只要掌握好前面的二种模式就已经够用。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">\v             \m           matches</div><div class="line">$              $            matches end-of-line</div><div class="line">.              .            matches any character</div><div class="line">*              *            any number of the previous atom</div><div class="line">()             \(\)         grouping into an atom</div><div class="line">|              \|           separating alternatives</div><div class="line">\a             \a           alphabetic character</div><div class="line">\\             \\           literal backslash</div><div class="line">\.             \.           literal dot</div><div class="line">\&#123;             &#123;            literal &apos;&#123;&apos;</div><div class="line">a              a            literal &apos;a&apos;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\v             \m           matches</span><span class="line">$              $            matches end-of-line</span><span class="line">.              .            matches any character</span><span class="line">*              *            any number of the previous atom</span><span class="line">()             \(\)         grouping into an atom</span><span class="line">|              \|           separating alternatives</span><span class="line">\a             \a           alphabetic character</span><span class="line">\\             \\           literal backslash</span><span class="line">\.             \.           literal dot</span><span class="line">\&#123;             &#123;            literal &apos;&#123;&apos;</span><span class="line">a              a            literal &apos;a&apos;</span></pre></td></tr></table></figure>
 <p>对于这二种模式而言，<code>\a</code>都是代表字母，其中需要注意的是<code>\m</code>中的<code>|</code>(或分隔符)需要转义，这个与linux中的grep命令一样，另外其<code>(</code>，<code>)</code>，<code>{</code>这三个字符也需要转义，但是对于<code>\m</code>模式，<code>}</code>却可以无需转义(The } may optionally be preceded with a backslash: {n，m})，所以在<code>\m</code>模式中写出来的没有<code>\v</code>中的正则表达式更加整齐好明白，下面提到的非贪婪匹配正是与<code>{</code>，<code>}</code>这对花括号有关。<br>非贪婪匹配写法</p>
 <p>vim中的匹配1个或者更多相同字符的<code>+</code>，在magic模式下需要转义，即用<code>\+</code>表示。如<code>\w\+</code>匹配一个或者一个以上的字母数字或者下划线。<code>\+</code>和<code>*</code>一样是贪婪匹配的。</p>
 <p>可以通过<code>:h non-greedy</code>查看非贪婪匹配的写法。只能在<code>\m</code>模式下进行非贪婪匹配，使用<code>.\{-}</code>进行最小匹配，如果写整齐点也可以用<code>.\{-\}</code>来表示，如<code>pa.\{-\}n</code>可以匹配到<code>pattern</code>或者是<code>pan</code>。摘录帮助手册中关于贪婪/非贪婪匹配说明如下(magic模式):</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">\&#123;n,m&#125;              Matches n to m of the preceding atom, as many as possible</div><div class="line">\&#123;n&#125;                Matches n of the preceding atom</div><div class="line">\&#123;n,&#125;               Matches at least n of the preceding atom, as many as possible</div><div class="line">\&#123;,m&#125;               Matches 0 to m of the preceding atom, as many as possible</div><div class="line">\&#123;&#125;                 Matches 0 or more of the preceding atom, as many as possible (like *)</div><div class="line">\&#123;-n,m&#125;             Matches n to m of the preceding atom, as few as possible</div><div class="line">\&#123;-n&#125;               Matches n of the preceding atom</div><div class="line">\&#123;-n,&#125;              Matches at least n of the preceding atom, as few as possible</div><div class="line">\&#123;-,m&#125;              Matches 0 to m of the preceding atom, as few as possible</div><div class="line">\&#123;-&#125;                Matches 0 or more of the preceding atom, as few as possible</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\&#123;n,m&#125;              Matches n to m of the preceding atom, as many as possible</span><span class="line">\&#123;n&#125;                Matches n of the preceding atom</span><span class="line">\&#123;n,&#125;               Matches at least n of the preceding atom, as many as possible</span><span class="line">\&#123;,m&#125;               Matches 0 to m of the preceding atom, as many as possible</span><span class="line">\&#123;&#125;                 Matches 0 or more of the preceding atom, as many as possible (like *)</span><span class="line">\&#123;-n,m&#125;             Matches n to m of the preceding atom, as few as possible</span><span class="line">\&#123;-n&#125;               Matches n of the preceding atom</span><span class="line">\&#123;-n,&#125;              Matches at least n of the preceding atom, as few as possible</span><span class="line">\&#123;-,m&#125;              Matches 0 to m of the preceding atom, as few as possible</span><span class="line">\&#123;-&#125;                Matches 0 or more of the preceding atom, as few as possible</span></pre></td></tr></table></figure>
 <p>匹配包括换号符在内的任意字符</p>
 <p>如果匹配内容有换行符，用通配符<code>.</code>不能匹配换行符，在其他语言如perl/php/javascript是用<code>/m</code>修饰符让<code>.</code>可以匹配字符串内的换行符，vim中是用一个转义的下划线<code>\_</code>加上<code>.</code>组成的<code>\_.</code>来表示包括换行符在内的任意字符，与此效果相似的还有<code>\_^</code>，<code>\_$</code>，<code>\_s</code>。</p>
 <p>关于vim和perl的正则表达式区别可以通过<code>:h perl-patterns</code>查看更详细的说明。</p>
 <h2 id="字符类-Character-classes"><a href="#字符类-Character-classes" class="headerlink" title="字符类(Character classes)"></a>字符类(Character classes)</h2><p>摘录部分常用的字符类如下，这部分多数与其他语言相似，其他很多字符类与别的语言中的字符类完全不一样，并且大小写的字符集不是取反的字符集，如<code>\i</code>，就不作记录说明。另外如果需要忽略大小写，可查看<code>:h /ignorecase</code>， 在任何位置加入<code>\c</code>标记开始忽略字母的大小写。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">\s          whitespace character: &lt;Space&gt; and &lt;Tab&gt;</div><div class="line">\S          non-whitespace character; opposite of \s</div><div class="line">\d          digit:    [0-9]</div><div class="line">\D          non-digit:   [^0-9]</div><div class="line">\w          word character:   [0-9A-Za-z_]</div><div class="line">\W          non-word character:  [^0-9A-Za-z_]</div><div class="line">\a          alphabetic character:  [A-Za-z]</div><div class="line">\A          non-alphabetic character: [^A-Za-z]</div><div class="line">\l          lowercase character:  [a-z]</div><div class="line">\u          uppercase character:  [A-Z]</div><div class="line">\t          matches &lt;Tab&gt;</div><div class="line">\r          matches &lt;CR&gt;</div><div class="line">\n          matches an end-of-line</div><div class="line">\1          Matches the same string that was matched by the first sub-expression in \( and \). Example: &apos;\([a-z]\).\1&apos; matches &apos;ata&apos;, &apos;ehe&apos;, &apos;tot&apos;, etc.</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\s          whitespace character: &lt;Space&gt; and &lt;Tab&gt;</span><span class="line">\S          non-whitespace character; opposite of \s</span><span class="line">\d          digit:    [0-9]</span><span class="line">\D          non-digit:   [^0-9]</span><span class="line">\w          word character:   [0-9A-Za-z_]</span><span class="line">\W          non-word character:  [^0-9A-Za-z_]</span><span class="line">\a          alphabetic character:  [A-Za-z]</span><span class="line">\A          non-alphabetic character: [^A-Za-z]</span><span class="line">\l          lowercase character:  [a-z]</span><span class="line">\u          uppercase character:  [A-Z]</span><span class="line">\t          matches &lt;Tab&gt;</span><span class="line">\r          matches &lt;CR&gt;</span><span class="line">\n          matches an end-of-line</span><span class="line">\1          Matches the same string that was matched by the first sub-expression in \( and \). Example: &apos;\([a-z]\).\1&apos; matches &apos;ata&apos;, &apos;ehe&apos;, &apos;tot&apos;, etc.</span></pre></td></tr></table></figure>
 <p>关于vim中的<code>[]</code>(<code>:h /collection</code>)</p>
 <p>在其他语言中perl/javascript/ruby中，方括号可以使用转义字符代替的字符集，如<code>\s</code>，<code>\w</code>等，在vim中只能在方括号中使用字符序列，也可以像其他编程语言一样放入<code>a-z</code>，<code>0-9</code>等，但不能用转义字符，这点在使用时比较不顺手。</p>
 <p>以上是个人认为比较常用并且较为简单的部分内容，更多神奇的vim正则查找，以及结合一些vim内置方法进行正则替换，则需要仔细阅读帮助手册说明。要熟练掌握vim，就需要多查手册，多实践。</p>
@@ -303,7 +303,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/linux/2010/10/08/ubuntu-10.10-gnome-theme.html" rel="next" title="一套ubuntu gnome主题">
-                上一篇：一套ubuntu gnome主题
+                <i class="fa fa-chevron-left"></i>
+                一套ubuntu gnome主题
               </a>
             
           </div>
@@ -311,7 +312,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/vim/2010/10/23/vim-tidy-html-valid.html" rel="prev" title="在vim中如何使用tidy为html验证并格式化内容">
-                下一篇：在vim中如何使用tidy为html验证并格式化内容
+                <i class="fa fa-chevron-right"></i>
+                在vim中如何使用tidy为html验证并格式化内容
               </a>
             
           </div>
@@ -360,7 +362,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -371,16 +373,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -462,10 +462,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

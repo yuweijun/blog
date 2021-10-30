@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="基于disruptor 3.3.0版本的一个示例，这是原文地址，略有调整，其中用到的几个类可从前文获得。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="disruptor demo">
-<meta property="og:url" content="https://www.4e00.com/java/2014/07/29/learning-disruptor-part-two.html">
+<meta property="og:url" content="http://www.4e00.com/java/2014/07/29/learning-disruptor-part-two.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="基于disruptor 3.3.0版本的一个示例，这是原文地址，略有调整，其中用到的几个类可从前文获得。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.145Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.090Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="disruptor demo">
 <meta name="twitter:description" content="基于disruptor 3.3.0版本的一个示例，这是原文地址，略有调整，其中用到的几个类可从前文获得。">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/java/2014/07/29/learning-disruptor-part-two.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2014/07/29/learning-disruptor-part-two.html">
 
   <title> disruptor demo | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -254,9 +254,9 @@
       
 
       
-        <p>基于disruptor 3.3.0版本的一个示例，这是<a href="http://blog.csdn.net/jiang_bing/article/details/9292163" target="_blank" rel="external">原文地址</a>，略有调整，其中用到的几个类可从<a href="http://yuweijun.github.io/blog/java/disruptor/2014/07/28/learning-disruptor-part-one/" target="_blank" rel="external">前文</a>获得。</p>
+        <p>基于disruptor 3.3.0版本的一个示例，这是<a href="http://blog.csdn.net/jiang_bing/article/details/9292163" target="_blank" rel="noopener">原文地址</a>，略有调整，其中用到的几个类可从<a href="http://yuweijun.github.io/blog/java/disruptor/2014/07/28/learning-disruptor-part-one/" target="_blank" rel="noopener">前文</a>获得。</p>
 <a id="more"></a>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.commons.lang.builder.ReflectionToStringBuilder;</div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.lmax.disruptor.BlockingWaitStrategy;</div><div class="line"><span class="keyword">import</span> com.lmax.disruptor.IgnoreExceptionHandler;</div><div class="line"><span class="keyword">import</span> com.lmax.disruptor.RingBuffer;</div><div class="line"><span class="keyword">import</span> com.lmax.disruptor.Sequence;</div><div class="line"><span class="keyword">import</span> com.lmax.disruptor.WorkHandler;</div><div class="line"><span class="keyword">import</span> com.lmax.disruptor.WorkerPool;</div><div class="line"><span class="keyword">import</span> com.lmax.disruptor.dsl.ProducerType;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DisruptorTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// 定义一个ringBuffer,也就是相当于一个队列</span></div><div class="line">        RingBuffer&lt;LongEvent&gt; buffer = RingBuffer.create(ProducerType.SINGLE, <span class="keyword">new</span> LongEventFactory(), <span class="number">1</span> &lt;&lt; <span class="number">2</span>, <span class="keyword">new</span> BlockingWaitStrategy());</div><div class="line"></div><div class="line">        <span class="comment">// 定义消费者,只要有生产出来的东西，该事件就会被触发,参数event为被生产出来的东西　</span></div><div class="line">        <span class="comment">// 几个workerHandler 表示有几个消费者</span></div><div class="line">        WorkHandler&lt;LongEvent&gt; workHandler = <span class="keyword">new</span> WorkHandler&lt;LongEvent&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(LongEvent event)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + ReflectionToStringBuilder.toString(event));</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        <span class="comment">// 定义一个消费者池，每一个handler都是一个消费者，也就是一个线程，会不停地就队列中请求位置，如果这们位置中被生产者放入了东西，</span></div><div class="line">        <span class="comment">// 而这个东西则是上面定义RingBuffer中的 factory</span></div><div class="line">        <span class="comment">// 创建出来的一个event,消费者会取出这个event,调用handler中的onEvent方法，</span></div><div class="line">        <span class="comment">// 如果这个位置还没有被生产者放入东西，则阻塞，等待生产者生产后唤醒.</span></div><div class="line">        <span class="comment">// 而生产者在生产时要先申请slot，而这个slot位置不能高于最后一个消费者的位置，否则会覆盖没有消费的slot，如果大于消费者的最后一个slot，则进行自旋等待.</span></div><div class="line">        WorkerPool&lt;LongEvent&gt; workerPool = <span class="keyword">new</span> WorkerPool&lt;LongEvent&gt;(buffer, buffer.newBarrier(), <span class="keyword">new</span> IgnoreExceptionHandler(), workHandler, workHandler);</div><div class="line">        <span class="comment">// 每个消费者，也就是 workProcessor都有一个sequence，表示上一个消费的位置,这个在初始化时都是-1</span></div><div class="line">        Sequence[] sequences = workerPool.getWorkerSequences();</div><div class="line">        <span class="comment">// 将其保存在ringBuffer中的 sequencer</span></div><div class="line">        <span class="comment">// 中，在为生产申请slot时要用到,也就是在为生产者申请slot时不能大于此数组中的最小值,否则产生覆盖</span></div><div class="line">        buffer.addGatingSequences(sequences);</div><div class="line">        <span class="comment">// 用executor 来启动workProcessor 线程</span></div><div class="line">        workerPool.start(Executors.newFixedThreadPool(<span class="number">10</span>));</div><div class="line">        System.out.println(<span class="string">"disruptor started"</span>);</div><div class="line"></div><div class="line">        <span class="comment">/**</span></div><div class="line"><span class="comment">         * 对于生产者生产都是以下面方式，disruptor3.0之后还有一个translator形式可以发布事件</span></div><div class="line"><span class="comment">         *</span></div><div class="line"><span class="comment">         * long next = ringBuffer.next();</span></div><div class="line"><span class="comment">         *</span></div><div class="line"><span class="comment">         * &lt;pre&gt;</span></div><div class="line"><span class="comment">         * try&#123;</span></div><div class="line"><span class="comment">         *     Event event = ringBuffer.get(next);</span></div><div class="line"><span class="comment">         *     //相当于生产</span></div><div class="line"><span class="comment">         *     event.set(...)</span></div><div class="line"><span class="comment">         * &#125; finally &#123;</span></div><div class="line"><span class="comment">         *     // 将事件发布</span></div><div class="line"><span class="comment">         *     ringBuffer.publis(next);</span></div><div class="line"><span class="comment">         * &#125;</span></div><div class="line"><span class="comment">         * &lt;/pre&gt;</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        System.out.println(<span class="string">"开始生产"</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line">            <span class="keyword">long</span> next = buffer.next();</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                LongEvent event = buffer.get(next);</div><div class="line">                event.set(i);</div><div class="line">            &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                System.out.println(<span class="string">"生产:"</span> + i);</div><div class="line">                buffer.publish(next);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><span class="line"></span><span class="line"><span class="keyword">import</span> org.apache.commons.lang.builder.ReflectionToStringBuilder;</span><span class="line"><span class="keyword">import</span> org.junit.Test;</span><span class="line"></span><span class="line"><span class="keyword">import</span> com.lmax.disruptor.BlockingWaitStrategy;</span><span class="line"><span class="keyword">import</span> com.lmax.disruptor.IgnoreExceptionHandler;</span><span class="line"><span class="keyword">import</span> com.lmax.disruptor.RingBuffer;</span><span class="line"><span class="keyword">import</span> com.lmax.disruptor.Sequence;</span><span class="line"><span class="keyword">import</span> com.lmax.disruptor.WorkHandler;</span><span class="line"><span class="keyword">import</span> com.lmax.disruptor.WorkerPool;</span><span class="line"><span class="keyword">import</span> com.lmax.disruptor.dsl.ProducerType;</span><span class="line"></span><span class="line"></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DisruptorTest</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="meta">@Test</span></span><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="comment">// 定义一个ringBuffer,也就是相当于一个队列</span></span><span class="line">        RingBuffer&lt;LongEvent&gt; buffer = RingBuffer.create(ProducerType.SINGLE, <span class="keyword">new</span> LongEventFactory(), <span class="number">1</span> &lt;&lt; <span class="number">2</span>, <span class="keyword">new</span> BlockingWaitStrategy());</span><span class="line"></span><span class="line">        <span class="comment">// 定义消费者,只要有生产出来的东西，该事件就会被触发,参数event为被生产出来的东西　</span></span><span class="line">        <span class="comment">// 几个workerHandler 表示有几个消费者</span></span><span class="line">        WorkHandler&lt;LongEvent&gt; workHandler = <span class="keyword">new</span> WorkHandler&lt;LongEvent&gt;() &#123;</span><span class="line">            <span class="meta">@Override</span></span><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(LongEvent event)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + ReflectionToStringBuilder.toString(event));</span><span class="line">            &#125;</span><span class="line">        &#125;;</span><span class="line"></span><span class="line">        <span class="comment">// 定义一个消费者池，每一个handler都是一个消费者，也就是一个线程，会不停地就队列中请求位置，如果这们位置中被生产者放入了东西，</span></span><span class="line">        <span class="comment">// 而这个东西则是上面定义RingBuffer中的 factory</span></span><span class="line">        <span class="comment">// 创建出来的一个event,消费者会取出这个event,调用handler中的onEvent方法，</span></span><span class="line">        <span class="comment">// 如果这个位置还没有被生产者放入东西，则阻塞，等待生产者生产后唤醒.</span></span><span class="line">        <span class="comment">// 而生产者在生产时要先申请slot，而这个slot位置不能高于最后一个消费者的位置，否则会覆盖没有消费的slot，如果大于消费者的最后一个slot，则进行自旋等待.</span></span><span class="line">        WorkerPool&lt;LongEvent&gt; workerPool = <span class="keyword">new</span> WorkerPool&lt;LongEvent&gt;(buffer, buffer.newBarrier(), <span class="keyword">new</span> IgnoreExceptionHandler(), workHandler, workHandler);</span><span class="line">        <span class="comment">// 每个消费者，也就是 workProcessor都有一个sequence，表示上一个消费的位置,这个在初始化时都是-1</span></span><span class="line">        Sequence[] sequences = workerPool.getWorkerSequences();</span><span class="line">        <span class="comment">// 将其保存在ringBuffer中的 sequencer</span></span><span class="line">        <span class="comment">// 中，在为生产申请slot时要用到,也就是在为生产者申请slot时不能大于此数组中的最小值,否则产生覆盖</span></span><span class="line">        buffer.addGatingSequences(sequences);</span><span class="line">        <span class="comment">// 用executor 来启动workProcessor 线程</span></span><span class="line">        workerPool.start(Executors.newFixedThreadPool(<span class="number">10</span>));</span><span class="line">        System.out.println(<span class="string">"disruptor started"</span>);</span><span class="line"></span><span class="line">        <span class="comment">/**</span></span><span class="line"><span class="comment">         * 对于生产者生产都是以下面方式，disruptor3.0之后还有一个translator形式可以发布事件</span></span><span class="line"><span class="comment">         *</span></span><span class="line"><span class="comment">         * long next = ringBuffer.next();</span></span><span class="line"><span class="comment">         *</span></span><span class="line"><span class="comment">         * &lt;pre&gt;</span></span><span class="line"><span class="comment">         * try&#123;</span></span><span class="line"><span class="comment">         *     Event event = ringBuffer.get(next);</span></span><span class="line"><span class="comment">         *     //相当于生产</span></span><span class="line"><span class="comment">         *     event.set(...)</span></span><span class="line"><span class="comment">         * &#125; finally &#123;</span></span><span class="line"><span class="comment">         *     // 将事件发布</span></span><span class="line"><span class="comment">         *     ringBuffer.publis(next);</span></span><span class="line"><span class="comment">         * &#125;</span></span><span class="line"><span class="comment">         * &lt;/pre&gt;</span></span><span class="line"><span class="comment">         */</span></span><span class="line">        System.out.println(<span class="string">"开始生产"</span>);</span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><span class="line">            <span class="keyword">long</span> next = buffer.next();</span><span class="line">            <span class="keyword">try</span> &#123;</span><span class="line">                LongEvent event = buffer.get(next);</span><span class="line">                event.set(i);</span><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><span class="line">                System.out.println(<span class="string">"生产:"</span> + i);</span><span class="line">                buffer.publish(next);</span><span class="line">            &#125;</span><span class="line"></span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
 
       
     </div>
@@ -283,7 +283,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/macos/2014/07/29/restart-mysql-server-on-mac-and-brew.html" rel="next" title="mac上brew安裝的mysql如何重启">
-                上一篇：mac上brew安裝的mysql如何重启
+                <i class="fa fa-chevron-left"></i>
+                mac上brew安裝的mysql如何重启
               </a>
             
           </div>
@@ -291,7 +292,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2014/07/30/howto-manage-git-branch.html" rel="prev" title="git分支管理">
-                下一篇：git分支管理
+                <i class="fa fa-chevron-right"></i>
+                git分支管理
               </a>
             
           </div>
@@ -340,7 +342,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -351,16 +353,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -442,10 +442,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

@@ -1,0 +1,883 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="NIO 开发需知Selector 在不同线程中对象锁竞争问题多路复用器 selector 的register(...)和select(...)操作会有锁冲突，在 reactor pattern skeleton example 文章中已经简单说明了多路复用器上有很多同步操作，锁竞争很严重，并可能阻塞线程，为了避免在 selector 及其属性对象上有同步操作，可以引入一层用以解耦，如示例 reac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java nio need to known">
+<meta property="og:url" content="http://www.4e00.com/java/2019/03/18/java-nio-need-to-known.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="NIO 开发需知Selector 在不同线程中对象锁竞争问题多路复用器 selector 的register(...)和select(...)操作会有锁冲突，在 reactor pattern skeleton example 文章中已经简单说明了多路复用器上有很多同步操作，锁竞争很严重，并可能阻塞线程，为了避免在 selector 及其属性对象上有同步操作，可以引入一层用以解耦，如示例 reac">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.143Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java nio need to known">
+<meta name="twitter:description" content="NIO 开发需知Selector 在不同线程中对象锁竞争问题多路复用器 selector 的register(...)和select(...)操作会有锁冲突，在 reactor pattern skeleton example 文章中已经简单说明了多路复用器上有很多同步操作，锁竞争很严重，并可能阻塞线程，为了避免在 selector 及其属性对象上有同步操作，可以引入一层用以解耦，如示例 reac">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2019/03/18/java-nio-need-to-known.html">
+
+  <title> java nio need to known | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java nio need to known
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-03-18T13:16:02+08:00" content="2019-03-18">
+              2019-03-18
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="NIO-开发需知"><a href="#NIO-开发需知" class="headerlink" title="NIO 开发需知"></a>NIO 开发需知</h2><h2 id="Selector-在不同线程中对象锁竞争问题"><a href="#Selector-在不同线程中对象锁竞争问题" class="headerlink" title="Selector 在不同线程中对象锁竞争问题"></a>Selector 在不同线程中对象锁竞争问题</h2><p>多路复用器 selector 的<code>register(...)</code>和<code>select(...)</code>操作会有锁冲突，在 <a href="/blog/java/2019/03/16/reactor-pattern-skeleton-example.html">reactor pattern skeleton example</a> 文章中已经简单说明了多路复用器上有很多同步操作，锁竞争很严重，并可能阻塞线程，为了避免在 selector 及其属性对象上有同步操作，可以引入一层用以解耦，如示例 <a href="/blog/java/2019/03/16/reactor-pattern-time-server-example.html">reactor pattern time server example</a> 里将 MainReactor 新接入的 socketChannel 加入到对应 SubReactor 线程的不同队列里，可以看源码注释说明。</p>
+<p>Netty 中因为在<code>selector.select(1000)</code>操作之后，后面还有处理定时任务相关的逻辑，线程不会一直持有<code>selector.publicKeys</code>对象锁，所以其他线程可以注册新的通道到<code>EventLoop#selector</code>上。</p>
+<h3 id="Selector-维护的各种集合"><a href="#Selector-维护的各种集合" class="headerlink" title="Selector 维护的各种集合"></a>Selector 维护的各种集合</h3><p>Selector 可以在多线程环境中使用，但是其各种键集合<strong>并非是线程安全的</strong>。</p>
+<p>Selector 维护三种选择键：</p>
+<ol>
+<li><code>keys</code>: 保存了所有已注册且没有 cancel 的选择键，Set 类型，可以通过<code>selector.keys()</code>获取。</li>
+<li><code>selectedKeys</code>: 已选择键集，即前一次操作期间，已经准备就绪的通道所对应的选择键，此集合为 keys 的子集，通过<code>selector.selectedKeys()</code>获取。</li>
+<li><code>canceledKeys</code>: 已取消键，已经被取消但尚未取消注册的选择键，此集合不可被访问，为 keys 的子集。</li>
+</ol>
+<p>Selector 本身对各种 key 集合的操作都是<strong>同步</strong>的，当然为了避免死锁问题，其同步的顺序也是一致的，比如在执行<code>select(...)</code>操作时，其他线程的<code>register(...)</code>操作将会阻塞，可以在任意时刻关闭通道或者取消键，因为<code>select(...)</code>操作并未对 cancelledKeys 同步，因此有可能再 selectedKey 中出现的 key 是已经被取消的，这一点需要注意，需要校验<code>key.isValid() &amp;&amp; key.isReadable()</code>。</p>
+<h3 id="Selector-wakeup-方法"><a href="#Selector-wakeup-方法" class="headerlink" title="Selector#wakeup() 方法"></a>Selector#wakeup() 方法</h3><p>某个线程调用<code>select(...)</code>方法后阻塞了，即使没有通道已经就绪，也有办法让其从<code>select(...)</code>方法返回。只要在其他线程上调用<code>Selector#wakeup()</code>方法即可，阻塞在<code>select(...)</code>方法上的线程会立即返回。</p>
+<p>如果有其它线程调用了<code>wakeup()</code>方法，但当前没有线程阻塞在<code>select(...)</code>方法上，下个调用<code>select(...)</code>方法的线程会立即<code>wakeup</code>。</p>
+<p>如果多个线程阻塞，事实上 wakeup 只能让正在阻塞的一个线程返回。</p>
+<p>有二种情况会导致线程阻塞在 select 操作上:</p>
+<ol>
+<li>因为 selector keys 集合同步阻塞</li>
+<li>因为 selector IO 阻塞</li>
+</ol>
+<p><code>wakeup()</code>方法是让基于 pipe IO 阻塞的操作返回。但是因为 keys 是同步锁的阻塞，wakeup 也无能为力，wakeup 是一种对底层操作消耗较为严重的操作，需要对此操作的调用频度有所留意。</p>
+<h4 id="为什么要唤醒-Selector-wakeup"><a href="#为什么要唤醒-Selector-wakeup" class="headerlink" title="为什么要唤醒 Selector#wakeup()"></a>为什么要唤醒 Selector#wakeup()</h4><ol>
+<li>注册了新的 channel 或者事件</li>
+<li>channel 关闭，取消注册</li>
+<li>优先级更高的事件触发(如定时器事件)，希望及时处理</li>
+</ol>
+<h4 id="wakeup-的原理"><a href="#wakeup-的原理" class="headerlink" title="wakeup 的原理"></a>wakeup 的原理</h4><ol>
+<li>Linux 上利用 pipe 调用创建一个管道</li>
+<li>Windows 上则是一个 loopback 的 TCP 连接，这是因为 win32 的管道无法加入 select fd set</li>
+<li>将管道或者 TCP 连接加入 select fd set</li>
+<li>wakeup 往管道或者连接写入一个字节</li>
+<li>阻塞的 select 因为有 IO 事件就绪，立即返回</li>
+<li>wakeup 的调用开销不可忽视</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">JNIEXPORT <span class="keyword">void</span> JNICALL <span class="title">Java_sun_nio_ch_EPollArrayWrapper_interrupt</span><span class="params">(JNI Env *env, jobject <span class="keyword">this</span>, jint fd)</span></span></span><span class="line"><span class="function"></span>&#123;</span><span class="line">    <span class="keyword">int</span> fakebuf[<span class="number">1</span>];</span><span class="line">    fakebuf[<span class="number">0</span>] = <span class="number">1</span>;</span><span class="line">    <span class="keyword">if</span> (write(fd, fakebuf, <span class="number">1</span>) &lt; <span class="number">0</span>) &#123;</span><span class="line">        JNU_ThrowIOExceptionWithLastError(env,<span class="string">" write to interrupt fd failed"</span>);</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="减少-wakeup-调用"><a href="#减少-wakeup-调用" class="headerlink" title="减少 wakeup 调用"></a>减少 wakeup 调用</h4><ol>
+<li>仅在有需要的时候才调用</li>
+<li>如往连接发送数据，通常是缓存在一个消息队列，当且仅当队列为空的注册 OP_WRITE 并 wakeup 。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">boolean</span> needsWakeup=<span class="keyword">false</span>;</span><span class="line"><span class="keyword">synchronized</span>(queue)  &#123;</span><span class="line">    <span class="keyword">if</span>(queue.isEmpty())</span><span class="line">        needsWakeup=<span class="keyword">true</span>;</span><span class="line">    queue.add(session);</span><span class="line">&#125;</span><span class="line"><span class="keyword">if</span>(needsWakeup) &#123;</span><span class="line">    registerOPWrite();</span><span class="line">    selector.wakeup();</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h4 id="Netty-的优化"><a href="#Netty-的优化" class="headerlink" title="Netty 的优化"></a>Netty 的优化</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">AtomicBoolean wakenUp = <span class="keyword">new</span> AtomicBoolean();</span><span class="line">wakenUp.set(<span class="keyword">false</span>); <span class="comment">//select 之前设置为 false</span></span><span class="line">selector.select(<span class="number">500</span>);</span><span class="line"><span class="keyword">if</span> (wakenUp.compareAndSet(<span class="keyword">false</span>, <span class="keyword">true</span>)) &#123;</span><span class="line">    selector.wakeup();</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="Selector-close-方法"><a href="#Selector-close-方法" class="headerlink" title="Selector#close() 方法"></a>Selector#close() 方法</h3><p>用完 Selector 后调用其<code>close()</code>方法会关闭该 Selector，即使注册到该 Selector 上的所有 SelectionKey 实例无效，但是通道本身并<strong>不会</strong>关闭。</p>
+<h2 id="为什么延迟取消-SelectionKey"><a href="#为什么延迟取消-SelectionKey" class="headerlink" title="为什么延迟取消 SelectionKey"></a>为什么延迟取消 SelectionKey</h2><p>使用内部的已取消的键的集合来延迟注销，是一种防止线程在取消键时阻塞，并防止与正在进行的选择操作冲突的优化。</p>
+<p>注销通道是一个潜在的代价很高的操作，这可能需要重新分配资源，键是与通道相关的，并且可能与它们相关的通道对象之间有复杂的交互。</p>
+<h2 id="关于-OP-WRITE-事件"><a href="#关于-OP-WRITE-事件" class="headerlink" title="关于 OP_WRITE 事件"></a>关于 OP_WRITE 事件</h2><p>OP_WRITE 事件的就绪条件并不是发生在调用<code>SocketChannel#write(...)</code>方法之后，而是在当底层缓冲区有空闲空间的情况下。</p>
+<p>因为写缓冲区在绝大部分时候都是有空闲空间的，所以如果你注册了写事件，这会使得写事件一直处于就就绪，选择处理操作就会一直占用着 CPU 资源。所以只有当你确实有数据要写时再注册写操作，并在写完以后马上<strong>取消</strong>注册。</p>
+<p>其实，在大部分情况下，我们直接调用<code>SocketChannel#write(...)</code>方法写数据就好了，没必要都用 OP_WRITE 事件。</p>
+<p>那么 OP_WRITE 事件主要是在什么情况下使用的了？</p>
+<p>其实 OP_WRITE 事件主要是在发送缓冲区空间<strong>满</strong>的情况下使用的，如下代码所示：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (buffer.hasRemaining()) &#123;</span><span class="line">     <span class="keyword">int</span> len = socketChannel.write(buffer);</span><span class="line">     <span class="keyword">if</span> (len == <span class="number">0</span>) &#123;</span><span class="line">          selectionKey.interestOps(selectionKey.interestOps() | SelectionKey.OP_WRITE);</span><span class="line">          selector.wakeup();</span><span class="line">          <span class="keyword">break</span>;</span><span class="line">     &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>当 buffer 还有数据，但缓冲区已经满的情况下，<code>socketChannel.write(buffer)</code>会返回已经写出去的字节数，此时为<code>0</code>。那么这个时候我们就需要注册 OP_WRITE 事件，这样当缓冲区又有空闲空间的时候就会触发 OP_WRITE 事件，这是我们就可以继续将没写完的数据继续写出了。</p>
+<p>而且在写完后，一定要记得将 OP_WRITE 事件注销：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">selectionKey.interestOps(sk.interestOps() &amp; ~SelectionKey.OP_WRITE);</span></pre></td></tr></table></figure>
+<p>注意，这里在修改了 interest 之后调用了<code>Selector#wakeup()</code>；方法是为了唤醒被堵塞的<code>Selector#select(...)</code>方法，这样当 while 中判断<code>Selector#select(...)</code>返回的是 0 时，会再次调用<code>Selector#select(...)</code>。而 selectionKey 的 interest 是在每次<code>selector#select(...)</code>操作的时候注册到系统进行监听的，所以在<code>Selector#select(...)</code>调用之后修改的 interest 需要在下一次<code>Selector#select(...)</code>调用才会生效。</p>
+<h3 id="读到或者写入-0-个字节"><a href="#读到或者写入-0-个字节" class="headerlink" title="读到或者写入 0 个字节"></a>读到或者写入 0 个字节</h3><ol>
+<li>不代表连接关闭</li>
+<li>高负载或者慢速网络下很常见的情况</li>
+<li>通常的处理办法是返回并继续注册 OP_READ/OP_WRITE 等待下次处理。<ol>
+<li>缺点: 系统调用开销，线程切换开销</li>
+</ol>
+</li>
+<li>其他解决办法<ol>
+<li>循环忙等待或者 yield 一定次数<ol>
+<li>Netty: writeSpinCount = 16</li>
+<li>Mina: WRITE_SPIN_COUNT = 256</li>
+</ol>
+</li>
+<li>启用 Temporary Selector 在当前线程注册并 poll</li>
+</ol>
+</li>
+</ol>
+<h2 id="关于远端关闭事件"><a href="#关于远端关闭事件" class="headerlink" title="关于远端关闭事件"></a>关于远端关闭事件</h2><p>SelectionKey 并没有提供关闭事件，其实通过 OP_READ 是可以监听到远端的<strong>关闭</strong>操作的。</p>
+<p>当 OP_READ 事件触发使，<code>int readByteNum = channel.read(buffer)</code>会返回从 channel 读取到的字节数：</p>
+<ol>
+<li>当<code>readByteNum &gt; 0</code>时，表示从 channel 读取到了 readByteNum 个字节到 buffer 中。</li>
+<li>当<code>readByteNum == 0</code>时，表示 channel 中已经<strong>没有</strong>数据可以读取了，这个时候 buffer 的<code>position == limit</code>。</li>
+<li>当<code>readByteNum == -1</code>时，表示远端 channel 正常关闭了，这个时候我们就需要进行该通道的关闭和注销操作了。</li>
+</ol>
+<h3 id="如何正确的关闭一个已经注册的-SelectableChannel"><a href="#如何正确的关闭一个已经注册的-SelectableChannel" class="headerlink" title="如何正确的关闭一个已经注册的 SelectableChannel"></a>如何正确的关闭一个已经注册的 SelectableChannel</h3><p>需要调用<code>Channel#close()</code>，最终调用的方法是<code>AbstractInterruptibleChannel#close()</code>方法，处理过程如下：</p>
+<ol>
+<li>调用<code>SelectionKey#cancel()</code>方法使该 SelectionKey 加到 Selector 的 cancelledKeys 集合中，这样在下一次<code>Selector#select(...)</code>的时候，就会将其从 selector 中相关的 SelectionKey 集合中移除，并且不会监听该 SelectionKey 所感兴趣的事件了。</li>
+<li>会关闭底层的套接字连接。</li>
+</ol>
+<p>这里注意：如果只是通过调用<code>SelectionKey.cancel()</code>来注销一个远端已经关闭了的 channel，是一个<strong>不对</strong>的用法。</p>
+<p>因为<code>Selector#select(...)</code>在处理 cancelledKeys 集合的时候，会判断若该 SelectionKey 对应的 channel 已经没有注册到其他的 selector，并且该 channel open 表示为<code>false</code>的情况下，才会去调用底层套接字的关闭操作，所以如果直接调用<code>SelectionKey.cancel()</code>来注销一个远端已经关闭了的 channel，会导致本段的 TCP 连接处于 CLOSE_WAIT 状态，一直在等待程序调用套接字的关闭。</p>
+<h3 id="Channel-的-open-标志"><a href="#Channel-的-open-标志" class="headerlink" title="Channel 的 open 标志"></a>Channel 的 open 标志</h3><p>只有在下面两种情况下才会将<code>AbstractInterruptibleChannel#open</code>属性设置为<code>false</code>。</p>
+<ol>
+<li>调用了<code>Channel#close()</code>方法。</li>
+<li>操作 channel 读/写的当前线程发生<strong>中断</strong>时。</li>
+</ol>
+<h2 id="SO-RCVBUF-和-SO-SNDBUF"><a href="#SO-RCVBUF-和-SO-SNDBUF" class="headerlink" title="SO_RCVBUF 和 SO_SNDBUF"></a>SO_RCVBUF 和 SO_SNDBUF</h2><p>使用<code>Socket.setReceiveBufferSize/setSendBufferSize</code>设置 Socket 缓冲区大小。</p>
+<p>此参数设置仅仅是对底层平台的一个提示，是否有效取决于底层平台，因此 get 返回的可能不是你设置的值，也可能不是底层平台实际使用的值。</p>
+<h3 id="设置原则"><a href="#设置原则" class="headerlink" title="设置原则"></a>设置原则</h3><ol>
+<li>在以太网上，<code>4k</code>通常是不够的，增加到<code>16K</code>，吞估量增加了<code>40%</code>。</li>
+<li>Socket 缓冲区大小至少应该是连接的 MSS 的三倍，<code>MSS = MTU + 40</code>，一般以太网卡的<code>MTU = 1500</code>字节。<ol>
+<li>MSS: 最大分段大小</li>
+<li>MTU: 最大传输单元</li>
+</ol>
+</li>
+<li>send buffer 最好与对端的 receive buffer 一致。</li>
+<li>对于一次性发送大量数据的应用，增加发送缓冲区到<code>48K</code>、<code>64K</code>可能是唯一的最有效地提高性能的方式。</li>
+<li>同样，对于大量接收数据的应用，提高接收缓冲区，能减少发送端的阻塞。</li>
+<li>如果应用既发送大量数据，也接收大量数据，recv buffer 和 send buffer 应该同时增加。</li>
+<li>如果要设置 ServerSocket 的 recv 缓冲区超过 RFC1323 中定义的<code>64k</code>，那么必须在绑定端口前设置，以后 accept 产生的 socket 将继承这一设置。</li>
+<li>无论缓冲区大小多少，你都应该尽可能地帮助 TCP 至少以那样的大小的块写入。</li>
+</ol>
+<h2 id="SO-TCPNODELAY"><a href="#SO-TCPNODELAY" class="headerlink" title="SO_TCPNODELAY"></a>SO_TCPNODELAY</h2><h3 id="Nagle-算法"><a href="#Nagle-算法" class="headerlink" title="Nagle 算法"></a>Nagle 算法</h3><ol>
+<li>NAGLE 算法通过将缓冲区内的小封包自动相连，组成较大的封包，阻止大量小封包的发送阻塞网络，从而提高网络应用效率</li>
+<li>默认打开</li>
+<li>对于实时性要求较高的应用(telnet、网游)，可能需要关闭此算法<ol>
+<li>注意，<code>true</code>为关闭此算法，<code>false</code>为开启</li>
+<li><code>Socket.setTcpNoDelay(true)</code></li>
+</ol>
+</li>
+</ol>
+<h3 id="Nagle-算法描述"><a href="#Nagle-算法描述" class="headerlink" title="Nagle 算法描述"></a>Nagle 算法描述</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if there is new data to send</span><span class="line">    if the window size &gt;= MSS and available data is &gt;= MSS</span><span class="line">        send complete MSS segment now</span><span class="line">    else</span><span class="line">        if there is unconfirmed data still in the pipe</span><span class="line">            enqueue data in the buffer until an acknowledge is received</span><span class="line">        else</span><span class="line">            send data immediately</span><span class="line">        end if</span><span class="line">    end if</span><span class="line">end if</span></pre></td></tr></table></figure>
+<h2 id="SO-LINGER"><a href="#SO-LINGER" class="headerlink" title="SO_LINGER"></a>SO_LINGER</h2><h3 id="Socket-setSoLinger-boolean-linger-int-timeout"><a href="#Socket-setSoLinger-boolean-linger-int-timeout" class="headerlink" title="Socket.setSoLinger(boolean linger, int timeout)"></a>Socket.setSoLinger(boolean linger, int timeout)</h3><p>SO_LINGER 这个参数是控制 socket 关闭后的行为，二个参数分别有以下几种组合：</p>
+<h3 id="linger-false-timeout-1"><a href="#linger-false-timeout-1" class="headerlink" title="linger=false, timeout=-1"></a>linger=false, timeout=-1</h3><blockquote>
+<p>这是默认行为，当 socket 主动 close，调用的线程会马上返回，不会阻塞，然后进入 CLOSING 状态，残留在缓冲区中的数据将继续发送给对端，并且与对端进行 FIN-ACK 协议交换，最后进入 TIME_WAIT 状态</p>
+</blockquote>
+<h3 id="linger-true-timeout-gt-0"><a href="#linger-true-timeout-gt-0" class="headerlink" title="linger=true, timeout&gt;0"></a>linger=true, timeout&gt;0</h3><blockquote>
+<p>调用 close 的线程将阻塞，发生两种可能的情况:一是剩余的数据继续发送，进行关闭协议交换，二就是超时过期，剩余的数据将被删除，进行 FIN-ACK 交换。</p>
+</blockquote>
+<h3 id="linger-true-timeout-0"><a href="#linger-true-timeout-0" class="headerlink" title="linger=true, timeout=0"></a>linger=true, timeout=0</h3><blockquote>
+<p>进行所谓 hard-close，任何剩余的数据都将被丢弃，并且 FIN-ACK 交换也不会发生，替代产生 RST ，让对端抛出 connection reset 的 SocketException 。</p>
+</blockquote>
+<h3 id="慎重使用该选项"><a href="#慎重使用该选项" class="headerlink" title="慎重使用该选项"></a>慎重使用该选项</h3><ol>
+<li>TIME_WAIT 状态的价值</li>
+<li>可靠实现 TCP 连接终止</li>
+<li>允许老的分节在网络中流失，防止发给新的连接</li>
+<li>持续时间<code>= 2 * MSL</code><ol>
+<li>MSL (Maximum Segment Lifetime)是最大分节生命期，一般为<code>60秒</code>(linux)，<code>120秒</code>(Windows)</li>
+<li>Linux 上可以查看<code>cat /proc/sys/net/ipv4/tcp_fin_timeout</code></li>
+<li><a href="https://docs.microsoft.com/en-us/biztalk/technical-guides/settings-that-can-be-modified-to-improve-network-performance" target="_blank" rel="noopener">Windows</a> 注册表项<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters</code>，默认值<code>120秒</code>，推荐值为<code>30秒</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="时间缓存"><a href="#时间缓存" class="headerlink" title="时间缓存"></a>时间缓存</h2><ol>
+<li>网络服务器通常需要频繁地获取系统时间: 定时器、协议时间戳、缓存过期等等。</li>
+<li>System.currentTimeMillis<ol>
+<li>Linux 调用 gettimeofday，需要切换到内核态</li>
+<li>大部分应用并不需要特别高的精度</li>
+</ol>
+</li>
+<li>SystemTimer.currentTimeMillis<ol>
+<li>独立线程定期更新时间缓存</li>
+<li>currentTimeMillis 直接返回缓存值</li>
+<li>精度取决于定期间隔</li>
+</ol>
+</li>
+</ol>
+<h3 id="SystemTimer"><a href="#SystemTimer" class="headerlink" title="SystemTimer"></a>SystemTimer</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SystemTimer</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> tickUnit = Long.parseLong(System.getProperty(<span class="string">"notify.systimer.tick"</span>, <span class="string">"50"</span>));</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">long</span> time = System.currentTimeMillis();</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TimerTicker</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">            time = System.currentTimeMillis();</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">currentTimeMillis</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">return</span> time;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">static</span> &#123;</span><span class="line">        executor.scheduleAtFixedRate(<span class="keyword">new</span> TimerTicker(), tickUnit, tickUnit, TimeUnit.MILLISECONDS);</span><span class="line">        Runtime.getRuntime().addShutdownHook(<span class="keyword">new</span> Thread() &#123;</span><span class="line">            <span class="meta">@Override</span></span><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">                executor.shutdown();</span><span class="line">            &#125;</span><span class="line">        &#125;);</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><ol>
+<li>Java 能做的事情有限<ol>
+<li>GC 带来的自动内存管理</li>
+</ol>
+</li>
+<li>缓冲区的管理<ol>
+<li>池化<ol>
+<li>ThreadLocal cache</li>
+<li>环形缓冲区</li>
+</ol>
+</li>
+<li>Netty 扩展<ol>
+<li>putString, getString 等高级 API</li>
+<li>缓冲区自动扩展和收缩，处理不定长度字节</li>
+</ol>
+</li>
+<li>字节序<ol>
+<li>跨语言通讯需要注意</li>
+<li>网络字节序: BigEndian</li>
+<li>默认缓冲区: BigEndian</li>
+<li>Java 的 IO 库和 class 文件: BigEndian</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="定时器的实现"><a href="#定时器的实现" class="headerlink" title="定时器的实现"></a>定时器的实现</h2><ol>
+<li>定时器在网络程序中频繁使用<ol>
+<li>周期性事件的触发</li>
+<li>异步超时通知和移除</li>
+<li>延迟事件的触发</li>
+</ol>
+</li>
+<li>三个时间复杂度<ol>
+<li>插入定时器</li>
+<li>删除定时器</li>
+<li>PerTickBookkeeping，一次 tick 内，系统需要执行的操作</li>
+</ol>
+</li>
+<li>Tick 的方式<ol>
+<li>Selector.select(timeout);</li>
+<li>Thread.sleep(timeout);</li>
+</ol>
+</li>
+</ol>
+<h3 id="Netty-定时器实现-HashedWheelTimer"><a href="#Netty-定时器实现-HashedWheelTimer" class="headerlink" title="Netty 定时器实现: HashedWheelTimer"></a>Netty 定时器实现: HashedWheelTimer</h3><ol>
+<li><a href="http://www.cse.wustl.edu/~cdgill/courses/cs6874/TimingWheels.ppt" target="_blank" rel="noopener">TimingWheels</a></li>
+<li>将定时器组织成时间轮</li>
+<li>指针按照一定周期旋转，一个 tick 跳动一个槽位</li>
+<li>定时器根据延时时间和当前指针位置插入到特定槽位</li>
+<li>槽位和 tick 决定了精度和延时</li>
+</ol>
+<h2 id="连接-IDLE-的判断"><a href="#连接-IDLE-的判断" class="headerlink" title="连接 IDLE 的判断"></a>连接 IDLE 的判断</h2><ol>
+<li>连接处于 Idle 状态:一段时间内没有 IO 读写事件发生<ol>
+<li>读 Idle，一段时间内没有 IO 读</li>
+<li>写 Idle，一段时间内没有 IO 写</li>
+<li>Both，一段时间内没有 IO 读写</li>
+</ol>
+</li>
+<li>实现方式:<ol>
+<li>每次 IO 读写都记录 IO 读和写的时间戳</li>
+<li>定时扫描所有连接，判断当前时间与上一次读或者写的时间差是否超过设定阀值，超过即认为连接处于 Idle 状态，通知业务处理器</li>
+<li>定时的方式: 基于<code>select(timeout)</code>或者定时器</li>
+</ol>
+</li>
+</ol>
+<h2 id="NIO-陷阱"><a href="#NIO-陷阱" class="headerlink" title="NIO 陷阱"></a>NIO 陷阱</h2><h3 id="陷阱-1-处理事件忘记移除-key"><a href="#陷阱-1-处理事件忘记移除-key" class="headerlink" title="陷阱 1: 处理事件忘记移除 key"></a>陷阱 1: 处理事件忘记移除 key</h3><ol>
+<li>在 select 返回值大于<code>0</code>的情况下，循环处理<code>Selector.selectedKeys</code>集合，每处理一个必须移除<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Iterator&lt;SelectionKey&gt; it = set.iterator();</span><span class="line"><span class="keyword">while</span> (it.hasNext()) &#123;</span><span class="line">    SelectionKey key = it.next();</span><span class="line">    it.remove(); <span class="comment">// 切记移除</span></span><span class="line">    <span class="comment">// ......处理事件</span></span><span class="line">&#125;</span></pre></td></tr></table></figure></li>
+<li>不移除的后果是本次的就绪的 key 集合下次会再次返，会导致无限循环，CPU 消耗 100%</li>
+</ol>
+<h3 id="陷阱-2-Selector-返回的-key-集合非线程安全"><a href="#陷阱-2-Selector-返回的-key-集合非线程安全" class="headerlink" title="陷阱 2: Selector 返回的 key 集合非线程安全"></a>陷阱 2: Selector 返回的 key 集合非线程安全</h3><ol>
+<li><code>Selector.selectedKeys/keys</code>返回的集合都是非线程安全的</li>
+<li><code>Selector.selectedKeys</code>返回的可移除</li>
+<li><code>Selector.keys</code>不可变</li>
+<li>对 selectedkeys 的处理必须单线程处理或者适当同步</li>
+</ol>
+<h3 id="陷阱-3-正确注册-Channel-和更新-interest"><a href="#陷阱-3-正确注册-Channel-和更新-interest" class="headerlink" title="陷阱 3: 正确注册 Channel 和更新 interest"></a>陷阱 3: 正确注册 Channel 和更新 interest</h3><ol>
+<li>直接注册不可吗?</li>
+<li><code>channel.register(selector, ops, attachment)</code></li>
+<li>不是不可以,效率问题</li>
+<li>至少加两次锁，锁竞争激烈</li>
+<li>Channel 本身的 regLock，竞争几乎没有</li>
+<li>Selector 内部的 key 集合，竞争激烈</li>
+<li><p>更好的方式: 加入缓冲队列，等待注册，reactor 单线程处理</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (isReactorThread())&#123;</span><span class="line">    channel.register(selector, ops, attachment);</span><span class="line">&#125; <span class="keyword">else</span> &#123;</span><span class="line">    register.offer(<span class="keyword">new</span> Event(channel,ops,attachment));</span><span class="line">    selector.wakeup();</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+</li>
+<li><p>同样，<code>SelectionKey.interest(ops)</code></p>
+</li>
+<li>在 Linux 上会阻塞，需要获取 selector 内部锁做同步</li>
+<li>在 Win32 上不会阻塞</li>
+<li>屏蔽平台差异，避免锁的激烈竞争，采用类似注册 channel 的方式:<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.isReactorThread()) &#123;</span><span class="line">    key.interestOps(key.interestOps() | SelectionKey.OP_READ);</span><span class="line">&#125; <span class="keyword">else</span> &#123;</span><span class="line">    <span class="keyword">this</span>.register.offer(<span class="keyword">new</span> Event(key,SelectionKey.OP_READ));</span><span class="line">    selector.wakeup();</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="陷阱-4-正确处理-OP-WRITE"><a href="#陷阱-4-正确处理-OP-WRITE" class="headerlink" title="陷阱 4: 正确处理 OP_WRITE"></a>陷阱 4: 正确处理 OP_WRITE</h3><ol>
+<li>OP_WRITE 处理不当很容易导致 CPU  100%</li>
+<li>OP_WRITE 触发条件<ol>
+<li>前提: interest 了 OP_WRITE</li>
+<li>触发条件:<ol>
+<li>socket 发送缓冲区可写</li>
+<li>远端关闭</li>
+<li>有错误发生</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>正确的处理方式<ol>
+<li>仅在已经连接的 channel 上注册</li>
+<li>仅在有数据可写的时候才注册</li>
+<li>触发之后立即取消注册，否则会继续触发导致循环</li>
+<li>处理完成后视情况决定是否继续注册<ol>
+<li>没有完全写入，继续注册</li>
+<li>全部写入，无需注册</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="陷阱-5-正确取消注册-channel"><a href="#陷阱-5-正确取消注册-channel" class="headerlink" title="陷阱 5: 正确取消注册 channel"></a>陷阱 5: 正确取消注册 channel</h3><ol>
+<li>SelectableChannel 一旦注册将一直有效直到明确取消</li>
+<li>怎么取消注册?<ol>
+<li><code>channel.close()</code>，内部会调用<code>key.cancel()</code></li>
+<li><code>key.cancel();</code></li>
+<li>中断 channel 的读写所在线程引起的 channel 关闭</li>
+</ol>
+</li>
+<li>但是这样还不够!<ol>
+<li><code>key.cancel()</code>仅仅是将 key 加入 cancelledKeys</li>
+<li>直到下一次 select 才真正处理</li>
+<li>并且 channel 的 socketfd 只有在真正取消注册后才会<code>close(fd)</code></li>
+</ol>
+</li>
+</ol>
+<h4 id="正确取消注册-channel"><a href="#正确取消注册-channel" class="headerlink" title="正确取消注册 channel"></a>正确取消注册 channel</h4><ol>
+<li>后果是什么?<ol>
+<li>服务端，问题不大，select 调用频繁</li>
+<li>客户端，通常只有一个连接，关闭 channel 之后，没有调用 select 就关闭了 selector<ol>
+<li>sockfd 没有关闭，停留在 CLOSE_WAIT 状态</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>正确的处理方式，取消注册也应当作为事件交给 reactor 处理，及时 wakeup 做 select</li>
+<li>适当的时候调用<code>selector.selectNow()</code></li>
+<li>Netty 在超过 256 个连接未关闭的时候主动调用一次 selectNow<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CLEANUP_INTERVAL = <span class="number">256</span>;</span><span class="line"></span><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">cleanUpCancelledKeys</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><span class="line">    <span class="keyword">if</span> (cancelledKeys &gt;= CLEANUP_INTERVAL) &#123;</span><span class="line">        cancelledKeys = <span class="number">0</span>;</span><span class="line">        selector.selectNow();</span><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><span class="line">    &#125;</span><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><span class="line">&#125;</span><span class="line"><span class="comment">//channel 关闭的时候</span></span><span class="line">channel.socket.close();</span><span class="line">cancelledKeys++;</span></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="陷阱-6-同时注册-OP-ACCPET-和-OP-READ，同时注册-OP-CONNECT-和-OP-WRITE"><a href="#陷阱-6-同时注册-OP-ACCPET-和-OP-READ，同时注册-OP-CONNECT-和-OP-WRITE" class="headerlink" title="陷阱 6: 同时注册 OP_ACCPET 和 OP_READ，同时注册 OP_CONNECT 和 OP_WRITE"></a>陷阱 6: 同时注册 OP_ACCPET 和 OP_READ，同时注册 OP_CONNECT 和 OP_WRITE</h3><ol>
+<li>在底层来说，只有两种事件: read 和 write</li>
+<li>Java NIO 还引入了 OP_ACCEPT 和 OP_CONNECT<ol>
+<li>OP_ACCEPT、OP_READ == Read</li>
+<li>OP_CONNECT、OP_WRITE == Write</li>
+</ol>
+</li>
+<li>同时注册 OP_ACCEPT 和 OP_READ,或者同时注册 OP_CONNECT 和 OP_WRITE 在不同平台上产生错误的行为，避免这样做!</li>
+</ol>
+<h3 id="陷阱-7-正确处理-connect"><a href="#陷阱-7-正确处理-connect" class="headerlink" title="陷阱 7: 正确处理 connect"></a>陷阱 7: 正确处理 connect</h3><ol>
+<li>SocketChannel.connect 方法在非阻塞模式下可能返回 false，切记判断返回值<ol>
+<li>如果是 loopback 连接，可能直接返回 true，表示连接成功</li>
+<li>返回 false，后续处理<ol>
+<li>注册 channel 到 selector，监听 OP_CONNECT 事件</li>
+<li>在 OP_CONNECT 触发后，调用<code>SocketChannel.finishConnect()</code>成功后，连接才真正建立</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>陷阱<ol>
+<li>没有判断 connect 返回值</li>
+<li>没有调用 finishConnect</li>
+<li>在 OP_CONNECT 触发后，没有移除 OP_CONNECT，导致 SelectionKey 一直处于就绪状态，空耗 CPU<ol>
+<li>OP_CONNECT 只能在还没有连接的 channel 上注册</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.blogjava.net/Files/killme2008/NIO%20trick%20and%20trap.pdf.zip" target="_blank" rel="noopener">Nio Trick and Trap.pdf</a></li>
+<li><a href="https://shift-alt-ctrl.iteye.com/blog/1840411" target="_blank" rel="noopener">NIO Selector 类详解</a></li>
+<li><a href="https://www.jianshu.com/p/1af407c043cb" target="_blank" rel="noopener">关于 NIO 你不得不知道的一些地雷</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2019/03/16/reactor-pattern-time-server-example.html" rel="next" title="reactor pattern time server example">
+                <i class="fa fa-chevron-left"></i>
+                reactor pattern time server example
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/vim/2019/03/20/vim-killer-plugin-vim-im-chinese-input-method.html" rel="prev" title="vim killer plugin vim-im chinese input method">
+                <i class="fa fa-chevron-right"></i>
+                vim killer plugin vim-im chinese input method
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#NIO-开发需知"><span class="nav-number">1.</span> <span class="nav-text">NIO 开发需知</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selector-在不同线程中对象锁竞争问题"><span class="nav-number">2.</span> <span class="nav-text">Selector 在不同线程中对象锁竞争问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Selector-维护的各种集合"><span class="nav-number">2.1.</span> <span class="nav-text">Selector 维护的各种集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Selector-wakeup-方法"><span class="nav-number">2.2.</span> <span class="nav-text">Selector#wakeup() 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么要唤醒-Selector-wakeup"><span class="nav-number">2.2.1.</span> <span class="nav-text">为什么要唤醒 Selector#wakeup()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wakeup-的原理"><span class="nav-number">2.2.2.</span> <span class="nav-text">wakeup 的原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#减少-wakeup-调用"><span class="nav-number">2.2.3.</span> <span class="nav-text">减少 wakeup 调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Netty-的优化"><span class="nav-number">2.2.4.</span> <span class="nav-text">Netty 的优化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Selector-close-方法"><span class="nav-number">2.3.</span> <span class="nav-text">Selector#close() 方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么延迟取消-SelectionKey"><span class="nav-number">3.</span> <span class="nav-text">为什么延迟取消 SelectionKey</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-OP-WRITE-事件"><span class="nav-number">4.</span> <span class="nav-text">关于 OP_WRITE 事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读到或者写入-0-个字节"><span class="nav-number">4.1.</span> <span class="nav-text">读到或者写入 0 个字节</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于远端关闭事件"><span class="nav-number">5.</span> <span class="nav-text">关于远端关闭事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何正确的关闭一个已经注册的-SelectableChannel"><span class="nav-number">5.1.</span> <span class="nav-text">如何正确的关闭一个已经注册的 SelectableChannel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Channel-的-open-标志"><span class="nav-number">5.2.</span> <span class="nav-text">Channel 的 open 标志</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SO-RCVBUF-和-SO-SNDBUF"><span class="nav-number">6.</span> <span class="nav-text">SO_RCVBUF 和 SO_SNDBUF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置原则"><span class="nav-number">6.1.</span> <span class="nav-text">设置原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SO-TCPNODELAY"><span class="nav-number">7.</span> <span class="nav-text">SO_TCPNODELAY</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nagle-算法"><span class="nav-number">7.1.</span> <span class="nav-text">Nagle 算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nagle-算法描述"><span class="nav-number">7.2.</span> <span class="nav-text">Nagle 算法描述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SO-LINGER"><span class="nav-number">8.</span> <span class="nav-text">SO_LINGER</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket-setSoLinger-boolean-linger-int-timeout"><span class="nav-number">8.1.</span> <span class="nav-text">Socket.setSoLinger(boolean linger, int timeout)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linger-false-timeout-1"><span class="nav-number">8.2.</span> <span class="nav-text">linger=false, timeout=-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linger-true-timeout-gt-0"><span class="nav-number">8.3.</span> <span class="nav-text">linger=true, timeout&gt;0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linger-true-timeout-0"><span class="nav-number">8.4.</span> <span class="nav-text">linger=true, timeout=0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#慎重使用该选项"><span class="nav-number">8.5.</span> <span class="nav-text">慎重使用该选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间缓存"><span class="nav-number">9.</span> <span class="nav-text">时间缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SystemTimer"><span class="nav-number">9.1.</span> <span class="nav-text">SystemTimer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存管理"><span class="nav-number">10.</span> <span class="nav-text">内存管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定时器的实现"><span class="nav-number">11.</span> <span class="nav-text">定时器的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-定时器实现-HashedWheelTimer"><span class="nav-number">11.1.</span> <span class="nav-text">Netty 定时器实现: HashedWheelTimer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接-IDLE-的判断"><span class="nav-number">12.</span> <span class="nav-text">连接 IDLE 的判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NIO-陷阱"><span class="nav-number">13.</span> <span class="nav-text">NIO 陷阱</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#陷阱-1-处理事件忘记移除-key"><span class="nav-number">13.1.</span> <span class="nav-text">陷阱 1: 处理事件忘记移除 key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#陷阱-2-Selector-返回的-key-集合非线程安全"><span class="nav-number">13.2.</span> <span class="nav-text">陷阱 2: Selector 返回的 key 集合非线程安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#陷阱-3-正确注册-Channel-和更新-interest"><span class="nav-number">13.3.</span> <span class="nav-text">陷阱 3: 正确注册 Channel 和更新 interest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#陷阱-4-正确处理-OP-WRITE"><span class="nav-number">13.4.</span> <span class="nav-text">陷阱 4: 正确处理 OP_WRITE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#陷阱-5-正确取消注册-channel"><span class="nav-number">13.5.</span> <span class="nav-text">陷阱 5: 正确取消注册 channel</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正确取消注册-channel"><span class="nav-number">13.5.1.</span> <span class="nav-text">正确取消注册 channel</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#陷阱-6-同时注册-OP-ACCPET-和-OP-READ，同时注册-OP-CONNECT-和-OP-WRITE"><span class="nav-number">13.6.</span> <span class="nav-text">陷阱 6: 同时注册 OP_ACCPET 和 OP_READ，同时注册 OP_CONNECT 和 OP_WRITE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#陷阱-7-正确处理-connect"><span class="nav-number">13.7.</span> <span class="nav-text">陷阱 7: 正确处理 connect</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">14.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

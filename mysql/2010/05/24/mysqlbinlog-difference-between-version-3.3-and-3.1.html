@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="mysqlbinlog version 3.3中多了一个--base64-output参数，默认值为auto:">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysqlbinlog version 3.3和3.1版本之间的输出差异">
-<meta property="og:url" content="https://www.4e00.com/mysql/2010/05/24/mysqlbinlog-difference-between-version-3.3-and-3.1.html">
+<meta property="og:url" content="http://www.4e00.com/mysql/2010/05/24/mysqlbinlog-difference-between-version-3.3-and-3.1.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="mysqlbinlog version 3.3中多了一个--base64-output参数，默认值为auto:">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.071Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysqlbinlog version 3.3和3.1版本之间的输出差异">
 <meta name="twitter:description" content="mysqlbinlog version 3.3中多了一个--base64-output参数，默认值为auto:">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/mysql/2010/05/24/mysqlbinlog-difference-between-version-3.3-and-3.1.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/mysql/2010/05/24/mysqlbinlog-difference-between-version-3.3-and-3.1.html">
 
   <title> mysqlbinlog version 3.3和3.1版本之间的输出差异 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/mysql/" itemprop="url" rel="index">
                     <span itemprop="name">mysql</span>
                   </a>
@@ -256,14 +256,14 @@
       
         <p>mysqlbinlog version 3.3中多了一个<code>--base64-output</code>参数，默认值为<code>auto</code>:</p>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">--base64-output[=name]</div><div class="line">    Determine when the output statements should be</div><div class="line">    base64-encoded BINLOG statements: &apos;never&apos; disables it and</div><div class="line">    works only for binlogs without row-based events; &apos;auto&apos;</div><div class="line">    is the default and prints base64 only when necessary</div><div class="line">    (i.e., for row-based events and format description</div><div class="line">    events); &apos;always&apos; prints base64 whenever possible.</div><div class="line">    &apos;always&apos; is for debugging only and should not be used in</div><div class="line">    a production system. The default is &apos;auto&apos;.</div><div class="line">    --base64-output is a short form for</div><div class="line">    --base64-output=always.</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">--base64-output[=name]</span><span class="line">    Determine when the output statements should be</span><span class="line">    base64-encoded BINLOG statements: &apos;never&apos; disables it and</span><span class="line">    works only for binlogs without row-based events; &apos;auto&apos;</span><span class="line">    is the default and prints base64 only when necessary</span><span class="line">    (i.e., for row-based events and format description</span><span class="line">    events); &apos;always&apos; prints base64 whenever possible.</span><span class="line">    &apos;always&apos; is for debugging only and should not be used in</span><span class="line">    a production system. The default is &apos;auto&apos;.</span><span class="line">    --base64-output is a short form for</span><span class="line">    --base64-output=always.</span></pre></td></tr></table></figure>
 <p>在原来的v3.1版本中没有此参数，对比<code>mysql-5.0</code>生成的日志文件的输出结果：</p>
-<h2 id="v3-1版本中使用mysqlbinlog输出结果"><a href="#v3-1版本中使用mysqlbinlog输出结果" class="headerlink" title="v3.1版本中使用mysqlbinlog输出结果"></a>v3.1版本中使用mysqlbinlog输出结果</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mysqlbinlog</span> mysql-bin.000182|less</div><div class="line">/*!40019 SET @@session.max_insert_delayed_threads=0*/;</div><div class="line">/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;</div><div class="line">DELIMITER /*!*/;</div><div class="line"><span class="comment"># at 4</span></div><div class="line"><span class="comment">#100515  1:38:58 server id 25  end_log_pos 98   Start: binlog v 4, server v 5.0.37-log created 100515  1:38:58</span></div><div class="line"><span class="comment"># at 98</span></div></pre></td></tr></table></figure>
-<h2 id="v3-3版本中使用mysqlbinlog输出结果"><a href="#v3-3版本中使用mysqlbinlog输出结果" class="headerlink" title="v3.3版本中使用mysqlbinlog输出结果"></a>v3.3版本中使用mysqlbinlog输出结果</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mysqlbinlog</span> --base64-output=never mysql-bin.000182|less</div><div class="line">/*!40019 SET @@session.max_insert_delayed_threads=0*/;</div><div class="line">/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;</div><div class="line">DELIMITER /*!*/;</div><div class="line"><span class="comment"># at 4</span></div><div class="line"><span class="comment">#100515  1:38:58 server id 25  end_log_pos 98   Start: binlog v 4, server v 5.0.37-log created 100515  1:38:58</span></div><div class="line"><span class="comment"># at 98</span></div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mysqlbinlog</span> --base64-output=auto mysql-bin.000182|less</div><div class="line">/*!40019 SET @@session.max_insert_delayed_threads=0*/;</div><div class="line">/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;</div><div class="line">DELIMITER /*!*/;</div><div class="line"><span class="comment"># at 4</span></div><div class="line"><span class="comment">#100515  1:38:58 server id 25  end_log_pos 98   Start: binlog v 4, server v 5.0.37-log created 100515  1:38:58</span></div><div class="line">BINLOG <span class="string">'</span></div><div class="line"><span class="string">sortSw8ZAAAAXgAAAGIAAAAAAAQANS4wLjM3LWxvZwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span></div><div class="line"><span class="string">AAAAAAAAAAAAAAAAAAAAAAAAEzgNAAgAEgAEBAQEEgAASwAEGg==</span></div><div class="line"><span class="string">'</span>/*!*/;</div><div class="line"><span class="comment"># at 98</span></div></pre></td></tr></table></figure>
+<h2 id="v3-1版本中使用mysqlbinlog输出结果"><a href="#v3-1版本中使用mysqlbinlog输出结果" class="headerlink" title="v3.1版本中使用mysqlbinlog输出结果"></a>v3.1版本中使用mysqlbinlog输出结果</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mysqlbinlog</span> mysql-bin.000182|less</span><span class="line">/*!40019 SET @@session.max_insert_delayed_threads=0*/;</span><span class="line">/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;</span><span class="line">DELIMITER /*!*/;</span><span class="line"><span class="comment"># at 4</span></span><span class="line"><span class="comment">#100515  1:38:58 server id 25  end_log_pos 98   Start: binlog v 4, server v 5.0.37-log created 100515  1:38:58</span></span><span class="line"><span class="comment"># at 98</span></span></pre></td></tr></table></figure>
+<h2 id="v3-3版本中使用mysqlbinlog输出结果"><a href="#v3-3版本中使用mysqlbinlog输出结果" class="headerlink" title="v3.3版本中使用mysqlbinlog输出结果"></a>v3.3版本中使用mysqlbinlog输出结果</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mysqlbinlog</span> --base64-output=never mysql-bin.000182|less</span><span class="line">/*!40019 SET @@session.max_insert_delayed_threads=0*/;</span><span class="line">/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;</span><span class="line">DELIMITER /*!*/;</span><span class="line"><span class="comment"># at 4</span></span><span class="line"><span class="comment">#100515  1:38:58 server id 25  end_log_pos 98   Start: binlog v 4, server v 5.0.37-log created 100515  1:38:58</span></span><span class="line"><span class="comment"># at 98</span></span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mysqlbinlog</span> --base64-output=auto mysql-bin.000182|less</span><span class="line">/*!40019 SET @@session.max_insert_delayed_threads=0*/;</span><span class="line">/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;</span><span class="line">DELIMITER /*!*/;</span><span class="line"><span class="comment"># at 4</span></span><span class="line"><span class="comment">#100515  1:38:58 server id 25  end_log_pos 98   Start: binlog v 4, server v 5.0.37-log created 100515  1:38:58</span></span><span class="line">BINLOG <span class="string">'</span></span><span class="line"><span class="string">sortSw8ZAAAAXgAAAGIAAAAAAAQANS4wLjM3LWxvZwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span></span><span class="line"><span class="string">AAAAAAAAAAAAAAAAAAAAAAAAEzgNAAgAEgAEBAQEEgAASwAEGg==</span></span><span class="line"><span class="string">'</span>/*!*/;</span><span class="line"><span class="comment"># at 98</span></span></pre></td></tr></table></figure>
 <p>从上面结果比较而言，相当于v3.1版本的<code>mysqlbinlog</code>的<code>base64-output</code>参数默认为<code>never</code>。</p>
 <p>在<code>mysql-5.0</code>中带的<code>mysqlbinlog</code>一般为v3.1版本的，而<code>mysql-5.1</code>版本中带的<code>mysqlbinlog</code>则为v3.3版本，如果需要将<code>mysql-5.0</code>生成的日志文件导入<code>mysql-5.1</code>时，需要将<code>mysqlbinlog</code>的<code>base64-output</code>值设置为<code>never</code>。</p>
 <p>如果不设置此参数，导入日志时，会在</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">BINLOG &apos;sortSw8ZAAAAXgAAAGIAAAAAAAQANS4wLjM3LWxvZwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</div><div class="line">AAAAAAAAAAAAAAAAAAAAAAAAEzgNAAgAEgAEBAQEEgAASwAEGg==&apos;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">BINLOG &apos;sortSw8ZAAAAXgAAAGIAAAAAAAQANS4wLjM3LWxvZwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span><span class="line">AAAAAAAAAAAAAAAAAAAAAAAAEzgNAAgAEgAEBAQEEgAASwAEGg==&apos;</span></pre></td></tr></table></figure>
 <p>处报sql语法错误。</p>
 
       
@@ -291,7 +291,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/mysql/2010/05/24/mysql-slave-server-errno-1236.html" rel="next" title="mysql slave同步报错server_errno=1236">
-                上一篇：mysql slave同步报错server_errno=1236
+                <i class="fa fa-chevron-left"></i>
+                mysql slave同步报错server_errno=1236
               </a>
             
           </div>
@@ -299,7 +300,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/javascript/2010/06/08/javascript-closures-lexical-scope-and-scope-chain.html" rel="prev" title="javascript: closures, lexical scope and scope chain">
-                下一篇：javascript: closures, lexical scope and scope chain
+                <i class="fa fa-chevron-right"></i>
+                javascript: closures, lexical scope and scope chain
               </a>
             
           </div>
@@ -348,7 +350,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -359,16 +361,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -450,10 +450,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

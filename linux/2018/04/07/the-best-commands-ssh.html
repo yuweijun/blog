@@ -1,0 +1,628 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="tldr sshSecure Shell is a protocol used to securely log onto remote systems.It can be used for logging or executing commands on a remote server.- Connect to a remote server:      ssh username@remote_h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令行神器之 ssh 篇">
+<meta property="og:url" content="http://www.4e00.com/linux/2018/04/07/the-best-commands-ssh.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="tldr sshSecure Shell is a protocol used to securely log onto remote systems.It can be used for logging or executing commands on a remote server.- Connect to a remote server:      ssh username@remote_h">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/ssh-socks5-proxy-linux.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/ssh-port-forwarding.png">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.130Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="命令行神器之 ssh 篇">
+<meta name="twitter:description" content="tldr sshSecure Shell is a protocol used to securely log onto remote systems.It can be used for logging or executing commands on a remote server.- Connect to a remote server:      ssh username@remote_h">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/linux/ssh-socks5-proxy-linux.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2018/04/07/the-best-commands-ssh.html">
+
+  <title> 命令行神器之 ssh 篇 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                命令行神器之 ssh 篇
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-04-07T11:02:17+08:00" content="2018-04-07">
+              2018-04-07
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="tldr-ssh"><a href="#tldr-ssh" class="headerlink" title="tldr ssh"></a>tldr ssh</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line output">Secure Shell is a protocol used to securely <span class="built_in">log</span> onto remote systems.</span><span class="line output">It can be used <span class="keyword">for</span> logging or executing commands on a remote server.</span><span class="line output"></span><span class="line output">- Connect to a remote server:</span><span class="line">      ssh username@remote_host</span><span class="line output"></span><span class="line output">- Connect to a remote server with a specific identity (private key):</span><span class="line">      ssh -i path/to/key_file username@remote_host</span><span class="line output"></span><span class="line output">- Connect to a remote server using a specific port:</span><span class="line">      ssh username@remote_host -p 2222</span><span class="line output"></span><span class="line output">- Run a <span class="built_in">command</span> on a remote server:</span><span class="line">      ssh remote_host <span class="built_in">command</span> -with -flags</span><span class="line output"></span><span class="line output">- SSH tunneling: Dynamic port forwarding (SOCKS proxy on localhost:9999):</span><span class="line">      ssh -D 9999 -C username@remote_host</span><span class="line output"></span><span class="line output">- SSH tunneling: Forward a specific port (localhost:9999 to slashdot.org:80):</span><span class="line">      ssh -L 9999:slashdot.org:80 username@remote_host</span><span class="line output"></span><span class="line output">- Enable the option to forward the authentication information to the remote machine (see `man ssh_config` <span class="keyword">for</span> available options):</span><span class="line">      ssh -o <span class="string">"ForwardAgent=yes"</span> username@remote_host</span></pre></td></tr></table></figure>
+<h2 id="using-ssh-agent"><a href="#using-ssh-agent" class="headerlink" title="using ssh agent"></a>using ssh agent</h2><p><code>ssh-agent</code>命令是一种用来保存公钥身份验证所使用的私钥的程序，本质上<code>ssh-agent</code>就是一个<strong>密钥管理器</strong>，运行<code>ssh-agent</code>以后，使用<code>ssh-add</code>将私钥交给<code>ssh-agent</code>保管，其他程序需要身份验证的时候可以将验证申请交给<code>ssh-agent</code>来完成整个认证过程。</p>
+<p>关于<code>ssh-agent</code>的工作原理可以查看<a href="http://www.unixwiz.net/techtips/ssh-agent-forwarding.html" target="_blank" rel="noopener">An Illustrated Guide to SSH Agent Forwarding</a>这篇文章，这里简单举例子说明其作用：</p>
+<p>假设当前机器为<code>A</code>，另有远程服务器<code>B</code>、<code>C</code>、<code>D</code>，将<code>A</code>的公钥发布到3台远程服务器上，在机器<code>A</code>开启<code>ssh-agent</code>，然后<code>ssh-add</code>当前<code>A</code>机器的私钥，并且在<code>~/.ssh/config</code>中开启转发<code>ForwardAgent yes</code>，这样<code>B</code>、<code>C</code>和<code>D</code>三台服务器之间 ssh 登录都可以通过<code>A</code>的这个公钥进行验证登录，而不用配置<code>A</code>的私钥，比如先 ssh 到<code>B</code>，可以从<code>B</code>直接 ssh 到<code>C</code>和<code>D</code>。</p>
+<h3 id="A-机器执行的命令"><a href="#A-机器执行的命令" class="headerlink" title="A 机器执行的命令"></a>A 机器执行的命令</h3><p><code>B</code>，<code>C</code>和<code>D</code>服务器上只要开启<code>sshd</code>服务，并且将用户目录下面的<code>~/.ssh</code>目录备份删除掉。<code>A</code>机器上备份删除原来的<code>~/.ssh</code>目录后，执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line output"><span class="comment"># 创建密钥</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh-keygen</span> -t rsa -C <span class="string">"username@A"</span></span><span class="line"></span><span class="line output"><span class="comment"># 一般 Mac OSX 和 Linux 都已经开启`ssh-agent`服务，可以使用以下命令确认</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">echo</span> <span class="string">"<span class="variable">$SSH_AUTH_SOCK</span>"</span></span><span class="line"></span><span class="line output"><span class="comment"># 如果没有开启 ssh-agent，则手动输入下面这个命令</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">eval</span> <span class="string">"<span class="variable">$(ssh-agent -s)</span>"</span></span><span class="line"></span><span class="line output"><span class="comment"># 显示ssh-agent中的公钥</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh-add</span> -L</span><span class="line"></span><span class="line output"><span class="comment"># 如果没有显示任何公钥信息，则手动加入个人的密钥</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh-add</span> ~/.ssh/id_rsa</span><span class="line"></span><span class="line output"><span class="comment"># 开启转发，一定要有这个配置，不然开启了 ssh-agent 也不会转发</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">echo</span> <span class="string">"Host *\n    ForwardAgent yes"</span> &gt; ~/.ssh/config</span><span class="line"></span><span class="line output"><span class="comment"># 用 ssh-copy-id 命令发布 A 机器的公钥到 B，C，D 服务器上，不要手动去创建目录和文件</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh-copy-id</span> username@B</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh-copy-id</span> username@C</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh-copy-id</span> username@D</span></pre></td></tr></table></figure>
+<h3 id="检查本地被代理的密钥"><a href="#检查本地被代理的密钥" class="headerlink" title="检查本地被代理的密钥"></a>检查本地被代理的密钥</h3><ul>
+<li>-L：显示ssh-agent中的公钥</li>
+<li>-l：显示ssh-agent中的密钥</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh-add</span> -L</span><span class="line output">The agent has no identities.</span></pre></td></tr></table></figure>
+<p>如果提示如上，则目前没有代理任何密钥，Linux 上可以通过<code>ssh-add ~/.ssh/id_rsa</code>命令添加指定的密钥。Mac OSX 上启动和添加密钥的操作说明，可以参考<a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/" target="_blank" rel="noopener">github</a>文档的说明：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Note: The -K option is Apple standard version of ssh-add, which stores the passphrase in your keychain for you when you add an ssh key to the ssh-agent.</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh-add</span> -K ~/.ssh/id_rsa</span><span class="line output">Passphrase stored <span class="keyword">in</span> keychain: /Users/username/.ssh/id_rsa</span><span class="line output">Identity added: /Users/username/.ssh/id_rsa (/Users/username/.ssh/id_rsa)</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh-add</span> -L</span><span class="line output">2048 2f:31:ba:0c:3e:b2:70:52:00:bc:85:37:a2:a7:77:ad /Users/username/.ssh/id_rsa (RSA)</span></pre></td></tr></table></figure>
+<h2 id="ssh-t-jumpbox-server-ssh-remote-server"><a href="#ssh-t-jumpbox-server-ssh-remote-server" class="headerlink" title="ssh -t jumpbox.server ssh remote.server"></a>ssh -t jumpbox.server ssh remote.server</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> -t -i ~/.ssh/jumpbox_rsa.pub username@jumpbox.server ssh username@remote.server</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> -t username@jumpbox.server ssh username@remote.server</span></pre></td></tr></table></figure>
+<h3 id="ssh-config-文件配置"><a href="#ssh-config-文件配置" class="headerlink" title="~/.ssh/config 文件配置"></a>~/.ssh/config 文件配置</h3><p>上面的命令参数有点多，通过配置<code>~/.ssh/config</code>文件，可以简化<code>ssh</code>命令连接常用服务器的参数：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Host *</span><span class="line">    ForwardAgent yes</span><span class="line"></span><span class="line">Host jumpbox.server</span><span class="line">    HostName 192.168.1.11</span><span class="line">    User username</span><span class="line">    IdentityFile ~/.ssh/jumpbox_rsa.pub</span><span class="line">    ControlMaster auto</span><span class="line">    ControlPath ~/.ssh/socket/master-%l-%r@%h:%p</span><span class="line"></span><span class="line">Host remote.server1</span><span class="line">    HostName 192.168.1.2</span><span class="line">    User username</span><span class="line">    Port 22</span><span class="line">    ForwardAgent yes</span><span class="line">    ProxyCommand ssh -i ~/.ssh/jumpbox_rsa.pub username@remote.server &apos;nc %h %p&apos;</span><span class="line"></span><span class="line">Host remote.server2</span><span class="line">    HostName 192.168.1.3</span><span class="line">    User username</span><span class="line">    Port 22</span><span class="line">    ForwardAgent yes</span><span class="line">    ProxyCommand ssh jumpbox.server nc %h %p</span></pre></td></tr></table></figure>
+<p>如上配置之后，就不用在命令行里每次显示的指定<code>jumpbox.server</code>，可以直接连接远程服务器，这里服务器的别名不需要 DNS 解析，<code>ssh</code>会从<code>~/.ssh/config</code>中获取服务器地址：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> remote.server1</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> remote.server2</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="set-up-socks5-ssh-tunnel"><a href="#set-up-socks5-ssh-tunnel" class="headerlink" title="set up socks5 ssh tunnel"></a>set up socks5 ssh tunnel</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> -D 1337 -N -C -f -q username@jump.server.com</span><span class="line"><span class="comment"># 如果有密钥，则指定 -i 参数</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> -D 1337 -N -C -f -q -i ~/.ssh/jumpbox_rsa.pub username@jump.server.com</span></pre></td></tr></table></figure>
+<img src="/blog/img/linux/ssh-socks5-proxy-linux.png" class="image-md" title="[ssh-socks5-proxy-linux.png]">
+<h3 id="use-socks5-tunnel-with-proxychains-ng"><a href="#use-socks5-tunnel-with-proxychains-ng" class="headerlink" title="use socks5 tunnel with proxychains-ng"></a>use socks5 tunnel with proxychains-ng</h3><p><code>proxychains-ng</code>安装请参考官方文档，在<code>/etc/proxychains.conf</code>文件<code>[ProxyList]</code>下面加入代理配置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">socks5 127.0.0.1 1337</span></pre></td></tr></table></figure>
+<p>如果需要<code>jumpbox.server</code>转发到目标服务器，像正常<code>scp</code>命令一样使用，只是在前面加上<code>proxychains4</code>， 如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">proxychains4</span> scp pom.xml username@remote.server:/home/username</span></pre></td></tr></table></figure>
+<h2 id="ssh-local-forwarding"><a href="#ssh-local-forwarding" class="headerlink" title="ssh local forwarding"></a>ssh local forwarding</h2><p>不用<code>proxychains-ng</code>的话，则使用<code>ssh</code>本地端口转发命令，示例如下，访问本地<code>8022</code>端口的数据会被转发到<code>192.168.1.3:22</code>端口：</p>
+<ul>
+<li>-L [bind_address:]port:host:hostport</li>
+<li>-N      Do not execute a remote command.  This is useful for just forwarding ports (protocol version 2 only)</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> -N -L 8022:192.168.1.3:22 -i ~/.ssh/jumpbox_rsa.pub username@jumpbox.server</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">scp</span> -P 8022 README.md username@localhost:/home/username</span></pre></td></tr></table></figure>
+<p><code>mysql</code>客户端连接本地<code>3307</code>端口，即可经过<code>jumpbox.server</code>的<code>ssh</code>转发到远程<code>remote.mysql.server</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> -N -L 3307:remote.mysql.server:3306 -i ~/.ssh/jumpbox_rsa.pub username@jumpbox.server</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mysql</span> -u root -P 3307 -p -h localhost <span class="built_in">test</span></span></pre></td></tr></table></figure>
+<h2 id="ssh-remote-forwarding"><a href="#ssh-remote-forwarding" class="headerlink" title="ssh remote forwarding"></a>ssh remote forwarding</h2><p>可以通过<code>ssh</code>将本地或者内网的服务暴露给外网，如访问远程服务器<code>jumpbox.server:8080</code>的请求会经过<code>ssh</code>转发到本地的<code>localhost:443</code>端口：</p>
+<ul>
+<li>-R [bind_address:]port:host:hostport</li>
+<li>-N      Do not execute a remote command.  This is useful for just forwarding ports (protocol version 2 only)</li>
+</ul>
+<p>本地监听<code>443</code>端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nc</span> -l 443</span></pre></td></tr></table></figure>
+<p>从本地使用<code>ssh</code>连接远程服务器<code>jumpbox.server</code>，并会在远程服务器开启监听端口<code>8090</code>，加入<code>-N</code>参数是指不需要真实远程登陆到<code>jumpbox.server</code>上：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh</span> -N -R 8090:localhost:443 username@jumpbox.server</span></pre></td></tr></table></figure>
+<p>这时再访问远程服务器，可以用<code>netstat</code>命令查看到，通过<code>ssh</code>在远程服务器上打开了一个监听端口<code>8090</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">netstat</span> -an | grep 8090</span><span class="line output">tcp        0      0 127.0.0.1:8090          0.0.0.0:*               LISTEN</span></pre></td></tr></table></figure>
+<p>在<code>jumpbox.server</code>上执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">echo</span> <span class="built_in">test</span> | nc localhost 8090</span></pre></td></tr></table></figure>
+<p>本地监听<code>443</code>的端口会收到远程服务器转发过来的字符串<code>test</code>，如果本地没有监听<code>443</code>端口，则提示：</p>
+<blockquote>
+<p>connect_to localhost port 443: failed.</p>
+</blockquote>
+<img src="/blog/img/linux/ssh-port-forwarding.png" class="image-md" title="[ssh-port-forwarding.png]">
+<h2 id="ssh-agent-登录碰到的一个问题"><a href="#ssh-agent-登录碰到的一个问题" class="headerlink" title="ssh-agent 登录碰到的一个问题"></a>ssh-agent 登录碰到的一个问题</h2><p>从当前机器<code>A</code>可以经过<code>jumpbox.server</code>服务器登录到<code>B</code>和<code>C</code>，却在登录<code>D</code>时需要密码输入之后才能进入。<code>D</code>和<code>B</code>、<code>C</code>服务器一样，在<code>~/.ssh/authorized_keys</code>文件中有<code>A</code>的公钥信息，<code>sshd</code>服务器版本和配置都是一样的，同时检查了一下<code>~/.ssh/authorized_keys</code>文件的权限都是<code>600</code>，这个文件没有问题。</p>
+<p>当前机器<code>A</code>上的环境如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> ~/.ssh/config</span><span class="line output">Host *</span><span class="line output">    ForwardAgent yes</span><span class="line output"></span><span class="line output">Host jumpbox.server</span><span class="line output">    HostName 192.168.1.11</span><span class="line output">    User username</span><span class="line output">    IdentityFile ~/.ssh/jumpbox_rsa.pub</span><span class="line output">    ControlMaster auto</span><span class="line output">    ControlPath ~/.ssh/socket/master-%l-%r@%h:%p</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ssh-add</span> -L</span><span class="line output">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQnnbiFwLHAQemEg4kHBvqpPe4k8X07tZoakf6Ky5hSn222qTCrS1WJVIgXs5nuxKVTGFe6mkywQh64e6Lluu4bWCL/gE7IbEDPEZd6viQSYnaEiCDLvIfENrAC7LynnHRXBMimp2pPGU+j/I/+uOjnUkvHNPy9v7GxRU7Dak3mewMHM4DdsPJJrG8eSMu4PBbK3mGbKI96gsg2uQ3GXJeZmG5tLVFUTnywJHX++s3q1FBeDrWsqcQsD9uRxpDAv7CUbtjBxRzmsXwGTQZjcupX33bhGWHfOp4ELTqfMv2PwaeE+PatU45bsciQeZDmG8myBpiuZujNV4OoBH1F2yr username@localhost</span></pre></td></tr></table></figure>
+<p>通过<code>ssh -vvv server.D.ip</code>也没有得到明显的提示信息，在网上 GOOGLE 了一些文章之后，在这个<a href="https://unix.stackexchange.com/questions/342106/ssh-agent-not-working-properly" target="_blank" rel="noopener">帖子</a>里，看到有个人提到了<code>~/.ssh</code>目录的权限需要是<code>700</code>，一般这个目录是用<code>ssh-keygen</code>生成的就是<code>700</code>权限，可是在服务器<code>D</code>上，这个目录却是<code>755</code>的权限，也就是这个目录是手工创建的，所以密钥登录验证没有通过，只能使用密码方式验证登录的用户了，另外<code>authorized_keys</code>最好是通过客户端的<code>ssh-copy-id</code>命令创建，如果手工创建也要确保文件权限是<code>600</code>的。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -la ~</span><span class="line output">drwxrwxr-x 2 username username 4096 Apr 7 11:28 .ssh</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -la ~/.ssh/authorized_keys</span><span class="line output">-rw------- 1 username username 398 Apr 7 11:28 authorized_keys</span></pre></td></tr></table></figure>
+<p>上面的<code>.ssh</code>目录权限不正确，正确应该如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">chmod</span> 700 ~/.ssh</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -la ~</span><span class="line output">drwx------ 2 username username 4096 Apr 7 11:29 .ssh</span></pre></td></tr></table></figure>
+<h2 id="用户主目录的权限对-SSH-的影响"><a href="#用户主目录的权限对-SSH-的影响" class="headerlink" title="用户主目录的权限对 SSH 的影响"></a>用户主目录的权限对 SSH 的影响</h2><p>在 Mac OSX 和 Ubuntu 里，用户主目录的权限为<code>755</code>，用户是可以使用公钥登录的，但是 CentOS 系统中，用户目录的权限必须是<code>700</code>的，不然也会因为宿主目录权限不正确，而被服务器拒绝公钥登录。</p>
+<h2 id="etc-security-access-conf"><a href="#etc-security-access-conf" class="headerlink" title="/etc/security/access.conf"></a>/etc/security/access.conf</h2><p>这个文件的配置也可以控制用户的登录权限。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/" target="_blank" rel="noopener">Generating a new SSH key and adding it to the ssh-agent</a></li>
+<li><a href="https://developer.github.com/v3/guides/using-ssh-agent-forwarding/" target="_blank" rel="noopener">Using SSH agent forwarding</a></li>
+<li><a href="http://www.unixwiz.net/techtips/ssh-agent-forwarding.html" target="_blank" rel="noopener">An Illustrated Guide to SSH Agent Forwarding</a></li>
+<li><a href="https://www.ssh.com/ssh/config/" target="_blank" rel="noopener">SSH CONFIG FILE</a></li>
+<li><a href="https://www.ssh.com/ssh/tunneling/example" target="_blank" rel="noopener">SSH PORT FORWARDING EXAMPLE</a></li>
+<li><a href="https://github.com/rofl0r/proxychains-ng" target="_blank" rel="noopener">ProxyChains-NG ver 4.12 README</a></li>
+<li><a href="https://ma.ttias.be/socks-proxy-linux-ssh-bypass-content-filters/" target="_blank" rel="noopener">Create a SOCKS proxy on a Linux server with SSH</a></li>
+<li><a href="https://serverfault.com/questions/337274/ssh-from-a-through-b-to-c-using-private-key-on-b" target="_blank" rel="noopener">SSH from A through B to C, using private key on B</a></li>
+<li><a href="http://softeng.oicr.on.ca//chen_chen/2017/06/27/Using-Jump-Servers-in-SSH/" target="_blank" rel="noopener">Using Jump Servers and Port Forwarding</a></li>
+<li><a href="http://huifeng.me/2015/08/23/ProxyChains-NG-4-OSX-Setting/" target="_blank" rel="noopener">Mac OSX系统下通过ProxyChains-NG实现终端下的代理</a></li>
+<li><a href="https://unix.stackexchange.com/questions/342106/ssh-agent-not-working-properly" target="_blank" rel="noopener">ssh-agent not working properly</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/04/06/exec-maven-plugin-run-spring-boot.html" rel="next" title="使用exec-maven-plugin运行spring boot应用">
+                <i class="fa fa-chevron-left"></i>
+                使用exec-maven-plugin运行spring boot应用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/mysql/2018/04/13/the-best-commands-mycli.html" rel="prev" title="命令行神器之 mycli 篇">
+                <i class="fa fa-chevron-right"></i>
+                命令行神器之 mycli 篇
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tldr-ssh"><span class="nav-number">1.</span> <span class="nav-text">tldr ssh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#using-ssh-agent"><span class="nav-number">2.</span> <span class="nav-text">using ssh agent</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#A-机器执行的命令"><span class="nav-number">2.1.</span> <span class="nav-text">A 机器执行的命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查本地被代理的密钥"><span class="nav-number">2.2.</span> <span class="nav-text">检查本地被代理的密钥</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh-t-jumpbox-server-ssh-remote-server"><span class="nav-number">3.</span> <span class="nav-text">ssh -t jumpbox.server ssh remote.server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh-config-文件配置"><span class="nav-number">3.1.</span> <span class="nav-text">~/.ssh/config 文件配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-up-socks5-ssh-tunnel"><span class="nav-number">4.</span> <span class="nav-text">set up socks5 ssh tunnel</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#use-socks5-tunnel-with-proxychains-ng"><span class="nav-number">4.1.</span> <span class="nav-text">use socks5 tunnel with proxychains-ng</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh-local-forwarding"><span class="nav-number">5.</span> <span class="nav-text">ssh local forwarding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh-remote-forwarding"><span class="nav-number">6.</span> <span class="nav-text">ssh remote forwarding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh-agent-登录碰到的一个问题"><span class="nav-number">7.</span> <span class="nav-text">ssh-agent 登录碰到的一个问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户主目录的权限对-SSH-的影响"><span class="nav-number">8.</span> <span class="nav-text">用户主目录的权限对 SSH 的影响</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-security-access-conf"><span class="nav-number">9.</span> <span class="nav-text">/etc/security/access.conf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">10.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

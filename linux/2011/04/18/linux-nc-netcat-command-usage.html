@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="使用netcat检查服务器的指定的端口是否开通">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux命令nc使用说明">
-<meta property="og:url" content="https://www.4e00.com/linux/2011/04/18/linux-nc-netcat-command-usage.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2011/04/18/linux-nc-netcat-command-usage.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="使用netcat检查服务器的指定的端口是否开通">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.076Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux命令nc使用说明">
 <meta name="twitter:description" content="使用netcat检查服务器的指定的端口是否开通">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2011/04/18/linux-nc-netcat-command-usage.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2011/04/18/linux-nc-netcat-command-usage.html">
 
   <title> linux命令nc使用说明 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -255,10 +255,10 @@
 
       
         <h2 id="使用netcat检查服务器的指定的端口是否开通"><a href="#使用netcat检查服务器的指定的端口是否开通" class="headerlink" title="使用netcat检查服务器的指定的端口是否开通"></a>使用netcat检查服务器的指定的端口是否开通</h2><a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">nc</span> -z -v 192.168.1.242 80</div><div class="line">linux.local [192.168.1.242] 80 (www) open</div></pre></td></tr></table></figure>
-<h2 id="使用netcat扫描端口"><a href="#使用netcat扫描端口" class="headerlink" title="使用netcat扫描端口"></a>使用netcat扫描端口</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">nc</span> -z -v -w 1 192.168.1.242 1-100</div><div class="line">linux.local [192.168.1.242] 80 (www) open</div><div class="line">linux.local [192.168.1.242] 22 (ssh) open</div></pre></td></tr></table></figure>
-<h2 id="使用netcat模拟HTTP请求"><a href="#使用netcat模拟HTTP请求" class="headerlink" title="使用netcat模拟HTTP请求"></a>使用netcat模拟HTTP请求</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">nc</span> www.google.com.hk 80</div><div class="line">GET / HTTP/1.1</div><div class="line">Host: www.google.com.hk</div><div class="line">User-Agent: google-chrome9</div><div class="line"></div><div class="line">HTTP/1.1 200 OK</div><div class="line">Date: Mon, 18 Apr 2011 08:56:03 GMT</div><div class="line">Expires: -1</div><div class="line">Cache-Control: private, max-age=0</div><div class="line">Content-Type: text/html; charset=Big5</div><div class="line">Set-Cookie: PREF=ID=5006f5c292697224:FF=0:NW=1:TM=1303116963:LM=1303116963:S=Lr6ijyXSbmjA6bmZ; expires=Wed, 17-Apr-2013 08:56:03 GMT; path=/; domain=.google.com.hk</div><div class="line">Set-Cookie: NID=46=ky6egq_YajJNEzdnM39_2u3CFq2hJLvSVuQm6BokYXSBKhAefFIuL-ZsZOvnDpMISnI2glY25IZxS8_5G0V-EHj-oEc7KRGW4rSZk9yIRnCgsPnm43qhLUMb9hJuKeVW; expires=Tue, 18-Oct-2011 08:56:03 GMT; path=/; domain=.google.com.hk; HttpOnly</div><div class="line">Server: gws</div><div class="line">X-XSS-Protection: 1; mode=block</div><div class="line">Transfer-Encoding: chunked</div><div class="line">[......]</div></pre></td></tr></table></figure>
-<h2 id="netcat参数说明"><a href="#netcat参数说明" class="headerlink" title="netcat参数说明"></a>netcat参数说明</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">语　　法：nc [-hlnruz][-g&lt;网关...&gt;][-G&lt;指向器数目&gt;][-i&lt;延迟秒数&gt;][-o&lt;输出文件&gt;][-p&lt;通信端口&gt;][-s&lt;来源位址&gt;][-v...][-w&lt;超时秒数&gt;][主机名称][通信端口...]</div><div class="line">参　　数：</div><div class="line">  -g&lt;网关&gt;  设置路由器跃程通信网关，最多可设置8个。</div><div class="line">  -G&lt;指向器数目&gt;  设置来源路由指向器，其数值为4的倍数。</div><div class="line">  -h   在线帮助。</div><div class="line">  -i&lt;延迟秒数&gt;  设置时间间隔，以便传送信息及扫描通信端口。</div><div class="line">  -l   使用监听模式，管控传入的资料。</div><div class="line">  -n   直接使用IP地址，而不通过域名服务器。</div><div class="line">  -o&lt;输出文件&gt;  指定文件名称，把往来传输的数据以16进制字码倾倒成该文件保存。</div><div class="line">  -p&lt;通信端口&gt;  设置本地主机使用的通信端口。</div><div class="line">  -r   乱数指定本地与远端主机的通信端口。</div><div class="line">  -s&lt;来源位址&gt;  设置本地主机送出数据包的IP地址。</div><div class="line">  -u   使用UDP传输协议。</div><div class="line">  -v   显示指令执行过程。</div><div class="line">  -w&lt;超时秒数&gt;  设置等待连线的时间。</div><div class="line">  -z   使用0输入/输出模式，只在扫描通信端口时使用。</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nc</span> -z -v 192.168.1.242 80</span><span class="line">linux.local [192.168.1.242] 80 (www) open</span></pre></td></tr></table></figure>
+<h2 id="使用netcat扫描端口"><a href="#使用netcat扫描端口" class="headerlink" title="使用netcat扫描端口"></a>使用netcat扫描端口</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nc</span> -z -v -w 1 192.168.1.242 1-100</span><span class="line">linux.local [192.168.1.242] 80 (www) open</span><span class="line">linux.local [192.168.1.242] 22 (ssh) open</span></pre></td></tr></table></figure>
+<h2 id="使用netcat模拟HTTP请求"><a href="#使用netcat模拟HTTP请求" class="headerlink" title="使用netcat模拟HTTP请求"></a>使用netcat模拟HTTP请求</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nc</span> www.google.com.hk 80</span><span class="line">GET / HTTP/1.1</span><span class="line">Host: www.google.com.hk</span><span class="line">User-Agent: google-chrome9</span><span class="line"></span><span class="line">HTTP/1.1 200 OK</span><span class="line">Date: Mon, 18 Apr 2011 08:56:03 GMT</span><span class="line">Expires: -1</span><span class="line">Cache-Control: private, max-age=0</span><span class="line">Content-Type: text/html; charset=Big5</span><span class="line">Set-Cookie: PREF=ID=5006f5c292697224:FF=0:NW=1:TM=1303116963:LM=1303116963:S=Lr6ijyXSbmjA6bmZ; expires=Wed, 17-Apr-2013 08:56:03 GMT; path=/; domain=.google.com.hk</span><span class="line">Set-Cookie: NID=46=ky6egq_YajJNEzdnM39_2u3CFq2hJLvSVuQm6BokYXSBKhAefFIuL-ZsZOvnDpMISnI2glY25IZxS8_5G0V-EHj-oEc7KRGW4rSZk9yIRnCgsPnm43qhLUMb9hJuKeVW; expires=Tue, 18-Oct-2011 08:56:03 GMT; path=/; domain=.google.com.hk; HttpOnly</span><span class="line">Server: gws</span><span class="line">X-XSS-Protection: 1; mode=block</span><span class="line">Transfer-Encoding: chunked</span><span class="line">[......]</span></pre></td></tr></table></figure>
+<h2 id="netcat参数说明"><a href="#netcat参数说明" class="headerlink" title="netcat参数说明"></a>netcat参数说明</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">语　　法：nc [-hlnruz][-g&lt;网关...&gt;][-G&lt;指向器数目&gt;][-i&lt;延迟秒数&gt;][-o&lt;输出文件&gt;][-p&lt;通信端口&gt;][-s&lt;来源位址&gt;][-v...][-w&lt;超时秒数&gt;][主机名称][通信端口...]</span><span class="line">参　　数：</span><span class="line">  -g&lt;网关&gt;  设置路由器跃程通信网关，最多可设置8个。</span><span class="line">  -G&lt;指向器数目&gt;  设置来源路由指向器，其数值为4的倍数。</span><span class="line">  -h   在线帮助。</span><span class="line">  -i&lt;延迟秒数&gt;  设置时间间隔，以便传送信息及扫描通信端口。</span><span class="line">  -l   使用监听模式，管控传入的资料。</span><span class="line">  -n   直接使用IP地址，而不通过域名服务器。</span><span class="line">  -o&lt;输出文件&gt;  指定文件名称，把往来传输的数据以16进制字码倾倒成该文件保存。</span><span class="line">  -p&lt;通信端口&gt;  设置本地主机使用的通信端口。</span><span class="line">  -r   乱数指定本地与远端主机的通信端口。</span><span class="line">  -s&lt;来源位址&gt;  设置本地主机送出数据包的IP地址。</span><span class="line">  -u   使用UDP传输协议。</span><span class="line">  -v   显示指令执行过程。</span><span class="line">  -w&lt;超时秒数&gt;  设置等待连线的时间。</span><span class="line">  -z   使用0输入/输出模式，只在扫描通信端口时使用。</span></pre></td></tr></table></figure>
 
       
     </div>
@@ -285,7 +285,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/java/2011/01/28/tomcat-url-get-uriencoding.html" rel="next" title="tomcat get请求的url支持中文文件名">
-                上一篇：tomcat get请求的url支持中文文件名
+                <i class="fa fa-chevron-left"></i>
+                tomcat get请求的url支持中文文件名
               </a>
             
           </div>
@@ -293,7 +294,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/javascript/2011/04/19/get-window-scroll-bar-width.html" rel="prev" title="get window scroll bar width">
-                下一篇：get window scroll bar width
+                <i class="fa fa-chevron-right"></i>
+                get window scroll bar width
               </a>
             
           </div>
@@ -342,7 +344,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -353,16 +355,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -444,10 +444,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

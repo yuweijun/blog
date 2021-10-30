@@ -1,0 +1,622 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="About HammerspoonHammerspoon 是 Mac OS 上强大自动化管理工具，Hammerspoon 的核心只是操作系统和 Lua 脚本引擎之间的桥梁。Hammerspoon 强大之处在于提供了一组扩展，这些扩展向用户提供了特定的系统功能，有了这些扩展，我们可以编写 Lua 脚本来控制 Mac OS X 系统的许多行为。 安装 brew cask install hammers">
+<meta property="og:type" content="article">
+<meta property="og:title" content="macos 神器之 hammerspoon 篇">
+<meta property="og:url" content="http://www.4e00.com/macos/2020/05/03/macos-app-hammerspoon.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="About HammerspoonHammerspoon 是 Mac OS 上强大自动化管理工具，Hammerspoon 的核心只是操作系统和 Lua 脚本引擎之间的桥梁。Hammerspoon 强大之处在于提供了一组扩展，这些扩展向用户提供了特定的系统功能，有了这些扩展，我们可以编写 Lua 脚本来控制 Mac OS X 系统的许多行为。 安装 brew cask install hammers">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/macos/hammerspoon-preferences.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/macos/hammerspoon-system-accessibility.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/macos/hammerspoon-tree.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/macos/hammerspoon-console.png">
+<meta property="og:updated_time" content="2020-05-03T11:43:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="macos 神器之 hammerspoon 篇">
+<meta name="twitter:description" content="About HammerspoonHammerspoon 是 Mac OS 上强大自动化管理工具，Hammerspoon 的核心只是操作系统和 Lua 脚本引擎之间的桥梁。Hammerspoon 强大之处在于提供了一组扩展，这些扩展向用户提供了特定的系统功能，有了这些扩展，我们可以编写 Lua 脚本来控制 Mac OS X 系统的许多行为。 安装 brew cask install hammers">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/macos/hammerspoon-preferences.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/macos/2020/05/03/macos-app-hammerspoon.html">
+
+  <title> macos 神器之 hammerspoon 篇 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                macos 神器之 hammerspoon 篇
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2020-05-03T09:51:40+08:00" content="2020-05-03">
+              2020-05-03
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/macos/" itemprop="url" rel="index">
+                    <span itemprop="name">macos</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="About-Hammerspoon"><a href="#About-Hammerspoon" class="headerlink" title="About Hammerspoon"></a>About Hammerspoon</h2><p><a href="https://github.com/Hammerspoon/hammerspoon" target="_blank" rel="noopener">Hammerspoon</a> 是 Mac OS 上强大自动化管理工具，<code>Hammerspoon</code> 的核心只是操作系统和 Lua 脚本引擎之间的桥梁。<code>Hammerspoon</code> 强大之处在于提供了一组扩展，这些扩展向用户提供了特定的系统功能，有了这些扩展，我们可以编写 Lua 脚本来控制 Mac OS X 系统的许多行为。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> cask install hammerspoon</span></pre></td></tr></table></figure>
+<p>第一次打开需要授予系统辅助功能权限 <code>Enable Accessibility</code>，如下 2 图。</p>
+<img src="/blog/img/macos/hammerspoon-preferences.png" class="image-md" title="[hammerspoon preferences]">
+<img src="/blog/img/macos/hammerspoon-system-accessibility.png" class="image-md" title="[system accessibility]">
+<h2 id="配置文件和-Spoon-插件结构"><a href="#配置文件和-Spoon-插件结构" class="headerlink" title="配置文件和 Spoon 插件结构"></a>配置文件和 Spoon 插件结构</h2><p>配置文件为 <code>~/.hammerspoon/init.lua</code>，插件安装目录 <code>~/.hammerspoon/Spoons</code>。</p>
+<img src="/blog/img/macos/hammerspoon-tree.png" class="image-md" title="[hammerspoon config and plugins]">
+<a id="more"></a>
+<h2 id="功能配置"><a href="#功能配置" class="headerlink" title="功能配置"></a>功能配置</h2><h3 id="自定义-hyper-键"><a href="#自定义-hyper-键" class="headerlink" title="自定义 hyper 键"></a>自定义 hyper 键</h3><p>这个如果配合<code>Karabiner Element.app</code>来定义是最好的，也可以直接用<code>Hammerspoon</code>自定义<kbd>Hyper</kbd>键如下，即同时按下<kbd>Ctrl + Option + Command</kbd>三个键：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> hyper = &#123;<span class="string">'ctrl'</span>, <span class="string">'alt'</span>, <span class="string">'cmd'</span>&#125;</span></pre></td></tr></table></figure>
+<h3 id="窗口管理"><a href="#窗口管理" class="headerlink" title="窗口管理"></a>窗口管理</h3><p>对窗口大小的位置进行配置管理，达到<code>Spectacle.app</code>软件类似的效果，快捷键说明：</p>
+<ol>
+<li><kbd>Hyper + 1</kbd>: 当前窗口显示到屏幕左上方 1/4 位置；</li>
+<li><kbd>Hyper + 2</kbd>: 当前窗口显示到屏幕右上方 1/4 位置；</li>
+<li><kbd>Hyper + 3</kbd>: 当前窗口显示到屏幕左下方 1/4 位置；</li>
+<li><kbd>Hyper + 4</kbd>: 当前窗口显示到屏幕右下方 1/4 位置；</li>
+<li><kbd>Hyper + left</kbd>: 当前窗口显示到屏幕左方 1/2 位置；</li>
+<li><kbd>Hyper + right</kbd>: 当前窗口显示到屏幕右方 1/2 位置；</li>
+<li><kbd>Hyper + up</kbd>: 当前窗口显示到屏幕上方 1/2 位置；</li>
+<li><kbd>Hyper + down</kbd>: 当前窗口显示到屏幕下方 1/2 位置；</li>
+<li><kbd>Hyper + 5</kbd>: 当前窗口最大化（不是全屏）。</li>
+</ol>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">baseMove</span><span class="params">(x, y, w, h)</span></span></span><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><span class="line">        <span class="keyword">local</span> win = hs.window.focusedWindow()</span><span class="line">        <span class="keyword">local</span> f = win:frame()</span><span class="line">        <span class="keyword">local</span> screen = win:screen()</span><span class="line">        <span class="keyword">local</span> <span class="built_in">max</span> = screen:frame()</span><span class="line"></span><span class="line">        f.x = <span class="built_in">max</span>.w * x + <span class="built_in">max</span>.x</span><span class="line">        f.y = <span class="built_in">max</span>.h * y</span><span class="line">        f.w = <span class="built_in">max</span>.w * w</span><span class="line">        f.h = <span class="built_in">max</span>.h * h</span><span class="line">        win:setFrame(f, <span class="number">0</span>)</span><span class="line">    <span class="keyword">end</span></span><span class="line"><span class="keyword">end</span></span><span class="line"></span><span class="line">hs.hotkey.bind(hyper, <span class="string">'Left'</span>, baseMove(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5</span>, <span class="number">1</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'Right'</span>, baseMove(<span class="number">0.5</span>, <span class="number">0</span>, <span class="number">0.5</span>, <span class="number">1</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'Down'</span>, baseMove(<span class="number">0</span>, <span class="number">0.5</span>, <span class="number">1</span>, <span class="number">0.5</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'Up'</span>, baseMove(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0.5</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'1'</span>, baseMove(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5</span>, <span class="number">0.5</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'2'</span>, baseMove(<span class="number">0.5</span>, <span class="number">0</span>, <span class="number">0.5</span>, <span class="number">0.5</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'3'</span>, baseMove(<span class="number">0</span>, <span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'4'</span>, baseMove(<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'5'</span>, hs.grid.maximizeWindow)</span></pre></td></tr></table></figure>
+<h3 id="应用快速切换"><a href="#应用快速切换" class="headerlink" title="应用快速切换"></a>应用快速切换</h3><p>使用快捷键一步直达想要操作的应用，避免使用<kbd>Command + Tab</kbd>切换：</p>
+<ol>
+<li><kbd>Alt + a</kbd>: 打开<code>Launchpad</code>；</li>
+<li><kbd>Alt + s</kbd>: 打开<code>System Preferemces</code>；</li>
+<li><kbd>Alt + d</kbd>: 打开<code>Intellij IDEA CE</code>；</li>
+<li><kbd>Alt + e</kbd>: 打开<code>Evernote</code>；</li>
+<li><kbd>Alt + f</kbd>: 打开<code>finder</code>；</li>
+<li><kbd>Alt + g</kbd>: 打开<code>Google Chrome</code>；</li>
+<li><kbd>Alt + w</kbd>: 打开<code>Mission Control</code>；</li>
+<li><kbd>Alt + x</kbd>: 打开<code>iTerm</code>。</li>
+</ol>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"a"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'Launchpad'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"s"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'System Preferences'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"d"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'Intellij IDEA CE'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"e"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'Evernote'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"f"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'finder'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"g"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'Google Chrome'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"w"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'Mission Control'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"x"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'iTerm'</span>) <span class="keyword">end</span>)</span></pre></td></tr></table></figure>
+<h3 id="屏幕锁定"><a href="#屏幕锁定" class="headerlink" title="屏幕锁定"></a>屏幕锁定</h3><p>可以安装这 2 款好看的屏保：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">brew</span> cask install fliqlo clocksaver</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">xattr</span> -rc <span class="string">"<span class="variable">$HOME</span>/Library/Screen Savers"</span></span></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">hs.hotkey.bind(hyper, <span class="string">'L'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><span class="line">    hs.caffeinate.startScreensaver()</span><span class="line"><span class="keyword">end</span>)</span></pre></td></tr></table></figure>
+<h3 id="方向键映射"><a href="#方向键映射" class="headerlink" title="方向键映射"></a>方向键映射</h3><p>映射<kbd>Alt + JK</kbd>，只映射了最常用到的上下方向键，在命令行和 vim 中与其他快捷键冲突较少：</p>
+<ol>
+<li><kbd>Alt-J</kbd> 映射为向下方向键 <kbd>down</kbd></li>
+<li><kbd>Alt-K</kbd> 映射为向上方向键 <kbd>up</kbd></li>
+</ol>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">pressFn</span><span class="params">(mods, key)</span></span></span><span class="line">    <span class="keyword">if</span> key == <span class="literal">nil</span> <span class="keyword">then</span></span><span class="line">        key = mods</span><span class="line">        mods = &#123;&#125;</span><span class="line">    <span class="keyword">end</span></span><span class="line"></span><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.eventtap.keyStroke(mods, key, <span class="number">80</span>) <span class="keyword">end</span></span><span class="line"><span class="keyword">end</span></span><span class="line"></span><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">remap</span><span class="params">(mods, key, pressFn)</span></span></span><span class="line">    hs.hotkey.bind(mods, key, pressFn, <span class="literal">nil</span>, pressFn)</span><span class="line"><span class="keyword">end</span></span><span class="line"></span><span class="line">remap(&#123;<span class="string">'alt'</span>&#125;, <span class="string">'j'</span>, pressFn(<span class="string">'down'</span>))</span><span class="line">remap(&#123;<span class="string">'alt'</span>&#125;, <span class="string">'k'</span>, pressFn(<span class="string">'up'</span>))</span></pre></td></tr></table></figure>
+<p>网上有配置是映射<kbd>Ctrl + HJKL</kbd>，如 <a href="https://github.com/kkamdooong/hammerspoon-control-hjkl-to-arrow" target="_blank" rel="noopener">https://github.com/kkamdooong/hammerspoon-control-hjkl-to-arrow</a>，这篇文章里对方向键做了更多的映射，可以参考，不过这些与我在命令行和 vim 中的有些快捷键冲突了，所以并不合适我。</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">remap(&#123;<span class="string">'ctrl'</span>&#125;, <span class="string">'h'</span>, pressFn(<span class="string">'left'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>&#125;, <span class="string">'j'</span>, pressFn(<span class="string">'down'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>&#125;, <span class="string">'k'</span>, pressFn(<span class="string">'up'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>&#125;, <span class="string">'l'</span>, pressFn(<span class="string">'right'</span>))</span><span class="line"></span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'shift'</span>&#125;, <span class="string">'h'</span>, pressFn(&#123;<span class="string">'shift'</span>&#125;, <span class="string">'left'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'shift'</span>&#125;, <span class="string">'j'</span>, pressFn(&#123;<span class="string">'shift'</span>&#125;, <span class="string">'down'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'shift'</span>&#125;, <span class="string">'k'</span>, pressFn(&#123;<span class="string">'shift'</span>&#125;, <span class="string">'up'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'shift'</span>&#125;, <span class="string">'l'</span>, pressFn(&#123;<span class="string">'shift'</span>&#125;, <span class="string">'right'</span>))</span><span class="line"></span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'cmd'</span>&#125;, <span class="string">'h'</span>, pressFn(&#123;<span class="string">'cmd'</span>&#125;, <span class="string">'left'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'cmd'</span>&#125;, <span class="string">'j'</span>, pressFn(&#123;<span class="string">'cmd'</span>&#125;, <span class="string">'down'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'cmd'</span>&#125;, <span class="string">'k'</span>, pressFn(&#123;<span class="string">'cmd'</span>&#125;, <span class="string">'up'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'cmd'</span>&#125;, <span class="string">'l'</span>, pressFn(&#123;<span class="string">'cmd'</span>&#125;, <span class="string">'right'</span>))</span><span class="line"></span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'h'</span>, pressFn(&#123;<span class="string">'alt'</span>&#125;, <span class="string">'left'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'j'</span>, pressFn(&#123;<span class="string">'alt'</span>&#125;, <span class="string">'down'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'k'</span>, pressFn(&#123;<span class="string">'alt'</span>&#125;, <span class="string">'up'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'l'</span>, pressFn(&#123;<span class="string">'alt'</span>&#125;, <span class="string">'right'</span>))</span><span class="line"></span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'shift'</span>, <span class="string">'cmd'</span>&#125;, <span class="string">'h'</span>, pressFn(&#123;<span class="string">'shift'</span>, <span class="string">'cmd'</span>&#125;, <span class="string">'left'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'shift'</span>, <span class="string">'cmd'</span>&#125;, <span class="string">'j'</span>, pressFn(&#123;<span class="string">'shift'</span>, <span class="string">'cmd'</span>&#125;, <span class="string">'down'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'shift'</span>, <span class="string">'cmd'</span>&#125;, <span class="string">'k'</span>, pressFn(&#123;<span class="string">'shift'</span>, <span class="string">'cmd'</span>&#125;, <span class="string">'up'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'shift'</span>, <span class="string">'cmd'</span>&#125;, <span class="string">'l'</span>, pressFn(&#123;<span class="string">'shift'</span>, <span class="string">'cmd'</span>&#125;, <span class="string">'right'</span>))</span><span class="line"></span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'shift'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'h'</span>, pressFn(&#123;<span class="string">'shift'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'left'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'shift'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'j'</span>, pressFn(&#123;<span class="string">'shift'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'down'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'shift'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'k'</span>, pressFn(&#123;<span class="string">'shift'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'up'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'shift'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'l'</span>, pressFn(&#123;<span class="string">'shift'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'right'</span>))</span><span class="line"></span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'cmd'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'h'</span>, pressFn(&#123;<span class="string">'cmd'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'left'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'cmd'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'j'</span>, pressFn(&#123;<span class="string">'cmd'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'down'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'cmd'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'k'</span>, pressFn(&#123;<span class="string">'cmd'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'up'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'cmd'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'l'</span>, pressFn(&#123;<span class="string">'cmd'</span>, <span class="string">'alt'</span>&#125;, <span class="string">'right'</span>))</span><span class="line"></span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'cmd'</span>, <span class="string">'alt'</span>, <span class="string">'shift'</span>&#125;, <span class="string">'h'</span>, pressFn(&#123;<span class="string">'cmd'</span>, <span class="string">'alt'</span>, <span class="string">'shift'</span>&#125;, <span class="string">'left'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'cmd'</span>, <span class="string">'alt'</span>, <span class="string">'shift'</span>&#125;, <span class="string">'j'</span>, pressFn(&#123;<span class="string">'cmd'</span>, <span class="string">'alt'</span>, <span class="string">'shift'</span>&#125;, <span class="string">'down'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'cmd'</span>, <span class="string">'alt'</span>, <span class="string">'shift'</span>&#125;, <span class="string">'k'</span>, pressFn(&#123;<span class="string">'cmd'</span>, <span class="string">'alt'</span>, <span class="string">'shift'</span>&#125;, <span class="string">'up'</span>))</span><span class="line">remap(&#123;<span class="string">'ctrl'</span>, <span class="string">'cmd'</span>, <span class="string">'alt'</span>, <span class="string">'shift'</span>&#125;, <span class="string">'l'</span>, pressFn(&#123;<span class="string">'cmd'</span>, <span class="string">'alt'</span>, <span class="string">'shift'</span>&#125;, <span class="string">'right'</span>))</span></pre></td></tr></table></figure>
+<h3 id="历史剪切板"><a href="#历史剪切板" class="headerlink" title="历史剪切板"></a>历史剪切板</h3><p><a href="http://www.hammerspoon.org/Spoons/TextClipboardHistory.html" target="_blank" rel="noopener">TextClipboardHistory</a>，剪贴板历史，仅支持文本内容，<a href="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/TextClipboardHistory.spoon.zip" target="_blank" rel="noopener">Download</a> 后解压出来的文件夹加到<code>~/.hammerspoon/Spoons</code>目录下，然后加入以下配置到<code>~/.hammerspoon/init.lua</code>文件中，重启应用即可：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">hs.loadSpoon(<span class="string">'TextClipboardHistory'</span>)</span><span class="line">spoon.TextClipboardHistory.show_in_menubar = <span class="literal">false</span></span><span class="line">spoon.TextClipboardHistory.paste_on_select = <span class="literal">true</span></span><span class="line">spoon.TextClipboardHistory.honor_ignoredidentifiers = <span class="literal">true</span></span><span class="line">spoon.TextClipboardHistory:start()</span><span class="line"></span><span class="line">hs.hotkey.bind(hyper, <span class="string">"V"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><span class="line">    spoon.TextClipboardHistory:toggleClipboard()</span><span class="line">    mode:<span class="built_in">exit</span>()</span><span class="line"><span class="keyword">end</span>)</span></pre></td></tr></table></figure>
+<p>不过 Mac OS 上其他一些剪贴板管理工具更加强大好用，比如收费的 <code>ipaste</code> 和 <code>paste</code> 都很不错，开源免费的 <code>clipy</code> 和 <code>flycut</code> 也是极好用。</p>
+<h3 id="菜单栏实时显示网速"><a href="#菜单栏实时显示网速" class="headerlink" title="菜单栏实时显示网速"></a>菜单栏实时显示网速</h3><p><a href="http://www.hammerspoon.org/Spoons/SpeedMenu.html" target="_blank" rel="noopener">SpeedMenu</a> 在 menu bar 上显示网速：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">hs.loadSpoon(<span class="string">'SpeedMenu'</span>)</span><span class="line">spoon.SpeedMenu:start()</span></pre></td></tr></table></figure>
+<h3 id="Hammerspoon-reload-配置和显示-Hammerspoon-console"><a href="#Hammerspoon-reload-配置和显示-Hammerspoon-console" class="headerlink" title="Hammerspoon reload 配置和显示 Hammerspoon console"></a>Hammerspoon reload 配置和显示 Hammerspoon console</h3><p>修改完配置文件，按<kbd>Ctrl + Option + Command + R</kbd>重新加载配置，这个功能有一个官方的<a href="http://www.hammerspoon.org/Spoons/ReloadConfiguration.html" target="_blank" rel="noopener">ReloadConfiguration 插件</a>：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">hs.hotkey.bind(hyper, <span class="string">"R"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><span class="line">    hs.reload()</span><span class="line">    hs.notify.new(&#123;title=<span class="string">"Hammerspoon config reloaded"</span>, informativeText=<span class="string">"Manually via keyboard shortcut"</span>&#125;):send()</span><span class="line"><span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(hyper, <span class="string">"C"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><span class="line">    hs.application.get(<span class="string">"Hammerspoon"</span>):selectMenuItem(<span class="string">"Console..."</span>)</span><span class="line">    hs.application.launchOrFocus(<span class="string">"Hammerspoon"</span>)</span><span class="line"><span class="keyword">end</span>)</span></pre></td></tr></table></figure>
+<p>如上配置之后，启动<code>Hammerspoon</code>后，可以使用快捷键<kbd>Ctrl + Option + Command + C</kbd>调出控制台，如下所示：</p>
+<img src="/blog/img/macos/hammerspoon-console.png" class="image-lg" title="[hammerspoon console]">
+<h2 id="init-lua-完整配置"><a href="#init-lua-完整配置" class="headerlink" title="init.lua 完整配置"></a>init.lua 完整配置</h2><p>个人使用的完整配置<code>~/.hammerspoon/init.lua</code>，没有包括历史剪贴板和显示网速等插件功能，更多插件可以查看：<a href="http://www.hammerspoon.org/Spoons/" target="_blank" rel="noopener">http://www.hammerspoon.org/Spoons/</a>。</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> hyper = &#123;<span class="string">'ctrl'</span>, <span class="string">'alt'</span>, <span class="string">'cmd'</span>&#125;</span><span class="line"></span><span class="line">hs.hotkey.bind(hyper, <span class="string">'L'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><span class="line">    hs.caffeinate.startScreensaver()</span><span class="line"><span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(hyper, <span class="string">"R"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><span class="line">    hs.reload()</span><span class="line">    hs.notify.new(&#123;title=<span class="string">"Hammerspoon config reloaded"</span>, informativeText=<span class="string">"Manually via keyboard shortcut"</span>&#125;):send()</span><span class="line"><span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(hyper, <span class="string">"C"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><span class="line">    hs.application.get(<span class="string">"Hammerspoon"</span>):selectMenuItem(<span class="string">"Console..."</span>)</span><span class="line">    hs.application.launchOrFocus(<span class="string">"Hammerspoon"</span>)</span><span class="line"><span class="keyword">end</span>)</span><span class="line"></span><span class="line"><span class="comment">--------------------------------------------------------------------------------</span></span><span class="line"><span class="comment">---------------------------- Hotkey app management -----------------------------</span></span><span class="line"><span class="comment">--------------------------------------------------------------------------------</span></span><span class="line"></span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"["</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.<span class="built_in">execute</span>(<span class="string">'~/.hammerspoon/bin/google'</span>, <span class="literal">true</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"]"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.<span class="built_in">execute</span>(<span class="string">'~/.hammerspoon/bin/translate'</span>, <span class="literal">true</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"a"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'Launchpad'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"s"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'System Preferences'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"d"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'Intellij IDEA CE'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"e"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'Evernote'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"f"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'finder'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"g"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'Google Chrome'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"w"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'Mission Control'</span>) <span class="keyword">end</span>)</span><span class="line">hs.hotkey.bind(&#123;<span class="string">'alt'</span>&#125;, <span class="string">"x"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.application.launchOrFocus(<span class="string">'iTerm'</span>) <span class="keyword">end</span>)</span><span class="line"></span><span class="line"><span class="comment">--------------------------------------------------------------------------------</span></span><span class="line"><span class="comment">------------------------------ Window management -------------------------------</span></span><span class="line"><span class="comment">--------------------------------------------------------------------------------</span></span><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">baseMove</span><span class="params">(x, y, w, h)</span></span></span><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><span class="line">        <span class="keyword">local</span> win = hs.window.focusedWindow()</span><span class="line">        <span class="keyword">local</span> f = win:frame()</span><span class="line">        <span class="keyword">local</span> screen = win:screen()</span><span class="line">        <span class="keyword">local</span> <span class="built_in">max</span> = screen:frame()</span><span class="line"></span><span class="line">        f.x = <span class="built_in">max</span>.w * x + <span class="built_in">max</span>.x</span><span class="line">        f.y = <span class="built_in">max</span>.h * y</span><span class="line">        f.w = <span class="built_in">max</span>.w * w</span><span class="line">        f.h = <span class="built_in">max</span>.h * h</span><span class="line">        win:setFrame(f, <span class="number">0</span>)</span><span class="line">    <span class="keyword">end</span></span><span class="line"><span class="keyword">end</span></span><span class="line"></span><span class="line">hs.hotkey.bind(hyper, <span class="string">'Left'</span>, baseMove(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5</span>, <span class="number">1</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'Right'</span>, baseMove(<span class="number">0.5</span>, <span class="number">0</span>, <span class="number">0.5</span>, <span class="number">1</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'Down'</span>, baseMove(<span class="number">0</span>, <span class="number">0.5</span>, <span class="number">1</span>, <span class="number">0.5</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'Up'</span>, baseMove(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0.5</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'1'</span>, baseMove(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5</span>, <span class="number">0.5</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'2'</span>, baseMove(<span class="number">0.5</span>, <span class="number">0</span>, <span class="number">0.5</span>, <span class="number">0.5</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'3'</span>, baseMove(<span class="number">0</span>, <span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'4'</span>, baseMove(<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>))</span><span class="line">hs.hotkey.bind(hyper, <span class="string">'5'</span>, hs.grid.maximizeWindow)</span><span class="line"></span><span class="line"><span class="comment">--------------------------------------------------------------------------------</span></span><span class="line"><span class="comment">------------------------------- remapping alt+jk -------------------------------</span></span><span class="line"><span class="comment">--------------------------------------------------------------------------------</span></span><span class="line"></span><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">pressFn</span><span class="params">(mods, key)</span></span></span><span class="line">    <span class="keyword">if</span> key == <span class="literal">nil</span> <span class="keyword">then</span></span><span class="line">        key = mods</span><span class="line">        mods = &#123;&#125;</span><span class="line">    <span class="keyword">end</span></span><span class="line"></span><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span></span> hs.eventtap.keyStroke(mods, key, <span class="number">80</span>) <span class="keyword">end</span></span><span class="line"><span class="keyword">end</span></span><span class="line"></span><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">remap</span><span class="params">(mods, key, pressFn)</span></span></span><span class="line">    hs.hotkey.bind(mods, key, pressFn, <span class="literal">nil</span>, pressFn)</span><span class="line"><span class="keyword">end</span></span><span class="line"></span><span class="line">remap(&#123;<span class="string">'alt'</span>&#125;, <span class="string">'j'</span>, pressFn(<span class="string">'down'</span>))</span><span class="line">remap(&#123;<span class="string">'alt'</span>&#125;, <span class="string">'k'</span>, pressFn(<span class="string">'up'</span>))</span></pre></td></tr></table></figure>
+<h2 id="其他人的配置参考"><a href="#其他人的配置参考" class="headerlink" title="其他人的配置参考"></a>其他人的配置参考</h2><p>官方提供了一些大神们的<a href="https://github.com/Hammerspoon/hammerspoon/wiki/Sample-Configurations" target="_blank" rel="noopener">配置样例</a>，可以参考学习。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://github.com/Hammerspoon/hammerspoon" target="_blank" rel="noopener">Hammerspoon on Github</a></li>
+<li><a href="https://github.com/Hammerspoon/hammerspoon/wiki/Sample-Configurations" target="_blank" rel="noopener">Sample Configurations</a></li>
+<li><a href="https://spinscale.de/posts/2016-11-08-creating-a-productive-osx-environment-hammerspoon.html" target="_blank" rel="noopener">Creating a productive osx environment - hammerspoon</a></li>
+<li><a href="http://www.hammerspoon.org/go/" target="_blank" rel="noopener">Getting Started with Hammerspoon</a></li>
+<li><a href="https://www.songofcode.com/posts/powerful-hammerspoon/" target="_blank" rel="noopener">Powerful Hammerspoon</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2020/03/18/terminal-colors-tools-and-tutorial.html" rel="next" title="terminal colors tools and tutorial">
+                <i class="fa fa-chevron-left"></i>
+                terminal colors tools and tutorial
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2020/05/03/vim-escape-key-configuration.html" rel="prev" title="vim escape key configuration">
+                <i class="fa fa-chevron-right"></i>
+                vim escape key configuration
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#About-Hammerspoon"><span class="nav-number">1.</span> <span class="nav-text">About Hammerspoon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件和-Spoon-插件结构"><span class="nav-number">3.</span> <span class="nav-text">配置文件和 Spoon 插件结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能配置"><span class="nav-number">4.</span> <span class="nav-text">功能配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义-hyper-键"><span class="nav-number">4.1.</span> <span class="nav-text">自定义 hyper 键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#窗口管理"><span class="nav-number">4.2.</span> <span class="nav-text">窗口管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用快速切换"><span class="nav-number">4.3.</span> <span class="nav-text">应用快速切换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#屏幕锁定"><span class="nav-number">4.4.</span> <span class="nav-text">屏幕锁定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方向键映射"><span class="nav-number">4.5.</span> <span class="nav-text">方向键映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#历史剪切板"><span class="nav-number">4.6.</span> <span class="nav-text">历史剪切板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#菜单栏实时显示网速"><span class="nav-number">4.7.</span> <span class="nav-text">菜单栏实时显示网速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hammerspoon-reload-配置和显示-Hammerspoon-console"><span class="nav-number">4.8.</span> <span class="nav-text">Hammerspoon reload 配置和显示 Hammerspoon console</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#init-lua-完整配置"><span class="nav-number">5.</span> <span class="nav-text">init.lua 完整配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他人的配置参考"><span class="nav-number">6.</span> <span class="nav-text">其他人的配置参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

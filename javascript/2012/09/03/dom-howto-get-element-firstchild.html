@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="element.firstChild这个方法可能取到的应该是TEXT_NODE。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何获取元素下的第一个子元素">
-<meta property="og:url" content="https://www.4e00.com/javascript/2012/09/03/dom-howto-get-element-firstchild.html">
+<meta property="og:url" content="http://www.4e00.com/javascript/2012/09/03/dom-howto-get-element-firstchild.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="element.firstChild这个方法可能取到的应该是TEXT_NODE。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.079Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何获取元素下的第一个子元素">
 <meta name="twitter:description" content="element.firstChild这个方法可能取到的应该是TEXT_NODE。">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2012/09/03/dom-howto-get-element-firstchild.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/javascript/2012/09/03/dom-howto-get-element-firstchild.html">
 
   <title> 如何获取元素下的第一个子元素 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/javascript/" itemprop="url" rel="index">
                     <span itemprop="name">javascript</span>
                   </a>
@@ -256,12 +256,12 @@
       
         <h2 id="element-firstChild"><a href="#element-firstChild" class="headerlink" title="element.firstChild"></a>element.firstChild</h2><p>这个方法可能取到的应该是<code>TEXT_NODE</code>。</p>
 <a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> util = &#123;&#125;;</div><div class="line"></div><div class="line">util.first = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!element) <span class="keyword">return</span>;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> first = element.firstChild;</div><div class="line">    <span class="comment">// 处理 w3c 浏览器中第一个子元素是 TEXT_NODE</span></div><div class="line">    <span class="comment">// 并且需要考虑到有没有 COMMENT_NODE 的情况</span></div><div class="line">    <span class="keyword">while</span> (first &amp;&amp; first.nodeType !== <span class="number">1</span>) first = first.nextSibling;</div><div class="line">    <span class="keyword">return</span> first;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="element-firstElementChild"><a href="#element-firstElementChild" class="headerlink" title="element.firstElementChild"></a>element.firstElementChild</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">util.first = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span>(!element) <span class="keyword">return</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 刚好 IE8 以下支持直接拿 firstChild</span></div><div class="line">    <span class="keyword">return</span> element[element.firstElementChild ? <span class="string">"firstElementChild"</span> : <span class="string">"firstChild"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="element-querySelector-and-element-getElementsByTagName"><a href="#element-querySelector-and-element-getElementsByTagName" class="headerlink" title="element.querySelector and element.getElementsByTagName"></a>element.querySelector and element.getElementsByTagName</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 通过 HTML5 的 querySelector，及 getElementsByTagName</span></div><div class="line">util.first = <span class="function"><span class="keyword">function</span>(<span class="params">element, tag</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span>(!element) <span class="keyword">return</span>;</div><div class="line">    tag = tag || <span class="string">"*"</span>;;</div><div class="line">    <span class="keyword">return</span> element.querySelector ? element.querySelector(tag) : element.getElementsByTagName(tag)[<span class="number">0</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// IE6 支持的 children</span></div><div class="line">util.first = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> element &amp;&amp; element.children[<span class="number">0</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> util = &#123;&#125;;</span><span class="line"></span><span class="line">util.first = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>) </span>&#123;</span><span class="line">    <span class="keyword">if</span> (!element) <span class="keyword">return</span>;</span><span class="line"></span><span class="line">    <span class="keyword">var</span> first = element.firstChild;</span><span class="line">    <span class="comment">// 处理 w3c 浏览器中第一个子元素是 TEXT_NODE</span></span><span class="line">    <span class="comment">// 并且需要考虑到有没有 COMMENT_NODE 的情况</span></span><span class="line">    <span class="keyword">while</span> (first &amp;&amp; first.nodeType !== <span class="number">1</span>) first = first.nextSibling;</span><span class="line">    <span class="keyword">return</span> first;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="element-firstElementChild"><a href="#element-firstElementChild" class="headerlink" title="element.firstElementChild"></a>element.firstElementChild</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">util.first = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>) </span>&#123;</span><span class="line">    <span class="keyword">if</span>(!element) <span class="keyword">return</span>;</span><span class="line"></span><span class="line">    <span class="comment">// 刚好 IE8 以下支持直接拿 firstChild</span></span><span class="line">    <span class="keyword">return</span> element[element.firstElementChild ? <span class="string">"firstElementChild"</span> : <span class="string">"firstChild"</span>];</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="element-querySelector-and-element-getElementsByTagName"><a href="#element-querySelector-and-element-getElementsByTagName" class="headerlink" title="element.querySelector and element.getElementsByTagName"></a>element.querySelector and element.getElementsByTagName</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 通过 HTML5 的 querySelector，及 getElementsByTagName</span></span><span class="line">util.first = <span class="function"><span class="keyword">function</span>(<span class="params">element, tag</span>) </span>&#123;</span><span class="line">    <span class="keyword">if</span>(!element) <span class="keyword">return</span>;</span><span class="line">    tag = tag || <span class="string">"*"</span>;;</span><span class="line">    <span class="keyword">return</span> element.querySelector ? element.querySelector(tag) : element.getElementsByTagName(tag)[<span class="number">0</span>];</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// IE6 支持的 children</span></span><span class="line">util.first = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>) </span>&#123;</span><span class="line">    <span class="keyword">return</span> element &amp;&amp; element.children[<span class="number">0</span>];</span><span class="line">&#125;</span></pre></td></tr></table></figure>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://gist.github.com/sofish/3549460" target="_blank" rel="external">如何取到ul下第一下li</a></li>
+<li><a href="https://gist.github.com/sofish/3549460" target="_blank" rel="noopener">如何取到ul下第一下li</a></li>
 </ol>
 
       
@@ -289,7 +289,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/php/2012/07/26/php-code-review-keywords.html" rel="next" title="php代码审计部分关键词">
-                上一篇：php代码审计部分关键词
+                <i class="fa fa-chevron-left"></i>
+                php代码审计部分关键词
               </a>
             
           </div>
@@ -297,7 +298,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2012/09/10/rsync-tutorial-with-examples.html" rel="prev" title="rsync tutorial with examples">
-                下一篇：rsync tutorial with examples
+                <i class="fa fa-chevron-right"></i>
+                rsync tutorial with examples
               </a>
             
           </div>
@@ -346,7 +348,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -357,16 +359,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -448,10 +448,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

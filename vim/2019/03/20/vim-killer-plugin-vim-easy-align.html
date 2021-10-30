@@ -1,0 +1,610 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="vim-easy-align一个功能强大的排版对齐工具，但实际上组合键使用有一定难度，并不完全像插件名称所示的那么简单。 安装使用 vim-plug 管理插件，加入以下配置到.vimrc中后再执行PlugInstall。 Plug &apos;junegunn/vim-easy-align&apos; 配置组合键映射在.vimrc中加入以下配置： xmap ga &amp;lt;Plug&amp;gt;(EasyAlign)nmap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim killer plugin - vim easy align">
+<meta property="og:url" content="http://www.4e00.com/vim/2019/03/20/vim-killer-plugin-vim-easy-align.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="vim-easy-align一个功能强大的排版对齐工具，但实际上组合键使用有一定难度，并不完全像插件名称所示的那么简单。 安装使用 vim-plug 管理插件，加入以下配置到.vimrc中后再执行PlugInstall。 Plug &apos;junegunn/vim-easy-align&apos; 配置组合键映射在.vimrc中加入以下配置： xmap ga &amp;lt;Plug&amp;gt;(EasyAlign)nmap">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/vim/easy-align/equals.gif">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/vim/easy-align/spaces.gif">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/vim/easy-align/tables.gif">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/vim/easy-align/commas.gif">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/vim/easy-align/regex.gif">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/vim/easy-align/modes.gif">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/vim/easy-align/yaml.gif">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/vim/easy-align/blockwise-visual.gif">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.143Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vim killer plugin - vim easy align">
+<meta name="twitter:description" content="vim-easy-align一个功能强大的排版对齐工具，但实际上组合键使用有一定难度，并不完全像插件名称所示的那么简单。 安装使用 vim-plug 管理插件，加入以下配置到.vimrc中后再执行PlugInstall。 Plug &apos;junegunn/vim-easy-align&apos; 配置组合键映射在.vimrc中加入以下配置： xmap ga &amp;lt;Plug&amp;gt;(EasyAlign)nmap">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/linux/vim/easy-align/equals.gif">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/vim/2019/03/20/vim-killer-plugin-vim-easy-align.html">
+
+  <title> vim killer plugin - vim easy align | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                vim killer plugin - vim easy align
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-03-20T14:39:50+08:00" content="2019-03-20">
+              2019-03-20
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="vim-easy-align"><a href="#vim-easy-align" class="headerlink" title="vim-easy-align"></a>vim-easy-align</h2><p>一个功能强大的排版对齐工具，但实际上组合键使用有一定难度，并不完全像插件名称所示的那么简单。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>使用 <a href="https://github.com/junegunn/vim-plug" target="_blank" rel="noopener">vim-plug</a> 管理插件，加入以下配置到<code>.vimrc</code>中后再执行<code>PlugInstall</code>。</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">Plug <span class="string">'junegunn/vim-easy-align'</span></span></pre></td></tr></table></figure>
+<h2 id="配置组合键映射"><a href="#配置组合键映射" class="headerlink" title="配置组合键映射"></a>配置组合键映射</h2><p>在<code>.vimrc</code>中加入以下配置：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">xmap</span> ga <span class="symbol">&lt;Plug&gt;</span>(EasyAlign)</span><span class="line"><span class="keyword">nmap</span> ga <span class="symbol">&lt;Plug&gt;</span>(EasyAlign)</span></pre></td></tr></table></figure>
+<h3 id="按键说明"><a href="#按键说明" class="headerlink" title="按键说明"></a>按键说明</h3><ol>
+<li><code>ga</code>组合键激活<code>:EasyAlign</code>命令</li>
+<li><code>Enter</code>回车键设置<code>左/中/右</code>对齐方式，连续按回车可切换对齐方式</li>
+<li>根据第几个指定的分隔符进行对齐，默认使用第一个分隔符<ul>
+<li><code>1</code>         第一个分隔符对齐</li>
+<li><code>2</code>         第二个分隔符对齐</li>
+<li><code>*</code>         所有分隔符对齐</li>
+<li><code>**</code>        所有分隔符对齐，左对齐和右对齐循环</li>
+<li><code>-</code>         即<code>-1</code>，最后一个分隔符对齐</li>
+<li><code>-2</code>        倒数第二个分隔符对齐</li>
+</ul>
+</li>
+<li>分隔符如<code>&lt;Space&gt;</code>, <code>=</code>, <code>:</code>, <code>.</code>, <code>|</code>, <code>&amp;</code>, <code>#</code>, <code>,</code>，或者在按<kbd>Ctrl-X</kbd>之后使用正则表达式进行分隔对齐</li>
+</ol>
+<h2 id="测试文本对齐"><a href="#测试文本对齐" class="headerlink" title="测试文本对齐"></a>测试文本对齐</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apple   =red</span><span class="line">grass+=green</span><span class="line">sky-=   blue</span></pre></td></tr></table></figure>
+<p>然后将以上内容保存到一个文本文件中，并执行以下组合键，关于 vim 的 text objects command 可以参考<a href="/blog/vim/2016/07/17/vim-killer-plugin-surround.html#Text-objects-commands">这里</a>的说明。</p>
+<ul>
+<li><code>vipga=</code><ul>
+<li><code>v</code>isual-select <code>i</code>nner <code>p</code>aragraph</li>
+<li>Start EasyAlign command (<code>ga</code>)</li>
+<li>Align around <code>=</code></li>
+<li>在可视模式下选中段落，并使用<code>ga</code>激活<code>EasyAlign</code>插件，在第一个<code>=</code>位置对齐选中的段落</li>
+</ul>
+</li>
+<li><code>gaip=</code><ul>
+<li>Start EasyAlign command (<code>ga</code>) for <code>i</code>nner <code>p</code>aragraph</li>
+<li>Align around <code>=</code></li>
+<li>使用<code>ga</code>激活<code>EasyAlign</code>插件，然后选中段落，并在第一个<code>=</code>位置执行对齐操作</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="官方示例动图演示"><a href="#官方示例动图演示" class="headerlink" title="官方示例动图演示"></a>官方示例动图演示</h2><p>常用的对齐操作就是以下 3 种，其他更多组合使用说明参考官方的<a href="https://github.com/junegunn/vim-easy-align/blob/master/README.md" target="_blank" rel="noopener">README.md</a>文档。</p>
+<h3 id="按-对齐"><a href="#按-对齐" class="headerlink" title="按 = 对齐"></a>按 <code>=</code> 对齐</h3><p><img src="/blog/img/linux/vim/easy-align/equals.gif" alt></p>
+<h3 id="按-lt-Space-gt-对齐"><a href="#按-lt-Space-gt-对齐" class="headerlink" title="按 &lt;Space&gt; 对齐"></a>按 <code>&lt;Space&gt;</code> 对齐</h3><p><img src="/blog/img/linux/vim/easy-align/spaces.gif" alt></p>
+<h3 id="按-对齐-markdown-的-table"><a href="#按-对齐-markdown-的-table" class="headerlink" title="按 | 对齐 markdown 的 table"></a>按 <code>|</code> 对齐 markdown 的 table</h3><p><img src="/blog/img/linux/vim/easy-align/tables.gif" alt></p>
+<h3 id="其他更多组合键效果演示动图"><a href="#其他更多组合键效果演示动图" class="headerlink" title="其他更多组合键效果演示动图"></a>其他更多组合键效果演示动图</h3><p><img src="/blog/img/linux/vim/easy-align/commas.gif" alt></p>
+<p><img src="/blog/img/linux/vim/easy-align/regex.gif" alt></p>
+<p><img src="/blog/img/linux/vim/easy-align/modes.gif" alt></p>
+<p><img src="/blog/img/linux/vim/easy-align/yaml.gif" alt></p>
+<p><img src="/blog/img/linux/vim/easy-align/blockwise-visual.gif" alt></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://github.com/junegunn/vim-easy-align" target="_blank" rel="noopener">vim-easy-align</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/vim/2019/03/20/vim-killer-plugin-vim-im-chinese-input-method.html" rel="next" title="vim killer plugin vim-im chinese input method">
+                <i class="fa fa-chevron-left"></i>
+                vim killer plugin vim-im chinese input method
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2019/03/23/vim-plugin-vim-space-doc.html" rel="prev" title="vim plugin vim-space doc">
+                <i class="fa fa-chevron-right"></i>
+                vim plugin vim-space doc
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vim-easy-align"><span class="nav-number">1.</span> <span class="nav-text">vim-easy-align</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置组合键映射"><span class="nav-number">3.</span> <span class="nav-text">配置组合键映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#按键说明"><span class="nav-number">3.1.</span> <span class="nav-text">按键说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试文本对齐"><span class="nav-number">4.</span> <span class="nav-text">测试文本对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#官方示例动图演示"><span class="nav-number">5.</span> <span class="nav-text">官方示例动图演示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#按-对齐"><span class="nav-number">5.1.</span> <span class="nav-text">按 = 对齐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按-lt-Space-gt-对齐"><span class="nav-number">5.2.</span> <span class="nav-text">按 &lt;Space&gt; 对齐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按-对齐-markdown-的-table"><span class="nav-number">5.3.</span> <span class="nav-text">按 | 对齐 markdown 的 table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他更多组合键效果演示动图"><span class="nav-number">5.4.</span> <span class="nav-text">其他更多组合键效果演示动图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

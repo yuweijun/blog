@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="下面的脚本重现了一个git分支合并的误操作，导致分支合并后，虽然在提交历史上可以看到每个commit，但是feature分支上提交的修改丢失了。 [ -a git-merge-head.git ] &amp;amp;&amp;amp; rm -rf git-merge-head.git[ -a git-merge-head-logs ] &amp;amp;&amp;amp; rm -rf git-merge-head-logsg">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git merge losts commits">
-<meta property="og:url" content="https://www.4e00.com/linux/2016/12/03/git-merge-losts-commits.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2016/12/03/git-merge-losts-commits.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="下面的脚本重现了一个git分支合并的误操作，导致分支合并后，虽然在提交历史上可以看到每个commit，但是feature分支上提交的修改丢失了。 [ -a git-merge-head.git ] &amp;amp;&amp;amp; rm -rf git-merge-head.git[ -a git-merge-head-logs ] &amp;amp;&amp;amp; rm -rf git-merge-head-logsg">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.153Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.115Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git merge losts commits">
 <meta name="twitter:description" content="下面的脚本重现了一个git分支合并的误操作，导致分支合并后，虽然在提交历史上可以看到每个commit，但是feature分支上提交的修改丢失了。 [ -a git-merge-head.git ] &amp;amp;&amp;amp; rm -rf git-merge-head.git[ -a git-merge-head-logs ] &amp;amp;&amp;amp; rm -rf git-merge-head-logsg">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2016/12/03/git-merge-losts-commits.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2016/12/03/git-merge-losts-commits.html">
 
   <title> git merge losts commits | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -255,7 +255,7 @@
 
       
         <p>下面的脚本重现了一个<code>git</code>分支合并的误操作，导致分支合并后，虽然在提交历史上可以看到每个<code>commit</code>，但是<code>feature</code>分支上提交的修改丢失了。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">[ -a git-merge-head.git ] &amp;&amp; rm -rf git-merge-head.git</div><div class="line">[ -a git-merge-head-logs ] &amp;&amp; rm -rf git-merge-head-logs</div><div class="line"></div><div class="line">git --bare init git-merge-head.git</div><div class="line">git <span class="built_in">clone</span> git-merge-head.git git-merge-head-logs</div><div class="line"></div><div class="line"><span class="built_in">cd</span> git-merge-head-logs/</div><div class="line"><span class="built_in">echo</span> <span class="string">"1"</span> &gt; v01-master.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v01-master"</span></div><div class="line"></div><div class="line">git checkout -b feature</div><div class="line"><span class="built_in">echo</span> <span class="string">"2"</span> &gt;&gt; v01-master.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v02-feature"</span></div><div class="line"></div><div class="line">git checkout master</div><div class="line"><span class="built_in">echo</span> <span class="string">"3"</span> &gt; v03-master.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v03-master"</span></div><div class="line"></div><div class="line"><span class="comment">#1</span></div><div class="line">git merge feature -m <span class="string">""</span></div><div class="line"></div><div class="line"><span class="comment">#2</span></div><div class="line">git reset .</div><div class="line"></div><div class="line"><span class="comment">#3</span></div><div class="line">git checkout .</div><div class="line"></div><div class="line">git commit -m <span class="string">"commit version lost modification of v02-feature"</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"4"</span> &gt; v04-master.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v04-master"</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"5"</span> &gt; v05-master.txt</div><div class="line">git add -A &amp;&amp; git commit -m <span class="string">"v05-master"</span></div><div class="line"></div><div class="line">cat v01-master.txt</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ -a git-merge-head.git ] &amp;&amp; rm -rf git-merge-head.git</span><span class="line">[ -a git-merge-head-logs ] &amp;&amp; rm -rf git-merge-head-logs</span><span class="line"></span><span class="line">git --bare init git-merge-head.git</span><span class="line">git <span class="built_in">clone</span> git-merge-head.git git-merge-head-logs</span><span class="line"></span><span class="line"><span class="built_in">cd</span> git-merge-head-logs/</span><span class="line"><span class="built_in">echo</span> <span class="string">"1"</span> &gt; v01-master.txt</span><span class="line">git add -A &amp;&amp; git commit -m <span class="string">"v01-master"</span></span><span class="line"></span><span class="line">git checkout -b feature</span><span class="line"><span class="built_in">echo</span> <span class="string">"2"</span> &gt;&gt; v01-master.txt</span><span class="line">git add -A &amp;&amp; git commit -m <span class="string">"v02-feature"</span></span><span class="line"></span><span class="line">git checkout master</span><span class="line"><span class="built_in">echo</span> <span class="string">"3"</span> &gt; v03-master.txt</span><span class="line">git add -A &amp;&amp; git commit -m <span class="string">"v03-master"</span></span><span class="line"></span><span class="line"><span class="comment">#1</span></span><span class="line">git merge feature -m <span class="string">""</span></span><span class="line"></span><span class="line"><span class="comment">#2</span></span><span class="line">git reset .</span><span class="line"></span><span class="line"><span class="comment">#3</span></span><span class="line">git checkout .</span><span class="line"></span><span class="line">git commit -m <span class="string">"commit version lost modification of v02-feature"</span></span><span class="line"></span><span class="line"><span class="built_in">echo</span> <span class="string">"4"</span> &gt; v04-master.txt</span><span class="line">git add -A &amp;&amp; git commit -m <span class="string">"v04-master"</span></span><span class="line"></span><span class="line"><span class="built_in">echo</span> <span class="string">"5"</span> &gt; v05-master.txt</span><span class="line">git add -A &amp;&amp; git commit -m <span class="string">"v05-master"</span></span><span class="line"></span><span class="line">cat v01-master.txt</span></pre></td></tr></table></figure>
 <h2 id="问题说明"><a href="#问题说明" class="headerlink" title="问题说明"></a>问题说明</h2><p>可以看到上述命令最后<code>cat v01-master.txt</code>命令，其输出的文件内容如下，可以看到<code>feature</code>分支中的修改丢失掉了。</p>
 <blockquote>
 <p>1</p>
@@ -287,13 +287,13 @@
 <p>其实上面<code>#2</code>和<code>#3</code>这2步操作接近于做了一次<code>git reset --hard</code>操作，只是因为之前的<code>git merge</code>操作没有完成，所以在<code>.git</code>目录里仍然存在<code>MERGE_HEAD</code>、<code>MERGE_MODE</code>和<code>MERGE_MSG</code>文件，可以继续提交此次合并操作，但实际上所有的代码已经被还原了。</p>
 <a id="more"></a>
 <h3 id="错误修复"><a href="#错误修复" class="headerlink" title="错误修复"></a>错误修复</h3><p>执行以下操作后，修复之前的错误操作。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment">#4</span></div><div class="line">git format-patch HEAD...HEAD~2</div><div class="line"></div><div class="line"><span class="comment">#5</span></div><div class="line">git reset --hard HEAD~3</div><div class="line"></div><div class="line"><span class="comment">#6</span></div><div class="line">git merge feature -m <span class="string">"FIX: merge branch feature into master"</span></div><div class="line"></div><div class="line"><span class="comment">#7</span></div><div class="line">git am -3 000*-master.patch</div><div class="line"></div><div class="line">rm -f 000*-master.patch</div><div class="line"></div><div class="line">cat v01-master.txt</div><div class="line"><span class="built_in">echo</span> git <span class="built_in">log</span> -- v01-master.txt</div><div class="line"><span class="built_in">echo</span> git <span class="built_in">log</span> --graph --decorate --all</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#4</span></span><span class="line">git format-patch HEAD...HEAD~2</span><span class="line"></span><span class="line"><span class="comment">#5</span></span><span class="line">git reset --hard HEAD~3</span><span class="line"></span><span class="line"><span class="comment">#6</span></span><span class="line">git merge feature -m <span class="string">"FIX: merge branch feature into master"</span></span><span class="line"></span><span class="line"><span class="comment">#7</span></span><span class="line">git am -3 000*-master.patch</span><span class="line"></span><span class="line">rm -f 000*-master.patch</span><span class="line"></span><span class="line">cat v01-master.txt</span><span class="line"><span class="built_in">echo</span> git <span class="built_in">log</span> -- v01-master.txt</span><span class="line"><span class="built_in">echo</span> git <span class="built_in">log</span> --graph --decorate --all</span></pre></td></tr></table></figure>
 <p>首先由<code>#4</code>这个操作生成分支合并后的所有提交补丁文件。</p>
 <p>其次使用<code>#5</code>操作回滚<code>git</code>版本到错误的合并操作的位置，这里测试脚本里使用HEAD来定位版本，实际中可以使用git提交时的hash版本号。</p>
 <p>然后使用<code>#6</code>操作指令正确合并分支，然后将<code>#4</code>操作生成的补丁逐一应用，如果有冲突，则解决冲突并提交，然后应用下一个补丁，测试脚本里的2个补丁应用时，没有冲突，所以直接应用成功。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://www.kernel.org/pub/software/scm/git/docs/user-manual.html" target="_blank" rel="external">git user manual</a></li>
-<li><a href="https://www.kernel.org/pub/software/scm/git/docs/git.html" target="_blank" rel="external">git manual page</a></li>
+<li><a href="https://www.kernel.org/pub/software/scm/git/docs/user-manual.html" target="_blank" rel="noopener">git user manual</a></li>
+<li><a href="https://www.kernel.org/pub/software/scm/git/docs/git.html" target="_blank" rel="noopener">git manual page</a></li>
 <li><a href="/blog/linux/2016/09/21/git-format-patch-and-git-diff.html">git format-patch and git diff</a></li>
 </ol>
 
@@ -322,7 +322,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/java/2016/11/20/java-method-handle.html" rel="next" title="java method handle">
-                上一篇：java method handle
+                <i class="fa fa-chevron-left"></i>
+                java method handle
               </a>
             
           </div>
@@ -330,7 +331,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/java/2016/12/16/java-command-line-options.html" rel="prev" title="java command line options">
-                下一篇：java command line options
+                <i class="fa fa-chevron-right"></i>
+                java command line options
               </a>
             
           </div>
@@ -379,7 +381,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -390,16 +392,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -481,10 +481,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

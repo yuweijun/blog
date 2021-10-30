@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="一、linux系统主要启动步骤读取mbr的信息，启动boot manager。加载系统内核，启动init进程，init进程是linux的根进程，所有的系统进程都是它的子进程。 init进程读取/etc/inittab文件中的信息，并进入预设的运行级别。通常情况下/etc/rcS.d/目录下的启动脚本首先被执行，然后是/etc/rcN.d/目录。 二、运行级别   级别 描述     0 关闭系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ubuntu中update-rc.d命令使用说明">
-<meta property="og:url" content="https://www.4e00.com/linux/2012/10/10/ubuntu-11.04-update-rc.d-usage.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2012/10/10/ubuntu-11.04-update-rc.d-usage.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="一、linux系统主要启动步骤读取mbr的信息，启动boot manager。加载系统内核，启动init进程，init进程是linux的根进程，所有的系统进程都是它的子进程。 init进程读取/etc/inittab文件中的信息，并进入预设的运行级别。通常情况下/etc/rcS.d/目录下的启动脚本首先被执行，然后是/etc/rcN.d/目录。 二、运行级别   级别 描述     0 关闭系统">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.083Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ubuntu中update-rc.d命令使用说明">
 <meta name="twitter:description" content="一、linux系统主要启动步骤读取mbr的信息，启动boot manager。加载系统内核，启动init进程，init进程是linux的根进程，所有的系统进程都是它的子进程。 init进程读取/etc/inittab文件中的信息，并进入预设的运行级别。通常情况下/etc/rcS.d/目录下的启动脚本首先被执行，然后是/etc/rcN.d/目录。 二、运行级别   级别 描述     0 关闭系统">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2012/10/10/ubuntu-11.04-update-rc.d-usage.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2012/10/10/ubuntu-11.04-update-rc.d-usage.html">
 
   <title> ubuntu中update-rc.d命令使用说明 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -284,27 +284,27 @@
 </table>
 <h2 id="三、切换运行级别"><a href="#三、切换运行级别" class="headerlink" title="三、切换运行级别"></a>三、切换运行级别</h2><p>命令：<code>init [0123456Ss]</code></p>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 命令关机</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">init</span> 0</div><div class="line"></div><div class="line"><span class="comment"># 命令重新启动</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">init</span> 6</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 命令关机</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">init</span> 0</span><span class="line"></span><span class="line"><span class="comment"># 命令重新启动</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">init</span> 6</span></pre></td></tr></table></figure>
 <h2 id="四、update-rc-d命令说明"><a href="#四、update-rc-d命令说明" class="headerlink" title="四、update-rc.d命令说明"></a>四、update-rc.d命令说明</h2><p>从所有的运行级别中删除指定启动项</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d -f remove</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d -f remove</span></pre></td></tr></table></figure>
 <p>按指定顺序、在指定运行级别中启动或关闭</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d start|stop</div></pre></td></tr></table></figure>
-<h2 id="五、update-rc-d使用实例"><a href="#五、update-rc-d使用实例" class="headerlink" title="五、update-rc.d使用实例"></a>五、update-rc.d使用实例</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d apachectl start 20 2 3 4 5 . stop 20 0 1 6 .</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d start|stop</span></pre></td></tr></table></figure>
+<h2 id="五、update-rc-d使用实例"><a href="#五、update-rc-d使用实例" class="headerlink" title="五、update-rc.d使用实例"></a>五、update-rc.d使用实例</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d apachectl start 20 2 3 4 5 . stop 20 0 1 6 .</span></pre></td></tr></table></figure>
 <p>这个例子表示在2、3、4、5这五个运行级别中，由小到大，第20个开始运行apachectl，在0、1、6这3个运行级别中，第20个关闭apachectl。这是合并起来的写法，注意它有2个点号，效果等于下面方法：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d apachectl defaults</div></pre></td></tr></table></figure>
-<h2 id="A启动后B才能启动，B关闭后A才关闭"><a href="#A启动后B才能启动，B关闭后A才关闭" class="headerlink" title="A启动后B才能启动，B关闭后A才关闭"></a>A启动后B才能启动，B关闭后A才关闭</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d A defaults 80 20</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d B defaults 90 10</div></pre></td></tr></table></figure>
-<h2 id="启动和关闭顺序为90，级别默认"><a href="#启动和关闭顺序为90，级别默认" class="headerlink" title="启动和关闭顺序为90，级别默认"></a>启动和关闭顺序为90，级别默认</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d defaults 90</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d apachectl defaults</span></pre></td></tr></table></figure>
+<h2 id="A启动后B才能启动，B关闭后A才关闭"><a href="#A启动后B才能启动，B关闭后A才关闭" class="headerlink" title="A启动后B才能启动，B关闭后A才关闭"></a>A启动后B才能启动，B关闭后A才关闭</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d A defaults 80 20</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d B defaults 90 10</span></pre></td></tr></table></figure>
+<h2 id="启动和关闭顺序为90，级别默认"><a href="#启动和关闭顺序为90，级别默认" class="headerlink" title="启动和关闭顺序为90，级别默认"></a>启动和关闭顺序为90，级别默认</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d defaults 90</span></pre></td></tr></table></figure>
 <p>以下为帮助手册中的一些示例：</p>
-<h2 id="Insert-links-using-the-defaults"><a href="#Insert-links-using-the-defaults" class="headerlink" title="Insert links using the defaults:"></a>Insert links using the defaults:</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar defaults</div></pre></td></tr></table></figure>
-<h2 id="Equivalent-command-using-explicit-argument-sets"><a href="#Equivalent-command-using-explicit-argument-sets" class="headerlink" title="Equivalent command using explicit argument sets:"></a>Equivalent command using explicit argument sets:</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar start 20 2 3 4 5 . stop 20 0 1 6 .</div></pre></td></tr></table></figure>
-<h2 id="More-typical-command-using-explicit-argument-sets"><a href="#More-typical-command-using-explicit-argument-sets" class="headerlink" title="More typical command using explicit argument sets:"></a>More typical command using explicit argument sets:</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar start 30 2 3 4 5 . stop 70 0 1 6 .</div></pre></td></tr></table></figure>
-<h2 id="Remove-all-links-for-a-script-assuming-foobar-has-been-deleted-already"><a href="#Remove-all-links-for-a-script-assuming-foobar-has-been-deleted-already" class="headerlink" title="Remove all links for a script (assuming foobar has been deleted already):"></a>Remove all links for a script (assuming foobar has been deleted already):</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar remove</div></pre></td></tr></table></figure>
-<h2 id="Example-of-disabling-a-service"><a href="#Example-of-disabling-a-service" class="headerlink" title="Example of disabling a service:"></a>Example of disabling a service:</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d -f foobar remove</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar stop 20 2 3 4 5 .</div></pre></td></tr></table></figure>
-<h2 id="Example-of-a-command-for-installing-a-system-initialization-and-shut‐down-script"><a href="#Example-of-a-command-for-installing-a-system-initialization-and-shut‐down-script" class="headerlink" title="Example of a command for installing a system initialization-and-shut‐down script:"></a>Example of a command for installing a system initialization-and-shut‐down script:</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar start 45 S . start 31 0 6 .</div></pre></td></tr></table></figure>
-<h2 id="Example-of-a-command-for-disabling-a-system-initialization-and-shutdown-script"><a href="#Example-of-a-command-for-disabling-a-system-initialization-and-shutdown-script" class="headerlink" title="Example of a command for disabling a system initialization-and-shutdown script:"></a>Example of a command for disabling a system initialization-and-shutdown script:</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d -f foobar remove</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar stop 45 S .</div></pre></td></tr></table></figure>
+<h2 id="Insert-links-using-the-defaults"><a href="#Insert-links-using-the-defaults" class="headerlink" title="Insert links using the defaults:"></a>Insert links using the defaults:</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar defaults</span></pre></td></tr></table></figure>
+<h2 id="Equivalent-command-using-explicit-argument-sets"><a href="#Equivalent-command-using-explicit-argument-sets" class="headerlink" title="Equivalent command using explicit argument sets:"></a>Equivalent command using explicit argument sets:</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar start 20 2 3 4 5 . stop 20 0 1 6 .</span></pre></td></tr></table></figure>
+<h2 id="More-typical-command-using-explicit-argument-sets"><a href="#More-typical-command-using-explicit-argument-sets" class="headerlink" title="More typical command using explicit argument sets:"></a>More typical command using explicit argument sets:</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar start 30 2 3 4 5 . stop 70 0 1 6 .</span></pre></td></tr></table></figure>
+<h2 id="Remove-all-links-for-a-script-assuming-foobar-has-been-deleted-already"><a href="#Remove-all-links-for-a-script-assuming-foobar-has-been-deleted-already" class="headerlink" title="Remove all links for a script (assuming foobar has been deleted already):"></a>Remove all links for a script (assuming foobar has been deleted already):</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar remove</span></pre></td></tr></table></figure>
+<h2 id="Example-of-disabling-a-service"><a href="#Example-of-disabling-a-service" class="headerlink" title="Example of disabling a service:"></a>Example of disabling a service:</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d -f foobar remove</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar stop 20 2 3 4 5 .</span></pre></td></tr></table></figure>
+<h2 id="Example-of-a-command-for-installing-a-system-initialization-and-shut‐down-script"><a href="#Example-of-a-command-for-installing-a-system-initialization-and-shut‐down-script" class="headerlink" title="Example of a command for installing a system initialization-and-shut‐down script:"></a>Example of a command for installing a system initialization-and-shut‐down script:</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar start 45 S . start 31 0 6 .</span></pre></td></tr></table></figure>
+<h2 id="Example-of-a-command-for-disabling-a-system-initialization-and-shutdown-script"><a href="#Example-of-a-command-for-disabling-a-system-initialization-and-shutdown-script" class="headerlink" title="Example of a command for disabling a system initialization-and-shutdown script:"></a>Example of a command for disabling a system initialization-and-shutdown script:</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d -f foobar remove</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">update-rc</span>.d foobar stop 45 S .</span></pre></td></tr></table></figure>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://manpages.ubuntu.com/manpages/hardy/man8/update-rc.d.8.html" target="_blank" rel="external">http://manpages.ubuntu.com/manpages/hardy/man8/update-rc.d.8.html</a></li>
-<li><a href="http://blog.wangyan.org/ubuntu-update-rc-d.html" target="_blank" rel="external">http://blog.wangyan.org/ubuntu-update-rc-d.html</a></li>
+<li><a href="http://manpages.ubuntu.com/manpages/hardy/man8/update-rc.d.8.html" target="_blank" rel="noopener">http://manpages.ubuntu.com/manpages/hardy/man8/update-rc.d.8.html</a></li>
+<li><a href="http://blog.wangyan.org/ubuntu-update-rc-d.html" target="_blank" rel="noopener">http://blog.wangyan.org/ubuntu-update-rc-d.html</a></li>
 </ol>
 
       
@@ -332,7 +332,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/linux/2012/10/10/ssh-client-connection-broken.html" rel="next" title="ssh不操作自动掉线问题">
-                上一篇：ssh不操作自动掉线问题
+                <i class="fa fa-chevron-left"></i>
+                ssh不操作自动掉线问题
               </a>
             
           </div>
@@ -340,7 +341,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/java/2012/10/10/java-pattern-canon-eq.html" rel="prev" title="java.util.regex.pattern.canon_eq说明">
-                下一篇：java.util.regex.pattern.canon_eq说明
+                <i class="fa fa-chevron-right"></i>
+                java.util.regex.pattern.canon_eq说明
               </a>
             
           </div>
@@ -389,7 +391,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -400,16 +402,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -491,10 +491,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

@@ -1,0 +1,561 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="vm/oops/markOop.hpp 第30行，关于markOopDesc数据结构的说明，markOop是指向class markOopDesc类型对象的指针，源码如下： 30313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hotspot source code - mark word">
+<meta property="og:url" content="http://www.4e00.com/java/2018/08/04/hotspot-source-code-mark-word.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="vm/oops/markOop.hpp 第30行，关于markOopDesc数据结构的说明，markOop是指向class markOopDesc类型对象的指针，源码如下： 30313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.136Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hotspot source code - mark word">
+<meta name="twitter:description" content="vm/oops/markOop.hpp 第30行，关于markOopDesc数据结构的说明，markOop是指向class markOopDesc类型对象的指针，源码如下： 30313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/08/04/hotspot-source-code-mark-word.html">
+
+  <title> hotspot source code - mark word | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                hotspot source code - mark word
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-08-04T22:46:49+08:00" content="2018-08-04">
+              2018-08-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/oops/markOop.hpp#30" target="_blank" rel="noopener">vm/oops/markOop.hpp</a> 第<code>30</code>行，关于<code>markOopDesc</code>数据结构的说明，<code>markOop</code>是指向<code>class markOopDesc</code>类型对象的指针，源码如下：</p>
+<figure class="highlight hpp"><table><tr><td class="gutter"><pre><span class="line">30</span><span class="line">31</span><span class="line">32</span><span class="line">33</span><span class="line">34</span><span class="line">35</span><span class="line">36</span><span class="line">37</span><span class="line">38</span><span class="line">39</span><span class="line">40</span><span class="line">41</span><span class="line">42</span><span class="line">43</span><span class="line">44</span><span class="line">45</span><span class="line">46</span><span class="line">47</span><span class="line">48</span><span class="line">49</span><span class="line">50</span><span class="line">51</span><span class="line">52</span><span class="line">53</span><span class="line">54</span><span class="line">55</span><span class="line">56</span><span class="line">57</span><span class="line">58</span><span class="line">59</span><span class="line">60</span><span class="line">61</span><span class="line">62</span><span class="line">63</span><span class="line">64</span><span class="line">65</span><span class="line">66</span><span class="line">67</span><span class="line">68</span><span class="line">69</span><span class="line">70</span><span class="line">71</span><span class="line">72</span><span class="line">73</span><span class="line">74</span><span class="line">75</span><span class="line">76</span><span class="line">77</span><span class="line">78</span><span class="line">79</span><span class="line">80</span><span class="line">81</span><span class="line">82</span><span class="line">83</span><span class="line">84</span><span class="line">85</span><span class="line">86</span><span class="line">87</span><span class="line">88</span><span class="line">89</span><span class="line">90</span><span class="line">91</span><span class="line">92</span><span class="line">93</span><span class="line">94</span><span class="line">95</span><span class="line">96</span><span class="line">97</span><span class="line">98</span><span class="line">99</span><span class="line">100</span><span class="line">101</span><span class="line">102</span><span class="line">103</span><span class="line">104</span><span class="line">105</span><span class="line">106</span><span class="line">107</span><span class="line">108</span><span class="line">109</span><span class="line">110</span><span class="line">111</span><span class="line">112</span><span class="line">113</span><span class="line">114</span><span class="line">115</span><span class="line">116</span><span class="line">117</span><span class="line">118</span><span class="line">119</span><span class="line">120</span><span class="line">121</span><span class="line">122</span><span class="line">123</span><span class="line">124</span><span class="line">125</span><span class="line">126</span><span class="line">127</span><span class="line">128</span><span class="line">129</span><span class="line">130</span><span class="line">131</span><span class="line">132</span><span class="line">133</span><span class="line">134</span><span class="line">135</span><span class="line">136</span><span class="line">137</span><span class="line">138</span><span class="line">139</span><span class="line">140</span><span class="line">141</span><span class="line">142</span><span class="line">143</span><span class="line">144</span><span class="line">145</span><span class="line">146</span><span class="line">147</span><span class="line">148</span><span class="line">149</span><span class="line">150</span><span class="line">151</span><span class="line">152</span><span class="line">153</span><span class="line">154</span><span class="line">155</span><span class="line">156</span><span class="line">157</span><span class="line">158</span><span class="line">159</span><span class="line">160</span><span class="line">161</span><span class="line">162</span><span class="line">163</span><span class="line">164</span><span class="line">165</span><span class="line">166</span><span class="line">167</span><span class="line">168</span><span class="line">169</span><span class="line">170</span><span class="line">171</span><span class="line">172</span><span class="line">173</span><span class="line">174</span><span class="line">175</span><span class="line">176</span><span class="line">177</span><span class="line">178</span><span class="line">179</span><span class="line">180</span><span class="line">181</span><span class="line">182</span><span class="line">183</span><span class="line">184</span><span class="line">185</span><span class="line">186</span><span class="line">187</span><span class="line">188</span><span class="line">189</span><span class="line">190</span><span class="line">191</span><span class="line">192</span><span class="line">193</span><span class="line">194</span><span class="line">195</span><span class="line">196</span><span class="line">197</span><span class="line">198</span><span class="line">199</span><span class="line">200</span><span class="line">201</span><span class="line">202</span><span class="line">203</span><span class="line">204</span><span class="line">205</span><span class="line">206</span><span class="line">207</span><span class="line">208</span><span class="line">209</span><span class="line">210</span><span class="line">211</span><span class="line">212</span><span class="line">213</span><span class="line">214</span><span class="line">215</span><span class="line">216</span><span class="line">217</span><span class="line">218</span><span class="line">219</span><span class="line">220</span><span class="line">221</span><span class="line">222</span><span class="line">223</span><span class="line">224</span><span class="line">225</span><span class="line">226</span><span class="line">227</span><span class="line">228</span><span class="line">229</span><span class="line">230</span><span class="line">231</span><span class="line">232</span><span class="line">233</span><span class="line">234</span><span class="line">235</span><span class="line">236</span><span class="line">237</span><span class="line">238</span><span class="line">239</span><span class="line">240</span><span class="line">241</span><span class="line">242</span><span class="line">243</span><span class="line">244</span><span class="line">245</span><span class="line">246</span><span class="line">247</span><span class="line">248</span><span class="line">249</span><span class="line">250</span><span class="line">251</span><span class="line">252</span><span class="line">253</span><span class="line">254</span><span class="line">255</span><span class="line">256</span><span class="line">257</span><span class="line">258</span><span class="line">259</span><span class="line">260</span><span class="line">261</span><span class="line">262</span><span class="line">263</span><span class="line">264</span><span class="line">265</span><span class="line">266</span><span class="line">267</span><span class="line">268</span><span class="line">269</span><span class="line">270</span><span class="line">271</span><span class="line">272</span><span class="line">273</span><span class="line">274</span><span class="line">275</span><span class="line">276</span><span class="line">277</span><span class="line">278</span><span class="line">279</span><span class="line">280</span><span class="line">281</span><span class="line">282</span><span class="line">283</span><span class="line">284</span><span class="line">285</span><span class="line">286</span><span class="line">287</span><span class="line">288</span><span class="line">289</span><span class="line">290</span><span class="line">291</span><span class="line">292</span><span class="line">293</span><span class="line">294</span><span class="line">295</span><span class="line">296</span><span class="line">297</span><span class="line">298</span><span class="line">299</span><span class="line">300</span><span class="line">301</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// The markOop describes the header of an object.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// Note that the mark is not a real oop but just a word.</span></span><span class="line"><span class="comment">// It is placed in the oop hierarchy for historical reasons.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// Bit-format of an object header (most significant first, big endian layout below):</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//  32 bits:</span></span><span class="line"><span class="comment">//  --------</span></span><span class="line"><span class="comment">//             hash:25 ------------&gt;| age:4    biased_lock:1 lock:2 (normal object)</span></span><span class="line"><span class="comment">//             JavaThread*:23 epoch:2 age:4    biased_lock:1 lock:2 (biased object)</span></span><span class="line"><span class="comment">//             size:32 ------------------------------------------&gt;| (CMS free block)</span></span><span class="line"><span class="comment">//             PromotedObject*:29 ----------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//  64 bits:</span></span><span class="line"><span class="comment">//  --------</span></span><span class="line"><span class="comment">//  unused:25 hash:31 --&gt;| unused:1   age:4    biased_lock:1 lock:2 (normal object)</span></span><span class="line"><span class="comment">//  JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)</span></span><span class="line"><span class="comment">//  PromotedObject*:61 ---------------------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)</span></span><span class="line"><span class="comment">//  size:64 -----------------------------------------------------&gt;| (CMS free block)</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//  unused:25 hash:31 --&gt;| cms_free:1 age:4    biased_lock:1 lock:2 (COOPs &amp;&amp; normal object)</span></span><span class="line"><span class="comment">//  JavaThread*:54 epoch:2 cms_free:1 age:4    biased_lock:1 lock:2 (COOPs &amp;&amp; biased object)</span></span><span class="line"><span class="comment">//  narrowOop:32 unused:24 cms_free:1 unused:4 promo_bits:3 -----&gt;| (COOPs &amp;&amp; CMS promoted object)</span></span><span class="line"><span class="comment">//  unused:21 size:35 --&gt;| cms_free:1 unused:7 ------------------&gt;| (COOPs &amp;&amp; CMS free block)</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//  - hash contains the identity hash value: largest value is</span></span><span class="line"><span class="comment">//    31 bits, see os::random().  Also, 64-bit vm's require</span></span><span class="line"><span class="comment">//    a hash value no bigger than 32 bits because they will not</span></span><span class="line"><span class="comment">//    properly generate a mask larger than that: see library_call.cpp</span></span><span class="line"><span class="comment">//    and c1_CodePatterns_sparc.cpp.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//  - the biased lock pattern is used to bias a lock toward a given</span></span><span class="line"><span class="comment">//    thread. When this pattern is set in the low three bits, the lock</span></span><span class="line"><span class="comment">//    is either biased toward a given thread or "anonymously" biased,</span></span><span class="line"><span class="comment">//    indicating that it is possible for it to be biased. When the</span></span><span class="line"><span class="comment">//    lock is biased toward a given thread, locking and unlocking can</span></span><span class="line"><span class="comment">//    be performed by that thread without using atomic operations.</span></span><span class="line"><span class="comment">//    When a lock's bias is revoked, it reverts back to the normal</span></span><span class="line"><span class="comment">//    locking scheme described below.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//    Note that we are overloading the meaning of the "unlocked" state</span></span><span class="line"><span class="comment">//    of the header. Because we steal a bit from the age we can</span></span><span class="line"><span class="comment">//    guarantee that the bias pattern will never be seen for a truly</span></span><span class="line"><span class="comment">//    unlocked object.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//    Note also that the biased state contains the age bits normally</span></span><span class="line"><span class="comment">//    contained in the object header. Large increases in scavenge</span></span><span class="line"><span class="comment">//    times were seen when these bits were absent and an arbitrary age</span></span><span class="line"><span class="comment">//    assigned to all biased objects, because they tended to consume a</span></span><span class="line"><span class="comment">//    significant fraction of the eden semispaces and were not</span></span><span class="line"><span class="comment">//    promoted promptly, causing an increase in the amount of copying</span></span><span class="line"><span class="comment">//    performed. The runtime system aligns all JavaThread* pointers to</span></span><span class="line"><span class="comment">//    a very large value (currently 128 bytes (32bVM) or 256 bytes (64bVM))</span></span><span class="line"><span class="comment">//    to make room for the age bits &amp; the epoch bits (used in support of</span></span><span class="line"><span class="comment">//    biased locking), and for the CMS "freeness" bit in the 64bVM (+COOPs).</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//    [JavaThread* | epoch | age | 1 | 01]       lock is biased toward given thread</span></span><span class="line"><span class="comment">//    [0           | epoch | age | 1 | 01]       lock is anonymously biased</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//  - the two lock bits are used to describe three states: locked/unlocked and monitor.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//    [ptr             | 00]  locked             ptr points to real header on stack</span></span><span class="line"><span class="comment">//    [header      | 0 | 01]  unlocked           regular object header</span></span><span class="line"><span class="comment">//    [ptr             | 10]  monitor            inflated lock (header is wapped out)</span></span><span class="line"><span class="comment">//    [ptr             | 11]  marked             used by markSweep to mark an object</span></span><span class="line"><span class="comment">//                                               not valid at any other time</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//    We assume that stack/thread pointers have the lowest two bits cleared.</span></span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BasicLock</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ObjectMonitor</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JavaThread</span>;</span></span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">markOopDesc</span>:</span> <span class="keyword">public</span> oopDesc &#123;</span><span class="line"> <span class="keyword">private</span>:</span><span class="line">  <span class="comment">// Conversion</span></span><span class="line">  <span class="function"><span class="keyword">uintptr_t</span> <span class="title">value</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> (<span class="keyword">uintptr_t</span>) <span class="keyword">this</span>; &#125;</span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="comment">// Constants</span></span><span class="line">  <span class="keyword">enum</span> &#123; age_bits                 = <span class="number">4</span>,</span><span class="line">         lock_bits                = <span class="number">2</span>,</span><span class="line">         biased_lock_bits         = <span class="number">1</span>,</span><span class="line">         max_hash_bits            = BitsPerWord - age_bits - lock_bits - biased_lock_bits,</span><span class="line">         hash_bits                = max_hash_bits &gt; <span class="number">31</span> ? <span class="number">31</span> : max_hash_bits,</span><span class="line">         cms_bits                 = LP64_ONLY(<span class="number">1</span>) NOT_LP64(<span class="number">0</span>),</span><span class="line">         epoch_bits               = <span class="number">2</span></span><span class="line">  &#125;;</span><span class="line"></span><span class="line">  <span class="comment">// The biased locking code currently requires that the age bits be</span></span><span class="line">  <span class="comment">// contiguous to the lock bits.</span></span><span class="line">  <span class="keyword">enum</span> &#123; lock_shift               = <span class="number">0</span>,</span><span class="line">         biased_lock_shift        = lock_bits,</span><span class="line">         age_shift                = lock_bits + biased_lock_bits,</span><span class="line">         cms_shift                = age_shift + age_bits,</span><span class="line">         hash_shift               = cms_shift + cms_bits,</span><span class="line">         epoch_shift              = hash_shift</span><span class="line">  &#125;;</span><span class="line"></span><span class="line">  <span class="keyword">enum</span> &#123; lock_mask                = right_n_bits(lock_bits),</span><span class="line">         lock_mask_in_place       = lock_mask &lt;&lt; lock_shift,</span><span class="line">         biased_lock_mask         = right_n_bits(lock_bits + biased_lock_bits),</span><span class="line">         biased_lock_mask_in_place= biased_lock_mask &lt;&lt; lock_shift,</span><span class="line">         biased_lock_bit_in_place = <span class="number">1</span> &lt;&lt; biased_lock_shift,</span><span class="line">         age_mask                 = right_n_bits(age_bits),</span><span class="line">         age_mask_in_place        = age_mask &lt;&lt; age_shift,</span><span class="line">         epoch_mask               = right_n_bits(epoch_bits),</span><span class="line">         epoch_mask_in_place      = epoch_mask &lt;&lt; epoch_shift,</span><span class="line">         cms_mask                 = right_n_bits(cms_bits),</span><span class="line">         cms_mask_in_place        = cms_mask &lt;&lt; cms_shift</span><span class="line">#ifndef _WIN64</span><span class="line">         ,hash_mask               = right_n_bits(hash_bits),</span><span class="line">         hash_mask_in_place       = (address_word)hash_mask &lt;&lt; hash_shift</span><span class="line">#endif</span><span class="line">  &#125;;</span><span class="line"></span><span class="line">  <span class="comment">// Alignment of JavaThread pointers encoded in object header required by biased locking</span></span><span class="line">  <span class="keyword">enum</span> &#123; biased_lock_alignment    = <span class="number">2</span> &lt;&lt; (epoch_shift + epoch_bits)</span><span class="line">  &#125;;</span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> _WIN64</span></span><span class="line">    <span class="comment">// These values are too big for Win64</span></span><span class="line">    <span class="keyword">const</span> <span class="keyword">static</span> <span class="keyword">uintptr_t</span> hash_mask = right_n_bits(hash_bits);</span><span class="line">    <span class="keyword">const</span> <span class="keyword">static</span> <span class="keyword">uintptr_t</span> hash_mask_in_place  =</span><span class="line">                            (address_word)hash_mask &lt;&lt; hash_shift;</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><span class="line"></span><span class="line">  <span class="keyword">enum</span> &#123; locked_value             = <span class="number">0</span>,</span><span class="line">         unlocked_value           = <span class="number">1</span>,</span><span class="line">         monitor_value            = <span class="number">2</span>,</span><span class="line">         marked_value             = <span class="number">3</span>,</span><span class="line">         biased_lock_pattern      = <span class="number">5</span></span><span class="line">  &#125;;</span><span class="line"></span><span class="line">  <span class="keyword">enum</span> &#123; no_hash                  = <span class="number">0</span> &#125;;  <span class="comment">// no hash value assigned</span></span><span class="line"></span><span class="line">  <span class="keyword">enum</span> &#123; no_hash_in_place         = (address_word)no_hash &lt;&lt; hash_shift,</span><span class="line">         no_lock_in_place         = unlocked_value</span><span class="line">  &#125;;</span><span class="line"></span><span class="line">  <span class="keyword">enum</span> &#123; max_age                  = age_mask &#125;;</span><span class="line"></span><span class="line">  <span class="keyword">enum</span> &#123; max_bias_epoch           = epoch_mask &#125;;</span><span class="line"></span><span class="line">  <span class="comment">// Biased Locking accessors.</span></span><span class="line">  <span class="comment">// These must be checked by all code which calls into the</span></span><span class="line">  <span class="comment">// ObjectSynchronizer and other code. The biasing is not understood</span></span><span class="line">  <span class="comment">// by the lower-level CAS-based locking code, although the runtime</span></span><span class="line">  <span class="comment">// fixes up biased locks to be compatible with it when a bias is</span></span><span class="line">  <span class="comment">// revoked.</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">has_bias_pattern</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><span class="line">    <span class="keyword">return</span> (mask_bits(value(), biased_lock_mask_in_place) == biased_lock_pattern);</span><span class="line">  &#125;</span><span class="line">  <span class="function">JavaThread* <span class="title">biased_locker</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><span class="line">    assert(has_bias_pattern(), <span class="string">"should not call this otherwise"</span>);</span><span class="line">    <span class="keyword">return</span> (JavaThread*) ((<span class="keyword">intptr_t</span>) (mask_bits(value(), ~(biased_lock_mask_in_place | age_mask_in_place | epoch_mask_in_place))));</span><span class="line">  &#125;</span><span class="line">  <span class="comment">// Indicates that the mark has the bias bit set but that it has not</span></span><span class="line">  <span class="comment">// yet been biased toward a particular thread</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_biased_anonymously</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><span class="line">    <span class="keyword">return</span> (has_bias_pattern() &amp;&amp; (biased_locker() == <span class="literal">NULL</span>));</span><span class="line">  &#125;</span><span class="line">  <span class="comment">// Indicates epoch in which this bias was acquired. If the epoch</span></span><span class="line">  <span class="comment">// changes due to too many bias revocations occurring, the biases</span></span><span class="line">  <span class="comment">// from the previous epochs are all considered invalid.</span></span><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">bias_epoch</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><span class="line">    assert(has_bias_pattern(), <span class="string">"should not call this otherwise"</span>);</span><span class="line">    <span class="keyword">return</span> (mask_bits(value(), epoch_mask_in_place) &gt;&gt; epoch_shift);</span><span class="line">  &#125;</span><span class="line">  <span class="function">markOop <span class="title">set_bias_epoch</span><span class="params">(<span class="keyword">int</span> epoch)</span> </span>&#123;</span><span class="line">    assert(has_bias_pattern(), <span class="string">"should not call this otherwise"</span>);</span><span class="line">    assert((epoch &amp; (~epoch_mask)) == <span class="number">0</span>, <span class="string">"epoch overflow"</span>);</span><span class="line">    <span class="keyword">return</span> markOop(mask_bits(value(), ~epoch_mask_in_place) | (epoch &lt;&lt; epoch_shift));</span><span class="line">  &#125;</span><span class="line">  <span class="function">markOop <span class="title">incr_bias_epoch</span><span class="params">()</span> </span>&#123;</span><span class="line">    <span class="keyword">return</span> set_bias_epoch((<span class="number">1</span> + bias_epoch()) &amp; epoch_mask);</span><span class="line">  &#125;</span><span class="line">  <span class="comment">// Prototype mark for initialization</span></span><span class="line">  <span class="function"><span class="keyword">static</span> markOop <span class="title">biased_locking_prototype</span><span class="params">()</span> </span>&#123;</span><span class="line">    <span class="keyword">return</span> markOop( biased_lock_pattern );</span><span class="line">  &#125;</span><span class="line"></span><span class="line">  <span class="comment">// lock accessors (note that these assume lock_shift == 0)</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_locked</span><span class="params">()</span>   <span class="keyword">const</span> </span>&#123;</span><span class="line">    <span class="keyword">return</span> (mask_bits(value(), lock_mask_in_place) != unlocked_value);</span><span class="line">  &#125;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_unlocked</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><span class="line">    <span class="keyword">return</span> (mask_bits(value(), biased_lock_mask_in_place) == unlocked_value);</span><span class="line">  &#125;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_marked</span><span class="params">()</span>   <span class="keyword">const</span> </span>&#123;</span><span class="line">    <span class="keyword">return</span> (mask_bits(value(), lock_mask_in_place) == marked_value);</span><span class="line">  &#125;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_neutral</span><span class="params">()</span>  <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> (mask_bits(value(), biased_lock_mask_in_place) == unlocked_value); &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Special temporary state of the markOop while being inflated.</span></span><span class="line">  <span class="comment">// Code that looks at mark outside a lock need to take this into account.</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_being_inflated</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> (value() == <span class="number">0</span>); &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Distinguished markword value - used when inflating over</span></span><span class="line">  <span class="comment">// an existing stacklock.  0 indicates the markword is "BUSY".</span></span><span class="line">  <span class="comment">// Lockword mutators that use a LD...CAS idiom should always</span></span><span class="line">  <span class="comment">// check for and avoid overwriting a 0 value installed by some</span></span><span class="line">  <span class="comment">// other thread.  (They should spin or block instead.  The 0 value</span></span><span class="line">  <span class="comment">// is transient and *should* be short-lived).</span></span><span class="line">  <span class="function"><span class="keyword">static</span> markOop <span class="title">INFLATING</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> (markOop) <span class="number">0</span>; &#125;    <span class="comment">// inflate-in-progress</span></span><span class="line"></span><span class="line">  <span class="comment">// Should this header be preserved during GC?</span></span><span class="line">  <span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">must_be_preserved</span><span class="params">(oop obj_containing_mark)</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">must_be_preserved_with_bias</span><span class="params">(oop obj_containing_mark)</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Should this header (including its age bits) be preserved in the</span></span><span class="line">  <span class="comment">// case of a promotion failure during scavenge?</span></span><span class="line">  <span class="comment">// Note that we special case this situation. We want to avoid</span></span><span class="line">  <span class="comment">// calling BiasedLocking::preserve_marks()/restore_marks() (which</span></span><span class="line">  <span class="comment">// decrease the number of mark words that need to be preserved</span></span><span class="line">  <span class="comment">// during GC) during each scavenge. During scavenges in which there</span></span><span class="line">  <span class="comment">// is no promotion failure, we actually don't need to call the above</span></span><span class="line">  <span class="comment">// routines at all, since we don't mutate and re-initialize the</span></span><span class="line">  <span class="comment">// marks of promoted objects using init_mark(). However, during</span></span><span class="line">  <span class="comment">// scavenges which result in promotion failure, we do re-initialize</span></span><span class="line">  <span class="comment">// the mark words of objects, meaning that we should have called</span></span><span class="line">  <span class="comment">// these mark word preservation routines. Currently there's no good</span></span><span class="line">  <span class="comment">// place in which to call them in any of the scavengers (although</span></span><span class="line">  <span class="comment">// guarded by appropriate locks we could make one), but the</span></span><span class="line">  <span class="comment">// observation is that promotion failures are quite rare and</span></span><span class="line">  <span class="comment">// reducing the number of mark words preserved during them isn't a</span></span><span class="line">  <span class="comment">// high priority.</span></span><span class="line">  <span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">must_be_preserved_for_promotion_failure</span><span class="params">(oop obj_containing_mark)</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">must_be_preserved_with_bias_for_promotion_failure</span><span class="params">(oop obj_containing_mark)</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Should this header be preserved during a scavenge where CMS is</span></span><span class="line">  <span class="comment">// the old generation?</span></span><span class="line">  <span class="comment">// (This is basically the same body as must_be_preserved_for_promotion_failure(),</span></span><span class="line">  <span class="comment">// but takes the Klass* as argument instead)</span></span><span class="line">  <span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">must_be_preserved_for_cms_scavenge</span><span class="params">(Klass* klass_of_obj_containing_mark)</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">must_be_preserved_with_bias_for_cms_scavenge</span><span class="params">(Klass* klass_of_obj_containing_mark)</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// WARNING: The following routines are used EXCLUSIVELY by</span></span><span class="line">  <span class="comment">// synchronization functions. They are not really gc safe.</span></span><span class="line">  <span class="comment">// They must get updated if markOop layout get changed.</span></span><span class="line">  <span class="function">markOop <span class="title">set_unlocked</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><span class="line">    <span class="keyword">return</span> markOop(value() | unlocked_value);</span><span class="line">  &#125;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">has_locker</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><span class="line">    <span class="keyword">return</span> ((value() &amp; lock_mask_in_place) == locked_value);</span><span class="line">  &#125;</span><span class="line">  <span class="function">BasicLock* <span class="title">locker</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><span class="line">    assert(has_locker(), <span class="string">"check"</span>);</span><span class="line">    <span class="keyword">return</span> (BasicLock*) value();</span><span class="line">  &#125;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">has_monitor</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><span class="line">    <span class="keyword">return</span> ((value() &amp; monitor_value) != <span class="number">0</span>);</span><span class="line">  &#125;</span><span class="line">  <span class="function">ObjectMonitor* <span class="title">monitor</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><span class="line">    assert(has_monitor(), <span class="string">"check"</span>);</span><span class="line">    <span class="comment">// Use xor instead of &amp;~ to provide one extra tag-bit check.</span></span><span class="line">    <span class="keyword">return</span> (ObjectMonitor*) (value() ^ monitor_value);</span><span class="line">  &#125;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">has_displaced_mark_helper</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><span class="line">    <span class="keyword">return</span> ((value() &amp; unlocked_value) == <span class="number">0</span>);</span><span class="line">  &#125;</span><span class="line">  <span class="function">markOop <span class="title">displaced_mark_helper</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><span class="line">    assert(has_displaced_mark_helper(), <span class="string">"check"</span>);</span><span class="line">    <span class="keyword">intptr_t</span> ptr = (value() &amp; ~monitor_value);</span><span class="line">    <span class="keyword">return</span> *(markOop*)ptr;</span><span class="line">  &#125;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_displaced_mark_helper</span><span class="params">(markOop m)</span> <span class="keyword">const</span> </span>&#123;</span><span class="line">    assert(has_displaced_mark_helper(), <span class="string">"check"</span>);</span><span class="line">    <span class="keyword">intptr_t</span> ptr = (value() &amp; ~monitor_value);</span><span class="line">    *(markOop*)ptr = m;</span><span class="line">  &#125;</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/oops/oop.hpp#35" target="_blank" rel="noopener">vm/oops/oop.hpp</a> 第<code>35</code>行，关于<code>markOopDesc</code>基类<code>oopDesc</code>数据结构的说明，<code>oop</code>是指向<code>class oopDesc</code>类型对象的指针，第<code>158</code>行处定义了锁的状态枚举值，源码如下：</p>
+<figure class="highlight hpp"><table><tr><td class="gutter"><pre><span class="line">30</span><span class="line">31</span><span class="line">32</span><span class="line">33</span><span class="line">34</span><span class="line">35</span><span class="line">36</span><span class="line">37</span><span class="line">38</span><span class="line">39</span><span class="line">40</span><span class="line">41</span><span class="line">42</span><span class="line">43</span><span class="line">44</span><span class="line">45</span><span class="line">46</span><span class="line">47</span><span class="line">48</span><span class="line">49</span><span class="line">50</span><span class="line">51</span><span class="line">52</span><span class="line">53</span><span class="line">54</span><span class="line">55</span><span class="line">56</span><span class="line">57</span><span class="line">58</span><span class="line">59</span><span class="line">60</span><span class="line">61</span><span class="line">62</span><span class="line">63</span><span class="line">64</span><span class="line">65</span><span class="line">66</span><span class="line">67</span><span class="line">68</span><span class="line">69</span><span class="line">70</span><span class="line">71</span><span class="line">72</span><span class="line">73</span><span class="line">74</span><span class="line">75</span><span class="line">76</span><span class="line">77</span><span class="line">78</span><span class="line">79</span><span class="line">80</span><span class="line">81</span><span class="line">82</span><span class="line">83</span><span class="line">84</span><span class="line">85</span><span class="line">86</span><span class="line">87</span><span class="line">88</span><span class="line">89</span><span class="line">90</span><span class="line">91</span><span class="line">92</span><span class="line">93</span><span class="line">94</span><span class="line">95</span><span class="line">96</span><span class="line">97</span><span class="line">98</span><span class="line">99</span><span class="line">100</span><span class="line">101</span><span class="line">102</span><span class="line">103</span><span class="line">104</span><span class="line">105</span><span class="line">106</span><span class="line">107</span><span class="line">108</span><span class="line">109</span><span class="line">110</span><span class="line">111</span><span class="line">112</span><span class="line">113</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// oopDesc is the top baseclass for objects classes.  The &#123;name&#125;Desc classes describe</span></span><span class="line"><span class="comment">// the format of Java objects so the fields can be accessed from C++.</span></span><span class="line"><span class="comment">// oopDesc is abstract.</span></span><span class="line"><span class="comment">// (see oopHierarchy for complete oop class hierarchy)</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// no virtual functions allowed</span></span><span class="line"></span><span class="line"><span class="comment">// store into oop with store check</span></span><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">void</span> <span class="title">oop_store</span>(<span class="title">T</span>* <span class="title">p</span>, <span class="title">oop</span> <span class="title">v</span>);</span></span><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">void</span> <span class="title">oop_store</span>(<span class="title">volatile</span> <span class="title">T</span>* <span class="title">p</span>, <span class="title">oop</span> <span class="title">v</span>);</span></span><span class="line"></span><span class="line"><span class="keyword">extern</span> <span class="keyword">bool</span> always_do_update_barrier;</span><span class="line"></span><span class="line"><span class="comment">// Forward declarations.</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OopClosure</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ScanClosure</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FastScanClosure</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FilteringClosure</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BarrierSet</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CMSIsAliveClosure</span>;</span></span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PSPromotionManager</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ParCompactionManager</span>;</span></span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">oopDesc</span> &#123;</span></span><span class="line">  <span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">VMStructs</span>;</span></span><span class="line"> <span class="keyword">private</span>:</span><span class="line">  <span class="keyword">volatile</span> markOop  _mark;</span><span class="line">  <span class="keyword">union</span> _metadata &#123;</span><span class="line">    Klass*      _klass;</span><span class="line">    narrowKlass _compressed_klass;</span><span class="line">  &#125; _metadata;</span><span class="line"></span><span class="line">  <span class="comment">// Fast access to barrier set.  Must be initialized.</span></span><span class="line">  <span class="keyword">static</span> BarrierSet* _bs;</span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="function">markOop  <span class="title">mark</span><span class="params">()</span> <span class="keyword">const</span>         </span>&#123; <span class="keyword">return</span> _mark; &#125;</span><span class="line">  <span class="function">markOop* <span class="title">mark_addr</span><span class="params">()</span> <span class="keyword">const</span>    </span>&#123; <span class="keyword">return</span> (markOop*) &amp;_mark; &#125;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_mark</span><span class="params">(<span class="keyword">volatile</span> markOop m)</span>      </span>&#123; _mark = m;   &#125;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">void</span>    <span class="title">release_set_mark</span><span class="params">(markOop m)</span></span>;</span><span class="line">  <span class="function">markOop <span class="title">cas_set_mark</span><span class="params">(markOop new_mark, markOop old_mark)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Used only to re-initialize the mark word (e.g., of promoted</span></span><span class="line">  <span class="comment">// objects during a GC) -- requires a valid klass pointer</span></span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">init_mark</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">  <span class="function">Klass* <span class="title">klass</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function">Klass* <span class="title">klass_or_null</span><span class="params">()</span> <span class="keyword">const</span> <span class="keyword">volatile</span></span>;</span><span class="line">  <span class="function">Klass** <span class="title">klass_addr</span><span class="params">()</span></span>;</span><span class="line">  <span class="function">narrowKlass* <span class="title">compressed_klass_addr</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_klass</span><span class="params">(Klass* k)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// For klass field compression</span></span><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">klass_gap</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_klass_gap</span><span class="params">(<span class="keyword">int</span> z)</span></span>;</span><span class="line">  <span class="comment">// For when the klass pointer is being used as a linked list "next" field.</span></span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_klass_to_list_ptr</span><span class="params">(oop k)</span></span>;</span><span class="line">  <span class="function">oop <span class="title">list_ptr_from_klass</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// size of object header, aligned to platform wordSize</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">header_size</span><span class="params">()</span>          </span>&#123; <span class="keyword">return</span> <span class="keyword">sizeof</span>(oopDesc)/HeapWordSize; &#125;</span><span class="line"></span><span class="line">  <span class="comment">// Returns whether this is an instance of k or an instance of a subclass of k</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_a</span><span class="params">(Klass* k)</span>  <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Returns the actual oop size of the object</span></span><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Sometimes (for complicated concurrency-related reasons), it is useful</span></span><span class="line">  <span class="comment">// to be able to figure out the size of an object knowing its klass.</span></span><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">size_given_klass</span><span class="params">(Klass* klass)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// type test operations (inlined in oop.inline.h)</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_instance</span><span class="params">()</span>            <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_instanceMirror</span><span class="params">()</span>      <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_instanceClassLoader</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_instanceRef</span><span class="params">()</span>         <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_array</span><span class="params">()</span>               <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_objArray</span><span class="params">()</span>            <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_typeArray</span><span class="params">()</span>           <span class="keyword">const</span></span>;</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/oops/markOop.hpp#30" target="_blank" rel="noopener">vm/oops/markOop.hpp</a></li>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/oops/oop.hpp#35" target="_blank" rel="noopener">vm/oops/oop.hpp</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/08/04/hotspot-source-code-klass-and-oop.html" rel="next" title="hotspot source code - klass and oop">
+                <i class="fa fa-chevron-left"></i>
+                hotspot source code - klass and oop
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/08/04/hotspot-source-code-object-monitor.html" rel="prev" title="hotspot source code - object monitor">
+                <i class="fa fa-chevron-right"></i>
+                hotspot source code - object monitor
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

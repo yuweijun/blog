@@ -1,0 +1,593 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="2018-07-05 开始 myJrebel 不再免费下面内容针对jrebel仍是一样可以参考。 注册激活 myJRebel 进入 https://my.jrebel.com/ 网页，按要求登陆并获取激活用的授权 license。 进入 https://zeroturnaround.com/software/jrebel/download/ 下载JRebel Standalone独立版本，也可以选">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jrebel configuration and usage with maven">
+<meta property="og:url" content="http://www.4e00.com/java/2018/04/05/jrebel-configuration-and-usage-with-maven.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="2018-07-05 开始 myJrebel 不再免费下面内容针对jrebel仍是一样可以参考。 注册激活 myJRebel 进入 https://my.jrebel.com/ 网页，按要求登陆并获取激活用的授权 license。 进入 https://zeroturnaround.com/software/jrebel/download/ 下载JRebel Standalone独立版本，也可以选">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.128Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jrebel configuration and usage with maven">
+<meta name="twitter:description" content="2018-07-05 开始 myJrebel 不再免费下面内容针对jrebel仍是一样可以参考。 注册激活 myJRebel 进入 https://my.jrebel.com/ 网页，按要求登陆并获取激活用的授权 license。 进入 https://zeroturnaround.com/software/jrebel/download/ 下载JRebel Standalone独立版本，也可以选">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/04/05/jrebel-configuration-and-usage-with-maven.html">
+
+  <title> jrebel configuration and usage with maven | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jrebel configuration and usage with maven
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-04-05T12:16:56+08:00" content="2018-04-05">
+              2018-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="2018-07-05-开始-myJrebel-不再免费"><a href="#2018-07-05-开始-myJrebel-不再免费" class="headerlink" title="2018-07-05 开始 myJrebel 不再免费"></a>2018-07-05 开始 myJrebel 不再免费</h2><p>下面内容针对<code>jrebel</code>仍是一样可以参考。</p>
+<h2 id="注册激活-myJRebel"><a href="#注册激活-myJRebel" class="headerlink" title="注册激活 myJRebel"></a>注册激活 myJRebel</h2><ol>
+<li>进入 <a href="https://my.jrebel.com/" target="_blank" rel="noopener">https://my.jrebel.com/</a> 网页，按要求登陆并获取激活用的授权 license。</li>
+<li>进入 <a href="https://zeroturnaround.com/software/jrebel/download/" target="_blank" rel="noopener">https://zeroturnaround.com/software/jrebel/download/</a> 下载<code>JRebel Standalone</code>独立版本，也可以选择 IDE 插件安装。</li>
+<li>根据 <a href="https://my.jrebel.com/account/how-to-activate" target="_blank" rel="noopener">https://my.jrebel.com/account/how-to-activate</a> 提示激活<code>myJRebel</code>。</li>
+</ol>
+<h2 id="安装-myJRebel"><a href="#安装-myJRebel" class="headerlink" title="安装 myJRebel"></a>安装 myJRebel</h2><ol>
+<li>解压文件到<code>${HOME}/.jrebel</code>目录。</li>
+<li>复制上面得到的 license 并保存为文件：<code>${HOME}/.jrebel/license.key</code></li>
+<li>根据<code>${HOME}/.jrebel/readme.txt</code>说明，在<code>${HOME}/.jrebel</code>目录下执行以下命令。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">bin</span>/activate.sh license.key</span><span class="line output">2018-04-05 15:56:35 JRebel: Contacting myJRebel server ..</span><span class="line output">JRebel successfully activated!</span><span class="line output">License <span class="built_in">type</span>:  myJRebel</span><span class="line output">Licensee name: <span class="built_in">test</span></span></pre></td></tr></table></figure>
+<h2 id="配置-myJRebel"><a href="#配置-myJRebel" class="headerlink" title="配置 myJRebel"></a>配置 myJRebel</h2><p>简单配置 maven 的全局环境变量<code>MAVEN_OPTS</code>，可以使所有的<code>mvn</code>命令都经过<code>myJRebel</code>代理，在 Mac OSX 的<code>${HOME}/.bash_profile</code>或者是<code>${HOME}/.zshrc</code>中加入以下配置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export MAVEN_OPTS=&quot;-agentpath:$HOME/.jrebel/lib/libjrebel64.dylib&quot;</span></pre></td></tr></table></figure>
+<p>或者是 Linux 下面的<code>${HOME}/.bashrc</code>或者是<code>${HOME}/.zshrc</code>中加入以下配置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export MAVEN_OPTS=&quot;-agentpath:$HOME/.jrebel/lib/libjrebel64.so&quot;</span></pre></td></tr></table></figure>
+<p>然后执行 maven 项目的<code>mvn clean</code>操作：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">jrebel</span> clean</span><span class="line output">2018-04-05 16:04:53 JRebel: Contacting myJRebel server ..</span><span class="line output">[INFO] Scanning <span class="keyword">for</span> projects...</span><span class="line output">[INFO]</span><span class="line output">[INFO] ------------------------------------------------------------------------</span><span class="line output">[INFO] Building language-java 0.3.1-SNAPSHOT</span><span class="line output">[INFO] ------------------------------------------------------------------------</span><span class="line output">[INFO]</span><span class="line output">[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ language-java ---</span><span class="line output">2018-04-05 16:04:55 JRebel:  Starting logging to file: /Users/<span class="built_in">test</span>/.jrebel/jrebel.log</span><span class="line output">2018-04-05 16:04:55 JRebel:</span><span class="line output">2018-04-05 16:04:55 JRebel:  <span class="comment">#############################################################</span></span><span class="line output">2018-04-05 16:04:55 JRebel:</span><span class="line output">2018-04-05 16:04:55 JRebel:  JRebel Agent 2018.1.0 (201803221138)</span><span class="line output">2018-04-05 16:04:55 JRebel:  (c) Copyright ZeroTurnaround AS, Estonia, Tartu.</span><span class="line output">2018-04-05 16:04:55 JRebel:</span><span class="line output">2018-04-05 16:04:55 JRebel:  Over the last 1 days JRebel prevented</span><span class="line output">2018-04-05 16:04:55 JRebel:  at least 10 redeploys/restarts saving you about 0.4 hours.</span><span class="line output">2018-04-05 16:04:55 JRebel:</span><span class="line output">2018-04-05 16:04:55 JRebel:  Licensed to <span class="built_in">test</span> (using myJRebel).</span><span class="line output">2018-04-05 16:04:55 JRebel:</span><span class="line output">2018-04-05 16:04:55 JRebel:</span><span class="line output">2018-04-05 16:04:55 JRebel:  <span class="comment">#############################################################</span></span><span class="line output">2018-04-05 16:04:55 JRebel:</span><span class="line output">[INFO] Deleting /github.com/maven-jrebel/target</span><span class="line output">[INFO] ------------------------------------------------------------------------</span><span class="line output">[INFO] BUILD SUCCESS</span><span class="line output">[INFO] ------------------------------------------------------------------------</span><span class="line output">[INFO] Total time: 0.543 s</span><span class="line output">[INFO] Finished at: 2018-04-05T16:04:55+08:00</span><span class="line output">[INFO] Final Memory: 24M/251M</span><span class="line output">[INFO] ------------------------------------------------------------------------</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>下面设置2个<code>mvn</code>命令别名，避免上述修改全局环境变量的方式：</p>
+<h3 id="Mac-OSX"><a href="#Mac-OSX" class="headerlink" title="Mac OSX"></a>Mac OSX</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alias jrebel=&quot;MAVEN_OPTS=&apos;-agentpath:$HOME/.jrebel/lib/libjrebel64.dylib&apos; mvn&quot;</span><span class="line">alias jdebug=&quot;MAVEN_OPTS=&apos;-agentpath:$HOME/.jrebel/lib/libjrebel64.dylib -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000&apos; mvn&quot;</span></pre></td></tr></table></figure>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alias jrebel=&quot;MAVEN_OPTS=&apos;-agentpath:$HOME/.jrebel/lib/libjrebel64.so&apos; mvn&quot;</span><span class="line">alias jdebug=&quot;MAVEN_OPTS=&apos;-agentpath:$HOME/.jrebel/lib/libjrebel64.so -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000&apos; mvn&quot;</span></pre></td></tr></table></figure>
+<h2 id="JRebel-Maven-插件"><a href="#JRebel-Maven-插件" class="headerlink" title="JRebel Maven 插件"></a>JRebel Maven 插件</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.zeroturnaround<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jrebel-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><span class="line">  <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>generate-rebel-xml<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><span class="line">      <span class="tag">&lt;<span class="name">phase</span>&gt;</span>process-resources<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><span class="line">      <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">goal</span>&gt;</span>generate<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><span class="line">      <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><span class="line">  <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span></pre></td></tr></table></figure>
+<h3 id="rebel-xml-生成"><a href="#rebel-xml-生成" class="headerlink" title="rebel.xml 生成"></a>rebel.xml 生成</h3><p>一般是使用 IDE 插件会自动生成<code>rebel.xml</code>文件，监控项目中的<code>classes</code>目录，或者其他指定目录的变化，并将这些变化直接反映到当前运行的应用程序中，也可以使用这个 Maven 插件，手动生成并配置这个<code>rebel.xml</code>文件，Maven 项目中默认会生成这个文件到<code>target/classes</code>目录中，更多详细说明参考<a href="http://manuals.zeroturnaround.com/jrebel/standalone/config.html#configuration" target="_blank" rel="noopener">官方文档</a>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> jrebel:generate -Drebel.generate.show=<span class="literal">true</span></span></pre></td></tr></table></figure>
+<p>如果上述命令提示<code>No plugin found for prefix &#39;jrebel&#39; in the current project and in the plugin groups</code>错误，可以输入完 Maven 的目标完整的信息，并显示生成的<code>rebel.xml</code>文件内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> org.zeroturnaround:jrebel-maven-plugin:generate -Drebel.generate.show=<span class="literal">true</span></span></pre></td></tr></table></figure>
+<h3 id="rebel-xml-example"><a href="#rebel-xml-example" class="headerlink" title="rebel.xml example"></a>rebel.xml example</h3><p>一般将<code>rebel.xml</code>文件放在 maven 项目的<code>src/main/resources</code>目录下。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><span class="line"></span><span class="line"><span class="comment">&lt;!--</span></span><span class="line"><span class="comment">  This is the JRebel configuration file. It maps the running application to your IDE workspace, enabling JRebel reloading for this project.</span></span><span class="line"><span class="comment">  Refer to https://manuals.zeroturnaround.com/jrebel/standalone/config.html for more information.</span></span><span class="line"><span class="comment">--&gt;</span></span><span class="line"><span class="tag">&lt;<span class="name">application</span> <span class="attr">generated-by</span>=<span class="string">"intellij"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xmlns</span>=<span class="string">"http://www.zeroturnaround.com"</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_1.xsd"</span>&gt;</span></span><span class="line"></span><span class="line">    <span class="tag">&lt;<span class="name">classpath</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">dir</span> <span class="attr">name</span>=<span class="string">"/path/to/maven/project/target/classes"</span>&gt;</span></span><span class="line">        <span class="tag">&lt;/<span class="name">dir</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">classpath</span>&gt;</span></span><span class="line"></span><span class="line"><span class="tag">&lt;/<span class="name">application</span>&gt;</span></span></pre></td></tr></table></figure>
+<h2 id="Spring-Boot-using-JRebel"><a href="#Spring-Boot-using-JRebel" class="headerlink" title="Spring Boot using JRebel"></a>Spring Boot using JRebel</h2><p>Spring Boot 1.x 版本中加入<code>JRebel</code>支持：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> spring-boot:run -Drun.jvmArguments=<span class="string">"-agentpath:[/path/to/JRebel library]"</span></span></pre></td></tr></table></figure>
+<p>Spring Boot 2.x 版本中加入<code>JRebel</code>支持：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mvn</span> spring-boot:run -Dspring.boot.run.jvmArguments=<span class="string">"-agentpath:[/path/to/JRebel library]"</span></span></pre></td></tr></table></figure>
+<p>在上述<code>mvn</code>命令中将实际<code>jrebel</code>库路径，替换进去。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://my.jrebel.com/" target="_blank" rel="noopener">https://my.jrebel.com/</a></li>
+<li><a href="https://zeroturnaround.com/software/jrebel/download/" target="_blank" rel="noopener">https://zeroturnaround.com/software/jrebel/download/</a></li>
+<li><a href="https://my.jrebel.com/account/how-to-activate" target="_blank" rel="noopener">https://my.jrebel.com/account/how-to-activate</a></li>
+<li><a href="http://manuals.zeroturnaround.com/jrebel/standalone/config.html#configuration" target="_blank" rel="noopener">Application configuration using rebel.xml</a></li>
+<li><a href="http://manuals.zeroturnaround.com/jrebel/standalone/maven.html#when-should-you-use-this-plugin" target="_blank" rel="noopener">Using the JRebel Maven plugin</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/04/05/spring-boot-debug-using-maven.html" rel="next" title="spring boot debug using maven">
+                <i class="fa fa-chevron-left"></i>
+                spring boot debug using maven
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2018/04/05/linux-commands-dig.html" rel="prev" title="linux 常用命令行之 dig">
+                <i class="fa fa-chevron-right"></i>
+                linux 常用命令行之 dig
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2018-07-05-开始-myJrebel-不再免费"><span class="nav-number">1.</span> <span class="nav-text">2018-07-05 开始 myJrebel 不再免费</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册激活-myJRebel"><span class="nav-number">2.</span> <span class="nav-text">注册激活 myJRebel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-myJRebel"><span class="nav-number">3.</span> <span class="nav-text">安装 myJRebel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-myJRebel"><span class="nav-number">4.</span> <span class="nav-text">配置 myJRebel</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mac-OSX"><span class="nav-number">4.1.</span> <span class="nav-text">Mac OSX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux"><span class="nav-number">4.2.</span> <span class="nav-text">Linux</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JRebel-Maven-插件"><span class="nav-number">5.</span> <span class="nav-text">JRebel Maven 插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rebel-xml-生成"><span class="nav-number">5.1.</span> <span class="nav-text">rebel.xml 生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rebel-xml-example"><span class="nav-number">5.2.</span> <span class="nav-text">rebel.xml example</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Boot-using-JRebel"><span class="nav-number">6.</span> <span class="nav-text">Spring Boot using JRebel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

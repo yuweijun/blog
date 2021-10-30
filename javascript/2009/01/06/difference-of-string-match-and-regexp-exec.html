@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="The match() method is the most general of the String regular-expression methods. It takes a regular expression as its only argument (or converts its argument to a regular expression by passing it to t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="difference of string.match and regexp.exec">
-<meta property="og:url" content="https://www.4e00.com/javascript/2009/01/06/difference-of-string-match-and-regexp-exec.html">
+<meta property="og:url" content="http://www.4e00.com/javascript/2009/01/06/difference-of-string-match-and-regexp-exec.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="The match() method is the most general of the String regular-expression methods. It takes a regular expression as its only argument (or converts its argument to a regular expression by passing it to t">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.137Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.062Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="difference of string.match and regexp.exec">
 <meta name="twitter:description" content="The match() method is the most general of the String regular-expression methods. It takes a regular expression as its only argument (or converts its argument to a regular expression by passing it to t">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2009/01/06/difference-of-string-match-and-regexp-exec.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/javascript/2009/01/06/difference-of-string-match-and-regexp-exec.html">
 
   <title> difference of string.match and regexp.exec | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/javascript/" itemprop="url" rel="index">
                     <span itemprop="name">javascript</span>
                   </a>
@@ -256,12 +256,12 @@
       
         <p>The <code>match()</code> method is the most general of the String regular-expression methods. It takes a regular expression as its only argument (or converts its argument to a regular expression by passing it to the <code>RegExp()</code> constructor) and returns an array that contains the results of the match. If the regular expression has the g flag set, the method returns an array of all matches that appear in the string. For example:</p>
 <a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="string">"1 plus 2 equals 3"</span>.match(<span class="regexp">/\d+/g</span>)  <span class="comment">// returns ["1", "2", "3"]</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="string">"1 plus 2 equals 3"</span>.match(<span class="regexp">/\d+/g</span>)  <span class="comment">// returns ["1", "2", "3"]</span></span></pre></td></tr></table></figure>
 <p>If the regular expression does not have the g flag set, <code>match()</code> does not do a global search; it simply searches for the first match. However, <code>match()</code> returns an array even when it does not perform a global search. In this case, the first element of the array is the matching string, and any remaining elements are the parenthesized subexpressions of the regular expression. Thus, if <code>match()</code> returns an array a, <code>a[0]</code> contains the complete match, <code>a[1]</code> contains the substring that matched the first parenthesized expression, and so on. To draw a parallel with the <code>replace()</code> method, <code>a[n]</code> holds the contents of <code>$n</code>.</p>
 <p>For example, consider parsing a <code>URL</code> with the following code:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> url = <span class="regexp">/(\w+):\/\/([\w.]+)\/(\S*)/</span>;</div><div class="line"><span class="keyword">var</span> text = <span class="string">"Visit my blog at http://www.example.com/~david"</span>;</div><div class="line"><span class="keyword">var</span> result = text.match(url);</div><div class="line"><span class="keyword">if</span> (result != <span class="literal">null</span>) &#123;</div><div class="line">    <span class="keyword">var</span> fullurl = result[<span class="number">0</span>];   <span class="comment">// Contains "http://www.example.com/~david"</span></div><div class="line">    <span class="keyword">var</span> protocol = result[<span class="number">1</span>];  <span class="comment">// Contains "http"</span></div><div class="line">    <span class="keyword">var</span> host = result[<span class="number">2</span>];      <span class="comment">// Contains "www.example.com"</span></div><div class="line">    <span class="keyword">var</span> path = result[<span class="number">3</span>];      <span class="comment">// Contains "~david"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="regexp">/(\w+):\/\/([\w.]+)\/(\S*)/</span>;</span><span class="line"><span class="keyword">var</span> text = <span class="string">"Visit my blog at http://www.example.com/~david"</span>;</span><span class="line"><span class="keyword">var</span> result = text.match(url);</span><span class="line"><span class="keyword">if</span> (result != <span class="literal">null</span>) &#123;</span><span class="line">    <span class="keyword">var</span> fullurl = result[<span class="number">0</span>];   <span class="comment">// Contains "http://www.example.com/~david"</span></span><span class="line">    <span class="keyword">var</span> protocol = result[<span class="number">1</span>];  <span class="comment">// Contains "http"</span></span><span class="line">    <span class="keyword">var</span> host = result[<span class="number">2</span>];      <span class="comment">// Contains "www.example.com"</span></span><span class="line">    <span class="keyword">var</span> path = result[<span class="number">3</span>];      <span class="comment">// Contains "~david"</span></span><span class="line">&#125;</span></pre></td></tr></table></figure>
 <p>Finally, you should know about one more feature of the <code>match()</code> method. The array it returns has a length property, as all arrays do. When <code>match()</code> is invoked on a nonglobal regular expression, however, the returned array also has two other properties: the index property, which contains the character position within the string at which the match begins, and the input property, which is a copy of the target string. So in the previous code, the value of the result.index property would be 17 because the matched URL begins at character position 17 in the text. The result.input property holds the same string as the text variable. For a regular expression r and string s that does not have the g flag set, calling <code>s.match(r)</code> returns the same value as <code>r.exec(s)</code>. The RegExp.<code>exec()</code> method is discussed a little later in this chapter.</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> pattern = <span class="regexp">/\bJava\w*\b/g</span>;</div><div class="line"><span class="keyword">var</span> text = <span class="string">"JavaScript is more fun than Java or JavaBeans!"</span>;</div><div class="line"><span class="keyword">var</span> result;</div><div class="line"><span class="keyword">while</span>((result = pattern.exec(text)) != <span class="literal">null</span>) &#123;</div><div class="line">    alert(<span class="string">"Matched '"</span> + result[<span class="number">0</span>] +</div><div class="line">          <span class="string">"' at position "</span> + result.index +</div><div class="line">          <span class="string">" next search begins at position "</span> + pattern.lastIndex);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> pattern = <span class="regexp">/\bJava\w*\b/g</span>;</span><span class="line"><span class="keyword">var</span> text = <span class="string">"JavaScript is more fun than Java or JavaBeans!"</span>;</span><span class="line"><span class="keyword">var</span> result;</span><span class="line"><span class="keyword">while</span>((result = pattern.exec(text)) != <span class="literal">null</span>) &#123;</span><span class="line">    alert(<span class="string">"Matched '"</span> + result[<span class="number">0</span>] +</span><span class="line">          <span class="string">"' at position "</span> + result.index +</span><span class="line">          <span class="string">" next search begins at position "</span> + pattern.lastIndex);</span><span class="line">&#125;</span></pre></td></tr></table></figure>
 <p>When <code>exec()</code> is invoked on a nonglobal pattern, it performs the search and returns the result described earlier. When regexp is a global regular expression, however, <code>exec()</code> behaves in a slightly more complex way. It begins searching string at the character position specified by the lastIndex property of regexp. When it finds a match, it sets lastIndex to the position of the first character after the match. This means that you can invoke <code>exec()</code> repeatedly in order to loop through all matches in a string. When <code>exec()</code> cannot find any more matches, it returns null and resets lastIndex to zero. If you begin searching a new string immediately after successfully finding a match in another string, you must be careful to manually reset lastIndex to zero.</p>
 <p>Note that <code>exec()</code> always includes full details of every match in the array it returns, whether or not regexp is a global pattern. This is where <code>exec()</code> differs from <code>String.match()</code>, which returns much less information when used with global patterns. Calling the <code>exec()</code> method repeatedly in a loop is the only way to obtain complete pattern-matching information for a global pattern.</p>
 <p>This article copy from <code>OReilly&#39;s《JavaScript The Definitive Guide》5th Edition</code>.</p>
@@ -291,7 +291,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/ruby/2009/01/06/rails-module-include-way.html" rel="next" title="rails module include way">
-                上一篇：rails module include way
+                <i class="fa fa-chevron-left"></i>
+                rails module include way
               </a>
             
           </div>
@@ -299,7 +300,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/web/2009/01/09/url-redirect-hash-keeped.html" rel="prev" title="页面重定向与url中的hash在不同的浏览器中的表现">
-                下一篇：页面重定向与url中的hash在不同的浏览器中的表现
+                <i class="fa fa-chevron-right"></i>
+                页面重定向与url中的hash在不同的浏览器中的表现
               </a>
             
           </div>
@@ -348,7 +350,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -359,16 +361,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -450,10 +450,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

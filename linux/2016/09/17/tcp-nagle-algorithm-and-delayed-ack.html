@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,40 +33,44 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
 
 
-<meta name="description" content="本文内容主要是为了帮助理解socket对象中的一个方法：socket.setTcpNoDelay(boolean)。 其中相关的主要内容如下：  糊涂窗口综合症- silly window syndrome。 nagle算法 - nagle&amp;#39;s algorithm。 延迟ACK - tcp delayed acknowledgment。  糊涂窗口综合症当tcp连接建立之后，在一些情况下，">
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="本文内容主要是为了帮助理解socket对象中的一个方法：socket.setTcpNoDelay(boolean)。 其中相关的主要内容如下：  糊涂窗口综合症- silly window syndrome。 nagle 算法 - nagle&amp;#39;s algorithm。 延迟 ACK - tcp delayed acknowledgment。  糊涂窗口综合症当 TCP 连接建立之后，在一些">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tcp nagle&#39;s algorithm and delayed ack">
-<meta property="og:url" content="https://www.4e00.com/linux/2016/09/17/tcp-nagle-algorithm-and-delayed-ack.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2016/09/17/tcp-nagle-algorithm-and-delayed-ack.html">
 <meta property="og:site_name" content="一">
-<meta property="og:description" content="本文内容主要是为了帮助理解socket对象中的一个方法：socket.setTcpNoDelay(boolean)。 其中相关的主要内容如下：  糊涂窗口综合症- silly window syndrome。 nagle算法 - nagle&amp;#39;s algorithm。 延迟ACK - tcp delayed acknowledgment。  糊涂窗口综合症当tcp连接建立之后，在一些情况下，">
+<meta property="og:description" content="本文内容主要是为了帮助理解socket对象中的一个方法：socket.setTcpNoDelay(boolean)。 其中相关的主要内容如下：  糊涂窗口综合症- silly window syndrome。 nagle 算法 - nagle&amp;#39;s algorithm。 延迟 ACK - tcp delayed acknowledgment。  糊涂窗口综合症当 TCP 连接建立之后，在一些">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://www.4e00.com/blog/img/linux/tcp/tcp-nagle-algorithm.png">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.153Z">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/tcp/tcp-nagle-algorithm.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/tcp/tcp-nagle-enabled-localhost.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/tcp/tcp-nagle-disabled-localhost.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/tcp/tcp-nagle-enabled-remote.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/tcp/tcp-nagle-disabled-remote.png">
+<meta property="og:updated_time" content="2019-03-28T15:43:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tcp nagle&#39;s algorithm and delayed ack">
-<meta name="twitter:description" content="本文内容主要是为了帮助理解socket对象中的一个方法：socket.setTcpNoDelay(boolean)。 其中相关的主要内容如下：  糊涂窗口综合症- silly window syndrome。 nagle算法 - nagle&amp;#39;s algorithm。 延迟ACK - tcp delayed acknowledgment。  糊涂窗口综合症当tcp连接建立之后，在一些情况下，">
-<meta name="twitter:image" content="https://www.4e00.com/blog/img/linux/tcp/tcp-nagle-algorithm.png">
+<meta name="twitter:description" content="本文内容主要是为了帮助理解socket对象中的一个方法：socket.setTcpNoDelay(boolean)。 其中相关的主要内容如下：  糊涂窗口综合症- silly window syndrome。 nagle 算法 - nagle&amp;#39;s algorithm。 延迟 ACK - tcp delayed acknowledgment。  糊涂窗口综合症当 TCP 连接建立之后，在一些">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/linux/tcp/tcp-nagle-algorithm.png">
 
 
 
@@ -87,7 +91,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2016/09/17/tcp-nagle-algorithm-and-delayed-ack.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2016/09/17/tcp-nagle-algorithm-and-delayed-ack.html">
 
   <title> tcp nagle's algorithm and delayed ack | 一 </title>
 </head>
@@ -118,7 +122,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -141,7 +145,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -151,7 +155,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -159,7 +163,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -186,7 +190,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -215,14 +219,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -260,77 +264,90 @@
 <p>其中相关的主要内容如下：</p>
 <ol>
 <li>糊涂窗口综合症- silly window syndrome。</li>
-<li>nagle算法 - nagle&#39;s algorithm。</li>
-<li>延迟ACK - tcp delayed acknowledgment。</li>
+<li>nagle 算法 - nagle&#39;s algorithm。</li>
+<li>延迟 ACK - tcp delayed acknowledgment。</li>
 </ol>
-<h2 id="糊涂窗口综合症"><a href="#糊涂窗口综合症" class="headerlink" title="糊涂窗口综合症"></a>糊涂窗口综合症</h2><p>当tcp连接建立之后，在一些情况下，网络传输的tcp报文段中数据长度只有1个字节，而传输开销有40字节(20字节的IP头 + 20字节的TCP头)，结果有很多41字节的IP数据报就在互连网中传来传去，造成网络拥塞，这种现象就叫糊涂窗口综合症。</p>
+<h2 id="糊涂窗口综合症"><a href="#糊涂窗口综合症" class="headerlink" title="糊涂窗口综合症"></a>糊涂窗口综合症</h2><p>当 TCP 连接建立之后，在一些情况下，网络传输的 TCP 报文段中数据长度只有 1 个字节，而传输开销有 40 字节(20 字节的 IP 头 + 20 字节的 TCP 头)，结果有很多 41 字节的 IP 数据报就在互连网中传来传去，造成网络拥塞，这种现象就叫<code>糊涂窗口综合症</code>。</p>
 <p>如果要避免糊涂窗口综合症，可以从发送端和接收端分别进行优化设置：</p>
 <ol>
-<li>发送端使用<code>nagle算法</code>。</li>
-<li>接收端设置<code>延迟ACK</code>。</li>
+<li>发送端使用<code>Nagle 算法</code>。</li>
+<li>接收端设置<code>延迟 ACK</code>。</li>
 </ol>
 <h2 id="Nagle-39-s-algorithm"><a href="#Nagle-39-s-algorithm" class="headerlink" title="Nagle&#39;s algorithm"></a>Nagle&#39;s algorithm</h2><p>为了避免糊涂窗口综合症，纳格算法会尽可能发送大块数据，减少大量小数据包的发送，避免网络中充斥着许多小数据块，从而提高网络利用率。</p>
-<p>纳格算法伪代码如下，实现可参考<code>tcp_output.c</code>文件里<code>tcp_nagle_check</code>函数注释：</p>
+<h3 id="纳格算法实现"><a href="#纳格算法实现" class="headerlink" title="纳格算法实现"></a>纳格算法实现</h3><p>参考 <a href="https://github.com/torvalds/linux/blob/v5.0/net/ipv4/tcp_output.c" target="_blank" rel="noopener">tcp_output.c</a> 文件 1679 行<code>tcp_nagle_check</code>函数注释：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1679</span><span class="line">1680</span><span class="line">1681</span><span class="line">1682</span><span class="line">1683</span><span class="line">1684</span><span class="line">1685</span><span class="line">1686</span><span class="line">1687</span><span class="line">1688</span><span class="line">1689</span><span class="line">1690</span><span class="line">1691</span><span class="line">1692</span></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Return false, if packet can be sent now without violation Nagle's rules:</span></span><span class="line"><span class="comment"> * 1. It is full sized. (provided by caller in %partial bool)</span></span><span class="line"><span class="comment"> * 2. Or it contains FIN. (already checked by caller)</span></span><span class="line"><span class="comment"> * 3. Or TCP_CORK is not set, and TCP_NODELAY is set.</span></span><span class="line"><span class="comment"> * 4. Or TCP_CORK is not set, and all sent packets are ACKed.</span></span><span class="line"><span class="comment"> *    With Minshall's modification: all sent small packets are ACKed.</span></span><span class="line"><span class="comment"> */</span></span><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">bool</span> <span class="title">tcp_nagle_check</span><span class="params">(<span class="keyword">bool</span> partial, <span class="keyword">const</span> struct tcp_sock *tp,</span></span></span><span class="line"><span class="function"><span class="params">                <span class="keyword">int</span> nonagle)</span></span></span><span class="line"><span class="function"></span>&#123;</span><span class="line">    <span class="keyword">return</span> partial &amp;&amp;</span><span class="line">        ((nonagle &amp; TCP_NAGLE_CORK) ||</span><span class="line">         (!nonagle &amp;&amp; tp-&gt;packets_out &amp;&amp; tcp_minshall_check(tp)));</span><span class="line">&#125;</span></pre></td></tr></table></figure>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if there is new data to send</div><div class="line">  if the window size &gt;= MSS and available data is &gt;= MSS</div><div class="line">    send complete MSS segment now</div><div class="line">  else</div><div class="line">    if there is unconfirmed data still in the pipe</div><div class="line">      enqueue data in the buffer until an acknowledge is received</div><div class="line">    else</div><div class="line">      send data immediately</div><div class="line">    end if</div><div class="line">  end if</div><div class="line">end if</div></pre></td></tr></table></figure>
-<p>纳格算法在发送端为了避免发送很小的tcp segment，规定只有在下面情况下才会发送tcp segment:</p>
+<h3 id="纳格算法伪代码"><a href="#纳格算法伪代码" class="headerlink" title="纳格算法伪代码"></a>纳格算法伪代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if there is new data to send</span><span class="line">  if the window size &gt;= MSS and available data is &gt;= MSS</span><span class="line">    send complete MSS segment now</span><span class="line">  else</span><span class="line">    if there is unconfirmed data still in the pipe</span><span class="line">      enqueue data in the buffer until an acknowledge is received</span><span class="line">    else</span><span class="line">      send data immediately</span><span class="line">    end if</span><span class="line">  end if</span><span class="line">end if</span></pre></td></tr></table></figure>
+<p>纳格算法在发送端为了避免发送很小的 tcp segment，规定只有在下面情况下才会发送 tcp segment:</p>
 <ol>
-<li>发送端的数据累计达到了MSS（maximun segment size）。</li>
-<li>如果该包含有FIN，则允许发送。</li>
-<li>设置了TCP_NODELAY选项，则允许发送。</li>
-<li>未设置TCP_CORK选项时，若所有发出去的小数据包（包长度小于MSS）均收到ACK确认，则允许发送。</li>
-<li>上述条件都未满足，但发生了超时（一般为200ms），则立即发送。</li>
+<li>发送端的数据累计达到了 MSS（maximum segment size）。</li>
+<li>如果该包含有 FIN，则允许发送。</li>
+<li>设置了 TCP_NODELAY 选项，则允许发送。</li>
+<li>未设置 TCP_CORK 选项时，若所有发出去的小数据包（包长度小于 MSS）均收到 ACK 确认，则允许发送。</li>
+<li>上述条件都未满足，但发生了超时（一般为 200ms），则立即发送。</li>
 </ol>
 <p>纳格算法维基百科原文有段说明如下：</p>
 <blockquote>
 <p>A solution recommended by Nagle is to avoid the algorithm sending premature packets by buffering up application writes and then flushing the buffer:</p>
 <p>The user-level solution is to avoid write-write-read sequences on sockets. write-read-write-read is fine. write-write-write is fine. But write-write-read is a killer. So, if you can, buffer up your little writes to TCP and send them all at once. Using the standard UNIX I/O package and flushing write before each read usually works.</p>
 </blockquote>
-<p>也就是说纳格算法对于<code>write-read-write-read</code>和<code>write-write-write</code>模式的应用能有效的优化网络，但对于使用<code>write-write-read</code>模式的应用，在启用纳格算法时，却反而可能会带来程序运行性能的问题，纳格算法的维基百科页面上提到了<code>尽量编写好的代码而不要依赖TCP内置的所谓的算法</code>来优化TCP的行为。</p>
+<p>也就是说纳格算法对于<code>write-read-write-read</code>和<code>write-write-write</code>模式的应用能有效的优化网络，但对于使用<code>write-write-read</code>模式的应用，在启用纳格算法时，却反而可能会带来程序运行性能的问题，纳格算法的维基百科页面上提到了<code>尽量编写好的代码而不要依赖 TCP 内置的所谓的算法</code>来优化 TCP 的行为。</p>
 <p>使用<code>TCP_NODELAY</code>选项可以禁止纳格算法。</p>
-<h2 id="延迟确认机制-TCP-delayed-acknowledgment"><a href="#延迟确认机制-TCP-delayed-acknowledgment" class="headerlink" title="延迟确认机制 - TCP delayed acknowledgment"></a>延迟确认机制 - TCP delayed acknowledgment</h2><p><a href="https://en.wikipedia.org/wiki/TCP_delayed_acknowledgment" target="_blank" rel="external">RFC 1122</a>定义，全名<code>Delayed Acknowledgment</code>，简称<code>延迟ACK</code>，翻译为<code>延迟确认</code>。</p>
-<p>接收端不启用<code>延迟ACK</code>时，在接收到每一个数据包后，都会发送一个ACK报文给发送方，这样就增加了网络中传输的小报文数。</p>
-<p>与Nagle算法一样，<code>延迟ACK</code>的目的也是为了减少网络中传输大量的小报文数，但是此设置是针对接收端的ACK报文的。</p>
-<p>一个来自发送端的报文到达接收端，TCP会延迟ACK的发送，根据实际情况来回复<code>ACK确认</code>给发送端：</p>
+<h2 id="延迟确认机制-TCP-delayed-acknowledgment"><a href="#延迟确认机制-TCP-delayed-acknowledgment" class="headerlink" title="延迟确认机制 - TCP delayed acknowledgment"></a>延迟确认机制 - TCP delayed acknowledgment</h2><p><a href="https://en.wikipedia.org/wiki/TCP_delayed_acknowledgment" target="_blank" rel="noopener">RFC 1122</a>定义，全名<code>Delayed Acknowledgment</code>，简称<code>延迟 ACK</code>，翻译为<code>延迟确认</code>。</p>
+<p>接收端不启用<code>延迟 ACK</code>时，在接收到每一个数据包后，都会发送一个 ACK 报文给发送方，这样就增加了网络中传输的小报文数。</p>
+<p>与 Nagle 算法一样，<code>延迟 ACK</code>的目的也是为了减少网络中传输大量的小报文数，但是此设置是针对接收端的 ACK 报文的。</p>
+<p>一个来自发送端的报文到达接收端，TCP 会延迟 ACK 的发送，根据实际情况来回复<code>ACK 确认</code>给发送端：</p>
 <ol>
-<li>将ACK确认推迟到下一个TCP segment到来，即每收到两个TCP segment，发送一个ACK确认。</li>
-<li><code>ACK定时器</code>超时，此时一个TCP segment对应一个ACK确认。</li>
-<li>应用程序会对刚刚收到的数据进行应答，这样就可以用新数据将ACK捎带过去。</li>
+<li>将 ACK 确认推迟到下一个 TCP segment 到来，即每收到两个 TCP segment，发送一个 ACK 确认。</li>
+<li><code>ACK 定时器</code>超时，此时一个 TCP segment 对应一个 ACK 确认。</li>
+<li>应用程序会对刚刚收到的数据进行应答，这样就可以用新数据将 ACK 捎带过去。</li>
 </ol>
-<p><code>延迟ACK</code>最终目标是通过<code>捎带技术</code>或者<code>多个segment共用一个ACK确认</code>等技术来减少用于<code>ACK确认</code>的TCP segment的数量，这样可以减少通信量，提高吞吐率。</p>
-<h3 id="关于ACK定时器超时说明"><a href="#关于ACK定时器超时说明" class="headerlink" title="关于ACK定时器超时说明"></a>关于ACK定时器超时说明</h3><p>TCP标准推荐最多延迟500ms，微软指定的延迟为200ms，Linux上延迟40ms。</p>
-<p><a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_MRG/1.3/html/Realtime_Tuning_Guide/sect-Realtime_Tuning_Guide-General_System_Tuning-Reducing_the_TCP_delayed_ack_timeout.html" target="_blank" rel="external">Reducing the TCP delayed ack timeout</a>中说明如下：</p>
+<p><code>延迟 ACK</code>最终目标是通过<code>捎带技术</code>或者<code>多个 segment 共用一个 ACK 确认</code>等技术来减少用于<code>ACK 确认</code>的 TCP segment 的数量，这样可以减少通信量，提高吞吐率。</p>
+<h3 id="关于-ACK-定时器超时说明"><a href="#关于-ACK-定时器超时说明" class="headerlink" title="关于 ACK 定时器超时说明"></a>关于 ACK 定时器超时说明</h3><p>TCP 标准推荐最多延迟 500ms，微软指定的延迟为 200ms，Linux 上延迟 40ms。</p>
+<p><a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_MRG/1.3/html/Realtime_Tuning_Guide/sect-Realtime_Tuning_Guide-General_System_Tuning-Reducing_the_TCP_delayed_ack_timeout.html" target="_blank" rel="noopener">Reducing the TCP delayed ack timeout</a>中说明如下，其中<code>tcp_delack_min</code>在高版本的 Linux 服务器上可能已经不支持了：</p>
 <blockquote>
 <p>Some applications that send small network packets can experience latencies due to the TCP delayed acknowledgement timeout. This value defaults to 40ms. To avoid this problem, try reducing the tcp_delack_min timeout value. This changes the minimum time to delay before sending an acknowledgement systemwide.</p>
 <p>Write the desired minimum value, in microseconds, to <code>/proc/sys/net/ipv4/tcp_delack_min</code></p>
 </blockquote>
-<h2 id="当纳格算法遇到延迟确认"><a href="#当纳格算法遇到延迟确认" class="headerlink" title="当纳格算法遇到延迟确认"></a>当纳格算法遇到延迟确认</h2><p>在<code>write-write-read</code>模式的应用程序中，发送端启用纳格算法，接收端启用<code>延迟ACK</code>时，就会对程序产生性能影响，简单说明如下：</p>
-<h3 id="发送端伪代码示例"><a href="#发送端伪代码示例" class="headerlink" title="发送端伪代码示例"></a>发送端伪代码示例</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">write(head); <span class="comment">// write</span></div><div class="line">write(body); <span class="comment">// write</span></div><div class="line">read(response); <span class="comment">// read</span></div></pre></td></tr></table></figure>
-<h3 id="接收端伪代码示例"><a href="#接收端伪代码示例" class="headerlink" title="接收端伪代码示例"></a>接收端伪代码示例</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">read(request);</div><div class="line">process(request);</div><div class="line">write(response);</div></pre></td></tr></table></figure>
-<p>假设这里head和body都比较小，并默认启用纳格算法，并且是第一次发送的时候：</p>
+<h2 id="当纳格算法遇到延迟确认"><a href="#当纳格算法遇到延迟确认" class="headerlink" title="当纳格算法遇到延迟确认"></a>当纳格算法遇到延迟确认</h2><p>在<code>write-write-read</code>模式的应用程序中，发送端启用纳格算法，接收端启用<code>延迟 ACK</code>时，就会对程序产生性能影响，简单说明如下：</p>
+<h3 id="发送端伪代码示例"><a href="#发送端伪代码示例" class="headerlink" title="发送端伪代码示例"></a>发送端伪代码示例</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">write(head); <span class="comment">// write</span></span><span class="line">write(body); <span class="comment">// write</span></span><span class="line">read(response); <span class="comment">// read</span></span></pre></td></tr></table></figure>
+<h3 id="接收端伪代码示例"><a href="#接收端伪代码示例" class="headerlink" title="接收端伪代码示例"></a>接收端伪代码示例</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">read(request);</span><span class="line">process(request);</span><span class="line">write(response);</span></pre></td></tr></table></figure>
+<p>假设这里 head 和 body 都比较小，并默认启用纳格算法，并且是第一次发送的时候：</p>
 <ol>
-<li>根据nagle算法，第一个段head可以立即发送，因为没有等待确认的段；</li>
-<li>接收端收到head，但是包不完整，继续等待body达到并<code>延迟ACK</code>；</li>
-<li>发送端继续写入body，这时候nagle算法起作用了，因为head还没有被ACK，所以body要延迟发送，这就造成了发送端和接收端都在等待对方发送数据的现象：</li>
-<li>发送端等待接收端对head进行ACK确认，以便继续发送body；</li>
-<li>接收端在等待发送方发送body并<code>延迟ACK</code>。</li>
+<li>根据 nagle 算法，第一个段 head 可以立即发送，因为没有等待确认的段；</li>
+<li>接收端收到 head，但是包不完整，继续等待 body 达到并<code>延迟 ACK</code>；</li>
+<li>发送端继续写入 body，这时候 nagle 算法起作用了，因为 head 还没有被 ACK，所以 body 要延迟发送，这就造成了发送端和接收端都在等待对方发送数据的现象：</li>
+<li>发送端等待接收端对 head 进行 ACK 确认，以便继续发送 body；</li>
+<li>接收端在等待发送方发送 body 并<code>延迟 ACK</code>。</li>
 </ol>
-<p>这种时候只有等待一端超时并发送数据，应用程序才能继续往下执行，一般接收端的<code>延迟ACK</code>40ms超时先触发，此而在程序中就产生了40ms的响应延时。</p>
-<h2 id="java代码示例"><a href="#java代码示例" class="headerlink" title="java代码示例"></a>java代码示例</h2><h3 id="接收端server"><a href="#接收端server" class="headerlink" title="接收端server"></a>接收端server</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SocketTcpNoDelayServer</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(SocketTcpNoDelayServer.class);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PORT = <span class="number">8888</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">        ServerSocket serverSocket = <span class="keyword">new</span> ServerSocket();</div><div class="line">        serverSocket.bind(<span class="keyword">new</span> InetSocketAddress(PORT));</div><div class="line"></div><div class="line">        LOGGER.debug(<span class="string">"Server startup at &#123;&#125;"</span>, PORT);</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">            Socket socket = serverSocket.accept();</div><div class="line">            InputStream in = socket.getInputStream();</div><div class="line">            OutputStream out = socket.getOutputStream();</div><div class="line">            <span class="keyword">int</span> i = <span class="number">1</span>;</div><div class="line"></div><div class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</div><div class="line">                    String line = reader.readLine();</div><div class="line">                    LOGGER.debug(<span class="string">"&#123;&#125; : &#123;&#125;"</span>, i++, line);</div><div class="line">                    out.write((line + <span class="string">"\r\n"</span>).getBytes());</div><div class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行main方法启动服务端应用程序。</p>
-<h3 id="发送端client"><a href="#发送端client" class="headerlink" title="发送端client"></a>发送端client</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SocketTcpNoDelayClient</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(SocketTcpNoDelayClient.class);</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">disableNagle</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">        noDelay(<span class="keyword">true</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enableNagle</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">        <span class="comment">// socket默认就是打开纳格算法的</span></div><div class="line">        noDelay(<span class="keyword">false</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">noDelay</span><span class="params">(<span class="keyword">boolean</span> enable)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">        Socket socket = <span class="keyword">new</span> Socket();</div><div class="line">        socket.setTcpNoDelay(enable);</div><div class="line">        socket.connect(<span class="keyword">new</span> InetSocketAddress(<span class="string">"localhost"</span>, <span class="number">8888</span>));</div><div class="line"></div><div class="line">        InputStream in = socket.getInputStream();</div><div class="line">        OutputStream out = socket.getOutputStream();</div><div class="line">        BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</div><div class="line"></div><div class="line">        String head = <span class="string">"hello "</span>;</div><div class="line">        String body = <span class="string">"world\r\n"</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1</span>; i++) &#123;</div><div class="line">            <span class="keyword">long</span> label = System.currentTimeMillis();</div><div class="line">            <span class="comment">// The user-level solution is to avoid write-write-read sequences on sockets.</span></div><div class="line">            <span class="comment">// write-read-write-read is fine.</span></div><div class="line">            <span class="comment">// write-write-write is fine.</span></div><div class="line">            <span class="comment">// But write-write-read is a killer.</span></div><div class="line">            out.write(head.getBytes()); <span class="comment">// write</span></div><div class="line">            out.write(body.getBytes()); <span class="comment">// write</span></div><div class="line">            String line = reader.readLine(); <span class="comment">// read</span></div><div class="line"></div><div class="line">            <span class="comment">// 注意如果时间大于40ms，说明服务器接收端tcp有设置Delayed Ack，</span></div><div class="line">            <span class="comment">// 是在等待后续数据包delayed超时之后，再向客户端发回ack消息，客户端再发第2个packet的</span></div><div class="line">            LOGGER.debug(<span class="string">"RTT: &#123;&#125;, receive: &#123;&#125;"</span>, (System.currentTimeMillis() - label), line);</div><div class="line">        &#125;</div><div class="line">        in.close();</div><div class="line">        out.close();</div><div class="line">        socket.close();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行测试用例，并使用wireshark抓包截图如下：</p>
+<p>这种时候只有等待一端超时并发送数据，应用程序才能继续往下执行，一般接收端的<code>延迟 ACK</code>40ms 超时先触发，此而在程序中就产生了 40ms 的响应延时。</p>
+<h2 id="java-代码示例"><a href="#java-代码示例" class="headerlink" title="java 代码示例"></a>java 代码示例</h2><h3 id="接收端-server"><a href="#接收端-server" class="headerlink" title="接收端 server"></a>接收端 server</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SocketTcpNoDelayServer</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(SocketTcpNoDelayServer<span class="class">.<span class="keyword">class</span>)</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PORT = <span class="number">8888</span>;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><span class="line">        ServerSocket serverSocket = <span class="keyword">new</span> ServerSocket();</span><span class="line">        serverSocket.bind(<span class="keyword">new</span> InetSocketAddress(PORT));</span><span class="line"></span><span class="line">        LOGGER.debug(<span class="string">"Server startup at &#123;&#125;"</span>, PORT);</span><span class="line"></span><span class="line">        <span class="keyword">byte</span>[] data = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1460</span>];</span><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><span class="line">            Socket socket = serverSocket.accept();</span><span class="line">            <span class="keyword">try</span> &#123;</span><span class="line">                InputStream socketInputStream = socket.getInputStream();</span><span class="line">                OutputStream socketOutputStream = socket.getOutputStream();</span><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; ; i++) &#123;</span><span class="line">                    <span class="keyword">try</span> &#123;</span><span class="line">                        <span class="keyword">int</span> read = socketInputStream.read(data);</span><span class="line">                        <span class="keyword">if</span> (read == -<span class="number">1</span>) &#123;</span><span class="line">                            LOGGER.info(<span class="string">"socket close for : &#123;&#125;"</span>, socket);</span><span class="line">                            socket.close();</span><span class="line">                            <span class="keyword">break</span>;</span><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (read &gt; <span class="number">0</span>) &#123;</span><span class="line">                            String line = <span class="keyword">new</span> String(data, <span class="number">0</span>, read);</span><span class="line">                            LOGGER.info(<span class="string">"&#123;&#125; : &#123;&#125;"</span>, i, line);</span><span class="line">                            socketOutputStream.write(<span class="string">"test"</span>.getBytes());</span><span class="line">                        &#125;</span><span class="line">                    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><span class="line">                        e.printStackTrace();</span><span class="line">                        socket.close();</span><span class="line">                        <span class="keyword">break</span>;</span><span class="line">                    &#125;</span><span class="line">                &#125;</span><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><span class="line">                e.printStackTrace();</span><span class="line">                socket.close();</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>运行 main 方法启动服务端应用程序。</p>
+<h3 id="发送端-client"><a href="#发送端-client" class="headerlink" title="发送端 client"></a>发送端 client</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SocketTcpNoDelayClient</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(SocketTcpNoDelayClient<span class="class">.<span class="keyword">class</span>)</span>;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><span class="line">        Socket socket = <span class="keyword">new</span> Socket();</span><span class="line"></span><span class="line">        <span class="comment">// socket.setTcpNoDelay(true);</span></span><span class="line">        socket.setTcpNoDelay(<span class="keyword">false</span>);</span><span class="line"></span><span class="line">        socket.connect(<span class="keyword">new</span> InetSocketAddress(<span class="string">"localhost"</span>, <span class="number">8888</span>));</span><span class="line"></span><span class="line">        <span class="keyword">byte</span>[] data = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1460</span>];</span><span class="line">        <span class="keyword">try</span> &#123;</span><span class="line">            OutputStream socketOutputStream = socket.getOutputStream();</span><span class="line"></span><span class="line">            String head = <span class="string">"hello "</span>;</span><span class="line">            String body = <span class="string">"world\r\n"</span>;</span><span class="line"></span><span class="line">            <span class="keyword">int</span> i = <span class="number">0</span>;</span><span class="line">            <span class="keyword">for</span> (; i &lt; <span class="number">5</span>; i++) &#123;</span><span class="line">                <span class="keyword">long</span> start = System.currentTimeMillis();</span><span class="line">                <span class="comment">// The user-level solution is to avoid write-write-read sequences on sockets.</span></span><span class="line">                <span class="comment">// write-read-write-read is fine.</span></span><span class="line">                <span class="comment">// write-write-write is fine.</span></span><span class="line">                <span class="comment">// But write-write-read is a killer.</span></span><span class="line">                socketOutputStream.write(head.getBytes()); <span class="comment">// write</span></span><span class="line">                socketOutputStream.write(body.getBytes()); <span class="comment">// write</span></span><span class="line">                read(socket, data, i);                     <span class="comment">// read</span></span><span class="line"></span><span class="line">                <span class="comment">// 注意如果时间大于40ms，说明服务器接收端tcp有设置Delayed Ack，</span></span><span class="line">                <span class="comment">// 是在等待后续数据包delayed超时之后，再向客户端发回ack消息，客户端再发第2个packet的</span></span><span class="line">                <span class="keyword">long</span> end = System.currentTimeMillis();</span><span class="line">                LOGGER.debug(<span class="string">"RTT: &#123;&#125;"</span>, end - start);</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="comment">// 客户端发起 FIN 包</span></span><span class="line">            socket.shutdownOutput();</span><span class="line">            <span class="keyword">while</span> (read(socket, data, i++) != -<span class="number">1</span>) &#123;</span><span class="line">                LOGGER.info(<span class="string">"read server response ..."</span>);</span><span class="line">            &#125;</span><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><span class="line">            e.printStackTrace();</span><span class="line">            socket.close();</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">(Socket socket, <span class="keyword">byte</span>[] data, <span class="keyword">int</span> i)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><span class="line">        <span class="keyword">int</span> read = socket.getInputStream().read(data);   <span class="comment">// read</span></span><span class="line">        <span class="keyword">if</span> (read == -<span class="number">1</span>) &#123;</span><span class="line">            LOGGER.info(<span class="string">"socket close for : &#123;&#125;"</span>, socket);</span><span class="line">            socket.close();</span><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (read &gt; <span class="number">0</span>) &#123;</span><span class="line">            String line = <span class="keyword">new</span> String(data, <span class="number">0</span>, read);</span><span class="line">            LOGGER.info(<span class="string">"&#123;&#125; : response : &#123;&#125;"</span>, i, line);</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="keyword">return</span> read;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>运行测试用例，并使用 wireshark 抓包截图如下：</p>
 <img src="/blog/img/linux/tcp/tcp-nagle-algorithm.png" title="[tcp-nagle-algorithm]">
 <ol>
-<li>上图标黑的前2条是在禁用纳格算法时，客户端连续发送head和body给服务端，图中序号为2057和2058这2条。</li>
-<li>启用纳格算法时（socket默认就是启用的），在发送head和body之间，有收到接收端的一个<code>ACK确认</code>消息，即2104到2016这三条，因为这个代码是在Mac OS上测试的，并没有<code>延迟ACK</code>，如果接收端有设置<code>延迟ACK</code>，则客户端程序中输出的RTT值应该大于40ms。</li>
+<li>上图标黑的前 2 条是在禁用纳格算法时，客户端连续发送 head 和 body 给服务端，图中序号为 2057 和 2058 这 2 条。</li>
+<li>启用纳格算法时（socket 默认就是启用的），在发送 head 和 body 之间，有收到接收端的一个<code>ACK 确认</code>消息，即图中 2105 条，如图显示第一次服务器并没有<code>Delay ACK</code>，至于服务器端是否有<code>Delayed ACK</code>则要看<code>RTT</code>时间，如果超过<code>40ms</code>则很可能服务端有启用了<code>Delayed ACK</code>。</li>
 </ol>
+<h2 id="2019-3-28-更新-tshark-截屏"><a href="#2019-3-28-更新-tshark-截屏" class="headerlink" title="2019.3.28 更新 tshark 截屏"></a>2019.3.28 更新 tshark 截屏</h2><p>上面测试代码中<code>Hello</code>是 6 个字节，<code>world\r\n</code>是 7 个字节，如果是 13 个字节一起发送出去了，那就是这 2 个数据包被一起发送给服务端了。</p>
+<h3 id="本地开启-Nagle-算法时"><a href="#本地开启-Nagle-算法时" class="headerlink" title="本地开启 Nagle 算法时"></a>本地开启 Nagle 算法时</h3><p>可以看到下图中第 14，20 条记录的<code>Len</code>分别为<code>20</code>和<code>13</code>，就是 Nagle 算法生效的表现，另外一些即时发送是因为客户端收到了服务端的<code>ACK</code>包，所以不管多小的数据都立即发送出去了。</p>
+<img src="/blog/img/linux/tcp/tcp-nagle-enabled-localhost.png" title="[tcp-nagle-enabled-localhost]">
+<h4 id="局域网中的-Nagle-算法"><a href="#局域网中的-Nagle-算法" class="headerlink" title="局域网中的 Nagle 算法"></a>局域网中的 Nagle 算法</h4><p>在局域网上一个字节被发送、确认和回显的平均往返时间约为 16ms，在局域网环境下两个主机之间发送数据时很少使用 Nagle 算法。</p>
+<h3 id="本地关闭-Nagle-算法时"><a href="#本地关闭-Nagle-算法时" class="headerlink" title="本地关闭 Nagle 算法时"></a>本地关闭 Nagle 算法时</h3><p>不管数据包大小都被即时发送给服务端了。</p>
+<img src="/blog/img/linux/tcp/tcp-nagle-disabled-localhost.png" title="[tcp-nagle-disabled-localhost]">
+<h3 id="远程开启-Nagle-算法时"><a href="#远程开启-Nagle-算法时" class="headerlink" title="远程开启 Nagle 算法时"></a>远程开启 Nagle 算法时</h3><p>第一个数据包不管多小都是即时发送出去的，后面<code>Len</code>为 13 的数据包，都是因为 Nagle 算法生效产生的结果，对比关闭 Nagle 算法的数据可以看到，原来要 28 个数据包往来，开启 Nagle 之后只要 20 个数据包往来，如下图所示。</p>
+<img src="/blog/img/linux/tcp/tcp-nagle-enabled-remote.png" title="[tcp-nagle-enabled-remote]">
+<h3 id="远程关闭-Nagle-算法时"><a href="#远程关闭-Nagle-算法时" class="headerlink" title="远程关闭 Nagle 算法时"></a>远程关闭 Nagle 算法时</h3><p>不管数据包大小都被即时发送给服务端了，这里来回一共 28 个数据包。</p>
+<img src="/blog/img/linux/tcp/tcp-nagle-disabled-remote.png" title="[tcp-nagle-disabled-remote]">
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://en.wikipedia.org/wiki/Nagle%27s_algorithm" target="_blank" rel="external">Nagle&#39;s algorithm</a></li>
-<li><a href="https://my.oschina.net/xinxingegeya/blog/485643" target="_blank" rel="external">当Nagle算法遇到Delayed ACK</a></li>
-<li><a href="http://m.blog.csdn.net/article/details?id=7340241" target="_blank" rel="external">java socket参数详解:TcpNoDelay</a></li>
-<li><a href="http://jerrypeng.me/2013/08/mythical-40ms-delay-and-tcp-nodelay/" target="_blank" rel="external">神秘的40毫秒延迟与 TCP_NODELAY</a></li>
-<li><a href="http://blog.csdn.net/dog250/article/details/21303679" target="_blank" rel="external">再次谈谈TCP的Nagle算法与TCP_CORK选项</a></li>
+<li><a href="https://github.com/torvalds/linux/blob/v5.0/net/ipv4/tcp_output.c" target="_blank" rel="noopener">tcp_output.c</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Nagle%27s_algorithm" target="_blank" rel="noopener">Nagle&#39;s algorithm</a></li>
+<li><a href="https://my.oschina.net/xinxingegeya/blog/485643" target="_blank" rel="noopener">当 Nagle 算法遇到 Delayed ACK</a></li>
+<li><a href="http://m.blog.csdn.net/article/details?id=7340241" target="_blank" rel="noopener">java socket 参数详解:TcpNoDelay</a></li>
+<li><a href="http://jerrypeng.me/2013/08/mythical-40ms-delay-and-tcp-nodelay/" target="_blank" rel="noopener">神秘的 40 毫秒延迟与 TCP_NODELAY</a></li>
+<li><a href="http://blog.csdn.net/dog250/article/details/21303679" target="_blank" rel="noopener">再次谈谈 TCP 的 Nagle 算法与 TCP_CORK 选项</a></li>
+<li><a href="http://docs.52im.net/extend/docs/book/tcpip/vol1/19/" target="_blank" rel="noopener">第19章 TCP的交互数据流</a></li>
 </ol>
 
       
@@ -357,8 +374,9 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/java/2016/08/20/java-tool-jstask.html" rel="next" title="java tool - jstack">
-                上一篇：java tool - jstack
+              <a href="/blog/java/2016/08/20/java-tool-jstack.html" rel="next" title="java tool - jstack">
+                <i class="fa fa-chevron-left"></i>
+                java tool - jstack
               </a>
             
           </div>
@@ -366,7 +384,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/java/2016/09/18/java-logger-intro.html" rel="prev" title="java日志框架简介">
-                下一篇：java日志框架简介
+                <i class="fa fa-chevron-right"></i>
+                java日志框架简介
               </a>
             
           </div>
@@ -415,7 +434,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -426,16 +445,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -501,7 +518,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#糊涂窗口综合症"><span class="nav-number">1.</span> <span class="nav-text">糊涂窗口综合症</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nagle-39-s-algorithm"><span class="nav-number">2.</span> <span class="nav-text">Nagle's algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延迟确认机制-TCP-delayed-acknowledgment"><span class="nav-number">3.</span> <span class="nav-text">延迟确认机制 - TCP delayed acknowledgment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于ACK定时器超时说明"><span class="nav-number">3.1.</span> <span class="nav-text">关于ACK定时器超时说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当纳格算法遇到延迟确认"><span class="nav-number">4.</span> <span class="nav-text">当纳格算法遇到延迟确认</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发送端伪代码示例"><span class="nav-number">4.1.</span> <span class="nav-text">发送端伪代码示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接收端伪代码示例"><span class="nav-number">4.2.</span> <span class="nav-text">接收端伪代码示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java代码示例"><span class="nav-number">5.</span> <span class="nav-text">java代码示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接收端server"><span class="nav-number">5.1.</span> <span class="nav-text">接收端server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送端client"><span class="nav-number">5.2.</span> <span class="nav-text">发送端client</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#糊涂窗口综合症"><span class="nav-number">1.</span> <span class="nav-text">糊涂窗口综合症</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nagle-39-s-algorithm"><span class="nav-number">2.</span> <span class="nav-text">Nagle&#39;s algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#纳格算法实现"><span class="nav-number">2.1.</span> <span class="nav-text">纳格算法实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#纳格算法伪代码"><span class="nav-number">2.2.</span> <span class="nav-text">纳格算法伪代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延迟确认机制-TCP-delayed-acknowledgment"><span class="nav-number">3.</span> <span class="nav-text">延迟确认机制 - TCP delayed acknowledgment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于-ACK-定时器超时说明"><span class="nav-number">3.1.</span> <span class="nav-text">关于 ACK 定时器超时说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当纳格算法遇到延迟确认"><span class="nav-number">4.</span> <span class="nav-text">当纳格算法遇到延迟确认</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发送端伪代码示例"><span class="nav-number">4.1.</span> <span class="nav-text">发送端伪代码示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接收端伪代码示例"><span class="nav-number">4.2.</span> <span class="nav-text">接收端伪代码示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java-代码示例"><span class="nav-number">5.</span> <span class="nav-text">java 代码示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接收端-server"><span class="nav-number">5.1.</span> <span class="nav-text">接收端 server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送端-client"><span class="nav-number">5.2.</span> <span class="nav-text">发送端 client</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2019-3-28-更新-tshark-截屏"><span class="nav-number">6.</span> <span class="nav-text">2019.3.28 更新 tshark 截屏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#本地开启-Nagle-算法时"><span class="nav-number">6.1.</span> <span class="nav-text">本地开启 Nagle 算法时</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#局域网中的-Nagle-算法"><span class="nav-number">6.1.1.</span> <span class="nav-text">局域网中的 Nagle 算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地关闭-Nagle-算法时"><span class="nav-number">6.2.</span> <span class="nav-text">本地关闭 Nagle 算法时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#远程开启-Nagle-算法时"><span class="nav-number">6.3.</span> <span class="nav-text">远程开启 Nagle 算法时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#远程关闭-Nagle-算法时"><span class="nav-number">6.4.</span> <span class="nav-text">远程关闭 Nagle 算法时</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
             
           </div>
         </section>
@@ -517,10 +534,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

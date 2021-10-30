@@ -1,0 +1,632 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="在 terminal 和 vim 配色时，常会用到颜色名字或者对应的数字，一种方式就是查看网页，如 256 COLORS - CHEAT SHEET，另一种方便的方式，直接在命令行中输出颜色面板和名字，方便配色时引用。 检查当前 Terminal 是否支持 24bit 色彩可以使用以下脚本，在命令行中运行一下，看输出的结果，可以判断当前 terminal 对 truecolors (24bit)支">
+<meta property="og:type" content="article">
+<meta property="og:title" content="terminal colors tools and tutorial">
+<meta property="og:url" content="http://www.4e00.com/linux/2020/03/18/terminal-colors-tools-and-tutorial.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="在 terminal 和 vim 配色时，常会用到颜色名字或者对应的数字，一种方式就是查看网页，如 256 COLORS - CHEAT SHEET，另一种方便的方式，直接在命令行中输出颜色面板和名字，方便配色时引用。 检查当前 Terminal 是否支持 24bit 色彩可以使用以下脚本，在命令行中运行一下，看输出的结果，可以判断当前 terminal 对 truecolors (24bit)支">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/terminal-check-24bit-colors.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/terminal-app-256-colors.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/iterm2-24bit-true-colors-support.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/xterm-256colors-table.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/xterm-16colors-table.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/bash-256-colors.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/zsh-fg-bg-colors-example.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/powerlevel9k-get-color-code.png">
+<meta property="og:updated_time" content="2020-05-04T02:24:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="terminal colors tools and tutorial">
+<meta name="twitter:description" content="在 terminal 和 vim 配色时，常会用到颜色名字或者对应的数字，一种方式就是查看网页，如 256 COLORS - CHEAT SHEET，另一种方便的方式，直接在命令行中输出颜色面板和名字，方便配色时引用。 检查当前 Terminal 是否支持 24bit 色彩可以使用以下脚本，在命令行中运行一下，看输出的结果，可以判断当前 terminal 对 truecolors (24bit)支">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/linux/terminal-check-24bit-colors.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2020/03/18/terminal-colors-tools-and-tutorial.html">
+
+  <title> terminal colors tools and tutorial | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                terminal colors tools and tutorial
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2020-03-18T09:38:00+08:00" content="2020-03-18">
+              2020-03-18
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在 <code>terminal</code> 和 <code>vim</code> 配色时，常会用到颜色名字或者对应的数字，一种方式就是查看网页，如 <a href="http://www.4e00.com/tools/xterm-256-colors.html">256 COLORS - CHEAT SHEET</a>，另一种方便的方式，直接在命令行中输出颜色面板和名字，方便配色时引用。</p>
+<h2 id="检查当前-Terminal-是否支持-24bit-色彩"><a href="#检查当前-Terminal-是否支持-24bit-色彩" class="headerlink" title="检查当前 Terminal 是否支持 24bit 色彩"></a>检查当前 Terminal 是否支持 24bit 色彩</h2><p>可以使用以下<a href="https://gist.github.com/sindresorhus/bed863fb8bedf023b833c88c322e44f9" target="_blank" rel="noopener">脚本</a>，在命令行中运行一下，看输出的结果，可以判断当前 <code>terminal</code> 对 truecolors (24bit)支持的情况。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">awk <span class="string">'BEGIN&#123;</span></span><span class="line"><span class="string">    s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;</span></span><span class="line"><span class="string">    for (colnum = 0; colnum&lt;77; colnum++) &#123;</span></span><span class="line"><span class="string">        r = 255-(colnum*255/76);</span></span><span class="line"><span class="string">        g = (colnum*510/76);</span></span><span class="line"><span class="string">        b = (colnum*255/76);</span></span><span class="line"><span class="string">        if (g&gt;255) g = 510-g;</span></span><span class="line"><span class="string">        printf "\033[48;2;%d;%d;%dm", r,g,b;</span></span><span class="line"><span class="string">        printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b;</span></span><span class="line"><span class="string">        printf "%s\033[0m", substr(s,colnum+1,1);</span></span><span class="line"><span class="string">    &#125;</span></span><span class="line"><span class="string">    printf "\n";</span></span><span class="line"><span class="string">&#125;'</span></span></pre></td></tr></table></figure>
+<p>如下是在<code>iTerm.app</code>中的运行结果：</p>
+<img src="/blog/img/linux/terminal-check-24bit-colors.png" class="image-lg" title="[iterm terminal 24bit colors]">
+<p>如下图是在<code>Terminal.app</code>中的运行结果，目前应该是只支持 256 色，相比而言，<code>iTerm.app</code>的色彩支持更好：</p>
+<img src="/blog/img/linux/terminal-app-256-colors.png" class="image-lg" title="[terminal app 256 colors]">
+<a id="more"></a>
+<h2 id="Terminal-escape-sequences-说明"><a href="#Terminal-escape-sequences-说明" class="headerlink" title="Terminal escape sequences 说明"></a>Terminal escape sequences 说明</h2><blockquote>
+<p>The ANSI/VT100 terminals and terminal emulators are not just able to display black and white text ; they can display colors and formatted texts thanks to escape sequences. Those sequences are composed of the Escape character (often represented by &quot;<span style="color: deeppink">^[</span>&quot; or &quot;<span style="color: deeppink">&lt;Esc&gt;</span>&quot;) followed by some other characters: &quot;<span style="color: deeppink">&lt;Esc&gt;[<span style="color: purple">FormatCode</span>m</span>&quot;.</p>
+<p>In Bash, the <span style="color: deeppink">&lt;Esc&gt;</span> character can be obtained with the following syntaxes:</p>
+</blockquote>
+<ol>
+<li><kbd>\e</kbd></li>
+<li><kbd>\033</kbd></li>
+<li><kbd>\x1B</kbd></li>
+</ol>
+<blockquote>
+<p>Foreground (text)</p>
+<p>For using one of the 256 colors on the foreground (text color), the control sequence is &quot;<span style="color: deeppink">&lt;Esc&gt;[38;5;<span style="color: purple">ColorNumber</span>m</span>&quot; where ColorNumber is one of the following colors:</p>
+<p>Background</p>
+<p>For using one of the 256 colors on the background, the control sequence is &quot;<span style="color: deeppink">&lt;Esc&gt;[48;5;<span style="color: purple">ColorNumber</span>m</span>&quot; where ColorNumber is one of the following colors:</p>
+</blockquote>
+<p>详细说明可参考 <a href="https://tools.paco.bg/14/" target="_blank" rel="noopener">Bash Colors</a> 和 <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit" target="_blank" rel="noopener">ANSI escape code</a>。</p>
+<h2 id="24bit-true-colour"><a href="#24bit-true-colour" class="headerlink" title="24bit true colour"></a>24bit true colour</h2><p>24bit 彩色通过 RBG 方式明确指定，其中 <code>fg</code> 为 <code>38</code>，<code>bg</code> 为 <code>48</code>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span> <span class="string">"\x1b[<span class="variable">$&#123;fg&#125;</span>;2;<span class="variable">$&#123;red&#125;</span>;<span class="variable">$&#123;green&#125;</span>;<span class="variable">$&#123;blue&#125;</span>m\n"</span></span><span class="line"><span class="built_in">printf</span> <span class="string">"\x1b[<span class="variable">$&#123;bg&#125;</span>;2;<span class="variable">$&#123;red&#125;</span>;<span class="variable">$&#123;green&#125;</span>;<span class="variable">$&#123;blue&#125;</span>m\n"</span></span></pre></td></tr></table></figure>
+<p>以下结果输出为白色的则表示不支持 24bit 颜色，如下图是在 <code>iTerm.app</code> 中输出的真彩结果：</p>
+<img src="/blog/img/linux/iterm2-24bit-true-colors-support.png" class="image-lg" title="[iterm2 24bit true colors support]">
+<h3 id="24bit-true-colors-support-in-neovim-and-vim"><a href="#24bit-true-colors-support-in-neovim-and-vim" class="headerlink" title="24bit true colors support in neovim and vim"></a>24bit true colors support in neovim and vim</h3><ol>
+<li>neovim - since commit <a href="https://github.com/neovim/neovim/commit/8dd415e887923f99ab5daaeba9f0303e173dd1aa" target="_blank" rel="noopener">8dd415e887923f99ab5daaeba9f0303e173dd1aa</a>; need to set <a href="https://neovim.io/doc/user/options.html#%27termguicolors" target="_blank" rel="noopener">termguicolors</a> to enable true color.</li>
+<li>vim - (from 7.4.1770) since commit <a href="https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd" target="_blank" rel="noopener">8a633e3427b47286869aa4b96f2bfc1fe65b25cd</a>; need to set <a href="https://github.com/vim/vim/blob/master/runtime/doc/version8.txt#L202" target="_blank" rel="noopener">termguicolors</a> to enable true color.</li>
+</ol>
+<h2 id="打印-256-色到控制台"><a href="#打印-256-色到控制台" class="headerlink" title="打印 256 色到控制台"></a>打印 256 色到控制台</h2><p>如下<a href="http://askubuntu.com/questions/821157/print-a-256-color-test-pattern-in-the-terminal/821163#821163" target="_blank" rel="noopener">脚本</a>，会输出 256 色示例到控制台，显示对应颜色和色号：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">curl</span> -s https://gist.githubusercontent.com/HaleTom/89ffe32783f89f403bba96bd7bcd1263/raw/ | bash</span></pre></td></tr></table></figure>
+<p>控制台输出如下图：</p>
+<img src="/blog/img/linux/xterm-256colors-table.png" class="image-lg" title="[xterm-256colors-table]">
+<p>上面输出的结果中第一行的 16 色(3/4bit)分别对应 8 个背景色和 8 个前景色，可以参考文章说明：<a href="/blog/linux/2007/06/03/table-for-16-color-terminal-escape-sequences.html">table for 16-color terminal escape sequences</a></p>
+<h3 id="ANSI-16-colors-escape-codes"><a href="#ANSI-16-colors-escape-codes" class="headerlink" title="ANSI 16 colors escape codes"></a>ANSI 16 colors escape codes</h3><p>8 背景色和 8 前景色以及粗细字体组合:</p>
+<img src="/blog/img/linux/xterm-16colors-table.png" class="image-lg" title="[xterm-16colors-table]">
+<h2 id="bash-前景色和背景色-256-色输出示例"><a href="#bash-前景色和背景色-256-色输出示例" class="headerlink" title="bash 前景色和背景色 256 色输出示例"></a>bash 前景色和背景色 256 色输出示例</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><span class="line"></span><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;0..255&#125;; <span class="keyword">do</span> <span class="built_in">printf</span> <span class="string">'\e[48;5;%dm%3d '</span> <span class="variable">$i</span> <span class="variable">$i</span>; (((i+3) % 18)) || <span class="built_in">printf</span> <span class="string">'\e[0m\n\t'</span>; <span class="keyword">done</span></span><span class="line"></span><span class="line"><span class="built_in">printf</span> <span class="string">'\e[0m\n'</span></span><span class="line"><span class="built_in">printf</span> <span class="string">'\n\t'</span></span><span class="line"></span><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;0..255&#125;; <span class="keyword">do</span> <span class="built_in">printf</span> <span class="string">'\x1b[38;5;%dm%3d '</span> <span class="variable">$i</span> <span class="variable">$i</span>; (((i+3) % 18)) || <span class="built_in">printf</span> <span class="string">'\x1b[0m\n\t'</span>; <span class="keyword">done</span></span><span class="line"><span class="built_in">printf</span> <span class="string">'\n'</span></span></pre></td></tr></table></figure>
+<img src="/blog/img/linux/bash-256-colors.png" class="image-lg" title="[bash-256-colors]">
+<h2 id="zsh-中前景色和背景色设置模式说明"><a href="#zsh-中前景色和背景色设置模式说明" class="headerlink" title="zsh 中前景色和背景色设置模式说明"></a>zsh 中前景色和背景色设置模式说明</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">man</span> zshmisc</span></pre></td></tr></table></figure>
+<p>上述命令输出内容摘录与前景色后景色设置有关的部分说明如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Visual effects</span><span class="line">    # %B (%b)</span><span class="line">        # Start (stop) boldface mode.</span><span class="line"></span><span class="line">    # %E     Clear to end of line.</span><span class="line"></span><span class="line">    # %U (%u)</span><span class="line">        # Start (stop) underline mode.</span><span class="line"></span><span class="line">    # %S (%s)</span><span class="line">        # Start (stop) standout mode.</span><span class="line"></span><span class="line">    # %F (%f)</span><span class="line">        # Start (stop) using a different foreground colour, if supported by the terminal.  The colour may be  specified  two  ways:</span><span class="line">        # either as a numeric argument, as normal, or by a sequence in braces following the %F, for example %F&#123;red&#125;.  In the latter</span><span class="line">        # case the values allowed are as described for the fg zle_highlight attribute; see  Character  Highlighting  in  zshzle(1).</span><span class="line">        # This means that numeric colours are allowed in the second format also.</span><span class="line"></span><span class="line">    # %K (%k)</span><span class="line">        # Start (stop) using a different bacKground colour.  The syntax is identical to that for %F and %f.</span><span class="line"></span><span class="line">    # %&#123;...%&#125;</span><span class="line">        # Include  a  string  as  a  literal  escape sequence.  The string within the braces should not change the cursor position.</span><span class="line">        # Brace pairs can nest.</span><span class="line"></span><span class="line">        # A positive numeric argument between the % and the &#123; is treated as described for %G below.</span><span class="line"></span><span class="line">    # %G  Within a %&#123;...%&#125; sequence, include a `glitch&apos;: that is, assume that a single character width will  be  output.   This  is</span><span class="line">        # useful  when outputting characters that otherwise cannot be correctly handled by the shell, such as the alternate charac-</span><span class="line">        # ter set on some terminals.  The characters in question can be included within a %&#123;...%&#125; sequence together with the appro-</span><span class="line">        # priate  number  of  %G sequences to indicate the correct width.  An integer between the `%&apos; and `G&apos; indicates a character</span><span class="line">        # width other than one.  Hence %&#123;seq%2G%&#125; outputs seq and assumes it takes up the width of two standard characters.</span><span class="line"></span><span class="line">        # Multiple uses of %G accumulate in the obvious fashion; the position of the %G is unimportant.  Negative integers are  not</span><span class="line">        # handled.</span><span class="line"></span><span class="line">        # Note that when prompt truncation is in use it is advisable to divide up output into single characters within each %&#123;...%&#125;</span><span class="line">        # group so that the correct truncation point can be found.</span></pre></td></tr></table></figure>
+<h2 id="zsh-前景色和背景色-256-色输出示例"><a href="#zsh-前景色和背景色-256-色输出示例" class="headerlink" title="zsh 前景色和背景色 256 色输出示例"></a>zsh 前景色和背景色 256 色输出示例</h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env zsh</span></span><span class="line"></span><span class="line"><span class="comment"># You can switch foreground and background colors with the standout mode %S (%s).</span></span><span class="line"><span class="comment"># As you can see, it does not matter in which order the colors and modes (works the same for boldface and underline modes) are set.</span></span><span class="line"><span class="comment"># You can set a foreground color with %F&#123;color&#125; before or after starting standout mode with %S, it is just used as background after %S until you stop standout mode with %s.</span></span><span class="line"><span class="built_in">print</span> -P $<span class="string">'\t unchanged output colors'</span></span><span class="line"><span class="built_in">print</span> -P $<span class="string">'\t%f%k default colors %S standout mode %s'</span></span><span class="line"><span class="built_in">print</span> -P $<span class="string">'\t%F&#123;blue&#125;%K&#123;red&#125; blue on red %f%k'</span></span><span class="line"><span class="built_in">print</span> -P $<span class="string">'\t%S%F&#123;blue&#125;%K&#123;red&#125; red on blue %s blue on red %f%k'</span></span><span class="line"><span class="built_in">print</span> -P $<span class="string">'\t%K&#123;default&#125;%F&#123;blue&#125;%Sdefault background on blue %s%f%k'</span></span><span class="line"><span class="built_in">print</span> -P $<span class="string">'\t%K&#123;red&#125;%F&#123;default&#125;%S red on default foreground %f%k%s'</span></span></pre></td></tr></table></figure>
+<img src="/blog/img/linux/zsh-fg-bg-colors-example.png" class="image-lg" title="[zsh-fg-bg-colors-example]">
+<h3 id="powerlevel9k-输出前景色和背景色"><a href="#powerlevel9k-输出前景色和背景色" class="headerlink" title="powerlevel9k 输出前景色和背景色"></a>powerlevel9k 输出前景色和背景色</h3><p>上面这个前景色和背景色输出示例，在<code>oh-my-zsh</code>主题<code>powerlevel9k</code>中有个帮助方法，可以用来查看类似的效果，命令如下所示：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">getColorCode</span> foreground</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">getColorCode</span> background</span></pre></td></tr></table></figure>
+<p>上述二个命令输出截图部分如下：</p>
+<img src="/blog/img/linux/powerlevel9k-get-color-code.png" class="image-lg" title="[powerlevel9k get color code]">
+<h2 id="scripts-source-code"><a href="#scripts-source-code" class="headerlink" title="scripts source code"></a>scripts source code</h2><p>下面是一些在命令行控制台输出颜色的 <code>bash</code> 或者 <code>zsh</code> 脚本源码。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><span class="line"></span><span class="line"><span class="comment"># prints a color table of 8bg * 8fg * 2 states (regular/bold)</span></span><span class="line"><span class="built_in">echo</span></span><span class="line"><span class="built_in">echo</span> Table <span class="keyword">for</span> 16-color terminal escape sequences.</span><span class="line"><span class="built_in">echo</span> Replace ESC with \\033 <span class="keyword">in</span> bash.</span><span class="line"><span class="built_in">echo</span></span><span class="line"><span class="built_in">echo</span> <span class="string">"Background | Foreground colors"</span></span><span class="line"><span class="built_in">echo</span> <span class="string">"---------------------------------------------------------------------"</span></span><span class="line"><span class="keyword">for</span>((<span class="built_in">bg</span>=40;<span class="built_in">bg</span>&lt;=47;<span class="built_in">bg</span>++)); <span class="keyword">do</span></span><span class="line">    <span class="keyword">for</span>((bold=0;bold&lt;=1;bold++)) <span class="keyword">do</span></span><span class="line">        <span class="built_in">echo</span> -en <span class="string">"\033[0m"</span><span class="string">" ESC[<span class="variable">$&#123;bg&#125;</span>m   | "</span></span><span class="line">        <span class="keyword">for</span>((<span class="built_in">fg</span>=30;<span class="built_in">fg</span>&lt;=37;<span class="built_in">fg</span>++)); <span class="keyword">do</span></span><span class="line">            <span class="keyword">if</span> [ <span class="variable">$bold</span> == <span class="string">"0"</span> ]; <span class="keyword">then</span></span><span class="line">                <span class="built_in">echo</span> -en <span class="string">"\033[<span class="variable">$&#123;bg&#125;</span>m\033[<span class="variable">$&#123;fg&#125;</span>m [<span class="variable">$&#123;fg&#125;</span>m  "</span></span><span class="line">            <span class="keyword">else</span></span><span class="line">                <span class="built_in">echo</span> -en <span class="string">"\033[<span class="variable">$&#123;bg&#125;</span>m\033[1;<span class="variable">$&#123;fg&#125;</span>m [1;<span class="variable">$&#123;fg&#125;</span>m"</span></span><span class="line">            <span class="keyword">fi</span></span><span class="line">        <span class="keyword">done</span></span><span class="line">        <span class="built_in">echo</span> -e <span class="string">"\033[0m"</span></span><span class="line">    <span class="keyword">done</span></span><span class="line">    <span class="built_in">echo</span> <span class="string">"--------------------------------------------------------------------- "</span></span><span class="line"><span class="keyword">done</span></span><span class="line"><span class="built_in">echo</span></span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><span class="line"></span><span class="line"><span class="comment"># Tom Hale, 2016. MIT Licence.</span></span><span class="line"><span class="comment"># Print out 256 colours, with each number printed in its corresponding colour</span></span><span class="line"><span class="comment"># See http://askubuntu.com/questions/821157/print-a-256-color-test-pattern-in-the-terminal/821163#821163</span></span><span class="line"></span><span class="line"><span class="built_in">set</span> -eu <span class="comment"># Fail on errors or undeclared variables</span></span><span class="line"></span><span class="line">printable_colours=256</span><span class="line"></span><span class="line"><span class="comment"># Return a colour that contrasts with the given colour</span></span><span class="line"><span class="comment"># Bash only does integer division, so keep it integral</span></span><span class="line"><span class="keyword">function</span> contrast_colour &#123;</span><span class="line">    <span class="built_in">local</span> r g b luminance</span><span class="line">    colour=<span class="string">"<span class="variable">$1</span>"</span></span><span class="line"></span><span class="line">    <span class="keyword">if</span> (( colour &lt; 16 )); <span class="keyword">then</span> <span class="comment"># Initial 16 ANSI colours</span></span><span class="line">        (( colour == 0 )) &amp;&amp; <span class="built_in">printf</span> <span class="string">"15"</span> || <span class="built_in">printf</span> <span class="string">"0"</span></span><span class="line">        <span class="built_in">return</span></span><span class="line">    <span class="keyword">fi</span></span><span class="line"></span><span class="line">    <span class="comment"># Greyscale # rgb_R = rgb_G = rgb_B = (number - 232) * 10 + 8</span></span><span class="line">    <span class="keyword">if</span> (( colour &gt; 231 )); <span class="keyword">then</span> <span class="comment"># Greyscale ramp</span></span><span class="line">        (( colour &lt; 244 )) &amp;&amp; <span class="built_in">printf</span> <span class="string">"15"</span> || <span class="built_in">printf</span> <span class="string">"0"</span></span><span class="line">        <span class="built_in">return</span></span><span class="line">    <span class="keyword">fi</span></span><span class="line"></span><span class="line">    <span class="comment"># All other colours:</span></span><span class="line">    <span class="comment"># 6x6x6 colour cube = 16 + 36*R + 6*G + B  # Where RGB are [0..5]</span></span><span class="line">    <span class="comment"># See http://stackoverflow.com/a/27165165/5353461</span></span><span class="line"></span><span class="line">    <span class="comment"># r=$(( (colour-16) / 36 ))</span></span><span class="line">    g=$(( ((colour-16) % 36) / 6 ))</span><span class="line">    <span class="comment"># b=$(( (colour-16) % 6 ))</span></span><span class="line"></span><span class="line">    <span class="comment"># If luminance is bright, print number in black, white otherwise.</span></span><span class="line">    <span class="comment"># Green contributes 587/1000 to human perceived luminance - ITU R-REC-BT.601</span></span><span class="line">    (( g &gt; 2)) &amp;&amp; <span class="built_in">printf</span> <span class="string">"0"</span> || <span class="built_in">printf</span> <span class="string">"15"</span></span><span class="line">    <span class="built_in">return</span></span><span class="line"></span><span class="line">    <span class="comment"># Uncomment the below for more precise luminance calculations</span></span><span class="line"></span><span class="line">    <span class="comment"># # Calculate percieved brightness</span></span><span class="line">    <span class="comment"># # See https://www.w3.org/TR/AERT#color-contrast</span></span><span class="line">    <span class="comment"># # and http://www.itu.int/rec/R-REC-BT.601</span></span><span class="line">    <span class="comment"># # Luminance is in range 0..5000 as each value is 0..5</span></span><span class="line">    <span class="comment"># luminance=$(( (r * 299) + (g * 587) + (b * 114) ))</span></span><span class="line">    <span class="comment"># (( $luminance &gt; 2500 )) &amp;&amp; printf "0" || printf "15"</span></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment"># Print a coloured block with the number of that colour</span></span><span class="line"><span class="keyword">function</span> print_colour &#123;</span><span class="line">    <span class="built_in">local</span> colour=<span class="string">"<span class="variable">$1</span>"</span> contrast</span><span class="line">    contrast=$(contrast_colour <span class="string">"<span class="variable">$1</span>"</span>)</span><span class="line">    <span class="built_in">printf</span> <span class="string">"\e[48;5;%sm"</span> <span class="string">"<span class="variable">$colour</span>"</span>                <span class="comment"># Start block of colour</span></span><span class="line">    <span class="built_in">printf</span> <span class="string">"\e[38;5;%sm%3d"</span> <span class="string">"<span class="variable">$contrast</span>"</span> <span class="string">"<span class="variable">$colour</span>"</span> <span class="comment"># In contrast, print number</span></span><span class="line">    <span class="built_in">printf</span> <span class="string">"\e[0m "</span>                               <span class="comment"># Reset colour</span></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment"># Starting at $1, print a run of $2 colours</span></span><span class="line"><span class="keyword">function</span> print_run &#123;</span><span class="line">    <span class="built_in">local</span> i</span><span class="line">    <span class="built_in">printf</span> <span class="string">"  "</span></span><span class="line">    <span class="keyword">for</span> (( i = <span class="string">"<span class="variable">$1</span>"</span>; i &lt; <span class="string">"<span class="variable">$1</span>"</span> + <span class="string">"<span class="variable">$2</span>"</span> &amp;&amp; i &lt; printable_colours; i++ )) <span class="keyword">do</span></span><span class="line">        print_colour <span class="string">"<span class="variable">$i</span>"</span></span><span class="line">    <span class="keyword">done</span></span><span class="line">    <span class="built_in">printf</span> <span class="string">"  "</span></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment"># Print blocks of colours</span></span><span class="line"><span class="keyword">function</span> print_blocks &#123;</span><span class="line">    <span class="built_in">local</span> start=<span class="string">"<span class="variable">$1</span>"</span> i</span><span class="line">    <span class="built_in">local</span> end=<span class="string">"<span class="variable">$2</span>"</span> <span class="comment"># inclusive</span></span><span class="line">    <span class="built_in">local</span> block_cols=<span class="string">"<span class="variable">$3</span>"</span></span><span class="line">    <span class="built_in">local</span> block_rows=<span class="string">"<span class="variable">$4</span>"</span></span><span class="line">    <span class="built_in">local</span> blocks_per_line=<span class="string">"<span class="variable">$5</span>"</span></span><span class="line">    <span class="built_in">local</span> block_length=$((block_cols * block_rows))</span><span class="line"></span><span class="line">    <span class="comment"># Print sets of blocks</span></span><span class="line">    <span class="keyword">for</span> (( i = start; i &lt;= end; i += (blocks_per_line-1) * block_length )) <span class="keyword">do</span></span><span class="line">        <span class="built_in">printf</span> <span class="string">"\n"</span> <span class="comment"># Space before each set of blocks</span></span><span class="line">        <span class="comment"># For each block row</span></span><span class="line">        <span class="keyword">for</span> (( row = 0; row &lt; block_rows; row++ )) <span class="keyword">do</span></span><span class="line">            <span class="comment"># Print block columns for all blocks on the line</span></span><span class="line">            <span class="keyword">for</span> (( block = 0; block &lt; blocks_per_line; block++ )) <span class="keyword">do</span></span><span class="line">                print_run $(( i + (block * block_length) )) <span class="string">"<span class="variable">$block_cols</span>"</span></span><span class="line">            <span class="keyword">done</span></span><span class="line">            (( i += block_cols )) <span class="comment"># Prepare to print the next row</span></span><span class="line">            <span class="built_in">printf</span> <span class="string">"\n"</span></span><span class="line">        <span class="keyword">done</span></span><span class="line">    <span class="keyword">done</span></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="built_in">printf</span> <span class="string">"\n"</span></span><span class="line">print_run 0 16 <span class="comment"># The first 16 colours are spread over the whole spectrum</span></span><span class="line"><span class="built_in">printf</span> <span class="string">"\n"</span></span><span class="line">print_blocks 16 231 6 6 3 <span class="comment"># 6x6x6 colour cube between 16 and 231 inclusive</span></span><span class="line">print_blocks 232 255 12 2 1 <span class="comment"># Not 50, but 24 Shades of Grey</span></span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><span class="line"></span><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;0..255&#125; ; <span class="keyword">do</span> <span class="built_in">printf</span> <span class="string">"\x1b[38;5;<span class="variable">$&#123;i&#125;</span>mcolour<span class="variable">$&#123;i&#125;</span>\x1b[0m\n"</span>; <span class="keyword">done</span></span><span class="line"></span><span class="line"><span class="built_in">printf</span> <span class="string">'\e[0m\n'</span></span><span class="line"></span><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;0..255&#125; ; <span class="keyword">do</span> <span class="built_in">printf</span> <span class="string">"\e[48;5;<span class="variable">$&#123;i&#125;</span>mcolour<span class="variable">$&#123;i&#125;</span>\e[0m\n"</span>; <span class="keyword">done</span></span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><span class="line"></span><span class="line"><span class="comment"># This program is free software. It comes without any warranty, to</span></span><span class="line"><span class="comment"># the extent permitted by applicable law. You can redistribute it</span></span><span class="line"><span class="comment"># and/or modify it under the terms of the Do What The Fuck You Want</span></span><span class="line"><span class="comment"># To Public License, Version 2, as published by Sam Hocevar. See</span></span><span class="line"><span class="comment"># http://sam.zoy.org/wtfpl/COPYING for more details.</span></span><span class="line"></span><span class="line"><span class="keyword">for</span> fgbg <span class="keyword">in</span> 38 48 ; <span class="keyword">do</span> <span class="comment">#Foreground/Background</span></span><span class="line">    <span class="keyword">for</span> color <span class="keyword">in</span> &#123;0..255&#125; ; <span class="keyword">do</span> <span class="comment">#Colors</span></span><span class="line">        <span class="comment">#Display the color</span></span><span class="line">        <span class="built_in">echo</span> -en <span class="string">"\e[<span class="variable">$&#123;fgbg&#125;</span>;5;<span class="variable">$&#123;color&#125;</span>m <span class="variable">$&#123;color&#125;</span>\t\e[0m"</span></span><span class="line">        <span class="comment">#Display 10 colors per lines</span></span><span class="line">        <span class="keyword">if</span> [ $(((<span class="variable">$color</span> + 1) % 10)) == 0 ] ; <span class="keyword">then</span></span><span class="line">            <span class="built_in">echo</span> <span class="comment">#New line</span></span><span class="line">        <span class="keyword">fi</span></span><span class="line">    <span class="keyword">done</span></span><span class="line">    <span class="built_in">echo</span> <span class="comment">#New line</span></span><span class="line"><span class="keyword">done</span></span><span class="line"></span><span class="line"><span class="built_in">exit</span> 0</span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><span class="line"></span><span class="line"><span class="comment"># This program is free software. It comes without any warranty, to</span></span><span class="line"><span class="comment"># the extent permitted by applicable law. You can redistribute it</span></span><span class="line"><span class="comment"># and/or modify it under the terms of the Do What The Fuck You Want</span></span><span class="line"><span class="comment"># To Public License, Version 2, as published by Sam Hocevar. See</span></span><span class="line"><span class="comment"># http://sam.zoy.org/wtfpl/COPYING for more details.</span></span><span class="line"></span><span class="line"><span class="comment">#Background</span></span><span class="line"><span class="keyword">for</span> clbg <span class="keyword">in</span> &#123;40..47&#125; &#123;100..107&#125; 49 ; <span class="keyword">do</span></span><span class="line">    <span class="comment">#Foreground</span></span><span class="line">    <span class="keyword">for</span> clfg <span class="keyword">in</span> &#123;30..37&#125; &#123;90..97&#125; 39 ; <span class="keyword">do</span></span><span class="line">        <span class="comment">#Formatting</span></span><span class="line">        <span class="keyword">for</span> attr <span class="keyword">in</span> 0 1 2 4 5 7 ; <span class="keyword">do</span></span><span class="line">            <span class="comment">#Print the result</span></span><span class="line">            <span class="built_in">echo</span> -en <span class="string">"\e[<span class="variable">$&#123;attr&#125;</span>;<span class="variable">$&#123;clbg&#125;</span>;<span class="variable">$&#123;clfg&#125;</span>m ^[<span class="variable">$&#123;attr&#125;</span>;<span class="variable">$&#123;clbg&#125;</span>;<span class="variable">$&#123;clfg&#125;</span>m \e[0m"</span></span><span class="line">        <span class="keyword">done</span></span><span class="line">        <span class="built_in">echo</span> <span class="comment">#Newline</span></span><span class="line">    <span class="keyword">done</span></span><span class="line"><span class="keyword">done</span></span><span class="line"></span><span class="line"><span class="built_in">exit</span> 0</span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env zsh</span></span><span class="line"></span><span class="line"><span class="keyword">for</span> code (&#123;000..255&#125;) <span class="built_in">print</span> -P -- <span class="string">"<span class="variable">$code</span>: %F&#123;<span class="variable">$code</span>&#125;This is how your text would look like%f"</span></span><span class="line"><span class="keyword">for</span> code (&#123;000..255&#125;) <span class="built_in">print</span> -P -- <span class="string">"<span class="variable">$code</span>: %K&#123;<span class="variable">$code</span>&#125;This is how your background would look like%k"</span></span></pre></td></tr></table></figure>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env zsh</span></span><span class="line"></span><span class="line"><span class="comment">################################################################</span></span><span class="line"><span class="comment"># vim:ft=zsh ts=2 sw=2 sts=2 et fenc=utf-8</span></span><span class="line"><span class="comment"># Color functions</span></span><span class="line"><span class="comment"># This file holds some color-functions for</span></span><span class="line"><span class="comment"># the powerlevel9k-ZSH-theme</span></span><span class="line"><span class="comment"># https://github.com/bhilburn/powerlevel9k</span></span><span class="line"><span class="comment">################################################################</span></span><span class="line"></span><span class="line"><span class="built_in">typeset</span> -gAh __P9K_COLORS</span><span class="line"><span class="comment"># https://jonasjacek.github.io/colors/</span></span><span class="line"><span class="comment"># use color names by default to allow dark/light themes to adjust colors based on names</span></span><span class="line">__P9K_COLORS=(</span><span class="line">  black             000</span><span class="line">  red               001</span><span class="line">  green             002</span><span class="line">  yellow            003</span><span class="line">  blue              004</span><span class="line">  magenta           005</span><span class="line">  cyan              006</span><span class="line">  white             007</span><span class="line">  grey              008</span><span class="line">  maroon            009</span><span class="line">  lime              010</span><span class="line">  olive             011</span><span class="line">  navy              012</span><span class="line">  fuchsia           013</span><span class="line">  purple            013</span><span class="line">  aqua              014</span><span class="line">  teal              014</span><span class="line">  silver            015</span><span class="line">  grey0             016</span><span class="line">  navyblue          017</span><span class="line">  darkblue          018</span><span class="line">  blue3             019</span><span class="line">  blue3             020</span><span class="line">  blue1             021</span><span class="line">  darkgreen         022</span><span class="line">  deepskyblue4      023</span><span class="line">  deepskyblue4      024</span><span class="line">  deepskyblue4      025</span><span class="line">  dodgerblue3       026</span><span class="line">  dodgerblue2       027</span><span class="line">  green4            028</span><span class="line">  springgreen4      029</span><span class="line">  turquoise4        030</span><span class="line">  deepskyblue3      031</span><span class="line">  deepskyblue3      032</span><span class="line">  dodgerblue1       033</span><span class="line">  green3            034</span><span class="line">  springgreen3      035</span><span class="line">  darkcyan          036</span><span class="line">  lightseagreen     037</span><span class="line">  deepskyblue2      038</span><span class="line">  deepskyblue1      039</span><span class="line">  green3            040</span><span class="line">  springgreen3      041</span><span class="line">  springgreen2      042</span><span class="line">  cyan3             043</span><span class="line">  darkturquoise     044</span><span class="line">  turquoise2        045</span><span class="line">  green1            046</span><span class="line">  springgreen2      047</span><span class="line">  springgreen1      048</span><span class="line">  mediumspringgreen 049</span><span class="line">  cyan2             050</span><span class="line">  cyan1             051</span><span class="line">  darkred           052</span><span class="line">  deeppink4         053</span><span class="line">  purple4           054</span><span class="line">  purple4           055</span><span class="line">  purple3           056</span><span class="line">  blueviolet        057</span><span class="line">  orange4           058</span><span class="line">  grey37            059</span><span class="line">  mediumpurple4     060</span><span class="line">  slateblue3        061</span><span class="line">  slateblue3        062</span><span class="line">  royalblue1        063</span><span class="line">  chartreuse4       064</span><span class="line">  darkseagreen4     065</span><span class="line">  paleturquoise4    066</span><span class="line">  steelblue         067</span><span class="line">  steelblue3        068</span><span class="line">  cornflowerblue    069</span><span class="line">  chartreuse3       070</span><span class="line">  darkseagreen4     071</span><span class="line">  cadetblue         072</span><span class="line">  cadetblue         073</span><span class="line">  skyblue3          074</span><span class="line">  steelblue1        075</span><span class="line">  chartreuse3       076</span><span class="line">  palegreen3        077</span><span class="line">  seagreen3         078</span><span class="line">  aquamarine3       079</span><span class="line">  mediumturquoise   080</span><span class="line">  steelblue1        081</span><span class="line">  chartreuse2       082</span><span class="line">  seagreen2         083</span><span class="line">  seagreen1         084</span><span class="line">  seagreen1         085</span><span class="line">  aquamarine1       086</span><span class="line">  darkslategray2    087</span><span class="line">  darkred           088</span><span class="line">  deeppink4         089</span><span class="line">  darkmagenta       090</span><span class="line">  darkmagenta       091</span><span class="line">  darkviolet        092</span><span class="line">  purple            093</span><span class="line">  orange4           094</span><span class="line">  lightpink4        095</span><span class="line">  plum4             096</span><span class="line">  mediumpurple3     097</span><span class="line">  mediumpurple3     098</span><span class="line">  slateblue1        099</span><span class="line">  yellow4           100</span><span class="line">  wheat4            101</span><span class="line">  grey53            102</span><span class="line">  lightslategrey    103</span><span class="line">  mediumpurple      104</span><span class="line">  lightslateblue    105</span><span class="line">  yellow4           106</span><span class="line">  darkolivegreen3   107</span><span class="line">  darkseagreen      108</span><span class="line">  lightskyblue3     109</span><span class="line">  lightskyblue3     110</span><span class="line">  skyblue2          111</span><span class="line">  chartreuse2       112</span><span class="line">  darkolivegreen3   113</span><span class="line">  palegreen3        114</span><span class="line">  darkseagreen3     115</span><span class="line">  darkslategray3    116</span><span class="line">  skyblue1          117</span><span class="line">  chartreuse1       118</span><span class="line">  lightgreen        119</span><span class="line">  lightgreen        120</span><span class="line">  palegreen1        121</span><span class="line">  aquamarine1       122</span><span class="line">  darkslategray1    123</span><span class="line">  red3              124</span><span class="line">  deeppink4         125</span><span class="line">  mediumvioletred   126</span><span class="line">  magenta3          127</span><span class="line">  darkviolet        128</span><span class="line">  purple            129</span><span class="line">  darkorange3       130</span><span class="line">  indianred         131</span><span class="line">  hotpink3          132</span><span class="line">  mediumorchid3     133</span><span class="line">  mediumorchid      134</span><span class="line">  mediumpurple2     135</span><span class="line">  darkgoldenrod     136</span><span class="line">  lightsalmon3      137</span><span class="line">  rosybrown         138</span><span class="line">  grey63            139</span><span class="line">  mediumpurple2     140</span><span class="line">  mediumpurple1     141</span><span class="line">  gold3             142</span><span class="line">  darkkhaki         143</span><span class="line">  navajowhite3      144</span><span class="line">  grey69            145</span><span class="line">  lightsteelblue3   146</span><span class="line">  lightsteelblue    147</span><span class="line">  yellow3           148</span><span class="line">  darkolivegreen3   149</span><span class="line">  darkseagreen3     150</span><span class="line">  darkseagreen2     151</span><span class="line">  lightcyan3        152</span><span class="line">  lightskyblue1     153</span><span class="line">  greenyellow       154</span><span class="line">  darkolivegreen2   155</span><span class="line">  palegreen1        156</span><span class="line">  darkseagreen2     157</span><span class="line">  darkseagreen1     158</span><span class="line">  paleturquoise1    159</span><span class="line">  red3              160</span><span class="line">  deeppink3         161</span><span class="line">  deeppink3         162</span><span class="line">  magenta3          163</span><span class="line">  magenta3          164</span><span class="line">  magenta2          165</span><span class="line">  darkorange3       166</span><span class="line">  indianred         167</span><span class="line">  hotpink3          168</span><span class="line">  hotpink2          169</span><span class="line">  orchid            170</span><span class="line">  mediumorchid1     171</span><span class="line">  orange3           172</span><span class="line">  lightsalmon3      173</span><span class="line">  lightpink3        174</span><span class="line">  pink3             175</span><span class="line">  plum3             176</span><span class="line">  violet            177</span><span class="line">  gold3             178</span><span class="line">  lightgoldenrod3   179</span><span class="line">  tan               180</span><span class="line">  mistyrose3        181</span><span class="line">  thistle3          182</span><span class="line">  plum2             183</span><span class="line">  yellow3           184</span><span class="line">  khaki3            185</span><span class="line">  lightgoldenrod2   186</span><span class="line">  lightyellow3      187</span><span class="line">  grey84            188</span><span class="line">  lightsteelblue1   189</span><span class="line">  yellow2           190</span><span class="line">  darkolivegreen1   191</span><span class="line">  darkolivegreen1   192</span><span class="line">  darkseagreen1     193</span><span class="line">  honeydew2         194</span><span class="line">  lightcyan1        195</span><span class="line">  red1              196</span><span class="line">  deeppink2         197</span><span class="line">  deeppink1         198</span><span class="line">  deeppink1         199</span><span class="line">  magenta2          200</span><span class="line">  magenta1          201</span><span class="line">  orangered1        202</span><span class="line">  indianred1        203</span><span class="line">  indianred1        204</span><span class="line">  hotpink           205</span><span class="line">  hotpink           206</span><span class="line">  mediumorchid1     207</span><span class="line">  darkorange        208</span><span class="line">  salmon1           209</span><span class="line">  lightcoral        210</span><span class="line">  palevioletred1    211</span><span class="line">  orchid2           212</span><span class="line">  orchid1           213</span><span class="line">  orange1           214</span><span class="line">  sandybrown        215</span><span class="line">  lightsalmon1      216</span><span class="line">  lightpink1        217</span><span class="line">  pink1             218</span><span class="line">  plum1             219</span><span class="line">  gold1             220</span><span class="line">  lightgoldenrod2   221</span><span class="line">  lightgoldenrod2   222</span><span class="line">  navajowhite1      223</span><span class="line">  mistyrose1        224</span><span class="line">  thistle1          225</span><span class="line">  yellow1           226</span><span class="line">  lightgoldenrod1   227</span><span class="line">  khaki1            228</span><span class="line">  wheat1            229</span><span class="line">  cornsilk1         230</span><span class="line">  grey100           231</span><span class="line">  grey3             232</span><span class="line">  grey7             233</span><span class="line">  grey11            234</span><span class="line">  grey15            235</span><span class="line">  grey19            236</span><span class="line">  grey23            237</span><span class="line">  grey27            238</span><span class="line">  grey30            239</span><span class="line">  grey35            240</span><span class="line">  grey39            241</span><span class="line">  grey42            242</span><span class="line">  grey46            243</span><span class="line">  grey50            244</span><span class="line">  grey54            245</span><span class="line">  grey58            246</span><span class="line">  grey62            247</span><span class="line">  grey66            248</span><span class="line">  grey70            249</span><span class="line">  grey74            250</span><span class="line">  grey78            251</span><span class="line">  grey82            252</span><span class="line">  grey85            253</span><span class="line">  grey89            254</span><span class="line">  grey93            255</span><span class="line">)</span><span class="line"></span><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">termColors</span></span>() &#123;</span><span class="line">  <span class="keyword">if</span> [[ <span class="variable">$POWERLEVEL9K_IGNORE_TERM_COLORS</span> == <span class="literal">true</span> ]]; <span class="keyword">then</span></span><span class="line">    <span class="built_in">return</span></span><span class="line">  <span class="keyword">fi</span></span><span class="line"></span><span class="line">  <span class="built_in">local</span> term_colors</span><span class="line"></span><span class="line">  <span class="keyword">if</span> <span class="built_in">which</span> tput &amp;&gt;/dev/null; <span class="keyword">then</span></span><span class="line">    term_colors=$(tput colors)</span><span class="line">  <span class="keyword">else</span></span><span class="line">    term_colors=$(<span class="built_in">echotc</span> Co)</span><span class="line">  <span class="keyword">fi</span></span><span class="line">  <span class="keyword">if</span> (( ! $? &amp;&amp; <span class="variable">$&#123;term_colors:-0&#125;</span> &lt; 256 )); <span class="keyword">then</span></span><span class="line">    <span class="built_in">print</span> -P <span class="string">"%F&#123;red&#125;WARNING!%f Your terminal appears to support fewer than 256 colors!"</span></span><span class="line">    <span class="built_in">print</span> -P <span class="string">"If your terminal supports 256 colors, please export the appropriate environment variable"</span></span><span class="line">    <span class="built_in">print</span> -P <span class="string">"_before_ loading this theme in your \~\/.zshrc. In most terminal emulators, putting"</span></span><span class="line">    <span class="built_in">print</span> -P <span class="string">"%F&#123;blue&#125;export TERM=\"xterm-256color\"%f at the top of your \~\/.zshrc is sufficient."</span></span><span class="line">  <span class="keyword">fi</span></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment"># get the proper color code if it does not exist as a name.</span></span><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getColor</span></span>() &#123;</span><span class="line">  <span class="comment"># If Color is not numerical, try to get the color code.</span></span><span class="line">  <span class="keyword">if</span> [[ <span class="string">"<span class="variable">$1</span>"</span> != &lt;-&gt; ]]; <span class="keyword">then</span></span><span class="line">    1=$(getColorCode <span class="variable">$1</span>)</span><span class="line">  <span class="keyword">fi</span></span><span class="line">  <span class="built_in">echo</span> -n <span class="string">"<span class="variable">$1</span>"</span></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment"># empty paramenter resets (stops) background color</span></span><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">backgroundColor</span></span>() &#123;</span><span class="line">  <span class="built_in">echo</span> -n <span class="string">"%K&#123;<span class="variable">$(getColor $1)</span>&#125;"</span></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment"># empty paramenter resets (stops) foreground color</span></span><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">foregroundColor</span></span>() &#123;</span><span class="line">  <span class="built_in">echo</span> -n <span class="string">"%F&#123;<span class="variable">$(getColor $1)</span>&#125;"</span></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment"># Get numerical color codes. That way we translate ANSI codes</span></span><span class="line"><span class="comment"># into ZSH-Style color codes.</span></span><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getColorCode</span></span>() &#123;</span><span class="line">  <span class="comment"># Early exit: Check if given value is already numerical</span></span><span class="line">  <span class="keyword">if</span> [[ <span class="string">"<span class="variable">$1</span>"</span> == &lt;-&gt; ]]; <span class="keyword">then</span></span><span class="line">    <span class="comment"># Pad color with zeroes</span></span><span class="line">    <span class="built_in">echo</span> -n <span class="string">"<span class="variable">$&#123;(l:3::0:)1&#125;</span>"</span></span><span class="line">    <span class="built_in">return</span></span><span class="line">  <span class="keyword">fi</span></span><span class="line"></span><span class="line">  <span class="built_in">local</span> colorName=<span class="string">"<span class="variable">$&#123;1&#125;</span>"</span></span><span class="line">  <span class="comment"># Check if value is none with any case.</span></span><span class="line">  <span class="keyword">if</span> [[ <span class="string">"<span class="variable">$&#123;(L)colorName&#125;</span>"</span> == <span class="string">"none"</span> ]]; <span class="keyword">then</span></span><span class="line">      <span class="built_in">echo</span> -n <span class="string">'none'</span></span><span class="line">  <span class="keyword">elif</span> [[ <span class="string">"<span class="variable">$&#123;colorName&#125;</span>"</span> == <span class="string">"foreground"</span>  ]]; <span class="keyword">then</span></span><span class="line">      <span class="comment"># for testing purposes in terminal</span></span><span class="line">      <span class="comment"># call via `getColorCode foreground`</span></span><span class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">"<span class="variable">$&#123;(k@)__P9K_COLORS&#125;</span>"</span>; <span class="keyword">do</span></span><span class="line">          <span class="built_in">print</span> -P <span class="string">"<span class="variable">$(foregroundColor $i)</span><span class="variable">$(getColor $i)</span> - <span class="variable">$i</span>%f"</span></span><span class="line">      <span class="keyword">done</span></span><span class="line">  <span class="keyword">elif</span> [[ <span class="string">"<span class="variable">$&#123;colorName&#125;</span>"</span> == <span class="string">"background"</span>  ]]; <span class="keyword">then</span></span><span class="line">      <span class="comment"># call via `getColorCode background`</span></span><span class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">"<span class="variable">$&#123;(k@)__P9K_COLORS&#125;</span>"</span>; <span class="keyword">do</span></span><span class="line">          <span class="built_in">print</span> -P <span class="string">"<span class="variable">$(backgroundColor $i)</span><span class="variable">$(getColor $i)</span> - <span class="variable">$i</span>%k"</span></span><span class="line">      <span class="keyword">done</span></span><span class="line">  <span class="keyword">else</span></span><span class="line">      <span class="comment"># Strip eventual "bg-" prefixes</span></span><span class="line">      colorName=<span class="variable">$&#123;colorName#bg-&#125;</span></span><span class="line">      <span class="comment"># Strip eventual "fg-" prefixes</span></span><span class="line">      colorName=<span class="variable">$&#123;colorName#fg-&#125;</span></span><span class="line">      <span class="comment"># Strip eventual "br" prefixes ("bright" colors)</span></span><span class="line">      colorName=<span class="variable">$&#123;colorName#br&#125;</span></span><span class="line">      <span class="built_in">echo</span> -n <span class="variable">$__P9K_COLORS</span>[<span class="variable">$colorName</span>]</span><span class="line">  <span class="keyword">fi</span></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment"># Check if two colors are equal, even if one is specified as ANSI code.</span></span><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">isSameColor</span></span>() &#123;</span><span class="line">  <span class="keyword">if</span> [[ <span class="string">"<span class="variable">$1</span>"</span> == <span class="string">"NONE"</span> || <span class="string">"<span class="variable">$2</span>"</span> == <span class="string">"NONE"</span> ]]; <span class="keyword">then</span></span><span class="line">    <span class="built_in">return</span> 1</span><span class="line">  <span class="keyword">fi</span></span><span class="line"></span><span class="line">  <span class="built_in">local</span> color1=$(getColorCode <span class="string">"<span class="variable">$1</span>"</span>)</span><span class="line">  <span class="built_in">local</span> color2=$(getColorCode <span class="string">"<span class="variable">$2</span>"</span>)</span><span class="line"></span><span class="line">  <span class="built_in">return</span> $(( color1 != color2 ))</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://www.4e00.com/tools/xterm-256-colors.html">256 COLORS - CHEAT SHEET</a></li>
+<li><a href="/blog/linux/2007/06/03/table-for-16-color-terminal-escape-sequences.html">table for 16-color terminal escape sequences</a></li>
+<li><a href="https://tools.paco.bg/14/" target="_blank" rel="noopener">Bash Colors</a></li>
+<li><a href="https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg" target="_blank" rel="noopener">Xterm 256color chart SVG</a></li>
+<li><a href="/tools/xterm-256color-chart.png">Xterm 256color chart PNG</a></li>
+<li><a href="https://stackoverflow.com/questions/24188309/zsh-256colors-default-background-color-as-foreground-color" target="_blank" rel="noopener">zsh 256colors: default background color as foreground color</a></li>
+<li><a href="https://jonasjacek.github.io/colors/" target="_blank" rel="noopener">colors.zsh of powerlevel9k</a></li>
+<li><a href="https://en.wikipedia.org/wiki/ANSI_escape_code" target="_blank" rel="noopener">ANSI escape code</a></li>
+<li><a href="https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux" target="_blank" rel="noopener">How to change the output color of echo in Linux</a></li>
+<li><a href="https://askubuntu.com/questions/821157/print-a-256-color-test-pattern-in-the-terminal" target="_blank" rel="noopener">Print a 256-color test pattern in the terminal</a></li>
+<li><a href="https://gist.github.com/sindresorhus/bed863fb8bedf023b833c88c322e44f9" target="_blank" rel="noopener">Colours in terminal</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2020/03/14/vim-killer-plugin-2html.html" rel="next" title="vim killer plugin - 2html.vim">
+                <i class="fa fa-chevron-left"></i>
+                vim killer plugin - 2html.vim
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/macos/2020/05/03/macos-app-hammerspoon.html" rel="prev" title="macos 神器之 hammerspoon 篇">
+                <i class="fa fa-chevron-right"></i>
+                macos 神器之 hammerspoon 篇
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#检查当前-Terminal-是否支持-24bit-色彩"><span class="nav-number">1.</span> <span class="nav-text">检查当前 Terminal 是否支持 24bit 色彩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Terminal-escape-sequences-说明"><span class="nav-number">2.</span> <span class="nav-text">Terminal escape sequences 说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#24bit-true-colour"><span class="nav-number">3.</span> <span class="nav-text">24bit true colour</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#24bit-true-colors-support-in-neovim-and-vim"><span class="nav-number">3.1.</span> <span class="nav-text">24bit true colors support in neovim and vim</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印-256-色到控制台"><span class="nav-number">4.</span> <span class="nav-text">打印 256 色到控制台</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ANSI-16-colors-escape-codes"><span class="nav-number">4.1.</span> <span class="nav-text">ANSI 16 colors escape codes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bash-前景色和背景色-256-色输出示例"><span class="nav-number">5.</span> <span class="nav-text">bash 前景色和背景色 256 色输出示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zsh-中前景色和背景色设置模式说明"><span class="nav-number">6.</span> <span class="nav-text">zsh 中前景色和背景色设置模式说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zsh-前景色和背景色-256-色输出示例"><span class="nav-number">7.</span> <span class="nav-text">zsh 前景色和背景色 256 色输出示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#powerlevel9k-输出前景色和背景色"><span class="nav-number">7.1.</span> <span class="nav-text">powerlevel9k 输出前景色和背景色</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scripts-source-code"><span class="nav-number">8.</span> <span class="nav-text">scripts source code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">9.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

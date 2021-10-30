@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="以下指令使用root用户执行。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="install xen-4.0 from source">
-<meta property="og:url" content="https://www.4e00.com/linux/2010/07/02/install-xen-4.0-from-source.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2010/07/02/install-xen-4.0-from-source.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="以下指令使用root用户执行。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.072Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="install xen-4.0 from source">
 <meta name="twitter:description" content="以下指令使用root用户执行。">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2010/07/02/install-xen-4.0-from-source.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2010/07/02/install-xen-4.0-from-source.html">
 
   <title> install xen-4.0 from source | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -256,21 +256,21 @@
       
         <p>以下指令使用root用户执行。</p>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> su -</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">apt-get</span> install bcc bin86 gawk bridge-utils iproute libcurl3 libcurl4-openssl-dev bzip2 module-init-tools transfig tgif texinfo texlive-latex-base texlive-latex-recommended texlive-fonts-extra texlive-fonts-recommended pciutils-dev mercurial build-essential make gcc libc6-dev zlib1g-dev python python-dev python-twisted libncurses5-dev patch libvncserver-dev libsdl-dev libjpeg62-dev iasl libbz2-dev e2fslibs-dev git-core uuid-dev</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">hg</span> <span class="built_in">clone</span> http://xenbits.xen.org/xen-4.0-testing.hg</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> xen-4.0-testing.hg</div></pre></td></tr></table></figure>
-<p>这个指令会下载linux-2.6-pvops.git，需要较长时间<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> world</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> su -</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">apt-get</span> install bcc bin86 gawk bridge-utils iproute libcurl3 libcurl4-openssl-dev bzip2 module-init-tools transfig tgif texinfo texlive-latex-base texlive-latex-recommended texlive-fonts-extra texlive-fonts-recommended pciutils-dev mercurial build-essential make gcc libc6-dev zlib1g-dev python python-dev python-twisted libncurses5-dev patch libvncserver-dev libsdl-dev libjpeg62-dev iasl libbz2-dev e2fslibs-dev git-core uuid-dev</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">hg</span> <span class="built_in">clone</span> http://xenbits.xen.org/xen-4.0-testing.hg</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> xen-4.0-testing.hg</span></pre></td></tr></table></figure>
+<p>这个指令会下载linux-2.6-pvops.git，需要较长时间<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> world</span></pre></td></tr></table></figure></p>
 <p>这个指令会安装xen.gz和vmlinuz-2.6.31到系统/boot目录下，vmlinuz-2.6.31这个linux kernel文件在下面会重新设置参数并生成，可查看后面linux kernel编译步骤详细说明。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> install</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> install</span></pre></td></tr></table></figure>
 <p>不修改.config文件，可以直接重新生成xen，kernels，tools，docs到dist目录中</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> dist</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> dist</span></pre></td></tr></table></figure>
 <p>修改了.config文件，可以用以下指令重新生成kernel</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> linux-2.6-xen-config CONFIGMODE=menuconfig <span class="comment"># (or xconfig)</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> linux-2.6-xen-build</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> linux-2.6-xen-install</div></pre></td></tr></table></figure>
-<h2 id="linux-kernel编译步骤"><a href="#linux-kernel编译步骤" class="headerlink" title="linux kernel编译步骤"></a>linux kernel编译步骤</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">clone</span> git://git.kernel.org/pub/scm/linux/kernel/git/jeremy/xen.git linux-2.6-xen</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> linux-2.6-xen-config CONFIGMODE=menuconfig <span class="comment"># (or xconfig)</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> linux-2.6-xen-build</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> linux-2.6-xen-install</span></pre></td></tr></table></figure>
+<h2 id="linux-kernel编译步骤"><a href="#linux-kernel编译步骤" class="headerlink" title="linux kernel编译步骤"></a>linux kernel编译步骤</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">clone</span> git://git.kernel.org/pub/scm/linux/kernel/git/jeremy/xen.git linux-2.6-xen</span></pre></td></tr></table></figure>
 <p>这个指令会从xen.git仓库中下载props dom0 kernel 2.6.31.x，大概是1.6G左右，需要不少时间</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> linux-2.6-xen</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> linux-2.6-xen</span></pre></td></tr></table></figure>
 <p>这个指令的作用是检查源码是否有.o文件和依赖问题，从全新的源码编译时不需要这一步。make mrproper主要清除环境变量及配置文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> mrproper</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> mrproper</span></pre></td></tr></table></figure>
 <p>设置linux kernel编译参数，在图形界面中输入斜杠&quot;/&quot;可以查询&quot;XEN_DOM0&quot;、&quot;PAE&quot;、&quot;HIGHPTE&quot;等参数设置</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> menuconfig</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> menuconfig</span></pre></td></tr></table></figure>
 <p>退出并保存配置文件之后，手工调整.config文件，并且在内核参数设置中需要注意：</p>
 <ol>
 <li>如果编译32位的内核，XEN需要有PAE支持，(Processor type and features -&gt; High Memory Support (64GB) -&gt; PAE (Physical Address Extension) Support)，对于64位内核PAE不需要，32位的操作系统最大内存支持不到4G，安装了PAE之后可以支持64G。</li>
@@ -278,22 +278,22 @@
 <li>要为DOM0开启ACPI功能。</li>
 <li>在.config文件中添加以下选项，并重新运行make menuconfig，并检查XEN_DOM0等参数设置状态</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">CONFIG_ACPI_PROCFS=y</div><div class="line">CONFIG_XEN=y</div><div class="line">CONFIG_XEN_MAX_DOMAIN_MEMORY=32</div><div class="line">CONFIG_XEN_SAVE_RESTORE=y</div><div class="line">CONFIG_XEN_DOM0=y</div><div class="line">CONFIG_XEN_PRIVILEGED_GUEST=y</div><div class="line">CONFIG_XEN_PCI=y</div><div class="line">CONFIG_PCI_XEN=y</div><div class="line">CONFIG_XEN_BLKDEV_FRONTEND=m</div><div class="line">CONFIG_NETXEN_NIC=m</div><div class="line">CONFIG_XEN_NETDEV_FRONTEND=m</div><div class="line">CONFIG_XEN_KBDDEV_FRONTEND=m</div><div class="line">CONFIG_HVC_XEN=y</div><div class="line">CONFIG_XEN_FBDEV_FRONTEND=m</div><div class="line">CONFIG_XEN_BALLOON=y</div><div class="line">CONFIG_XEN_SCRUB_PAGES=y</div><div class="line">CONFIG_XEN_DEV_EVTCHN=y</div><div class="line">CONFIG_XEN_BACKEND=y</div><div class="line">CONFIG_XEN_BLKDEV_BACKEND=y</div><div class="line">CONFIG_XEN_NETDEV_BACKEND=y</div><div class="line">CONFIG_XENFS=y</div><div class="line">CONFIG_XEN_COMPAT_XENFS=y</div><div class="line">CONFIG_XEN_XENBUS_FRONTEND=m</div><div class="line">CONFIG_XEN_PCIDEV_FRONTEND=y</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CONFIG_ACPI_PROCFS=y</span><span class="line">CONFIG_XEN=y</span><span class="line">CONFIG_XEN_MAX_DOMAIN_MEMORY=32</span><span class="line">CONFIG_XEN_SAVE_RESTORE=y</span><span class="line">CONFIG_XEN_DOM0=y</span><span class="line">CONFIG_XEN_PRIVILEGED_GUEST=y</span><span class="line">CONFIG_XEN_PCI=y</span><span class="line">CONFIG_PCI_XEN=y</span><span class="line">CONFIG_XEN_BLKDEV_FRONTEND=m</span><span class="line">CONFIG_NETXEN_NIC=m</span><span class="line">CONFIG_XEN_NETDEV_FRONTEND=m</span><span class="line">CONFIG_XEN_KBDDEV_FRONTEND=m</span><span class="line">CONFIG_HVC_XEN=y</span><span class="line">CONFIG_XEN_FBDEV_FRONTEND=m</span><span class="line">CONFIG_XEN_BALLOON=y</span><span class="line">CONFIG_XEN_SCRUB_PAGES=y</span><span class="line">CONFIG_XEN_DEV_EVTCHN=y</span><span class="line">CONFIG_XEN_BACKEND=y</span><span class="line">CONFIG_XEN_BLKDEV_BACKEND=y</span><span class="line">CONFIG_XEN_NETDEV_BACKEND=y</span><span class="line">CONFIG_XENFS=y</span><span class="line">CONFIG_XEN_COMPAT_XENFS=y</span><span class="line">CONFIG_XEN_XENBUS_FRONTEND=m</span><span class="line">CONFIG_XEN_PCIDEV_FRONTEND=y</span></pre></td></tr></table></figure>
 <p>在rhel5和centos5中，需要在<code>.config</code>文件中加入以下2个参数：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">CONFIG_SYSFS_DEPRECATED=y</div><div class="line">CONFIG_SYSFS_DEPRECATED_V2=y</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CONFIG_SYSFS_DEPRECATED=y</span><span class="line">CONFIG_SYSFS_DEPRECATED_V2=y</span></pre></td></tr></table></figure>
 <p>要使用initrd，编译内核时必须选择以下两项：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">CONFIG_BLK_DEV_RAM=y</div><div class="line">CONFIG_BLK_DEV_INITRD=y</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CONFIG_BLK_DEV_RAM=y</span><span class="line">CONFIG_BLK_DEV_INITRD=y</span></pre></td></tr></table></figure>
 <p>重新运行menuconfig，检查配置，最后保存配置文件。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> menuconfig</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> install</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> menuconfig</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> install</span></pre></td></tr></table></figure>
 <p>这个指令会将内核映象和相应的System.map拷贝到/boot目录下。</p>
 <p>可以查看指令运行完成后，在/boot目录下新增加的文件列表。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">ll</span> --sort=time /boot/</div><div class="line">total 214594</div><div class="line">-rw-r--r--  1 root root  109K 2010-07-02 11:51 config-2.6.31.13</div><div class="line">-rw-r--r--  1 root root  1.6M 2010-07-02 11:51 System.map-2.6.31.13</div><div class="line">-rw-r--r--  1 root root  3.9M 2010-07-02 11:51 vmlinuz-2.6.31.13</div><div class="line">...</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ll</span> --sort=time /boot/</span><span class="line">total 214594</span><span class="line">-rw-r--r--  1 root root  109K 2010-07-02 11:51 config-2.6.31.13</span><span class="line">-rw-r--r--  1 root root  1.6M 2010-07-02 11:51 System.map-2.6.31.13</span><span class="line">-rw-r--r--  1 root root  3.9M 2010-07-02 11:51 vmlinuz-2.6.31.13</span><span class="line">...</span></pre></td></tr></table></figure>
 <p>生成初始化镜像文件(initialed ramdisk)</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> /boot</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">depmod</span> 2.6.31.13</div><div class="line"><span class="comment"># ubuntu中生成初如化镜像文件的指令</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mkinitramfs</span> -o initrd-2.6.31-xen.img 2.6.31.13</div><div class="line"><span class="comment"># 或者是用这个指令(CentOS5)</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">mkinitrd</span> -v -f --with=aacraid --with=sd_mod --with=scsi_mod initrd-2.6.31-xen.img 2.6.31.13</div><div class="line"></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">vi</span> /boot/grub/menu.lst</div><div class="line"></div><div class="line">title Xen 4.0, dom0 Linux kernel 2.6.31.13</div><div class="line">kernel /boot/xen.gz dom0_mem=512M</div><div class="line">module /boot/vmlinuz-2.6.31.13 root=/dev/sda7 ro nomodeset</div><div class="line">module /boot/initrd-2.6.31-xen.img</div></pre></td></tr></table></figure>
-<h2 id="注：一般内核编译中会有以下一些步骤"><a href="#注：一般内核编译中会有以下一些步骤" class="headerlink" title="注：一般内核编译中会有以下一些步骤"></a>注：一般内核编译中会有以下一些步骤</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> menuconfig</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span></div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> bzImage</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> modules</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> modules_install</div><div class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> install</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> /boot</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">depmod</span> 2.6.31.13</span><span class="line"><span class="comment"># ubuntu中生成初如化镜像文件的指令</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mkinitramfs</span> -o initrd-2.6.31-xen.img 2.6.31.13</span><span class="line"><span class="comment"># 或者是用这个指令(CentOS5)</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mkinitrd</span> -v -f --with=aacraid --with=sd_mod --with=scsi_mod initrd-2.6.31-xen.img 2.6.31.13</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">vi</span> /boot/grub/menu.lst</span><span class="line"></span><span class="line">title Xen 4.0, dom0 Linux kernel 2.6.31.13</span><span class="line">kernel /boot/xen.gz dom0_mem=512M</span><span class="line">module /boot/vmlinuz-2.6.31.13 root=/dev/sda7 ro nomodeset</span><span class="line">module /boot/initrd-2.6.31-xen.img</span></pre></td></tr></table></figure>
+<h2 id="注：一般内核编译中会有以下一些步骤"><a href="#注：一般内核编译中会有以下一些步骤" class="headerlink" title="注：一般内核编译中会有以下一些步骤"></a>注：一般内核编译中会有以下一些步骤</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> menuconfig</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> bzImage</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> modules</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> modules_install</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">make</span> install</span></pre></td></tr></table></figure>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://wiki.xensource.com/xenwiki/Xen4.0" target="_blank" rel="external">http://wiki.xensource.com/xenwiki/Xen4.0</a></li>
-<li><a href="http://wiki.xensource.com/xenwiki/XenParavirtOps" target="_blank" rel="external">http://wiki.xensource.com/xenwiki/XenParavirtOps</a></li>
+<li><a href="http://wiki.xensource.com/xenwiki/Xen4.0" target="_blank" rel="noopener">http://wiki.xensource.com/xenwiki/Xen4.0</a></li>
+<li><a href="http://wiki.xensource.com/xenwiki/XenParavirtOps" target="_blank" rel="noopener">http://wiki.xensource.com/xenwiki/XenParavirtOps</a></li>
 </ol>
 
       
@@ -321,7 +321,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/javascript/2010/06/25/script-defer-property.html" rel="next" title="script标签中的defer属性说明">
-                上一篇：script标签中的defer属性说明
+                <i class="fa fa-chevron-left"></i>
+                script标签中的defer属性说明
               </a>
             
           </div>
@@ -329,7 +330,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2010/07/06/mongodb-tutorial-and-references.html" rel="prev" title="mongodb tutorial and references">
-                下一篇：mongodb tutorial and references
+                <i class="fa fa-chevron-right"></i>
+                mongodb tutorial and references
               </a>
             
           </div>
@@ -378,7 +380,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -389,16 +391,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -480,10 +480,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

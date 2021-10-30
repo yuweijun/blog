@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,38 +33,38 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
 
 
-<meta name="description" content="sed正则替换内容时，碰到在Linux上正常执行的命令在MacOSX执行失败的问题，如： $&amp;gt; sed -i &apos;s/text/replaced/g&apos; filename  sed: 1: &amp;quot;filename&amp;quot;: invalid command code -  google之后发现有别人碰到类似的问题，在MacOSX上需要加个空字符串在-i参数后面： $&amp;gt; sed -i">
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="sed正则替换内容时，碰到在Linux上正常执行的命令在MacOSX执行失败的问题，如：  sed -i &apos;s/text/replaced/g&apos; filename  sed: 1: &amp;quot;filename&amp;quot;: invalid command code -  google之后发现有别人碰到类似的问题，在MacOSX上需要加个空字符串在-i参数后面：  sed -i &quot;&quot; &apos;s/tex">
 <meta property="og:type" content="article">
 <meta property="og:title" content="difference sed on macosx and linux">
-<meta property="og:url" content="https://www.4e00.com/linux/2014/08/01/difference-sed-between-macosx-and-linux.html">
+<meta property="og:url" content="http://www.4e00.com/linux/2014/08/01/difference-sed-between-macosx-and-linux.html">
 <meta property="og:site_name" content="一">
-<meta property="og:description" content="sed正则替换内容时，碰到在Linux上正常执行的命令在MacOSX执行失败的问题，如： $&amp;gt; sed -i &apos;s/text/replaced/g&apos; filename  sed: 1: &amp;quot;filename&amp;quot;: invalid command code -  google之后发现有别人碰到类似的问题，在MacOSX上需要加个空字符串在-i参数后面： $&amp;gt; sed -i">
+<meta property="og:description" content="sed正则替换内容时，碰到在Linux上正常执行的命令在MacOSX执行失败的问题，如：  sed -i &apos;s/text/replaced/g&apos; filename  sed: 1: &amp;quot;filename&amp;quot;: invalid command code -  google之后发现有别人碰到类似的问题，在MacOSX上需要加个空字符串在-i参数后面：  sed -i &quot;&quot; &apos;s/tex">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.145Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.094Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="difference sed on macosx and linux">
-<meta name="twitter:description" content="sed正则替换内容时，碰到在Linux上正常执行的命令在MacOSX执行失败的问题，如： $&amp;gt; sed -i &apos;s/text/replaced/g&apos; filename  sed: 1: &amp;quot;filename&amp;quot;: invalid command code -  google之后发现有别人碰到类似的问题，在MacOSX上需要加个空字符串在-i参数后面： $&amp;gt; sed -i">
+<meta name="twitter:description" content="sed正则替换内容时，碰到在Linux上正常执行的命令在MacOSX执行失败的问题，如：  sed -i &apos;s/text/replaced/g&apos; filename  sed: 1: &amp;quot;filename&amp;quot;: invalid command code -  google之后发现有别人碰到类似的问题，在MacOSX上需要加个空字符串在-i参数后面：  sed -i &quot;&quot; &apos;s/tex">
 
 
 
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2014/08/01/difference-sed-between-macosx-and-linux.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2014/08/01/difference-sed-between-macosx-and-linux.html">
 
   <title> difference sed on macosx and linux | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -255,22 +255,24 @@
 
       
         <p>sed正则替换内容时，碰到在Linux上正常执行的命令在MacOSX执行失败的问题，如：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sed</span> -i <span class="string">'s/text/replaced/g'</span> filename</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sed</span> -i <span class="string">'s/text/replaced/g'</span> filename</span></pre></td></tr></table></figure>
 <blockquote>
 <p>sed: 1: &quot;filename&quot;: invalid command code -</p>
 </blockquote>
-<p>google之后发现有别人碰到类似的<a href="http://www.markhneedham.com/blog/2011/01/14/sed-sed-1-invalid-command-code-r-on-mac-os-x/" target="_blank" rel="external">问题</a>，在MacOSX上需要加个空字符串在<code>-i</code>参数后面：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">sed</span> -i <span class="string">""</span> <span class="string">'s/text/relpaced/g'</span> filename</div></pre></td></tr></table></figure>
+<p>google之后发现有别人碰到类似的<a href="http://www.markhneedham.com/blog/2011/01/14/sed-sed-1-invalid-command-code-r-on-mac-os-x/" target="_blank" rel="noopener">问题</a>，在MacOSX上需要加个空字符串在<code>-i</code>参数后面：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sed</span> -i <span class="string">""</span> <span class="string">'s/text/relpaced/g'</span> filename</span></pre></td></tr></table></figure>
 <blockquote>
 <p>What I hadn’t realised is that on the Mac version of sed the <code>-i</code> flag has a mandatory suffix, as described in this post.</p>
 <p>The appropriate section of the man page for sed on the Mac looks like this:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-i extension</div><div class="line">    Edit files in-place, saving backups with the specified extension. If a zero-length extension is given, no backup will be saved.</div></pre></td></tr></table></figure>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-i extension</span><span class="line">    Edit files in-place, saving backups with the specified extension. If a zero-length extension is given, no backup will be saved.</span></pre></td></tr></table></figure>
+<blockquote>
 <p>It is not recommended togive a zero-length extension when in-place editing files, as you risk corruption or partial content in situations where disk space is exhausted, etc.</p>
 </blockquote>
 <a id="more"></a>
 <blockquote>
 <p>Whereas on Ubuntu the suffix is optional so we see this:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-i[SUFFIX], –in-place[=SUFFIX]</div><div class="line">    edit files in place (makes backup if extension supplied)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-i[SUFFIX], –in-place[=SUFFIX]</span><span class="line">    edit files in place (makes backup if extension supplied)</span></pre></td></tr></table></figure>
 <p>In order to get around this we need to provide a blank suffix when using the <code>-i</code> flag on the Mac:</p>
 </blockquote>
 
@@ -299,7 +301,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/jquery/2014/08/01/jquery-src-utilities.html" rel="next" title="jquery-1.4.2 utilities部分源码分析">
-                上一篇：jquery-1.4.2 utilities部分源码分析
+                <i class="fa fa-chevron-left"></i>
+                jquery-1.4.2 utilities部分源码分析
               </a>
             
           </div>
@@ -307,7 +310,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/vim/2014/08/06/airline-settings-on-macvim.html" rel="prev" title="在macvim中为vim-airline配色">
-                下一篇：在macvim中为vim-airline配色
+                <i class="fa fa-chevron-right"></i>
+                在macvim中为vim-airline配色
               </a>
             
           </div>
@@ -356,7 +360,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -367,16 +371,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -458,10 +460,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

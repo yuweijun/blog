@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="一、java泛型基本概念泛型(Generic Type或Generics)是对Java语言的类型系统的一种扩展，以支持创建可以按类型进行参数化的类。可以把类型参数看做是使用参数化类型时指定的类型的一个占位符，就像方法的形式参数是运行时传递的占位符一样，泛型的体现主要是在集合框架里面可以看到，JCF里面应该是1.5里面使用泛型最多的地方。Java语言引入泛型是一个较大的功能增强，不仅语言、类型系统和">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java泛型相关知识点">
-<meta property="og:url" content="https://www.4e00.com/java/2012/10/10/java-generic-type.html">
+<meta property="og:url" content="http://www.4e00.com/java/2012/10/10/java-generic-type.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="一、java泛型基本概念泛型(Generic Type或Generics)是对Java语言的类型系统的一种扩展，以支持创建可以按类型进行参数化的类。可以把类型参数看做是使用参数化类型时指定的类型的一个占位符，就像方法的形式参数是运行时传递的占位符一样，泛型的体现主要是在集合框架里面可以看到，JCF里面应该是1.5里面使用泛型最多的地方。Java语言引入泛型是一个较大的功能增强，不仅语言、类型系统和">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.082Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java泛型相关知识点">
 <meta name="twitter:description" content="一、java泛型基本概念泛型(Generic Type或Generics)是对Java语言的类型系统的一种扩展，以支持创建可以按类型进行参数化的类。可以把类型参数看做是使用参数化类型时指定的类型的一个占位符，就像方法的形式参数是运行时传递的占位符一样，泛型的体现主要是在集合框架里面可以看到，JCF里面应该是1.5里面使用泛型最多的地方。Java语言引入泛型是一个较大的功能增强，不仅语言、类型系统和">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/java/2012/10/10/java-generic-type.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2012/10/10/java-generic-type.html">
 
   <title> java泛型相关知识点 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -260,9 +260,9 @@
 <p>类型擦除可以简单的理解为将泛型java代码转换为普通java代码，只不过编译器更直接点，将泛型java代码直接转换成普通java字节码。</p>
 <p>具体的转化过程大致分为以下几个部分：</p>
 <ol>
-<li>将参数化类型中的类型参数&quot;擦除&quot;（erasure）掉；</li>
-<li>将类型变量用&quot;上限（upper bound）&quot;取代，通常情况下这些上限是Object。这里的类型变量是指实例域，本地方法域，方法参数以及方法返回值中用来标记类型信息的&quot;变量&quot;，例如：实例域中的变量声明A elem;，方法声明Node (A elem){};，其中，A用来标记elem的类型，它就是类型变量。</li>
-<li>添加类型转换并插入&quot;桥方法&quot;（bridge method），以便覆盖（overridden）可以正常的工作。</li>
+<li>将参数化类型中的类型参数<code>擦除</code>（erasure）掉；</li>
+<li>将类型变量用<code>上限（upper bound）</code>取代，通常情况下这些上限是<code>Object</code>。这里的类型变量是指实例域，本地方法域，方法参数以及方法返回值中用来标记类型信息的<code>变量</code>，例如：实例域中的变量声明<code>A elem;</code>，方法声明<code>Node (A elem){};</code>，其中，<code>A</code>用来标记<code>elem</code>的类型，它就是<code>类型变量</code>。</li>
+<li>添加类型转换并插入<code>桥方法</code>（bridge method），以便<code>覆盖</code>（overridden）可以正常的工作。</li>
 </ol>
 <h2 id="三、泛型优点"><a href="#三、泛型优点" class="headerlink" title="三、泛型优点"></a>三、泛型优点</h2><ol>
 <li>类型安全。泛型的一个主要目标就是提高Java程序的类型安全。使用泛型可以使编译器知道变量的类型限制，进而可以在更高程度上验证类型假设。如果没有泛型，那么类型的安全性主要由程序员来把握，这显然不如带有泛型的程序安全性高。</li>
@@ -274,28 +274,28 @@
 <li>不能用基本类型实例化泛型类型参数</li>
 <li>不能在数据类型转换或instanceof操作中使用类型参数</li>
 <li>不能在new操作符中使用类型参数</li>
-<li>不能在类定义的implements或extends字句中使用类型参数</li>
+<li>不能在类定义的implements或extends子句中使用类型参数</li>
 </ol>
 <h2 id="五、泛型和反射"><a href="#五、泛型和反射" class="headerlink" title="五、泛型和反射"></a>五、泛型和反射</h2><p>既然泛型信息在编译后已完全抹去，那如何在运行时得到参数化的类型呢？</p>
 <p>泛型是在Java平台上作为编译时转换实现的。编译器实际上生成与使用非泛型源代码时相同的字节指令，插入运行时类型转换以在每次访问时将值转换为正确的类型。尽管是相同的字节码，但是类型参数信息用一个新的签名（signature）属性记录在类模式中。JVM在装载类时记录这个签名信息，并在运行时通过反射使它可用。</p>
-<h2 id="六、通配符类型和受限泛型"><a href="#六、通配符类型和受限泛型" class="headerlink" title="六、通配符类型和受限泛型"></a>六、通配符类型和受限泛型</h2><p>通配符--使用一个?标识类型参数，是一种表示类或方法行为对于未知类型的类型约束的方法，比如“不管这个方法的参数x和y是哪种类型，它们必须是相同的类型”。</p>
+<h2 id="六、通配符类型和受限泛型"><a href="#六、通配符类型和受限泛型" class="headerlink" title="六、通配符类型和受限泛型"></a>六、通配符类型和受限泛型</h2><p><code>通配符</code>，使用一个<code>?</code>标识<code>类型参数</code>，是一种表示类或方法行为对于未知类型的类型约束的方法，比如“不管这个方法的参数x和y是哪种类型，它们必须是相同的类型”。</p>
 <p>通配符类型<code>List&lt;?&gt;</code>、<code>List&lt;T&gt;</code>、原始<code>List</code>和具体<code>List&lt;Object&gt;</code>都不相同。如果说变量x具有<code>List&lt;?&gt;</code>类型，标识存在一些<code>T</code>类型，其中x是<code>List&lt;T&gt;</code>类型。</p>
 <p>尽管我们不知道其元素的具体类型，这并不代表它具有任意内容，而是指我们并不了解内容的类型限制是什么--但我们知道存在某种限制。</p>
-<p>另一方面，原始类型List是异构的，我们不能对其元素有任何类型限制，具体类型<code>List&lt;Object&gt;</code>表示我们明确地知道它能包含任何对象。</p>
+<p>另一方面，原始类型List是<code>异构</code>的，我们不能对其元素有任何类型限制，具体类型<code>List&lt;Object&gt;</code>表示我们明确地知道它能包含任何对象。</p>
 <p>在非<code>?</code>通配符的使用过程里面，一般的通配符如<code>T</code>相当于是定义了一个类型，该类型是可以直接作为Java语言里面的类型来进行使用的，在定义这种类型的泛型类里面可以直接使用。</p>
 <h2 id="七、泛型不是协变（covariant）的，而数组则是协变的"><a href="#七、泛型不是协变（covariant）的，而数组则是协变的" class="headerlink" title="七、泛型不是协变（covariant）的，而数组则是协变的"></a>七、泛型不是协变（covariant）的，而数组则是协变的</h2><p>数组是协变的，因为<code>Integer</code>是<code>Number</code>的子类型，数组类型<code>Integer[]</code>是<code>Number[]</code>的子类型，因此在任何需要<code>Number[]</code>值的地方都可以提供一个<code>Integer[]</code>值。</p>
 <p>泛型不是协变的，<code>List&lt;Integer&gt;</code>不是<code>List&lt;Number&gt;</code>的子类型，试图在要求<code>List&lt;Number&gt;</code>的位置提供<code>List&lt;Integer&gt;</code>是一个类型错误。</p>
 <p>因为数组和泛型的这个冲突，所以java语法规定不能创建参数化类型组成的数组，因为这样的数组会破坏类型的安全性。</p>
 <p>java不允许这样的写法：<code>List&lt;Integer&gt;[] list = new ArrayList&lt;Integer&gt;[]{};</code></p>
 <p>但是<code>List&lt;Integer&gt;[]</code>本身可以作为类型参数，如：<code>List&lt;List&lt;Integer&gt;[]&gt; list = new ArrayList&lt;List&lt;Integer&gt;[]&gt;();</code></p>
-<p>另外未绑定的参数化类型数组<code>new ArrayList&lt;?&gt;[3]</code>是合法的。</p>
+<p>另外未绑定的参数化类型数组<code>new ArrayList&lt;?&gt;[3]</code>是合法的，因为<code>ArrayList&lt;?&gt;</code>是可具化类型(<code>reifiable type</code>)。</p>
 <a id="more"></a>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 泛型是非协变的，在编译期就不会让下面这段代码通过</span></div><div class="line"><span class="comment">// List&lt;Integer&gt; li = new ArrayList&lt;Integer&gt;();</span></div><div class="line"><span class="comment">// List&lt;Number&gt; ln = li; // illegal</span></div><div class="line"><span class="comment">// ln.add(new Float(3.1415));</span></div><div class="line"></div><div class="line">Integer[] is = <span class="keyword">new</span> Integer[<span class="number">3</span>];</div><div class="line">is[<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">Number[] ns = is;</div><div class="line"><span class="comment">// 数组是协变的，编译期不检查类型安全，运行时才会发现</span></div><div class="line">ns[<span class="number">1</span>] = <span class="number">3.14</span>; <span class="comment">// java.lang.ArrayStoreException: java.lang.Double</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 泛型是非协变的，在编译期就不会让下面这段代码通过</span></span><span class="line"><span class="comment">// List&lt;Integer&gt; li = new ArrayList&lt;Integer&gt;();</span></span><span class="line"><span class="comment">// List&lt;Number&gt; ln = li; // illegal</span></span><span class="line"><span class="comment">// ln.add(new Float(3.1415));</span></span><span class="line"></span><span class="line">Integer[] is = <span class="keyword">new</span> Integer[<span class="number">3</span>];</span><span class="line">is[<span class="number">0</span>] = <span class="number">1</span>;</span><span class="line">Number[] ns = is;</span><span class="line"><span class="comment">// 数组是协变的，编译期不检查类型安全，运行时才会发现</span></span><span class="line">ns[<span class="number">1</span>] = <span class="number">3.14</span>; <span class="comment">// java.lang.ArrayStoreException: java.lang.Double</span></span></pre></td></tr></table></figure>
 <h2 id="八、泛型的类型捕获"><a href="#八、泛型的类型捕获" class="headerlink" title="八、泛型的类型捕获"></a>八、泛型的类型捕获</h2><p><code>泛型的类型捕获</code>是从编译器的级别来说的，当我们定义了泛型的时候，如果使用了<code>&lt;? extends T&gt;</code>这种格式，编译器遇到一个这样带有通配符的变量的时候，它如何来进行识别操作呢？</p>
 <p>编译器认为遇到<code>T</code>之后，对这些<code>T</code>而言一定有一个<code>Class&lt;T&gt;</code>类型。但是它不知道<code>T</code>代表什么，但是JVM会为<code>T</code>定制一个占位符来代替<code>T</code>的类型。占位符被称为<code>特殊通配符的捕获</code>。这种情况下，编译器会为通配符提供一个名字，每个变量声明中出现的一个通配符都会获得JVM的一个捕获，因此在泛型声明中如果用了<code>public void method(Pointer&lt;?,?&gt; pointer)</code>的话，JVM就会获取两个通配符名称，因为这个时候<code>?</code>也好，<code>T</code>也好，类型是未知的，任意未知的类型的参数在使用的时候相互之间是没有任何关系的。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://www.ibm.com/developerworks/cn/java/j-jtp01255.html" target="_blank" rel="external">Java 理论和实践: 了解泛型</a></li>
-<li><a href="http://www.ibm.com/developerworks/cn/java/j-jtp01255.html" target="_blank" rel="external">Java 理论与实践: 使用通配符简化泛型使用</a></li>
+<li><a href="https://docs.oracle.com/javase/tutorial/java/generics/index.html" target="_blank" rel="noopener">Generics are a powerful feature of the Java programming language</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-jtp01255.html" target="_blank" rel="noopener">Java 理论和实践: 了解泛型</a></li>
 </ol>
 
       
@@ -323,7 +323,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/vim/2012/10/09/vim-converting-tabs-to-spaces.html" rel="next" title="vim converting tabs to spaces">
-                上一篇：vim converting tabs to spaces
+                <i class="fa fa-chevron-left"></i>
+                vim converting tabs to spaces
               </a>
             
           </div>
@@ -331,7 +332,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2012/10/10/ubuntu-11.04-remove-indicator-from-panel.html" rel="prev" title="ubuntu-11.04删除面板上的信封图标和帐号标志">
-                下一篇：ubuntu-11.04删除面板上的信封图标和帐号标志
+                <i class="fa fa-chevron-right"></i>
+                ubuntu-11.04删除面板上的信封图标和帐号标志
               </a>
             
           </div>
@@ -380,7 +382,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -391,16 +393,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -482,10 +482,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

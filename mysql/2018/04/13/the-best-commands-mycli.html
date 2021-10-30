@@ -1,0 +1,567 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="init mycli config file git clone https://github.com/yuweijun/mycli.git cd mycli mkdir -p ~/.mysql/out ln -s myclirc ~/.myclirc ln -s my.cnf ~/.my.cnf ln -s my.vim ~/.my.vim log query sql and result my">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令行神器之 mycli 篇">
+<meta property="og:url" content="http://www.4e00.com/mysql/2018/04/13/the-best-commands-mycli.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="init mycli config file git clone https://github.com/yuweijun/mycli.git cd mycli mkdir -p ~/.mysql/out ln -s myclirc ~/.myclirc ln -s my.cnf ~/.my.cnf ln -s my.vim ~/.my.vim log query sql and result my">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.130Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="命令行神器之 mycli 篇">
+<meta name="twitter:description" content="init mycli config file git clone https://github.com/yuweijun/mycli.git cd mycli mkdir -p ~/.mysql/out ln -s myclirc ~/.myclirc ln -s my.cnf ~/.my.cnf ln -s my.vim ~/.my.vim log query sql and result my">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/mysql/2018/04/13/the-best-commands-mycli.html">
+
+  <title> 命令行神器之 mycli 篇 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                命令行神器之 mycli 篇
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-04-13T22:38:55+08:00" content="2018-04-13">
+              2018-04-13
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="init-mycli-config-file"><a href="#init-mycli-config-file" class="headerlink" title="init mycli config file"></a>init mycli config file</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">clone</span> https://github.com/yuweijun/mycli.git</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> mycli</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mkdir</span> -p ~/.mysql/out</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ln</span> -s myclirc ~/.myclirc</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ln</span> -s my.cnf ~/.my.cnf</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ln</span> -s my.vim ~/.my.vim</span></pre></td></tr></table></figure>
+<h2 id="log-query-sql-and-result"><a href="#log-query-sql-and-result" class="headerlink" title="log query sql and result"></a>log query sql and result</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mycli</span> -u root -p password -D database -l ~/.mysql/audit.log</span></pre></td></tr></table></figure>
+<p>按<code>,e</code>关闭弹出的<code>vim</code>窗口，按<code>,w</code>保存查询SQL的结果到<code>~/.mysql/out/[0-9]{10}.log</code>文件中，并关闭<code>vim</code>窗口。</p>
+<a id="more"></a>
+<h2 id="myclirc-文件配置修改"><a href="#myclirc-文件配置修改" class="headerlink" title="myclirc 文件配置修改"></a>myclirc 文件配置修改</h2><p>主要修改了默认配置文件里的这3个参数。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">key_bindings = vi</span><span class="line">syntax_style = monokai</span><span class="line">audit_log = ~/.mysql/audit.log</span></pre></td></tr></table></figure>
+<h2 id="my-cnf-配置"><a href="#my-cnf-配置" class="headerlink" title="my.cnf 配置"></a>my.cnf 配置</h2><p>只是加了一个<code>pager</code>的设置，这个文件是与<code>mysql</code>客户端共用的，会影响原来的<code>mysql</code>命令。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[client]</span><span class="line">pager = &apos;vim -u ~/.my.vim -&apos;</span></pre></td></tr></table></figure>
+<h2 id="my-vim-配置"><a href="#my-vim-配置" class="headerlink" title="my.vim 配置"></a>my.vim 配置</h2><p><code>my.cnf</code>中配置是用<code>vim</code>来显示<code>mysql</code>查询结果，这里配置<code>vim</code>的显示和操作快捷键，可以用<code>,q</code>强制退出，或者是<code>,w</code>保存退出。</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> nocompatible</span><span class="line"></span><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Save</span><span class="params">()</span></span></span><span class="line">    exec <span class="string">'wq! ~/.mysql/out/'</span>.<span class="built_in">localtime</span>().<span class="string">'.log'</span></span><span class="line"><span class="keyword">endfunction</span></span><span class="line"></span><span class="line"><span class="keyword">let</span> mapleader=<span class="string">","</span></span><span class="line"><span class="keyword">let</span> maplocalleader=<span class="string">"\\"</span></span><span class="line"></span><span class="line"><span class="keyword">nnoremap</span> <span class="symbol">&lt;silent&gt;</span> <span class="symbol">&lt;leader&gt;</span><span class="keyword">w</span> :<span class="keyword">call</span> Save()<span class="symbol">&lt;cr&gt;</span></span><span class="line"><span class="keyword">nnoremap</span> <span class="symbol">&lt;silent&gt;</span> <span class="symbol">&lt;leader&gt;</span><span class="keyword">e</span> :q!<span class="symbol">&lt;cr&gt;</span></span><span class="line"><span class="keyword">inoremap</span> jj <span class="symbol">&lt;esc&gt;</span></span><span class="line"></span><span class="line"><span class="keyword">set</span> encoding=utf-<span class="number">8</span></span><span class="line"><span class="keyword">set</span> <span class="keyword">number</span></span><span class="line"><span class="keyword">set</span> numberwidth=<span class="number">3</span></span><span class="line"><span class="keyword">set</span> ruler</span><span class="line"><span class="keyword">set</span> nowrap</span><span class="line"><span class="keyword">set</span> noswapfile</span></pre></td></tr></table></figure>
+<p>文件被保存到<code>~/.mysql/out</code>目录下面，需要先建立这个文件夹：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mkdir</span> -p ~/.mysql/out</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://github.com/dbcli/mycli" target="_blank" rel="noopener">github mycli</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2018/04/07/the-best-commands-ssh.html" rel="next" title="命令行神器之 ssh 篇">
+                <i class="fa fa-chevron-left"></i>
+                命令行神器之 ssh 篇
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/04/21/percent-encoding-in-rfc1738-rfc2396-and-rfc3986.html" rel="prev" title="percent encoding in rfc1738 rfc2396 and rfc3986">
+                <i class="fa fa-chevron-right"></i>
+                percent encoding in rfc1738 rfc2396 and rfc3986
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#init-mycli-config-file"><span class="nav-number">1.</span> <span class="nav-text">init mycli config file</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#log-query-sql-and-result"><span class="nav-number">2.</span> <span class="nav-text">log query sql and result</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#myclirc-文件配置修改"><span class="nav-number">3.</span> <span class="nav-text">myclirc 文件配置修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#my-cnf-配置"><span class="nav-number">4.</span> <span class="nav-text">my.cnf 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#my-vim-配置"><span class="nav-number">5.</span> <span class="nav-text">my.vim 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

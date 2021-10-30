@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="一、全局作用域和局部作用域在全局环境里:var a = 1;与a = 1;的作用是相同的。但是如果是在一个函数体内这二者就不同了，前者是声明了一个函数体内的局部变量，而后者在此函数被运行一次之后就会生成一个全局变量 a 。 一般在声明变量时尽可能的加上变量声明var。 二、delete与变量关系：按javascript权威指南书中所言，一个变量一旦被 var 声明之后(未初始化)就有一个默认值&amp;#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="javascript 中变量的声明和变量的作用域说明">
-<meta property="og:url" content="https://www.4e00.com/javascript/2007/10/26/javascript-variable-scope-chain.html">
+<meta property="og:url" content="http://www.4e00.com/javascript/2007/10/26/javascript-variable-scope-chain.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="一、全局作用域和局部作用域在全局环境里:var a = 1;与a = 1;的作用是相同的。但是如果是在一个函数体内这二者就不同了，前者是声明了一个函数体内的局部变量，而后者在此函数被运行一次之后就会生成一个全局变量 a 。 一般在声明变量时尽可能的加上变量声明var。 二、delete与变量关系：按javascript权威指南书中所言，一个变量一旦被 var 声明之后(未初始化)就有一个默认值&amp;#">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.133Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.031Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript 中变量的声明和变量的作用域说明">
 <meta name="twitter:description" content="一、全局作用域和局部作用域在全局环境里:var a = 1;与a = 1;的作用是相同的。但是如果是在一个函数体内这二者就不同了，前者是声明了一个函数体内的局部变量，而后者在此函数被运行一次之后就会生成一个全局变量 a 。 一般在声明变量时尽可能的加上变量声明var。 二、delete与变量关系：按javascript权威指南书中所言，一个变量一旦被 var 声明之后(未初始化)就有一个默认值&amp;#">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2007/10/26/javascript-variable-scope-chain.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/javascript/2007/10/26/javascript-variable-scope-chain.html">
 
   <title> javascript 中变量的声明和变量的作用域说明 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/javascript/" itemprop="url" rel="index">
                     <span itemprop="name">javascript</span>
                   </a>
@@ -259,7 +259,7 @@
 <h2 id="二、delete与变量关系："><a href="#二、delete与变量关系：" class="headerlink" title="二、delete与变量关系："></a>二、delete与变量关系：</h2><p>按javascript权威指南书中所言，一个变量一旦被 <code>var</code> 声明之后(未初始化)就有一个默认值&#39;undefined&#39;，并<code>delete</code>运算符不能删除这些变量，不然会引发一个错误。不过在firefox中测试是可以对声明后的变量进行<code>delete</code>，并返回true，在操作之后再引用就会报未定义错误，说明变量正常删除。在ie7里进行<code>delete</code>是的确返回false，无法删除，不过也没有引发错误。</p>
 <h2 id="三、JavaScript没有块级作用域"><a href="#三、JavaScript没有块级作用域" class="headerlink" title="三、JavaScript没有块级作用域"></a>三、JavaScript没有块级作用域</h2><p>这个不同于c/c++/java，javascript的变量只要声明了就会在整个函数体中都有定义，而不管声明的前后位置，会覆盖全局的同名变量。</p>
 <a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">o</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> i = <span class="number">0</span>;                      <span class="comment">// i is defined throughout function</span></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> o == <span class="string">"object"</span>) &#123;</div><div class="line">        <span class="keyword">var</span> j = <span class="number">0</span>;                  <span class="comment">// j is defined everywhere, not just block</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> k=<span class="number">0</span>; k &lt; <span class="number">10</span>; k++) &#123; <span class="comment">// k is defined everywhere, not just loop</span></div><div class="line">            <span class="built_in">console</span>.log(k);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">console</span>.log(k);          <span class="comment">// k is still defined: prints 10</span></div><div class="line">    &#125;</div><div class="line">    <span class="built_in">console</span>.log(j);              <span class="comment">// j is defined, but may not be initialized</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> scope = <span class="string">"global"</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"> </span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(scope);         <span class="comment">// Displays "undefined", not "global"</span></div><div class="line">    <span class="keyword">var</span> scope = <span class="string">"local"</span>;  <span class="comment">// Variable initialized here, but defined everywhere</span></div><div class="line">    <span class="built_in">console</span>.log(scope);         <span class="comment">// Displays "local"</span></div><div class="line">&#125;</div><div class="line">f();</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">o</span>) </span>&#123;</span><span class="line">    <span class="keyword">var</span> i = <span class="number">0</span>;                      <span class="comment">// i is defined throughout function</span></span><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> o == <span class="string">"object"</span>) &#123;</span><span class="line">        <span class="keyword">var</span> j = <span class="number">0</span>;                  <span class="comment">// j is defined everywhere, not just block</span></span><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> k=<span class="number">0</span>; k &lt; <span class="number">10</span>; k++) &#123; <span class="comment">// k is defined everywhere, not just loop</span></span><span class="line">            <span class="built_in">console</span>.log(k);</span><span class="line">        &#125;</span><span class="line">        <span class="built_in">console</span>.log(k);          <span class="comment">// k is still defined: prints 10</span></span><span class="line">    &#125;</span><span class="line">    <span class="built_in">console</span>.log(j);              <span class="comment">// j is defined, but may not be initialized</span></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="keyword">var</span> scope = <span class="string">"global"</span>;</span><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"> </span>) </span>&#123;</span><span class="line">    <span class="built_in">console</span>.log(scope);         <span class="comment">// Displays "undefined", not "global"</span></span><span class="line">    <span class="keyword">var</span> scope = <span class="string">"local"</span>;  <span class="comment">// Variable initialized here, but defined everywhere</span></span><span class="line">    <span class="built_in">console</span>.log(scope);         <span class="comment">// Displays "local"</span></span><span class="line">&#125;</span><span class="line">f();</span></pre></td></tr></table></figure>
 
       
     </div>
@@ -286,7 +286,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/javascript/2007/10/22/window-location-and-document-location.html" rel="next" title="window.location and document.location">
-                上一篇：window.location and document.location
+                <i class="fa fa-chevron-left"></i>
+                window.location and document.location
               </a>
             
           </div>
@@ -294,7 +295,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2007/11/08/centos5-vs-nat-config.html" rel="prev" title="centos5.0 vs-nat config">
-                下一篇：centos5.0 vs-nat config
+                <i class="fa fa-chevron-right"></i>
+                centos5.0 vs-nat config
               </a>
             
           </div>
@@ -343,7 +345,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -354,16 +356,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -445,10 +445,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

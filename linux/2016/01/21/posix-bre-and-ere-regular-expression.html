@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -56,14 +56,14 @@
 
 <meta name="description" content="POSIX规范常见的正则表达式记法，其实都源于Perl，实际上，正则表达式从Perl衍生出一个显赫的流派，叫做PCRE（Perl Compatible Regular Expression），\d、\w、\s 之类的记法，就是这个流派的特征。但是在PCRE之外，正则表达式还有其它流派，比如下面要介绍的POSIX规范的正则表达式。 POSIX的全称是Portable Operating System">
 <meta property="og:type" content="article">
-<meta property="og:title" content="POSIX正则表达式规范BRE和ERE简介">
-<meta property="og:url" content="https://www.4e00.com/linux/2016/01/21/posix-bre-and-ere-regular-expression.html">
+<meta property="og:title" content="posix正则表达式规范bre和ere简介">
+<meta property="og:url" content="http://www.4e00.com/linux/2016/01/21/posix-bre-and-ere-regular-expression.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="POSIX规范常见的正则表达式记法，其实都源于Perl，实际上，正则表达式从Perl衍生出一个显赫的流派，叫做PCRE（Perl Compatible Regular Expression），\d、\w、\s 之类的记法，就是这个流派的特征。但是在PCRE之外，正则表达式还有其它流派，比如下面要介绍的POSIX规范的正则表达式。 POSIX的全称是Portable Operating System">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.102Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="POSIX正则表达式规范BRE和ERE简介">
+<meta name="twitter:title" content="posix正则表达式规范bre和ere简介">
 <meta name="twitter:description" content="POSIX规范常见的正则表达式记法，其实都源于Perl，实际上，正则表达式从Perl衍生出一个显赫的流派，叫做PCRE（Perl Compatible Regular Expression），\d、\w、\s 之类的记法，就是这个流派的特征。但是在PCRE之外，正则表达式还有其它流派，比如下面要介绍的POSIX规范的正则表达式。 POSIX的全称是Portable Operating System">
 
 
@@ -85,9 +85,9 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/linux/2016/01/21/posix-bre-and-ere-regular-expression.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2016/01/21/posix-bre-and-ere-regular-expression.html">
 
-  <title> POSIX正则表达式规范BRE和ERE简介 | 一 </title>
+  <title> posix正则表达式规范bre和ere简介 | 一 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="default">
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -195,7 +195,7 @@
             
             
               
-                POSIX正则表达式规范BRE和ERE简介
+                posix正则表达式规范bre和ere简介
               
             
           </h1>
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -271,10 +271,10 @@
 <p>在POSIX规范中，<code>[a-z]</code>、<code>[aeiou]</code>之类的记法仍然是合法的，其意义与PCRE中的字符组也没有区别，只是这类记法的准确名称是POSIX方括号表达式（bracket expression），它主要用在Unix/Linux系统中。</p>
 <h2 id="POSIX与PCRE方括号表示法的区别"><a href="#POSIX与PCRE方括号表示法的区别" class="headerlink" title="POSIX与PCRE方括号表示法的区别"></a>POSIX与PCRE方括号表示法的区别</h2><p>POSIX与PCRE方括号表示法的最主要差别在于：POSIX字符组中，反斜线<code>\</code>不是用来转义的。所以POSIX方括号表示法<code>[\d]</code>只能匹配<code>\</code>和<code>d</code>两个字符，而不是<code>[0-9]</code>对应的数字字符。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://www.infoq.com/cn/news/2011/07/regular-expressions-6-POSIX" target="_blank" rel="external">Linux/Unix工具与正则表达式的POSIX规范</a></li>
-<li><a href="http://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap09.html" target="_blank" rel="external">9. Regular Expressions</a></li>
-<li><a href="http://blog.chinaunix.net/uid-23045379-id-2562051.html" target="_blank" rel="external">BRE与ERE的差异</a></li>
-<li><a href="http://www.caiyiting.com/blog/2013/expressions.html" target="_blank" rel="external">sed正则表达式和12个实例</a></li>
+<li><a href="http://www.infoq.com/cn/news/2011/07/regular-expressions-6-POSIX" target="_blank" rel="noopener">Linux/Unix工具与正则表达式的POSIX规范</a></li>
+<li><a href="http://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap09.html" target="_blank" rel="noopener">9. Regular Expressions</a></li>
+<li><a href="http://blog.chinaunix.net/uid-23045379-id-2562051.html" target="_blank" rel="noopener">BRE与ERE的差异</a></li>
+<li><a href="http://www.caiyiting.com/blog/2013/expressions.html" target="_blank" rel="noopener">sed正则表达式和12个实例</a></li>
 </ol>
 
       
@@ -302,7 +302,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/linux/2016/01/20/ssh-copy-id.html" rel="next" title="ssh-copy-id命令详解">
-                上一篇：ssh-copy-id命令详解
+                <i class="fa fa-chevron-left"></i>
+                ssh-copy-id命令详解
               </a>
             
           </div>
@@ -310,7 +311,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2016/01/21/how-to-install-java8-on-ubuntu-14-04.html" rel="prev" title="howto install java8 on ubuntu-14.04">
-                下一篇：howto install java8 on ubuntu-14.04
+                <i class="fa fa-chevron-right"></i>
+                howto install java8 on ubuntu-14.04
               </a>
             
           </div>
@@ -359,7 +361,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -370,16 +372,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -461,10 +461,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

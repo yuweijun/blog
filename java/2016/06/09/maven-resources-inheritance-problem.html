@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="如果maven项目中父项目pom.xml里的build &amp;gt; resources项有配置，而子项目pom.xml中的build &amp;gt; resources没有配置时，则子项目直接继承父项目的配置内容。 如果子项目中有配置build &amp;gt; resources，则会覆盖父项目中的全部配置，即父项目中pom.xml中关于build &amp;gt; resources的配置就无效了，不会再被子项目继承">
 <meta property="og:type" content="article">
 <meta property="og:title" content="maven resources inheritance problem">
-<meta property="og:url" content="https://www.4e00.com/java/2016/06/09/maven-resources-inheritance-problem.html">
+<meta property="og:url" content="http://www.4e00.com/java/2016/06/09/maven-resources-inheritance-problem.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="如果maven项目中父项目pom.xml里的build &amp;gt; resources项有配置，而子项目pom.xml中的build &amp;gt; resources没有配置时，则子项目直接继承父项目的配置内容。 如果子项目中有配置build &amp;gt; resources，则会覆盖父项目中的全部配置，即父项目中pom.xml中关于build &amp;gt; resources的配置就无效了，不会再被子项目继承">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.149Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.104Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="maven resources inheritance problem">
 <meta name="twitter:description" content="如果maven项目中父项目pom.xml里的build &amp;gt; resources项有配置，而子项目pom.xml中的build &amp;gt; resources没有配置时，则子项目直接继承父项目的配置内容。 如果子项目中有配置build &amp;gt; resources，则会覆盖父项目中的全部配置，即父项目中pom.xml中关于build &amp;gt; resources的配置就无效了，不会再被子项目继承">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/06/09/maven-resources-inheritance-problem.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2016/06/09/maven-resources-inheritance-problem.html">
 
   <title> maven resources inheritance problem | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -256,26 +256,26 @@
       
         <p>如果maven项目中父项目pom.xml里的<code>build &gt; resources</code>项有配置，而子项目pom.xml中的<code>build &gt; resources</code>没有配置时，则子项目直接继承父项目的配置内容。</p>
 <p>如果子项目中有配置<code>build &gt; resources</code>，则会覆盖父项目中的全部配置，即父项目中pom.xml中关于<code>build &gt; resources</code>的配置就无效了，不会再被子项目继承，这不同于<code>dependencies &gt; dependence</code>和<code>build &gt; plugins &gt; plugin</code>，这二个会完整的继承父项目的设置，并且会覆盖相同的配置，合并不同的配置。</p>
-<p>所以maven<a href="https://issues.apache.org/jira/browse/MNG-2751" target="_blank" rel="external">官方JIRA</a>中很多人认为这是一个bug，因为这与继承的直观印象相左，很容易误用，不过这个问题并没有被进一步修正过，状态为CLOSED。</p>
-<p>以下就采用<a href="http://stackoverflow.com/questions/3008065/maven-2-resources-inheritance-parent-child-project" target="_blank" rel="external">stackoverflow.com</a>上用户的提问来简单说明一下：</p>
+<p>所以maven<a href="https://issues.apache.org/jira/browse/MNG-2751" target="_blank" rel="noopener">官方JIRA</a>中很多人认为这是一个bug，因为这与继承的直观印象相左，很容易误用，不过这个问题并没有被进一步修正过，状态为CLOSED。</p>
+<p>以下就采用<a href="http://stackoverflow.com/questions/3008065/maven-2-resources-inheritance-parent-child-project" target="_blank" rel="noopener">stackoverflow.com</a>上用户的提问来简单说明一下：</p>
 <h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>项目结构如下：</p>
 <blockquote>
 <p>parent-pom.xml</p>
 <p>└── child-pom.xml</p>
 </blockquote>
 <h3 id="parent-pom-xml"><a href="#parent-pom-xml" class="headerlink" title="parent-pom.xml"></a>parent-pom.xml</h3><a id="more"></a>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">excludes</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>$&#123;dev-config.path&#125;<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/rules<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/test/rules<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">excludes</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>$&#123;dev-config.path&#125;<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><span class="line">        <span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/rules<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/test/rules<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span></pre></td></tr></table></figure>
 <p>如果以上配置之后，而子项目中不配置<code>&lt;resources&gt;</code>，那么<code>parent-pom.xml</code>中的设置在子项目完全有效。但是如果在子项目中有如下配置的话，就会完全无视<code>parent-pom.xml</code>中的配置了。</p>
-<h3 id="child-pom-xml"><a href="#child-pom-xml" class="headerlink" title="child-pom.xml"></a>child-pom.xml</h3><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">excludes</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>$&#123;dev-config.path&#125;<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="child-pom-xml"><a href="#child-pom-xml" class="headerlink" title="child-pom.xml"></a>child-pom.xml</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">excludes</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>$&#123;dev-config.path&#125;<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><span class="line">        <span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span></pre></td></tr></table></figure>
 <p>如果在子项目<code>child-pom.xml</code>中有如上配置，虽然只是简单重复了<code>parent-pom.xml</code>中的部分配置，但结果会发现<code>parent-pom.xml</code>中如下所示的2个<code>resource</code>的配置最后发布时没有被打包进生成的jar/war包中。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/rules<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/test/rules<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/rules<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/test/rules<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span></pre></td></tr></table></figure>
 <p>这个问题在stackoverflow和maven的官方JIRA里都有很多人提问，可以参考一下，另外官方也没有文档说明<code>resources</code>的继承使用方式。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://stackoverflow.com/questions/3008065/maven-2-resources-inheritance-parent-child-project" target="_blank" rel="external">Maven 2 resource inheritance</a></li>
-<li><a href="https://issues.apache.org/jira/browse/MNG-2751" target="_blank" rel="external">Resource inheritance isn&#39;t additive</a></li>
-<li><a href="https://issues.apache.org/jira/browse/MNG-5054" target="_blank" rel="external">parent pom and it&#39;s children</a></li>
-<li><a href="http://maven.apache.org/guides/introduction/introduction-to-the-pom.html" target="_blank" rel="external">Introduction to the POM</a></li>
-<li><a href="https://maven.apache.org/pom.html" target="_blank" rel="external">POM Reference</a></li>
+<li><a href="http://stackoverflow.com/questions/3008065/maven-2-resources-inheritance-parent-child-project" target="_blank" rel="noopener">Maven 2 resource inheritance</a></li>
+<li><a href="https://issues.apache.org/jira/browse/MNG-2751" target="_blank" rel="noopener">Resource inheritance isn&#39;t additive</a></li>
+<li><a href="https://issues.apache.org/jira/browse/MNG-5054" target="_blank" rel="noopener">parent pom and it&#39;s children</a></li>
+<li><a href="http://maven.apache.org/guides/introduction/introduction-to-the-pom.html" target="_blank" rel="noopener">Introduction to the POM</a></li>
+<li><a href="https://maven.apache.org/pom.html" target="_blank" rel="noopener">POM Reference</a></li>
 </ol>
 
       
@@ -303,7 +303,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/linux/2016/06/01/application-connections-configuration-spec.html" rel="next" title="application connections configuration using hosts">
-                上一篇：application connections configuration using hosts
+                <i class="fa fa-chevron-left"></i>
+                application connections configuration using hosts
               </a>
             
           </div>
@@ -311,7 +312,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/java/2016/06/10/logback-spring-boot-xml-configuration.html" rel="prev" title="logback.xml configuration example">
-                下一篇：logback.xml configuration example
+                <i class="fa fa-chevron-right"></i>
+                logback.xml configuration example
               </a>
             
           </div>
@@ -360,7 +362,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -371,16 +373,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -462,10 +462,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

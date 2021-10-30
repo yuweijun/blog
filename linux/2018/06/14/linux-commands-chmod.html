@@ -1,0 +1,627 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="三种特殊权限简介在 Linux 下，除了rwx权限外，有时还会看到s和t这样的权限，这些是 Linux 下的特殊权限，包括SUID，SGID，SBIT。 本文内容主要参考鸟哥的文章 - Linux 文件与目录管理，更多内容可阅读鸟哥原文。 示例注意原来的权限的x位置上的变化，x被s和t所替换了。  ls -ld /usr/bin/passwd /tmp /usr/bin/walldrwxrwxrw">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 常用命令之 chmod 设置特殊权限">
+<meta property="og:url" content="http://www.4e00.com/linux/2018/06/14/linux-commands-chmod.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="三种特殊权限简介在 Linux 下，除了rwx权限外，有时还会看到s和t这样的权限，这些是 Linux 下的特殊权限，包括SUID，SGID，SBIT。 本文内容主要参考鸟哥的文章 - Linux 文件与目录管理，更多内容可阅读鸟哥原文。 示例注意原来的权限的x位置上的变化，x被s和t所替换了。  ls -ld /usr/bin/passwd /tmp /usr/bin/walldrwxrwxrw">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/chmod-suid-sgid-sbit.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/unix_chkpwd.png">
+<meta property="og:updated_time" content="2020-03-06T03:35:37.646Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 常用命令之 chmod 设置特殊权限">
+<meta name="twitter:description" content="三种特殊权限简介在 Linux 下，除了rwx权限外，有时还会看到s和t这样的权限，这些是 Linux 下的特殊权限，包括SUID，SGID，SBIT。 本文内容主要参考鸟哥的文章 - Linux 文件与目录管理，更多内容可阅读鸟哥原文。 示例注意原来的权限的x位置上的变化，x被s和t所替换了。  ls -ld /usr/bin/passwd /tmp /usr/bin/walldrwxrwxrw">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/linux/chmod-suid-sgid-sbit.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2018/06/14/linux-commands-chmod.html">
+
+  <title> linux 常用命令之 chmod 设置特殊权限 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux 常用命令之 chmod 设置特殊权限
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-06-14T21:37:42+08:00" content="2018-06-14">
+              2018-06-14
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="三种特殊权限简介"><a href="#三种特殊权限简介" class="headerlink" title="三种特殊权限简介"></a>三种特殊权限简介</h2><p>在 Linux 下，除了<code>rwx</code>权限外，有时还会看到<code>s</code>和<code>t</code>这样的权限，这些是 Linux 下的特殊权限，包括SUID，SGID，SBIT。</p>
+<p>本文内容主要参考<a href="http://cn.linux.vbird.org/linux_basic/0220filemanager.php" target="_blank" rel="noopener">鸟哥的文章 - Linux 文件与目录管理</a>，更多内容可阅读鸟哥原文。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>注意原来的权限的<code>x</code>位置上的变化，<code>x</code>被<code>s</code>和<code>t</code>所替换了。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -ld /usr/bin/passwd /tmp /usr/bin/wall</span><span class="line output">drwxrwxrwt 12 root root  4096 Jun 14 15:51 /tmp</span><span class="line output">-rwsr-xr-x  1 root root 59640 Jan 25 15:09 /usr/bin/passwd</span><span class="line output">-rwxr-sr-x  1 root tty  30800 May 16 10:41 /usr/bin/wall</span></pre></td></tr></table></figure>
+<p>Linux 命令行中运行其实是有不同的高亮背景表示这些文件拥有特殊权限的。</p>
+<img src="/blog/img/linux/chmod-suid-sgid-sbit.png" class="image-md" title="[chmod-suid-sgid-sbit]">
+<h2 id="SUID"><a href="#SUID" class="headerlink" title="SUID"></a>SUID</h2><p>当一个设置了 SUID 位的可执行文件被执行时，该文件将以所有者的身份运行，也就是说无论谁来执行这个文件，他都有文件所有者的特权。</p>
+<p>如果所有者是 root 的话，那么执行人就有超级用户的特权了，因此不要轻易设置该位。</p>
+<h3 id="SUID-特殊权限说明"><a href="#SUID-特殊权限说明" class="headerlink" title="SUID 特殊权限说明"></a>SUID 特殊权限说明</h3><ol>
+<li>SUID 权限仅对可执行文件有效，也就是说 SUID 只能用在 <strong>文件</strong> 上，不能用在目录</li>
+<li>执行者对于该程序需要具有<code>x</code>的可执行权限</li>
+<li>本权限仅在执行该程序的过程中有效</li>
+<li>执行者将具有该程序拥有者的权限</li>
+</ol>
+<h3 id="SUID-example"><a href="#SUID-example" class="headerlink" title="SUID example"></a>SUID example</h3><p>以<code>/usr/bin/passwd</code>为例：</p>
+<ol>
+<li><code>git</code>用户对于<code>/usr/bin/passwd</code>这个程序具有<code>x</code>权限，表明<code>git</code>用户可以执行<code>passwd</code></li>
+<li><code>passwd</code>的所有者为<code>root</code></li>
+<li><code>git</code>用户执行<code>passwd</code>的过程中会暂时获得<code>root</code>的权限</li>
+<li>因此<code>/etc/shadow</code>可以被<code>git</code>用户所执行的<code>passwd</code>所修改</li>
+</ol>
+<h2 id="SGID"><a href="#SGID" class="headerlink" title="SGID"></a>SGID</h2><p>当一个设置了 SGID 位的可执行文件运行时，该文件将具有所属组的特权，任意操作组所能使用的系统资源。</p>
+<h3 id="SGID-目录说明"><a href="#SGID-目录说明" class="headerlink" title="SGID 目录说明"></a>SGID 目录说明</h3><p>SGID 除了对二进制程序生效，也可以用目录上，而且主要就是在目录上使用这个特殊权限，当一个目录设置了 SGID 权限后，它具有如下功能：</p>
+<ol>
+<li>用户若对此目录具有<code>r</code>和<code>x</code>权限，该用户能够进入该目录</li>
+<li>用户在此目录下的有效用户组将变成该目录的用户组</li>
+<li>若用户在此目录下拥有<code>w</code>权限，则用户所创建的新文件的用户组与该目录的用户组相同</li>
+</ol>
+<h3 id="SGID-示例"><a href="#SGID-示例" class="headerlink" title="SGID 示例"></a>SGID 示例</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mkdir</span> sgid</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">chmod</span> 4755 sgid</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -l sgid</span><span class="line output">total 0</span><span class="line output">drwsr-xr-x    2 yu staff   68 Jun 17 22:53 .</span><span class="line output">drwx------+ 149 yu staff 5066 Jun 17 22:53 ..</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cp</span> /etc/hosts sgid</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -l /etc/hosts</span><span class="line output">-rw-r--r-- 1 root wheel 262 Feb 27 22:09 /etc/hosts</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -l sgid</span><span class="line output">total 4</span><span class="line output">drwsr-xr-x    3 yu staff  102 Jun 17 22:54 .</span><span class="line output">drwx------+ 149 yu staff 5066 Jun 17 22:53 ..</span><span class="line output">-rw-r--r--    1 yu staff  262 Jun 17 22:54 hosts</span></pre></td></tr></table></figure>
+<h2 id="SBIT"><a href="#SBIT" class="headerlink" title="SBIT"></a>SBIT</h2><p><code>Sticky-bit</code>现在仅对目录有效。</p>
+<h3 id="SBIT-特殊权限说明"><a href="#SBIT-特殊权限说明" class="headerlink" title="SBIT 特殊权限说明"></a>SBIT 特殊权限说明</h3><p>对一个目录设置了<code>Sticky-bit</code>之后，存放在该目录的文件仅准许其属主执行删除、移动等操作，因此该位可以理解为防删除位。</p>
+<h3 id="SBIT-示例"><a href="#SBIT-示例" class="headerlink" title="SBIT 示例"></a>SBIT 示例</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> /tmp &amp;&amp; ls -ld .font-unix &amp;&amp; rm -rf .font-unix</span><span class="line"><span class="comment output">drwxrwxrwt 2 root root 4096 Jun  9 12:32 .font-unix</span></span><span class="line"><span class="comment output">rm: cannot remove '.font-unix': Operation not permitted</span></span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="特殊权限的数值表示"><a href="#特殊权限的数值表示" class="headerlink" title="特殊权限的数值表示"></a>特殊权限的数值表示</h2><p>这三种特殊权限的数值表示:</p>
+<ul>
+<li>SUID: 4</li>
+<li>SGID: 2</li>
+<li>SBIT: 1</li>
+</ul>
+<p>三种特殊权限可以用单独的一位8进制数值表示：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SUID SGID SBIT   二进制 八进制 说明</span><span class="line">-    -    -      000    0      不设置特殊权限</span><span class="line">-    -    t      001    1      只设置sticky</span><span class="line">-    s    -      010    2      只设置SGID</span><span class="line">-    s    t      011    3      只设置SGID和sticky</span><span class="line">s    -    -      100    4      只设置SUID</span><span class="line">s    -    t      101    5      只设置SUID和sticky</span><span class="line">s    s    -      110    6      只设置SUID和SGID</span><span class="line">s    s    t      111    7      设置三种特殊权限</span></pre></td></tr></table></figure>
+<h2 id="大写的-S-和-T"><a href="#大写的-S-和-T" class="headerlink" title="大写的 S 和 T"></a>大写的 S 和 T</h2><p>如果文件或者文件夹没有<code>x</code>权限，这时<code>s</code>和<code>t</code>对应的位置会变为大写的<code>S</code>和<code>T</code>，实际上也就代表特殊权限无效。</p>
+<h2 id="SUID-SGID-SBIT权限设置"><a href="#SUID-SGID-SBIT权限设置" class="headerlink" title="SUID/SGID/SBIT权限设置"></a>SUID/SGID/SBIT权限设置</h2><p>使用 chmod 设置这3种特殊权限，和<code>rwx</code>差不多，也有两种方式，一种是以字符，一种是以数字。</p>
+<h3 id="字符方式设置权限"><a href="#字符方式设置权限" class="headerlink" title="字符方式设置权限"></a>字符方式设置权限</h3><ul>
+<li>SUID: u+s 和 u-s</li>
+<li>SGID: g+s 和 g-s</li>
+<li>SBIT: o+t 和 o-t</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> /tmp</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">touch</span> suid</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -l suid</span><span class="line output">-rw-r--r-- 1 root root 0 Jun 18 09:22 suid</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">chmod</span> u+s suid</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -l suid</span><span class="line output">-rwSr--r-- 1 root root 0 Jun 18 09:22 suid</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">chmod</span> u+x suid</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -l suid</span><span class="line output">-rwsr--r-- 1 root root 0 Jun 18 09:22 suid</span></pre></td></tr></table></figure>
+<h3 id="数字方式设置权限"><a href="#数字方式设置权限" class="headerlink" title="数字方式设置权限"></a>数字方式设置权限</h3><ul>
+<li>SUID: 4rwx</li>
+<li>SGID: 2rwx</li>
+<li>SBIT: 1rwx 和 0rwx</li>
+</ul>
+<p>上面<code>rwx</code>对应原来文件或者目录的权限，并且数值方式<strong>不能移除 SUID 和 SGID权限</strong>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">mkdir</span> sgid-sbit</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">chmod</span> 3777 sgid-sbit</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -ld sgid-sbit</span><span class="line output">drwxrwsrwt 2 root root 4096 Jun 18 21:39 sgid-sbit</span></pre></td></tr></table></figure>
+<h2 id="Real-UID-和-Effective-UID"><a href="#Real-UID-和-Effective-UID" class="headerlink" title="Real UID 和 Effective UID"></a>Real UID 和 Effective UID</h2><p>Linux 中的进程有2个属性与 SUID 相关，即 RUID 和 EUID，用以控制进程访问文件的权限，查看<code>ps</code>命令手册，可以看到如下信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">man</span> ps | grep -e <span class="string">"euid\s*EUID\|ruid\s*RUID"</span></span><span class="line"><span class="comment output">euid        EUID      effective user ID (alias uid).</span></span><span class="line"><span class="comment output">ruid        RUID      real user ID.</span></span></pre></td></tr></table></figure>
+<p>当一个没有设置 SUID 的程序运行时，RUID 和 EUID 就是当前执行程序的用户的<code>uid</code>，所以 Linux 上基本上除了几个特殊的命令之外(如<code>usr/bin/passwd</code>)，程序执行时 RUID 等于 EUID。<br>而当执行一个有设置 SUID 的程序时，RUID 就是当前执行程序的用<code>uid</code>，而 EUID 则是当前应用程序属主的<code>uid</code>。</p>
+<h3 id="测试程序源码"><a href="#测试程序源码" class="headerlink" title="测试程序源码"></a>测试程序源码</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><span class="line"></span><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><span class="line">    <span class="built_in">printf</span>(<span class="string">"uid = %d, gid = %d, euid = %d, egid = %d\n"</span>, getuid(), getgid(), geteuid(), getegid());</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>当前用户名为<code>git</code>，用此帐号将上面源码文件<code>uids.c</code>复制到<code>/tmp</code>目录下，编译生成二进制可执行文件<code>uids</code>，并设置 SUID 位。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> /tmp</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -l uids.c</span><span class="line output">-rw-rw-r-- 1 git git 158 Jun 19 22:41 uids.c</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">gcc</span> -o uids uids.c</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">chmod</span> 4755 uids</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -l uids</span><span class="line output">-rwsr-xr-x 1 git git 8472 Jun 19 22:41 uids</span></pre></td></tr></table></figure>
+<h3 id="当前用户执行"><a href="#当前用户执行" class="headerlink" title="当前用户执行"></a>当前用户执行</h3><p>使用当前用户<code>git</code>运行此程序，可以看到其<code>uid</code>和<code>euid</code>值都是当前用户的<code>uid</code>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> ./uids</span><span class="line output">uid = 1000, gid = 1000, euid = 1000, egid = 1000</span></pre></td></tr></table></figure>
+<h3 id="切换用户执行"><a href="#切换用户执行" class="headerlink" title="切换用户执行"></a>切换用户执行</h3><p>切换到 root 用户执行此程序，输出的<code>uid</code>为 root 用户的<code>uid</code>，而<code>euid</code>依然是可执行程序属主<code>git</code>的<code>uid</code>值。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> /tmp/</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ls</span> -l uids</span><span class="line output">-rwsr-xr-x 1 git git 8472 Jun 19 22:41 uids</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> ./uids</span><span class="line output">uid = 0, gid = 0, euid = 1000, egid = 0</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">id</span> git</span><span class="line output">uid=1000(git) gid=1000(git) groups=1000(git)</span></pre></td></tr></table></figure>
+<h2 id="chown-导致文件属性变化"><a href="#chown-导致文件属性变化" class="headerlink" title="chown 导致文件属性变化"></a>chown 导致文件属性变化</h2><p>如下图所示，在执行<code>chown root:root /usr/bin/wall</code>命令之后，导致文件属组上的<code>s</code>标记丢失了，如果<code>unix_chkpwd</code>的属性发生变化，也会导致用户密码验证问题，如<code>i3lock</code>在锁屏之后，输入正确密码之后也不能 unlock，就是因为它个<code>unix_chkpwd</code>的用户属性上特殊标志<code>s</code>丢失了。</p>
+<img src="/blog/img/linux/unix_chkpwd.png" class="image-md" title="[unix_chkpwd]">
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://cn.linux.vbird.org/linux_basic/0220filemanager.php" target="_blank" rel="noopener">Linux 文件与目录管理</a></li>
+<li><a href="http://blog.51cto.com/crazyming/467414" target="_blank" rel="noopener">linux特殊文件权限suid/sgid/sticky-bit的作用</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2018/06/11/linux-commands-hardwares-info.html" rel="next" title="linux 常用命令之 硬件查看命令">
+                <i class="fa fa-chevron-left"></i>
+                linux 常用命令之 硬件查看命令
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/06/15/gc-algorithms-implements.html" rel="prev" title="gc algorithms: implementations">
+                <i class="fa fa-chevron-right"></i>
+                gc algorithms: implementations
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#三种特殊权限简介"><span class="nav-number">1.</span> <span class="nav-text">三种特殊权限简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">1.1.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SUID"><span class="nav-number">2.</span> <span class="nav-text">SUID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SUID-特殊权限说明"><span class="nav-number">2.1.</span> <span class="nav-text">SUID 特殊权限说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SUID-example"><span class="nav-number">2.2.</span> <span class="nav-text">SUID example</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SGID"><span class="nav-number">3.</span> <span class="nav-text">SGID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SGID-目录说明"><span class="nav-number">3.1.</span> <span class="nav-text">SGID 目录说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SGID-示例"><span class="nav-number">3.2.</span> <span class="nav-text">SGID 示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SBIT"><span class="nav-number">4.</span> <span class="nav-text">SBIT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SBIT-特殊权限说明"><span class="nav-number">4.1.</span> <span class="nav-text">SBIT 特殊权限说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SBIT-示例"><span class="nav-number">4.2.</span> <span class="nav-text">SBIT 示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊权限的数值表示"><span class="nav-number">5.</span> <span class="nav-text">特殊权限的数值表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大写的-S-和-T"><span class="nav-number">6.</span> <span class="nav-text">大写的 S 和 T</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SUID-SGID-SBIT权限设置"><span class="nav-number">7.</span> <span class="nav-text">SUID/SGID/SBIT权限设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符方式设置权限"><span class="nav-number">7.1.</span> <span class="nav-text">字符方式设置权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字方式设置权限"><span class="nav-number">7.2.</span> <span class="nav-text">数字方式设置权限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Real-UID-和-Effective-UID"><span class="nav-number">8.</span> <span class="nav-text">Real UID 和 Effective UID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#测试程序源码"><span class="nav-number">8.1.</span> <span class="nav-text">测试程序源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#当前用户执行"><span class="nav-number">8.2.</span> <span class="nav-text">当前用户执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切换用户执行"><span class="nav-number">8.3.</span> <span class="nav-text">切换用户执行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chown-导致文件属性变化"><span class="nav-number">9.</span> <span class="nav-text">chown 导致文件属性变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">10.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

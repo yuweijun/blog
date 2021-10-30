@@ -1,0 +1,604 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="检查当前网络使用的 DNS 服务器，以及检查不同的 DNS 服务器解析域名的情况，主要使用dig和nslookup，也可以用host检查 DNS 解析情况，下面示例的命令是在 Mac OSX 电脑上运行的。 digdig是domain information groper的缩写，man手册上说明简单摘录如下，详细中文说明手册可参考 IBM 的文档:  dig (domain information">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 常用命令行之 dig">
+<meta property="og:url" content="http://www.4e00.com/linux/2018/04/05/linux-commands-dig.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="检查当前网络使用的 DNS 服务器，以及检查不同的 DNS 服务器解析域名的情况，主要使用dig和nslookup，也可以用host检查 DNS 解析情况，下面示例的命令是在 Mac OSX 电脑上运行的。 digdig是domain information groper的缩写，man手册上说明简单摘录如下，详细中文说明手册可参考 IBM 的文档:  dig (domain information">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.129Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 常用命令行之 dig">
+<meta name="twitter:description" content="检查当前网络使用的 DNS 服务器，以及检查不同的 DNS 服务器解析域名的情况，主要使用dig和nslookup，也可以用host检查 DNS 解析情况，下面示例的命令是在 Mac OSX 电脑上运行的。 digdig是domain information groper的缩写，man手册上说明简单摘录如下，详细中文说明手册可参考 IBM 的文档:  dig (domain information">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2018/04/05/linux-commands-dig.html">
+
+  <title> linux 常用命令行之 dig | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux 常用命令行之 dig
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-04-05T12:18:13+08:00" content="2018-04-05">
+              2018-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>检查当前网络使用的 DNS 服务器，以及检查不同的 DNS 服务器解析域名的情况，主要使用<code>dig</code>和<code>nslookup</code>，也可以用<code>host</code>检查 DNS 解析情况，下面示例的命令是在 Mac OSX 电脑上运行的。</p>
+<h2 id="dig"><a href="#dig" class="headerlink" title="dig"></a>dig</h2><p><code>dig</code>是<code>domain information groper</code>的缩写，<code>man</code>手册上说明简单摘录如下，详细中文说明手册可参考 IBM 的<a href="https://www.ibm.com/support/knowledgecenter/zh/ssw_aix_72/com.ibm.aix.cmds2/dig.htm" target="_blank" rel="noopener">文档</a>:</p>
+<blockquote>
+<p>dig (domain information groper) is a flexible tool for interrogating DNS name servers. It performs DNS lookups and displays the answers that are returned from the name server(s) that were queried. Most DNS administrators use dig to troubleshoot DNS problems because of its flexibility, ease of use and clarity of output. Other lookup tools tend to have less functionality than dig.</p>
+</blockquote>
+<p>一个典型的<code>dig</code>调用类似：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">dig</span> @dns-server name <span class="built_in">type</span></span></pre></td></tr></table></figure>
+<h3 id="dig命令使用示例"><a href="#dig命令使用示例" class="headerlink" title="dig命令使用示例"></a>dig命令使用示例</h3><p>查看当前电脑使用的 DNS 服务器地址，默认会使用<code>/etc/resolv.conf</code>中的配置。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">dig</span></span><span class="line output">; &lt;&lt;&gt;&gt; DiG 9.8.3-P1 &lt;&lt;&gt;&gt;</span><span class="line output">;; global options: +cmd</span><span class="line output">;; Got answer:</span><span class="line output">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 34872</span><span class="line output">;; flags: qr rd ra; QUERY: 1, ANSWER: 13, AUTHORITY: 0, ADDITIONAL: 0</span><span class="line output">;; QUESTION SECTION:</span><span class="line output">;.                IN  NS</span><span class="line output">;; ANSWER SECTION:</span><span class="line output">.         6795    IN  NS  m.root-servers.net.</span><span class="line output">.         6795    IN  NS  h.root-servers.net.</span><span class="line output">.         6795    IN  NS  d.root-servers.net.</span><span class="line output">.         6795    IN  NS  c.root-servers.net.</span><span class="line output">.         6795    IN  NS  l.root-servers.net.</span><span class="line output">.         6795    IN  NS  i.root-servers.net.</span><span class="line output">.         6795    IN  NS  e.root-servers.net.</span><span class="line output">.         6795    IN  NS  k.root-servers.net.</span><span class="line output">.         6795    IN  NS  f.root-servers.net.</span><span class="line output">.         6795    IN  NS  j.root-servers.net.</span><span class="line output">.         6795    IN  NS  g.root-servers.net.</span><span class="line output">.         6795    IN  NS  b.root-servers.net.</span><span class="line output">.         6795    IN  NS  a.root-servers.net.</span><span class="line output">;; Query time: 6 msec</span><span class="line output">;; SERVER: 202.96.209.133<span class="comment">#53(202.96.209.133)</span></span><span class="line output">;; WHEN: Thu Apr  5 13:28:22 2018</span><span class="line output">;; MSG SIZE  rcvd: 228</span></pre></td></tr></table></figure>
+<p>本机<code>/etc/resolv.conf</code>文件配置的内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nameserver 202.96.209.133</span><span class="line">nameserver 8.8.8.8</span></pre></td></tr></table></figure>
+<p>所以<code>dig</code>命令显示的DNS服务地址是<code>202.96.209.133</code>。</p>
+<a id="more"></a>
+<h3 id="dig命令其他用法示例"><a href="#dig命令其他用法示例" class="headerlink" title="dig命令其他用法示例"></a>dig命令其他用法示例</h3><p><code>dig</code>命令常用的<code>DNS record types</code>：</p>
+<ul>
+<li>A</li>
+<li>AAAA</li>
+<li>NS</li>
+<li>MX</li>
+<li>CNAME</li>
+</ul>
+<p>常用的 DNS 服务器地址：</p>
+<ul>
+<li>1.1.1.1</li>
+<li>8.8.4.4</li>
+<li>8.8.8.8</li>
+<li>9.9.9.9</li>
+<li>75.75.75.75</li>
+<li>77.88.8.7</li>
+<li>208.67.222.222</li>
+<li>208.67.220.220</li>
+<li>223.5.5.5</li>
+<li>223.6.6.6</li>
+<li>114.114.114.114</li>
+<li>114.114.115.115</li>
+<li>180.168.255.118</li>
+<li>202.96.209.5</li>
+<li>202.96.209.133</li>
+</ul>
+<p>最后面3个是上海电信的 DNS 服务器，可以在<code>dig</code>命令查询结果中查看<code>Query time</code>这一项数据，判断 DNS 服务器的解析速度。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">dig</span> @8.8.8.8 www.google.com A</span><span class="line output">; &lt;&lt;&gt;&gt; DiG 9.8.3-P1 &lt;&lt;&gt;&gt; @8.8.8.8 www.google.com A</span><span class="line output">; (1 server found)</span><span class="line output">;; global options: +cmd</span><span class="line output">;; Got answer:</span><span class="line output">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 1390</span><span class="line output">;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0</span><span class="line output">;; QUESTION SECTION:</span><span class="line output">;www.google.com.                        IN      A</span><span class="line output">;; ANSWER SECTION:</span><span class="line output">www.google.com.         122     IN      A       69.171.246.9</span><span class="line output">;; Query time: 6 msec</span><span class="line output">;; SERVER: 8.8.8.8<span class="comment">#53(8.8.8.8)</span></span><span class="line output">;; WHEN: Thu Apr  5 13:36:40 2018</span><span class="line output">;; MSG SIZE  rcvd: 48</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">dig</span> @8.8.8.8 www.google.com NS</span><span class="line output">; &lt;&lt;&gt;&gt; DiG 9.8.3-P1 &lt;&lt;&gt;&gt; @8.8.8.8 www.google.com NS</span><span class="line output">; (1 server found)</span><span class="line output">;; global options: +cmd</span><span class="line output">;; Got answer:</span><span class="line output">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 48199</span><span class="line output">;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0</span><span class="line output">;; QUESTION SECTION:</span><span class="line output">;www.google.com.                        IN      NS</span><span class="line output">;; ANSWER SECTION:</span><span class="line output">www.google.com.         179     IN      A       31.13.82.1</span><span class="line output">;; Query time: 5 msec</span><span class="line output">;; SERVER: 8.8.8.8<span class="comment">#53(8.8.8.8)</span></span><span class="line output">;; WHEN: Thu Apr  5 13:37:59 2018</span><span class="line output">;; MSG SIZE  rcvd: 48</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">dig</span> @8.8.8.8 www.google.com MX</span><span class="line output">; &lt;&lt;&gt;&gt; DiG 9.8.3-P1 &lt;&lt;&gt;&gt; @8.8.8.8 www.google.com MX</span><span class="line output">; (1 server found)</span><span class="line output">;; global options: +cmd</span><span class="line output">;; Got answer:</span><span class="line output">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 26775</span><span class="line output">;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0</span><span class="line output">;; QUESTION SECTION:</span><span class="line output">;www.google.com.                        IN      MX</span><span class="line output">;; ANSWER SECTION:</span><span class="line output">www.google.com.         67      IN      A       243.185.187.39</span><span class="line output">;; Query time: 6 msec</span><span class="line output">;; SERVER: 8.8.8.8<span class="comment">#53(8.8.8.8)</span></span><span class="line output">;; WHEN: Thu Apr  5 13:38:05 2018</span><span class="line output">;; MSG SIZE  rcvd: 48</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">dig</span> @8.8.8.8 +short NS www.google.com</span><span class="line output">31.13.73.17</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">dig</span> @8.8.8.8 +short A www.google.com</span><span class="line output">31.13.82.23</span></pre></td></tr></table></figure>
+<p>可以使用ANY类型查询对应域名尽可能多的信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">dig</span> @8.8.8.8 google.com ANY</span><span class="line output">; &lt;&lt;&gt;&gt; DiG 9.8.3-P1 &lt;&lt;&gt;&gt; @8.8.8.8 google.com ANY</span><span class="line output">; (1 server found)</span><span class="line output">;; global options: +cmd</span><span class="line output">;; Got answer:</span><span class="line output">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 3688</span><span class="line output">;; flags: qr rd ra; QUERY: 1, ANSWER: 15, AUTHORITY: 0, ADDITIONAL: 0</span><span class="line output">;; QUESTION SECTION:</span><span class="line output">;google.com.                    IN      ANY</span><span class="line output">;; ANSWER SECTION:</span><span class="line output">google.com.             299     IN      A       172.217.160.78</span><span class="line output">google.com.             299     IN      AAAA    2404:6800:4012::200e</span><span class="line output">google.com.             599     IN      MX      50 alt4.aspmx.l.google.com.</span><span class="line output">google.com.             299     IN      TXT     <span class="string">"docusign=05958488-4752-4ef2-95eb-aa7ba8a3bd0e"</span></span><span class="line output">google.com.             21599   IN      TYPE257 \<span class="comment"># 15 00056973737565706B692E676F6F67</span></span><span class="line output">google.com.             21599   IN      NS      ns2.google.com.</span><span class="line output">google.com.             21599   IN      NS      ns4.google.com.</span><span class="line output">google.com.             599     IN      MX      10 aspmx.l.google.com.</span><span class="line output">google.com.             59      IN      SOA     ns1.google.com. dns-admin.google.com. 191660339 900 900 1800 60</span><span class="line output">google.com.             3599    IN      TXT     <span class="string">"v=spf1 include:_spf.google.com ~all"</span></span><span class="line output">google.com.             599     IN      MX      20 alt1.aspmx.l.google.com.</span><span class="line output">google.com.             21599   IN      NS      ns3.google.com.</span><span class="line output">google.com.             599     IN      MX      40 alt3.aspmx.l.google.com.</span><span class="line output">google.com.             599     IN      MX      30 alt2.aspmx.l.google.com.</span><span class="line output">google.com.             21599   IN      NS      ns1.google.com.</span><span class="line output">;; Query time: 46 msec</span><span class="line output">;; SERVER: 8.8.8.8<span class="comment">#53(8.8.8.8)</span></span><span class="line output">;; WHEN: Thu Apr  5 13:52:53 2018</span><span class="line output">;; MSG SIZE  rcvd: 431</span></pre></td></tr></table></figure>
+<h2 id="nslookup"><a href="#nslookup" class="headerlink" title="nslookup"></a>nslookup</h2><p><code>nslookup</code>命令默认查询<code>A</code>记录，可以在交互模式中设置查询记录类型。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nslookup</span> www.google.com</span><span class="line output">Server:         202.96.209.133</span><span class="line output">Address:        202.96.209.133<span class="comment">#53</span></span><span class="line output">Non-authoritative answer:</span><span class="line output">Name:   www.google.com</span><span class="line output">Address: 69.63.176.15</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nslookup</span> www.google.com 1.1.1.1</span><span class="line output">Server:         1.1.1.1</span><span class="line output">Address:        1.1.1.1<span class="comment">#53</span></span><span class="line output">Non-authoritative answer:</span><span class="line output">Name:   www.google.com</span><span class="line output">Address: 8.7.198.45</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nslookup</span> www.google.com 8.8.8.8</span><span class="line output">Server:         8.8.8.8</span><span class="line output">Address:        8.8.8.8<span class="comment">#53</span></span><span class="line output">Non-authoritative answer:</span><span class="line output">Name:   www.google.com</span><span class="line output">Address: 31.13.82.1</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">nslookup</span></span><span class="line"> &gt; server www.google.com</span><span class="line output"> Default server: www.google.com</span><span class="line output"> Address: 31.13.75.18<span class="comment">#53</span></span><span class="line"> &gt; <span class="built_in">set</span> q=A</span><span class="line"> &gt; server www.google.com</span><span class="line output"> Default server: www.google.com</span><span class="line output"> Address: 31.13.75.18<span class="comment">#53</span></span><span class="line"> &gt; <span class="built_in">set</span> q=MX</span><span class="line"> &gt; server www.google.com</span><span class="line output"> Default server: www.google.com</span><span class="line output"> Address: 31.13.75.18<span class="comment">#53</span></span><span class="line"> &gt; <span class="built_in">set</span> q=AAAA</span><span class="line"> &gt; server www.google.com</span><span class="line output"> Default server: www.google.com</span><span class="line output"> Address: 31.13.75.18<span class="comment">#53</span></span></pre></td></tr></table></figure>
+<h2 id="host"><a href="#host" class="headerlink" title="host"></a>host</h2><p>可以用指定的 DNS 服务器，查询服务器 IP 地址。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">host</span> www.google.com</span><span class="line output">www.google.com has address 69.171.244.11</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">host</span> www.google.com 202.96.209.133</span><span class="line output">Using domain server:</span><span class="line output">Name: 202.96.209.133</span><span class="line output">Address: 202.96.209.133<span class="comment">#53</span></span><span class="line output">Aliases:</span><span class="line output">www.google.com has address 69.171.244.11</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://www.ibm.com/support/knowledgecenter/zh/ssw_aix_72/com.ibm.aix.cmds2/dig.htm" target="_blank" rel="noopener">dig命令</a></li>
+<li><a href="https://www.cyberciti.biz/faq/linux-unix-dig-command-examples-usage-syntax/" target="_blank" rel="noopener">Linux and Unix dig Command Examples</a></li>
+<li><a href="http://droptips.com/using-dig-to-query-a-specific-dns-server-name-server-directly-linux-bsd-osx" target="_blank" rel="noopener">Using dig to Query a Specific DNS Server Directly</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/04/05/jrebel-configuration-and-usage-with-maven.html" rel="next" title="jrebel configuration and usage with maven">
+                <i class="fa fa-chevron-left"></i>
+                jrebel configuration and usage with maven
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/04/06/exec-maven-plugin-run-spring-boot.html" rel="prev" title="使用exec-maven-plugin运行spring boot应用">
+                <i class="fa fa-chevron-right"></i>
+                使用exec-maven-plugin运行spring boot应用
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#dig"><span class="nav-number">1.</span> <span class="nav-text">dig</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dig命令使用示例"><span class="nav-number">1.1.</span> <span class="nav-text">dig命令使用示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dig命令其他用法示例"><span class="nav-number">1.2.</span> <span class="nav-text">dig命令其他用法示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nslookup"><span class="nav-number">2.</span> <span class="nav-text">nslookup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#host"><span class="nav-number">3.</span> <span class="nav-text">host</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

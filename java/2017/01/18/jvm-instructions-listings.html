@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,38 +33,38 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
 
 
-<meta name="description" content="Data OperationsThe StackPushing constants onto the stack   opcode Description     bipush Push a signed byte.   sipush Push a signed word.   ldc Push a single word constant.   ldc_w Push a single word">
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="Java Virtual Machine Online Instruction Reference对每个虚拟机指令都有更详细的说明，并配有示例，非常的易于理解，每个指令可以参考这份文档进行学习。 下面按虚拟机指令的作用类型分成以下几大组，每个指令上的链接指向官网说明文档。 Data OperationsThe StackPushing constants onto the stack   opco">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jvm instructions listings">
-<meta property="og:url" content="https://www.4e00.com/java/2017/01/18/jvm-instructions-listings.html">
+<meta property="og:url" content="http://www.4e00.com/java/2017/01/18/jvm-instructions-listings.html">
 <meta property="og:site_name" content="一">
-<meta property="og:description" content="Data OperationsThe StackPushing constants onto the stack   opcode Description     bipush Push a signed byte.   sipush Push a signed word.   ldc Push a single word constant.   ldc_w Push a single word">
+<meta property="og:description" content="Java Virtual Machine Online Instruction Reference对每个虚拟机指令都有更详细的说明，并配有示例，非常的易于理解，每个指令可以参考这份文档进行学习。 下面按虚拟机指令的作用类型分成以下几大组，每个指令上的链接指向官网说明文档。 Data OperationsThe StackPushing constants onto the stack   opco">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.153Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.118Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm instructions listings">
-<meta name="twitter:description" content="Data OperationsThe StackPushing constants onto the stack   opcode Description     bipush Push a signed byte.   sipush Push a signed word.   ldc Push a single word constant.   ldc_w Push a single word">
+<meta name="twitter:description" content="Java Virtual Machine Online Instruction Reference对每个虚拟机指令都有更详细的说明，并配有示例，非常的易于理解，每个指令可以参考这份文档进行学习。 下面按虚拟机指令的作用类型分成以下几大组，每个指令上的链接指向官网说明文档。 Data OperationsThe StackPushing constants onto the stack   opco">
 
 
 
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/java/2017/01/18/jvm-instructions-listings.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2017/01/18/jvm-instructions-listings.html">
 
   <title> jvm instructions listings | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -254,7 +254,9 @@
       
 
       
-        <h2 id="Data-Operations"><a href="#Data-Operations" class="headerlink" title="Data Operations"></a>Data Operations</h2><h3 id="The-Stack"><a href="#The-Stack" class="headerlink" title="The Stack"></a>The Stack</h3><h4 id="Pushing-constants-onto-the-stack"><a href="#Pushing-constants-onto-the-stack" class="headerlink" title="Pushing constants onto the stack"></a>Pushing constants onto the stack</h4><table>
+        <p><a href="https://cs.au.dk/~mis/dOvs/jvmspec/ref-Java.html" target="_blank" rel="noopener">Java Virtual Machine Online Instruction Reference</a>对每个虚拟机指令都有更详细的说明，并配有示例，非常的易于理解，每个指令可以参考这份文档进行学习。</p>
+<p>下面按虚拟机指令的作用类型分成以下几大组，每个指令上的链接指向官网说明文档。</p>
+<h2 id="Data-Operations"><a href="#Data-Operations" class="headerlink" title="Data Operations"></a>Data Operations</h2><h3 id="The-Stack"><a href="#The-Stack" class="headerlink" title="The Stack"></a>The Stack</h3><h4 id="Pushing-constants-onto-the-stack"><a href="#Pushing-constants-onto-the-stack" class="headerlink" title="Pushing constants onto the stack"></a>Pushing constants onto the stack</h4><table>
 <thead>
 <tr>
 <th style="text-align:center">opcode</th>
@@ -263,47 +265,47 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.bipush" target="_blank" rel="external">bipush</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.bipush" target="_blank" rel="noopener">bipush</a></td>
 <td style="text-align:center">Push a signed byte.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.sipush" target="_blank" rel="external">sipush</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.sipush" target="_blank" rel="noopener">sipush</a></td>
 <td style="text-align:center">Push a signed word.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ldc" target="_blank" rel="external">ldc</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ldc" target="_blank" rel="noopener">ldc</a></td>
 <td style="text-align:center">Push a single word constant.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ldc_w" target="_blank" rel="external">ldc_w</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ldc_w" target="_blank" rel="noopener">ldc_w</a></td>
 <td style="text-align:center">Push a single word constant. (16-bit ref in constant pool)</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ldc2_w" target="_blank" rel="external">ldc2_w</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ldc2_w" target="_blank" rel="noopener">ldc2_w</a></td>
 <td style="text-align:center">Push a double word constant.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.aconst_null" target="_blank" rel="external">aconst_null</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.aconst_null" target="_blank" rel="noopener">aconst_null</a></td>
 <td style="text-align:center">Push the null object.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iconst_m1" target="_blank" rel="external">iconst_m1</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iconst_m1" target="_blank" rel="noopener">iconst_m1</a></td>
 <td style="text-align:center">Push integer -1.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iconst_i" target="_blank" rel="external">iconst_i</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iconst_i" target="_blank" rel="noopener">iconst_i</a></td>
 <td style="text-align:center">Integers i = 0..5.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lconst_l" target="_blank" rel="external">lconst_l</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lconst_l" target="_blank" rel="noopener">lconst_l</a></td>
 <td style="text-align:center">Longs l = 0..1.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fconst_f" target="_blank" rel="external">fconst_f</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fconst_f" target="_blank" rel="noopener">fconst_f</a></td>
 <td style="text-align:center">Floats f = 0.0..2.0.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dconst_d" target="_blank" rel="external">dconst_d</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dconst_d" target="_blank" rel="noopener">dconst_d</a></td>
 <td style="text-align:center">Doubles d = 0.0..1.0.</td>
 </tr>
 </tbody>
@@ -317,43 +319,43 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.nop" target="_blank" rel="external">nop</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.nop" target="_blank" rel="noopener">nop</a></td>
 <td style="text-align:center">Do nothing.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.pop" target="_blank" rel="external">pop</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.pop" target="_blank" rel="noopener">pop</a></td>
 <td style="text-align:center">Pop the top word.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.pop2" target="_blank" rel="external">pop2</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.pop2" target="_blank" rel="noopener">pop2</a></td>
 <td style="text-align:center">Pop the top two words.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dup" target="_blank" rel="external">dup</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dup" target="_blank" rel="noopener">dup</a></td>
 <td style="text-align:center">Duplicate the top word to place 2.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dup2" target="_blank" rel="external">dup2</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dup2" target="_blank" rel="noopener">dup2</a></td>
 <td style="text-align:center">Duplicate the top two words.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dup_x1" target="_blank" rel="external">dup_x1</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dup_x1" target="_blank" rel="noopener">dup_x1</a></td>
 <td style="text-align:center">Duplicate the top word to place 3.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dup2_x1" target="_blank" rel="external">dup2_x1</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dup2_x1" target="_blank" rel="noopener">dup2_x1</a></td>
 <td style="text-align:center">Duplicate the top two words to places 4 and 5.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dup_x2" target="_blank" rel="external">dup_x2</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dup_x2" target="_blank" rel="noopener">dup_x2</a></td>
 <td style="text-align:center">Duplicate the top word to place 4.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dup2_x2" target="_blank" rel="external">dup2_x2</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dup2_x2" target="_blank" rel="noopener">dup2_x2</a></td>
 <td style="text-align:center">Duplicate the top two words to places 5 and 6.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.swap" target="_blank" rel="external">swap</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.swap" target="_blank" rel="noopener">swap</a></td>
 <td style="text-align:center">Swap the top two words.</td>
 </tr>
 </tbody>
@@ -367,43 +369,43 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.aload" target="_blank" rel="external">aload</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.aload" target="_blank" rel="noopener">aload</a></td>
 <td style="text-align:center">Load object from local variable n</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.aload_n" target="_blank" rel="external">aload_n</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.aload_n" target="_blank" rel="noopener">aload_n</a></td>
 <td style="text-align:center">Load object from local variable n : n = 0..3</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dload" target="_blank" rel="external">dload</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dload" target="_blank" rel="noopener">dload</a></td>
 <td style="text-align:center">Load double from local variable n</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dload_n" target="_blank" rel="external">dload_n</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dload_n" target="_blank" rel="noopener">dload_n</a></td>
 <td style="text-align:center">Load double from local variable n : n = 0..3</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fload" target="_blank" rel="external">fload</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fload" target="_blank" rel="noopener">fload</a></td>
 <td style="text-align:center">Load float from local variable n</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fload_n" target="_blank" rel="external">fload_n</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fload_n" target="_blank" rel="noopener">fload_n</a></td>
 <td style="text-align:center">Load float from local variable n : n = 0..3</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iload" target="_blank" rel="external">iload</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iload" target="_blank" rel="noopener">iload</a></td>
 <td style="text-align:center">Load integer from local variable n</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iload_n" target="_blank" rel="external">iload_n</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iload_n" target="_blank" rel="noopener">iload_n</a></td>
 <td style="text-align:center">Load integer from local variable n : n = 0..3</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lload" target="_blank" rel="external">lload</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lload" target="_blank" rel="noopener">lload</a></td>
 <td style="text-align:center">Load long from local variable n</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lload_n" target="_blank" rel="external">lload_n</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lload_n" target="_blank" rel="noopener">lload_n</a></td>
 <td style="text-align:center">Load long from local variable n : n = 0..3</td>
 </tr>
 </tbody>
@@ -417,43 +419,43 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.astore" target="_blank" rel="external">astore</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.astore" target="_blank" rel="noopener">astore</a></td>
 <td style="text-align:center">store object in local variable n</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.astore_n" target="_blank" rel="external">astore_n</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.astore_n" target="_blank" rel="noopener">astore_n</a></td>
 <td style="text-align:center">store object in local variable n : n = 0..3</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dstore" target="_blank" rel="external">dstore</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dstore" target="_blank" rel="noopener">dstore</a></td>
 <td style="text-align:center">store double in local variable n</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dstore_n" target="_blank" rel="external">dstore_n</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dstore_n" target="_blank" rel="noopener">dstore_n</a></td>
 <td style="text-align:center">store double in local variable n : n = 0..3</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fstore" target="_blank" rel="external">fstore</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fstore" target="_blank" rel="noopener">fstore</a></td>
 <td style="text-align:center">store float in local variable n</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fstore_n" target="_blank" rel="external">fstore_n</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fstore_n" target="_blank" rel="noopener">fstore_n</a></td>
 <td style="text-align:center">store float in local variable n : n = 0..3</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.istore" target="_blank" rel="external">istore</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.istore" target="_blank" rel="noopener">istore</a></td>
 <td style="text-align:center">store integer in local variable n</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.istore_n" target="_blank" rel="external">istore_n</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.istore_n" target="_blank" rel="noopener">istore_n</a></td>
 <td style="text-align:center">store integer in local variable n : n = 0..3</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lstore" target="_blank" rel="external">lstore</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lstore" target="_blank" rel="noopener">lstore</a></td>
 <td style="text-align:center">store long in local variable n</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lstore_n" target="_blank" rel="external">lstore_n</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lstore_n" target="_blank" rel="noopener">lstore_n</a></td>
 <td style="text-align:center">store long in local variable n : n = 0..3</td>
 </tr>
 </tbody>
@@ -468,15 +470,15 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.newarray" target="_blank" rel="external">newarray</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.newarray" target="_blank" rel="noopener">newarray</a></td>
 <td style="text-align:center">New array of primitive type</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.anewarray" target="_blank" rel="external">anewarray</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.anewarray" target="_blank" rel="noopener">anewarray</a></td>
 <td style="text-align:center">New array of objects</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.multianewarray" target="_blank" rel="external">multianewarray</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.multianewarray" target="_blank" rel="noopener">multianewarray</a></td>
 <td style="text-align:center">New multidimensional array</td>
 </tr>
 </tbody>
@@ -490,35 +492,35 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.aaload" target="_blank" rel="external">aaload</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.aaload" target="_blank" rel="noopener">aaload</a></td>
 <td style="text-align:center">Push object from array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.baload" target="_blank" rel="external">baload</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.baload" target="_blank" rel="noopener">baload</a></td>
 <td style="text-align:center">Push byte or boolean from array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.caload" target="_blank" rel="external">caload</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.caload" target="_blank" rel="noopener">caload</a></td>
 <td style="text-align:center">Push char from array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.daload" target="_blank" rel="external">daload</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.daload" target="_blank" rel="noopener">daload</a></td>
 <td style="text-align:center">Push double from array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.faload" target="_blank" rel="external">faload</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.faload" target="_blank" rel="noopener">faload</a></td>
 <td style="text-align:center">Push float from array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iaload" target="_blank" rel="external">iaload</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iaload" target="_blank" rel="noopener">iaload</a></td>
 <td style="text-align:center">Push integer from array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.laload" target="_blank" rel="external">laload</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.laload" target="_blank" rel="noopener">laload</a></td>
 <td style="text-align:center">Push long from array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.saload" target="_blank" rel="external">saload</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.saload" target="_blank" rel="noopener">saload</a></td>
 <td style="text-align:center">Push short from array.</td>
 </tr>
 </tbody>
@@ -532,35 +534,35 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.aastore" target="_blank" rel="external">aastore</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.aastore" target="_blank" rel="noopener">aastore</a></td>
 <td style="text-align:center">Store object in array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.bastore" target="_blank" rel="external">bastore</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.bastore" target="_blank" rel="noopener">bastore</a></td>
 <td style="text-align:center">Store byte or boolean in array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.castore" target="_blank" rel="external">castore</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.castore" target="_blank" rel="noopener">castore</a></td>
 <td style="text-align:center">Store char in array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dastore" target="_blank" rel="external">dastore</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dastore" target="_blank" rel="noopener">dastore</a></td>
 <td style="text-align:center">Store double in array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fastore" target="_blank" rel="external">fastore</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fastore" target="_blank" rel="noopener">fastore</a></td>
 <td style="text-align:center">Store float in array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iastore" target="_blank" rel="external">iastore</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iastore" target="_blank" rel="noopener">iastore</a></td>
 <td style="text-align:center">Store integer in array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lastore" target="_blank" rel="external">lastore</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lastore" target="_blank" rel="noopener">lastore</a></td>
 <td style="text-align:center">Store long in array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.sastore" target="_blank" rel="external">sastore</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.sastore" target="_blank" rel="noopener">sastore</a></td>
 <td style="text-align:center">Store short in array.</td>
 </tr>
 </tbody>
@@ -574,35 +576,35 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.arraylength" target="_blank" rel="external">arraylength</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.arraylength" target="_blank" rel="noopener">arraylength</a></td>
 <td style="text-align:center">Get length of array.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.new" target="_blank" rel="external">new</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.new" target="_blank" rel="noopener">new</a></td>
 <td style="text-align:center">Allocate mem for object.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.putfield" target="_blank" rel="external">putfield</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.putfield" target="_blank" rel="noopener">putfield</a></td>
 <td style="text-align:center">Store an instance variable.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.getfield" target="_blank" rel="external">getfield</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.getfield" target="_blank" rel="noopener">getfield</a></td>
 <td style="text-align:center">Push an instance variable.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.putstatic" target="_blank" rel="external">putstatic</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.putstatic" target="_blank" rel="noopener">putstatic</a></td>
 <td style="text-align:center">Store a static object&#39;s variable.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.getstatic" target="_blank" rel="external">getstatic</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.getstatic" target="_blank" rel="noopener">getstatic</a></td>
 <td style="text-align:center">Push a static object&#39;s variable.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.checkcast" target="_blank" rel="external">checkcast</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.checkcast" target="_blank" rel="noopener">checkcast</a></td>
 <td style="text-align:center">Checks object type of stack top.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.instanceof" target="_blank" rel="external">instanceof</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.instanceof" target="_blank" rel="noopener">instanceof</a></td>
 <td style="text-align:center">Checks object&#39;s class.</td>
 </tr>
 </tbody>
@@ -616,103 +618,103 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iinc" target="_blank" rel="external">iinc</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iinc" target="_blank" rel="noopener">iinc</a></td>
 <td style="text-align:center">Increment local var.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dadd" target="_blank" rel="external">dadd</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dadd" target="_blank" rel="noopener">dadd</a></td>
 <td style="text-align:center">Add two doubles.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fadd" target="_blank" rel="external">fadd</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fadd" target="_blank" rel="noopener">fadd</a></td>
 <td style="text-align:center">Add two floats.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iadd" target="_blank" rel="external">iadd</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iadd" target="_blank" rel="noopener">iadd</a></td>
 <td style="text-align:center">Add two integers.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ladd" target="_blank" rel="external">ladd</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ladd" target="_blank" rel="noopener">ladd</a></td>
 <td style="text-align:center">Add two longs.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dsub" target="_blank" rel="external">dsub</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dsub" target="_blank" rel="noopener">dsub</a></td>
 <td style="text-align:center">Subtract two doubles.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fsub" target="_blank" rel="external">fsub</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fsub" target="_blank" rel="noopener">fsub</a></td>
 <td style="text-align:center">Subtract two floats.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.isub" target="_blank" rel="external">isub</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.isub" target="_blank" rel="noopener">isub</a></td>
 <td style="text-align:center">Subtract two integers.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lsub" target="_blank" rel="external">lsub</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lsub" target="_blank" rel="noopener">lsub</a></td>
 <td style="text-align:center">Subtract two longs.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dmul" target="_blank" rel="external">dmul</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dmul" target="_blank" rel="noopener">dmul</a></td>
 <td style="text-align:center">Multiply two doubles.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fmul" target="_blank" rel="external">fmul</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fmul" target="_blank" rel="noopener">fmul</a></td>
 <td style="text-align:center">Multiply two floats.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.imul" target="_blank" rel="external">imul</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.imul" target="_blank" rel="noopener">imul</a></td>
 <td style="text-align:center">Multiply two integers.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lmul" target="_blank" rel="external">lmul</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lmul" target="_blank" rel="noopener">lmul</a></td>
 <td style="text-align:center">Multiply two longs.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ddiv" target="_blank" rel="external">ddiv</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ddiv" target="_blank" rel="noopener">ddiv</a></td>
 <td style="text-align:center">Divide two doubles.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fdiv" target="_blank" rel="external">fdiv</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fdiv" target="_blank" rel="noopener">fdiv</a></td>
 <td style="text-align:center">Divide two floats.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.idiv" target="_blank" rel="external">idiv</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.idiv" target="_blank" rel="noopener">idiv</a></td>
 <td style="text-align:center">Divide two integers.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ldiv" target="_blank" rel="external">ldiv</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ldiv" target="_blank" rel="noopener">ldiv</a></td>
 <td style="text-align:center">Divide two longs.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.drem" target="_blank" rel="external">drem</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.drem" target="_blank" rel="noopener">drem</a></td>
 <td style="text-align:center">Take remainder of two doubles.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.frem" target="_blank" rel="external">frem</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.frem" target="_blank" rel="noopener">frem</a></td>
 <td style="text-align:center">Take remainder of two floats.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.irem" target="_blank" rel="external">irem</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.irem" target="_blank" rel="noopener">irem</a></td>
 <td style="text-align:center">Take remainder of two integers.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lrem" target="_blank" rel="external">lrem</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lrem" target="_blank" rel="noopener">lrem</a></td>
 <td style="text-align:center">Take remainder of two longs.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dneg" target="_blank" rel="external">dneg</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dneg" target="_blank" rel="noopener">dneg</a></td>
 <td style="text-align:center">Negate a double.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fneg" target="_blank" rel="external">fneg</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fneg" target="_blank" rel="noopener">fneg</a></td>
 <td style="text-align:center">Negate a float.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ineg" target="_blank" rel="external">ineg</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ineg" target="_blank" rel="noopener">ineg</a></td>
 <td style="text-align:center">Negate a integer.</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lneg" target="_blank" rel="external">lneg</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lneg" target="_blank" rel="noopener">lneg</a></td>
 <td style="text-align:center">Negate a long.</td>
 </tr>
 </tbody>
@@ -726,51 +728,51 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ishl" target="_blank" rel="external">ishl</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ishl" target="_blank" rel="noopener">ishl</a></td>
 <td style="text-align:center">shift integer left</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ishr" target="_blank" rel="external">ishr</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ishr" target="_blank" rel="noopener">ishr</a></td>
 <td style="text-align:center">shift integer right</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iushr" target="_blank" rel="external">iushr</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iushr" target="_blank" rel="noopener">iushr</a></td>
 <td style="text-align:center">shift integer right without regard to sign</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lshl" target="_blank" rel="external">lshl</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lshl" target="_blank" rel="noopener">lshl</a></td>
 <td style="text-align:center">shift long left</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lshr" target="_blank" rel="external">lshr</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lshr" target="_blank" rel="noopener">lshr</a></td>
 <td style="text-align:center">shift long righ</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lushr" target="_blank" rel="external">lushr</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lushr" target="_blank" rel="noopener">lushr</a></td>
 <td style="text-align:center">shift long right without regard to sign</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iand" target="_blank" rel="external">iand</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iand" target="_blank" rel="noopener">iand</a></td>
 <td style="text-align:center">and two integers</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.land" target="_blank" rel="external">land</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.land" target="_blank" rel="noopener">land</a></td>
 <td style="text-align:center">and two longs</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ior" target="_blank" rel="external">ior</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ior" target="_blank" rel="noopener">ior</a></td>
 <td style="text-align:center">or two integers</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lor" target="_blank" rel="external">lor</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lor" target="_blank" rel="noopener">lor</a></td>
 <td style="text-align:center">or two longs</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ixor" target="_blank" rel="external">ixor</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ixor" target="_blank" rel="noopener">ixor</a></td>
 <td style="text-align:center">exclusive or two integers</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lxor" target="_blank" rel="external">lxor</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lxor" target="_blank" rel="noopener">lxor</a></td>
 <td style="text-align:center">exclusive or two longs</td>
 </tr>
 </tbody>
@@ -784,63 +786,63 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.i2l" target="_blank" rel="external">i2l</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.i2l" target="_blank" rel="noopener">i2l</a></td>
 <td style="text-align:center">integer to long</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.i2f" target="_blank" rel="external">i2f</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.i2f" target="_blank" rel="noopener">i2f</a></td>
 <td style="text-align:center">integer to float</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.i2d" target="_blank" rel="external">i2d</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.i2d" target="_blank" rel="noopener">i2d</a></td>
 <td style="text-align:center">integer to double</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.i2b" target="_blank" rel="external">i2b</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.i2b" target="_blank" rel="noopener">i2b</a></td>
 <td style="text-align:center">integer to byte</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.i2s" target="_blank" rel="external">i2s</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.i2s" target="_blank" rel="noopener">i2s</a></td>
 <td style="text-align:center">integer to short</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.i2c" target="_blank" rel="external">i2c</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.i2c" target="_blank" rel="noopener">i2c</a></td>
 <td style="text-align:center">integer to char</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.l2i" target="_blank" rel="external">l2i</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.l2i" target="_blank" rel="noopener">l2i</a></td>
 <td style="text-align:center">long to integer</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.l2f" target="_blank" rel="external">l2f</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.l2f" target="_blank" rel="noopener">l2f</a></td>
 <td style="text-align:center">long to float</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.l2d" target="_blank" rel="external">l2d</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.l2d" target="_blank" rel="noopener">l2d</a></td>
 <td style="text-align:center">long to double</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.f2i" target="_blank" rel="external">f2i</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.f2i" target="_blank" rel="noopener">f2i</a></td>
 <td style="text-align:center">float to integer</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.f2l" target="_blank" rel="external">f2l</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.f2l" target="_blank" rel="noopener">f2l</a></td>
 <td style="text-align:center">float to long</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.f2d" target="_blank" rel="external">f2d</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.f2d" target="_blank" rel="noopener">f2d</a></td>
 <td style="text-align:center">float to double</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.d2i" target="_blank" rel="external">d2i</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.d2i" target="_blank" rel="noopener">d2i</a></td>
 <td style="text-align:center">double to integer</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.d2l" target="_blank" rel="external">d2l</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.d2l" target="_blank" rel="noopener">d2l</a></td>
 <td style="text-align:center">double to long</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.d2f" target="_blank" rel="external">d2f</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.d2f" target="_blank" rel="noopener">d2f</a></td>
 <td style="text-align:center">double to float</td>
 </tr>
 </tbody>
@@ -854,67 +856,67 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifeq" target="_blank" rel="external">ifeq</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifeq" target="_blank" rel="noopener">ifeq</a></td>
 <td style="text-align:center">branch if equal</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifne" target="_blank" rel="external">ifne</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifne" target="_blank" rel="noopener">ifne</a></td>
 <td style="text-align:center">branch if not equal</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iflt" target="_blank" rel="external">iflt</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.iflt" target="_blank" rel="noopener">iflt</a></td>
 <td style="text-align:center">branch if less than</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifle" target="_blank" rel="external">ifle</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifle" target="_blank" rel="noopener">ifle</a></td>
 <td style="text-align:center">branch if less than or equal</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifgt" target="_blank" rel="external">ifgt</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifgt" target="_blank" rel="noopener">ifgt</a></td>
 <td style="text-align:center">branch if greater than</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifge" target="_blank" rel="external">ifge</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifge" target="_blank" rel="noopener">ifge</a></td>
 <td style="text-align:center">branch if greater than or equal</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifnull" target="_blank" rel="external">ifnull</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifnull" target="_blank" rel="noopener">ifnull</a></td>
 <td style="text-align:center">branch if null</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifnonnull" target="_blank" rel="external">ifnonnull</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ifnonnull" target="_blank" rel="noopener">ifnonnull</a></td>
 <td style="text-align:center">branch if not null</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_icmpeq" target="_blank" rel="external">if_icmpeq</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_icmpeq" target="_blank" rel="noopener">if_icmpeq</a></td>
 <td style="text-align:center">branch if two ints are equal</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_icmpne" target="_blank" rel="external">if_icmpne</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_icmpne" target="_blank" rel="noopener">if_icmpne</a></td>
 <td style="text-align:center">branch if two ints are not equal</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_icmplt" target="_blank" rel="external">if_icmplt</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_icmplt" target="_blank" rel="noopener">if_icmplt</a></td>
 <td style="text-align:center">branch if int2 less than int1</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_icmple" target="_blank" rel="external">if_icmple</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_icmple" target="_blank" rel="noopener">if_icmple</a></td>
 <td style="text-align:center">branch if int2 less than or equal to int1</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_icmpgt" target="_blank" rel="external">if_icmpgt</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_icmpgt" target="_blank" rel="noopener">if_icmpgt</a></td>
 <td style="text-align:center">branch if int2 greater than int1</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_icmpge" target="_blank" rel="external">if_icmpge</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_icmpge" target="_blank" rel="noopener">if_icmpge</a></td>
 <td style="text-align:center">branch if int2 greater than or equal to int1</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_acmpeq" target="_blank" rel="external">if_acmpeq</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_acmpeq" target="_blank" rel="noopener">if_acmpeq</a></td>
 <td style="text-align:center">branch if references are equal</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_acmpne" target="_blank" rel="external">if_acmpne</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.if_acmpne" target="_blank" rel="noopener">if_acmpne</a></td>
 <td style="text-align:center">branch if references are uneqal</td>
 </tr>
 </tbody>
@@ -928,23 +930,23 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lcmp" target="_blank" rel="external">lcmp</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lcmp" target="_blank" rel="noopener">lcmp</a></td>
 <td style="text-align:center">compare two longs</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fcmpl" target="_blank" rel="external">fcmpl</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fcmpl" target="_blank" rel="noopener">fcmpl</a></td>
 <td style="text-align:center">compare two floats (-1 on NaN)</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fcmpg" target="_blank" rel="external">fcmpg</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.fcmpg" target="_blank" rel="noopener">fcmpg</a></td>
 <td style="text-align:center">compare two floats (1 on NaN)</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dcmpl" target="_blank" rel="external">dcmpl</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dcmpl" target="_blank" rel="noopener">dcmpl</a></td>
 <td style="text-align:center">compare two doubles (-1 on NaN)</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dcmpg" target="_blank" rel="external">dcmpg</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dcmpg" target="_blank" rel="noopener">dcmpg</a></td>
 <td style="text-align:center">compare two doubles (1 on NaN)</td>
 </tr>
 </tbody>
@@ -958,23 +960,23 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.goto" target="_blank" rel="external">goto</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.goto" target="_blank" rel="noopener">goto</a></td>
 <td style="text-align:center">go to label</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.goto_w" target="_blank" rel="external">goto_w</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.goto_w" target="_blank" rel="noopener">goto_w</a></td>
 <td style="text-align:center">go to label (wide address)</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.jsr" target="_blank" rel="external">jsr</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.jsr" target="_blank" rel="noopener">jsr</a></td>
 <td style="text-align:center">jump to subroutine</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.jsr_w" target="_blank" rel="external">jsr_w</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.jsr_w" target="_blank" rel="noopener">jsr_w</a></td>
 <td style="text-align:center">jump to subroutine (wide address)</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ret" target="_blank" rel="external">ret</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ret" target="_blank" rel="noopener">ret</a></td>
 <td style="text-align:center">return from subroutine</td>
 </tr>
 </tbody>
@@ -988,11 +990,11 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lookupswitch" target="_blank" rel="external">lookupswitch</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lookupswitch" target="_blank" rel="noopener">lookupswitch</a></td>
 <td style="text-align:center">case statement equivalent</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.tableswitch" target="_blank" rel="external">tableswitch</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.tableswitch" target="_blank" rel="noopener">tableswitch</a></td>
 <td style="text-align:center">branch by range of values</td>
 </tr>
 </tbody>
@@ -1006,43 +1008,43 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.invokeinterface" target="_blank" rel="external">invokeinterface</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.invokeinterface" target="_blank" rel="noopener">invokeinterface</a></td>
 <td style="text-align:center">call interface method</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.invokespecial" target="_blank" rel="external">invokespecial</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.invokespecial" target="_blank" rel="noopener">invokespecial</a></td>
 <td style="text-align:center">call method in a specific class</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.invokestatic" target="_blank" rel="external">invokestatic</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.invokestatic" target="_blank" rel="noopener">invokestatic</a></td>
 <td style="text-align:center">call a static method</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.invokevirtual" target="_blank" rel="external">invokevirtual</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.invokevirtual" target="_blank" rel="noopener">invokevirtual</a></td>
 <td style="text-align:center">call any other method</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ireturn" target="_blank" rel="external">ireturn</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.ireturn" target="_blank" rel="noopener">ireturn</a></td>
 <td style="text-align:center">return from method with integer</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lreturn" target="_blank" rel="external">lreturn</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.lreturn" target="_blank" rel="noopener">lreturn</a></td>
 <td style="text-align:center">return from method with long</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.freturn" target="_blank" rel="external">freturn</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.freturn" target="_blank" rel="noopener">freturn</a></td>
 <td style="text-align:center">return from method with float</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dreturn" target="_blank" rel="external">dreturn</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.dreturn" target="_blank" rel="noopener">dreturn</a></td>
 <td style="text-align:center">return from method with double</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.areturn" target="_blank" rel="external">areturn</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.areturn" target="_blank" rel="noopener">areturn</a></td>
 <td style="text-align:center">return from method with object</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.return" target="_blank" rel="external">return</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.return" target="_blank" rel="noopener">return</a></td>
 <td style="text-align:center">return from method with nothing</td>
 </tr>
 </tbody>
@@ -1056,31 +1058,32 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.athrow" target="_blank" rel="external">athrow</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.athrow" target="_blank" rel="noopener">athrow</a></td>
 <td style="text-align:center">throw exception</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.breakpoint" target="_blank" rel="external">breakpoint</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.breakpoint" target="_blank" rel="noopener">breakpoint</a></td>
 <td style="text-align:center">used for debugging</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.wide" target="_blank" rel="external">wide</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.wide" target="_blank" rel="noopener">wide</a></td>
 <td style="text-align:center">used for 2-word address or value</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.monitorenter" target="_blank" rel="external">monitorenter</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.monitorenter" target="_blank" rel="noopener">monitorenter</a></td>
 <td style="text-align:center">begin sychronization</td>
 </tr>
 <tr>
-<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.monitorexit" target="_blank" rel="external">monitorexit</a></td>
+<td style="text-align:center"><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.monitorexit" target="_blank" rel="noopener">monitorexit</a></td>
 <td style="text-align:center">end sychronization</td>
 </tr>
 </tbody>
 </table>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings" target="_blank" rel="external">Java bytecode instruction listings</a></li>
-<li><a href="http://homepages.inf.ed.ac.uk/kwxm/JVM/codeByNo.html" target="_blank" rel="external">Opcodes by Number</a></li>
-<li><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html" target="_blank" rel="external">Chapter 6. The Java Virtual Machine Instruction Set</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings" target="_blank" rel="noopener">Java bytecode instruction listings</a></li>
+<li><a href="http://homepages.inf.ed.ac.uk/kwxm/JVM/codeByNo.html" target="_blank" rel="noopener">Opcodes by Number</a></li>
+<li><a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html" target="_blank" rel="noopener">Chapter 6. The Java Virtual Machine Instruction Set</a></li>
+<li><a href="https://cs.au.dk/~mis/dOvs/jvmspec/ref-Java.html" target="_blank" rel="noopener">Java Virtual Machine - Online Instruction Reference</a></li>
 </ol>
 
       
@@ -1108,7 +1111,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/java/2016/12/26/the-lifetime-of-a-class.html" rel="next" title="the lifetime of a class">
-                上一篇：the lifetime of a class
+                <i class="fa fa-chevron-left"></i>
+                the lifetime of a class
               </a>
             
           </div>
@@ -1116,7 +1120,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/java/2017/02/26/tomcat-startup-blocked-because-stackoverflow-error.html" rel="prev" title="tomcat startup blocked because stackoverflow error">
-                下一篇：tomcat startup blocked because stackoverflow error
+                <i class="fa fa-chevron-right"></i>
+                tomcat startup blocked because stackoverflow error
               </a>
             
           </div>
@@ -1165,7 +1170,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -1176,16 +1181,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -1267,10 +1270,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

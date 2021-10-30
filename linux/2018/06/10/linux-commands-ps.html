@@ -1,0 +1,615 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="tldr ps tldr psInformation about running processes.  - List all running processes:    ps aux  - List all running processes including the full command string:    ps auxww  - Search for a process that m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 常用命令之 ps">
+<meta property="og:url" content="http://www.4e00.com/linux/2018/06/10/linux-commands-ps.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="tldr ps tldr psInformation about running processes.  - List all running processes:    ps aux  - List all running processes including the full command string:    ps auxww  - Search for a process that m">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.132Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 常用命令之 ps">
+<meta name="twitter:description" content="tldr ps tldr psInformation about running processes.  - List all running processes:    ps aux  - List all running processes including the full command string:    ps auxww  - Search for a process that m">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2018/06/10/linux-commands-ps.html">
+
+  <title> linux 常用命令之 ps | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux 常用命令之 ps
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-06-10T22:00:34+08:00" content="2018-06-10">
+              2018-06-10
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="tldr-ps"><a href="#tldr-ps" class="headerlink" title="tldr ps"></a>tldr ps</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">tldr</span> ps</span><span class="line"><span class="comment output">Information about running processes.</span></span><span class="line"></span><span class="line"><span class="comment output">  - List all running processes:</span></span><span class="line">    ps aux</span><span class="line"></span><span class="line"><span class="comment output">  - List all running processes including the full command string:</span></span><span class="line">    ps auxww</span><span class="line"></span><span class="line"><span class="comment output">  - Search for a process that matches a string:</span></span><span class="line">    ps aux | grep string</span><span class="line"></span><span class="line"><span class="comment output">  - List all processes of the current user in extra full format:</span></span><span class="line">    ps --user $(id -u) -F</span><span class="line"></span><span class="line"><span class="comment output">  - List all processes of the current user as a tree:</span></span><span class="line">    ps --user $(id -u) f</span><span class="line"></span><span class="line"><span class="comment output">  - Get the parent pid of a process:</span></span><span class="line">    ps -o ppid= -p pid</span><span class="line"></span><span class="line"><span class="comment output">  - To see every process on the system using standard syntax:</span></span><span class="line">    ps -e</span><span class="line">    ps -ef</span><span class="line">    ps -eF</span><span class="line">    ps -ely</span><span class="line"></span><span class="line"><span class="comment output">  - To see every process on the system using BSD syntax:</span></span><span class="line">    ps ax</span><span class="line">    ps axu</span><span class="line"></span><span class="line"><span class="comment output">  - To print a process tree:</span></span><span class="line">    ps -ejH</span><span class="line">    ps axjf</span><span class="line"></span><span class="line"><span class="comment output">  - To get info about threads:</span></span><span class="line">    ps -eLf</span><span class="line">    ps axms</span><span class="line"></span><span class="line"><span class="comment output">  - To get security info:</span></span><span class="line">    ps -eo euser,ruser,suser,fuser,f,comm,label</span><span class="line">    ps axZ</span><span class="line">    ps -eM</span><span class="line"></span><span class="line"><span class="comment output">  - To see every process running as root (real &amp; effective ID) in user format:</span></span><span class="line">    ps -U root -u root u</span><span class="line"></span><span class="line"><span class="comment output">  - To see every process with a user-defined format:</span></span><span class="line">    ps -eo pid,tid,class,rtprio,ni,pri,psr,pcpu,<span class="built_in">stat</span>,wchan:14,comm</span><span class="line">    ps axo <span class="built_in">stat</span>,euid,ruid,tty,tpgid,sess,pgrp,ppid,pid,pcpu,comm</span><span class="line">    ps -eopid,tt,user,fname,tmout,f,wchan</span><span class="line"></span><span class="line"><span class="comment output">  - Print only the process IDs of syslogd:</span></span><span class="line">    ps -C syslogd -o pid=</span><span class="line"></span><span class="line"><span class="comment output">  - Print only the name of PID 42:</span></span><span class="line">    ps -q 42 -o comm=</span></pre></td></tr></table></figure>
+<h2 id="ps-命令参数语法"><a href="#ps-命令参数语法" class="headerlink" title="ps 命令参数语法"></a>ps 命令参数语法</h2><p><code>ps</code>命令的参数支持三种语法格式：</p>
+<ol>
+<li>UNIX options, which may be grouped and <strong>must</strong> be preceded by a dash <code>-</code>.</li>
+<li>BSD options, which may be grouped and <strong>must not</strong> be used with a dash <code>-</code>.</li>
+<li>GNU long options, which are preceded by two dashes <code>--</code>.</li>
+</ol>
+<h2 id="ps-命令行-UNIX-风格参数简单说明"><a href="#ps-命令行-UNIX-风格参数简单说明" class="headerlink" title="ps 命令行 UNIX 风格参数简单说明"></a>ps 命令行 UNIX 风格参数简单说明</h2><ol>
+<li>部分参数是为了在所有进程中选择参数指定的那部分进程，如<code>-e</code>显示全部进程</li>
+<li>部分参数是为控制输出结果的，如<code>-o</code>控制字段显示</li>
+<li>部分参数是最后对前面的输出结果进行修正的，如<code>--sort</code>按指定字段排序</li>
+</ol>
+<p>这里只显示了<strong>部分</strong>参数的简单说明，不是全部参数，更多的可以看官方手册说明<code>man ps</code>。</p>
+<h3 id="ps-进程选择相关的参数"><a href="#ps-进程选择相关的参数" class="headerlink" title="ps 进程选择相关的参数"></a>ps 进程选择相关的参数</h3><ol>
+<li><code>-C</code> 以指定命令显示</li>
+<li><code>-A</code> 显示所有进程（等价于-e）</li>
+<li><code>-e</code> 显示全部进程，同<code>-A</code></li>
+<li><code>-g</code> grplist 按组 id 或者组名显示</li>
+<li><code>-p</code> pidlist 按进程 id 显示</li>
+<li><code>-u</code> userlist 按用户id或者是用户名显示</li>
+<li><code>-t</code> ttylist 按 tty 显示</li>
+</ol>
+<h3 id="ps-输出字段相关的参数"><a href="#ps-输出字段相关的参数" class="headerlink" title="ps 输出字段相关的参数"></a>ps 输出字段相关的参数</h3><ol>
+<li><code>-f</code> 全部列出，通常和其他选项联用，如：<code>ps -fa</code> 或者 <code>ps -fx</code></li>
+<li><code>-F</code> 显示<code>-f</code>之外的一些字段</li>
+<li><code>-l</code> 显示的字段更多些，常用如：<code>ps -ely</code></li>
+<li><code>-o</code> 用户自定义显示字段格式</li>
+<li><code>-O</code> 除用户自定义显示字段，还有默认显示的一些字段</li>
+</ol>
+<h3 id="ps-输出结果修改参数"><a href="#ps-输出结果修改参数" class="headerlink" title="ps 输出结果修改参数"></a>ps 输出结果修改参数</h3><ol>
+<li><code>-H</code> 显示进程的层次(和其它的命令合用，如：<code>ps -Ha</code> 或者 <code>ps -ejH</code>)</li>
+<li><code>--sort</code> 按指定字段排序，如：<code>ps jax --sort=uid,-ppid,+pid</code></li>
+</ol>
+<h2 id="ps-o-用户自定义输出字段格式说明"><a href="#ps-o-用户自定义输出字段格式说明" class="headerlink" title="ps -o 用户自定义输出字段格式说明"></a>ps -o 用户自定义输出字段格式说明</h2><p>这里只简单列出来<code>ps -o</code>支持的标准格式中的<strong>部分</strong>字段及简短说明，<code>ps</code>另外支持 AIX 的字段格式输出。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">| CODE       |  HEADER    | DESCRIPTION</span><span class="line">---------------------------------------------------------------------------------------------------------------------------------------------------</span><span class="line">| %cpu       |  %CPU      | cpu utilization of the process in &quot;##.#&quot; format. (alias pcpu)</span><span class="line">| %mem       |  %MEM      | ratio of the process&apos;s resident set size to the physical memory on the machine, expressed as a percentage. (alias pmem).</span><span class="line">| args       |  COMMAND   | command with all its arguments as a string.</span><span class="line">| bsdstart   |  START     | time the command started.</span><span class="line">| bsdtime    |  TIME      | accumulated cpu time, user + system. The display format is usually &quot;MMM:SS&quot;</span><span class="line">| cmd        |  CMD       | see args. (alias args, command).</span><span class="line">| comm       |  COMMAND   | command name (only the executable name).</span><span class="line">| command    |  COMMAND   | see args. (alias args, cmd).</span><span class="line">| cp         |  CP        | per-mill (tenths of a percent) CPU usage. (see %cpu).</span><span class="line">| cputime    |  TIME      | cumulative CPU time, &quot;[dd-]hh:mm:ss&quot; format. (alias time).</span><span class="line">| egid       |  EGID      | effective group ID number of the process as a decimal integer. (alias gid).</span><span class="line">| egroup     |  EGROUP    | effective group ID of the process. (alias group).</span><span class="line">| etime      |  ELAPSED   | elapsed time since the process was started, in the form [[dd-]hh:]mm:ss.</span><span class="line">| euid       |  EUID      | effective user ID. (alias uid).</span><span class="line">| euser      |  EUSER     | effective user name. (alias uname, user).</span><span class="line">| f          |  F         | flags associated with the process, see the PROCESS FLAGS section. (alias flag, flags).</span><span class="line">| fgid       |  FGID      | filesystem access group ID. (alias fsgid).</span><span class="line">| fgroup     |  FGROUP    | filesystem access group ID. (alias fsgroup).</span><span class="line">| fname      |  COMMAND   | first 8 bytes of the base name of the process&apos;s executable file.</span><span class="line">| fuid       |  FUID      | filesystem access user ID. (alias fsuid).</span><span class="line">| gid        |  GID       | see egid. (alias egid).</span><span class="line">| group      |  GROUP     | see egroup. (alias egroup).</span><span class="line">| lstart     |  STARTED   | time the command started. See also bsdstart, start, start_time, and stime.</span><span class="line">| ni         |  NI        | nice value. This ranges from 19 (nicest) to -20 (not nice to others), see nice(1). (alias nice).</span><span class="line">| nlwp       |  NLWP      | number of lwps (threads) in the process. (alias thcount).</span><span class="line">| pcpu       |  %CPU      | see %cpu. (alias %cpu).</span><span class="line">| pgid       |  PGID      | process group ID or, equivalently, the process ID of the process group leader. (alias pgrp).</span><span class="line">| pgrp       |  PGRP      | see pgid. (alias pgid).</span><span class="line">| pid        |  PID       | process ID number of the process.</span><span class="line">| pmem       |  %MEM      | see %mem. (alias %mem).</span><span class="line">| ppid       |  PPID      | parent process ID.</span><span class="line">| pri        |  PRI       | priority of the process. Higher number means lower priority</span><span class="line">| psr        |  PSR       | processor that process is currently assigned to.</span><span class="line">| rgid       |  RGID      | real group ID.</span><span class="line">| rgroup     |  RGROUP    | real group name.</span><span class="line">| rss        |  RSS       | resident set size, the non-swapped physical memory that a task has used (in kiloBytes). (alias rssize, rsz).</span><span class="line">| rssize     |  RSS       | see rss. (alias rss, rsz).</span><span class="line">| rsz        |  RSZ       | see rss. (alias rss, rssize).</span><span class="line">| rtprio     |  RTPRIO    | realtime priority.</span><span class="line">| ruid       |  RUID      | real user ID.</span><span class="line">| s          |  S         | minimal state display (one character). (alias state).</span><span class="line">| sid        |  SID       | see sess. (alias sess, session).</span><span class="line">| sig        |  PENDING   | see pending. (alias pending, sig_pend).</span><span class="line">| sigcatch   |  CAUGHT    | see caught. (alias caught, sig_catch).</span><span class="line">| sigignore  |  IGNORED   | see ignored. (alias ignored, sig_ignore).</span><span class="line">| sigmask    |  BLOCKED   | see blocked. (alias blocked, sig_block).</span><span class="line">| size       |  SZ        | approximate amount of swap space . This number is very rough!</span><span class="line">| spid       |  SPID      | see lwp. (alias lwp, tid).</span><span class="line">| stackp     |  STACKP    | address of the bottom (start) of stack for the process.</span><span class="line">| start      |  STARTED   | time the command started.</span><span class="line">| start_time |  START     | starting time or date of the process.</span><span class="line">| stat       |  STAT      | multi-character process state.</span><span class="line">| state      |  S         | see s. (alias s).</span><span class="line">| suid       |  SUID      | saved user ID. (alias svuid).</span><span class="line">| suser      |  SUSER     | saved user name.</span><span class="line">| svgid      |  SVGID     | see sgid. (alias sgid).</span><span class="line">| svuid      |  SVUID     | see suid. (alias suid).</span><span class="line">| sz         |  SZ        | size in physical pages of the core image of the process.</span><span class="line">| thcount    |  THCNT     | see nlwp. (alias nlwp). number of kernel threads owned by the process.</span><span class="line">| tid        |  TID       | see lwp. (alias lwp).</span><span class="line">| time       |  TIME      | cumulative CPU time, &quot;[dd-]hh:mm:ss&quot; format. (alias cputime).</span><span class="line">| tname      |  TTY       | controlling tty (terminal). (alias tt, tty).</span><span class="line">| tt         |  TT        | controlling tty (terminal). (alias tname, tty).</span><span class="line">| tty        |  TT        | controlling tty (terminal). (alias tname, tt).</span><span class="line">| ucmd       |  CMD       | see comm. (alias comm, ucomm).</span><span class="line">| ucomm      |  COMMAND   | see comm. (alias comm, ucmd).</span><span class="line">| uid        |  UID       | see euid. (alias euid).</span><span class="line">| uname      |  USER      | see euser. (alias euser, user).</span><span class="line">| user       |  USER      | see euser. (alias euser, uname).</span><span class="line">| vsize      |  VSZ       | see vsz. (alias vsz).</span><span class="line">| vsz        |  VSZ       | virtual memory size of the process in KiB (alias vsize).</span><span class="line">| wchan      |  WCHAN     | name of the kernel function in which the process is sleeping, a &quot;-&quot; if the process is running.</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="ps-examples"><a href="#ps-examples" class="headerlink" title="ps examples"></a>ps examples</h2><h3 id="ps-eF"><a href="#ps-eF" class="headerlink" title="ps -eF"></a>ps -eF</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -eF | head</span><span class="line output">UID        PID  PPID  C    SZ   RSS PSR STIME TTY          TIME CMD</span><span class="line output">root         1     0  0 39971  7632   0 Jun09 ?        00:00:05 /sbin/init</span><span class="line output">root         2     0  0     0     0   0 Jun09 ?        00:00:00 [kthreadd]</span><span class="line output">root         4     2  0     0     0   0 Jun09 ?        00:00:00 [kworker/0:0H]</span><span class="line output">root         6     2  0     0     0   0 Jun09 ?        00:00:00 [mm_percpu_wq]</span><span class="line output">root         7     2  0     0     0   0 Jun09 ?        00:00:00 [ksoftirqd/0]</span><span class="line output">root         8     2  0     0     0   0 Jun09 ?        00:00:01 [rcu_sched]</span><span class="line output">root         9     2  0     0     0   0 Jun09 ?        00:00:00 [rcu_bh]</span><span class="line output">root        10     2  0     0     0   0 Jun09 ?        00:00:00 [migration/0]</span><span class="line output">root        11     2  0     0     0   0 Jun09 ?        00:00:00 [watchdog/0]</span></pre></td></tr></table></figure>
+<h3 id="ps-f-u-root-git-sshd"><a href="#ps-f-u-root-git-sshd" class="headerlink" title="ps -f -u root,git,sshd"></a>ps -f -u root,git,sshd</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -f -u root,git,sshd</span><span class="line output">UID        PID  PPID  C STIME TTY          TIME CMD</span><span class="line output">root         1     0  0 Jun09 ?        00:00:05 /sbin/init</span><span class="line output">root         2     0  0 Jun09 ?        00:00:00 [kthreadd]</span><span class="line output">root         4     2  0 Jun09 ?        00:00:00 [kworker/0:0H]</span><span class="line output">root         6     2  0 Jun09 ?        00:00:00 [mm_percpu_wq]</span><span class="line output">root         7     2  0 Jun09 ?        00:00:00 [ksoftirqd/0]</span><span class="line output">root         8     2  0 Jun09 ?        00:00:01 [rcu_sched]</span><span class="line output">root         9     2  0 Jun09 ?        00:00:00 [rcu_bh]</span><span class="line output">root        10     2  0 Jun09 ?        00:00:00 [migration/0]</span></pre></td></tr></table></figure>
+<h3 id="ps-ajxf"><a href="#ps-ajxf" class="headerlink" title="ps ajxf"></a>ps ajxf</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> ajxf</span><span class="line output"> PPID   PID  PGID   SID TTY      TPGID STAT   UID   TIME COMMAND</span><span class="line output">    0     2     0     0 ?           -1 S        0   0:00 [kthreadd]</span><span class="line output">    2     4     0     0 ?           -1 I&lt;       0   0:00  \_ [kworker/0:0H]</span><span class="line output">    2     6     0     0 ?           -1 I&lt;       0   0:00  \_ [mm_percpu_wq]</span><span class="line output">    2     7     0     0 ?           -1 S        0   0:01  \_ [ksoftirqd/0]</span><span class="line output">    2     8     0     0 ?           -1 I        0   0:03  \_ [rcu_sched]</span><span class="line output">    2     9     0     0 ?           -1 I        0   0:00  \_ [rcu_bh]</span><span class="line output">    2    10     0     0 ?           -1 S        0   0:00  \_ [migration/0]</span><span class="line output">    2    11     0     0 ?           -1 S        0   0:00  \_ [watchdog/0]</span><span class="line output">    2    12     0     0 ?           -1 S        0   0:00  \_ [cpuhp/0]</span><span class="line output">    2 26968     0     0 ?           -1 I        0   0:00  \_ [kworker/u2:2]</span><span class="line output">    2 27018     0     0 ?           -1 I        0   0:00  \_ [kworker/u2:1]</span><span class="line output">    0     1     1     1 ?           -1 Ss       0   0:07 /sbin/init</span><span class="line output">    1   385   385   385 ?           -1 S&lt;s      0   0:19 /lib/systemd/systemd-journald</span><span class="line output">    1   390   390   390 ?           -1 Ss       0   0:00 /sbin/lvmetad -f</span><span class="line output">    1   393   393   393 ?           -1 Ss       0   0:01 /lib/systemd/systemd-udevd</span><span class="line output">    1   433   433   433 ?           -1 Ss     100   0:00 /lib/systemd/systemd-networkd</span><span class="line output">    1   453   453   453 ?           -1 Ssl  62583   0:00 /lib/systemd/systemd-timesyncd</span><span class="line output">    1   460   460   460 ?           -1 Ss     101   0:01 /lib/systemd/systemd-resolved</span><span class="line output">    1   500   500   500 ?           -1 Ss       0   0:00 /usr/sbin/cron -f</span><span class="line output">    1   501   501   501 ?           -1 Ssl      0   0:07 /usr/lib/accountsservice/accounts-daemon</span><span class="line output">    1   502   502   502 ?           -1 Ssl    102   0:03 /usr/sbin/rsyslogd -n</span><span class="line output">    1   503   503   503 ?           -1 Ss       1   0:00 /usr/sbin/atd -f</span><span class="line output">    1   505   505   505 ?           -1 Ss       0   0:00 /lib/systemd/systemd-logind</span><span class="line output">    1   510   510   510 ?           -1 Ssl      0   0:01 /usr/bin/lxcfs /var/lib/lxcfs/</span><span class="line output">    1   511   511   511 ?           -1 Ssl      0   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher</span><span class="line output">    1   512   512   512 ?           -1 Ss     103   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-onl</span><span class="line output">    1   522   522   522 ?           -1 Ssl      0   0:07 /usr/lib/snapd/snapd</span><span class="line output">    1   530   530   530 ?           -1 Ssl      0   0:00 /usr/lib/policykit-1/polkitd --no-debug</span><span class="line output">    1   543   543   543 ?           -1 Ss       0   0:00 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;</span><span class="line output">  543   544   543   543 ?           -1 S       33   0:13  \_ nginx: worker process</span><span class="line output">    1   626   626   626 ?           -1 Ss       0   0:05 /sbin/iscsid</span><span class="line output">    1   627   627   627 ?           -1 S&lt;Ls     0   0:00 /sbin/iscsid</span><span class="line output">    1   635   635   635 ?           -1 Ss       0   0:03 /usr/sbin/sshd -D</span><span class="line output">  635 27062 27062 27062 ?           -1 Ss       0   0:00  \_ sshd: root@pts/0</span><span class="line output">27062 27159 27159 27159 pts/0    27211 Ss       0   0:00      \_ -bash</span><span class="line output">27159 27211 27211 27159 pts/0    27211 R+       0   0:00          \_ ps -ajxf</span><span class="line output">    1   645   645   645 tty1       645 Ss+      0   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux</span><span class="line output">    1   655   654   654 ?           -1 S    65534   0:00 /usr/bin/python /usr/bin/ssserver -q -c /etc/shadowsocks/config.json</span><span class="line output">  655   712   654   654 ?           -1 S    65534   0:17  \_ /usr/bin/python /usr/bin/ssserver -q -c /etc/shadowsocks/config.json</span><span class="line output">  655   713   654   654 ?           -1 S    65534   0:17  \_ /usr/bin/python /usr/bin/ssserver -q -c /etc/shadowsocks/config.json</span><span class="line output">    1  9512  9512  9512 ?           -1 Ss    1000   0:00 /lib/systemd/systemd --user</span><span class="line output"> 9512  9513  9512  9512 ?           -1 S     1000   0:00  \_ (sd-pam)</span><span class="line output">    1  9958  9958  9958 ?           -1 Ssl   1000   0:47 PM2 v2.10.4: God Daemon (/home/git/.pm2)</span><span class="line output"> 9958 11727 11727 11727 ?           -1 Ssl   1000   3:03  \_ node /data/shufabeitie.com/bin/www</span><span class="line output">    1 11133 11133 11133 ?           -1 Ss     111   0:04 /usr/sbin/vnstatd -n</span><span class="line output">    1 27066 27066 27066 ?           -1 Ss       0   0:00 /lib/systemd/systemd --user</span><span class="line output">27066 27067 27066 27066 ?           -1 S        0   0:00  \_ (sd-pam)</span></pre></td></tr></table></figure>
+<h3 id="pstree"><a href="#pstree" class="headerlink" title="pstree"></a>pstree</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">pstree</span></span><span class="line output">systemd─┬─PM2 v2.10.4: Go─┬─node /data/shuf───9*[&#123;node /data/shuf&#125;]</span><span class="line output">        │                 └─9*[&#123;PM2 v2.10.4: Go&#125;]</span><span class="line output">        ├─accounts-daemon───2*[&#123;accounts-daemon&#125;]</span><span class="line output">        ├─agetty</span><span class="line output">        ├─atd</span><span class="line output">        ├─cron</span><span class="line output">        ├─dbus-daemon</span><span class="line output">        ├─2*[iscsid]</span><span class="line output">        ├─lvmetad</span><span class="line output">        ├─lxcfs───10*[&#123;lxcfs&#125;]</span><span class="line output">        ├─networkd-dispat───&#123;networkd-dispat&#125;</span><span class="line output">        ├─nginx───nginx</span><span class="line output">        ├─polkitd───2*[&#123;polkitd&#125;]</span><span class="line output">        ├─rsyslogd───3*[&#123;rsyslogd&#125;]</span><span class="line output">        ├─snapd───7*[&#123;snapd&#125;]</span><span class="line output">        ├─sshd─┬─sshd───bash</span><span class="line output">        │      └─sshd───sshd───zsh───pstree</span><span class="line output">        ├─ssserver───2*[ssserver]</span><span class="line output">        ├─2*[systemd───(sd-pam)]</span><span class="line output">        ├─systemd-journal</span><span class="line output">        ├─systemd-logind</span><span class="line output">        ├─systemd-network</span><span class="line output">        ├─systemd-resolve</span><span class="line output">        ├─systemd-timesyn───&#123;systemd-timesyn&#125;</span><span class="line output">        └─systemd-udevd</span></pre></td></tr></table></figure>
+<h3 id="ps-fG-nginx"><a href="#ps-fG-nginx" class="headerlink" title="ps -fG nginx"></a>ps -fG nginx</h3><p>按组显示进程。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -fG nginx</span><span class="line output">UID        PID  PPID  C STIME TTY          TIME CMD</span><span class="line output">nginx    26832  2015  0 Jun06 ?        01:10:14 nginx: worker process</span><span class="line output">nginx    26833  2015  0 Jun06 ?        00:56:29 nginx: worker process</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">id</span> nginx</span><span class="line output">uid=498(nginx) gid=499(nginx) groups=499(nginx)</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -fG 499</span><span class="line output">UID        PID  PPID  C STIME TTY          TIME CMD</span><span class="line output">nginx    26832  2015  0 Jun06 ?        01:10:14 nginx: worker process</span><span class="line output">nginx    26833  2015  0 Jun06 ?        00:56:29 nginx: worker process</span></pre></td></tr></table></figure>
+<h3 id="ps-f-forest-C-sshd"><a href="#ps-f-forest-C-sshd" class="headerlink" title="ps -f --forest -C sshd"></a>ps -f --forest -C sshd</h3><p>按指定命令显示进程树。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -f --forest -C sshd</span><span class="line output">UID        PID  PPID  C STIME TTY          TIME CMD</span><span class="line output">root       635     1  0 Jun09 ?        00:00:08 /usr/sbin/sshd -D</span><span class="line output">root     13334   635  0 13:56 ?        00:00:00  \_ sshd: root@pts/0</span></pre></td></tr></table></figure>
+<h3 id="ps-e-u"><a href="#ps-e-u" class="headerlink" title="ps -e u"></a>ps -e u</h3><p>最后的u参数用来决定以针对用户的格式输出，由User, PID, %CPU, %MEM, VSZ, RSS, TTY, STAT, START, TIME 和 COMMAND这几列组成。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -e u | head</span><span class="line output">USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span><span class="line output">root         1  0.0  1.4 159556  7016 ?        Ss   Jun09   0:03 /sbin/init</span><span class="line output">root         2  0.0  0.0      0     0 ?        S    Jun09   0:00 [kthreadd]</span><span class="line output">root         4  0.0  0.0      0     0 ?        I&lt;   Jun09   0:00 [kworker/0:0H]</span><span class="line output">root         6  0.0  0.0      0     0 ?        I&lt;   Jun09   0:00 [mm_percpu_wq]</span><span class="line output">root         7  0.0  0.0      0     0 ?        S    Jun09   0:00 [ksoftirqd/0]</span><span class="line output">root         8  0.0  0.0      0     0 ?        I    Jun09   0:01 [rcu_sched]</span><span class="line output">root         9  0.0  0.0      0     0 ?        I    Jun09   0:00 [rcu_bh]</span><span class="line output">root        10  0.0  0.0      0     0 ?        S    Jun09   0:00 [migration/0]</span><span class="line output">root        11  0.0  0.0      0     0 ?        S    Jun09   0:00 [watchdog/0]</span></pre></td></tr></table></figure>
+<h3 id="ps-f-C-java"><a href="#ps-f-C-java" class="headerlink" title="ps -f -C java"></a>ps -f -C java</h3><p>参数<code>-C</code>显示指定应用名称的进程。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -f -C java</span><span class="line output">UID        PID  PPID  C STIME TTY          TIME CMD</span><span class="line output">root      1304  1302  0 May07 ?        04:13:07 /opt/java/jdk8/bin/java</span><span class="line output">root      8447     1  0 May31 ?        00:31:12 /opt/java/jdk8/bin/java</span><span class="line output">root      9169     1  0 May08 ?        02:04:24 /opt/java/jdk8/bin/java</span><span class="line output">tomcat   15961     1  0 Jun07 ?        00:11:56 /opt/java/jdk8/bin/java</span><span class="line output">root     20095     1  0 Jun07 ?        00:16:34 /opt/java/jdk8/bin/java</span><span class="line output">root     20487     1  0 Jun07 ?        00:15:57 /opt/java/jdk8/bin/java</span></pre></td></tr></table></figure>
+<h3 id="ps-f-p-15961-20095"><a href="#ps-f-p-15961-20095" class="headerlink" title="ps -f -p 15961,20095"></a>ps -f -p 15961,20095</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -f -p 15961,20095</span><span class="line output">UID        PID  PPID  C STIME TTY          TIME CMD</span><span class="line output">tomcat   15961     1  0 Jun07 ?        00:11:56 /opt/java/jdk8/bin/java</span><span class="line output">root     20095     1  0 Jun07 ?        00:16:34 /opt/java/jdk8/bin/java</span></pre></td></tr></table></figure>
+<h3 id="ps-H-e-o-pid-user-ppid-nice-size-rss-pcpu-pmem-etime-cmd-lstart-sort-pcpu"><a href="#ps-H-e-o-pid-user-ppid-nice-size-rss-pcpu-pmem-etime-cmd-lstart-sort-pcpu" class="headerlink" title="ps H -e -o pid,user,ppid,nice,size,rss,pcpu,pmem,etime,cmd,lstart --sort=-pcpu"></a>ps H -e -o pid,user,ppid,nice,size,rss,pcpu,pmem,etime,cmd,lstart --sort=-pcpu</h3><p>参数 -e 显示所有进程信息，-o 参数控制输出：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> H -e -o pid,user,ppid,nice,size,rss,pcpu,pmem,etime,cmd,lstart --sort=-pcpu | head -n 20</span><span class="line output">  PID USER      PPID  NI    SZ   RSS %CPU %MEM     ELAPSED CMD                                          STARTED</span><span class="line output">27221 tomcat       1   0 5184880 2856640 1.0 72.7 2-01:54:12 /opt/java/jdk/bin/java -Dja Thu Jun  7 20:53:52 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.7 72.7 2-01:54:27 /opt/java/jdk/bin/java -Dja Thu Jun  7 20:53:37 2018</span><span class="line output">26832 nginx     2015   0 28500 30288  0.6  0.7  3-12:38:15 nginx: worker process       Wed Jun  6 10:09:49 2018</span><span class="line output"> 2043 root      2042   0 284664 58952 0.5  1.5 33-05:55:41 /usr/<span class="built_in">local</span>/ilogtail/ilogtai Mon May  7 16:52:23 2018</span><span class="line output">26833 nginx     2015   0 28936 30264  0.5  0.7  3-12:38:15 nginx: worker process       Wed Jun  6 10:09:49 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.5 72.7 2-01:54:09 /opt/java/jdk/bin/java -Dja Thu Jun  7 20:53:55 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.5 72.7 1-15:18:16 /opt/java/jdk/bin/java -Dja Fri Jun  8 07:29:48 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.5 72.7 1-12:41:03 /opt/java/jdk/bin/java -Dja Fri Jun  8 10:07:01 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.5 72.7 15:01:41 /opt/java/jdk/bin/java -Dja Sat Jun  9 07:46:23 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.5 72.7 14:48:15 /opt/java/jdk/bin/java -Dja Sat Jun  9 07:59:49 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.5 72.7 14:48:15 /opt/java/jdk/bin/java -Dja Sat Jun  9 07:59:49 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.5 72.7 14:36:20 /opt/java/jdk/bin/java -Dja Sat Jun  9 08:11:44 2018</span><span class="line output">  997 root       995   0 2351344 67248 0.4  1.7 33-06:06:32 /usr/<span class="built_in">local</span>/cloudmonitor/jre Mon May  7 16:41:32 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.4 72.7 2-01:53:44 /opt/java/jdk/bin/java -Dja Thu Jun  7 20:54:20 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.4 72.7 2-01:23:13 /opt/java/jdk/bin/java -Dja Thu Jun  7 21:24:51 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.4 72.7 2-01:23:10 /opt/java/jdk/bin/java -Dja Thu Jun  7 21:24:54 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.4 72.7 1-14:39:07 /opt/java/jdk/bin/java -Dja Fri Jun  8 08:08:57 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.4 72.7 1-11:50:56 /opt/java/jdk/bin/java -Dja Fri Jun  8 10:57:08 2018</span><span class="line output">27221 tomcat       1   0 5184880 2856640 0.4 72.7 1-11:48:26 /opt/java/jdk/bin/java -Dja Fri Jun  8 10:59:38 2018</span></pre></td></tr></table></figure>
+<h3 id="ps-aux-sort-pmem"><a href="#ps-aux-sort-pmem" class="headerlink" title="ps aux --sort=-pmem"></a>ps aux --sort=-pmem</h3><p>可以用这个命令检查内存问题，不过这个命令在 Ubuntu 运行没有问题，在 CentOS 6.5 上运行并没有生效。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> aux --sort=-pmem | head</span><span class="line output">USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span><span class="line output">root       385  0.0 11.8 243296 58552 ?        S s  Jun09   0:10 /lib/systemd/systemd-journald</span><span class="line output">git       9958  0.0 10.1 1237076 49820 ?       Ssl  08:03   0:12 PM2 v2.10.4: God Daemon (/home/git/.pm2)</span><span class="line output">git      11727  0.1 10.0 948332 49456 ?        Ssl  08:30   0:38 node /data/shufabeitie.com/bin/www</span><span class="line output">nobody     712  0.0  3.2  66428 15996 ?        S    Jun09   0:07 /usr/bin/python /usr/bin/ssserver -q -c /etc/shadowsocks/config.json</span><span class="line output">nobody     713  0.0  3.1  66340 15580 ?        S    Jun09   0:07 /usr/bin/python /usr/bin/ssserver -q -c /etc/shadowsocks/config.json</span><span class="line output">nobody     655  0.0  3.1  65072 15452 ?        S    Jun09   0:00 /usr/bin/python /usr/bin/ssserver -q -c /etc/shadowsocks/config.json</span><span class="line output">root       511  0.0  2.3 170724 11340 ?        Ssl  Jun09   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher</span><span class="line output">root       522  0.0  2.1 549072 10600 ?        Ssl  Jun09   0:04 /usr/lib/snapd/snapd</span><span class="line output">root     12410  0.0  1.6  25300  8356 ?        S Ls 10:59   0:01 /usr/bin/atop -R -w /var/<span class="built_in">log</span>/atop/atop_20180610 600</span></pre></td></tr></table></figure>
+<h3 id="ps-aux-sort-pcpu"><a href="#ps-aux-sort-pcpu" class="headerlink" title="ps aux --sort=-pcpu"></a>ps aux --sort=-pcpu</h3><p>这个命令在 CentOS 6.5 和 Ubuntu 18.04 上运行都是没有问题的。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> aux --sort=-pcpu | head -5</span><span class="line output">USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span><span class="line output">tomcat   27221 22.3 72.6 5291448 2850520 ?     Sl   Jun07 1298:03 /opt/java/jdk/bin/java</span><span class="line output">nginx    26832  0.6  0.7  75792 29704 ?        S    Jun06  52:09 nginx: worker process</span><span class="line output">root       997  0.5  1.7 2506656 67312 ?       Sl   May07 283:18 /usr/<span class="built_in">local</span>/cloudmonitor/jre/bin/java</span><span class="line output">nginx    26833  0.5  0.7  76160 30624 ?        S    Jun06  41:41 nginx: worker process</span></pre></td></tr></table></figure>
+<h3 id="ps-o-pid-uname-comm-C-nginx"><a href="#ps-o-pid-uname-comm-C-nginx" class="headerlink" title="ps -o pid,uname,comm -C nginx"></a>ps -o pid,uname,comm -C nginx</h3><p>显示指定命令的进程及所有派生的子进程。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -o pid,uname,comm -C nginx</span><span class="line output">  PID USER     COMMAND</span><span class="line output"> 2015 root     nginx</span><span class="line output">26832 nginx    nginx</span><span class="line output">26833 nginx    nginx</span></pre></td></tr></table></figure>
+<h3 id="ps-L-p-27221"><a href="#ps-L-p-27221" class="headerlink" title="ps -L -p 27221"></a>ps -L -p 27221</h3><p>显示指定进程的所有线程。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -L -p 27221</span><span class="line output">  PID   LWP TTY          TIME CMD</span><span class="line output">27221 27221 ?        00:00:00 java</span><span class="line output">27221 27222 ?        00:00:00 java</span><span class="line output">27221 27223 ?        00:02:43 java</span><span class="line output">27221 27224 ?        00:02:43 java</span><span class="line output">27221 27225 ?        00:12:55 java</span><span class="line output">27221 27226 ?        00:00:02 java</span><span class="line output">27221 27227 ?        00:00:04 java</span><span class="line output">27221 27228 ?        00:00:00 java</span><span class="line output">27221 27229 ?        00:32:41 java</span></pre></td></tr></table></figure>
+<h3 id="ps-e-O-ppid-o-user-cmd-head"><a href="#ps-e-O-ppid-o-user-cmd-head" class="headerlink" title="ps -e -O ppid -o user,cmd | head"></a>ps -e -O ppid -o user,cmd | head</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ps</span> -e -O ppid -o user,cmd | head</span><span class="line output">  PID  PPID S TTY          TIME COMMAND                     USER     CMD</span><span class="line output">    1     0 S ?        00:00:07 /sbin/init                  root     /sbin/init</span><span class="line output">    2     0 S ?        00:00:00 [kthreadd]                  root     [kthreadd]</span><span class="line output">    4     2 I ?        00:00:00 [kworker/0:0H]              root     [kworker/0:0H]</span><span class="line output">    6     2 I ?        00:00:00 [mm_percpu_wq]              root     [mm_percpu_wq]</span><span class="line output">    7     2 S ?        00:00:01 [ksoftirqd/0]               root     [ksoftirqd/0]</span><span class="line output">    8     2 I ?        00:00:03 [rcu_sched]                 root     [rcu_sched]</span><span class="line output">    9     2 I ?        00:00:00 [rcu_bh]                    root     [rcu_bh]</span><span class="line output">   10     2 S ?        00:00:00 [migration/0]               root     [migration/0]</span><span class="line output">   11     2 S ?        00:00:00 [watchdog/0]                root     [watchdog/0]</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://linuxcommand.org/lc3_man_pages/ps1.html" target="_blank" rel="noopener">Linux user&#39;s manual - ps</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2018/06/09/linux-commands-networking.html" rel="next" title="linux 常用命令之 流量监控命令">
+                <i class="fa fa-chevron-left"></i>
+                linux 常用命令之 流量监控命令
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2018/06/11/linux-commands-hardwares-info.html" rel="prev" title="linux 常用命令之 硬件查看命令">
+                <i class="fa fa-chevron-right"></i>
+                linux 常用命令之 硬件查看命令
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tldr-ps"><span class="nav-number">1.</span> <span class="nav-text">tldr ps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ps-命令参数语法"><span class="nav-number">2.</span> <span class="nav-text">ps 命令参数语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ps-命令行-UNIX-风格参数简单说明"><span class="nav-number">3.</span> <span class="nav-text">ps 命令行 UNIX 风格参数简单说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-进程选择相关的参数"><span class="nav-number">3.1.</span> <span class="nav-text">ps 进程选择相关的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-输出字段相关的参数"><span class="nav-number">3.2.</span> <span class="nav-text">ps 输出字段相关的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-输出结果修改参数"><span class="nav-number">3.3.</span> <span class="nav-text">ps 输出结果修改参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ps-o-用户自定义输出字段格式说明"><span class="nav-number">4.</span> <span class="nav-text">ps -o 用户自定义输出字段格式说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ps-examples"><span class="nav-number">5.</span> <span class="nav-text">ps examples</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-eF"><span class="nav-number">5.1.</span> <span class="nav-text">ps -eF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-f-u-root-git-sshd"><span class="nav-number">5.2.</span> <span class="nav-text">ps -f -u root,git,sshd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-ajxf"><span class="nav-number">5.3.</span> <span class="nav-text">ps ajxf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pstree"><span class="nav-number">5.4.</span> <span class="nav-text">pstree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-fG-nginx"><span class="nav-number">5.5.</span> <span class="nav-text">ps -fG nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-f-forest-C-sshd"><span class="nav-number">5.6.</span> <span class="nav-text">ps -f --forest -C sshd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-e-u"><span class="nav-number">5.7.</span> <span class="nav-text">ps -e u</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-f-C-java"><span class="nav-number">5.8.</span> <span class="nav-text">ps -f -C java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-f-p-15961-20095"><span class="nav-number">5.9.</span> <span class="nav-text">ps -f -p 15961,20095</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-H-e-o-pid-user-ppid-nice-size-rss-pcpu-pmem-etime-cmd-lstart-sort-pcpu"><span class="nav-number">5.10.</span> <span class="nav-text">ps H -e -o pid,user,ppid,nice,size,rss,pcpu,pmem,etime,cmd,lstart --sort=-pcpu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-aux-sort-pmem"><span class="nav-number">5.11.</span> <span class="nav-text">ps aux --sort=-pmem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-aux-sort-pcpu"><span class="nav-number">5.12.</span> <span class="nav-text">ps aux --sort=-pcpu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-o-pid-uname-comm-C-nginx"><span class="nav-number">5.13.</span> <span class="nav-text">ps -o pid,uname,comm -C nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-L-p-27221"><span class="nav-number">5.14.</span> <span class="nav-text">ps -L -p 27221</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-e-O-ppid-o-user-cmd-head"><span class="nav-number">5.15.</span> <span class="nav-text">ps -e -O ppid -o user,cmd | head</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

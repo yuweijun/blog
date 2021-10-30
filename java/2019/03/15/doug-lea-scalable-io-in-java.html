@@ -1,0 +1,855 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="PPT: Scalable IO in JavaAuthor: Doug LeaOutline Scalable network services Event-driven processing Reactor pattern Basic version Multithreaded versions Other variants   Walkthrough of java.nio nonblock">
+<meta property="og:type" content="article">
+<meta property="og:title" content="doug lea - scalable io in java">
+<meta property="og:url" content="http://www.4e00.com/java/2019/03/15/doug-lea-scalable-io-in-java.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="PPT: Scalable IO in JavaAuthor: Doug LeaOutline Scalable network services Event-driven processing Reactor pattern Basic version Multithreaded versions Other variants   Walkthrough of java.nio nonblock">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/reactor/reactor1.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/reactor/reactor2.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/reactor/reactor3.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/reactor/reactor4.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/reactor/reactor5.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/reactor/reactor6.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/reactor/reactor7.png">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="doug lea - scalable io in java">
+<meta name="twitter:description" content="PPT: Scalable IO in JavaAuthor: Doug LeaOutline Scalable network services Event-driven processing Reactor pattern Basic version Multithreaded versions Other variants   Walkthrough of java.nio nonblock">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/java/reactor/reactor1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2019/03/15/doug-lea-scalable-io-in-java.html">
+
+  <title> doug lea - scalable io in java | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                doug lea - scalable io in java
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-03-15T09:20:27+08:00" content="2019-03-15">
+              2019-03-15
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="PPT-Scalable-IO-in-Java"><a href="#PPT-Scalable-IO-in-Java" class="headerlink" title="PPT: Scalable IO in Java"></a>PPT: Scalable IO in Java</h2><h3 id="Author-Doug-Lea"><a href="#Author-Doug-Lea" class="headerlink" title="Author: Doug Lea"></a>Author: Doug Lea</h3><h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h2><ul>
+<li>Scalable network services</li>
+<li>Event-driven processing</li>
+<li>Reactor pattern<ol>
+<li>Basic version</li>
+<li>Multithreaded versions</li>
+<li>Other variants</li>
+</ol>
+</li>
+<li>Walkthrough of <code>java.nio</code> nonblocking IO APIs</li>
+</ul>
+<h2 id="Network-Services"><a href="#Network-Services" class="headerlink" title="Network Services"></a>Network Services</h2><ul>
+<li>Web services, Distributed Objects, etc</li>
+<li>Most have same basic structure:<ol>
+<li><strong>Read request</strong></li>
+<li><strong>Decode request</strong></li>
+<li><strong>Process service</strong></li>
+<li><strong>Encode reply</strong></li>
+<li><strong>Send reply</strong></li>
+</ol>
+</li>
+<li>But differ in nature and cost of each step<ol>
+<li>XML parsing, File transfer, Web page</li>
+<li>generation, computational services, ...</li>
+</ol>
+</li>
+</ul>
+<h2 id="Classic-Service-Designs"><a href="#Classic-Service-Designs" class="headerlink" title="Classic Service Designs"></a>Classic Service Designs</h2><img src="/blog/img/java/reactor/reactor1.png" class="image-lg" title="[reactor1.png]">
+<blockquote>
+<p>Each handler may be started in its own thread</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Classic-ServerSocket-Loop"><a href="#Classic-ServerSocket-Loop" class="headerlink" title="Classic ServerSocket Loop"></a>Classic ServerSocket Loop</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Note: most exception handling elided from code examples</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Server</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">try</span> &#123;</span><span class="line">            ServerSocket ss = <span class="keyword">new</span> ServerSocket(PORT);</span><span class="line">            <span class="keyword">while</span> (!Thread.interrupted())</span><span class="line">                <span class="keyword">new</span> Thread(<span class="keyword">new</span> Handler(ss.accept())).start();</span><span class="line">                <span class="comment">// or, single-threaded, or a thread pool</span></span><span class="line">        &#125; <span class="keyword">catch</span> (IOException ex) &#123; <span class="comment">/* ... */</span> &#125;</span><span class="line">    &#125;</span><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Handler</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line">        <span class="keyword">final</span> Socket socket;</span><span class="line">        Handler(Socket s) &#123; socket = s; &#125;</span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">            <span class="keyword">try</span> &#123;</span><span class="line">                <span class="keyword">byte</span>[] input = <span class="keyword">new</span> <span class="keyword">byte</span>[MAX_INPUT];</span><span class="line">                socket.getInputStream().read(input);</span><span class="line">                <span class="keyword">byte</span>[] output = process(input);</span><span class="line">                socket.getOutputStream().write(output);</span><span class="line">            &#125; <span class="keyword">catch</span> (IOException ex) &#123; <span class="comment">/* ... */</span> &#125;</span><span class="line">        &#125;</span><span class="line">        <span class="keyword">private</span> <span class="keyword">byte</span>[] process(<span class="keyword">byte</span>[] cmd) &#123; <span class="comment">/* ... */</span> &#125;</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="Scalability-Goals"><a href="#Scalability-Goals" class="headerlink" title="Scalability Goals"></a>Scalability Goals</h2><ul>
+<li>Graceful degradation under increasing load (more clients)</li>
+<li>Continuous improvement with increasing resources (CPU, memory, disk, bandwidth)</li>
+<li>Also meet availability and performance goals<ul>
+<li>Short latencies</li>
+<li>Meeting peak demand</li>
+<li>Tunable quality of service</li>
+</ul>
+</li>
+</ul>
+<h2 id="Divide-and-Conquer"><a href="#Divide-and-Conquer" class="headerlink" title="Divide and Conquer"></a>Divide and Conquer</h2><ul>
+<li>Divide-and-conquer is usually the best approach for achieving any scalability goal</li>
+<li>Divide processing into small tasks<ul>
+<li>Each task performs an action without blocking</li>
+</ul>
+</li>
+<li>Execute each task when it is enabled<ul>
+<li>Here, an IO event usually serves as trigger<img src="/blog/img/java/reactor/reactor2.png" class="image-lg" title="[reactor2.png]"></li>
+</ul>
+</li>
+<li>Basic mechanisms supported in java.nio<ul>
+<li><strong>Non-blocking</strong> reads and writes</li>
+<li><strong>Dispatch</strong> tasks associated with sensed IO events</li>
+</ul>
+</li>
+<li>Endless variation possible<ul>
+<li>A family of event-driven designs</li>
+</ul>
+</li>
+</ul>
+<h2 id="Event-driven-Designs"><a href="#Event-driven-Designs" class="headerlink" title="Event-driven Designs"></a>Event-driven Designs</h2><ul>
+<li>Usually more efficient than alternatives<ul>
+<li>Fewer resources</li>
+</ul>
+</li>
+<li>Don&#39;t usually need a thread per client<ul>
+<li>Less overhead</li>
+</ul>
+</li>
+<li>Less context switching, often less locking<ul>
+<li>But dispatching can be slower<ul>
+<li>Must manually bind actions to events</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Usually harder to program<ul>
+<li>Must break up into simple non-blocking actions<ul>
+<li>Similar to GUI event-driven actions</li>
+<li>Cannot eliminate all blocking: GC, page faults, etc</li>
+</ul>
+</li>
+<li>Must keep track of logical state of service</li>
+</ul>
+</li>
+</ul>
+<h2 id="Background-Events-in-AWT"><a href="#Background-Events-in-AWT" class="headerlink" title="Background: Events in AWT"></a>Background: Events in AWT</h2><img src="/blog/img/java/reactor/reactor3.png" class="image-lg" title="[reactor3.png]">
+<blockquote>
+<p>Event-driven IO uses similar ideas but in different designs</p>
+</blockquote>
+<h2 id="Reactor-Pattern"><a href="#Reactor-Pattern" class="headerlink" title="Reactor Pattern"></a>Reactor Pattern</h2><ul>
+<li><strong>Reactor</strong> responds to IO events by dispatching the appropriate handler<ul>
+<li>Similar to AWT thread</li>
+</ul>
+</li>
+<li><strong>Handlers</strong> perform non-blocking actions<ul>
+<li>Similar to AWT ActionListeners</li>
+</ul>
+</li>
+<li>Manage by binding handlers to events<ul>
+<li>Similar to AWT addActionListener</li>
+</ul>
+</li>
+<li>See Schmidt et al, Pattern-Oriented Software Architecture, Volume 2 (POSA2)<ul>
+<li>Also Richard Stevens&#39;s networking books, Matt Welsh&#39;s SEDA framework, etc</li>
+</ul>
+</li>
+</ul>
+<h2 id="Basic-Reactor-Design"><a href="#Basic-Reactor-Design" class="headerlink" title="Basic Reactor Design"></a>Basic Reactor Design</h2><img src="/blog/img/java/reactor/reactor4.png" class="image-lg" title="[reactor4.png]">
+<p>Single threaded version</p>
+<h2 id="java-nio-Support"><a href="#java-nio-Support" class="headerlink" title="java.nio Support"></a>java.nio Support</h2><h3 id="Channels"><a href="#Channels" class="headerlink" title="Channels"></a>Channels</h3><ul>
+<li>Connections to files, sockets etc that support</li>
+<li>non-blocking reads</li>
+</ul>
+<h3 id="Buffers"><a href="#Buffers" class="headerlink" title="Buffers"></a>Buffers</h3><ul>
+<li>Array-like objects that can be directly read or written by Channels</li>
+</ul>
+<h3 id="Selectors"><a href="#Selectors" class="headerlink" title="Selectors"></a>Selectors</h3><ul>
+<li>Tell which of a set of Channels have IO events</li>
+</ul>
+<h3 id="SelectionKeys"><a href="#SelectionKeys" class="headerlink" title="SelectionKeys"></a>SelectionKeys</h3><p>Maintain IO event status and bindings</p>
+<h2 id="Reactor-1-Setup"><a href="#Reactor-1-Setup" class="headerlink" title="Reactor 1: Setup"></a>Reactor 1: Setup</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Reactor</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line">    <span class="keyword">final</span> Selector selector;</span><span class="line">    <span class="keyword">final</span> ServerSocketChannel serverSocket;</span><span class="line"></span><span class="line">    Reactor(<span class="keyword">int</span> port) <span class="keyword">throws</span> IOException &#123;</span><span class="line">        selector = Selector.open();</span><span class="line">        serverSocket = ServerSocketChannel.open();</span><span class="line">        serverSocket.socket().bind(</span><span class="line">                <span class="keyword">new</span> InetSocketAddress(port));</span><span class="line">        serverSocket.configureBlocking(<span class="keyword">false</span>);</span><span class="line">        SelectionKey sk =</span><span class="line">                serverSocket.register(selector, SelectionKey.OP_ACCEPT);</span><span class="line">        sk.attach(<span class="keyword">new</span> Acceptor());</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">/**</span></span><span class="line"><span class="comment">     * Alternatively, use explicit SPI provider:</span></span><span class="line"><span class="comment">     * SelectorProvider p = SelectorProvider.provider();</span></span><span class="line"><span class="comment">     * selector = p.openSelector();</span></span><span class="line"><span class="comment">     * serverSocket = p.openServerSocketChannel();</span></span><span class="line"><span class="comment">     */</span></span></pre></td></tr></table></figure>
+<h2 id="Reactor-2-Dispatch-Loop"><a href="#Reactor-2-Dispatch-Loop" class="headerlink" title="Reactor 2: Dispatch Loop"></a>Reactor 2: Dispatch Loop</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// class Reactor continued</span></span><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; <span class="comment">// normally in a new Thread</span></span><span class="line">    <span class="keyword">try</span> &#123;</span><span class="line">        <span class="keyword">while</span> (!Thread.interrupted()) &#123;</span><span class="line">            selector.select();</span><span class="line">            Set selected = selector.selectedKeys();</span><span class="line">            Iterator it = selected.iterator();</span><span class="line">            <span class="keyword">while</span> (it.hasNext())</span><span class="line">                dispatch((SelectionKey) (it.next());</span><span class="line">            selected.clear();</span><span class="line">        &#125;</span><span class="line">    &#125; <span class="keyword">catch</span> (IOException ex) &#123; <span class="comment">/* ... */</span> &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dispatch</span><span class="params">(SelectionKey k)</span> </span>&#123;</span><span class="line">    Runnable r = (Runnable) (k.attachment());</span><span class="line">    <span class="keyword">if</span> (r != <span class="keyword">null</span>)</span><span class="line">        r.run();</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="Reactor-3-Acceptor"><a href="#Reactor-3-Acceptor" class="headerlink" title="Reactor 3: Acceptor"></a>Reactor 3: Acceptor</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="comment">// class Reactor continued</span></span><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Acceptor</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123; <span class="comment">// inner</span></span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">            <span class="keyword">try</span> &#123;</span><span class="line">                SocketChannel c = serverSocket.accept();</span><span class="line">                <span class="keyword">if</span> (c != <span class="keyword">null</span>)</span><span class="line">                    <span class="keyword">new</span> Handler(selector, c);</span><span class="line">            &#125; <span class="keyword">catch</span> (IOException ex) &#123; <span class="comment">/* ... */</span> &#125;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<img src="/blog/img/java/reactor/reactor5.png" class="image-lg" title="[reactor5.png]">
+<h2 id="Reactor4-Handler-setup"><a href="#Reactor4-Handler-setup" class="headerlink" title="Reactor4: Handler setup"></a>Reactor4: Handler setup</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Handler</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line">    <span class="keyword">final</span> SocketChannel socket;</span><span class="line">    <span class="keyword">final</span> SelectionKey sk;</span><span class="line">    ByteBuffer input = ByteBuffer.allocate(MAXIN);</span><span class="line">    ByteBuffer output = ByteBuffer.allocate(MAXOUT);</span><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> READING = <span class="number">0</span>, SENDING = <span class="number">1</span>;</span><span class="line">    <span class="keyword">int</span> state = READING;</span><span class="line"></span><span class="line">    Handler(Selector sel, SocketChannel c)</span><span class="line">            <span class="keyword">throws</span> IOException &#123;</span><span class="line">        socket = c;</span><span class="line">        c.configureBlocking(<span class="keyword">false</span>);</span><span class="line">        <span class="comment">// Optionally try first read now</span></span><span class="line">        sk = socket.register(sel, <span class="number">0</span>);</span><span class="line">        sk.attach(<span class="keyword">this</span>);</span><span class="line">        sk.interestOps(SelectionKey.OP_READ);</span><span class="line">        sel.wakeup();</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">inputIsComplete</span><span class="params">()</span> </span>&#123; <span class="comment">/* ... */</span> &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">outputIsComplete</span><span class="params">()</span> </span>&#123; <span class="comment">/* ... */</span> &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">()</span> </span>&#123; <span class="comment">/* ... */</span> &#125;</span></pre></td></tr></table></figure>
+<h2 id="Reactor-5-Request-handling"><a href="#Reactor-5-Request-handling" class="headerlink" title="Reactor 5: Request handling"></a>Reactor 5: Request handling</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="comment">// class Handler continued</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">try</span> &#123;</span><span class="line">            <span class="keyword">if</span></span><span class="line">            (state == READING) read();</span><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (state == SENDING) send();</span><span class="line">        &#125; <span class="keyword">catch</span> (IOException ex) &#123; <span class="comment">/* ... */</span> &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">read</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><span class="line">        socket.read(input);</span><span class="line">        <span class="keyword">if</span> (inputIsComplete()) &#123;</span><span class="line">            process();</span><span class="line">            state = SENDING;</span><span class="line">            <span class="comment">// Normally also do first write now</span></span><span class="line">            sk.interestOps(SelectionKey.OP_WRITE);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">send</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><span class="line">        socket.write(output);</span><span class="line">        <span class="keyword">if</span> (outputIsComplete()) sk.cancel();</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="Per-State-Handlers"><a href="#Per-State-Handlers" class="headerlink" title="Per-State Handlers"></a>Per-State Handlers</h2><ul>
+<li>A simple use of GoF State-Object pattern<ul>
+<li><strong>Rebind</strong> appropriate handler as attachment</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Handler</span> </span>&#123; <span class="comment">// ...</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; <span class="comment">// initial state is reader</span></span><span class="line">        socket.read(input);</span><span class="line">        <span class="keyword">if</span> (inputIsComplete()) &#123;</span><span class="line">            process();</span><span class="line">            sk.attach(<span class="keyword">new</span> Sender());</span><span class="line">            sk.interest(SelectionKey.OP_WRITE);</span><span class="line">            sk.selector().wakeup();</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Sender</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; <span class="comment">// ...</span></span><span class="line">            socket.write(output);</span><span class="line">            <span class="keyword">if</span> (outputIsComplete()) sk.cancel();</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="Multithreaded-Designs"><a href="#Multithreaded-Designs" class="headerlink" title="Multithreaded Designs"></a>Multithreaded Designs</h2><ul>
+<li>Strategically add threads for scalability<ul>
+<li>Mainly applicable to multiprocessors</li>
+</ul>
+</li>
+<li>Worker Threads<ul>
+<li>Reactors should quickly trigger handlers<ul>
+<li>Handler processing slows down Reactor</li>
+</ul>
+</li>
+<li>Offload non-IO processing to other threads</li>
+</ul>
+</li>
+<li>Multiple Reactor Threads<ul>
+<li>Reactor threads can saturate doing IO</li>
+<li>Distribute load to other reactors<ul>
+<li>Load-balance to match CPU and IO rates</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Worker-Threads"><a href="#Worker-Threads" class="headerlink" title="Worker Threads"></a>Worker Threads</h2><ul>
+<li>Offload non-IO processing to speed up Reactor thread<ul>
+<li>Similar to POSA2 Proactor designs</li>
+</ul>
+</li>
+<li>Simpler than reworking compute-bound processing into event-driven form<ul>
+<li>Should still be pure nonblocking computation<ul>
+<li>Enough processing to outweigh overhead</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>But harder to overlap processing with IO<ul>
+<li>Best when can first read all input into a buffer</li>
+</ul>
+</li>
+<li>Use thread pool so can tune and control<ul>
+<li>Normally need many fewer threads than clientsWorker Thread Pools</li>
+</ul>
+</li>
+</ul>
+<img src="/blog/img/java/reactor/reactor6.png" class="image-lg" title="[reactor6.png]">
+<h2 id="Handler-with-Thread-Pool"><a href="#Handler-with-Thread-Pool" class="headerlink" title="Handler with Thread Pool"></a>Handler with Thread Pool</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Handler</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line">    <span class="comment">// uses util.concurrent thread pool</span></span><span class="line">    <span class="keyword">static</span> PooledExecutor pool = <span class="keyword">new</span> PooledExecutor(...);</span><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PROCESSING = <span class="number">3</span>;</span><span class="line"></span><span class="line">    <span class="comment">// ...</span></span><span class="line">    <span class="function"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">()</span> </span>&#123; <span class="comment">// ...</span></span><span class="line">        socket.read(input);</span><span class="line">        <span class="keyword">if</span> (inputIsComplete()) &#123;</span><span class="line">            state = PROCESSING;</span><span class="line">            pool.execute(<span class="keyword">new</span> Processer());</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">processAndHandOff</span><span class="params">()</span> </span>&#123;</span><span class="line">        process();</span><span class="line">        state = SENDING; <span class="comment">// or rebind attachment</span></span><span class="line">        sk.interest(SelectionKey.OP_WRITE);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Processer</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">            processAndHandOff();</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="Coordinating-Tasks"><a href="#Coordinating-Tasks" class="headerlink" title="Coordinating Tasks"></a>Coordinating Tasks</h2><h3 id="Handoffs"><a href="#Handoffs" class="headerlink" title="Handoffs"></a>Handoffs</h3><ul>
+<li>Each task enables, triggers, or calls next one</li>
+<li>Usually fastest but can be brittle</li>
+</ul>
+<h3 id="Callbacks-to-per-handler-dispatcher"><a href="#Callbacks-to-per-handler-dispatcher" class="headerlink" title="Callbacks to per-handler dispatcher"></a>Callbacks to per-handler dispatcher</h3><ul>
+<li>Sets state, attachment, etc</li>
+<li>A variant of GoF Mediator pattern</li>
+</ul>
+<h3 id="Queues"><a href="#Queues" class="headerlink" title="Queues"></a>Queues</h3><ul>
+<li>For example, passing buffers across stages</li>
+</ul>
+<h3 id="Futures"><a href="#Futures" class="headerlink" title="Futures"></a>Futures</h3><ul>
+<li>When each task produces a result</li>
+<li>Coordination layered on top of join or wait/notify</li>
+</ul>
+<h2 id="Using-PooledExecutor"><a href="#Using-PooledExecutor" class="headerlink" title="Using PooledExecutor"></a>Using PooledExecutor</h2><ul>
+<li>A tunable worker thread pool</li>
+<li>Main method <code>execute(Runnable r)</code></li>
+<li>Controls for:<ul>
+<li>The kind of task queue (any Channel)</li>
+<li>Maximum number of threads</li>
+<li>Minimum number of threads</li>
+<li>&quot;Warm&quot; versus on-demand threads</li>
+<li>Keep-alive interval until idle threads die<ul>
+<li>to be later replaced by new ones if necessary</li>
+</ul>
+</li>
+<li>Saturation policy<ul>
+<li>block, drop, producer-runs, etc</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Multiple-Reactor-Threads"><a href="#Multiple-Reactor-Threads" class="headerlink" title="Multiple Reactor Threads"></a>Multiple Reactor Threads</h2><ul>
+<li>Using Reactor Pools<ul>
+<li>Use to match CPU and IO rates</li>
+<li>Static or dynamic construction<ul>
+<li>Each with own Selector, Thread, dispatch loop</li>
+</ul>
+</li>
+<li>Main acceptor distributes to other reactors</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Selector[] selectors; <span class="comment">// also create threads</span></span><span class="line"><span class="keyword">int</span> next = <span class="number">0</span>;</span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Acceptor</span> </span>&#123; <span class="comment">// ...</span></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; ...</span><span class="line">        Socket connection = serverSocket.accept();</span><span class="line">        <span class="keyword">if</span> (connection != <span class="keyword">null</span>)</span><span class="line">            <span class="keyword">new</span> Handler(selectors[next], connection);</span><span class="line">        <span class="keyword">if</span> (++next == selectors.length) next = <span class="number">0</span>;</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="Using-Multiple-Reactors"><a href="#Using-Multiple-Reactors" class="headerlink" title="Using Multiple Reactors"></a>Using Multiple Reactors</h2><img src="/blog/img/java/reactor/reactor7.png" class="image-lg" title="[reactor7.png]">
+<h2 id="Using-other-java-nio-features"><a href="#Using-other-java-nio-features" class="headerlink" title="Using other java.nio features"></a>Using other java.nio features</h2><ul>
+<li>Multiple Selectors per Reactor<ul>
+<li>To bind different handlers to different IO events</li>
+<li>May need careful synchronization to coordinate</li>
+</ul>
+</li>
+<li>File transfer<ul>
+<li>Automated file-to-net or net-to-file copying</li>
+</ul>
+</li>
+<li>Memory-mapped files<ul>
+<li>Access files via buffers</li>
+</ul>
+</li>
+<li>Direct buffers<ul>
+<li>Can sometimes achieve zero-copy transfer</li>
+<li>But have setup and finalization overhead</li>
+<li>Best for applications with long-lived connections</li>
+</ul>
+</li>
+</ul>
+<h2 id="Connection-Based-Extensions"><a href="#Connection-Based-Extensions" class="headerlink" title="Connection-Based Extensions"></a>Connection-Based Extensions</h2><ul>
+<li>Instead of a single service request,<ul>
+<li>Client connects</li>
+<li>Client sends a series of messages/requests</li>
+<li>Client disconnects</li>
+</ul>
+</li>
+<li>Examples<ul>
+<li>Databases and Transaction monitors</li>
+<li>Multi-participant games, chat, etc</li>
+</ul>
+</li>
+<li>Can extend basic network service patterns<ul>
+<li>Handle many relatively long-lived clients</li>
+<li>Track client and session state (including drops)</li>
+<li>Distribute services across multiple hosts</li>
+</ul>
+</li>
+</ul>
+<h2 id="API-Walkthrough"><a href="#API-Walkthrough" class="headerlink" title="API Walkthrough"></a>API Walkthrough</h2><ol>
+<li>Buffer</li>
+<li>ByteBuffer (CharBuffer, LongBuffer, etc not shown.)</li>
+<li>Channel</li>
+<li>SelectableChannel</li>
+<li>SocketChannel</li>
+<li>ServerSocketChannel</li>
+<li>FileChannel</li>
+<li>Selector</li>
+<li>SelectionKey</li>
+</ol>
+<h2 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Buffer</span> </span>&#123;</span><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">capacity</span><span class="params">()</span></span>;</span><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">position</span><span class="params">()</span></span>;</span><span class="line">     <span class="function">Buffer <span class="title">position</span><span class="params">(<span class="keyword">int</span> newPosition)</span></span>;</span><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">limit</span><span class="params">()</span></span>;</span><span class="line">     <span class="function">Buffer <span class="title">limit</span><span class="params">(<span class="keyword">int</span> newLimit)</span></span>;</span><span class="line">     <span class="function">Buffer <span class="title">mark</span><span class="params">()</span></span>;</span><span class="line">     <span class="function">Buffer <span class="title">reset</span><span class="params">()</span></span>;</span><span class="line">     <span class="function">Buffer <span class="title">clear</span><span class="params">()</span></span>;</span><span class="line">     <span class="function">Buffer <span class="title">flip</span><span class="params">()</span></span>;</span><span class="line">     <span class="function">Buffer <span class="title">rewind</span><span class="params">()</span></span>;</span><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">remaining</span><span class="params">()</span></span>;</span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasRemaining</span><span class="params">()</span></span>;</span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isReadOnly</span><span class="params">()</span></span>;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="ByteBuffer"><a href="#ByteBuffer" class="headerlink" title="ByteBuffer"></a>ByteBuffer</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ByteBuffer</span> <span class="keyword">extends</span> <span class="title">Buffer</span> </span>&#123;</span><span class="line">          <span class="function"><span class="keyword">static</span> ByteBuffer <span class="title">allocateDirect</span><span class="params">(<span class="keyword">int</span> capacity)</span></span>;</span><span class="line">          <span class="function"><span class="keyword">static</span> ByteBuffer <span class="title">allocate</span><span class="params">(<span class="keyword">int</span> capacity)</span></span>;</span><span class="line">          <span class="function"><span class="keyword">static</span> ByteBuffer <span class="title">wrap</span><span class="params">(<span class="keyword">byte</span>[] src, <span class="keyword">int</span> offset, <span class="keyword">int</span> len)</span></span>;</span><span class="line">          <span class="function"><span class="keyword">static</span> ByteBuffer <span class="title">wrap</span><span class="params">(<span class="keyword">byte</span>[] src)</span></span>;</span><span class="line">         <span class="function"><span class="keyword">boolean</span> <span class="title">isDirect</span><span class="params">()</span></span>;</span><span class="line">       <span class="function">ByteOrder <span class="title">order</span><span class="params">()</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">order</span><span class="params">(ByteOrder bo)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">slice</span><span class="params">()</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">duplicate</span><span class="params">()</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">compact</span><span class="params">()</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">asReadOnlyBuffer</span><span class="params">()</span></span>;</span><span class="line">            <span class="function"><span class="keyword">byte</span> <span class="title">get</span><span class="params">()</span></span>;</span><span class="line">            <span class="function"><span class="keyword">byte</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">get</span><span class="params">(<span class="keyword">byte</span>[] dst, <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">get</span><span class="params">(<span class="keyword">byte</span>[] dst)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">put</span><span class="params">(<span class="keyword">byte</span> b)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">put</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">byte</span> b)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">put</span><span class="params">(<span class="keyword">byte</span>[] src, <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">put</span><span class="params">(ByteBuffer src)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">put</span><span class="params">(<span class="keyword">byte</span>[] src)</span></span>;</span><span class="line">            <span class="function"><span class="keyword">char</span> <span class="title">getChar</span><span class="params">()</span></span>;</span><span class="line">            <span class="function"><span class="keyword">char</span> <span class="title">getChar</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">putChar</span><span class="params">(<span class="keyword">char</span> value)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">putChar</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">char</span> value)</span></span>;</span><span class="line">      <span class="function">CharBuffer <span class="title">asCharBuffer</span><span class="params">()</span></span>;</span><span class="line">           <span class="function"><span class="keyword">short</span> <span class="title">getShort</span><span class="params">()</span></span>;</span><span class="line">           <span class="function"><span class="keyword">short</span> <span class="title">getShort</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">putShort</span><span class="params">(<span class="keyword">short</span> value)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">putShort</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">short</span> value)</span></span>;</span><span class="line">     <span class="function">ShortBuffer <span class="title">asShortBuffer</span><span class="params">()</span></span>;</span><span class="line">             <span class="function"><span class="keyword">int</span> <span class="title">getInt</span><span class="params">()</span></span>;</span><span class="line">             <span class="function"><span class="keyword">int</span> <span class="title">getInt</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">putInt</span><span class="params">(<span class="keyword">int</span> value)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">putInt</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> value)</span></span>;</span><span class="line">       <span class="function">IntBuffer <span class="title">asIntBuffer</span><span class="params">()</span></span>;</span><span class="line">            <span class="function"><span class="keyword">long</span> <span class="title">getLong</span><span class="params">()</span></span>;</span><span class="line">            <span class="function"><span class="keyword">long</span> <span class="title">getLong</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">putLong</span><span class="params">(<span class="keyword">long</span> value)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">putLong</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">long</span> value)</span></span>;</span><span class="line">      <span class="function">LongBuffer <span class="title">asLongBuffer</span><span class="params">()</span></span>;</span><span class="line">           <span class="function"><span class="keyword">float</span> <span class="title">getFloat</span><span class="params">()</span></span>;</span><span class="line">           <span class="function"><span class="keyword">float</span> <span class="title">getFloat</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">putFloat</span><span class="params">(<span class="keyword">float</span> value)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">putFloat</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">float</span> value)</span></span>;</span><span class="line">     <span class="function">FloatBuffer <span class="title">asFloatBuffer</span><span class="params">()</span></span>;</span><span class="line">          <span class="function"><span class="keyword">double</span> <span class="title">getDouble</span><span class="params">()</span></span>;</span><span class="line">          <span class="function"><span class="keyword">double</span> <span class="title">getDouble</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">putDouble</span><span class="params">(<span class="keyword">double</span> value)</span></span>;</span><span class="line">      <span class="function">ByteBuffer <span class="title">putDouble</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">double</span> value)</span></span>;</span><span class="line">    <span class="function">DoubleBuffer <span class="title">asDoubleBuffer</span><span class="params">()</span></span>;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Channel</span> </span>&#123;</span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isOpen</span><span class="params">()</span></span>;</span><span class="line">       <span class="function"><span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">&#125;</span><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ReadableByteChannel</span> <span class="keyword">extends</span> <span class="title">Channel</span> </span>&#123;</span><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(ByteBuffer dst)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">&#125;</span><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">WritableByteChannel</span>  <span class="keyword">extends</span> <span class="title">Channel</span> </span>&#123;</span><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">write</span><span class="params">(ByteBuffer src)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">&#125;</span><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ScatteringByteChannel</span> <span class="keyword">extends</span> <span class="title">ReadableByteChannel</span> </span>&#123;</span><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(ByteBuffer[] dsts, <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(ByteBuffer[] dsts)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">&#125;</span><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">GatheringByteChannel</span> <span class="keyword">extends</span> <span class="title">WritableByteChannel</span> </span>&#123;</span><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">write</span><span class="params">(ByteBuffer[] srcs, <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">write</span><span class="params">(ByteBuffer[] srcs)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="SelectableChannel"><a href="#SelectableChannel" class="headerlink" title="SelectableChannel"></a>SelectableChannel</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">SelectableChannel</span> <span class="keyword">implements</span> <span class="title">Channel</span> </span>&#123;</span><span class="line">             <span class="function"><span class="keyword">int</span> <span class="title">validOps</span><span class="params">()</span></span>;</span><span class="line">         <span class="function"><span class="keyword">boolean</span> <span class="title">isRegistered</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">    <span class="function">SelectionKey <span class="title">keyFor</span><span class="params">(Selector sel)</span></span>;</span><span class="line">    <span class="function">SelectionKey <span class="title">register</span><span class="params">(Selector sel, <span class="keyword">int</span> ops)</span> <span class="keyword">throws</span> ClosedChannelException</span>;</span><span class="line">    <span class="function">SelectionKey <span class="title">register</span><span class="params">(Selector sel, <span class="keyword">int</span> ops, Object att)</span> <span class="keyword">throws</span> ClosedChannelException</span>;</span><span class="line"></span><span class="line">            <span class="function"><span class="keyword">void</span> <span class="title">configureBlocking</span><span class="params">(<span class="keyword">boolean</span> block)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">         <span class="function"><span class="keyword">boolean</span> <span class="title">isBlocking</span><span class="params">()</span></span>;</span><span class="line">          <span class="function">Object <span class="title">blockingLock</span><span class="params">()</span></span>;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="SocketChannel"><a href="#SocketChannel" class="headerlink" title="SocketChannel"></a>SocketChannel</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">SocketChannel</span> <span class="keyword">implements</span> <span class="title">ByteChannel</span> ... </span>&#123;</span><span class="line">     <span class="function"><span class="keyword">static</span> SocketChannel <span class="title">open</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">     <span class="function">Socket <span class="title">socket</span><span class="params">()</span></span>;</span><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">validOps</span><span class="params">()</span></span>;</span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isConnected</span><span class="params">()</span></span>;</span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isConnectionPending</span><span class="params">()</span></span>;</span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isInputOpen</span><span class="params">()</span></span>;</span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isOutputOpen</span><span class="params">()</span></span>;</span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">connect</span><span class="params">(SocketAddress remote)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">finishConnect</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">       <span class="function"><span class="keyword">void</span> <span class="title">shutdownInput</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">       <span class="function"><span class="keyword">void</span> <span class="title">shutdownOutput</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(ByteBuffer dst)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(ByteBuffer[] dsts, <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(ByteBuffer[] dsts)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">write</span><span class="params">(ByteBuffer src)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">write</span><span class="params">(ByteBuffer[] srcs, <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">write</span><span class="params">(ByteBuffer[] srcs)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="ServerSocketChannel"><a href="#ServerSocketChannel" class="headerlink" title="ServerSocketChannel"></a>ServerSocketChannel</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerSocketChannel</span> <span class="keyword">extends</span> ... </span>&#123;</span><span class="line">           <span class="function"><span class="keyword">static</span> ServerSocketChannel <span class="title">open</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">              <span class="function"><span class="keyword">int</span> <span class="title">validOps</span><span class="params">()</span></span>;</span><span class="line">     <span class="function">ServerSocket <span class="title">socket</span><span class="params">()</span></span>;</span><span class="line">    <span class="function">SocketChannel <span class="title">accept</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="FileChannel"><a href="#FileChannel" class="headerlink" title="FileChannel"></a>FileChannel</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">FileChannel</span> <span class="keyword">implements</span> ... </span>&#123;</span><span class="line">                 <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(ByteBuffer dst)</span></span>;</span><span class="line">                 <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(ByteBuffer dst, <span class="keyword">long</span> position)</span></span>;</span><span class="line">                 <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(ByteBuffer[] dsts, <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span></span>;</span><span class="line">                 <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(ByteBuffer[] dsts)</span></span>;</span><span class="line">                 <span class="function"><span class="keyword">int</span> <span class="title">write</span><span class="params">(ByteBuffer src)</span></span>;</span><span class="line">                 <span class="function"><span class="keyword">int</span> <span class="title">write</span><span class="params">(ByteBuffer src, <span class="keyword">long</span> position)</span></span>;</span><span class="line">                 <span class="function"><span class="keyword">int</span> <span class="title">write</span><span class="params">(ByteBuffer[] srcs, <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span></span>;</span><span class="line">                 <span class="function"><span class="keyword">int</span> <span class="title">write</span><span class="params">(ByteBuffer[] srcs)</span></span>;</span><span class="line">                <span class="function"><span class="keyword">long</span> <span class="title">position</span><span class="params">()</span></span>;</span><span class="line">                <span class="function"><span class="keyword">void</span> <span class="title">position</span><span class="params">(<span class="keyword">long</span> newPosition)</span></span>;</span><span class="line">                <span class="function"><span class="keyword">long</span> <span class="title">size</span><span class="params">()</span></span>;</span><span class="line">                <span class="function"><span class="keyword">void</span> <span class="title">truncate</span><span class="params">(<span class="keyword">long</span> size)</span></span>;</span><span class="line">                <span class="function"><span class="keyword">void</span> <span class="title">force</span><span class="params">(<span class="keyword">boolean</span> flushMetaDataToo)</span></span>;</span><span class="line">                 <span class="function"><span class="keyword">int</span> <span class="title">transferTo</span><span class="params">(<span class="keyword">long</span> position, <span class="keyword">int</span> count, WritableByteChannel dst)</span></span>;</span><span class="line">                 <span class="function"><span class="keyword">int</span> <span class="title">transferFrom</span><span class="params">(ReadableByteChannel src, <span class="keyword">long</span> position, <span class="keyword">int</span> count)</span></span>;</span><span class="line">            <span class="function">FileLock <span class="title">lock</span><span class="params">(<span class="keyword">long</span> position, <span class="keyword">long</span> size, <span class="keyword">boolean</span> shared)</span></span>;</span><span class="line">            <span class="function">FileLock <span class="title">lock</span><span class="params">()</span></span>;</span><span class="line">            <span class="function">FileLock <span class="title">tryLock</span><span class="params">(<span class="keyword">long</span> pos, <span class="keyword">long</span> size, <span class="keyword">boolean</span> shared)</span></span>;</span><span class="line">            <span class="function">FileLock <span class="title">tryLock</span><span class="params">()</span></span>;</span><span class="line">              <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAP_RO, MAP_RW,  MAP_COW;</span><span class="line">    <span class="function">MappedByteBuffer <span class="title">map</span><span class="params">(<span class="keyword">int</span> mode, <span class="keyword">long</span> position, <span class="keyword">int</span> size)</span></span>;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<blockquote>
+<p>NOTE: ALL methods throw IOException</p>
+</blockquote>
+<h2 id="Selector"><a href="#Selector" class="headerlink" title="Selector"></a>Selector</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Selector</span> </span>&#123;</span><span class="line">    <span class="function"><span class="keyword">static</span> Selector <span class="title">open</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">       <span class="function">Set <span class="title">keys</span><span class="params">()</span></span>;</span><span class="line">       <span class="function">Set <span class="title">selectedKeys</span><span class="params">()</span></span>;</span><span class="line">       <span class="function"><span class="keyword">int</span> <span class="title">selectNow</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">       <span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">(<span class="keyword">long</span> timeout)</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">       <span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">wakeup</span><span class="params">()</span></span>;</span><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="SelectionKey"><a href="#SelectionKey" class="headerlink" title="SelectionKey"></a>SelectionKey</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">SelectionKey</span> </span>&#123;</span><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span>  OP_READ,    OP_WRITE,</span><span class="line">                      OP_CONNECT, OP_ACCEPT;</span><span class="line">    <span class="function">SelectableChannel <span class="title">channel</span><span class="params">()</span></span>;</span><span class="line">             <span class="function">Selector <span class="title">selector</span><span class="params">()</span></span>;</span><span class="line">              <span class="function"><span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">()</span></span>;</span><span class="line">                 <span class="function"><span class="keyword">void</span> <span class="title">cancel</span><span class="params">()</span></span>;</span><span class="line">                  <span class="function"><span class="keyword">int</span> <span class="title">interestOps</span><span class="params">()</span></span>;</span><span class="line">                 <span class="function"><span class="keyword">void</span> <span class="title">interestOps</span><span class="params">(<span class="keyword">int</span> ops)</span></span>;</span><span class="line">                  <span class="function"><span class="keyword">int</span> <span class="title">readyOps</span><span class="params">()</span></span>;</span><span class="line">              <span class="function"><span class="keyword">boolean</span> <span class="title">isReadable</span><span class="params">()</span></span>;</span><span class="line">              <span class="function"><span class="keyword">boolean</span> <span class="title">isWritable</span><span class="params">()</span></span>;</span><span class="line">              <span class="function"><span class="keyword">boolean</span> <span class="title">isConnectable</span><span class="params">()</span></span>;</span><span class="line">              <span class="function"><span class="keyword">boolean</span> <span class="title">isAcceptable</span><span class="params">()</span></span>;</span><span class="line">               <span class="function">Object <span class="title">attach</span><span class="params">(Object ob)</span></span>;</span><span class="line">               <span class="function">Object <span class="title">attachment</span><span class="params">()</span></span>;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://gee.cs.oswego.edu/dl/cpjslides/nio.pdf" target="_blank" rel="noopener">Scalable IO in Java</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2019/03/01/linux-bash-shell-shortcuts-cheatsheet.html" rel="next" title="linux bash shell shortcuts cheatsheet">
+                <i class="fa fa-chevron-left"></i>
+                linux bash shell shortcuts cheatsheet
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2019/03/16/reactor-pattern-skeleton-example.html" rel="prev" title="reactor pattern skeleton example">
+                <i class="fa fa-chevron-right"></i>
+                reactor pattern skeleton example
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PPT-Scalable-IO-in-Java"><span class="nav-number">1.</span> <span class="nav-text">PPT: Scalable IO in Java</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Author-Doug-Lea"><span class="nav-number">1.1.</span> <span class="nav-text">Author: Doug Lea</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Outline"><span class="nav-number">2.</span> <span class="nav-text">Outline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Network-Services"><span class="nav-number">3.</span> <span class="nav-text">Network Services</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Classic-Service-Designs"><span class="nav-number">4.</span> <span class="nav-text">Classic Service Designs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Classic-ServerSocket-Loop"><span class="nav-number">5.</span> <span class="nav-text">Classic ServerSocket Loop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scalability-Goals"><span class="nav-number">6.</span> <span class="nav-text">Scalability Goals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Divide-and-Conquer"><span class="nav-number">7.</span> <span class="nav-text">Divide and Conquer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Event-driven-Designs"><span class="nav-number">8.</span> <span class="nav-text">Event-driven Designs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Background-Events-in-AWT"><span class="nav-number">9.</span> <span class="nav-text">Background: Events in AWT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor-Pattern"><span class="nav-number">10.</span> <span class="nav-text">Reactor Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-Reactor-Design"><span class="nav-number">11.</span> <span class="nav-text">Basic Reactor Design</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java-nio-Support"><span class="nav-number">12.</span> <span class="nav-text">java.nio Support</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Channels"><span class="nav-number">12.1.</span> <span class="nav-text">Channels</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Buffers"><span class="nav-number">12.2.</span> <span class="nav-text">Buffers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Selectors"><span class="nav-number">12.3.</span> <span class="nav-text">Selectors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SelectionKeys"><span class="nav-number">12.4.</span> <span class="nav-text">SelectionKeys</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor-1-Setup"><span class="nav-number">13.</span> <span class="nav-text">Reactor 1: Setup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor-2-Dispatch-Loop"><span class="nav-number">14.</span> <span class="nav-text">Reactor 2: Dispatch Loop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor-3-Acceptor"><span class="nav-number">15.</span> <span class="nav-text">Reactor 3: Acceptor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor4-Handler-setup"><span class="nav-number">16.</span> <span class="nav-text">Reactor4: Handler setup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor-5-Request-handling"><span class="nav-number">17.</span> <span class="nav-text">Reactor 5: Request handling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Per-State-Handlers"><span class="nav-number">18.</span> <span class="nav-text">Per-State Handlers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multithreaded-Designs"><span class="nav-number">19.</span> <span class="nav-text">Multithreaded Designs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Worker-Threads"><span class="nav-number">20.</span> <span class="nav-text">Worker Threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Handler-with-Thread-Pool"><span class="nav-number">21.</span> <span class="nav-text">Handler with Thread Pool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Coordinating-Tasks"><span class="nav-number">22.</span> <span class="nav-text">Coordinating Tasks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Handoffs"><span class="nav-number">22.1.</span> <span class="nav-text">Handoffs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Callbacks-to-per-handler-dispatcher"><span class="nav-number">22.2.</span> <span class="nav-text">Callbacks to per-handler dispatcher</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Queues"><span class="nav-number">22.3.</span> <span class="nav-text">Queues</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Futures"><span class="nav-number">22.4.</span> <span class="nav-text">Futures</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-PooledExecutor"><span class="nav-number">23.</span> <span class="nav-text">Using PooledExecutor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiple-Reactor-Threads"><span class="nav-number">24.</span> <span class="nav-text">Multiple Reactor Threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-Multiple-Reactors"><span class="nav-number">25.</span> <span class="nav-text">Using Multiple Reactors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-other-java-nio-features"><span class="nav-number">26.</span> <span class="nav-text">Using other java.nio features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connection-Based-Extensions"><span class="nav-number">27.</span> <span class="nav-text">Connection-Based Extensions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API-Walkthrough"><span class="nav-number">28.</span> <span class="nav-text">API Walkthrough</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Buffer"><span class="nav-number">29.</span> <span class="nav-text">Buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ByteBuffer"><span class="nav-number">30.</span> <span class="nav-text">ByteBuffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Channel"><span class="nav-number">31.</span> <span class="nav-text">Channel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SelectableChannel"><span class="nav-number">32.</span> <span class="nav-text">SelectableChannel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SocketChannel"><span class="nav-number">33.</span> <span class="nav-text">SocketChannel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ServerSocketChannel"><span class="nav-number">34.</span> <span class="nav-text">ServerSocketChannel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FileChannel"><span class="nav-number">35.</span> <span class="nav-text">FileChannel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selector"><span class="nav-number">36.</span> <span class="nav-text">Selector</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SelectionKey"><span class="nav-number">37.</span> <span class="nav-text">SelectionKey</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">38.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,35 +57,35 @@
 <meta name="description" content="jvisualvm截图 Heap and Non-Heap Memory The JVM memory consists of the following segments:  Heap Memory, which is the storage for Java objects Non-Heap Memory, which is used by Java to store loaded class">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java jvm and gc">
-<meta property="og:url" content="https://www.4e00.com/java/2016/10/13/java-jvm-and-gc.html">
+<meta property="og:url" content="http://www.4e00.com/java/2016/10/13/java-jvm-and-gc.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="jvisualvm截图 Heap and Non-Heap Memory The JVM memory consists of the following segments:  Heap Memory, which is the storage for Java objects Non-Heap Memory, which is used by Java to store loaded class">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/jvisualvm.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-jvm/jvm-architecture.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-jvm/jvm-memory-architecture.gif">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/1-jvm-architecture.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/2-jvm-components.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/3-gc-marking.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/4-gc-normal-deletion.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/5-gc-deletion-compacting.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/6-hotspot-heap-structure.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/7-object-allocation.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/8-filling-eden-space.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/9-copy-reference-objects.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/10-gc-object-aging.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/11-additional-aging.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/12-gc-promotion.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/13-gc-young-old-promotion.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-gc/14-gc-process-summary.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-jvm/jvm-internal-architecture.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-jvm/jvm-memory-architecture-with-data-areas.png">
-<meta property="og:image" content="https://www.4e00.com/blog/img/java/java-jvm/jvm-memory-architecture-with-ratio.jpg">
-<meta property="og:updated_time" content="2017-09-25T01:50:17.665Z">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/jvisualvm.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-jvm/jvm-architecture.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-jvm/jvm-memory-architecture.jpg">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/1-jvm-architecture.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/2-jvm-components.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/3-gc-marking.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/4-gc-normal-deletion.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/5-gc-deletion-compacting.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/6-hotspot-heap-structure.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/7-object-allocation.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/8-filling-eden-space.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/9-copy-reference-objects.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/10-gc-object-aging.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/11-additional-aging.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/12-gc-promotion.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/13-gc-young-old-promotion.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/14-gc-process-summary.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-jvm/jvm-internal-architecture.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-jvm/jvm-memory-architecture-with-data-areas.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-jvm/jvm-memory-architecture-with-ratio.jpg">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.111Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java jvm and gc">
 <meta name="twitter:description" content="jvisualvm截图 Heap and Non-Heap Memory The JVM memory consists of the following segments:  Heap Memory, which is the storage for Java objects Non-Heap Memory, which is used by Java to store loaded class">
-<meta name="twitter:image" content="https://www.4e00.com/blog/img/java/jvisualvm.png">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/java/jvisualvm.png">
 
 
 
@@ -106,7 +106,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/10/13/java-jvm-and-gc.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2016/10/13/java-jvm-and-gc.html">
 
   <title> java jvm and gc | 一 </title>
 </head>
@@ -137,7 +137,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -160,7 +160,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -170,7 +170,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -178,7 +178,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -205,7 +205,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -234,14 +234,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -304,7 +304,7 @@
 <li>If there are strings being massively interned. For detection of such problem, Object allocation recording may be used.</li>
 </ol>
 <p>If the application indeed needs that much of non-heap memory and the default maximum size of <code>64 Mb</code> is not enough, you may enlarge the maximum size with the help of <code>-XX:MaxPermSize</code> VM option. For example, <code>-XX:MaxPermSize=128m</code> sets the size of <code>128 Mb</code>.</p>
-<h3 id="Heap组成部分说明"><a href="#Heap组成部分说明" class="headerlink" title="Heap组成部分说明"></a>Heap组成部分说明</h3><img src="/blog/img/java/java-jvm/jvm-memory-architecture.gif" title="[jvm-memory-architecture]">
+<h3 id="Heap组成部分说明"><a href="#Heap组成部分说明" class="headerlink" title="Heap组成部分说明"></a>Heap组成部分说明</h3><img src="/blog/img/java/java-jvm/jvm-memory-architecture.jpg" title="[jvm-memory-architecture]">
 <ol>
 <li>Heap区分两大块，一块是young generation，另一块是old generation。上图中的permanent generation不属于Heap。</li>
 <li>在young generation中，有一个叫eden的空间，主要是用来存放新生的对象，还有两个survivor spaces(from, to)，即部分示例图中的s0和s1，它们的大小总是一样，它们用来存放每次垃圾回收后存活下来的对象。</li>
@@ -357,13 +357,15 @@
 <h2 id="JVM-architecture示意图"><a href="#JVM-architecture示意图" class="headerlink" title="JVM architecture示意图"></a>JVM architecture示意图</h2><img src="/blog/img/java/java-jvm/jvm-internal-architecture.png" title="[jvm-internal-architecture]">
 <img src="/blog/img/java/java-jvm/jvm-memory-architecture-with-data-areas.png" title="[jvm-memory-architecture-with-data-areas]">
 <h2 id="JVM-Heap示意图"><a href="#JVM-Heap示意图" class="headerlink" title="JVM Heap示意图"></a>JVM Heap示意图</h2><img src="/blog/img/java/java-jvm/jvm-memory-architecture-with-ratio.jpg" title="[jvm-memory-architecture-with-ratio]">
+<h2 id="GC-算法和-GC-日志解读"><a href="#GC-算法和-GC-日志解读" class="headerlink" title="GC 算法和 GC 日志解读"></a>GC 算法和 GC 日志解读</h2><p><a href="https://plumbr.io/handbook/garbage-collection-algorithms-implementations" target="_blank" rel="noopener">GC Algorithms: Implementations</a>这篇文章非常优秀，其中也指出是 GC 日志中的报告显示 bug，需要仔细多读几遍。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html" target="_blank" rel="external">Java Garbage Collection Basics</a></li>
-<li><a href="http://blog.csdn.net/ithomer/article/details/6252552" target="_blank" rel="external">Java 内存模型及GC原理</a></li>
-<li><a href="https://www.yourkit.com/docs/kb/sizes.jsp" target="_blank" rel="external">JVM Memory Structure</a></li>
-<li><a href="http://blog.jamesdbloom.com/JVMInternals.html" target="_blank" rel="external">JVM Internals</a></li>
-<li><a href="http://www.artima.com/insidejvm/ed2/gcP.html" target="_blank" rel="external">Garbage Collection</a></li>
+<li><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html" target="_blank" rel="noopener">Java Garbage Collection Basics</a></li>
+<li><a href="http://blog.csdn.net/ithomer/article/details/6252552" target="_blank" rel="noopener">Java 内存模型及GC原理</a></li>
+<li><a href="https://www.yourkit.com/docs/kb/sizes.jsp" target="_blank" rel="noopener">JVM Memory Structure</a></li>
+<li><a href="http://blog.jamesdbloom.com/JVMInternals.html" target="_blank" rel="noopener">JVM Internals</a></li>
+<li><a href="http://www.artima.com/insidejvm/ed2/gcP.html" target="_blank" rel="noopener">Garbage Collection</a></li>
 <li><a href="/blog/java/2017/09/21/getting-started-with-the-G1-garbage-collector.html">getting started with the G1 garbage collector</a></li>
+<li><a href="https://plumbr.io/handbook/garbage-collection-algorithms-implementations" target="_blank" rel="noopener">GC Algorithms: Implementations</a></li>
 </ol>
 
       
@@ -390,8 +392,9 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/java/2016/10/13/java-memory-model.html" rel="next" title="java memory model">
-                上一篇：java memory model
+              <a href="/blog/java/2016/10/13/java-memory-model-notes.html" rel="next" title="java memory model 学习笔记">
+                <i class="fa fa-chevron-left"></i>
+                java memory model 学习笔记
               </a>
             
           </div>
@@ -399,7 +402,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/java/2016/10/18/java-weak-references.html" rel="prev" title="java weak references">
-                下一篇：java weak references
+                <i class="fa fa-chevron-right"></i>
+                java weak references
               </a>
             
           </div>
@@ -448,7 +452,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -459,16 +463,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -534,7 +536,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#jvisualvm截图"><span class="nav-number">1.</span> <span class="nav-text">jvisualvm截图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Heap-and-Non-Heap-Memory"><span class="nav-number">2.</span> <span class="nav-text">Heap and Non-Heap Memory</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Heap"><span class="nav-number">2.1.</span> <span class="nav-text">Heap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Non-Heap"><span class="nav-number">2.2.</span> <span class="nav-text">Non-Heap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Heap组成部分说明"><span class="nav-number">2.3.</span> <span class="nav-text">Heap组成部分说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM内存申请过程"><span class="nav-number">3.</span> <span class="nav-text">JVM内存申请过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hotspot-Architecture"><span class="nav-number">4.</span> <span class="nav-text">Hotspot Architecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Key-Hotspot-Components"><span class="nav-number">5.</span> <span class="nav-text">Key Hotspot Components</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Describing-Garbage-Collection"><span class="nav-number">6.</span> <span class="nav-text">Describing Garbage Collection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-1-Marking"><span class="nav-number">6.1.</span> <span class="nav-text">Step 1: Marking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2-Normal-Deletion"><span class="nav-number">6.2.</span> <span class="nav-text">Step 2: Normal Deletion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2a-Deletion-with-Compacting"><span class="nav-number">6.3.</span> <span class="nav-text">Step 2a: Deletion with Compacting</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-Generations"><span class="nav-number">7.</span> <span class="nav-text">JVM Generations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Generational-Garbage-Collection-Process"><span class="nav-number">8.</span> <span class="nav-text">The Generational Garbage Collection Process</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#object-allocation-in-eden"><span class="nav-number">8.1.</span> <span class="nav-text">object allocation in eden</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#minor-gc-after-eden-filling-up"><span class="nav-number">8.2.</span> <span class="nav-text">minor gc after eden filling up</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#copy-reference-objects-to-s0"><span class="nav-number">8.3.</span> <span class="nav-text">copy reference objects to s0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#object-increment-age-and-copy-to-s1"><span class="nav-number">8.4.</span> <span class="nav-text">object increment age and copy to s1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#minor-gc"><span class="nav-number">8.5.</span> <span class="nav-text">minor gc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#objects-promotion"><span class="nav-number">8.6.</span> <span class="nav-text">objects promotion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#objects-promoted-to-the-old-generation-space"><span class="nav-number">8.7.</span> <span class="nav-text">objects promoted to the old generation space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#major-gc"><span class="nav-number">8.8.</span> <span class="nav-text">major gc</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-architecture示意图"><span class="nav-number">9.</span> <span class="nav-text">JVM architecture示意图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-Heap示意图"><span class="nav-number">10.</span> <span class="nav-text">JVM Heap示意图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">11.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#jvisualvm截图"><span class="nav-number">1.</span> <span class="nav-text">jvisualvm截图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Heap-and-Non-Heap-Memory"><span class="nav-number">2.</span> <span class="nav-text">Heap and Non-Heap Memory</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Heap"><span class="nav-number">2.1.</span> <span class="nav-text">Heap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Non-Heap"><span class="nav-number">2.2.</span> <span class="nav-text">Non-Heap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Heap组成部分说明"><span class="nav-number">2.3.</span> <span class="nav-text">Heap组成部分说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM内存申请过程"><span class="nav-number">3.</span> <span class="nav-text">JVM内存申请过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hotspot-Architecture"><span class="nav-number">4.</span> <span class="nav-text">Hotspot Architecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Key-Hotspot-Components"><span class="nav-number">5.</span> <span class="nav-text">Key Hotspot Components</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Describing-Garbage-Collection"><span class="nav-number">6.</span> <span class="nav-text">Describing Garbage Collection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-1-Marking"><span class="nav-number">6.1.</span> <span class="nav-text">Step 1: Marking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2-Normal-Deletion"><span class="nav-number">6.2.</span> <span class="nav-text">Step 2: Normal Deletion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2a-Deletion-with-Compacting"><span class="nav-number">6.3.</span> <span class="nav-text">Step 2a: Deletion with Compacting</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-Generations"><span class="nav-number">7.</span> <span class="nav-text">JVM Generations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Generational-Garbage-Collection-Process"><span class="nav-number">8.</span> <span class="nav-text">The Generational Garbage Collection Process</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#object-allocation-in-eden"><span class="nav-number">8.1.</span> <span class="nav-text">object allocation in eden</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#minor-gc-after-eden-filling-up"><span class="nav-number">8.2.</span> <span class="nav-text">minor gc after eden filling up</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#copy-reference-objects-to-s0"><span class="nav-number">8.3.</span> <span class="nav-text">copy reference objects to s0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#object-increment-age-and-copy-to-s1"><span class="nav-number">8.4.</span> <span class="nav-text">object increment age and copy to s1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#minor-gc"><span class="nav-number">8.5.</span> <span class="nav-text">minor gc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#objects-promotion"><span class="nav-number">8.6.</span> <span class="nav-text">objects promotion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#objects-promoted-to-the-old-generation-space"><span class="nav-number">8.7.</span> <span class="nav-text">objects promoted to the old generation space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#major-gc"><span class="nav-number">8.8.</span> <span class="nav-text">major gc</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-architecture示意图"><span class="nav-number">9.</span> <span class="nav-text">JVM architecture示意图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-Heap示意图"><span class="nav-number">10.</span> <span class="nav-text">JVM Heap示意图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GC-算法和-GC-日志解读"><span class="nav-number">11.</span> <span class="nav-text">GC 算法和 GC 日志解读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">12.</span> <span class="nav-text">References</span></a></li></ol></div>
             
           </div>
         </section>
@@ -550,10 +552,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

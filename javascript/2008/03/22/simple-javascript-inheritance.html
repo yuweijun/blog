@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="John Resig published a great article on his blog, which brought out a smiple javascript inheritance resolution:">
 <meta property="og:type" content="article">
 <meta property="og:title" content="simple javascript inheritance">
-<meta property="og:url" content="https://www.4e00.com/javascript/2008/03/22/simple-javascript-inheritance.html">
+<meta property="og:url" content="http://www.4e00.com/javascript/2008/03/22/simple-javascript-inheritance.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="John Resig published a great article on his blog, which brought out a smiple javascript inheritance resolution:">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.133Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.037Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="simple javascript inheritance">
 <meta name="twitter:description" content="John Resig published a great article on his blog, which brought out a smiple javascript inheritance resolution:">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2008/03/22/simple-javascript-inheritance.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/javascript/2008/03/22/simple-javascript-inheritance.html">
 
   <title> simple javascript inheritance | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/javascript/" itemprop="url" rel="index">
                     <span itemprop="name">javascript</span>
                   </a>
@@ -256,8 +256,8 @@
       
         <p>John Resig published a great article on his blog, which brought out a smiple javascript inheritance resolution:</p>
 <a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Inspired by base2 and Prototype</span></div><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> initializing = <span class="literal">false</span>, fnTest = <span class="regexp">/xyz/</span>.test(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;xyz;&#125;) ? <span class="regexp">/\b_super\b/</span> : <span class="regexp">/.*/</span>;</div><div class="line"></div><div class="line">  <span class="comment">// The base Class implementation (does nothing)</span></div><div class="line">  <span class="keyword">this</span>.Class = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</div><div class="line"></div><div class="line">  <span class="comment">// Create a new Class that inherits from this class</span></div><div class="line">  Class.extend = <span class="function"><span class="keyword">function</span>(<span class="params">prop</span>) </span>&#123;</div><div class="line">    <span class="comment">// "super" is a FutureReservedWord in ECMAScript v3.</span></div><div class="line">    <span class="keyword">var</span> _super = <span class="keyword">this</span>.prototype;</div><div class="line"></div><div class="line">    <span class="comment">// Instantiate a base class (but only create the instance,</span></div><div class="line">    <span class="comment">// don't run the init constructor)</span></div><div class="line">    <span class="comment">// SubClass may define init() function, "new this()" should prevent init() function to be excuted.</span></div><div class="line">    initializing = <span class="literal">true</span>;</div><div class="line">    <span class="keyword">var</span> prototype = <span class="keyword">new</span> <span class="keyword">this</span>();</div><div class="line">    initializing = <span class="literal">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">// Copy the properties over onto the new prototype</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> name <span class="keyword">in</span> prop) &#123;</div><div class="line">      <span class="comment">// Check if we're overwriting an existing function</span></div><div class="line">      prototype[name] = <span class="keyword">typeof</span> prop[name] == <span class="string">"function"</span> &amp;&amp;</div><div class="line">        <span class="keyword">typeof</span> _super[name] == <span class="string">"function"</span> &amp;&amp; fnTest.test(prop[name]) ?</div><div class="line">        (<span class="function"><span class="keyword">function</span>(<span class="params">name, fn</span>)</span>&#123;</div><div class="line">          <span class="comment">// return a cloures, which return results of function prop[name](arguments)</span></div><div class="line">          <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="comment">//save a reference to the old this._super (disregarding if it actually exists)</span></div><div class="line">            <span class="comment">//and restore it after we're done.</span></div><div class="line">            <span class="keyword">var</span> tmp = <span class="keyword">this</span>._super;</div><div class="line"></div><div class="line">            <span class="comment">// Add a new ._super() method that is the same method</span></div><div class="line">            <span class="comment">// but on the super-class</span></div><div class="line">            <span class="comment">// fn function body has statement such as "this._super()"</span></div><div class="line">            <span class="comment">// this._super will be invoked by function fn</span></div><div class="line">            <span class="keyword">this</span>._super = _super[name];</div><div class="line"></div><div class="line">            <span class="comment">// The method only need to be bound temporarily, so we</span></div><div class="line">            <span class="comment">// remove it when we're done executing</span></div><div class="line">            <span class="keyword">var</span> ret = fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">            <span class="keyword">this</span>._super = tmp;</div><div class="line"></div><div class="line">            <span class="keyword">return</span> ret;</div><div class="line">          &#125;;</div><div class="line">        &#125;)(name, prop[name]) :</div><div class="line">        prop[name];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// The dummy SubClass constructor</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">SubClass</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="comment">// All construction is actually done in the init method</span></div><div class="line">      <span class="keyword">if</span> ( !initializing &amp;&amp; <span class="keyword">this</span>.init )</div><div class="line">        <span class="keyword">this</span>.init.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Populate our constructed prototype object</span></div><div class="line">    SubClass.prototype = prototype;</div><div class="line"></div><div class="line">    <span class="comment">// Enforce the constructor to be what we expect</span></div><div class="line">    <span class="comment">// else SubClass.constructor is Function</span></div><div class="line">    SubClass.constructor = SubClass;</div><div class="line"></div><div class="line">    <span class="comment">// And make this SubClass extendable</span></div><div class="line">    SubClass.extend = <span class="built_in">arguments</span>.callee;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> SubClass;</div><div class="line">  &#125;;</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
-<h2 id="Example"><a href="#Example" class="headerlink" title="Example:"></a>Example:</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> A = Class.extend(&#123;</div><div class="line">  value:<span class="string">"A"</span>,</div><div class="line">  doStuff:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"><span class="keyword">var</span> B = A.extend(&#123;&#125;);</div><div class="line"><span class="keyword">var</span> C = B.extend(&#123;</div><div class="line">  doStuff:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._super();</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"><span class="keyword">var</span> c = <span class="keyword">new</span> C;</div><div class="line"><span class="built_in">console</span>.log(c.doStuff());</div><div class="line"></div><div class="line"><span class="keyword">var</span> Person = Class.extend(&#123;</div><div class="line">  init: <span class="function"><span class="keyword">function</span>(<span class="params">isDancing</span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.dancing = isDancing;</div><div class="line">  &#125;,</div><div class="line">  dance: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.dancing;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(Person.constructor);</div><div class="line"></div><div class="line"><span class="keyword">var</span> Ninja = Person.extend(&#123;</div><div class="line">  init: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>._super( <span class="literal">false</span> );</div><div class="line">  &#125;,</div><div class="line">  dance: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">// Call the inherited version of dance()</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._super();</div><div class="line">  &#125;,</div><div class="line">  swingSword: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(Ninja.constructor);</div><div class="line"></div><div class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person(<span class="literal">true</span>);</div><div class="line"><span class="built_in">console</span>.log(p.dance()); <span class="comment">// =&gt; true</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> n = <span class="keyword">new</span> Ninja();</div><div class="line"><span class="built_in">console</span>.log(n.dance()); <span class="comment">// =&gt; false</span></div><div class="line"><span class="built_in">console</span>.log(n.swingSword()); <span class="comment">// =&gt; true</span></div><div class="line"></div><div class="line"><span class="comment">// Should all be true</span></div><div class="line"><span class="built_in">console</span>.log(p <span class="keyword">instanceof</span> Person &amp;&amp; p <span class="keyword">instanceof</span> Class &amp;&amp; n <span class="keyword">instanceof</span> Ninja &amp;&amp; n <span class="keyword">instanceof</span> Person &amp;&amp; n <span class="keyword">instanceof</span> Class);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Inspired by base2 and Prototype</span></span><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><span class="line">  <span class="keyword">var</span> initializing = <span class="literal">false</span>, fnTest = <span class="regexp">/xyz/</span>.test(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;xyz;&#125;) ? <span class="regexp">/\b_super\b/</span> : <span class="regexp">/.*/</span>;</span><span class="line"></span><span class="line">  <span class="comment">// The base Class implementation (does nothing)</span></span><span class="line">  <span class="keyword">this</span>.Class = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><span class="line"></span><span class="line">  <span class="comment">// Create a new Class that inherits from this class</span></span><span class="line">  Class.extend = <span class="function"><span class="keyword">function</span>(<span class="params">prop</span>) </span>&#123;</span><span class="line">    <span class="comment">// "super" is a FutureReservedWord in ECMAScript v3.</span></span><span class="line">    <span class="keyword">var</span> _super = <span class="keyword">this</span>.prototype;</span><span class="line"></span><span class="line">    <span class="comment">// Instantiate a base class (but only create the instance,</span></span><span class="line">    <span class="comment">// don't run the init constructor)</span></span><span class="line">    <span class="comment">// SubClass may define init() function, "new this()" should prevent init() function to be excuted.</span></span><span class="line">    initializing = <span class="literal">true</span>;</span><span class="line">    <span class="keyword">var</span> prototype = <span class="keyword">new</span> <span class="keyword">this</span>();</span><span class="line">    initializing = <span class="literal">false</span>;</span><span class="line"></span><span class="line">    <span class="comment">// Copy the properties over onto the new prototype</span></span><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> name <span class="keyword">in</span> prop) &#123;</span><span class="line">      <span class="comment">// Check if we're overwriting an existing function</span></span><span class="line">      prototype[name] = <span class="keyword">typeof</span> prop[name] == <span class="string">"function"</span> &amp;&amp;</span><span class="line">        <span class="keyword">typeof</span> _super[name] == <span class="string">"function"</span> &amp;&amp; fnTest.test(prop[name]) ?</span><span class="line">        (<span class="function"><span class="keyword">function</span>(<span class="params">name, fn</span>)</span>&#123;</span><span class="line">          <span class="comment">// return a cloures, which return results of function prop[name](arguments)</span></span><span class="line">          <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">            <span class="comment">//save a reference to the old this._super (disregarding if it actually exists)</span></span><span class="line">            <span class="comment">//and restore it after we're done.</span></span><span class="line">            <span class="keyword">var</span> tmp = <span class="keyword">this</span>._super;</span><span class="line"></span><span class="line">            <span class="comment">// Add a new ._super() method that is the same method</span></span><span class="line">            <span class="comment">// but on the super-class</span></span><span class="line">            <span class="comment">// fn function body has statement such as "this._super()"</span></span><span class="line">            <span class="comment">// this._super will be invoked by function fn</span></span><span class="line">            <span class="keyword">this</span>._super = _super[name];</span><span class="line"></span><span class="line">            <span class="comment">// The method only need to be bound temporarily, so we</span></span><span class="line">            <span class="comment">// remove it when we're done executing</span></span><span class="line">            <span class="keyword">var</span> ret = fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><span class="line">            <span class="keyword">this</span>._super = tmp;</span><span class="line"></span><span class="line">            <span class="keyword">return</span> ret;</span><span class="line">          &#125;;</span><span class="line">        &#125;)(name, prop[name]) :</span><span class="line">        prop[name];</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">// The dummy SubClass constructor</span></span><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">SubClass</span>(<span class="params"></span>) </span>&#123;</span><span class="line">      <span class="comment">// All construction is actually done in the init method</span></span><span class="line">      <span class="keyword">if</span> ( !initializing &amp;&amp; <span class="keyword">this</span>.init )</span><span class="line">        <span class="keyword">this</span>.init.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">// Populate our constructed prototype object</span></span><span class="line">    SubClass.prototype = prototype;</span><span class="line"></span><span class="line">    <span class="comment">// Enforce the constructor to be what we expect</span></span><span class="line">    <span class="comment">// else SubClass.constructor is Function</span></span><span class="line">    SubClass.constructor = SubClass;</span><span class="line"></span><span class="line">    <span class="comment">// And make this SubClass extendable</span></span><span class="line">    SubClass.extend = <span class="built_in">arguments</span>.callee;</span><span class="line"></span><span class="line">    <span class="keyword">return</span> SubClass;</span><span class="line">  &#125;;</span><span class="line">&#125;)();</span></pre></td></tr></table></figure>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example:"></a>Example:</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> A = Class.extend(&#123;</span><span class="line">  value:<span class="string">"A"</span>,</span><span class="line">  doStuff:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><span class="line">  &#125;</span><span class="line">&#125;);</span><span class="line"><span class="keyword">var</span> B = A.extend(&#123;&#125;);</span><span class="line"><span class="keyword">var</span> C = B.extend(&#123;</span><span class="line">  doStuff:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._super();</span><span class="line">  &#125;</span><span class="line">&#125;);</span><span class="line"><span class="keyword">var</span> c = <span class="keyword">new</span> C;</span><span class="line"><span class="built_in">console</span>.log(c.doStuff());</span><span class="line"></span><span class="line"><span class="keyword">var</span> Person = Class.extend(&#123;</span><span class="line">  init: <span class="function"><span class="keyword">function</span>(<span class="params">isDancing</span>)</span>&#123;</span><span class="line">    <span class="keyword">this</span>.dancing = isDancing;</span><span class="line">  &#125;,</span><span class="line">  dance: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.dancing;</span><span class="line">  &#125;</span><span class="line">&#125;);</span><span class="line"><span class="built_in">console</span>.log(Person.constructor);</span><span class="line"></span><span class="line"><span class="keyword">var</span> Ninja = Person.extend(&#123;</span><span class="line">  init: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><span class="line">    <span class="keyword">this</span>._super( <span class="literal">false</span> );</span><span class="line">  &#125;,</span><span class="line">  dance: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><span class="line">    <span class="comment">// Call the inherited version of dance()</span></span><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._super();</span><span class="line">  &#125;,</span><span class="line">  swingSword: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><span class="line">  &#125;</span><span class="line">&#125;);</span><span class="line"><span class="built_in">console</span>.log(Ninja.constructor);</span><span class="line"></span><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person(<span class="literal">true</span>);</span><span class="line"><span class="built_in">console</span>.log(p.dance()); <span class="comment">// =&gt; true</span></span><span class="line"></span><span class="line"><span class="keyword">var</span> n = <span class="keyword">new</span> Ninja();</span><span class="line"><span class="built_in">console</span>.log(n.dance()); <span class="comment">// =&gt; false</span></span><span class="line"><span class="built_in">console</span>.log(n.swingSword()); <span class="comment">// =&gt; true</span></span><span class="line"></span><span class="line"><span class="comment">// Should all be true</span></span><span class="line"><span class="built_in">console</span>.log(p <span class="keyword">instanceof</span> Person &amp;&amp; p <span class="keyword">instanceof</span> Class &amp;&amp; n <span class="keyword">instanceof</span> Ninja &amp;&amp; n <span class="keyword">instanceof</span> Person &amp;&amp; n <span class="keyword">instanceof</span> Class);</span></pre></td></tr></table></figure>
 
       
     </div>
@@ -284,7 +284,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/javascript/2008/03/21/difference-of-function-tostring-in-ie7-and-ff2.html" rel="next" title="difference of function tostring() in ie7 and ff2">
-                上一篇：difference of function tostring() in ie7 and ff2
+                <i class="fa fa-chevron-left"></i>
+                difference of function tostring() in ie7 and ff2
               </a>
             
           </div>
@@ -292,7 +293,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/javascript/2008/04/02/load-a-track-link-when-window-onunload.html" rel="prev" title="load a track link when window.onunload">
-                下一篇：load a track link when window.onunload
+                <i class="fa fa-chevron-right"></i>
+                load a track link when window.onunload
               </a>
             
           </div>
@@ -341,7 +343,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -352,16 +354,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -443,10 +443,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

@@ -1,0 +1,587 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="第一步 SSLKEYLOGFILE=$HOME/premaster.txt chromium-browser &amp;amp;&amp;gt;/dev/null &amp;amp;  在控制台中启动wireshark应用。  wireshark &amp;amp;&amp;gt;/dev/null">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 上使用 wireshark 查看 https 请求的内容">
+<meta property="og:url" content="http://www.4e00.com/web/2018/06/26/wireshark-decrypt-https-request.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="第一步 SSLKEYLOGFILE=$HOME/premaster.txt chromium-browser &amp;amp;&amp;gt;/dev/null &amp;amp;  在控制台中启动wireshark应用。  wireshark &amp;amp;&amp;gt;/dev/null">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/wireshark/wireshark-https-chromium-browser.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/wireshark/wireshark-https-ssl-pre-master-log.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/linux/wireshark/wireshark-https-httpbin-get.png">
+<meta property="og:image" content="http://www.4e00.com/blog/img/web/ssl-handshake-rsa.jpg">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.135Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 上使用 wireshark 查看 https 请求的内容">
+<meta name="twitter:description" content="第一步 SSLKEYLOGFILE=$HOME/premaster.txt chromium-browser &amp;amp;&amp;gt;/dev/null &amp;amp;  在控制台中启动wireshark应用。  wireshark &amp;amp;&amp;gt;/dev/null">
+<meta name="twitter:image" content="http://www.4e00.com/blog/img/linux/wireshark/wireshark-https-chromium-browser.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/web/2018/06/26/wireshark-decrypt-https-request.html">
+
+  <title> linux 上使用 wireshark 查看 https 请求的内容 | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux 上使用 wireshark 查看 https 请求的内容
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-06-26T15:35:15+08:00" content="2018-06-26">
+              2018-06-26
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">SSLKEYLOGFILE</span>=<span class="variable">$HOME</span>/premaster.txt chromium-browser &amp;&gt;/dev/null &amp;</span></pre></td></tr></table></figure>
+<img src="/blog/img/linux/wireshark/wireshark-https-chromium-browser.png" class="image-md" title="[wireshark-https-chromium-browser]">
+<p>在控制台中启动<code>wireshark</code>应用。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">wireshark</span> &amp;&gt;/dev/null</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><p>打开<code>Wireshark - Preferences - Protocols - SSL - (Pre)-Master-Secret log filename</code>，设置前面命令行中的<code>premaster.txt</code>完整的路径。</p>
+<img src="/blog/img/linux/wireshark/wireshark-https-ssl-pre-master-log.png" class="image-md" title="[wireshark-https-ssl-pre-master-log]">
+<h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h2><ol>
+<li>启动<code>wireshark</code>抓包</li>
+<li>在<code>Chromium</code>浏览器中访问链接：<code>https://httpbin.org/get</code></li>
+</ol>
+<h2 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h2><ol>
+<li>查看<code>$HOME/premaster.txt</code>文件，正确的情况下里面应该会有内容，没有内容则说明浏览器不支持<code>SSLKEYLOGFILE</code>。</li>
+<li>在 wireshark 中的过滤查找此请求的数据包并<code>Follow SSL stream</code>，选中<code>HTTP GET /get</code>这个请求，查看<code>Decrypted SSL Data</code>标签，如图所示。</li>
+</ol>
+<img src="/blog/img/linux/wireshark/wireshark-https-httpbin-get.png" class="image-full" title="[wireshark-https-httpbin-get]">
+<h2 id="HTTPS-RSA-握手过程简单说明"><a href="#HTTPS-RSA-握手过程简单说明" class="headerlink" title="HTTPS RSA 握手过程简单说明"></a>HTTPS RSA 握手过程简单说明</h2><img src="/blog/img/web/ssl-handshake-rsa.jpg" class="image-lg" title="[ssl handshake rsa]">
+<ol>
+<li>[明文] 客户端发送随机数client_random和支持的加密方式列表</li>
+<li>[明文] 服务器返回随机数server_random，选择的加密方式和服务器证书链</li>
+<li>[RSA] 客户端验证服务器证书，使用证书中的公钥加密premaster secret发送给服务端</li>
+<li>服务端使用私钥解密premaster secret</li>
+<li>两端分别通过client_random，server_random 和premaster secret 生成master secret，用于对称加密后续通信内容</li>
+</ol>
+<p>客户端和服务端在握手hello消息中明文交换了client_random和server_random，使用RSA公钥加密传输premaster secret，最后通过算法，客户端和服务端分别计算master secret。其中，不直接使用premaster secret的原因是：保证secret的随机性不受任意一方的影响。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://jimshaver.net/2015/02/11/decrypting-tls-browser-traffic-with-wireshark-the-easy-way/" target="_blank" rel="noopener">Decrypting TLS Browser Traffic With Wireshark</a></li>
+<li><a href="https://blog.cloudflare.com/keyless-ssl-the-nitty-gritty-technical-details/" target="_blank" rel="noopener">Keyless SSL: The Nitty Gritty Technical Details</a></li>
+<li><a href="https://cattail.me/tech/2015/11/30/how-https-works.html" target="_blank" rel="noopener">HTTPS工作原理</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux/2018/06/23/the-best-commands-docker.html" rel="next" title="命令行神器之 docker 篇">
+                <i class="fa fa-chevron-left"></i>
+                命令行神器之 docker 篇
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/08/04/hotspot-source-code-jdk8u-downloads.html" rel="prev" title="hotspot source code - jdk8u downloads">
+                <i class="fa fa-chevron-right"></i>
+                hotspot source code - jdk8u downloads
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步"><span class="nav-number">1.</span> <span class="nav-text">第一步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二步"><span class="nav-number">2.</span> <span class="nav-text">第二步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步"><span class="nav-number">3.</span> <span class="nav-text">第三步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四步"><span class="nav-number">4.</span> <span class="nav-text">第四步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-RSA-握手过程简单说明"><span class="nav-number">5.</span> <span class="nav-text">HTTPS RSA 握手过程简单说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

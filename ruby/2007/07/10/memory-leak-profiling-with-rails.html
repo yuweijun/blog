@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="Ruby on Rails项目中有内存溢出，总是需要定期重启mongrel_cluster，在网上找了一个程序，用于检查ruby内存中的对象情况，以判断程序内存溢出的可能原因：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="memory leak profiling with rails">
-<meta property="og:url" content="https://www.4e00.com/ruby/2007/07/10/memory-leak-profiling-with-rails.html">
+<meta property="og:url" content="http://www.4e00.com/ruby/2007/07/10/memory-leak-profiling-with-rails.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="Ruby on Rails项目中有内存溢出，总是需要定期重启mongrel_cluster，在网上找了一个程序，用于检查ruby内存中的对象情况，以判断程序内存溢出的可能原因：">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.133Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.023Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="memory leak profiling with rails">
 <meta name="twitter:description" content="Ruby on Rails项目中有内存溢出，总是需要定期重启mongrel_cluster，在网上找了一个程序，用于检查ruby内存中的对象情况，以判断程序内存溢出的可能原因：">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/ruby/2007/07/10/memory-leak-profiling-with-rails.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/ruby/2007/07/10/memory-leak-profiling-with-rails.html">
 
   <title> memory leak profiling with rails | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/ruby/" itemprop="url" rel="index">
                     <span itemprop="name">ruby</span>
                   </a>
@@ -256,7 +256,7 @@
       
         <p>Ruby on Rails项目中有内存溢出，总是需要定期重启mongrel_cluster，在网上找了一个程序，用于检查ruby内存中的对象情况，以判断程序内存溢出的可能原因：</p>
 <a id="more"></a>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line"><span class="comment"># author: scott<span class="doctag">@sigkill</span>.org</span></div><div class="line"><span class="comment"># http://scottstuff.net/blog/articles/2006/08/17/memory-leak-profiling-with-rails</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MemoryProfiler</span></span></div><div class="line"></div><div class="line">  DEFAULTS = &#123;<span class="symbol">:delay</span> =&gt; <span class="number">10</span>, <span class="symbol">:string_debug</span> =&gt; <span class="literal">false</span>&#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">start</span><span class="params">(opt = &#123;&#125;)</span></span></div><div class="line">    opt = DEFAULTS.dup.merge(opt)</div><div class="line"></div><div class="line">    Thread.new <span class="keyword">do</span></div><div class="line">      prev = Hash.new(<span class="number">0</span>)</div><div class="line">      curr = Hash.new(<span class="number">0</span>)</div><div class="line">      curr_strings = []</div><div class="line">      delta = Hash.new(<span class="number">0</span>)</div><div class="line"></div><div class="line">      file = File.open(<span class="string">'log/memory_profiler.log'</span>, <span class="string">'w'</span>)</div><div class="line"></div><div class="line">      loop <span class="keyword">do</span> <span class="params">|i|</span></div><div class="line">        <span class="keyword">begin</span></div><div class="line">          GC.start</div><div class="line">          curr.clear</div><div class="line">          curr_strings = [] <span class="keyword">if</span> opt[<span class="symbol">:string_debug</span>]</div><div class="line"></div><div class="line">          ObjectSpace.each_object <span class="keyword">do</span> <span class="params">|o|</span></div><div class="line">            curr[o.<span class="keyword">class</span>] += <span class="number">1</span> <span class="comment"># Marshal.dump(o).size rescue 1</span></div><div class="line">            <span class="keyword">if</span> opt[<span class="symbol">:string_debug</span>] <span class="keyword">and</span> o.<span class="keyword">class</span> == String</div><div class="line">              curr_strings.push o</div><div class="line">            <span class="keyword">end</span></div><div class="line">          <span class="keyword">end</span></div><div class="line"></div><div class="line">          <span class="keyword">if</span> opt[<span class="symbol">:string_debug</span>]</div><div class="line">            File.open(<span class="string">"log/memory_profiler_strings<span class="subst">#&#123;Time.now.to_i&#125;</span>.log"</span>, <span class="string">'w'</span>) <span class="keyword">do</span> <span class="params">|f|</span></div><div class="line">              curr_strings.sort.each <span class="keyword">do</span> <span class="params">|s|</span></div><div class="line">                f.puts s</div><div class="line">              <span class="keyword">end</span></div><div class="line">            <span class="keyword">end</span></div><div class="line">            curr_strings.clear</div><div class="line">          <span class="keyword">end</span></div><div class="line"></div><div class="line">          delta.clear</div><div class="line">          (curr.keys + delta.keys).uniq.each <span class="keyword">do</span> <span class="params">|k,v|</span></div><div class="line">            delta[k] = curr[k] - prev[k]</div><div class="line">          <span class="keyword">end</span></div><div class="line"></div><div class="line">          file.puts <span class="string">"Top 20"</span></div><div class="line">          delta.sort_by &#123; <span class="params">|k, v|</span> -v.abs &#125;[<span class="number">0</span>..<span class="number">19</span>].sort_by &#123; <span class="params">|k, v|</span> -v&#125;.each <span class="keyword">do</span> <span class="params">|k, v|</span></div><div class="line">            file.printf <span class="string">"%+5d: %s (%d)\n"</span>, v, k.name, curr[k] <span class="keyword">unless</span> v == <span class="number">0</span></div><div class="line">          <span class="keyword">end</span></div><div class="line">          file.flush</div><div class="line"></div><div class="line">          delta.clear</div><div class="line">          prev.clear</div><div class="line">          prev.update curr</div><div class="line">          GC.start</div><div class="line">        <span class="keyword">rescue</span> Exception =&gt; err</div><div class="line">          STDERR.puts <span class="string">"** memory_profiler error: <span class="subst">#&#123;err&#125;</span>"</span></div><div class="line">        <span class="keyword">end</span></div><div class="line"></div><div class="line">        sleep opt[<span class="symbol">:delay</span>]</div><div class="line">      <span class="keyword">end</span></div><div class="line"></div><div class="line">    <span class="keyword">end</span> <span class="comment"># end loop</span></div><div class="line"></div><div class="line">  <span class="keyword">end</span> <span class="comment"># end Thread.new</span></div><div class="line"></div><div class="line"><span class="keyword">end</span> <span class="comment"># end def self.start</span></div><div class="line"></div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="comment"># author: scott<span class="doctag">@sigkill</span>.org</span></span><span class="line"><span class="comment"># http://scottstuff.net/blog/articles/2006/08/17/memory-leak-profiling-with-rails</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MemoryProfiler</span></span></span><span class="line"></span><span class="line">  DEFAULTS = &#123;<span class="symbol">:delay</span> =&gt; <span class="number">10</span>, <span class="symbol">:string_debug</span> =&gt; <span class="literal">false</span>&#125;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">start</span><span class="params">(opt = &#123;&#125;)</span></span></span><span class="line">    opt = DEFAULTS.dup.merge(opt)</span><span class="line"></span><span class="line">    Thread.new <span class="keyword">do</span></span><span class="line">      prev = Hash.new(<span class="number">0</span>)</span><span class="line">      curr = Hash.new(<span class="number">0</span>)</span><span class="line">      curr_strings = []</span><span class="line">      delta = Hash.new(<span class="number">0</span>)</span><span class="line"></span><span class="line">      file = File.open(<span class="string">'log/memory_profiler.log'</span>, <span class="string">'w'</span>)</span><span class="line"></span><span class="line">      loop <span class="keyword">do</span> <span class="params">|i|</span></span><span class="line">        <span class="keyword">begin</span></span><span class="line">          GC.start</span><span class="line">          curr.clear</span><span class="line">          curr_strings = [] <span class="keyword">if</span> opt[<span class="symbol">:string_debug</span>]</span><span class="line"></span><span class="line">          ObjectSpace.each_object <span class="keyword">do</span> <span class="params">|o|</span></span><span class="line">            curr[o.class] += 1 # Marshal.dump(o).size rescue 1</span><span class="line">            if opt[:string_debug] and o.class == String</span><span class="line">              curr_strings.push o</span><span class="line">            <span class="keyword">end</span></span><span class="line">          <span class="keyword">end</span></span><span class="line"></span><span class="line">          <span class="keyword">if</span> opt[<span class="symbol">:string_debug</span>]</span><span class="line">            File.open(<span class="string">"log/memory_profiler_strings<span class="subst">#&#123;Time.now.to_i&#125;</span>.log"</span>, <span class="string">'w'</span>) <span class="keyword">do</span> <span class="params">|f|</span></span><span class="line">              curr_strings.sort.each <span class="keyword">do</span> <span class="params">|s|</span></span><span class="line">                f.puts s</span><span class="line">              <span class="keyword">end</span></span><span class="line">            <span class="keyword">end</span></span><span class="line">            curr_strings.clear</span><span class="line">          <span class="keyword">end</span></span><span class="line"></span><span class="line">          delta.clear</span><span class="line">          (curr.keys + delta.keys).uniq.each <span class="keyword">do</span> <span class="params">|k,v|</span></span><span class="line">            delta[k] = curr[k] - prev[k]</span><span class="line">          <span class="keyword">end</span></span><span class="line"></span><span class="line">          file.puts <span class="string">"Top 20"</span></span><span class="line">          delta.sort_by &#123; <span class="params">|k, v|</span> -v.abs &#125;[<span class="number">0</span>..<span class="number">19</span>].sort_by &#123; <span class="params">|k, v|</span> -v&#125;.each <span class="keyword">do</span> <span class="params">|k, v|</span></span><span class="line">            file.printf <span class="string">"%+5d: %s (%d)\n"</span>, v, k.name, curr[k] <span class="keyword">unless</span> v == <span class="number">0</span></span><span class="line">          <span class="keyword">end</span></span><span class="line">          file.flush</span><span class="line"></span><span class="line">          delta.clear</span><span class="line">          prev.clear</span><span class="line">          prev.update curr</span><span class="line">          GC.start</span><span class="line">        <span class="keyword">rescue</span> Exception =&gt; err</span><span class="line">          STDERR.puts <span class="string">"** memory_profiler error: <span class="subst">#&#123;err&#125;</span>"</span></span><span class="line">        <span class="keyword">end</span></span><span class="line"></span><span class="line">        sleep opt[<span class="symbol">:delay</span>]</span><span class="line">      <span class="keyword">end</span></span><span class="line"></span><span class="line">    <span class="keyword">end</span> <span class="comment"># end loop</span></span><span class="line"></span><span class="line">  <span class="keyword">end</span> <span class="comment"># end Thread.new</span></span><span class="line"></span><span class="line"><span class="keyword">end</span> <span class="comment"># end def self.start</span></span><span class="line"></span></pre></td></tr></table></figure>
 
       
     </div>
@@ -283,7 +283,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/ruby/2007/06/13/ruby-block-difference.html" rel="next" title="ruby block二种写法之间的区别">
-                上一篇：ruby block二种写法之间的区别
+                <i class="fa fa-chevron-left"></i>
+                ruby block二种写法之间的区别
               </a>
             
           </div>
@@ -291,7 +292,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/javascript/2007/07/13/javascript-debugger-functions.html" rel="prev" title="javascript debugger functions">
-                下一篇：javascript debugger functions
+                <i class="fa fa-chevron-right"></i>
+                javascript debugger functions
               </a>
             
           </div>
@@ -340,7 +342,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -351,16 +353,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -442,10 +442,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

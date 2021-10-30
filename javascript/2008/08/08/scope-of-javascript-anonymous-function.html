@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="匿名函数中的作用对象是全局的window对象，一般是不需要注意这点，但当在匿名函数中使用使用this就要小心，这个this是指向window的，如上所示可以用apply或者call来指定匿名函数作用于哪个对象上，但匿名函数如果在setTimeout/setInterval中使用的话则需要将this对象用别名如_self/self/_this/that替代后在匿名方法中使用，如下面二个参考文章所示。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="scope of javascript anonymous function">
-<meta property="og:url" content="https://www.4e00.com/javascript/2008/08/08/scope-of-javascript-anonymous-function.html">
+<meta property="og:url" content="http://www.4e00.com/javascript/2008/08/08/scope-of-javascript-anonymous-function.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="匿名函数中的作用对象是全局的window对象，一般是不需要注意这点，但当在匿名函数中使用使用this就要小心，这个this是指向window的，如上所示可以用apply或者call来指定匿名函数作用于哪个对象上，但匿名函数如果在setTimeout/setInterval中使用的话则需要将this对象用别名如_self/self/_this/that替代后在匿名方法中使用，如下面二个参考文章所示。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.137Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.043Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="scope of javascript anonymous function">
 <meta name="twitter:description" content="匿名函数中的作用对象是全局的window对象，一般是不需要注意这点，但当在匿名函数中使用使用this就要小心，这个this是指向window的，如上所示可以用apply或者call来指定匿名函数作用于哪个对象上，但匿名函数如果在setTimeout/setInterval中使用的话则需要将this对象用别名如_self/self/_this/that替代后在匿名方法中使用，如下面二个参考文章所示。">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2008/08/08/scope-of-javascript-anonymous-function.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/javascript/2008/08/08/scope-of-javascript-anonymous-function.html">
 
   <title> scope of javascript anonymous function | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/javascript/" itemprop="url" rel="index">
                     <span itemprop="name">javascript</span>
                   </a>
@@ -256,11 +256,11 @@
       
         <p>匿名函数中的作用对象是全局的<code>window</code>对象，一般是不需要注意这点，但当在匿名函数中使用使用<code>this</code>就要小心，这个<code>this</code>是指向<code>window</code>的，如上所示可以用<code>apply</code>或者<code>call</code>来指定匿名函数作用于哪个对象上，但匿名函数如果在<code>setTimeout/setInterval</code>中使用的话则需要将<code>this</code>对象用别名如<code>_self/self/_this/that</code>替代后在匿名方法中使用，如下面二个参考文章所示。</p>
 <a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> foo = <span class="string">"test in global window"</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Constructor</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.foo = <span class="string">'test in Constructor'</span>;</div><div class="line">    <span class="keyword">this</span>.local = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        alert(<span class="keyword">this</span>.foo);</div><div class="line">        <span class="keyword">return</span> <span class="string">"local"</span>;</div><div class="line">    &#125;).apply(<span class="keyword">this</span>);</div><div class="line">    <span class="keyword">this</span>.globals = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        alert(<span class="keyword">this</span>.foo);</div><div class="line">        <span class="keyword">return</span> <span class="string">"global"</span>;</div><div class="line">    &#125;)();</div><div class="line">&#125;</div><div class="line"><span class="keyword">new</span> Constructor();</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="string">"test in global window"</span>;</span><span class="line"></span><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Constructor</span>(<span class="params"></span>) </span>&#123;</span><span class="line">    <span class="keyword">this</span>.foo = <span class="string">'test in Constructor'</span>;</span><span class="line">    <span class="keyword">this</span>.local = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">        alert(<span class="keyword">this</span>.foo);</span><span class="line">        <span class="keyword">return</span> <span class="string">"local"</span>;</span><span class="line">    &#125;).apply(<span class="keyword">this</span>);</span><span class="line">    <span class="keyword">this</span>.globals = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><span class="line">        alert(<span class="keyword">this</span>.foo);</span><span class="line">        <span class="keyword">return</span> <span class="string">"global"</span>;</span><span class="line">    &#125;)();</span><span class="line">&#125;</span><span class="line"><span class="keyword">new</span> Constructor();</span></pre></td></tr></table></figure>
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>In javascript, scope of anonymous functions is global.</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://yuweijun.blogspot.com/2008/05/test-scope-of-this-in-closure-and-in.html" target="_blank" rel="external">http://yuweijun.blogspot.com/2008/05/test-scope-of-this-in-closure-and-in.html</a></li>
-<li><a href="http://www.dustindiaz.com/scoping-anonymous-functions/" target="_blank" rel="external">http://www.dustindiaz.com/scoping-anonymous-functions/</a></li>
+<li><a href="http://yuweijun.blogspot.com/2008/05/test-scope-of-this-in-closure-and-in.html" target="_blank" rel="noopener">http://yuweijun.blogspot.com/2008/05/test-scope-of-this-in-closure-and-in.html</a></li>
+<li><a href="http://www.dustindiaz.com/scoping-anonymous-functions/" target="_blank" rel="noopener">http://www.dustindiaz.com/scoping-anonymous-functions/</a></li>
 </ol>
 
       
@@ -288,7 +288,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/mysql/2008/07/31/mysql-innodb-myisam-table.html" rel="next" title="myisam和innodb引擎选择">
-                上一篇：myisam和innodb引擎选择
+                <i class="fa fa-chevron-left"></i>
+                myisam和innodb引擎选择
               </a>
             
           </div>
@@ -296,7 +297,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/css/2008/08/12/ie6-css-float-double-margin.html" rel="prev" title="解决ie6的浮动元素的双倍边距问题">
-                下一篇：解决ie6的浮动元素的双倍边距问题
+                <i class="fa fa-chevron-right"></i>
+                解决ie6的浮动元素的双倍边距问题
               </a>
             
           </div>
@@ -345,7 +347,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -356,16 +358,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -447,10 +447,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

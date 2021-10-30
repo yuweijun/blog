@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="闭包的定义(javascript权威指南)如下： javascript functions are a combination of code to be executed and the scope in which to execute them. this combination of code and scope is known as a closure in the computer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="javascript: closures, lexical scope and scope chain">
-<meta property="og:url" content="https://www.4e00.com/javascript/2010/06/08/javascript-closures-lexical-scope-and-scope-chain.html">
+<meta property="og:url" content="http://www.4e00.com/javascript/2010/06/08/javascript-closures-lexical-scope-and-scope-chain.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="闭包的定义(javascript权威指南)如下： javascript functions are a combination of code to be executed and the scope in which to execute them. this combination of code and scope is known as a closure in the computer">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.071Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript: closures, lexical scope and scope chain">
 <meta name="twitter:description" content="闭包的定义(javascript权威指南)如下： javascript functions are a combination of code to be executed and the scope in which to execute them. this combination of code and scope is known as a closure in the computer">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/javascript/2010/06/08/javascript-closures-lexical-scope-and-scope-chain.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/javascript/2010/06/08/javascript-closures-lexical-scope-and-scope-chain.html">
 
   <title> javascript: closures, lexical scope and scope chain | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/javascript/" itemprop="url" rel="index">
                     <span itemprop="name">javascript</span>
                   </a>
@@ -269,7 +269,7 @@
 <p>如此通过<code>作用域链</code>，javascript就实现了call object中变量名检索。</p>
 <p>在全局对象中一个方法调用完成之后，生成的call object会被回收，这看不出<code>闭包</code>(即当前被调用的方法)有什么功用。但是当一个外部方法的内部返回一个嵌套方法，并且返回的嵌套方法被全局对象引用时，或者是外部方法内将嵌套方法赋给全局对象的属性(jquery构造方法就是在匿名方法内设置在window.jquery上)，外部方法调用生成的call object就会引用这个嵌套方法，而同时嵌套方法被全局对象引用，所以这个外部方法调用产生的call object及其属性就会继续生存在内存中，这时闭包(外部方法)的功用才被显示出来，下面以<code>jQuery.fn.animation()</code>方法调用过程为例进行说明:</p>
 <a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"> window, undefined </span>) </span>&#123;</div><div class="line">    <span class="comment">// ......jQuery source code;</span></div><div class="line">    <span class="comment">// expose jQuery to the global object</span></div><div class="line">    <span class="built_in">window</span>.jQuery = <span class="built_in">window</span>.$ = jQuery;</div><div class="line">&#125;)(<span class="built_in">window</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"> window, undefined </span>) </span>&#123;</span><span class="line">    <span class="comment">// ......jQuery source code;</span></span><span class="line">    <span class="comment">// expose jQuery to the global object</span></span><span class="line">    <span class="built_in">window</span>.jQuery = <span class="built_in">window</span>.$ = jQuery;</span><span class="line">&#125;)(<span class="built_in">window</span>);</span></pre></td></tr></table></figure>
 <ol>
 <li>当载入整个jquery.js文件时，会运行最外面的匿名方法(通过这个匿名方法形成一个命名空间，所有的变量名都是匿名方法内部定义的局部变量名):</li>
 <li>因为匿名方法内部有一个内部方法jquery被全局对象window的属性jquery和$引用，这里变量名很搞，一个是匿名方法内嵌套的构造方法jquery，另一个window对象的属性名jquery。因为这个匿名方法内部的jquery构造方法被全局对象window.jquery引用，所以外围的匿名方法在运行时产生的call object会继续生存在内存中。此时，这个call object可以利用firebug或者chrome的debug工具可以看到，在firebug中的scopechain中称之为&quot;object&quot;，在chrome的console中称之为&quot;closure&quot;，该对象中记录了当前这个最外围的匿名方法被调用后生成的call object上变量的值，这些变量是未绑定的，是自由的，其值可以被修改并保存在作用域链上。运行此匿名方法时，会将其call object置于global object之上，形成作用域链。这里注意一点，这匿名方法是一个闭包，但运行方法生成的call object对象只是作用域链顶端的一个对象，记录了方法中的变量名和值。闭包不但包括这个运行的作用域，还包括其运行所需的代码。</li>
@@ -278,7 +278,7 @@
 <li>对于最后的匿名function运行完成之后，如果这个匿名function对象还被其他element的queue数组引用，则第3步中运行.animate()方法生成的闭包将继续生存在内存之中，直到所有的效果方法运行完成，此匿名function没有其他引用时，.animate()调用生成的call object就会被回收。</li>
 </ol>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://yuweijun.blogspot.com/2008/10/javascript.html" target="_blank" rel="external">javascript函数调用时的作用域链和调用对象是如何形成的及与闭包的关系</a></li>
+<li><a href="http://yuweijun.blogspot.com/2008/10/javascript.html" target="_blank" rel="noopener">javascript函数调用时的作用域链和调用对象是如何形成的及与闭包的关系</a></li>
 </ol>
 
       
@@ -306,7 +306,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/mysql/2010/05/24/mysqlbinlog-difference-between-version-3.3-and-3.1.html" rel="next" title="mysqlbinlog version 3.3和3.1版本之间的输出差异">
-                上一篇：mysqlbinlog version 3.3和3.1版本之间的输出差异
+                <i class="fa fa-chevron-left"></i>
+                mysqlbinlog version 3.3和3.1版本之间的输出差异
               </a>
             
           </div>
@@ -314,7 +315,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/javascript/2010/06/20/relationship-of-constructor-and-prototype-in-javascript.html" rel="prev" title="relationship of constructor and prototype in javascript">
-                下一篇：relationship of constructor and prototype in javascript
+                <i class="fa fa-chevron-right"></i>
+                relationship of constructor and prototype in javascript
               </a>
             
           </div>
@@ -363,7 +365,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -374,16 +376,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -465,10 +465,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

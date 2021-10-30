@@ -301,8 +301,9 @@ blockquote {
   margin: 0;
   padding: 0;
   opacity: 0.6;
-  letter-spacing: -1px;
-  font-style: italic;
+  background-color: rgba(200,200,200,0.6);
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 blockquote p,
 blockquote pre,
@@ -328,8 +329,8 @@ hr {
 blockquote {
   padding: 0 15px;
   margin: 0 0 20px 0;
-  color: #666;
-  border-left: 4px solid #ddd;
+  color: #111;
+  border-left: 4px solid #5bc0de;
 }
 blockquote cite::before {
   content: "-";
@@ -542,6 +543,7 @@ pre,
   overflow-y: hidden;
   margin: 20px 0;
   padding: 8px 12px;
+  word-break: keep-all;
   font-size: 12px;
   color: #c5c8c6;
   line-height: 1.6;
@@ -583,7 +585,7 @@ pre code {
 }
 .highlight table {
   margin: 0;
-  width: auto;
+  width: 100%;
   border: none;
 }
 .highlight td {
@@ -611,6 +613,9 @@ pre code {
 .highlight figcaption a:hover {
   border-bottom-color: #c5c8c6;
 }
+.highlight .gutter {
+  width: 40px;
+}
 .highlight .gutter pre {
   color: #666;
   text-align: right;
@@ -618,10 +623,52 @@ pre code {
 }
 .highlight .line {
   height: 20px;
+  display: block;
 }
-.highlight .line.output {
+.highlight .line.output,
+.highlight .comment.output {
   color: #666;
   padding-left: 15px;
+}
+.highlight .line.output .variable,
+.highlight .line.output .attribute,
+.highlight .line.output .keyword,
+.highlight .line.output .regexp,
+.highlight .line.output .built_in,
+.highlight .line.output .literal,
+.highlight .line.output .params,
+.highlight .line.output .constant,
+.highlight .line.output .command,
+.highlight .line.output .comment,
+.highlight .line.output .string,
+.highlight .line.output .value,
+.highlight .line.output .inheritance,
+.highlight .line.output .header,
+.highlight .line.output .special,
+.highlight .line.output .number,
+.highlight .line.output .formula {
+  color: #666;
+}
+@media (min-width: 768px) and (max-width: 1990px) {
+  .highlight ::-webkit-scrollbar {
+    width: 5px;
+    height: 4px;
+  }
+  .highlight ::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.1);
+  }
+  .highlight ::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.1);
+  }
+  .highlight:hover ::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.5);
+  }
+}
+.highlight.plain {
+  background: rgba(0,0,0,0.04);
+}
+.highlight.plain pre {
+  color: #555;
 }
 .gist table {
   width: auto;
@@ -1065,6 +1112,21 @@ pre .javascript .function {
   .post-body {
     word-break: break-word;
   }
+}
+.post-body kbd {
+  margin: 0 3px;
+  font-size: 85%;
+  overflow: auto;
+  white-space: pre-wrap;
+  border: 1px solid rgba(215,215,215,0.6);
+  color: #fff;
+  background-color: rgba(0,0,0,0.8);
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px #aaa;
+  padding: 2px 8px 3px 8px;
+  line-height: 2em;
+  position: relative;
+  top: -1px;
 }
 .post-body .fancybox img {
   display: block !important;
@@ -1610,7 +1672,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #6a9421;
+  background: #ff914e;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2188,6 +2250,7 @@ hr {
   height: 2px;
 }
 .header {
+  border-top: 5px solid #333;
   background: #f5f5f5;
 }
 .header-inner {
@@ -2206,6 +2269,7 @@ hr {
     width: auto;
     margin-bottom: 50px;
     padding: 10px;
+    border-bottom: 1px solid #e8e8e8;
   }
 }
 .site-meta {
@@ -2375,6 +2439,7 @@ hr {
 }
 .posts-expand .post-body img {
   margin: 0 0 20px 0;
+  border-radius: 6px;
 }
 .posts-expand .post-tags {
   text-align: left;

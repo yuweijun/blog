@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="Java Log Frameworks常见的java日志框架和实现主要有：  slf4j log4j logback apache jakarta commons-logging java.util.logging log4j 2  上述几个日志工具的简单说明：  前面3个日志工具是同一个作者 Ceki G&amp;uuml;lc&amp;uuml; 开发的。 slf4j是Simple Logging Facad">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java日志框架简介">
-<meta property="og:url" content="https://www.4e00.com/java/2016/09/18/java-logger-intro.html">
+<meta property="og:url" content="http://www.4e00.com/java/2016/09/18/java-logger-intro.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="Java Log Frameworks常见的java日志框架和实现主要有：  slf4j log4j logback apache jakarta commons-logging java.util.logging log4j 2  上述几个日志工具的简单说明：  前面3个日志工具是同一个作者 Ceki G&amp;uuml;lc&amp;uuml; 开发的。 slf4j是Simple Logging Facad">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.153Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.109Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java日志框架简介">
 <meta name="twitter:description" content="Java Log Frameworks常见的java日志框架和实现主要有：  slf4j log4j logback apache jakarta commons-logging java.util.logging log4j 2  上述几个日志工具的简单说明：  前面3个日志工具是同一个作者 Ceki G&amp;uuml;lc&amp;uuml; 开发的。 slf4j是Simple Logging Facad">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/09/18/java-logger-intro.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2016/09/18/java-logger-intro.html">
 
   <title> java日志框架简介 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -317,8 +317,8 @@
 <li><code>non-static</code>是<code>IOC</code>友好的，因为<code>IOC</code>中的<code>BEAN</code>一般都是单例的。</li>
 </ol>
 <h3 id="STATIC"><a href="#STATIC" class="headerlink" title="STATIC"></a>STATIC</h3><a id="more"></a>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(LoggerExample.class);</div></pre></td></tr></table></figure>
-<h3 id="INSTANCE"><a href="#INSTANCE" class="headerlink" title="INSTANCE"></a>INSTANCE</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(LoggerExample<span class="class">.<span class="keyword">class</span>)</span>;</span></pre></td></tr></table></figure>
+<h3 id="INSTANCE"><a href="#INSTANCE" class="headerlink" title="INSTANCE"></a>INSTANCE</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</span></pre></td></tr></table></figure>
 <h2 id="日志查询RequstID"><a href="#日志查询RequstID" class="headerlink" title="日志查询RequstID"></a>日志查询RequstID</h2><p>如果应用是分布式的，或者是用户会访问多个子系统的，当访问者第一次进入系统时，可以为其生成一个统一的<code>RequestID</code>，并使用<code>MDC</code>(Mapped Diagnostic Context，映射调试上下文)写入日志文件中，可以跟踪用户完整的操作过程，对问题分析和数据分析会很有用。</p>
 <p>比如使用如下这些信息通过一个可逆算法生成这个<code>RequestID</code>。</p>
 <ol>
@@ -328,20 +328,20 @@
 </ol>
 <h2 id="使用结构化或者半结构化的日志消息"><a href="#使用结构化或者半结构化的日志消息" class="headerlink" title="使用结构化或者半结构化的日志消息"></a>使用结构化或者半结构化的日志消息</h2><p>日志格式设计比较好的日志消息，对于查找问题会很有利，也便于使用<code>logstash</code>导入到<code>elasticsearch</code>中进行分析，或者是<code>kibana</code>查看。</p>
 <h2 id="日志命名格式以及日志文件名"><a href="#日志命名格式以及日志文件名" class="headerlink" title="日志命名格式以及日志文件名"></a>日志命名格式以及日志文件名</h2><p>日志文件一般按日期，应用标识和日志级别三者来命名，也可以再带上主机名。如：<code>web-info-2016-09-18.log</code>。</p>
-<h2 id="Logger使用注意事项"><a href="#Logger使用注意事项" class="headerlink" title="Logger使用注意事项"></a>Logger使用注意事项</h2><h3 id="不要使用字符串拼接方法"><a href="#不要使用字符串拼接方法" class="headerlink" title="不要使用字符串拼接方法"></a>不要使用字符串拼接方法</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">log.debug(<span class="string">"orderId is "</span> + order.getId() + <span class="string">" and amounts is "</span> + amounts);</div></pre></td></tr></table></figure>
-<h3 id="使用对象占位符"><a href="#使用对象占位符" class="headerlink" title="使用对象占位符"></a>使用对象占位符</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">log.debug(<span class="string">"orderId is &#123;&#125; and amounts is &#123;&#125;"</span>, order.getId(), amounts);</div></pre></td></tr></table></figure>
-<h3 id="记录异常信息"><a href="#记录异常信息" class="headerlink" title="记录异常信息"></a>记录异常信息</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    ...</div><div class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">    e.printStackTrace(); <span class="comment">// BAD</span></div><div class="line">    log.error(<span class="string">"IO exception"</span>, e.getMessage()); <span class="comment">// BAD</span></div><div class="line">    log.error(<span class="string">"IO exception"</span>, e); <span class="comment">// OK</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="不要记录异常并抛出异常"><a href="#不要记录异常并抛出异常" class="headerlink" title="不要记录异常并抛出异常"></a>不要记录异常并抛出异常</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    ...</div><div class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">    log.error(<span class="string">"IO exception"</span>); <span class="comment">// OK</span></div><div class="line">    log.error(<span class="string">"IO exception"</span>, e); <span class="comment">// BAD</span></div><div class="line">    <span class="keyword">throw</span> e;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="不要记录集合和复杂对象"><a href="#不要记录集合和复杂对象" class="headerlink" title="不要记录集合和复杂对象"></a>不要记录集合和复杂对象</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">log.info(<span class="string">"fetch users: &#123;&#125; from db."</span>, users);</div></pre></td></tr></table></figure>
-<h3 id="程序中不要使用System-out"><a href="#程序中不要使用System-out" class="headerlink" title="程序中不要使用System.out"></a>程序中不要使用System.out</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">System.out.println(<span class="string">"current login user name is : "</span> + user.getName());</div></pre></td></tr></table></figure>
+<h2 id="Logger使用注意事项"><a href="#Logger使用注意事项" class="headerlink" title="Logger使用注意事项"></a>Logger使用注意事项</h2><h3 id="不要使用字符串拼接方法"><a href="#不要使用字符串拼接方法" class="headerlink" title="不要使用字符串拼接方法"></a>不要使用字符串拼接方法</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">log.debug(<span class="string">"orderId is "</span> + order.getId() + <span class="string">" and amounts is "</span> + amounts);</span></pre></td></tr></table></figure>
+<h3 id="使用对象占位符"><a href="#使用对象占位符" class="headerlink" title="使用对象占位符"></a>使用对象占位符</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">log.debug(<span class="string">"orderId is &#123;&#125; and amounts is &#123;&#125;"</span>, order.getId(), amounts);</span></pre></td></tr></table></figure>
+<h3 id="记录异常信息"><a href="#记录异常信息" class="headerlink" title="记录异常信息"></a>记录异常信息</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><span class="line">    ...</span><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><span class="line">    e.printStackTrace(); <span class="comment">// BAD</span></span><span class="line">    log.error(<span class="string">"IO exception"</span>, e.getMessage()); <span class="comment">// BAD</span></span><span class="line">    log.error(<span class="string">"IO exception"</span>, e); <span class="comment">// OK</span></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="不要记录异常并抛出异常"><a href="#不要记录异常并抛出异常" class="headerlink" title="不要记录异常并抛出异常"></a>不要记录异常并抛出异常</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><span class="line">    ...</span><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><span class="line">    log.error(<span class="string">"IO exception"</span>); <span class="comment">// OK</span></span><span class="line">    log.error(<span class="string">"IO exception"</span>, e); <span class="comment">// BAD</span></span><span class="line">    <span class="keyword">throw</span> e;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="不要记录集合和复杂对象"><a href="#不要记录集合和复杂对象" class="headerlink" title="不要记录集合和复杂对象"></a>不要记录集合和复杂对象</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">log.info(<span class="string">"fetch users: &#123;&#125; from db."</span>, users);</span></pre></td></tr></table></figure>
+<h3 id="程序中不要使用System-out"><a href="#程序中不要使用System-out" class="headerlink" title="程序中不要使用System.out"></a>程序中不要使用System.out</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">System.out.println(<span class="string">"current login user name is : "</span> + user.getName());</span></pre></td></tr></table></figure>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://stackoverflow.com/questions/3842823/should-logger-be-private-static-or-not" target="_blank" rel="external">Should logger be private static or not</a></li>
-<li><a href="http://www.slf4j.org/faq.html#declared_static" target="_blank" rel="external">Should Logger members of a class be declared as static</a></li>
-<li><a href="http://www.yegor256.com/2014/05/23/avoid-java-static-logger.html" target="_blank" rel="external">Get Rid of Java Static Loggers</a></li>
-<li><a href="http://www.infoq.com/cn/articles/things-of-java-log-performance" target="_blank" rel="external">Java日志性能那些事</a></li>
-<li><a href="http://www.ibm.com/developerworks/cn/java/j-lo-practicelog/index.html" target="_blank" rel="external">Java 日志管理最佳实践</a></li>
-<li><a href="https://www.linkedin.com/pulse/java%E6%97%A5%E5%BF%97%E8%A7%84%E8%8C%83-ding-lau" target="_blank" rel="external">java日志规范</a></li>
-<li><a href="http://blog.jobbole.com/56574/" target="_blank" rel="external">最佳日志实践</a></li>
+<li><a href="http://stackoverflow.com/questions/3842823/should-logger-be-private-static-or-not" target="_blank" rel="noopener">Should logger be private static or not</a></li>
+<li><a href="http://www.slf4j.org/faq.html#declared_static" target="_blank" rel="noopener">Should Logger members of a class be declared as static</a></li>
+<li><a href="http://www.yegor256.com/2014/05/23/avoid-java-static-logger.html" target="_blank" rel="noopener">Get Rid of Java Static Loggers</a></li>
+<li><a href="http://www.infoq.com/cn/articles/things-of-java-log-performance" target="_blank" rel="noopener">Java日志性能那些事</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-lo-practicelog/index.html" target="_blank" rel="noopener">Java 日志管理最佳实践</a></li>
+<li><a href="https://www.linkedin.com/pulse/java%E6%97%A5%E5%BF%97%E8%A7%84%E8%8C%83-ding-lau" target="_blank" rel="noopener">java日志规范</a></li>
+<li><a href="http://blog.jobbole.com/56574/" target="_blank" rel="noopener">最佳日志实践</a></li>
 </ol>
 
       
@@ -369,7 +369,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/linux/2016/09/17/tcp-nagle-algorithm-and-delayed-ack.html" rel="next" title="tcp nagle's algorithm and delayed ack">
-                上一篇：tcp nagle's algorithm and delayed ack
+                <i class="fa fa-chevron-left"></i>
+                tcp nagle's algorithm and delayed ack
               </a>
             
           </div>
@@ -377,7 +378,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2016/09/21/git-format-patch-and-git-diff.html" rel="prev" title="git format-patch and git diff">
-                下一篇：git format-patch and git diff
+                <i class="fa fa-chevron-right"></i>
+                git format-patch and git diff
               </a>
             
           </div>
@@ -426,7 +428,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -437,16 +439,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -528,10 +528,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

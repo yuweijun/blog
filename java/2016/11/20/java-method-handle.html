@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="JDK 7以前字节码指令集中，四条方法调用指令invokevirtual、invokespecial、invokestatic、invokeinterface的第一个参数都是被调用的方法的符号引用CONSTANT_Methodref_info或者CONSTANT_InterfaceMethodref_info常量，方法的符号引用在编译时产生，而动态类型语言只有在运行期才能确定接收者类型，为了在Ja">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java method handle">
-<meta property="og:url" content="https://www.4e00.com/java/2016/11/20/java-method-handle.html">
+<meta property="og:url" content="http://www.4e00.com/java/2016/11/20/java-method-handle.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="JDK 7以前字节码指令集中，四条方法调用指令invokevirtual、invokespecial、invokestatic、invokeinterface的第一个参数都是被调用的方法的符号引用CONSTANT_Methodref_info或者CONSTANT_InterfaceMethodref_info常量，方法的符号引用在编译时产生，而动态类型语言只有在运行期才能确定接收者类型，为了在Ja">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.153Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.114Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java method handle">
 <meta name="twitter:description" content="JDK 7以前字节码指令集中，四条方法调用指令invokevirtual、invokespecial、invokestatic、invokeinterface的第一个参数都是被调用的方法的符号引用CONSTANT_Methodref_info或者CONSTANT_InterfaceMethodref_info常量，方法的符号引用在编译时产生，而动态类型语言只有在运行期才能确定接收者类型，为了在Ja">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/11/20/java-method-handle.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2016/11/20/java-method-handle.html">
 
   <title> java method handle | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -259,9 +259,9 @@
 <p>新加入的<code>java.lang.invoke</code>包是就是<code>JSR 292</code>的一个重要组成部分，这个包的主要目的是在之前单纯依靠符号引用来确定调用的目标方法这条路之外，提供一种新的动态确定目标方法的机制，称为<code>MethodHandle</code>。</p>
 <p><code>MethodHandle</code>可以指向任意方法，提供为方法创建“别名”的能力，可以用统一的方式去调用<code>MethodHandle</code>。此外，<code>MethodHandle</code>还支持组合，可以以适配器的方式将多个<code>MethodHandle</code>串在一起，实现参数过滤、参数转换、返回值转换等许多功能。</p>
 <p>目前通过benchmark测试的结果来看，调用<code>MethodHandle</code>的速度是最慢的，距调用接口方法的速度还是有较明显的差距，下面会测试代码详细说明。</p>
-<p><code>MethodHandle</code>对许多JVM的内部实现来说并不是一个全新的概念。要实现JVM，在内部总会保留一些指向方法的指针，<code>JDK 7</code>只是把它（和其它许多JVM里原本就支持的概念）具体化为Java类型暴露给Java代码用而已，这就是所谓的<a href="https://en.wikipedia.org/wiki/Reification_%28computer_science%29" target="_blank" rel="external">reification</a>。</p>
-<p><code>MethodHandle</code>的主要要解决的问题就是“要高效的调用编译时已知签名但具体目标未知的方法”，其主要还是为JVM上的动态语言的实现服务，并不是面向普通的Java程序员的，换个说法就是对普通Java程序员来说并不是很常用的。</p>
-<h2 id="MethodHandle示例"><a href="#MethodHandle示例" class="headerlink" title="MethodHandle示例"></a>MethodHandle示例</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleDynamicInvoker</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InvokeDynamicA</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">array</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">            <span class="keyword">int</span> length = args.length;</div><div class="line">            System.out.println(<span class="keyword">this</span>.getClass().getSimpleName() + <span class="string">" : arguments length is : "</span> + length);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InvokeDynamicB</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">array</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">            <span class="keyword">int</span> length = args.length;</div><div class="line">            System.out.println(<span class="keyword">this</span>.getClass().getSimpleName() + <span class="string">" : arguments length is : "</span> + length);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">list</span><span class="params">(List&lt;String&gt; args)</span> </span>&#123;</div><div class="line">            <span class="keyword">int</span> length = args.size();</div><div class="line">            System.out.println(<span class="string">"list size is : "</span> + length);</div><div class="line">            <span class="keyword">return</span> length;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        InvokeDynamicB invokeDynamicB = <span class="keyword">new</span> InvokeDynamicB();</div><div class="line">        MethodHandles.Lookup lookup = MethodHandles.lookup(); <span class="comment">// 1</span></div><div class="line"></div><div class="line">        <span class="comment">// instance method invoke</span></div><div class="line">        MethodType methodType = MethodType.methodType(<span class="keyword">void</span>.class, String[].class); <span class="comment">// 2</span></div><div class="line">        MethodHandle methodHandle = lookup.findVirtual(InvokeDynamicB.class, <span class="string">"array"</span>, methodType).bindTo(invokeDynamicB); <span class="comment">// 3</span></div><div class="line">        methodHandle.invoke(<span class="keyword">new</span> String[]&#123;<span class="string">"abc"</span>, <span class="string">"def"</span>, <span class="string">"ghi"</span>&#125;); <span class="comment">// 4</span></div><div class="line"></div><div class="line">        <span class="comment">// bind the same methodType and methodName to another instance</span></div><div class="line">        methodHandle = lookup.findVirtual(InvokeDynamicA.class, <span class="string">"array"</span>, methodType).bindTo(<span class="keyword">new</span> InvokeDynamicA());</div><div class="line">        methodHandle.invokeExact(<span class="keyword">new</span> String[]&#123;<span class="string">"abc"</span>, <span class="string">"def"</span>, <span class="string">"ghi"</span>&#125;);</div><div class="line"></div><div class="line">        <span class="comment">// static method invoke</span></div><div class="line">        methodType = MethodType.methodType(<span class="keyword">int</span>.class, java.util.List.class);</div><div class="line">        methodHandle = lookup.findStatic(InvokeDynamicB.class, <span class="string">"list"</span>, methodType);</div><div class="line">        List&lt;String&gt; list = Lists.newArrayList(<span class="string">"abc"</span>, <span class="string">"def"</span>, <span class="string">"ghi"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// 必须指明返回类型为int，满足methodType的要求，否则抛异常：expected (List)int but found (List)Object</span></div><div class="line">        <span class="comment">// Object length = methodHandle.invokeExact(list);</span></div><div class="line">        <span class="keyword">int</span> length = (<span class="keyword">int</span>) methodHandle.invokeExact(list);</div><div class="line">        System.out.println(length);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>MethodHandle</code>对许多JVM的内部实现来说并不是一个全新的概念。要实现JVM，在内部总会保留一些指向方法的指针，<code>JDK 7</code>只是把它（和其它许多JVM里原本就支持的概念）具体化为Java类型暴露给Java代码用而已，这就是所谓的<a href="https://en.wikipedia.org/wiki/Reification_%28computer_science%29" target="_blank" rel="noopener">reification</a>。</p>
+<p><code>MethodHandle</code>的主要要解决的问题就是<code>要高效的调用编译时已知签名但具体目标未知的方法</code>，其主要还是为JVM上的动态语言的实现服务，并不是面向普通的Java程序员的，换个说法就是对普通Java程序员来说并不是很常用的。</p>
+<h2 id="MethodHandle示例"><a href="#MethodHandle示例" class="headerlink" title="MethodHandle示例"></a>MethodHandle示例</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleDynamicInvoker</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InvokeDynamicA</span> </span>&#123;</span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">array</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">            <span class="keyword">int</span> length = args.length;</span><span class="line">            System.out.println(<span class="keyword">this</span>.getClass().getSimpleName() + <span class="string">" : arguments length is : "</span> + length);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InvokeDynamicB</span> </span>&#123;</span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">array</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">            <span class="keyword">int</span> length = args.length;</span><span class="line">            System.out.println(<span class="keyword">this</span>.getClass().getSimpleName() + <span class="string">" : arguments length is : "</span> + length);</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">list</span><span class="params">(List&lt;String&gt; args)</span> </span>&#123;</span><span class="line">            <span class="keyword">int</span> length = args.size();</span><span class="line">            System.out.println(<span class="string">"list size is : "</span> + length);</span><span class="line">            <span class="keyword">return</span> length;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><span class="line">        InvokeDynamicB invokeDynamicB = <span class="keyword">new</span> InvokeDynamicB();</span><span class="line">        MethodHandles.Lookup lookup = MethodHandles.lookup(); <span class="comment">// 1</span></span><span class="line"></span><span class="line">        <span class="comment">// instance method invoke</span></span><span class="line">        MethodType methodType = MethodType.methodType(void.class, String[].class); // 2</span><span class="line">        MethodHandle methodHandle = lookup.findVirtual(InvokeDynamicB.class, "array", methodType).bindTo(invokeDynamicB); // 3</span><span class="line">        methodHandle.invoke(<span class="keyword">new</span> String[]&#123;<span class="string">"abc"</span>, <span class="string">"def"</span>, <span class="string">"ghi"</span>&#125;); <span class="comment">// 4</span></span><span class="line"></span><span class="line">        <span class="comment">// bind the same methodType and methodName to another instance</span></span><span class="line">        methodHandle = lookup.findVirtual(InvokeDynamicA.class, "array", methodType).bindTo(new InvokeDynamicA());</span><span class="line">        methodHandle.invokeExact(<span class="keyword">new</span> String[]&#123;<span class="string">"abc"</span>, <span class="string">"def"</span>, <span class="string">"ghi"</span>&#125;);</span><span class="line"></span><span class="line">        <span class="comment">// static method invoke</span></span><span class="line">        methodType = MethodType.methodType(<span class="keyword">int</span><span class="class">.<span class="keyword">class</span>, <span class="title">java</span>.<span class="title">util</span>.<span class="title">List</span>.<span class="title">class</span>)</span>;</span><span class="line">        methodHandle = lookup.findStatic(InvokeDynamicB.class, "list", methodType);</span><span class="line">        List&lt;String&gt; list = Lists.newArrayList(<span class="string">"abc"</span>, <span class="string">"def"</span>, <span class="string">"ghi"</span>);</span><span class="line"></span><span class="line">        <span class="comment">// 必须指明返回类型为int，满足methodType的要求，否则抛异常：expected (List)int but found (List)Object</span></span><span class="line">        <span class="comment">// Object length = methodHandle.invokeExact(list);</span></span><span class="line">        <span class="keyword">int</span> length = (<span class="keyword">int</span>) methodHandle.invokeExact(list);</span><span class="line">        System.out.println(length);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
 <p>这个例子用到的是<code>MethodHandles</code>、<code>MethodHandles.Lookup</code>、<code>MethodType</code>、<code>MethodHandle</code>几个类。代码执行流程：</p>
 <ol>
 <li>调用<code>MethodHandles.lookup()</code>方法，遍历调用栈检查访问权限，然后得到一个<code>MethodHandles.Lookup</code>实例；该对象用于确认创建<code>MethodHandle</code>的实例的类对目标方法的访问权限是否满足要求，并提供搜索目标方法的逻辑。</li>
@@ -271,7 +271,7 @@
 </ol>
 <p>其中，第1步中调用的<code>MethodType.methodType()</code>方法接收的参数是一组类型，第一个参数是<code>返回类型</code>，后面依次是各个<code>参数类型</code>。</p>
 <p>第2步调用中<code>MethodType.methodType(void.class, String[].class)</code>得到的就是一个返回类型为<code>void</code>，参数列表为<code>String[]</code>类型的方法类型。而这个方法类型在class字节码文件中的描述符就是:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">descriptor: ([Ljava/lang/String;)V</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">descriptor: ([Ljava/lang/String;)V</span></pre></td></tr></table></figure>
 <p><code>MethodType</code>的实例只代表所有<code>返回值类型</code>与<code>参数类型</code>匹配的一类方法的<code>方法类型</code>，自身没有名字；在检查某个方法是否与某个<code>MethodType</code>匹配时只考虑结构，可以算是一种特殊的<code>structural-typing</code>。</p>
 <p>第2步看起来跟普通的反射很像，但通过反射得到的代表方法的对象是<code>java.lang.reflect.Method</code>的实例，它含有许多跟“执行”没有直接关系的信息，比较笨重；通过<code>Method</code>对象调用方法只是正常方法调用的模拟，所有参数会被包装为一个数组，开销较大。而<code>MethodHandle</code>则是个非常轻量的对象，主要目的就是用来引用方法并调用；通过它去调用方法不会导致参数被包装，原始类型的参数也不会被自动装箱。</p>
 <p><code>MethodHandles.Lookup</code>对象上有三个<code>find</code>方法，包括<code>findStatic()</code>、<code>findVirtual()</code>、<code>findSpecial()</code>，分别对应<code>invokestatic</code>、<code>invokevirtual &amp; invokeinterface</code>、<code>invokespecial</code>这4个虚拟机指令。</p>
@@ -288,48 +288,29 @@
 <p>某种程度上可以说<code>invokedynamic</code>指令与<code>MethodHandle</code>机制的作用是一样的，都是为了解决原有四条<code>invoke*</code>指令方法分派规则固化在虚拟机之中的问题，把如何查找目标方法的决定权从虚拟机转嫁到具体用户代码之中，让用户（包含其他语言的设计者）有更高的自由度。</p>
 <a id="more"></a>
 <h2 id="MethodHandle-performance"><a href="#MethodHandle-performance" class="headerlink" title="MethodHandle performance"></a>MethodHandle performance</h2><p>在下面的测试代码中比较了一下不同方式进行方法调用的效率情况，测试环境说明如下：</p>
-<h3 id="操作系统环境"><a href="#操作系统环境" class="headerlink" title="操作系统环境"></a>操作系统环境</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">iMac (Retina 5K, 27-inch, Late 2014)</div><div class="line">Processor: 3.5 GHz Intel Core i5</div><div class="line">Memory: 8 GB 1600 MHz DDR3</div><div class="line">Graphics: AMD Radeon R9 M290X 2048 MB</div></pre></td></tr></table></figure>
-<h3 id="JVM运行参数"><a href="#JVM运行参数" class="headerlink" title="JVM运行参数"></a>JVM运行参数</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-Xms1000M -Xmx1000M -Xmn400M -XX:SurvivorRatio=8</div></pre></td></tr></table></figure>
-<h3 id="Java版本"><a href="#Java版本" class="headerlink" title="Java版本"></a>Java版本</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"><i class="fa fa-usd"></i> <span class="built_in">java</span> -version</div></pre></td></tr></table></figure>
+<h3 id="操作系统环境"><a href="#操作系统环境" class="headerlink" title="操作系统环境"></a>操作系统环境</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">iMac (Retina 5K, 27-inch, Late 2014)</span><span class="line">Processor: 3.5 GHz Intel Core i5</span><span class="line">Memory: 8 GB 1600 MHz DDR3</span><span class="line">Graphics: AMD Radeon R9 M290X 2048 MB</span></pre></td></tr></table></figure>
+<h3 id="JVM运行参数"><a href="#JVM运行参数" class="headerlink" title="JVM运行参数"></a>JVM运行参数</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-Xms1000M -Xmx1000M -Xmn400M -XX:SurvivorRatio=8</span></pre></td></tr></table></figure>
+<h3 id="Java版本"><a href="#Java版本" class="headerlink" title="Java版本"></a>Java版本</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">java</span> -version</span></pre></td></tr></table></figure>
 <blockquote>
 <p>java version &quot;1.8.0_77&quot;</p>
 <p>Java(TM) SE Runtime Environment (build 1.8.0_77-b03)</p>
 <p>Java HotSpot(TM) 64-Bit Server VM (build 25.77-b03, mixed mode)</p>
 </blockquote>
-<h3 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * -Xms1000M -Xmx1000M -Xmn400M -XX:SurvivorRatio=8</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@author</span> yuweijun 2016-11-20.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BenchmarkProfiler</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> startTime = <span class="number">0l</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> endTime = <span class="number">0l</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        BenchmarkProfiler benchmarkProfiler = <span class="keyword">new</span> BenchmarkProfiler();</div><div class="line">        benchmarkProfiler.run(<span class="number">10_000_000</span>);</div><div class="line">        benchmarkProfiler.run(<span class="number">100_000_000</span>);</div><div class="line">        benchmarkProfiler.run(<span class="number">1000_000_000</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">timerStart</span><span class="params">()</span> </span>&#123;</div><div class="line">        startTime = System.currentTimeMillis();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">timerEnd</span><span class="params">(String profile)</span> </span>&#123;</div><div class="line">        endTime = System.currentTimeMillis();</div><div class="line">        System.out.println(profile + <span class="string">" : "</span> + (endTime - startTime));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        System.out.println(<span class="string">"+++++++++++++++++++++++"</span> + reps);</div><div class="line">        timerStart();</div><div class="line">        reflect(reps);</div><div class="line">        timerEnd(<span class="string">"Reflect"</span>);</div><div class="line">        timerStart();</div><div class="line">        methodHandle(reps);</div><div class="line">        timerEnd(<span class="string">"MethodHandle"</span>);</div><div class="line">        timerStart();</div><div class="line">        methodHandleBind(reps);</div><div class="line">        timerEnd(<span class="string">"MethodHandleBind"</span>);</div><div class="line"></div><div class="line">        timerStart();</div><div class="line">        methodHandleInt(reps);</div><div class="line">        timerEnd(<span class="string">"MethodHandleInt"</span>);</div><div class="line"></div><div class="line">        timerStart();</div><div class="line">        implementDirect(reps);</div><div class="line">        timerEnd(<span class="string">"Direct"</span>);</div><div class="line">        timerStart();</div><div class="line">        iface(reps);</div><div class="line">        timerEnd(<span class="string">"Interface"</span>);</div><div class="line">        timerStart();</div><div class="line">        staticMethod(reps);</div><div class="line">        timerEnd(<span class="string">"Static"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reflect</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Method m = BenchmarkImpl.class.getMethod(<span class="string">"exec"</span>, Object.class);</div><div class="line">        BenchmarkImpl benchmark = <span class="keyword">new</span> BenchmarkImpl();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</div><div class="line">            <span class="comment">// auto-boxing</span></div><div class="line">            m.invoke(benchmark, i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodHandle</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        BenchmarkImpl benchmark = <span class="keyword">new</span> BenchmarkImpl();</div><div class="line">        MethodType methodType = MethodType.methodType(<span class="keyword">void</span>.class, Object.class);</div><div class="line">        MethodHandle mh = MethodHandles.lookup().findVirtual(BenchmarkImpl.class, <span class="string">"exec"</span>, methodType);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</div><div class="line">            mh.invokeExact(benchmark, (Object) i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodHandleInt</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        BenchmarkImpl benchmark = <span class="keyword">new</span> BenchmarkImpl();</div><div class="line">        MethodType methodType = MethodType.methodType(<span class="keyword">void</span>.class, <span class="keyword">int</span>.class);</div><div class="line">        MethodHandle mh = MethodHandles.lookup().findVirtual(BenchmarkImpl.class, <span class="string">"execInt"</span>, methodType).bindTo(benchmark);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</div><div class="line">            <span class="comment">// 直接调用 int 则快了一倍，封箱操作花费较多时间</span></div><div class="line">            mh.invoke(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodHandleBind</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        BenchmarkImpl benchmark = <span class="keyword">new</span> BenchmarkImpl();</div><div class="line">        MethodType methodType = MethodType.methodType(<span class="keyword">void</span>.class, Object.class);</div><div class="line">        MethodHandle mh = MethodHandles.lookup().findVirtual(BenchmarkImpl.class, <span class="string">"exec"</span>, methodType).bindTo(benchmark);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</div><div class="line">            mh.invoke(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">implementDirect</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Method m = BenchmarkImpl.class.getMethod(<span class="string">"exec"</span>, Object.class);</div><div class="line">        BenchmarkImpl benchmark = <span class="keyword">new</span> BenchmarkImpl();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</div><div class="line">            benchmark.exec(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">iface</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        IBenchmark m = <span class="keyword">new</span> BenchmarkImpl();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</div><div class="line">            m.exec(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">staticMethod</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</div><div class="line">            BenchmarkImpl.execStatic(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><span class="line"><span class="comment"> * -Xms1000M -Xmx1000M -Xmn400M -XX:SurvivorRatio=8</span></span><span class="line"><span class="comment"> * -Xms1000M -Xmx1000M -Xmn400M -XX:SurvivorRatio=8 -Xint</span></span><span class="line"><span class="comment"> *</span></span><span class="line"><span class="comment"> * <span class="doctag">@author</span> yuweijun 2016-11-20.</span></span><span class="line"><span class="comment"> */</span></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BenchmarkProfiler</span> </span>&#123;</span><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> startTime = <span class="number">0l</span>;</span><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> endTime = <span class="number">0l</span>;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><span class="line">        BenchmarkProfiler benchmarkProfiler = <span class="keyword">new</span> BenchmarkProfiler();</span><span class="line">        benchmarkProfiler.run(<span class="number">10_000_000</span>);</span><span class="line">        benchmarkProfiler.run(<span class="number">100_000_000</span>);</span><span class="line">        benchmarkProfiler.run(<span class="number">1000_000_000</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">timerStart</span><span class="params">()</span> </span>&#123;</span><span class="line">        startTime = System.currentTimeMillis();</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">timerEnd</span><span class="params">(String profile)</span> </span>&#123;</span><span class="line">        endTime = System.currentTimeMillis();</span><span class="line">        System.out.println(profile + <span class="string">" : "</span> + (endTime - startTime));</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><span class="line">        System.out.println(<span class="string">"+++++++++++++++++++++++"</span> + reps);</span><span class="line">        timerStart();</span><span class="line">        reflect(reps);</span><span class="line">        timerEnd(<span class="string">"Reflect"</span>);</span><span class="line">        timerStart();</span><span class="line">        methodHandle(reps);</span><span class="line">        timerEnd(<span class="string">"MethodHandle"</span>);</span><span class="line">        timerStart();</span><span class="line">        methodHandleBind(reps);</span><span class="line">        timerEnd(<span class="string">"MethodHandleBind"</span>);</span><span class="line"></span><span class="line">        timerStart();</span><span class="line">        methodHandleInt(reps);</span><span class="line">        timerEnd(<span class="string">"MethodHandleInt"</span>);</span><span class="line"></span><span class="line">        timerStart();</span><span class="line">        implementDirect(reps);</span><span class="line">        timerEnd(<span class="string">"Direct"</span>);</span><span class="line">        timerStart();</span><span class="line">        iface(reps);</span><span class="line">        timerEnd(<span class="string">"Interface"</span>);</span><span class="line">        timerStart();</span><span class="line">        staticMethod(reps);</span><span class="line">        timerEnd(<span class="string">"Static"</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reflect</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><span class="line">        Method m = BenchmarkImpl.class.getMethod("exec", Object.class);</span><span class="line">        BenchmarkImpl benchmark = <span class="keyword">new</span> BenchmarkImpl();</span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</span><span class="line">            <span class="comment">// auto-boxing</span></span><span class="line">            m.invoke(benchmark, i);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodHandle</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><span class="line">        BenchmarkImpl benchmark = <span class="keyword">new</span> BenchmarkImpl();</span><span class="line">        MethodType methodType = MethodType.methodType(<span class="keyword">void</span><span class="class">.<span class="keyword">class</span>, <span class="title">Object</span>.<span class="title">class</span>)</span>;</span><span class="line">        MethodHandle mh = MethodHandles.lookup().findVirtual(BenchmarkImpl.class, "exec", methodType);</span><span class="line"></span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</span><span class="line">            mh.invokeExact(benchmark, (Object) i);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodHandleInt</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><span class="line">        BenchmarkImpl benchmark = <span class="keyword">new</span> BenchmarkImpl();</span><span class="line">        MethodType methodType = MethodType.methodType(<span class="keyword">void</span><span class="class">.<span class="keyword">class</span>, <span class="title">int</span>.<span class="title">class</span>)</span>;</span><span class="line">        MethodHandle mh = MethodHandles.lookup().findVirtual(BenchmarkImpl.class, "execInt", methodType).bindTo(benchmark);</span><span class="line"></span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</span><span class="line">            <span class="comment">// 直接调用 int 则快了一倍，封箱操作花费较多时间</span></span><span class="line">            mh.invoke(i);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodHandleBind</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><span class="line">        BenchmarkImpl benchmark = <span class="keyword">new</span> BenchmarkImpl();</span><span class="line">        MethodType methodType = MethodType.methodType(<span class="keyword">void</span><span class="class">.<span class="keyword">class</span>, <span class="title">Object</span>.<span class="title">class</span>)</span>;</span><span class="line">        MethodHandle mh = MethodHandles.lookup().findVirtual(BenchmarkImpl.class, "exec", methodType).bindTo(benchmark);</span><span class="line"></span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</span><span class="line">            mh.invoke(i);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">implementDirect</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><span class="line">        Method m = BenchmarkImpl.class.getMethod("exec", Object.class);</span><span class="line">        BenchmarkImpl benchmark = <span class="keyword">new</span> BenchmarkImpl();</span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</span><span class="line">            benchmark.exec(i);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">iface</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><span class="line">        IBenchmark m = <span class="keyword">new</span> BenchmarkImpl();</span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</span><span class="line">            m.exec(i);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">staticMethod</span><span class="params">(<span class="keyword">int</span> reps)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; reps; i++) &#123;</span><span class="line">            BenchmarkImpl.execStatic(i);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
 <h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><blockquote>
-<p>+++++++++++++++++++++++10000000</p>
-<p>Reflect : 114</p>
-<p>MethodHandle : 132</p>
-<p>MethodHandleBind : 68</p>
-<p>MethodHandleInt : 37</p>
-<p>Direct : 29</p>
-<p>Interface : 29</p>
-<p>Static : 30</p>
-<p>+++++++++++++++++++++++100000000</p>
-<p>Reflect : 866</p>
-<p>MethodHandle : 542</p>
-<p>MethodHandleBind : 541</p>
-<p>MethodHandleInt : 348</p>
-<p>Direct : 229</p>
-<p>Interface : 222</p>
-<p>Static : 223</p>
-<p>+++++++++++++++++++++++1000000000</p>
-<p>Reflect : 5538</p>
-<p>MethodHandle : 4438</p>
-<p>MethodHandleBind : 5197</p>
-<p>MethodHandleInt : 2933</p>
-<p>Direct : 2069</p>
-<p>Interface : 2043</p>
-<p>Static : 2211</p>
+<p>+++++++++++++++++++++++10000000<br>Reflect : 114<br>MethodHandle : 132<br>MethodHandleBind : 68<br>MethodHandleInt : 37<br>Direct : 29<br>Interface : 29<br>Static : 30</p>
+<p>+++++++++++++++++++++++100000000<br>Reflect : 866<br>MethodHandle : 542<br>MethodHandleBind : 541<br>MethodHandleInt : 348<br>Direct : 229<br>Interface : 222<br>Static : 223</p>
+<p>+++++++++++++++++++++++1000000000<br>Reflect : 5538<br>MethodHandle : 4438<br>MethodHandleBind : 5197<br>MethodHandleInt : 2933<br>Direct : 2069<br>Interface : 2043<br>Static : 2211</p>
 </blockquote>
 <p>从上述Mac电脑<code>JDK 8</code>上的运行结果来看，基于接口方法和实现类方法直接调用的性能基本是一样的，与静态方法的调用效率也很接近，<code>Reflection</code>和<code>MethodHandle</code>执行就稍慢一点，<code>MethodHandle</code>方式进行方法调用的效率目前看上去还是很差，甚至会慢于反射。</p>
+<p>如果添加<code>-Xint</code>参数，以解释字节码方式运行 JVM，则效率极低，但是略快于反射。</p>
+<p><code>MethodType</code>和<code>MethodHandle</code>主要是为了配合<code>invokedynamic</code>使用，以及在 Java8 中实现<code>lambda</code>表达式时使用。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://stackoverflow.com/questions/8823793/methodhandle-what-is-it-all-about" target="_blank" rel="external">MethodHandle - What is it all about</a></li>
-<li><a href="http://www.iteye.com/topic/477934" target="_blank" rel="external">JDK 7的MethodHandle</a></li>
-<li><a href="http://www.infoq.com/cn/articles/jdk-dynamically-typed-language" target="_blank" rel="external">解析JDK 7的动态类型语言支持</a></li>
-<li><a href="http://blog.headius.com/2008/09/first-taste-of-invokedynamic.html" target="_blank" rel="external">A First Taste of InvokeDynamic</a></li>
-<li><a href="http://stackoverflow.com/questions/15621434/methodhandle-performance" target="_blank" rel="external">MethodHandle performance</a></li>
+<li><a href="http://stackoverflow.com/questions/8823793/methodhandle-what-is-it-all-about" target="_blank" rel="noopener">MethodHandle - What is it all about</a></li>
+<li><a href="http://www.iteye.com/topic/477934" target="_blank" rel="noopener">JDK 7的MethodHandle</a></li>
+<li><a href="http://www.infoq.com/cn/articles/jdk-dynamically-typed-language" target="_blank" rel="noopener">解析JDK 7的动态类型语言支持</a></li>
+<li><a href="http://blog.headius.com/2008/09/first-taste-of-invokedynamic.html" target="_blank" rel="noopener">A First Taste of InvokeDynamic</a></li>
+<li><a href="http://stackoverflow.com/questions/15621434/methodhandle-performance" target="_blank" rel="noopener">MethodHandle performance</a></li>
 </ol>
 
       
@@ -356,8 +337,9 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/macos/2016/11/19/using-7zip-and-unarchiver-on-Mac-OS.html" rel="next" title="using 7zip and unarchiver on Mac OS">
-                上一篇：using 7zip and unarchiver on Mac OS
+              <a href="/blog/macos/2016/11/19/using-7zip-and-unarchiver-on-Mac-OS.html" rel="next" title="using 7zip and unarchiver on mac os">
+                <i class="fa fa-chevron-left"></i>
+                using 7zip and unarchiver on mac os
               </a>
             
           </div>
@@ -365,7 +347,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2016/12/03/git-merge-losts-commits.html" rel="prev" title="git merge losts commits">
-                下一篇：git merge losts commits
+                <i class="fa fa-chevron-right"></i>
+                git merge losts commits
               </a>
             
           </div>
@@ -414,7 +397,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -425,16 +408,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -516,10 +497,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

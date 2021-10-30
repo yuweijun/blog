@@ -1,0 +1,562 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="下面是Reactor Pattern中多Reactor多线程模型的简单示例，可以简单响应客户端的请求，但是没有处理TCP/IP传输数据包的粘包/分包相关问题。 直接运行此类的main()方法，里面有一个简单的同步阻塞的客户端实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="reactor pattern time server example">
+<meta property="og:url" content="http://www.4e00.com/java/2019/03/16/reactor-pattern-time-server-example.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="下面是Reactor Pattern中多Reactor多线程模型的简单示例，可以简单响应客户端的请求，但是没有处理TCP/IP传输数据包的粘包/分包相关问题。 直接运行此类的main()方法，里面有一个简单的同步阻塞的客户端实现。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.142Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="reactor pattern time server example">
+<meta name="twitter:description" content="下面是Reactor Pattern中多Reactor多线程模型的简单示例，可以简单响应客户端的请求，但是没有处理TCP/IP传输数据包的粘包/分包相关问题。 直接运行此类的main()方法，里面有一个简单的同步阻塞的客户端实现。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2019/03/16/reactor-pattern-time-server-example.html">
+
+  <title> reactor pattern time server example | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                reactor pattern time server example
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-03-16T04:24:30+08:00" content="2019-03-16">
+              2019-03-16
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>下面是<code>Reactor Pattern</code>中<code>多Reactor多线程模型</code>的简单示例，可以简单响应客户端的请求，但是没有处理<code>TCP/IP</code>传输数据包的<code>粘包/分包</code>相关问题。</p>
+<p>直接运行此类的<code>main()</code>方法，里面有一个简单的同步阻塞的客户端实现。</p>
+<a id="more"></a>
+<h2 id="多Reactor多线程模型示例代码"><a href="#多Reactor多线程模型示例代码" class="headerlink" title="多Reactor多线程模型示例代码"></a>多Reactor多线程模型示例代码</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.nio.reactor;</span><span class="line"></span><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><span class="line"></span><span class="line"><span class="keyword">import</span> java.io.IOException;</span><span class="line"><span class="keyword">import</span> java.net.InetSocketAddress;</span><span class="line"><span class="keyword">import</span> java.nio.BufferOverflowException;</span><span class="line"><span class="keyword">import</span> java.nio.ByteBuffer;</span><span class="line"><span class="keyword">import</span> java.nio.channels.*;</span><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><span class="line"><span class="keyword">import</span> java.util.*;</span><span class="line"><span class="keyword">import</span> java.util.concurrent.*;</span><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><span class="line"></span><span class="line"><span class="comment">/**</span></span><span class="line"><span class="comment"> * 多Reactor多线程模型</span></span><span class="line"><span class="comment"> *</span></span><span class="line"><span class="comment"> * &lt;pre&gt;</span></span><span class="line"><span class="comment"> * 与单Reactor多线程模型相比，是将Reactor分成两部分:</span></span><span class="line"><span class="comment"> * 1. MainReactor负责监听server socket，用来处理新连接的接收，将建立的socketChannel指定注册给SubReactor。</span></span><span class="line"><span class="comment"> * 2. SubReactor维护自己的selector，基于mainReactor注册的socketChannel多路分离IO读写事件，读写网络数据，</span></span><span class="line"><span class="comment"> *    将接收到的数据发给业务线程池worker处理，并在SubReactor线程池中返回业务处理的结果。</span></span><span class="line"><span class="comment"> * 3. 业务逻辑代码通常比较耗时，不要在reactor线程处理。</span></span><span class="line"><span class="comment"> * &lt;/pre&gt;</span></span><span class="line"><span class="comment"> */</span></span><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeServerMultipleReactor</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(TimeServerMultipleReactor<span class="class">.<span class="keyword">class</span>)</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> POOL_SIZE = <span class="number">4</span>;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> AtomicInteger WORKER_NUMBER = <span class="keyword">new</span> AtomicInteger(<span class="number">1</span>);</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> AtomicInteger SUB_REACTOR_NUMBER = <span class="keyword">new</span> AtomicInteger(<span class="number">1</span>);</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> AtomicInteger MAIN_REACTOR_LOOPS = <span class="keyword">new</span> AtomicInteger();</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;Queue&lt;SocketChannel&gt;&gt; socketChannelQueues = <span class="keyword">new</span> ArrayList&lt;&gt;(POOL_SIZE);</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Selector[] selectors = <span class="keyword">new</span> Selector[POOL_SIZE];</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ExecutorService workerPool =</span><span class="line">            <span class="keyword">new</span> ThreadPoolExecutor(POOL_SIZE, POOL_SIZE * <span class="number">10</span>, <span class="number">60</span>, TimeUnit.SECONDS, <span class="keyword">new</span> LinkedBlockingQueue&lt;&gt;(<span class="number">1000</span>),</span><span class="line">                    <span class="keyword">new</span> ThreadFactory() &#123;</span><span class="line">                        <span class="meta">@Override</span></span><span class="line">                        <span class="function"><span class="keyword">public</span> Thread <span class="title">newThread</span><span class="params">(Runnable r)</span> </span>&#123;</span><span class="line">                            Thread thread = <span class="keyword">new</span> Thread(r);</span><span class="line">                            thread.setName(<span class="string">"WORKER-"</span> + WORKER_NUMBER.getAndIncrement());</span><span class="line">                            <span class="keyword">return</span> thread;</span><span class="line">                        &#125;</span><span class="line">                    &#125;, <span class="keyword">new</span> ThreadPoolExecutor.CallerRunsPolicy());</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ExecutorService subReactorPool =</span><span class="line">            <span class="keyword">new</span> ThreadPoolExecutor(POOL_SIZE, POOL_SIZE, <span class="number">60</span>, TimeUnit.SECONDS, <span class="keyword">new</span> LinkedBlockingQueue&lt;&gt;(),</span><span class="line">                    <span class="keyword">new</span> ThreadFactory() &#123;</span><span class="line">                        <span class="meta">@Override</span></span><span class="line">                        <span class="function"><span class="keyword">public</span> Thread <span class="title">newThread</span><span class="params">(Runnable r)</span> </span>&#123;</span><span class="line">                            Thread thread = <span class="keyword">new</span> Thread(r);</span><span class="line">                            thread.setName(<span class="string">"SUB-REACTOR-"</span> + SUB_REACTOR_NUMBER.getAndIncrement());</span><span class="line">                            <span class="keyword">return</span> thread;</span><span class="line">                        &#125;</span><span class="line">                    &#125;, <span class="keyword">new</span> ThreadPoolExecutor.CallerRunsPolicy());</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        TimeServerMultipleReactor server = <span class="keyword">new</span> TimeServerMultipleReactor();</span><span class="line">        server.start();</span><span class="line"></span><span class="line">        <span class="comment">// Test Client Requests</span></span><span class="line">        ExecutorService testExecutorService = Executors.newFixedThreadPool(<span class="number">5</span>);</span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><span class="line">            testExecutorService.submit(<span class="keyword">new</span> TimeServerMultipleReactorClient());</span><span class="line">        &#125;</span><span class="line">        testExecutorService.shutdown();</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="comment">// 接受 TCP 连接的主线程</span></span><span class="line">        Thread mainReactorThread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> MainReactor());</span><span class="line">        mainReactorThread.setName(<span class="string">"MAIN-REACTOR"</span>);</span><span class="line">        mainReactorThread.start();</span><span class="line"></span><span class="line">        <span class="comment">// 初始化并启动 SubReactor 线程</span></span><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; POOL_SIZE; i++) &#123;</span><span class="line">            socketChannelQueues.add(<span class="keyword">new</span> ConcurrentLinkedQueue&lt;&gt;());</span><span class="line">            subReactorPool.submit(<span class="keyword">new</span> SubReactor(i));</span><span class="line">        &#125;</span><span class="line">        subReactorPool.shutdown();</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">MainReactor</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line">        <span class="meta">@Override</span></span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">            <span class="keyword">try</span> &#123;</span><span class="line">                Selector selector = Selector.open();</span><span class="line">                ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();</span><span class="line">                serverSocketChannel.bind(<span class="keyword">new</span> InetSocketAddress(<span class="number">8080</span>));</span><span class="line">                serverSocketChannel.configureBlocking(<span class="keyword">false</span>);</span><span class="line">                SelectionKey selectionKey = serverSocketChannel.register(selector, serverSocketChannel.validOps());</span><span class="line">                selectionKey.attach(<span class="keyword">new</span> Acceptor());</span><span class="line">                LOGGER.info(<span class="string">"server start at port : &#123;&#125;"</span>, <span class="number">8080</span>);</span><span class="line"></span><span class="line">                <span class="comment">// 这个是分配 socketChannel 到不同的 SubReactor 中去的索引</span></span><span class="line">                <span class="keyword">int</span> index = <span class="number">0</span>;</span><span class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><span class="line">                    MAIN_REACTOR_LOOPS.getAndIncrement();</span><span class="line">                    <span class="keyword">int</span> select = selector.select(<span class="number">1000</span>);</span><span class="line">                    <span class="keyword">int</span> counter = MAIN_REACTOR_LOOPS.get();</span><span class="line">                    <span class="keyword">if</span> ((counter &amp; <span class="number">0x3F</span>) == <span class="number">0</span>) &#123;</span><span class="line">                        LOGGER.info(<span class="string">"MAIN_REACTOR_LOOPS : &#123;&#125; for main selector &#123;&#125;"</span>, counter, select);</span><span class="line">                    &#125;</span><span class="line"></span><span class="line">                    <span class="keyword">if</span> (select != <span class="number">0</span>) &#123;</span><span class="line">                        Set&lt;SelectionKey&gt; selectionKeys = selector.selectedKeys();</span><span class="line">                        Iterator&lt;SelectionKey&gt; iterator = selectionKeys.iterator();</span><span class="line">                        <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><span class="line">                            SelectionKey sk = iterator.next();</span><span class="line">                            <span class="keyword">if</span> (sk.isAcceptable()) &#123;</span><span class="line">                                Acceptor acceptor = (Acceptor) sk.attachment();</span><span class="line">                                acceptor.accept(index++, selectionKey);</span><span class="line">                                <span class="keyword">if</span> (index &gt;= POOL_SIZE) &#123;</span><span class="line">                                    index = <span class="number">0</span>;</span><span class="line">                                &#125;</span><span class="line">                            &#125;</span><span class="line">                        &#125;</span><span class="line">                        selectionKeys.clear();</span><span class="line">                    &#125;</span><span class="line">                &#125;</span><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><span class="line">                e.printStackTrace();</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Acceptor</span> </span>&#123;</span><span class="line"></span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> index, SelectionKey selectionKey)</span> </span>&#123;</span><span class="line">            <span class="keyword">try</span> &#123;</span><span class="line">                ServerSocketChannel serverSocketChannel = (ServerSocketChannel) selectionKey.channel();</span><span class="line">                SocketChannel socketChannel = serverSocketChannel.accept();</span><span class="line">                <span class="keyword">if</span> (Objects.nonNull(socketChannel)) &#123;</span><span class="line">                    socketChannel.configureBlocking(<span class="keyword">false</span>);</span><span class="line">                    <span class="comment">// 使用这个共享队列，而不是使用共享sub Selector，避免在Selector及其publicKeys上产生锁竞争</span></span><span class="line">                    <span class="keyword">boolean</span> offer = socketChannelQueues.get(index).offer(socketChannel);</span><span class="line">                    <span class="comment">// wakeup 对应的用路复用器</span></span><span class="line">                    selectors[index].wakeup();</span><span class="line"></span><span class="line">                    <span class="keyword">if</span> (!offer) &#123;</span><span class="line">                        LOGGER.warn(<span class="string">"offer socketChannel failure : &#123;&#125;"</span>, socketChannel);</span><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><span class="line">                        LOGGER.info(<span class="string">"offer socketChannel success : &#123;&#125;"</span>, socketChannel);</span><span class="line">                    &#125;</span><span class="line">                &#125;</span><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><span class="line">                LOGGER.error(<span class="string">"acceptor exception"</span>, e);</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">SubReactor</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line"></span><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> index;</span><span class="line"></span><span class="line">        SubReactor(<span class="keyword">int</span> index) &#123;</span><span class="line">            <span class="keyword">this</span>.index = index;</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="meta">@Override</span></span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">            <span class="keyword">try</span> &#123;</span><span class="line">                <span class="keyword">final</span> Selector selector = Selector.open();</span><span class="line">                LOGGER.info(<span class="string">"add sub reactor : &#123;&#125;"</span>, selector);</span><span class="line">                selectors[index] = selector;</span><span class="line"></span><span class="line">                <span class="comment">// 每个子线程有一个I/O完成的消息发送队列，避免并发操作产生问题</span></span><span class="line">                Queue&lt;SelectionKey&gt; queue = <span class="keyword">new</span> LinkedBlockingQueue&lt;&gt;();</span><span class="line">                <span class="comment">// 每个子线程有一个channelSocket队列，均匀分布请求数</span></span><span class="line">                Queue&lt;SocketChannel&gt; socketChannels = socketChannelQueues.get(index);</span><span class="line"></span><span class="line">                <span class="keyword">int</span> counter = <span class="number">0</span>;</span><span class="line">                <span class="keyword">while</span> (!Thread.interrupted()) &#123;</span><span class="line">                    counter++;</span><span class="line">                    <span class="keyword">int</span> select = selector.select(<span class="number">10_000</span>);</span><span class="line">                    <span class="keyword">if</span> (select != <span class="number">0</span>) &#123;</span><span class="line">                        Set&lt;SelectionKey&gt; selectionKeys = selector.selectedKeys();</span><span class="line">                        Iterator&lt;SelectionKey&gt; iterator = selectionKeys.iterator();</span><span class="line">                        <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><span class="line">                            dispatch(iterator.next(), queue);</span><span class="line">                        &#125;</span><span class="line">                        selectionKeys.clear();</span><span class="line">                    &#125;</span><span class="line">                    <span class="keyword">if</span> ((counter &amp; <span class="number">0x7F</span>) == <span class="number">0</span>) &#123;</span><span class="line">                        LOGGER.info(<span class="string">"sub reactor select counter : &#123;&#125; and select : &#123;&#125;"</span>, counter, select);</span><span class="line">                    &#125;</span><span class="line"></span><span class="line">                    SocketChannel socketChannel = socketChannels.poll();</span><span class="line">                    <span class="keyword">do</span> &#123;</span><span class="line">                        <span class="keyword">if</span> (Objects.nonNull(socketChannel)) &#123;</span><span class="line">                            <span class="comment">// register new socketChannel to this selector</span></span><span class="line">                            <span class="keyword">try</span> &#123;</span><span class="line">                                LOGGER.info(<span class="string">"register socketChannel to selector : &#123;&#125;"</span>, selector);</span><span class="line">                                socketChannel.register(selector, SelectionKey.OP_READ);</span><span class="line">                            &#125; <span class="keyword">catch</span> (ClosedChannelException e) &#123;</span><span class="line">                                e.printStackTrace();</span><span class="line">                            &#125;</span><span class="line">                        &#125;</span><span class="line">                    &#125; <span class="keyword">while</span> (Objects.nonNull(socketChannel = socketChannels.poll()));</span><span class="line">                &#125;</span><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><span class="line">                e.printStackTrace();</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dispatch</span><span class="params">(SelectionKey selectionKey, <span class="keyword">final</span> Queue&lt;SelectionKey&gt; queue)</span> </span>&#123;</span><span class="line">        SelectableChannel selectableChannel = selectionKey.channel();</span><span class="line">        <span class="keyword">if</span> (selectionKey.isReadable()) &#123;</span><span class="line">            SocketChannel channel = (SocketChannel) selectableChannel;</span><span class="line">            <span class="keyword">if</span> (!channel.isConnected()) &#123;</span><span class="line">                LOGGER.info(<span class="string">"channel is closed : &#123;&#125;"</span>, channel);</span><span class="line">                <span class="keyword">return</span>;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">try</span> &#123;</span><span class="line">                ByteBuffer byteBuffer = ByteBuffer.allocate(<span class="number">1024</span>);</span><span class="line">                <span class="keyword">int</span> read = channel.read(byteBuffer);</span><span class="line">                <span class="keyword">if</span> (read == -<span class="number">1</span>) &#123;</span><span class="line">                    LOGGER.info(<span class="string">"close channel"</span>);</span><span class="line">                    channel.close();</span><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><span class="line">                    <span class="keyword">if</span> (read &gt; <span class="number">0</span>) &#123;</span><span class="line">                        byteBuffer.flip();</span><span class="line">                        <span class="keyword">int</span> remaining = byteBuffer.remaining();</span><span class="line">                        <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[remaining];</span><span class="line">                        byteBuffer.get(bytes);</span><span class="line">                        String request = <span class="keyword">new</span> String(bytes);</span><span class="line"></span><span class="line">                        <span class="comment">// 多线程负责I/O处理</span></span><span class="line">                        workerPool.submit(<span class="keyword">new</span> Processor(request, selectionKey, queue));</span><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><span class="line">                        LOGGER.info(<span class="string">"read 0 bytes for channel : &#123;&#125;"</span>, channel);</span><span class="line">                    &#125;</span><span class="line">                &#125;</span><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><span class="line">                <span class="keyword">try</span> &#123;</span><span class="line">                    LOGGER.error(<span class="string">"close channel for selectionKey : &#123;&#125;"</span>, selectionKey, e);</span><span class="line">                    selectionKey.channel();</span><span class="line">                    channel.close();</span><span class="line">                &#125; <span class="keyword">catch</span> (IOException ex) &#123;</span><span class="line">                    ex.printStackTrace();</span><span class="line">                &#125;</span><span class="line">            &#125;</span><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (selectionKey.isWritable()) &#123;</span><span class="line">            send(selectionKey, queue);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Processor</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><span class="line"></span><span class="line">        <span class="keyword">private</span> String request;</span><span class="line"></span><span class="line">        <span class="keyword">private</span> SelectionKey selectionKey;</span><span class="line"></span><span class="line">        <span class="keyword">private</span> Queue&lt;SelectionKey&gt; queue;</span><span class="line"></span><span class="line">        Processor(String request, SelectionKey selectionKey, Queue&lt;SelectionKey&gt; queue) &#123;</span><span class="line">            <span class="keyword">this</span>.request = request;</span><span class="line">            <span class="keyword">this</span>.selectionKey = selectionKey;</span><span class="line">            <span class="keyword">this</span>.queue = queue;</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="meta">@Override</span></span><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><span class="line">            <span class="keyword">try</span> &#123;</span><span class="line">                <span class="comment">// 业务处理时间</span></span><span class="line">                TimeUnit.MILLISECONDS.sleep(<span class="number">10L</span>);</span><span class="line">                LOGGER.info(<span class="string">"request : &#123;&#125;"</span>, request);</span><span class="line">                <span class="keyword">boolean</span> offer = queue.offer(selectionKey);</span><span class="line">                <span class="keyword">if</span> (!offer) &#123;</span><span class="line">                    LOGGER.info(<span class="string">"add queue failure for selectionKey : &#123;&#125;"</span>, selectionKey);</span><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><span class="line">                    String attachment = request + <span class="string">" : "</span> + LocalDateTime.now();</span><span class="line">                    <span class="comment">// add interest OP_WRITE</span></span><span class="line">                    selectionKey.interestOps(selectionKey.interestOps() | SelectionKey.OP_WRITE);</span><span class="line">                    <span class="comment">// 并添加附件</span></span><span class="line">                    selectionKey.attach(attachment);</span><span class="line">                    <span class="comment">// wakeup被select()阻塞的selector</span></span><span class="line">                    selectionKey.selector().wakeup();</span><span class="line">                &#125;</span><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><span class="line">                e.printStackTrace();</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(SelectionKey selectionKey, Queue&lt;SelectionKey&gt; queue)</span> </span>&#123;</span><span class="line">        <span class="keyword">if</span> (queue.isEmpty()) &#123;</span><span class="line">            <span class="comment">// queue should not be empty</span></span><span class="line">            <span class="keyword">return</span>;</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        ByteBuffer byteBuffer = ByteBuffer.allocate(<span class="number">1024</span>);</span><span class="line">        <span class="keyword">int</span> size = queue.size();</span><span class="line">        <span class="keyword">boolean</span> removed = queue.remove(selectionKey);</span><span class="line">        LOGGER.info(<span class="string">"queue size : &#123;&#125;, removed selectionKey : &#123;&#125;"</span>, size, removed);</span><span class="line"></span><span class="line">        SocketChannel channel = (SocketChannel) selectionKey.channel();</span><span class="line">        String body = (String) selectionKey.attachment();</span><span class="line">        <span class="keyword">if</span> (Objects.isNull(body)) &#123;</span><span class="line">            <span class="keyword">return</span>;</span><span class="line">        &#125;</span><span class="line"></span><span class="line">        <span class="keyword">try</span> &#123;</span><span class="line">            LOGGER.info(<span class="string">"send response : &#123;&#125;"</span>, body);</span><span class="line">            byteBuffer.clear();</span><span class="line">            <span class="keyword">try</span> &#123;</span><span class="line">                byteBuffer.put(body.getBytes());</span><span class="line">            &#125; <span class="keyword">catch</span> (BufferOverflowException b) &#123;</span><span class="line">                byteBuffer.put(<span class="string">"ERROR"</span>.getBytes());</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            byteBuffer.flip();</span><span class="line">            channel.write(byteBuffer);</span><span class="line"></span><span class="line">            <span class="comment">// remove interest OP_WRITE and attachment</span></span><span class="line">            selectionKey.attach(<span class="keyword">null</span>);</span><span class="line">            selectionKey.interestOps(selectionKey.interestOps() &amp; ~SelectionKey.OP_WRITE);</span><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><span class="line">            LOGGER.error(<span class="string">"byteBuffer or channel write error : &#123;&#125;"</span>, selectionKey, e);</span><span class="line">            <span class="keyword">try</span> &#123;</span><span class="line">                channel.close();</span><span class="line">            &#125; <span class="keyword">catch</span> (IOException ex) &#123;</span><span class="line">                ex.printStackTrace();</span><span class="line">            &#125;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeServerMultipleReactorClient</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">Boolean</span>&gt; </span>&#123;</span><span class="line"></span><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(TimeServerMultipleReactorClient<span class="class">.<span class="keyword">class</span>)</span>;</span><span class="line"></span><span class="line">        <span class="meta">@Override</span></span><span class="line">        <span class="function"><span class="keyword">public</span> Boolean <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</span><span class="line">            ByteBuffer byteBuffer = ByteBuffer.allocateDirect(<span class="number">64</span>);</span><span class="line">            SocketChannel socketChannel = SocketChannel.open(<span class="keyword">new</span> InetSocketAddress(<span class="number">8080</span>));</span><span class="line">            <span class="comment">// 同步请求</span></span><span class="line">            <span class="comment">// socketChannel.configureBlocking(false);</span></span><span class="line">            socketChannel.socket().setTcpNoDelay(<span class="keyword">true</span>);</span><span class="line">            <span class="keyword">while</span> (!socketChannel.finishConnect()) &#123;</span><span class="line">                LOGGER.info(<span class="string">"connecting ..."</span>);</span><span class="line">                TimeUnit.MILLISECONDS.sleep(<span class="number">5L</span>);</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">20</span>; i++) &#123;</span><span class="line">                byteBuffer.put(String.format(<span class="string">"%d : TIME"</span>, i).getBytes());</span><span class="line">                byteBuffer.flip();</span><span class="line">                socketChannel.write(byteBuffer);</span><span class="line"></span><span class="line">                TimeUnit.MILLISECONDS.sleep(<span class="number">300L</span>);</span><span class="line"></span><span class="line">                byteBuffer.clear();</span><span class="line">                <span class="keyword">if</span> (socketChannel.read(byteBuffer) &gt; <span class="number">0</span>) &#123;</span><span class="line">                    byteBuffer.flip();</span><span class="line">                    <span class="keyword">byte</span>[] response = <span class="keyword">new</span> <span class="keyword">byte</span>[byteBuffer.remaining()];</span><span class="line">                    byteBuffer.get(response);</span><span class="line">                    LOGGER.info(<span class="string">"&#123;&#125; : receive response : &#123;&#125;"</span>, i, <span class="keyword">new</span> String(response));</span><span class="line">                    byteBuffer.clear();</span><span class="line">                &#125;</span><span class="line">            &#125;</span><span class="line"></span><span class="line">            socketChannel.shutdownOutput(); <span class="comment">// 服务端会收到FIN包</span></span><span class="line">            TimeUnit.MILLISECONDS.sleep(<span class="number">300L</span>);</span><span class="line">            socketChannel.close();</span><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h2 id="logback-xml"><a href="#logback-xml" class="headerlink" title="logback.xml"></a>logback.xml</h2><p>为了方便查看线程运行情况，加入<code>logback</code>依赖及其配置文件，内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><span class="line"></span><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"CONSOLE_LOG_PATTERN"</span></span></span><span class="line"><span class="tag">              <span class="attr">value</span>=<span class="string">"%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; %highlight(-%5p) --- [%15.15thread] %cyan(%-50.50logger&#123;49&#125; [%5line] :) %m%n%ex"</span>/&gt;</span></span><span class="line">    <span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"CONSOLE"</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.ConsoleAppender"</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">encoder</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>$&#123;CONSOLE_LOG_PATTERN&#125;<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><span class="line">            <span class="tag">&lt;<span class="name">charset</span>&gt;</span>utf8<span class="tag">&lt;/<span class="name">charset</span>&gt;</span></span><span class="line">        <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><span class="line"></span><span class="line">    <span class="tag">&lt;<span class="name">root</span> <span class="attr">level</span>=<span class="string">"DEBUG"</span>&gt;</span></span><span class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"CONSOLE"</span>/&gt;</span></span><span class="line">    <span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span></pre></td></tr></table></figure>
+<h2 id="Selector-在不同线程中对象锁竞争问题"><a href="#Selector-在不同线程中对象锁竞争问题" class="headerlink" title="Selector 在不同线程中对象锁竞争问题"></a>Selector 在不同线程中对象锁竞争问题</h2><p>多路复用器<code>selector</code>的<code>register(...)</code>和<code>select(...)</code>操作会有锁冲突，在 <a href="/blog/java/2019/03/16/reactor-pattern-skeleton-example.html">reactor pattern skeleton example</a> 文章中已经简单说明了多路复用器上有很多同步操作，锁竞争很严重，并可能阻塞线程，为了避免在<code>selector</code>及其属性对象上有同步操作，本示例里将<code>MainReactor</code>新接入的<code>socketChannel</code>加入到对应<code>SubReactor</code>线程的不同队列里，另外IO请求处理完的结果也用队列来维护减少并发问题，可以看源码注释说明。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://gee.cs.oswego.edu/dl/cpjslides/nio.pdf" target="_blank" rel="noopener">Scalable IO in Java</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2019/03/16/reactor-pattern-skeleton-example.html" rel="next" title="reactor pattern skeleton example">
+                <i class="fa fa-chevron-left"></i>
+                reactor pattern skeleton example
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2019/03/18/java-nio-need-to-known.html" rel="prev" title="java nio need to known">
+                <i class="fa fa-chevron-right"></i>
+                java nio need to known
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#多Reactor多线程模型示例代码"><span class="nav-number">1.</span> <span class="nav-text">多Reactor多线程模型示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logback-xml"><span class="nav-number">2.</span> <span class="nav-text">logback.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selector-在不同线程中对象锁竞争问题"><span class="nav-number">3.</span> <span class="nav-text">Selector 在不同线程中对象锁竞争问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

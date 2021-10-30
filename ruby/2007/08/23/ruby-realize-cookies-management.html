@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="用ruby实现HTTP Cookies管理。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ruby realize cookies management">
-<meta property="og:url" content="https://www.4e00.com/ruby/2007/08/23/ruby-realize-cookies-management.html">
+<meta property="og:url" content="http://www.4e00.com/ruby/2007/08/23/ruby-realize-cookies-management.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="用ruby实现HTTP Cookies管理。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.133Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.025Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ruby realize cookies management">
 <meta name="twitter:description" content="用ruby实现HTTP Cookies管理。">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/ruby/2007/08/23/ruby-realize-cookies-management.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/ruby/2007/08/23/ruby-realize-cookies-management.html">
 
   <title> ruby realize cookies management | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/ruby/" itemprop="url" rel="index">
                     <span itemprop="name">ruby</span>
                   </a>
@@ -256,7 +256,7 @@
       
         <p>用ruby实现HTTP Cookies管理。</p>
 <a id="more"></a>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env ruby</span></div><div class="line"><span class="keyword">require</span> <span class="string">'pp'</span></div><div class="line"><span class="keyword">require</span> <span class="string">'erb'</span></div><div class="line"><span class="keyword">require</span> <span class="string">'uri'</span></div><div class="line"><span class="keyword">require</span> <span class="string">'hpricot'</span></div><div class="line"><span class="keyword">require</span> <span class="string">'net/http'</span></div><div class="line"><span class="keyword">require</span> <span class="string">'net/https'</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">module</span> <span class="title">CookieMechanism</span></span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">cookies_hashed</span><span class="params">(set_cookie, path, domain)</span></span></div><div class="line">    expires = <span class="string">'Mon, 01-Jan-2010 00:00:00 GMT'</span></div><div class="line">    arr_hashed = Array.new</div><div class="line">    <span class="keyword">if</span> set_cookie</div><div class="line">      arr = set_cookie.split(<span class="regexp">/, /</span>)</div><div class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span> ... arr.size - <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> arr[i] =~ <span class="regexp">/Expires=/</span> &amp;&amp; arr[i + <span class="number">1</span>] =~ <span class="regexp">/.*GMT/</span></div><div class="line">          arr[i] &lt;&lt; <span class="string">', '</span> &lt;&lt; arr[i + <span class="number">1</span>]</div><div class="line">          arr[i + <span class="number">1</span>] = <span class="string">''</span></div><div class="line">        <span class="keyword">end</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">      arr.delete_if &#123;<span class="params">|del|</span> del == <span class="string">''</span>&#125;</div><div class="line">      arr.each <span class="keyword">do</span> <span class="params">|cookie|</span></div><div class="line">        fields = cookie.split(<span class="string">';'</span>)</div><div class="line">        hashed = Hash.new</div><div class="line">        hashed[<span class="string">'Path'</span>] = path</div><div class="line">        hashed[<span class="string">'Domain'</span>] = domain</div><div class="line">        hashed[<span class="string">'Secure'</span>] = <span class="number">0</span></div><div class="line">        fields.each <span class="keyword">do</span> <span class="params">|f|</span></div><div class="line">          h = f.strip.split(<span class="string">'='</span>, <span class="number">2</span>)</div><div class="line">          h[<span class="number">0</span>].capitalize! <span class="keyword">if</span> h[<span class="number">0</span>].capitalize =~ <span class="regexp">/Expires|Path|Domain|Secure/i</span></div><div class="line">          h[<span class="number">1</span>] = <span class="number">1</span> <span class="keyword">if</span> h[<span class="number">0</span>] == <span class="string">'Secure'</span></div><div class="line">          hashed.merge!(&#123;h[<span class="number">0</span>] =&gt; h[<span class="number">1</span>]&#125;)</div><div class="line">        <span class="keyword">end</span></div><div class="line">        <span class="keyword">if</span> hashed.has_key?(<span class="string">'Expires'</span>)</div><div class="line">          hashed[<span class="string">'Expires'</span>] = <span class="number">0</span> <span class="keyword">if</span> Time.httpdate(hashed[<span class="string">'Expires'</span>]) &lt;= Time.now()</div><div class="line">        <span class="keyword">else</span></div><div class="line">          hashed[<span class="string">'Expires'</span>] = expires</div><div class="line">        <span class="keyword">end</span></div><div class="line">        arr_hashed &lt;&lt; hashed</div><div class="line">      <span class="keyword">end</span></div><div class="line">    <span class="keyword">end</span></div><div class="line">    <span class="keyword">return</span> arr_hashed</div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">cookies_process</span><span class="params">(arr_hashed_new, arr_hashed_old = Array.new)</span></span></div><div class="line">    arr_hashed_new.each <span class="keyword">do</span> <span class="params">|new|</span></div><div class="line">      same_key = <span class="number">0</span></div><div class="line">      new.each <span class="keyword">do</span> <span class="params">|new_key, new_value|</span></div><div class="line">        <span class="keyword">if</span> new_key !~ <span class="regexp">/Expires|Path|Domain|Secure/i</span></div><div class="line">          arr_hashed_old.each <span class="keyword">do</span> <span class="params">|old|</span></div><div class="line">            old.each <span class="keyword">do</span> <span class="params">|old_key, old_value|</span></div><div class="line">              <span class="keyword">if</span> old_key !~ <span class="regexp">/Expires|Path|Domain|Secure/i</span> &amp;&amp; same_key == <span class="number">0</span></div><div class="line">                <span class="keyword">if</span> old_key == new_key</div><div class="line">                  same_key = <span class="number">1</span></div><div class="line">                <span class="keyword">end</span></div><div class="line">              <span class="keyword">end</span></div><div class="line">              <span class="keyword">break</span> <span class="keyword">if</span> same_key == <span class="number">1</span></div><div class="line">            <span class="keyword">end</span></div><div class="line">          <span class="keyword">end</span></div><div class="line">          <span class="keyword">if</span> same_key == <span class="number">1</span></div><div class="line">            arr_hashed_old.each <span class="keyword">do</span> <span class="params">|old|</span></div><div class="line">              old.each <span class="keyword">do</span> <span class="params">|old_key, old_value|</span></div><div class="line">                <span class="keyword">if</span> old_key == new_key</div><div class="line">                  <span class="keyword">if</span> new[<span class="string">'Path'</span>] == old[<span class="string">'Path'</span>] &amp;&amp; new[<span class="string">'Domain'</span>] == old[<span class="string">'Domain'</span>]</div><div class="line">                    <span class="keyword">if</span> new[<span class="string">'Expires'</span>] != <span class="number">0</span></div><div class="line">                      old[old_key] = new_value</div><div class="line">                      old[<span class="string">'Expires'</span>] = new[<span class="string">'Expires'</span>]</div><div class="line">                      old[<span class="string">'Secure'</span>] = new[<span class="string">'Secure'</span>]</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                      arr_hashed_old.delete(old)</div><div class="line">                    <span class="keyword">end</span></div><div class="line">                  <span class="keyword">else</span></div><div class="line">                    arr_hashed_old &lt;&lt; new <span class="keyword">if</span> new[<span class="string">'Expires'</span>] != <span class="number">0</span></div><div class="line">                  <span class="keyword">end</span></div><div class="line">                <span class="keyword">end</span></div><div class="line">              <span class="keyword">end</span></div><div class="line">            <span class="keyword">end</span></div><div class="line">          <span class="keyword">else</span></div><div class="line">            arr_hashed_old &lt;&lt; new <span class="keyword">if</span> new[<span class="string">'Expires'</span>] != <span class="number">0</span></div><div class="line">          <span class="keyword">end</span></div><div class="line">        <span class="keyword">end</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">    <span class="keyword">end</span></div><div class="line">    <span class="keyword">return</span> arr_hashed_old</div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">cookies_request</span><span class="params">(arr_hashed_old, path, domain, secure = <span class="number">0</span>)</span></span></div><div class="line">    cookie = String.new</div><div class="line">    cookies = Array.new</div><div class="line">    arr_hashed_old.each <span class="keyword">do</span> <span class="params">|old|</span></div><div class="line">      reg_str = Regexp.escape(old[<span class="string">'Path'</span>])</div><div class="line">      reg_path = Regexp.new(<span class="string">'^'</span> + reg_str)</div><div class="line">      reg_str = Regexp.escape(old[<span class="string">'Domain'</span>])</div><div class="line">      reg_domain = Regexp.new(reg_str + <span class="string">'$'</span>)</div><div class="line">      <span class="keyword">if</span> path =~ reg_path &amp;&amp; domain =~ reg_domain</div><div class="line">        <span class="keyword">if</span> secure == <span class="number">0</span></div><div class="line">          cookies &lt;&lt; old <span class="keyword">if</span> old[<span class="string">'Secure'</span>] == <span class="number">0</span></div><div class="line">        <span class="keyword">else</span></div><div class="line">          cookies &lt;&lt; old</div><div class="line">        <span class="keyword">end</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">    <span class="keyword">end</span></div><div class="line">    cookies.sort!&#123;<span class="params">|a, b|</span> a[<span class="string">'Path'</span>] &lt;=&gt; b[<span class="string">'Path'</span>]&#125;.reverse!</div><div class="line">    cookies.each <span class="keyword">do</span> <span class="params">|c|</span></div><div class="line">      c.each <span class="keyword">do</span> <span class="params">|key, value|</span></div><div class="line">        <span class="keyword">if</span> key !~ <span class="regexp">/Expires|Path|Domain|Secure/i</span></div><div class="line">          cookie == <span class="string">''</span> ? cookie += key + <span class="string">'='</span> + value : cookie += <span class="string">'; '</span> + key + <span class="string">'='</span> + value</div><div class="line">        <span class="keyword">end</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">    <span class="keyword">end</span></div><div class="line">    <span class="keyword">return</span> cookie</div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">add_cookie</span><span class="params">(response, path, domain, arr_hashed_old)</span></span></div><div class="line">    set_cookie = response[<span class="string">'set-cookie'</span>]</div><div class="line">    <span class="comment"># response: HTTPResponse object</span></div><div class="line">    arr_hashed_new = cookies_hashed(set_cookie, path, domain)</div><div class="line">    arr_hashed_old = cookies_process(arr_hashed_new, arr_hashed_old)</div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_http_headers</span><span class="params">(path, domain, arr_hashed_old)</span></span></div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">     <span class="string">'Cookie'</span> =&gt; cookies_request(arr_hashed_old, path, domain, <span class="number">0</span>),</div><div class="line">     <span class="string">'User-Agent'</span> =&gt; <span class="string">'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)'</span>,</div><div class="line">     <span class="string">'Connection'</span> =&gt; <span class="string">'Keep-Alive'</span>,</div><div class="line">     <span class="string">'Accept-Language'</span> =&gt; <span class="string">'zh-cn'</span></div><div class="line">    &#125;</div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">post_http_headers</span><span class="params">(path, domain, arr_hashed_old)</span></span></div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">     <span class="string">'Cookie'</span> =&gt; cookies_request(arr_hashed_old, path, domain, <span class="number">0</span>),</div><div class="line">     <span class="string">'Content-Type'</span> =&gt; <span class="string">'application/x-www-form-urlencoded'</span>,</div><div class="line">     <span class="string">'User-Agent'</span> =&gt; <span class="string">'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)'</span>,</div><div class="line">     <span class="string">'Connection'</span> =&gt; <span class="string">'Keep-Alive'</span>,</div><div class="line">     <span class="string">'Accept-Language'</span> =&gt; <span class="string">'zh-cn'</span></div><div class="line">    &#125;</div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_https_headers</span><span class="params">(path, domain, arr_hashed_old)</span></span></div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">     <span class="string">'Cookie'</span> =&gt; cookies_request(arr_hashed_old, path, domain, <span class="number">1</span>),</div><div class="line">     <span class="string">'User-Agent'</span> =&gt; <span class="string">'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)'</span>,</div><div class="line">     <span class="string">'Connection'</span> =&gt; <span class="string">'Keep-Alive'</span>,</div><div class="line">     <span class="string">'Accept-Language'</span> =&gt; <span class="string">'zh-cn'</span></div><div class="line">    &#125;</div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">post_https_headers</span><span class="params">(path, domain, arr_hashed_old)</span></span></div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">     <span class="string">'Cookie'</span> =&gt; cookies_request(arr_hashed_old, path, domain, <span class="number">1</span>),</div><div class="line">     <span class="string">'Content-Type'</span> =&gt; <span class="string">'application/x-www-form-urlencoded'</span>,</div><div class="line">     <span class="string">'User-Agent'</span> =&gt; <span class="string">'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)'</span>,</div><div class="line">     <span class="string">'Connection'</span> =&gt; <span class="string">'Keep-Alive'</span>,</div><div class="line">     <span class="string">'Accept-Language'</span> =&gt; <span class="string">'zh-cn'</span></div><div class="line">    &#125;</div><div class="line">  <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env ruby</span></span><span class="line"><span class="keyword">require</span> <span class="string">'pp'</span></span><span class="line"><span class="keyword">require</span> <span class="string">'erb'</span></span><span class="line"><span class="keyword">require</span> <span class="string">'uri'</span></span><span class="line"><span class="keyword">require</span> <span class="string">'hpricot'</span></span><span class="line"><span class="keyword">require</span> <span class="string">'net/http'</span></span><span class="line"><span class="keyword">require</span> <span class="string">'net/https'</span></span><span class="line"></span><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">CookieMechanism</span></span></span><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">cookies_hashed</span><span class="params">(set_cookie, path, domain)</span></span></span><span class="line">    expires = <span class="string">'Mon, 01-Jan-2010 00:00:00 GMT'</span></span><span class="line">    arr_hashed = Array.new</span><span class="line">    <span class="keyword">if</span> set_cookie</span><span class="line">      arr = set_cookie.split(<span class="regexp">/, /</span>)</span><span class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span> ... arr.size - <span class="number">1</span></span><span class="line">        <span class="keyword">if</span> arr[i] =~ <span class="regexp">/Expires=/</span> &amp;&amp; arr[i + <span class="number">1</span>] =~ <span class="regexp">/.*GMT/</span></span><span class="line">          arr[i] &lt;&lt; <span class="string">', '</span> &lt;&lt; arr[i + <span class="number">1</span>]</span><span class="line">          arr[i + <span class="number">1</span>] = <span class="string">''</span></span><span class="line">        <span class="keyword">end</span></span><span class="line">      <span class="keyword">end</span></span><span class="line">      arr.delete_if &#123;<span class="params">|del|</span> del == <span class="string">''</span>&#125;</span><span class="line">      arr.each <span class="keyword">do</span> <span class="params">|cookie|</span></span><span class="line">        fields = cookie.split(<span class="string">';'</span>)</span><span class="line">        hashed = Hash.new</span><span class="line">        hashed[<span class="string">'Path'</span>] = path</span><span class="line">        hashed[<span class="string">'Domain'</span>] = domain</span><span class="line">        hashed[<span class="string">'Secure'</span>] = <span class="number">0</span></span><span class="line">        fields.each <span class="keyword">do</span> <span class="params">|f|</span></span><span class="line">          h = f.strip.split(<span class="string">'='</span>, <span class="number">2</span>)</span><span class="line">          h[<span class="number">0</span>].capitalize! <span class="keyword">if</span> h[<span class="number">0</span>].capitalize =~ <span class="regexp">/Expires|Path|Domain|Secure/i</span></span><span class="line">          h[<span class="number">1</span>] = <span class="number">1</span> <span class="keyword">if</span> h[<span class="number">0</span>] == <span class="string">'Secure'</span></span><span class="line">          hashed.merge!(&#123;h[<span class="number">0</span>] =&gt; h[<span class="number">1</span>]&#125;)</span><span class="line">        <span class="keyword">end</span></span><span class="line">        <span class="keyword">if</span> hashed.has_key?(<span class="string">'Expires'</span>)</span><span class="line">          hashed[<span class="string">'Expires'</span>] = <span class="number">0</span> <span class="keyword">if</span> Time.httpdate(hashed[<span class="string">'Expires'</span>]) &lt;= Time.now()</span><span class="line">        <span class="keyword">else</span></span><span class="line">          hashed[<span class="string">'Expires'</span>] = expires</span><span class="line">        <span class="keyword">end</span></span><span class="line">        arr_hashed &lt;&lt; hashed</span><span class="line">      <span class="keyword">end</span></span><span class="line">    <span class="keyword">end</span></span><span class="line">    <span class="keyword">return</span> arr_hashed</span><span class="line">  <span class="keyword">end</span></span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">cookies_process</span><span class="params">(arr_hashed_new, arr_hashed_old = Array.new)</span></span></span><span class="line">    arr_hashed_new.each <span class="keyword">do</span> <span class="params">|new|</span></span><span class="line">      same_key = <span class="number">0</span></span><span class="line">      new.each <span class="keyword">do</span> <span class="params">|new_key, new_value|</span></span><span class="line">        <span class="keyword">if</span> new_key !~ <span class="regexp">/Expires|Path|Domain|Secure/i</span></span><span class="line">          arr_hashed_old.each <span class="keyword">do</span> <span class="params">|old|</span></span><span class="line">            old.each <span class="keyword">do</span> <span class="params">|old_key, old_value|</span></span><span class="line">              <span class="keyword">if</span> old_key !~ <span class="regexp">/Expires|Path|Domain|Secure/i</span> &amp;&amp; same_key == <span class="number">0</span></span><span class="line">                <span class="keyword">if</span> old_key == new_key</span><span class="line">                  same_key = <span class="number">1</span></span><span class="line">                <span class="keyword">end</span></span><span class="line">              <span class="keyword">end</span></span><span class="line">              <span class="keyword">break</span> <span class="keyword">if</span> same_key == <span class="number">1</span></span><span class="line">            <span class="keyword">end</span></span><span class="line">          <span class="keyword">end</span></span><span class="line">          <span class="keyword">if</span> same_key == <span class="number">1</span></span><span class="line">            arr_hashed_old.each <span class="keyword">do</span> <span class="params">|old|</span></span><span class="line">              old.each <span class="keyword">do</span> <span class="params">|old_key, old_value|</span></span><span class="line">                <span class="keyword">if</span> old_key == new_key</span><span class="line">                  <span class="keyword">if</span> new[<span class="string">'Path'</span>] == old[<span class="string">'Path'</span>] &amp;&amp; new[<span class="string">'Domain'</span>] == old[<span class="string">'Domain'</span>]</span><span class="line">                    <span class="keyword">if</span> new[<span class="string">'Expires'</span>] != <span class="number">0</span></span><span class="line">                      old[old_key] = new_value</span><span class="line">                      old[<span class="string">'Expires'</span>] = new[<span class="string">'Expires'</span>]</span><span class="line">                      old[<span class="string">'Secure'</span>] = new[<span class="string">'Secure'</span>]</span><span class="line">                    <span class="keyword">else</span></span><span class="line">                      arr_hashed_old.delete(old)</span><span class="line">                    <span class="keyword">end</span></span><span class="line">                  <span class="keyword">else</span></span><span class="line">                    arr_hashed_old &lt;&lt; new <span class="keyword">if</span> new[<span class="string">'Expires'</span>] != <span class="number">0</span></span><span class="line">                  <span class="keyword">end</span></span><span class="line">                <span class="keyword">end</span></span><span class="line">              <span class="keyword">end</span></span><span class="line">            <span class="keyword">end</span></span><span class="line">          <span class="keyword">else</span></span><span class="line">            arr_hashed_old &lt;&lt; new <span class="keyword">if</span> new[<span class="string">'Expires'</span>] != <span class="number">0</span></span><span class="line">          <span class="keyword">end</span></span><span class="line">        <span class="keyword">end</span></span><span class="line">      <span class="keyword">end</span></span><span class="line">    <span class="keyword">end</span></span><span class="line">    <span class="keyword">return</span> arr_hashed_old</span><span class="line">  <span class="keyword">end</span></span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">cookies_request</span><span class="params">(arr_hashed_old, path, domain, secure = <span class="number">0</span>)</span></span></span><span class="line">    cookie = String.new</span><span class="line">    cookies = Array.new</span><span class="line">    arr_hashed_old.each <span class="keyword">do</span> <span class="params">|old|</span></span><span class="line">      reg_str = Regexp.escape(old[<span class="string">'Path'</span>])</span><span class="line">      reg_path = Regexp.new(<span class="string">'^'</span> + reg_str)</span><span class="line">      reg_str = Regexp.escape(old[<span class="string">'Domain'</span>])</span><span class="line">      reg_domain = Regexp.new(reg_str + <span class="string">'$'</span>)</span><span class="line">      <span class="keyword">if</span> path =~ reg_path &amp;&amp; domain =~ reg_domain</span><span class="line">        <span class="keyword">if</span> secure == <span class="number">0</span></span><span class="line">          cookies &lt;&lt; old <span class="keyword">if</span> old[<span class="string">'Secure'</span>] == <span class="number">0</span></span><span class="line">        <span class="keyword">else</span></span><span class="line">          cookies &lt;&lt; old</span><span class="line">        <span class="keyword">end</span></span><span class="line">      <span class="keyword">end</span></span><span class="line">    <span class="keyword">end</span></span><span class="line">    cookies.sort!&#123;<span class="params">|a, b|</span> a[<span class="string">'Path'</span>] &lt;=&gt; b[<span class="string">'Path'</span>]&#125;.reverse!</span><span class="line">    cookies.each <span class="keyword">do</span> <span class="params">|c|</span></span><span class="line">      c.each <span class="keyword">do</span> <span class="params">|key, value|</span></span><span class="line">        <span class="keyword">if</span> key !~ <span class="regexp">/Expires|Path|Domain|Secure/i</span></span><span class="line">          cookie == <span class="string">''</span> ? cookie += key + <span class="string">'='</span> + value : cookie += <span class="string">'; '</span> + key + <span class="string">'='</span> + value</span><span class="line">        <span class="keyword">end</span></span><span class="line">      <span class="keyword">end</span></span><span class="line">    <span class="keyword">end</span></span><span class="line">    <span class="keyword">return</span> cookie</span><span class="line">  <span class="keyword">end</span></span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">add_cookie</span><span class="params">(response, path, domain, arr_hashed_old)</span></span></span><span class="line">    set_cookie = response[<span class="string">'set-cookie'</span>]</span><span class="line">    <span class="comment"># response: HTTPResponse object</span></span><span class="line">    arr_hashed_new = cookies_hashed(set_cookie, path, domain)</span><span class="line">    arr_hashed_old = cookies_process(arr_hashed_new, arr_hashed_old)</span><span class="line">  <span class="keyword">end</span></span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_http_headers</span><span class="params">(path, domain, arr_hashed_old)</span></span></span><span class="line">    <span class="keyword">return</span> &#123;</span><span class="line">     <span class="string">'Cookie'</span> =&gt; cookies_request(arr_hashed_old, path, domain, <span class="number">0</span>),</span><span class="line">     <span class="string">'User-Agent'</span> =&gt; <span class="string">'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)'</span>,</span><span class="line">     <span class="string">'Connection'</span> =&gt; <span class="string">'Keep-Alive'</span>,</span><span class="line">     <span class="string">'Accept-Language'</span> =&gt; <span class="string">'zh-cn'</span></span><span class="line">    &#125;</span><span class="line">  <span class="keyword">end</span></span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">post_http_headers</span><span class="params">(path, domain, arr_hashed_old)</span></span></span><span class="line">    <span class="keyword">return</span> &#123;</span><span class="line">     <span class="string">'Cookie'</span> =&gt; cookies_request(arr_hashed_old, path, domain, <span class="number">0</span>),</span><span class="line">     <span class="string">'Content-Type'</span> =&gt; <span class="string">'application/x-www-form-urlencoded'</span>,</span><span class="line">     <span class="string">'User-Agent'</span> =&gt; <span class="string">'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)'</span>,</span><span class="line">     <span class="string">'Connection'</span> =&gt; <span class="string">'Keep-Alive'</span>,</span><span class="line">     <span class="string">'Accept-Language'</span> =&gt; <span class="string">'zh-cn'</span></span><span class="line">    &#125;</span><span class="line">  <span class="keyword">end</span></span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_https_headers</span><span class="params">(path, domain, arr_hashed_old)</span></span></span><span class="line">    <span class="keyword">return</span> &#123;</span><span class="line">     <span class="string">'Cookie'</span> =&gt; cookies_request(arr_hashed_old, path, domain, <span class="number">1</span>),</span><span class="line">     <span class="string">'User-Agent'</span> =&gt; <span class="string">'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)'</span>,</span><span class="line">     <span class="string">'Connection'</span> =&gt; <span class="string">'Keep-Alive'</span>,</span><span class="line">     <span class="string">'Accept-Language'</span> =&gt; <span class="string">'zh-cn'</span></span><span class="line">    &#125;</span><span class="line">  <span class="keyword">end</span></span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">post_https_headers</span><span class="params">(path, domain, arr_hashed_old)</span></span></span><span class="line">    <span class="keyword">return</span> &#123;</span><span class="line">     <span class="string">'Cookie'</span> =&gt; cookies_request(arr_hashed_old, path, domain, <span class="number">1</span>),</span><span class="line">     <span class="string">'Content-Type'</span> =&gt; <span class="string">'application/x-www-form-urlencoded'</span>,</span><span class="line">     <span class="string">'User-Agent'</span> =&gt; <span class="string">'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)'</span>,</span><span class="line">     <span class="string">'Connection'</span> =&gt; <span class="string">'Keep-Alive'</span>,</span><span class="line">     <span class="string">'Accept-Language'</span> =&gt; <span class="string">'zh-cn'</span></span><span class="line">    &#125;</span><span class="line">  <span class="keyword">end</span></span><span class="line"><span class="keyword">end</span></span></pre></td></tr></table></figure>
 
       
     </div>
@@ -283,7 +283,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/ruby/2007/08/16/ruby-spreadsheet-create-excel.html" rel="next" title="ruby spreadsheet/excel生成excel">
-                上一篇：ruby spreadsheet/excel生成excel
+                <i class="fa fa-chevron-left"></i>
+                ruby spreadsheet/excel生成excel
               </a>
             
           </div>
@@ -291,7 +292,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/ruby/2007/08/24/ruby-metaprogramming-example.html" rel="prev" title="ruby metaprogramming example">
-                下一篇：ruby metaprogramming example
+                <i class="fa fa-chevron-right"></i>
+                ruby metaprogramming example
               </a>
             
           </div>
@@ -340,7 +342,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -351,16 +353,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -442,10 +442,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

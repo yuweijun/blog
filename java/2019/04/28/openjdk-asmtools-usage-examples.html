@@ -1,0 +1,574 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="asmtoolsAsmTools 由一组（Java 类文件）汇编程序/反汇编程序组成：  Jasm / Jdis: 一种汇编语言，提供类似 Java 的成员签名声明，同时提供符合 Java VM 规范的字节码指令助记符。Jasm 还为 classfile 属性中常见的构造提供高级语法。Jasm 编码测试对于对字节代码进行排序非常有用，因为 Javac 编译的代码通常不会对字节代码进行排序。  JC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="openjdk asmtools usage examples">
+<meta property="og:url" content="http://www.4e00.com/java/2019/04/28/openjdk-asmtools-usage-examples.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="asmtoolsAsmTools 由一组（Java 类文件）汇编程序/反汇编程序组成：  Jasm / Jdis: 一种汇编语言，提供类似 Java 的成员签名声明，同时提供符合 Java VM 规范的字节码指令助记符。Jasm 还为 classfile 属性中常见的构造提供高级语法。Jasm 编码测试对于对字节代码进行排序非常有用，因为 Javac 编译的代码通常不会对字节代码进行排序。  JC">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-27T16:34:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="openjdk asmtools usage examples">
+<meta name="twitter:description" content="asmtoolsAsmTools 由一组（Java 类文件）汇编程序/反汇编程序组成：  Jasm / Jdis: 一种汇编语言，提供类似 Java 的成员签名声明，同时提供符合 Java VM 规范的字节码指令助记符。Jasm 还为 classfile 属性中常见的构造提供高级语法。Jasm 编码测试对于对字节代码进行排序非常有用，因为 Javac 编译的代码通常不会对字节代码进行排序。  JC">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2019/04/28/openjdk-asmtools-usage-examples.html">
+
+  <title> openjdk asmtools usage examples | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                openjdk asmtools usage examples
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-04-28T15:48:56+08:00" content="2019-04-28">
+              2019-04-28
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="asmtools"><a href="#asmtools" class="headerlink" title="asmtools"></a>asmtools</h2><p>AsmTools 由一组（Java 类文件）汇编程序/反汇编程序组成：</p>
+<ol>
+<li><p>Jasm / Jdis: 一种汇编语言，提供类似 Java 的成员签名声明，同时提供符合 Java VM 规范的字节码指令助记符。Jasm 还为 classfile 属性中常见的构造提供高级语法。Jasm 编码测试对于对字节代码进行排序非常有用，因为 Javac 编译的代码通常不会对字节代码进行排序。</p>
+</li>
+<li><p>JCod / JDec: 一种汇编语言，提供类文件结构的字节码容器。</p>
+</li>
+</ol>
+<p>AsmTools 是完全自反的，Java 二进制（.class）文件可以被反汇编成文本表示，而文本表示又可以汇编回同一个二进制文件。</p>
+<h3 id="Downloads"><a href="#Downloads" class="headerlink" title="Downloads"></a>Downloads</h3><p><a href="https://wiki.openjdk.java.net/display/CodeTools/asmtools" target="_blank" rel="noopener">https://wiki.openjdk.java.net/display/CodeTools/asmtools</a> 下载 jar 包或者在 github 上搜索下载 <code>asmtools.jar</code>。</p>
+<a id="more"></a>
+<h3 id="bash-scripts-for-jdis"><a href="#bash-scripts-for-jdis" class="headerlink" title="bash scripts for jdis"></a>bash scripts for jdis</h3><p>设置二个 bash 脚本，添加可执行权限，方便后面命令执行。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><span class="line"></span><span class="line">java -jar asmtools.jar jdis <span class="variable">$@</span></span></pre></td></tr></table></figure>
+<h3 id="bash-scripts-for-jasm"><a href="#bash-scripts-for-jasm" class="headerlink" title="bash scripts for jasm"></a>bash scripts for jasm</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><span class="line"></span><span class="line">java -jar asmtools.jar jasm <span class="variable">$@</span></span></pre></td></tr></table></figure>
+<h3 id="java-源码"><a href="#java-源码" class="headerlink" title="java 源码"></a>java 源码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><span class="line">        System.out.println(<span class="string">"Hello World"</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="jdis-jasm"><a href="#jdis-jasm" class="headerlink" title="jdis / jasm"></a>jdis / jasm</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">jdis</span> HelloWorld.class</span><span class="line output">super public class HelloWorld</span><span class="line output">        version 52:0</span><span class="line output">&#123;</span><span class="line output"></span><span class="line output"></span><span class="line output">public Method <span class="string">"&lt;init&gt;"</span>:<span class="string">"()V"</span></span><span class="line output">        stack 1 locals 1</span><span class="line output">&#123;</span><span class="line output">                aload_0;</span><span class="line output">                invokespecial   Method java/lang/Object.<span class="string">"&lt;init&gt;"</span>:<span class="string">"()V"</span>;</span><span class="line output">                <span class="built_in">return</span>;</span><span class="line output"></span><span class="line output">&#125;</span><span class="line output"></span><span class="line output">public static Method main:<span class="string">"([Ljava/lang/String;)V"</span></span><span class="line output">        stack 2 locals 1</span><span class="line output">&#123;</span><span class="line output">                getstatic       Field java/lang/System.out:<span class="string">"Ljava/io/PrintStream;"</span>;</span><span class="line output">                ldc     String <span class="string">"Hello World"</span>;</span><span class="line output">                invokevirtual   Method java/io/PrintStream.println:<span class="string">"(Ljava/lang/String;)V"</span>;</span><span class="line output">                <span class="built_in">return</span>;</span><span class="line output"></span><span class="line output">&#125;</span><span class="line output"></span><span class="line output">&#125; // end Class HelloWorld</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">jdis</span> HelloWorld.class &gt; HelloWorld.jdis</span><span class="line"></span><span class="line"><span class="comment"># 删除原来的 HelloWorld.class 文件</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">rm</span> -f HelloWorld.class</span><span class="line"></span><span class="line"><span class="comment"># 用 jasm 生成 HelloWorld.class 文件</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">jasm</span> HelloWorld.jdis</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ll</span> HelloWorld.class</span><span class="line output">-rw-r--r-- 1 yu staff 379 Apr 27 23:55 HelloWorld.class</span><span class="line"></span><span class="line"><span class="comment"># 运行 jasm 生的 HelloWorld.class</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">java</span> HelloWorld</span><span class="line output">Hello World</span></pre></td></tr></table></figure>
+<h3 id="修改-jdis-生成的文件"><a href="#修改-jdis-生成的文件" class="headerlink" title="修改 jdis 生成的文件"></a>修改 jdis 生成的文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">awk</span> <span class="string">'NR==1,/Hello World/&#123;sub(/Hello World/, "Hello World!!")&#125; 1'</span> HelloWorld.jdis &gt; HelloWorld.jdis.2</span><span class="line"></span><span class="line"><span class="comment"># 上面的命令修改了 ldc String "Hello World";</span></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">diff</span> HelloWorld.jdis HelloWorld.jdis.2</span><span class="line output">20c20</span><span class="line output">&lt;               ldc     String <span class="string">"Hello World"</span>;</span><span class="line output">---</span><span class="line output">&gt;               ldc     String <span class="string">"Hello World!!"</span>;</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cat</span> HelloWorld.jdis.2</span><span class="line output">super public class HelloWorld</span><span class="line output">        version 52:0</span><span class="line output">&#123;</span><span class="line output"></span><span class="line output"></span><span class="line output">public Method <span class="string">"&lt;init&gt;"</span>:<span class="string">"()V"</span></span><span class="line output">        stack 1 locals 1</span><span class="line output">&#123;</span><span class="line output">                aload_0;</span><span class="line output">                invokespecial   Method java/lang/Object.<span class="string">"&lt;init&gt;"</span>:<span class="string">"()V"</span>;</span><span class="line output">                <span class="built_in">return</span>;</span><span class="line output"></span><span class="line output">&#125;</span><span class="line output"></span><span class="line output">public static Method main:<span class="string">"([Ljava/lang/String;)V"</span></span><span class="line output">        stack 2 locals 1</span><span class="line output">&#123;</span><span class="line output">                getstatic       Field java/lang/System.out:<span class="string">"Ljava/io/PrintStream;"</span>;</span><span class="line output">                ldc     String <span class="string">"Hello World!!"</span>;</span><span class="line output">                invokevirtual   Method java/io/PrintStream.println:<span class="string">"(Ljava/lang/String;)V"</span>;</span><span class="line output">                <span class="built_in">return</span>;</span><span class="line output"></span><span class="line output">&#125;</span><span class="line output"></span><span class="line output">&#125; // end Class HelloWorld</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">rm</span> -f HelloWorld.class</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">jasm</span> HelloWorld.jdis.2</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ll</span> HelloWorld.class</span><span class="line output">-rw-r--r-- 1 yu staff 383 Apr 28 00:15 HelloWorld.class</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">java</span> HelloWorld</span><span class="line output">Hello World!!</span></pre></td></tr></table></figure>
+<h2 id="jdec-jcoder"><a href="#jdec-jcoder" class="headerlink" title="jdec / jcoder"></a>jdec / jcoder</h2><h3 id="jdec"><a href="#jdec" class="headerlink" title="jdec"></a>jdec</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><span class="line"></span><span class="line">java -jar asmtools.jar jdec <span class="variable">$@</span></span></pre></td></tr></table></figure>
+<h3 id="jcoder"><a href="#jcoder" class="headerlink" title="jcoder"></a>jcoder</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><span class="line"></span><span class="line">java -jar asmtools.jar jcoder <span class="variable">$@</span></span></pre></td></tr></table></figure>
+<h3 id="jdec-jcoder-example"><a href="#jdec-jcoder-example" class="headerlink" title="jdec / jcoder example"></a>jdec / jcoder example</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">rm</span> -f HelloWorld.class</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">javac</span> HelloWorld.java</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">jdec</span> HelloWorld.class</span><span class="line output">class HelloWorld &#123;</span><span class="line output">  0xCAFEBABE;</span><span class="line output">  0; // minor version</span><span class="line output">  52; // version</span><span class="line output">  [] &#123; // Constant Pool</span><span class="line output">    ; // first element is empty</span><span class="line output">    Method <span class="comment">#6 #20; // #1</span></span><span class="line output">    Field <span class="comment">#21 #22; // #2</span></span><span class="line output">    String <span class="comment">#23; // #3</span></span><span class="line output">    Method <span class="comment">#24 #25; // #4</span></span><span class="line output">    class <span class="comment">#26; // #5</span></span><span class="line output">    class <span class="comment">#27; // #6</span></span><span class="line output">    Utf8 <span class="string">"&lt;init&gt;"</span>; // <span class="comment">#7</span></span><span class="line output">    Utf8 <span class="string">"()V"</span>; // <span class="comment">#8</span></span><span class="line output">    Utf8 <span class="string">"Code"</span>; // <span class="comment">#9</span></span><span class="line output">    Utf8 <span class="string">"LineNumberTable"</span>; // <span class="comment">#10</span></span><span class="line output">    Utf8 <span class="string">"LocalVariableTable"</span>; // <span class="comment">#11</span></span><span class="line output">    Utf8 <span class="string">"this"</span>; // <span class="comment">#12</span></span><span class="line output">    Utf8 <span class="string">"LHelloWorld;"</span>; // <span class="comment">#13</span></span><span class="line output">    Utf8 <span class="string">"main"</span>; // <span class="comment">#14</span></span><span class="line output">    Utf8 <span class="string">"([Ljava/lang/String;)V"</span>; // <span class="comment">#15</span></span><span class="line output">    Utf8 <span class="string">"args"</span>; // <span class="comment">#16</span></span><span class="line output">    Utf8 <span class="string">"[Ljava/lang/String;"</span>; // <span class="comment">#17</span></span><span class="line output">    Utf8 <span class="string">"SourceFile"</span>; // <span class="comment">#18</span></span><span class="line output">    Utf8 <span class="string">"HelloWorld.java"</span>; // <span class="comment">#19</span></span><span class="line output">    NameAndType <span class="comment">#7 #8; // #20</span></span><span class="line output">    class <span class="comment">#28; // #21</span></span><span class="line output">    NameAndType <span class="comment">#29 #30; // #22</span></span><span class="line output">    Utf8 <span class="string">"Hello World"</span>; // <span class="comment">#23</span></span><span class="line output">    class <span class="comment">#31; // #24</span></span><span class="line output">    NameAndType <span class="comment">#32 #33; // #25</span></span><span class="line output">    Utf8 <span class="string">"HelloWorld"</span>; // <span class="comment">#26</span></span><span class="line output">    Utf8 <span class="string">"java/lang/Object"</span>; // <span class="comment">#27</span></span><span class="line output">    Utf8 <span class="string">"java/lang/System"</span>; // <span class="comment">#28</span></span><span class="line output">    Utf8 <span class="string">"out"</span>; // <span class="comment">#29</span></span><span class="line output">    Utf8 <span class="string">"Ljava/io/PrintStream;"</span>; // <span class="comment">#30</span></span><span class="line output">    Utf8 <span class="string">"java/io/PrintStream"</span>; // <span class="comment">#31</span></span><span class="line output">    Utf8 <span class="string">"println"</span>; // <span class="comment">#32</span></span><span class="line output">    Utf8 <span class="string">"(Ljava/lang/String;)V"</span>; // <span class="comment">#33</span></span><span class="line output">  &#125; // Constant Pool</span><span class="line output"></span><span class="line output">  0x0021; // access</span><span class="line output">  <span class="comment">#5;// this_cpx</span></span><span class="line output">  <span class="comment">#6;// super_cpx</span></span><span class="line output"></span><span class="line output">  [] &#123; // Interfaces</span><span class="line output">  &#125; // Interfaces</span><span class="line output"></span><span class="line output">  [] &#123; // fields</span><span class="line output">  &#125; // fields</span><span class="line output"></span><span class="line output">  [] &#123; // methods</span><span class="line output">    &#123; // Member</span><span class="line output">      0x0001; // access</span><span class="line output">      <span class="comment">#7; // name_cpx</span></span><span class="line output">      <span class="comment">#8; // sig_cpx</span></span><span class="line output">      [] &#123; // Attributes</span><span class="line output">        Attr(<span class="comment">#9) &#123; // Code</span></span><span class="line output">          1; // max_stack</span><span class="line output">          1; // max_locals</span><span class="line output">          Bytes[]&#123;</span><span class="line output">            0x2AB70001B1;</span><span class="line output">          &#125;</span><span class="line output">          [] &#123; // Traps</span><span class="line output">          &#125; // end Traps</span><span class="line output">          [] &#123; // Attributes</span><span class="line output">            Attr(<span class="comment">#10) &#123; // LineNumberTable</span></span><span class="line output">              [] &#123; // LineNumberTable</span><span class="line output">                0  1;</span><span class="line output">              &#125;</span><span class="line output">            &#125; // end LineNumberTable</span><span class="line output">            ;</span><span class="line output">            Attr(<span class="comment">#11) &#123; // LocalVariableTable</span></span><span class="line output">              [] &#123; // LocalVariableTable</span><span class="line output">                0 5 12 13 0;</span><span class="line output">              &#125;</span><span class="line output">            &#125; // end LocalVariableTable</span><span class="line output">          &#125; // Attributes</span><span class="line output">        &#125; // end Code</span><span class="line output">      &#125; // Attributes</span><span class="line output">    &#125; // Member</span><span class="line output">    ;</span><span class="line output">    &#123; // Member</span><span class="line output">      0x0009; // access</span><span class="line output">      <span class="comment">#14; // name_cpx</span></span><span class="line output">      <span class="comment">#15; // sig_cpx</span></span><span class="line output">      [] &#123; // Attributes</span><span class="line output">        Attr(<span class="comment">#9) &#123; // Code</span></span><span class="line output">          2; // max_stack</span><span class="line output">          1; // max_locals</span><span class="line output">          Bytes[]&#123;</span><span class="line output">            0xB200021203B60004;</span><span class="line output">            0xB1;</span><span class="line output">          &#125;</span><span class="line output">          [] &#123; // Traps</span><span class="line output">          &#125; // end Traps</span><span class="line output">          [] &#123; // Attributes</span><span class="line output">            Attr(<span class="comment">#10) &#123; // LineNumberTable</span></span><span class="line output">              [] &#123; // LineNumberTable</span><span class="line output">                0  4;</span><span class="line output">                8  5;</span><span class="line output">              &#125;</span><span class="line output">            &#125; // end LineNumberTable</span><span class="line output">            ;</span><span class="line output">            Attr(<span class="comment">#11) &#123; // LocalVariableTable</span></span><span class="line output">              [] &#123; // LocalVariableTable</span><span class="line output">                0 9 16 17 0;</span><span class="line output">              &#125;</span><span class="line output">            &#125; // end LocalVariableTable</span><span class="line output">          &#125; // Attributes</span><span class="line output">        &#125; // end Code</span><span class="line output">      &#125; // Attributes</span><span class="line output">    &#125; // Member</span><span class="line output">  &#125; // methods</span><span class="line output"></span><span class="line output">  [] &#123; // Attributes</span><span class="line output">    Attr(<span class="comment">#18) &#123; // SourceFile</span></span><span class="line output">      <span class="comment">#19;</span></span><span class="line output">    &#125; // end SourceFile</span><span class="line output">  &#125; // Attributes</span><span class="line output">&#125; // end class HelloWorld</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">jdec</span> HelloWorld.class &gt; HelloWorld.jdec</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">rm</span> -f HelloWorld.class</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">jcoder</span> HelloWorld.jdec</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">ll</span> HelloWorld.class</span><span class="line output">-rw-r--r-- 1 yu staff 533 Apr 28 00:27 HelloWorld.class</span><span class="line"></span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">java</span> HelloWorld</span><span class="line output">Hello World</span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://wiki.openjdk.java.net/display/CodeTools/asmtools" target="_blank" rel="noopener">https://wiki.openjdk.java.net/display/CodeTools/asmtools</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/web/2019/04/09/http-cross-origin-resource-sharing-cors.html" rel="next" title="cross origin resource sharing - cors">
+                <i class="fa fa-chevron-left"></i>
+                cross origin resource sharing - cors
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/macos/2020/03/11/disable-macos-shortcut-command-h.html" rel="prev" title="disable macos shortcut command-h">
+                <i class="fa fa-chevron-right"></i>
+                disable macos shortcut command-h
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#asmtools"><span class="nav-number">1.</span> <span class="nav-text">asmtools</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Downloads"><span class="nav-number">1.1.</span> <span class="nav-text">Downloads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bash-scripts-for-jdis"><span class="nav-number">1.2.</span> <span class="nav-text">bash scripts for jdis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bash-scripts-for-jasm"><span class="nav-number">1.3.</span> <span class="nav-text">bash scripts for jasm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java-源码"><span class="nav-number">1.4.</span> <span class="nav-text">java 源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jdis-jasm"><span class="nav-number">1.5.</span> <span class="nav-text">jdis / jasm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改-jdis-生成的文件"><span class="nav-number">1.6.</span> <span class="nav-text">修改 jdis 生成的文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jdec-jcoder"><span class="nav-number">2.</span> <span class="nav-text">jdec / jcoder</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jdec"><span class="nav-number">2.1.</span> <span class="nav-text">jdec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jcoder"><span class="nav-number">2.2.</span> <span class="nav-text">jcoder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jdec-jcoder-example"><span class="nav-number">2.3.</span> <span class="nav-text">jdec / jcoder example</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

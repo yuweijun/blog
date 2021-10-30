@@ -1,0 +1,564 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="vm/runtime/frame.hpp 第54行，关于栈帧操作的系列方法定义，源码如下： 5455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210310410510610710810911011111211311411511611711811912">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hotspot source code - jvm stack frame">
+<meta property="og:url" content="http://www.4e00.com/java/2018/08/05/hotspot-source-code-jvm-stack-frame.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="vm/runtime/frame.hpp 第54行，关于栈帧操作的系列方法定义，源码如下： 5455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210310410510610710810911011111211311411511611711811912">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.137Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hotspot source code - jvm stack frame">
+<meta name="twitter:description" content="vm/runtime/frame.hpp 第54行，关于栈帧操作的系列方法定义，源码如下： 5455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210310410510610710810911011111211311411511611711811912">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/08/05/hotspot-source-code-jvm-stack-frame.html">
+
+  <title> hotspot source code - jvm stack frame | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                hotspot source code - jvm stack frame
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-08-05T09:51:58+08:00" content="2018-08-05">
+              2018-08-05
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/runtime/frame.hpp#54" target="_blank" rel="noopener">vm/runtime/frame.hpp</a> 第<code>54</code>行，关于栈帧操作的系列方法定义，源码如下：</p>
+<figure class="highlight hpp"><table><tr><td class="gutter"><pre><span class="line">54</span><span class="line">55</span><span class="line">56</span><span class="line">57</span><span class="line">58</span><span class="line">59</span><span class="line">60</span><span class="line">61</span><span class="line">62</span><span class="line">63</span><span class="line">64</span><span class="line">65</span><span class="line">66</span><span class="line">67</span><span class="line">68</span><span class="line">69</span><span class="line">70</span><span class="line">71</span><span class="line">72</span><span class="line">73</span><span class="line">74</span><span class="line">75</span><span class="line">76</span><span class="line">77</span><span class="line">78</span><span class="line">79</span><span class="line">80</span><span class="line">81</span><span class="line">82</span><span class="line">83</span><span class="line">84</span><span class="line">85</span><span class="line">86</span><span class="line">87</span><span class="line">88</span><span class="line">89</span><span class="line">90</span><span class="line">91</span><span class="line">92</span><span class="line">93</span><span class="line">94</span><span class="line">95</span><span class="line">96</span><span class="line">97</span><span class="line">98</span><span class="line">99</span><span class="line">100</span><span class="line">101</span><span class="line">102</span><span class="line">103</span><span class="line">104</span><span class="line">105</span><span class="line">106</span><span class="line">107</span><span class="line">108</span><span class="line">109</span><span class="line">110</span><span class="line">111</span><span class="line">112</span><span class="line">113</span><span class="line">114</span><span class="line">115</span><span class="line">116</span><span class="line">117</span><span class="line">118</span><span class="line">119</span><span class="line">120</span><span class="line">121</span><span class="line">122</span><span class="line">123</span><span class="line">124</span><span class="line">125</span><span class="line">126</span><span class="line">127</span><span class="line">128</span><span class="line">129</span><span class="line">130</span><span class="line">131</span><span class="line">132</span><span class="line">133</span><span class="line">134</span><span class="line">135</span><span class="line">136</span><span class="line">137</span><span class="line">138</span><span class="line">139</span><span class="line">140</span><span class="line">141</span><span class="line">142</span><span class="line">143</span><span class="line">144</span><span class="line">145</span><span class="line">146</span><span class="line">147</span><span class="line">148</span><span class="line">149</span><span class="line">150</span><span class="line">151</span><span class="line">152</span><span class="line">153</span><span class="line">154</span><span class="line">155</span><span class="line">156</span><span class="line">157</span><span class="line">158</span><span class="line">159</span><span class="line">160</span><span class="line">161</span><span class="line">162</span><span class="line">163</span><span class="line">164</span><span class="line">165</span><span class="line">166</span><span class="line">167</span><span class="line">168</span><span class="line">169</span><span class="line">170</span><span class="line">171</span><span class="line">172</span><span class="line">173</span><span class="line">174</span><span class="line">175</span><span class="line">176</span><span class="line">177</span><span class="line">178</span><span class="line">179</span><span class="line">180</span><span class="line">181</span><span class="line">182</span><span class="line">183</span><span class="line">184</span><span class="line">185</span><span class="line">186</span><span class="line">187</span><span class="line">188</span><span class="line">189</span><span class="line">190</span><span class="line">191</span><span class="line">192</span><span class="line">193</span><span class="line">194</span><span class="line">195</span><span class="line">196</span><span class="line">197</span><span class="line">198</span><span class="line">199</span><span class="line">200</span><span class="line">201</span><span class="line">202</span><span class="line">203</span><span class="line">204</span><span class="line">205</span><span class="line">206</span><span class="line">207</span><span class="line">208</span><span class="line">209</span><span class="line">210</span><span class="line">211</span><span class="line">212</span><span class="line">213</span><span class="line">214</span><span class="line">215</span><span class="line">216</span><span class="line">217</span><span class="line">218</span><span class="line">219</span><span class="line">220</span><span class="line">221</span><span class="line">222</span><span class="line">223</span><span class="line">224</span><span class="line">225</span><span class="line">226</span><span class="line">227</span><span class="line">228</span><span class="line">229</span><span class="line">230</span><span class="line">231</span><span class="line">232</span><span class="line">233</span><span class="line">234</span><span class="line">235</span><span class="line">236</span><span class="line">237</span><span class="line">238</span><span class="line">239</span><span class="line">240</span><span class="line">241</span><span class="line">242</span><span class="line">243</span><span class="line">244</span><span class="line">245</span><span class="line">246</span><span class="line">247</span><span class="line">248</span><span class="line">249</span><span class="line">250</span><span class="line">251</span><span class="line">252</span><span class="line">253</span><span class="line">254</span><span class="line">255</span><span class="line">256</span><span class="line">257</span><span class="line">258</span><span class="line">259</span><span class="line">260</span><span class="line">261</span><span class="line">262</span><span class="line">263</span><span class="line">264</span><span class="line">265</span><span class="line">266</span><span class="line">267</span><span class="line">268</span><span class="line">269</span><span class="line">270</span><span class="line">271</span><span class="line">272</span><span class="line">273</span><span class="line">274</span><span class="line">275</span><span class="line">276</span><span class="line">277</span><span class="line">278</span><span class="line">279</span><span class="line">280</span><span class="line">281</span><span class="line">282</span><span class="line">283</span><span class="line">284</span><span class="line">285</span><span class="line">286</span><span class="line">287</span><span class="line">288</span><span class="line">289</span><span class="line">290</span><span class="line">291</span><span class="line">292</span><span class="line">293</span><span class="line">294</span><span class="line">295</span><span class="line">296</span><span class="line">297</span><span class="line">298</span><span class="line">299</span><span class="line">300</span><span class="line">301</span><span class="line">302</span><span class="line">303</span><span class="line">304</span><span class="line">305</span><span class="line">306</span><span class="line">307</span><span class="line">308</span><span class="line">309</span><span class="line">310</span><span class="line">311</span><span class="line">312</span><span class="line">313</span><span class="line">314</span><span class="line">315</span><span class="line">316</span><span class="line">317</span><span class="line">318</span><span class="line">319</span><span class="line">320</span><span class="line">321</span><span class="line">322</span><span class="line">323</span><span class="line">324</span><span class="line">325</span><span class="line">326</span><span class="line">327</span><span class="line">328</span><span class="line">329</span><span class="line">330</span><span class="line">331</span><span class="line">332</span><span class="line">333</span><span class="line">334</span><span class="line">335</span><span class="line">336</span><span class="line">337</span><span class="line">338</span><span class="line">339</span><span class="line">340</span><span class="line">341</span><span class="line">342</span><span class="line">343</span><span class="line">344</span><span class="line">345</span><span class="line">346</span><span class="line">347</span><span class="line">348</span><span class="line">349</span><span class="line">350</span><span class="line">351</span><span class="line">352</span><span class="line">353</span><span class="line">354</span><span class="line">355</span><span class="line">356</span><span class="line">357</span><span class="line">358</span><span class="line">359</span><span class="line">360</span><span class="line">361</span><span class="line">362</span><span class="line">363</span><span class="line">364</span><span class="line">365</span><span class="line">366</span><span class="line">367</span><span class="line">368</span><span class="line">369</span><span class="line">370</span><span class="line">371</span><span class="line">372</span><span class="line">373</span><span class="line">374</span><span class="line">375</span><span class="line">376</span><span class="line">377</span><span class="line">378</span><span class="line">379</span><span class="line">380</span><span class="line">381</span><span class="line">382</span><span class="line">383</span><span class="line">384</span><span class="line">385</span><span class="line">386</span><span class="line">387</span><span class="line">388</span><span class="line">389</span><span class="line">390</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CodeBlob</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FrameValues</span>;</span></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">vframeArray</span>;</span></span><span class="line"></span><span class="line"></span><span class="line"><span class="comment">// A frame represents a physical stack frame (an activation).  Frames</span></span><span class="line"><span class="comment">// can be C or Java frames, and the Java frames can be interpreted or</span></span><span class="line"><span class="comment">// compiled.  In contrast, vframes represent source-level activations,</span></span><span class="line"><span class="comment">// so that one physical frame can correspond to multiple source level</span></span><span class="line"><span class="comment">// frames because of inlining.</span></span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">frame</span> <span class="title">VALUE_OBJ_CLASS_SPEC</span> &#123;</span></span><span class="line"> <span class="keyword">private</span>:</span><span class="line">  <span class="comment">// Instance variables:</span></span><span class="line">  <span class="keyword">intptr_t</span>* _sp; <span class="comment">// stack pointer (from Thread::last_Java_sp)</span></span><span class="line">  address   _pc; <span class="comment">// program counter (the next instruction after the call)</span></span><span class="line"></span><span class="line">  CodeBlob* _cb; <span class="comment">// CodeBlob that "owns" pc</span></span><span class="line">  <span class="keyword">enum</span> deopt_state &#123;</span><span class="line">    not_deoptimized,</span><span class="line">    is_deoptimized,</span><span class="line">    unknown</span><span class="line">  &#125;;</span><span class="line"></span><span class="line">  deopt_state _deopt_state;</span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="comment">// Constructors</span></span><span class="line">  frame();</span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> PRODUCT</span></span><span class="line">  <span class="comment">// This is a generic constructor which is only used by pns() in debug.cpp.</span></span><span class="line">  <span class="comment">// pns (i.e. print native stack) uses this constructor to create a starting</span></span><span class="line">  <span class="comment">// frame for stack walking. The implementation of this constructor is platform</span></span><span class="line">  <span class="comment">// dependent (i.e. SPARC doesn't need an 'fp' argument an will ignore it) but</span></span><span class="line">  <span class="comment">// we want to keep the signature generic because pns() is shared code.</span></span><span class="line">  frame(<span class="keyword">void</span>* sp, <span class="keyword">void</span>* fp, <span class="keyword">void</span>* pc);</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><span class="line"></span><span class="line">  <span class="comment">// Accessors</span></span><span class="line"></span><span class="line">  <span class="comment">// pc: Returns the pc at which this frame will continue normally.</span></span><span class="line">  <span class="comment">// It must point at the beginning of the next instruction to execute.</span></span><span class="line">  <span class="function">address <span class="title">pc</span><span class="params">()</span> <span class="keyword">const</span>             </span>&#123; <span class="keyword">return</span> _pc; &#125;</span><span class="line"></span><span class="line">  <span class="comment">// This returns the pc that if you were in the debugger you'd see. Not</span></span><span class="line">  <span class="comment">// the idealized value in the frame object. This undoes the magic conversion</span></span><span class="line">  <span class="comment">// that happens for deoptimized frames. In addition it makes the value the</span></span><span class="line">  <span class="comment">// hardware would want to see in the native frame. The only user (at this point)</span></span><span class="line">  <span class="comment">// is deoptimization. It likely no one else should ever use it.</span></span><span class="line">  <span class="function">address <span class="title">raw_pc</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_pc</span><span class="params">( address   newpc )</span></span>;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">sp</span><span class="params">()</span> <span class="keyword">const</span>           </span>&#123; <span class="keyword">return</span> _sp; &#125;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_sp</span><span class="params">( <span class="keyword">intptr_t</span>* newsp )</span> </span>&#123; _sp = newsp; &#125;</span><span class="line"></span><span class="line"></span><span class="line">  <span class="function">CodeBlob* <span class="title">cb</span><span class="params">()</span> <span class="keyword">const</span>           </span>&#123; <span class="keyword">return</span> _cb; &#125;</span><span class="line"></span><span class="line">  <span class="comment">// patching operations</span></span><span class="line">  <span class="function"><span class="keyword">void</span>   <span class="title">patch_pc</span><span class="params">(Thread* thread, address pc)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Every frame needs to return a unique id which distinguishes it from all other frames.</span></span><span class="line">  <span class="comment">// For sparc and ia32 use sp. ia64 can have memory frames that are empty so multiple frames</span></span><span class="line">  <span class="comment">// will have identical sp values. For ia64 the bsp (fp) value will serve. No real frame</span></span><span class="line">  <span class="comment">// should have an id() of NULL so it is a distinguishing value for an unmatchable frame.</span></span><span class="line">  <span class="comment">// We also have relationals which allow comparing a frame to anoth frame's id() allow</span></span><span class="line">  <span class="comment">// us to distinguish younger (more recent activation) from older (less recent activations)</span></span><span class="line">  <span class="comment">// A NULL id is only valid when comparing for equality.</span></span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">id</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_younger</span><span class="params">(<span class="keyword">intptr_t</span>* id)</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_older</span><span class="params">(<span class="keyword">intptr_t</span>* id)</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// testers</span></span><span class="line"></span><span class="line">  <span class="comment">// Compares for strict equality. Rarely used or needed.</span></span><span class="line">  <span class="comment">// It can return a different result than f1.id() == f2.id()</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">equal</span><span class="params">(frame other)</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// type testers</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_interpreted_frame</span><span class="params">()</span>    <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_java_frame</span><span class="params">()</span>           <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_entry_frame</span><span class="params">()</span>          <span class="keyword">const</span></span>;             <span class="comment">// Java frame called from C?</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_stub_frame</span><span class="params">()</span>           <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_ignored_frame</span><span class="params">()</span>        <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_native_frame</span><span class="params">()</span>         <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_runtime_frame</span><span class="params">()</span>        <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_compiled_frame</span><span class="params">()</span>       <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_safepoint_blob_frame</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_deoptimized_frame</span><span class="params">()</span>    <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// testers</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_first_frame</span><span class="params">()</span> <span class="keyword">const</span></span>; <span class="comment">// oldest frame? (has no sender)</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_first_java_frame</span><span class="params">()</span> <span class="keyword">const</span></span>;              <span class="comment">// same for Java frame</span></span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">is_interpreted_frame_valid</span><span class="params">(JavaThread* thread)</span> <span class="keyword">const</span></span>;       <span class="comment">// performs sanity checks on interpreted frames.</span></span><span class="line"></span><span class="line">  <span class="comment">// tells whether this frame is marked for deoptimization</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">should_be_deoptimized</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// tells whether this frame can be deoptimized</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">can_be_deoptimized</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// returns the frame size in stack slots</span></span><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">frame_size</span><span class="params">(RegisterMap* <span class="built_in">map</span>)</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// returns the sending frame</span></span><span class="line">  <span class="function">frame <span class="title">sender</span><span class="params">(RegisterMap* <span class="built_in">map</span>)</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// for Profiling - acting on another frame. walks sender frames</span></span><span class="line">  <span class="comment">// if valid.</span></span><span class="line">  <span class="function">frame <span class="title">profile_find_Java_sender_frame</span><span class="params">(JavaThread *thread)</span></span>;</span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">safe_for_sender</span><span class="params">(JavaThread *thread)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// returns the sender, but skips conversion frames</span></span><span class="line">  <span class="function">frame <span class="title">real_sender</span><span class="params">(RegisterMap* <span class="built_in">map</span>)</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// returns the the sending Java frame, skipping any intermediate C frames</span></span><span class="line">  <span class="comment">// NB: receiver must not be first frame</span></span><span class="line">  <span class="function">frame <span class="title">java_sender</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line"> <span class="keyword">private</span>:</span><span class="line">  <span class="comment">// Helper methods for better factored code in frame::sender</span></span><span class="line">  <span class="function">frame <span class="title">sender_for_compiled_frame</span><span class="params">(RegisterMap* <span class="built_in">map</span>)</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function">frame <span class="title">sender_for_entry_frame</span><span class="params">(RegisterMap* <span class="built_in">map</span>)</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function">frame <span class="title">sender_for_interpreter_frame</span><span class="params">(RegisterMap* <span class="built_in">map</span>)</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function">frame <span class="title">sender_for_native_frame</span><span class="params">(RegisterMap* <span class="built_in">map</span>)</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// All frames:</span></span><span class="line"></span><span class="line">  <span class="comment">// A low-level interface for vframes:</span></span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">addr_at</span><span class="params">(<span class="keyword">int</span> index)</span> <span class="keyword">const</span>             </span>&#123; <span class="keyword">return</span> &amp;fp()[index];    &#125;</span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>  <span class="title">at</span><span class="params">(<span class="keyword">int</span> index)</span> <span class="keyword">const</span>                  </span>&#123; <span class="keyword">return</span> *addr_at(index); &#125;</span><span class="line"></span><span class="line">  <span class="comment">// accessors for locals</span></span><span class="line">  <span class="function">oop <span class="title">obj_at</span><span class="params">(<span class="keyword">int</span> offset)</span> <span class="keyword">const</span>                   </span>&#123; <span class="keyword">return</span> *obj_at_addr(offset);  &#125;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">obj_at_put</span><span class="params">(<span class="keyword">int</span> offset, oop value)</span>         </span>&#123; *obj_at_addr(offset) = value; &#125;</span><span class="line"></span><span class="line">  <span class="function">jint <span class="title">int_at</span><span class="params">(<span class="keyword">int</span> offset)</span> <span class="keyword">const</span>                  </span>&#123; <span class="keyword">return</span> *int_at_addr(offset);  &#125;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">int_at_put</span><span class="params">(<span class="keyword">int</span> offset, jint value)</span>        </span>&#123; *int_at_addr(offset) = value; &#125;</span><span class="line"></span><span class="line">  <span class="function">oop*      <span class="title">obj_at_addr</span><span class="params">(<span class="keyword">int</span> offset)</span> <span class="keyword">const</span>        </span>&#123; <span class="keyword">return</span> (oop*)     addr_at(offset); &#125;</span><span class="line"></span><span class="line">  <span class="function">oop*      <span class="title">adjusted_obj_at_addr</span><span class="params">(Method* method, <span class="keyword">int</span> index)</span> </span>&#123; <span class="keyword">return</span> obj_at_addr(adjust_offset(method, index)); &#125;</span><span class="line"></span><span class="line"> <span class="keyword">private</span>:</span><span class="line">  <span class="function">jint*    <span class="title">int_at_addr</span><span class="params">(<span class="keyword">int</span> offset)</span> <span class="keyword">const</span>         </span>&#123; <span class="keyword">return</span> (jint*)    addr_at(offset); &#125;</span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="comment">// Link (i.e., the pointer to the previous frame)</span></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">link</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set_link</span><span class="params">(<span class="keyword">intptr_t</span>* addr)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Return address</span></span><span class="line">  <span class="function">address  <span class="title">sender_pc</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Support for deoptimization</span></span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">deoptimize</span><span class="params">(JavaThread* thread)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// The frame's original SP, before any extension by an interpreted callee;</span></span><span class="line">  <span class="comment">// used for packing debug info into vframeArray objects and vframeArray lookup.</span></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">unextended_sp</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// returns the stack pointer of the calling frame</span></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">sender_sp</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Returns the real 'frame pointer' for the current frame.</span></span><span class="line">  <span class="comment">// This is the value expected by the platform ABI when it defines a</span></span><span class="line">  <span class="comment">// frame pointer register. It may differ from the effective value of</span></span><span class="line">  <span class="comment">// the FP register when that register is used in the JVM for other</span></span><span class="line">  <span class="comment">// purposes (like compiled frames on some platforms).</span></span><span class="line">  <span class="comment">// On other platforms, it is defined so that the stack area used by</span></span><span class="line">  <span class="comment">// this frame goes from real_fp() to sp().</span></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">real_fp</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Deoptimization info, if needed (platform dependent).</span></span><span class="line">  <span class="comment">// Stored in the initial_info field of the unroll info, to be used by</span></span><span class="line">  <span class="comment">// the platform dependent deoptimization blobs.</span></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span> *<span class="title">initial_deoptimization_info</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Interpreter frames:</span></span><span class="line"></span><span class="line"> <span class="keyword">private</span>:</span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>** <span class="title">interpreter_frame_locals_addr</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>*  <span class="title">interpreter_frame_bcx_addr</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>*  <span class="title">interpreter_frame_mdx_addr</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="comment">// Locals</span></span><span class="line"></span><span class="line">  <span class="comment">// The _at version returns a pointer because the address is used for GC.</span></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">interpreter_frame_local_at</span><span class="params">(<span class="keyword">int</span> index)</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">interpreter_frame_set_locals</span><span class="params">(<span class="keyword">intptr_t</span>* locs)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// byte code index/pointer (use these functions for unchecked frame access only!)</span></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span> <span class="title">interpreter_frame_bcx</span><span class="params">()</span> <span class="keyword">const</span>                  </span>&#123; <span class="keyword">return</span> *interpreter_frame_bcx_addr(); &#125;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">interpreter_frame_set_bcx</span><span class="params">(<span class="keyword">intptr_t</span> bcx)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// byte code index</span></span><span class="line">  <span class="function">jint <span class="title">interpreter_frame_bci</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">interpreter_frame_set_bci</span><span class="params">(jint bci)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// byte code pointer</span></span><span class="line">  <span class="function">address <span class="title">interpreter_frame_bcp</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">void</span>    <span class="title">interpreter_frame_set_bcp</span><span class="params">(address bcp)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Unchecked access to the method data index/pointer.</span></span><span class="line">  <span class="comment">// Only use this if you know what you are doing.</span></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span> <span class="title">interpreter_frame_mdx</span><span class="params">()</span> <span class="keyword">const</span>                  </span>&#123; <span class="keyword">return</span> *interpreter_frame_mdx_addr(); &#125;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">interpreter_frame_set_mdx</span><span class="params">(<span class="keyword">intptr_t</span> mdx)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// method data pointer</span></span><span class="line">  <span class="function">address <span class="title">interpreter_frame_mdp</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">void</span>    <span class="title">interpreter_frame_set_mdp</span><span class="params">(address dp)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Find receiver out of caller's (compiled) argument list</span></span><span class="line">  <span class="function">oop <span class="title">retrieve_receiver</span><span class="params">(RegisterMap *reg_map)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Return the monitor owner and BasicLock for compiled synchronized</span></span><span class="line">  <span class="comment">// native methods so that biased locking can revoke the receiver's</span></span><span class="line">  <span class="comment">// bias if necessary.  This is also used by JVMTI's GetLocalInstance method</span></span><span class="line">  <span class="comment">// (via VM_GetReceiver) to retrieve the receiver from a native wrapper frame.</span></span><span class="line">  <span class="function">BasicLock* <span class="title">get_native_monitor</span><span class="params">()</span></span>;</span><span class="line">  <span class="function">oop        <span class="title">get_native_receiver</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Find receiver for an invoke when arguments are just pushed on stack (i.e., callee stack-frame is</span></span><span class="line">  <span class="comment">// not setup)</span></span><span class="line">  <span class="function">oop <span class="title">interpreter_callee_receiver</span><span class="params">(Symbol* signature)</span>     </span>&#123; <span class="keyword">return</span> *interpreter_callee_receiver_addr(signature); &#125;</span><span class="line"></span><span class="line"></span><span class="line">  <span class="function">oop* <span class="title">interpreter_callee_receiver_addr</span><span class="params">(Symbol* signature)</span></span>;</span><span class="line"></span><span class="line"></span><span class="line">  <span class="comment">// expression stack (may go up or down, direction == 1 or -1)</span></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">interpreter_frame_expression_stack</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">static</span>  jint  <span class="title">interpreter_frame_expression_stack_direction</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// The _at version returns a pointer because the address is used for GC.</span></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">interpreter_frame_expression_stack_at</span><span class="params">(jint offset)</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// top of expression stack</span></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">interpreter_frame_tos_at</span><span class="params">(jint offset)</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">interpreter_frame_tos_address</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line"></span><span class="line">  <span class="function">jint  <span class="title">interpreter_frame_expression_stack_size</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">interpreter_frame_sender_sp</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> CC_INTERP</span></span><span class="line">  <span class="comment">// template based interpreter deoptimization support</span></span><span class="line">  <span class="function"><span class="keyword">void</span>  <span class="title">set_interpreter_frame_sender_sp</span><span class="params">(<span class="keyword">intptr_t</span>* sender_sp)</span></span>;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">interpreter_frame_set_monitor_end</span><span class="params">(BasicObjectLock* value)</span></span>;</span><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// CC_INTERP</span></span></span><span class="line"></span><span class="line">  <span class="comment">// Address of the temp oop in the frame. Needed as GC root.</span></span><span class="line">  <span class="function">oop* <span class="title">interpreter_frame_temp_oop_addr</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// BasicObjectLocks:</span></span><span class="line">  <span class="comment">//</span></span><span class="line">  <span class="comment">// interpreter_frame_monitor_begin is higher in memory than interpreter_frame_monitor_end</span></span><span class="line">  <span class="comment">// Interpreter_frame_monitor_begin points to one element beyond the oldest one,</span></span><span class="line">  <span class="comment">// interpreter_frame_monitor_end   points to the youngest one, or if there are none,</span></span><span class="line">  <span class="comment">//                                 it points to one beyond where the first element will be.</span></span><span class="line">  <span class="comment">// interpreter_frame_monitor_size  reports the allocation size of a monitor in the interpreter stack.</span></span><span class="line">  <span class="comment">//                                 this value is &gt;= BasicObjectLock::size(), and may be rounded up</span></span><span class="line"></span><span class="line">  <span class="function">BasicObjectLock* <span class="title">interpreter_frame_monitor_begin</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function">BasicObjectLock* <span class="title">interpreter_frame_monitor_end</span><span class="params">()</span>   <span class="keyword">const</span></span>;</span><span class="line">  <span class="function">BasicObjectLock* <span class="title">next_monitor_in_interpreter_frame</span><span class="params">(BasicObjectLock* current)</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function">BasicObjectLock* <span class="title">previous_monitor_in_interpreter_frame</span><span class="params">(BasicObjectLock* current)</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">interpreter_frame_monitor_size</span><span class="params">()</span></span>;</span><span class="line"></span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">interpreter_frame_verify_monitor</span><span class="params">(BasicObjectLock* value)</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Tells whether the current interpreter_frame frame pointer</span></span><span class="line">  <span class="comment">// corresponds to the old compiled/deoptimized fp</span></span><span class="line">  <span class="comment">// The receiver used to be a top level frame</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">interpreter_frame_equals_unpacked_fp</span><span class="params">(<span class="keyword">intptr_t</span>* fp)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Return/result value from this interpreter frame</span></span><span class="line">  <span class="comment">// If the method return type is T_OBJECT or T_ARRAY populates oop_result</span></span><span class="line">  <span class="comment">// For other (non-T_VOID) the appropriate field in the jvalue is populated</span></span><span class="line">  <span class="comment">// with the result value.</span></span><span class="line">  <span class="comment">// Should only be called when at method exit when the method is not</span></span><span class="line">  <span class="comment">// exiting due to an exception.</span></span><span class="line">  <span class="function">BasicType <span class="title">interpreter_frame_result</span><span class="params">(oop* oop_result, jvalue* value_result)</span></span>;</span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="comment">// Method &amp; constant pool cache</span></span><span class="line">  <span class="function">Method* <span class="title">interpreter_frame_method</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">interpreter_frame_set_method</span><span class="params">(Method* method)</span></span>;</span><span class="line">  <span class="function">Method** <span class="title">interpreter_frame_method_addr</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function">ConstantPoolCache** <span class="title">interpreter_frame_cache_addr</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="comment">// Entry frames</span></span><span class="line">  <span class="function">JavaCallWrapper* <span class="title">entry_frame_call_wrapper</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> *entry_frame_call_wrapper_addr(); &#125;</span><span class="line">  <span class="function">JavaCallWrapper* <span class="title">entry_frame_call_wrapper_if_safe</span><span class="params">(JavaThread* thread)</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function">JavaCallWrapper** <span class="title">entry_frame_call_wrapper_addr</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line">  <span class="function"><span class="keyword">intptr_t</span>* <span class="title">entry_frame_argument_at</span><span class="params">(<span class="keyword">int</span> offset)</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// tells whether there is another chunk of Delta stack above</span></span><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">entry_frame_is_first</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Compiled frames:</span></span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="comment">// Given the index of a local, and the number of argument words</span></span><span class="line">  <span class="comment">// in this stack frame, tell which word of the stack frame to find</span></span><span class="line">  <span class="comment">// the local in.  Arguments are stored above the ofp/rpc pair,</span></span><span class="line">  <span class="comment">// while other locals are stored below it.</span></span><span class="line">  <span class="comment">// Since monitors (BasicLock blocks) are also assigned indexes,</span></span><span class="line">  <span class="comment">// but may have different storage requirements, their presence</span></span><span class="line">  <span class="comment">// can also affect the calculation of offsets.</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">local_offset_for_compiler</span><span class="params">(<span class="keyword">int</span> local_index, <span class="keyword">int</span> nof_args, <span class="keyword">int</span> max_nof_locals, <span class="keyword">int</span> max_nof_monitors)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Given the index of a monitor, etc., tell which word of the</span></span><span class="line">  <span class="comment">// stack frame contains the start of the BasicLock block.</span></span><span class="line">  <span class="comment">// Note that the local index by convention is the __higher__</span></span><span class="line">  <span class="comment">// of the two indexes allocated to the block.</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">monitor_offset_for_compiler</span><span class="params">(<span class="keyword">int</span> local_index, <span class="keyword">int</span> nof_args, <span class="keyword">int</span> max_nof_locals, <span class="keyword">int</span> max_nof_monitors)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Tell the smallest value that local_offset_for_compiler will attain.</span></span><span class="line">  <span class="comment">// This is used to help determine how much stack frame to allocate.</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">min_local_offset_for_compiler</span><span class="params">(<span class="keyword">int</span> nof_args, <span class="keyword">int</span> max_nof_locals, <span class="keyword">int</span> max_nof_monitors)</span></span>;</span><span class="line"></span><span class="line">  <span class="comment">// Tells if this register must be spilled during a call.</span></span><span class="line">  <span class="comment">// On Intel, all registers are smashed by calls.</span></span><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">bool</span> <span class="title">volatile_across_calls</span><span class="params">(Register reg)</span></span>;</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/cpu/x86/vm/bytecodeInterpreter_x86.hpp#69" target="_blank" rel="noopener">cpu/x86/vm/bytecodeInterpreter_x86.hpp</a> 第<code>69</code>行，定义了<code>javaStack</code>和<code>javaLocals</code>相关的操作，源码如下：</p>
+<figure class="highlight hpp"><table><tr><td class="gutter"><pre><span class="line">69</span><span class="line">70</span><span class="line">71</span><span class="line">72</span><span class="line">73</span><span class="line">74</span><span class="line">75</span><span class="line">76</span><span class="line">77</span><span class="line">78</span><span class="line">79</span><span class="line">80</span><span class="line">81</span><span class="line">82</span><span class="line">83</span><span class="line">84</span><span class="line">85</span><span class="line">86</span><span class="line">87</span><span class="line">88</span><span class="line">89</span><span class="line">90</span><span class="line">91</span><span class="line">92</span><span class="line">93</span><span class="line">94</span><span class="line">95</span><span class="line">96</span><span class="line">97</span><span class="line">98</span><span class="line">99</span><span class="line">100</span><span class="line">101</span><span class="line">102</span><span class="line">103</span><span class="line">104</span><span class="line">105</span><span class="line">106</span><span class="line">107</span><span class="line">108</span><span class="line">109</span><span class="line">110</span><span class="line">111</span><span class="line">112</span><span class="line">113</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// JavaStack Implementation</span></span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GET_STACK_SLOT(offset)    (*((intptr_t*) &amp;topOfStack[-(offset)]))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACK_SLOT(offset)    ((address) &amp;topOfStack[-(offset)])</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACK_ADDR(offset)    (*((address *) &amp;topOfStack[-(offset)]))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACK_INT(offset)     (*((jint*) &amp;topOfStack[-(offset)]))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACK_FLOAT(offset)   (*((jfloat *) &amp;topOfStack[-(offset)]))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACK_OBJECT(offset)  (*((oop *) &amp;topOfStack [-(offset)]))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACK_DOUBLE(offset)  (((VMJavaVal64*) &amp;topOfStack[-(offset)])-&gt;d)</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACK_LONG(offset)    (((VMJavaVal64 *) &amp;topOfStack[-(offset)])-&gt;l)</span></span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_STACK_SLOT(value, offset)   (*(intptr_t*)&amp;topOfStack[-(offset)] = *(intptr_t*)(value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_STACK_ADDR(value, offset)   (*((address *)&amp;topOfStack[-(offset)]) = (value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_STACK_INT(value, offset)    (*((jint *)&amp;topOfStack[-(offset)]) = (value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_STACK_FLOAT(value, offset)  (*((jfloat *)&amp;topOfStack[-(offset)]) = (value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_STACK_OBJECT(value, offset) (*((oop *)&amp;topOfStack[-(offset)]) = (value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_STACK_DOUBLE(value, offset) (((VMJavaVal64*)&amp;topOfStack[-(offset)])-&gt;d = (value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_STACK_DOUBLE_FROM_ADDR(addr, offset) (((VMJavaVal64*)&amp;topOfStack[-(offset)])-&gt;d =  \</span></span><span class="line">                                                 ((VMJavaVal64*)(addr))-&gt;d)</span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_STACK_LONG(value, offset)   (((VMJavaVal64*)&amp;topOfStack[-(offset)])-&gt;l = (value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_STACK_LONG_FROM_ADDR(addr, offset)   (((VMJavaVal64*)&amp;topOfStack[-(offset)])-&gt;l =  \</span></span><span class="line">                                                 ((VMJavaVal64*)(addr))-&gt;l)</span><span class="line"><span class="comment">// JavaLocals implementation</span></span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LOCALS_SLOT(offset)    ((intptr_t*)&amp;locals[-(offset)])</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LOCALS_ADDR(offset)    ((address)locals[-(offset)])</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LOCALS_INT(offset)     ((jint)(locals[-(offset)]))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LOCALS_FLOAT(offset)   (*((jfloat*)&amp;locals[-(offset)]))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LOCALS_OBJECT(offset)  (cast_to_oop(locals[-(offset)]))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LOCALS_DOUBLE(offset)  (((VMJavaVal64*)&amp;locals[-((offset) + 1)])-&gt;d)</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LOCALS_LONG(offset)    (((VMJavaVal64*)&amp;locals[-((offset) + 1)])-&gt;l)</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LOCALS_LONG_AT(offset) (((address)&amp;locals[-((offset) + 1)]))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LOCALS_DOUBLE_AT(offset) (((address)&amp;locals[-((offset) + 1)]))</span></span><span class="line"></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_LOCALS_SLOT(value, offset)    (*(intptr_t*)&amp;locals[-(offset)] = *(intptr_t *)(value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_LOCALS_ADDR(value, offset)    (*((address *)&amp;locals[-(offset)]) = (value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_LOCALS_INT(value, offset)     (*((jint *)&amp;locals[-(offset)]) = (value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_LOCALS_FLOAT(value, offset)   (*((jfloat *)&amp;locals[-(offset)]) = (value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_LOCALS_OBJECT(value, offset)  (*((oop *)&amp;locals[-(offset)]) = (value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_LOCALS_DOUBLE(value, offset)  (((VMJavaVal64*)&amp;locals[-((offset)+1)])-&gt;d = (value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_LOCALS_LONG(value, offset)    (((VMJavaVal64*)&amp;locals[-((offset)+1)])-&gt;l = (value))</span></span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_LOCALS_DOUBLE_FROM_ADDR(addr, offset) (((VMJavaVal64*)&amp;locals[-((offset)+1)])-&gt;d = \</span></span><span class="line">                                                  ((VMJavaVal64*)(addr))-&gt;d)</span><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SET_LOCALS_LONG_FROM_ADDR(addr, offset) (((VMJavaVal64*)&amp;locals[-((offset)+1)])-&gt;l = \</span></span><span class="line">                                                ((VMJavaVal64*)(addr))-&gt;l)</span></pre></td></tr></table></figure>
+<p><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/cpu/x86/vm/frame_x86.hpp#31" target="_blank" rel="noopener">cpu/x86/vm/frame_x86.hpp</a> 第<code>31</code>行，描述了<code>frame</code>的数据结构，源码如下：</p>
+<figure class="highlight hpp"><table><tr><td class="gutter"><pre><span class="line">31</span><span class="line">32</span><span class="line">33</span><span class="line">34</span><span class="line">35</span><span class="line">36</span><span class="line">37</span><span class="line">38</span><span class="line">39</span><span class="line">40</span><span class="line">41</span><span class="line">42</span><span class="line">43</span><span class="line">44</span><span class="line">45</span><span class="line">46</span><span class="line">47</span><span class="line">48</span><span class="line">49</span><span class="line">50</span><span class="line">51</span><span class="line">52</span><span class="line">53</span><span class="line">54</span><span class="line">55</span><span class="line">56</span><span class="line">57</span><span class="line">58</span><span class="line">59</span><span class="line">60</span><span class="line">61</span><span class="line">62</span><span class="line">63</span><span class="line">64</span><span class="line">65</span><span class="line">66</span><span class="line">67</span><span class="line">68</span><span class="line">69</span><span class="line">70</span><span class="line">71</span><span class="line">72</span><span class="line">73</span><span class="line">74</span><span class="line">75</span><span class="line">76</span><span class="line">77</span><span class="line">78</span><span class="line">79</span><span class="line">80</span><span class="line">81</span><span class="line">82</span><span class="line">83</span><span class="line">84</span><span class="line">85</span><span class="line">86</span><span class="line">87</span><span class="line">88</span><span class="line">89</span><span class="line">90</span><span class="line">91</span><span class="line">92</span><span class="line">93</span><span class="line">94</span><span class="line">95</span><span class="line">96</span><span class="line">97</span><span class="line">98</span><span class="line">99</span><span class="line">100</span><span class="line">101</span><span class="line">102</span><span class="line">103</span><span class="line">104</span><span class="line">105</span><span class="line">106</span><span class="line">107</span><span class="line">108</span><span class="line">109</span><span class="line">110</span><span class="line">111</span><span class="line">112</span><span class="line">113</span><span class="line">114</span><span class="line">115</span><span class="line">116</span><span class="line">117</span><span class="line">118</span><span class="line">119</span><span class="line">120</span><span class="line">121</span><span class="line">122</span><span class="line">123</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// A frame represents a physical stack frame (an activation).  Frames can be</span></span><span class="line"><span class="comment">// C or Java frames, and the Java frames can be interpreted or compiled.</span></span><span class="line"><span class="comment">// In contrast, vframes represent source-level activations, so that one physical frame</span></span><span class="line"><span class="comment">// can correspond to multiple source level frames because of inlining.</span></span><span class="line"><span class="comment">// A frame is comprised of &#123;pc, fp, sp&#125;</span></span><span class="line"><span class="comment">// ------------------------------ Asm interpreter ----------------------------------------</span></span><span class="line"><span class="comment">// Layout of asm interpreter frame:</span></span><span class="line"><span class="comment">//    [expression stack      ] * &lt;- sp</span></span><span class="line"><span class="comment">//    [monitors              ]   \</span></span><span class="line"><span class="comment">//     ...                        | monitor block size</span></span><span class="line"><span class="comment">//    [monitors              ]   /</span></span><span class="line"><span class="comment">//    [monitor block size    ]</span></span><span class="line"><span class="comment">//    [byte code index/pointr]                   = bcx()                bcx_offset</span></span><span class="line"><span class="comment">//    [pointer to locals     ]                   = locals()             locals_offset</span></span><span class="line"><span class="comment">//    [constant pool cache   ]                   = cache()              cache_offset</span></span><span class="line"><span class="comment">//    [methodData            ]                   = mdp()                mdx_offset</span></span><span class="line"><span class="comment">//    [Method*               ]                   = method()             method_offset</span></span><span class="line"><span class="comment">//    [last sp               ]                   = last_sp()            last_sp_offset</span></span><span class="line"><span class="comment">//    [old stack pointer     ]                     (sender_sp)          sender_sp_offset</span></span><span class="line"><span class="comment">//    [old frame pointer     ]   &lt;- fp           = link()</span></span><span class="line"><span class="comment">//    [return pc             ]</span></span><span class="line"><span class="comment">//    [oop temp              ]                     (only for native calls)</span></span><span class="line"><span class="comment">//    [locals and parameters ]</span></span><span class="line"><span class="comment">//                               &lt;- sender sp</span></span><span class="line"><span class="comment">// ------------------------------ Asm interpreter ----------------------------------------</span></span><span class="line"></span><span class="line"><span class="comment">// ------------------------------ C++ interpreter ----------------------------------------</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// Layout of C++ interpreter frame: (While executing in BytecodeInterpreter::run)</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">//                             &lt;- SP (current esp/rsp)</span></span><span class="line"><span class="comment">//    [local variables         ] BytecodeInterpreter::run local variables</span></span><span class="line"><span class="comment">//    ...                        BytecodeInterpreter::run local variables</span></span><span class="line"><span class="comment">//    [local variables         ] BytecodeInterpreter::run local variables</span></span><span class="line"><span class="comment">//    [old frame pointer       ]   fp [ BytecodeInterpreter::run's ebp/rbp ]</span></span><span class="line"><span class="comment">//    [return pc               ]  (return to frame manager)</span></span><span class="line"><span class="comment">//    [interpreter_state*      ]  (arg to BytecodeInterpreter::run)   --------------</span></span><span class="line"><span class="comment">//    [expression stack        ] &lt;- last_Java_sp                           |</span></span><span class="line"><span class="comment">//    [...                     ] * &lt;- interpreter_state.stack              |</span></span><span class="line"><span class="comment">//    [expression stack        ] * &lt;- interpreter_state.stack_base         |</span></span><span class="line"><span class="comment">//    [monitors                ]   \                                       |</span></span><span class="line"><span class="comment">//     ...                          | monitor block size                   |</span></span><span class="line"><span class="comment">//    [monitors                ]   / &lt;- interpreter_state.monitor_base     |</span></span><span class="line"><span class="comment">//    [struct interpretState   ] &lt;-----------------------------------------|</span></span><span class="line"><span class="comment">//    [return pc               ] (return to callee of frame manager [1]</span></span><span class="line"><span class="comment">//    [locals and parameters   ]</span></span><span class="line"><span class="comment">//                               &lt;- sender sp</span></span><span class="line"></span><span class="line"><span class="comment">// [1] When the C++ interpreter calls a new method it returns to the frame</span></span><span class="line"><span class="comment">//     manager which allocates a new frame on the stack. In that case there</span></span><span class="line"><span class="comment">//     is no real callee of this newly allocated frame. The frame manager is</span></span><span class="line"><span class="comment">//     aware of the additional frame(s) and will pop them as nested calls</span></span><span class="line"><span class="comment">//     complete. However, to make it look good in the debugger the frame</span></span><span class="line"><span class="comment">//     manager actually installs a dummy pc pointing to RecursiveInterpreterActivation</span></span><span class="line"><span class="comment">//     with a fake interpreter_state* parameter to make it easy to debug</span></span><span class="line"><span class="comment">//     nested calls.</span></span><span class="line"></span><span class="line"><span class="comment">// Note that contrary to the layout for the assembly interpreter the</span></span><span class="line"><span class="comment">// expression stack allocated for the C++ interpreter is full sized.</span></span><span class="line"><span class="comment">// However this is not as bad as it seems as the interpreter frame_manager</span></span><span class="line"><span class="comment">// will truncate the unused space on successive method calls.</span></span><span class="line"><span class="comment">//</span></span><span class="line"><span class="comment">// ------------------------------ C++ interpreter ----------------------------------------</span></span><span class="line"></span><span class="line"> <span class="keyword">public</span>:</span><span class="line">  <span class="keyword">enum</span> &#123;</span><span class="line">    pc_return_offset                                 =  <span class="number">0</span>,</span><span class="line">    <span class="comment">// All frames</span></span><span class="line">    link_offset                                      =  <span class="number">0</span>,</span><span class="line">    return_addr_offset                               =  <span class="number">1</span>,</span><span class="line">    <span class="comment">// non-interpreter frames</span></span><span class="line">    sender_sp_offset                                 =  <span class="number">2</span>,</span><span class="line"></span><span class="line">#ifndef CC_INTERP</span><span class="line"></span><span class="line">    <span class="comment">// Interpreter frames</span></span><span class="line">    interpreter_frame_result_handler_offset          =  <span class="number">3</span>, <span class="comment">// for native calls only</span></span><span class="line">    interpreter_frame_oop_temp_offset                =  <span class="number">2</span>, <span class="comment">// for native calls only</span></span><span class="line"></span><span class="line">    interpreter_frame_sender_sp_offset               = <span class="number">-1</span>,</span><span class="line">    <span class="comment">// outgoing sp before a call to an invoked method</span></span><span class="line">    interpreter_frame_last_sp_offset                 = interpreter_frame_sender_sp_offset - <span class="number">1</span>,</span><span class="line">    interpreter_frame_method_offset                  = interpreter_frame_last_sp_offset - <span class="number">1</span>,</span><span class="line">    interpreter_frame_mdx_offset                     = interpreter_frame_method_offset - <span class="number">1</span>,</span><span class="line">    interpreter_frame_cache_offset                   = interpreter_frame_mdx_offset - <span class="number">1</span>,</span><span class="line">    interpreter_frame_locals_offset                  = interpreter_frame_cache_offset - <span class="number">1</span>,</span><span class="line">    interpreter_frame_bcx_offset                     = interpreter_frame_locals_offset - <span class="number">1</span>,</span><span class="line">    interpreter_frame_initial_sp_offset              = interpreter_frame_bcx_offset - <span class="number">1</span>,</span><span class="line"></span><span class="line">    interpreter_frame_monitor_block_top_offset       = interpreter_frame_initial_sp_offset,</span><span class="line">    interpreter_frame_monitor_block_bottom_offset    = interpreter_frame_initial_sp_offset,</span><span class="line"></span><span class="line">#endif <span class="comment">// CC_INTERP</span></span></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/share/vm/runtime/frame.hpp#54" target="_blank" rel="noopener">vm/runtime/frame.hpp</a></li>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/cpu/x86/vm/bytecodeInterpreter_x86.hpp#69" target="_blank" rel="noopener">cpu/x86/vm/bytecodeInterpreter_x86.hpp</a></li>
+<li><a href="http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/f3108e56b502/src/cpu/x86/vm/frame_x86.hpp#31" target="_blank" rel="noopener">cpu/x86/vm/frame_x86.hpp</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/java/2018/08/05/hotspot-source-code-java-method-calls.html" rel="next" title="hotspot source code - java method calls">
+                <i class="fa fa-chevron-left"></i>
+                hotspot source code - java method calls
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/java/2018/08/05/hotspot-source-code-memory-types-and-generation-gc.html" rel="prev" title="hotspot source code - memory types and generation gc">
+                <i class="fa fa-chevron-right"></i>
+                hotspot source code - memory types and generation gc
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

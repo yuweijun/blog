@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="\s*匹配0或多个空白(比如空格、tab等，不匹配换行) vim里面，如果要连换行一起匹配，则加个下划线，比如\_s匹配包括换行在内的空白，而\_.匹配包括换行在内的任意字符(注意，后面有个小数点)。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vim中匹配换行符的正则表达式">
-<meta property="og:url" content="https://www.4e00.com/vim/2010/10/01/vim-regexp-pattern-match-newline.html">
+<meta property="og:url" content="http://www.4e00.com/vim/2010/10/01/vim-regexp-pattern-match-newline.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="\s*匹配0或多个空白(比如空格、tab等，不匹配换行) vim里面，如果要连换行一起匹配，则加个下划线，比如\_s匹配包括换行在内的空白，而\_.匹配包括换行在内的任意字符(注意，后面有个小数点)。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.141Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.073Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vim中匹配换行符的正则表达式">
 <meta name="twitter:description" content="\s*匹配0或多个空白(比如空格、tab等，不匹配换行) vim里面，如果要连换行一起匹配，则加个下划线，比如\_s匹配包括换行在内的空白，而\_.匹配包括换行在内的任意字符(注意，后面有个小数点)。">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/vim/2010/10/01/vim-regexp-pattern-match-newline.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/vim/2010/10/01/vim-regexp-pattern-match-newline.html">
 
   <title> vim中匹配换行符的正则表达式 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/vim/" itemprop="url" rel="index">
                     <span itemprop="name">vim</span>
                   </a>
@@ -258,7 +258,7 @@
 <p>vim里面，如果要连换行一起匹配，则加个下划线，比如<code>\_s</code>匹配包括换行在内的空白，而<code>\_.</code>匹配包括换行在内的任意字符(注意，后面有个小数点)。</p>
 <a id="more"></a>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://jianzi0307.blog.163.com/blog/static/2081200200951613843867/" target="_blank" rel="external">vim正则表达式查找替换</a></li>
+<li><a href="http://jianzi0307.blog.163.com/blog/static/2081200200951613843867/" target="_blank" rel="noopener">vim正则表达式查找替换</a></li>
 </ol>
 
       
@@ -286,7 +286,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/linux/2010/10/01/ubuntu-nvidia-display-card-problem.html" rel="next" title="ubuntu-10.04下nvidia显卡不定时闪屏的解决">
-                上一篇：ubuntu-10.04下nvidia显卡不定时闪屏的解决
+                <i class="fa fa-chevron-left"></i>
+                ubuntu-10.04下nvidia显卡不定时闪屏的解决
               </a>
             
           </div>
@@ -294,7 +295,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2010/10/08/ubuntu-10.10-gnome-theme.html" rel="prev" title="一套ubuntu gnome主题">
-                下一篇：一套ubuntu gnome主题
+                <i class="fa fa-chevron-right"></i>
+                一套ubuntu gnome主题
               </a>
             
           </div>
@@ -343,7 +345,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -354,16 +356,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -445,10 +445,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

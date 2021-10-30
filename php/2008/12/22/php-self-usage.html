@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -57,11 +57,11 @@
 <meta name="description" content="self一般指向当前类的静态方法和常量，用self::加方法名和常量名方式引用。 $this则是指向当前类的实例对象，用$this-&amp;gt;加方法名和实例变量方式引用。 在一些参数为callback的方法里，可以用字符串self形式指向当前类，而不要直接用self，如call_user_func(&amp;#39;self&amp;#39;, $method)中。 另外self引用的总是当前类的方法和常量，子类调">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php中self关键字说明">
-<meta property="og:url" content="https://www.4e00.com/php/2008/12/22/php-self-usage.html">
+<meta property="og:url" content="http://www.4e00.com/php/2008/12/22/php-self-usage.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="self一般指向当前类的静态方法和常量，用self::加方法名和常量名方式引用。 $this则是指向当前类的实例对象，用$this-&amp;gt;加方法名和实例变量方式引用。 在一些参数为callback的方法里，可以用字符串self形式指向当前类，而不要直接用self，如call_user_func(&amp;#39;self&amp;#39;, $method)中。 另外self引用的总是当前类的方法和常量，子类调">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.137Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.058Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="php中self关键字说明">
 <meta name="twitter:description" content="self一般指向当前类的静态方法和常量，用self::加方法名和常量名方式引用。 $this则是指向当前类的实例对象，用$this-&amp;gt;加方法名和实例变量方式引用。 在一些参数为callback的方法里，可以用字符串self形式指向当前类，而不要直接用self，如call_user_func(&amp;#39;self&amp;#39;, $method)中。 另外self引用的总是当前类的方法和常量，子类调">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/php/2008/12/22/php-self-usage.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/php/2008/12/22/php-self-usage.html">
 
   <title> php中self关键字说明 | 一 </title>
 </head>
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/php/" itemprop="url" rel="index">
                     <span itemprop="name">php</span>
                   </a>
@@ -259,9 +259,9 @@
 <p>在一些参数为<code>callback</code>的方法里，可以用字符串<code>self</code>形式指向当前类，而不要直接用<code>self</code>，如<code>call_user_func(&#39;self&#39;, $method)</code>中。</p>
 <p>另外<code>self</code>引用的总是当前类的方法和常量，子类调用父类的静态方法，其中的父类方法中的<code>self</code>仍是指向父类本身的，如果子类的同名方法覆盖了父类方法，则可以用<code>parent::</code>来引用父类方法。</p>
 <a id="more"></a>
-<figure class="highlight php"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">AppConstants</span> </span>&#123;</div><div class="line">    <span class="keyword">const</span> FOOBAR = <span class="string">'Hello, World.'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> <span class="keyword">implements</span> <span class="title">AppConstants</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="keyword">self</span>::FOOBAR;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj = <span class="keyword">new</span> Example();</div><div class="line">$obj - &gt; test(); <span class="comment">// outputs "Hello, world."</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</div><div class="line">    <span class="keyword">const</span> NAME = <span class="string">'Foo'</span>;</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">myFunc</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"MyClass::myFunc()\n"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">display</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="keyword">self</span>::NAME;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">        $instance = <span class="keyword">new</span> <span class="keyword">self</span>;</div><div class="line">        <span class="keyword">return</span> $instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ChildClass</span> <span class="keyword">extends</span> <span class="title">MyClass</span> </span>&#123;</div><div class="line">    <span class="keyword">const</span> NAME = <span class="string">'Child'</span>;</div><div class="line"></div><div class="line">    <span class="comment">// Override parent's definition</span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">myFunc</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// But still call the parent function</span></div><div class="line">        <span class="keyword">parent</span>::myFunc();</div><div class="line">        <span class="keyword">echo</span> <span class="string">"ChildClass::myFunc()\n"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$class = <span class="keyword">new</span> ChildClass();</div><div class="line">$class - &gt; myFunc();</div><div class="line"></div><div class="line"><span class="keyword">echo</span>(<span class="string">'Class constant: '</span>);</div><div class="line">ChildClass::display();</div><div class="line"><span class="keyword">echo</span>(<span class="string">'Object class: '</span>);</div><div class="line"><span class="keyword">echo</span>(get_class(ChildClass::getInstance()));</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Hello, World.</div><div class="line">MyClass::myFunc()</div><div class="line">ChildClass::myFunc()</div><div class="line">Class constant: Foo</div><div class="line">Object class: MyClass</div></pre></td></tr></table></figure>
-<p>另外可以再参考一个php-5.3.0的运行时绑定(延迟绑定)的用法，地址是：<a href="http://cn2.php.net/oop5.late-static-bindings" target="_blank" rel="external">http://cn2.php.net/oop5.late-static-bindings</a></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">AppConstants</span> </span>&#123;</span><span class="line">    <span class="keyword">const</span> FOOBAR = <span class="string">'Hello, World.'</span>;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> <span class="keyword">implements</span> <span class="title">AppConstants</span> </span>&#123;</span><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">echo</span> <span class="keyword">self</span>::FOOBAR;</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line">$obj = <span class="keyword">new</span> Example();</span><span class="line">$obj - &gt; test(); <span class="comment">// outputs "Hello, world."</span></span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><span class="line">    <span class="keyword">const</span> NAME = <span class="string">'Foo'</span>;</span><span class="line"></span><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">myFunc</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">echo</span> <span class="string">"MyClass::myFunc()\n"</span>;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">display</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="keyword">echo</span> <span class="keyword">self</span>::NAME;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><span class="line">        $instance = <span class="keyword">new</span> <span class="keyword">self</span>;</span><span class="line">        <span class="keyword">return</span> $instance;</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ChildClass</span> <span class="keyword">extends</span> <span class="title">MyClass</span> </span>&#123;</span><span class="line">    <span class="keyword">const</span> NAME = <span class="string">'Child'</span>;</span><span class="line"></span><span class="line">    <span class="comment">// Override parent's definition</span></span><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">myFunc</span><span class="params">()</span> </span>&#123;</span><span class="line">        <span class="comment">// But still call the parent function</span></span><span class="line">        <span class="keyword">parent</span>::myFunc();</span><span class="line">        <span class="keyword">echo</span> <span class="string">"ChildClass::myFunc()\n"</span>;</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line">$class = <span class="keyword">new</span> ChildClass();</span><span class="line">$class - &gt; myFunc();</span><span class="line"></span><span class="line"><span class="keyword">echo</span>(<span class="string">'Class constant: '</span>);</span><span class="line">ChildClass::display();</span><span class="line"><span class="keyword">echo</span>(<span class="string">'Object class: '</span>);</span><span class="line"><span class="keyword">echo</span>(get_class(ChildClass::getInstance()));</span><span class="line"><span class="meta">?&gt;</span></span></pre></td></tr></table></figure>
+<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Hello, World.</span><span class="line">MyClass::myFunc()</span><span class="line">ChildClass::myFunc()</span><span class="line">Class constant: Foo</span><span class="line">Object class: MyClass</span></pre></td></tr></table></figure>
+<p>另外可以再参考一个php-5.3.0的运行时绑定(延迟绑定)的用法，地址是：<a href="http://cn2.php.net/oop5.late-static-bindings" target="_blank" rel="noopener">http://cn2.php.net/oop5.late-static-bindings</a></p>
 
       
     </div>
@@ -288,7 +288,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/ruby/2008/12/22/ubuntu-8.10-install-passenger-2.0.6.html" rel="next" title="ubuntu-8.10上安装passenger-2.0.6">
-                上一篇：ubuntu-8.10上安装passenger-2.0.6
+                <i class="fa fa-chevron-left"></i>
+                ubuntu-8.10上安装passenger-2.0.6
               </a>
             
           </div>
@@ -296,7 +297,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/linux/2008/12/23/linux-login-welcome-message-modify.html" rel="prev" title="linux用户登录时的欢迎词修改">
-                下一篇：linux用户登录时的欢迎词修改
+                <i class="fa fa-chevron-right"></i>
+                linux用户登录时的欢迎词修改
               </a>
             
           </div>
@@ -345,7 +347,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -356,16 +358,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -447,10 +447,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

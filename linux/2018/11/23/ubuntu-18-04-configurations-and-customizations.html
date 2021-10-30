@@ -1,0 +1,631 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="ubuntu 18.04 安装完之后，个人定制的一些系统软件安装与设置。 disable CapsLock所有电脑上我都习惯禁用大小写切换键Caps Lock，在命令行中执行如下命令：  setxkbmap -layout us -option ctrl:nocaps disable Super禁用ubuntu的Super键，在用户根目录这个文件~/.Xmodmap中写入以下内容，注销当前用户再重">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu 18.04 configurations and customizations">
+<meta property="og:url" content="http://www.4e00.com/linux/2018/11/23/ubuntu-18-04-configurations-and-customizations.html">
+<meta property="og:site_name" content="一">
+<meta property="og:description" content="ubuntu 18.04 安装完之后，个人定制的一些系统软件安装与设置。 disable CapsLock所有电脑上我都习惯禁用大小写切换键Caps Lock，在命令行中执行如下命令：  setxkbmap -layout us -option ctrl:nocaps disable Super禁用ubuntu的Super键，在用户根目录这个文件~/.Xmodmap中写入以下内容，注销当前用户再重">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.140Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ubuntu 18.04 configurations and customizations">
+<meta name="twitter:description" content="ubuntu 18.04 安装完之后，个人定制的一些系统软件安装与设置。 disable CapsLock所有电脑上我都习惯禁用大小写切换键Caps Lock，在命令行中执行如下命令：  setxkbmap -layout us -option ctrl:nocaps disable Super禁用ubuntu的Super键，在用户根目录这个文件~/.Xmodmap中写入以下内容，注销当前用户再重">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: false,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.4e00.com/blog/linux/2018/11/23/ubuntu-18-04-configurations-and-customizations.html">
+
+  <title> ubuntu 18.04 configurations and customizations | 一 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/" class="brand" rel="start">
+      <span class="site-title">一</span>
+    </a>
+  </div>
+  <p class="site-subtitle">{"type":"编程笔记"}</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      <li class="menu-item menu-item-search">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    </ul>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ubuntu 18.04 configurations and customizations
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-11-23T17:12:07+08:00" content="2018-11-23">
+              2018-11-23
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
+                  <a href="/blog/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>ubuntu 18.04 安装完之后，个人定制的一些系统软件安装与设置。</p>
+<h2 id="disable-CapsLock"><a href="#disable-CapsLock" class="headerlink" title="disable CapsLock"></a>disable CapsLock</h2><p>所有电脑上我都习惯禁用大小写切换键<kbd>Caps Lock</kbd>，在命令行中执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">setxkbmap</span> -layout us -option ctrl:nocaps</span></pre></td></tr></table></figure>
+<h2 id="disable-Super"><a href="#disable-Super" class="headerlink" title="disable Super"></a>disable Super</h2><p>禁用ubuntu的<kbd>Super</kbd>键，在用户根目录这个文件<code>~/.Xmodmap</code>中写入以下内容，注销当前用户再重新登录生效：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">keycode 133 = NoSymbol</span><span class="line">keycode 134 = NoSymbol</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="using-gnome-shell-integration-extentions"><a href="#using-gnome-shell-integration-extentions" class="headerlink" title="using gnome shell integration extentions"></a>using gnome shell integration extentions</h2><p>安装这2个插件，隐藏系统顶部的工具栏和应用程序的标题栏：</p>
+<ol>
+<li>Hide top bar</li>
+<li>No title bar</li>
+</ol>
+<h2 id="安装中文输入法"><a href="#安装中文输入法" class="headerlink" title="安装中文输入法"></a>安装中文输入法</h2><p>使用fcitx小企鹅输入法，删除自带的ibus相关的组件，其中fcitx有自带一个非常好用的剪贴板历史，快捷键默认是<kbd>ctrl + ;</kbd>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt-get remove ibus</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt install fcitx fcitx-bin fcitx-table fcitx-table-wupy im-config</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">im-config</span></span></pre></td></tr></table></figure>
+<h2 id="安装-google-chrome"><a href="#安装-google-chrome" class="headerlink" title="安装 google-chrome"></a>安装 google-chrome</h2><p>系统中自带了firefox和chromium-browser都很好用，但习惯还是安装一个google-chrome。</p>
+<h2 id="安装其他工具"><a href="#安装其他工具" class="headerlink" title="安装其他工具"></a>安装其他工具</h2><p>其中<code>indicator-netspeed-unity</code>可以在工具栏托盘中显示系统当前的网速，<code>tilda</code>配置为<kbd>ctrl + F12</kbd>快捷键从顶部呼出的命令行工具。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt install -y indicator-netspeed-unity shadowsocks tilda gnome-tweaks</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt install -y neovim vim.gtk wireshark uget</span></pre></td></tr></table></figure>
+<h2 id="设置用户登录自启动项"><a href="#设置用户登录自启动项" class="headerlink" title="设置用户登录自启动项"></a>设置用户登录自启动项</h2><ol>
+<li>/usr/bin/fcitx-autostart</li>
+<li>/usr/bin/google-chrome</li>
+<li>/usr/bin/indicator-netspeed-unity</li>
+<li>/usr/local/bin/sslocal -c ~/.ssh/sslocal.conf</li>
+<li>/usr/bin/tilda</li>
+</ol>
+<h2 id="安装配置-bash-zsh"><a href="#安装配置-bash-zsh" class="headerlink" title="安装配置 bash/zsh"></a>安装配置 bash/zsh</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt install -y zsh</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">git</span> <span class="built_in">clone</span> https://github.com/yuweijun/dotfiles.git</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> dotfiles</span><span class="line"><i class="fa fa-usd"></i> ./install.sh</span></pre></td></tr></table></figure>
+<h2 id="disabled-ubuntu-dock"><a href="#disabled-ubuntu-dock" class="headerlink" title="disabled ubuntu dock"></a>disabled ubuntu dock</h2><p>禁用ubuntu dock，或者直接删除此目录：<a href="mailto:ubuntu-dock@ubuntu.com" target="_blank" rel="noopener">ubuntu-dock@ubuntu.com</a> ，重启生效。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">cd</span> /usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> mv metadata.json metadata.orig.json</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">reboot</span></span></pre></td></tr></table></figure>
+<h2 id="修改-gnome-terminal-的复制粘贴快捷键"><a href="#修改-gnome-terminal-的复制粘贴快捷键" class="headerlink" title="修改 gnome-terminal 的复制粘贴快捷键"></a>修改 gnome-terminal 的复制粘贴快捷键</h2><p>设置<code>Preferences</code> &gt; <code>General</code>，不要勾选中<code>enable mnemonics(...)</code>。</p>
+<p>避免命令行的中断命令快捷键<kbd>Ctrl + c</kbd>与系统的<kbd>Ctrl + c</kbd>冲突，可将复制快捷键和粘贴快捷键修改为<kbd>Alt + c</kbd>和<kbd>Alt + p</kbd>。</p>
+<h2 id="关闭部分系统原生设定的快捷键"><a href="#关闭部分系统原生设定的快捷键" class="headerlink" title="关闭部分系统原生设定的快捷键"></a>关闭部分系统原生设定的快捷键</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings begin-move <span class="string">"['disabled']"</span></span><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings begin-resize <span class="string">"['disabled']"</span></span><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings cycle-group <span class="string">"['disabled']"</span></span><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings toggle-shaded <span class="string">"['disabled']"</span></span><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings minimize <span class="string">"['disabled']"</span></span><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings maximize <span class="string">"['disabled']"</span></span><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings unmaximize <span class="string">"['disabled']"</span></span><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings toggle-maximized <span class="string">"['disabled']"</span></span><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings activate-window-menu <span class="string">"['disabled']"</span></span><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings switch-to-workspace-left <span class="string">"['disabled']"</span></span><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings switch-to-workspace-right <span class="string">"['disabled']"</span></span><span class="line"></span><span class="line"><span class="comment"># gsettings set org.gnome.desktop.wm.keybindings panel-main-menu "['disabled']"</span></span></pre></td></tr></table></figure>
+<h2 id="修改系统常用快捷键"><a href="#修改系统常用快捷键" class="headerlink" title="修改系统常用快捷键"></a>修改系统常用快捷键</h2><p>进入<code>gnome-control-center -&gt; keyboard</code>，设置相关应用程序的快捷键，保留截屏相关的组合快捷键，禁用其他所有组合快捷键：</p>
+<style>th:nth-of-type(1) { width: 40%; }</style>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:right">name</th>
+<th style="text-align:left">shortcuts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">gvim</td>
+<td style="text-align:left"><kbd>Ctrl + Alt + g</kbd></td>
+</tr>
+<tr>
+<td style="text-align:right">terminal</td>
+<td style="text-align:left"><kbd>Ctrl + Alt + t</kbd></td>
+</tr>
+<tr>
+<td style="text-align:right">settings</td>
+<td style="text-align:left"><kbd>Ctrl + Alt + .</kbd></td>
+</tr>
+<tr>
+<td style="text-align:right">home</td>
+<td style="text-align:left"><kbd>Ctrl + Alt + h</kbd></td>
+</tr>
+<tr>
+<td style="text-align:right">switch directly</td>
+<td style="text-align:left"><kbd>Alt + Escape</kbd></td>
+</tr>
+<tr>
+<td style="text-align:right">show the activities overview</td>
+<td style="text-align:left"><kbd>Alt + F1</kbd></td>
+</tr>
+<tr>
+<td style="text-align:right">show the run command prompt</td>
+<td style="text-align:left"><kbd>Alt + F2</kbd></td>
+</tr>
+<tr>
+<td style="text-align:right">hide window</td>
+<td style="text-align:left"><kbd>Alt + F3</kbd></td>
+</tr>
+<tr>
+<td style="text-align:right">close window</td>
+<td style="text-align:left"><kbd>Alt + F4</kbd></td>
+</tr>
+</tbody>
+</table>
+<h2 id="卸载不常用的自带软件"><a href="#卸载不常用的自带软件" class="headerlink" title="卸载不常用的自带软件"></a>卸载不常用的自带软件</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt-get remove unity-webapps-common</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt-get remove libreoffice-common</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt-get remove thunderbird totem rhythmbox empathy brasero simple-scan gnome-mahjongg aisleriot gnome-mines cheese transmission-common gnome-orca webbrowser-app gnome-sudoku landscape-client-ui-install</span><span class="line"><i class="fa fa-usd"></i> <span class="built_in">sudo</span> apt-get autoremove</span></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/macos/2018/11/05/wubi-input-method-squirrel.html" rel="next" title="mac os 五笔输入法 - 鼠须管 squirrel">
+                <i class="fa fa-chevron-left"></i>
+                mac os 五笔输入法 - 鼠须管 squirrel
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/linux/2019/03/01/linux-bash-shell-shortcuts-cheatsheet.html" rel="prev" title="linux bash shell shortcuts cheatsheet">
+                <i class="fa fa-chevron-right"></i>
+                linux bash shell shortcuts cheatsheet
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
+          <p class="site-author-name" itemprop="name">yuweijun</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">492</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yuweijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yuweijun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#disable-CapsLock"><span class="nav-number">1.</span> <span class="nav-text">disable CapsLock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#disable-Super"><span class="nav-number">2.</span> <span class="nav-text">disable Super</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#using-gnome-shell-integration-extentions"><span class="nav-number">3.</span> <span class="nav-text">using gnome shell integration extentions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装中文输入法"><span class="nav-number">4.</span> <span class="nav-text">安装中文输入法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-google-chrome"><span class="nav-number">5.</span> <span class="nav-text">安装 google-chrome</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装其他工具"><span class="nav-number">6.</span> <span class="nav-text">安装其他工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置用户登录自启动项"><span class="nav-number">7.</span> <span class="nav-text">设置用户登录自启动项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装配置-bash-zsh"><span class="nav-number">8.</span> <span class="nav-text">安装配置 bash/zsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#disabled-ubuntu-dock"><span class="nav-number">9.</span> <span class="nav-text">disabled ubuntu dock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-gnome-terminal-的复制粘贴快捷键"><span class="nav-number">10.</span> <span class="nav-text">修改 gnome-terminal 的复制粘贴快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭部分系统原生设定的快捷键"><span class="nav-number">11.</span> <span class="nav-text">关闭部分系统原生设定的快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改系统常用快捷键"><span class="nav-number">12.</span> <span class="nav-text">修改系统常用快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卸载不常用的自带软件"><span class="nav-number">13.</span> <span class="nav-text">卸载不常用的自带软件</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuweijun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist.KISS
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

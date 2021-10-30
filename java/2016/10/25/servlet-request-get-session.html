@@ -4,15 +4,15 @@
 
 
 <html class="theme-next mist">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -33,21 +33,21 @@
 
   
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml" />
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="一" type="application/atom+xml">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1">
 
 
 
@@ -56,14 +56,14 @@
 
 <meta name="description" content="HttpServletRequest接口中getSession()方法有3种用法，说明如下：  request.getSession()就是request.getSession(true)。 request.getSession(false)与上二者的区别在于，如果当前Context中没有Session时(如用户第一次访问网站时)，并不创建新Session对象，直接返回null。  以下根据tom">
 <meta property="og:type" content="article">
-<meta property="og:title" content="request.getSession()方法说明">
-<meta property="og:url" content="https://www.4e00.com/java/2016/10/25/servlet-request-get-session.html">
+<meta property="og:title" content="request.getsession()方法说明">
+<meta property="og:url" content="http://www.4e00.com/java/2016/10/25/servlet-request-get-session.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="HttpServletRequest接口中getSession()方法有3种用法，说明如下：  request.getSession()就是request.getSession(true)。 request.getSession(false)与上二者的区别在于，如果当前Context中没有Session时(如用户第一次访问网站时)，并不创建新Session对象，直接返回null。  以下根据tom">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-31T01:27:48.153Z">
+<meta property="og:updated_time" content="2020-03-06T01:24:26.113Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="request.getSession()方法说明">
+<meta name="twitter:title" content="request.getsession()方法说明">
 <meta name="twitter:description" content="HttpServletRequest接口中getSession()方法有3种用法，说明如下：  request.getSession()就是request.getSession(true)。 request.getSession(false)与上二者的区别在于，如果当前Context中没有Session时(如用户第一次访问网站时)，并不创建新Session对象，直接返回null。  以下根据tom">
 
 
@@ -85,9 +85,9 @@
 
 
 
-  <link rel="canonical" href="https://www.4e00.com/blog/java/2016/10/25/servlet-request-get-session.html"/>
+  <link rel="canonical" href="http://www.4e00.com/blog/java/2016/10/25/servlet-request-get-session.html">
 
-  <title> request.getSession()方法说明 | 一 </title>
+  <title> request.getsession()方法说明 | 一 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="default">
@@ -116,7 +116,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/blog/"  class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="site-title">一</span>
     </a>
   </div>
@@ -139,7 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/blog/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -149,7 +149,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/blog/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Awww.4e00.com%2Fblog%2F" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -184,7 +184,7 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -195,7 +195,7 @@
             
             
               
-                request.getSession()方法说明
+                request.getsession()方法说明
               
             
           </h1>
@@ -213,14 +213,14 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="//schema.org/Thing">
                   <a href="/blog/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -261,17 +261,17 @@
 </ol>
 <p>以下根据<code>tomcat-8.0.24</code>中的源码进行简单说明。</p>
 <h2 id="getSession-与getSession-true"><a href="#getSession-与getSession-true" class="headerlink" title="getSession()与getSession(true)"></a>getSession()与getSession(true)</h2><p>从这个<code>org.apache.catalina.connector.RequestFacade</code>类中可以看到<code>getSession()</code>方法其实就是调用<code>getSession(true)</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> HttpSession <span class="title">getSession</span><span class="params">(<span class="keyword">boolean</span> create)</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (request == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</div><div class="line">                        sm.getString(<span class="string">"requestFacade.nullRequest"</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (SecurityUtil.isPackageProtectionEnabled())&#123;</div><div class="line">        <span class="keyword">return</span> AccessController.</div><div class="line">            doPrivileged(<span class="keyword">new</span> GetSessionPrivilegedAction(create));</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> request.getSession(create);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> HttpSession <span class="title">getSession</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (request == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</div><div class="line">                        sm.getString(<span class="string">"requestFacade.nullRequest"</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> getSession(<span class="keyword">true</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> HttpSession <span class="title">getSession</span><span class="params">(<span class="keyword">boolean</span> create)</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">if</span> (request == <span class="keyword">null</span>) &#123;</span><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><span class="line">                        sm.getString(<span class="string">"requestFacade.nullRequest"</span>));</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">if</span> (SecurityUtil.isPackageProtectionEnabled())&#123;</span><span class="line">        <span class="keyword">return</span> AccessController.</span><span class="line">            doPrivileged(<span class="keyword">new</span> GetSessionPrivilegedAction(create));</span><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><span class="line">        <span class="keyword">return</span> request.getSession(create);</span><span class="line">    &#125;</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="meta">@Override</span></span><span class="line"><span class="function"><span class="keyword">public</span> HttpSession <span class="title">getSession</span><span class="params">()</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">if</span> (request == <span class="keyword">null</span>) &#123;</span><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><span class="line">                        sm.getString(<span class="string">"requestFacade.nullRequest"</span>));</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">return</span> getSession(<span class="keyword">true</span>);</span><span class="line">&#125;</span></pre></td></tr></table></figure>
 <a id="more"></a>
 <h2 id="getSession-false"><a href="#getSession-false" class="headerlink" title="getSession(false)"></a>getSession(false)</h2><p>上面的方法会调用此<code>org.apache.catalina.connector.Request</code>类中的<code>getSession()</code>和<code>doGetSession(true)</code>方法，然后由<code>session.getSession()</code>返回结果。</p>
 <p>如果是<code>getSession(false)</code>，则会进入<code>doGetSession(false)</code>方法，当用户初次访问时，<code>requestedSessionId</code>为空，所以<code>session</code>为<code>null</code>，因为此时参数<code>create</code>传入的值为<code>false</code>，所以直接返回<code>null</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> HttpSession <span class="title">getSession</span><span class="params">()</span> </span>&#123;</div><div class="line">    Session session = doGetSession(<span class="keyword">true</span>);</div><div class="line">    <span class="keyword">if</span> (session == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> session.getSession();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> HttpSession <span class="title">getSession</span><span class="params">(<span class="keyword">boolean</span> create)</span> </span>&#123;</div><div class="line">    Session session = doGetSession(create);</div><div class="line">    <span class="keyword">if</span> (session == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> session.getSession();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">protected</span> Session <span class="title">doGetSession</span><span class="params">(<span class="keyword">boolean</span> create)</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// There cannot be a session if no context has been assigned yet</span></div><div class="line">    Context context = getContext();</div><div class="line">    <span class="keyword">if</span> (context == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> (<span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Return the current session if it exists and is valid</span></div><div class="line">    <span class="keyword">if</span> ((session != <span class="keyword">null</span>) &amp;&amp; !session.isValid()) &#123;</div><div class="line">        session = <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (session != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> (session);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Return the requested session if it exists and is valid</span></div><div class="line">    Manager manager = context.getManager();</div><div class="line">    <span class="keyword">if</span> (manager == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> (<span class="keyword">null</span>);      <span class="comment">// Sessions are not supported</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (requestedSessionId != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            session = manager.findSession(requestedSessionId);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            session = <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ((session != <span class="keyword">null</span>) &amp;&amp; !session.isValid()) &#123;</div><div class="line">            session = <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (session != <span class="keyword">null</span>) &#123;</div><div class="line">            session.access();</div><div class="line">            <span class="keyword">return</span> (session);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Create a new session if requested and the response is not committed</span></div><div class="line">    <span class="keyword">if</span> (!create) &#123;</div><div class="line">        <span class="comment">// request.getSession(false)时，在此返回null</span></div><div class="line">        <span class="keyword">return</span> (<span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (response != <span class="keyword">null</span></div><div class="line">            &amp;&amp; context.getServletContext()</div><div class="line">                    .getEffectiveSessionTrackingModes()</div><div class="line">                    .contains(SessionTrackingMode.COOKIE)</div><div class="line">            &amp;&amp; response.getResponse().isCommitted()) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</div><div class="line">                sm.getString(<span class="string">"coyoteRequest.sessionCreateCommitted"</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Attempt to reuse session id if one was submitted in a cookie</span></div><div class="line">    <span class="comment">// Do not reuse the session id if it is from a URL, to prevent possible</span></div><div class="line">    <span class="comment">// phishing attacks</span></div><div class="line">    <span class="comment">// Use the SSL session ID if one is present.</span></div><div class="line">    <span class="keyword">if</span> ((<span class="string">"/"</span>.equals(context.getSessionCookiePath())</div><div class="line">            &amp;&amp; isRequestedSessionIdFromCookie()) || requestedSessionSSL ) &#123;</div><div class="line">        session = manager.createSession(getRequestedSessionId());</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        session = manager.createSession(<span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Creating a new session cookie based on that session</span></div><div class="line">    <span class="keyword">if</span> (session != <span class="keyword">null</span></div><div class="line">            &amp;&amp; context.getServletContext()</div><div class="line">                    .getEffectiveSessionTrackingModes()</div><div class="line">                    .contains(SessionTrackingMode.COOKIE)) &#123;</div><div class="line">        Cookie cookie =</div><div class="line">            ApplicationSessionCookieConfig.createSessionCookie(</div><div class="line">                    context, session.getIdInternal(), isSecure());</div><div class="line"></div><div class="line">        response.addSessionCookieInternal(cookie);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (session == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    session.access();</div><div class="line">    <span class="keyword">return</span> session;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><span class="line"><span class="function"><span class="keyword">public</span> HttpSession <span class="title">getSession</span><span class="params">()</span> </span>&#123;</span><span class="line">    Session session = doGetSession(<span class="keyword">true</span>);</span><span class="line">    <span class="keyword">if</span> (session == <span class="keyword">null</span>) &#123;</span><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">return</span> session.getSession();</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="function"><span class="keyword">public</span> HttpSession <span class="title">getSession</span><span class="params">(<span class="keyword">boolean</span> create)</span> </span>&#123;</span><span class="line">    Session session = doGetSession(create);</span><span class="line">    <span class="keyword">if</span> (session == <span class="keyword">null</span>) &#123;</span><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">return</span> session.getSession();</span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="function"><span class="keyword">protected</span> Session <span class="title">doGetSession</span><span class="params">(<span class="keyword">boolean</span> create)</span> </span>&#123;</span><span class="line"></span><span class="line">    <span class="comment">// There cannot be a session if no context has been assigned yet</span></span><span class="line">    Context context = getContext();</span><span class="line">    <span class="keyword">if</span> (context == <span class="keyword">null</span>) &#123;</span><span class="line">        <span class="keyword">return</span> (<span class="keyword">null</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">// Return the current session if it exists and is valid</span></span><span class="line">    <span class="keyword">if</span> ((session != <span class="keyword">null</span>) &amp;&amp; !session.isValid()) &#123;</span><span class="line">        session = <span class="keyword">null</span>;</span><span class="line">    &#125;</span><span class="line">    <span class="keyword">if</span> (session != <span class="keyword">null</span>) &#123;</span><span class="line">        <span class="keyword">return</span> (session);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">// Return the requested session if it exists and is valid</span></span><span class="line">    Manager manager = context.getManager();</span><span class="line">    <span class="keyword">if</span> (manager == <span class="keyword">null</span>) &#123;</span><span class="line">        <span class="keyword">return</span> (<span class="keyword">null</span>);      <span class="comment">// Sessions are not supported</span></span><span class="line">    &#125;</span><span class="line">    <span class="keyword">if</span> (requestedSessionId != <span class="keyword">null</span>) &#123;</span><span class="line">        <span class="keyword">try</span> &#123;</span><span class="line">            session = manager.findSession(requestedSessionId);</span><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><span class="line">            session = <span class="keyword">null</span>;</span><span class="line">        &#125;</span><span class="line">        <span class="keyword">if</span> ((session != <span class="keyword">null</span>) &amp;&amp; !session.isValid()) &#123;</span><span class="line">            session = <span class="keyword">null</span>;</span><span class="line">        &#125;</span><span class="line">        <span class="keyword">if</span> (session != <span class="keyword">null</span>) &#123;</span><span class="line">            session.access();</span><span class="line">            <span class="keyword">return</span> (session);</span><span class="line">        &#125;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">// Create a new session if requested and the response is not committed</span></span><span class="line">    <span class="keyword">if</span> (!create) &#123;</span><span class="line">        <span class="comment">// request.getSession(false)时，在此返回null</span></span><span class="line">        <span class="keyword">return</span> (<span class="keyword">null</span>);</span><span class="line">    &#125;</span><span class="line">    <span class="keyword">if</span> (response != <span class="keyword">null</span></span><span class="line">            &amp;&amp; context.getServletContext()</span><span class="line">                    .getEffectiveSessionTrackingModes()</span><span class="line">                    .contains(SessionTrackingMode.COOKIE)</span><span class="line">            &amp;&amp; response.getResponse().isCommitted()) &#123;</span><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><span class="line">                sm.getString(<span class="string">"coyoteRequest.sessionCreateCommitted"</span>));</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">// Attempt to reuse session id if one was submitted in a cookie</span></span><span class="line">    <span class="comment">// Do not reuse the session id if it is from a URL, to prevent possible</span></span><span class="line">    <span class="comment">// phishing attacks</span></span><span class="line">    <span class="comment">// Use the SSL session ID if one is present.</span></span><span class="line">    <span class="keyword">if</span> ((<span class="string">"/"</span>.equals(context.getSessionCookiePath())</span><span class="line">            &amp;&amp; isRequestedSessionIdFromCookie()) || requestedSessionSSL ) &#123;</span><span class="line">        session = manager.createSession(getRequestedSessionId());</span><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><span class="line">        session = manager.createSession(<span class="keyword">null</span>);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="comment">// Creating a new session cookie based on that session</span></span><span class="line">    <span class="keyword">if</span> (session != <span class="keyword">null</span></span><span class="line">            &amp;&amp; context.getServletContext()</span><span class="line">                    .getEffectiveSessionTrackingModes()</span><span class="line">                    .contains(SessionTrackingMode.COOKIE)) &#123;</span><span class="line">        Cookie cookie =</span><span class="line">            ApplicationSessionCookieConfig.createSessionCookie(</span><span class="line">                    context, session.getIdInternal(), isSecure());</span><span class="line"></span><span class="line">        response.addSessionCookieInternal(cookie);</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    <span class="keyword">if</span> (session == <span class="keyword">null</span>) &#123;</span><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><span class="line">    &#125;</span><span class="line"></span><span class="line">    session.access();</span><span class="line">    <span class="keyword">return</span> session;</span><span class="line">&#125;</span><span class="line"></span></pre></td></tr></table></figure>
 <h2 id="findSession-String"><a href="#findSession-String" class="headerlink" title="findSession(String)"></a>findSession(String)</h2><p>再通过<code>org.apache.catalina.session.ManagerBase</code>看一下<code>servlet</code>是如何通过<code>requestedSessionId</code>查找到对应的用户<code>session</code>的，由下面代码可以看到tomcat中用户session使用<code>ConcurrentHashMap</code>作为容器进行管理的。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Return the active Session, associated with this Manager, with the specified session id (if any); otherwise return null.</span></div><div class="line"><span class="comment"> * Parameters:</span></div><div class="line"><span class="comment"> * id The session id for the session to be returned</span></div><div class="line"><span class="comment"> * Throws:</span></div><div class="line"><span class="comment"> * java.lang.IllegalStateException if a new session cannot be instantiated for any reason</span></div><div class="line"><span class="comment"> * java.io.IOException if an input/output error occurs while processing this request</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> Session <span class="title">findSession</span><span class="params">(String id)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (id == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">return</span> (<span class="keyword">null</span>);</div><div class="line">    <span class="keyword">return</span> sessions.get(id);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * The set of currently active Sessions for this Manager, keyed by session identifier.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">protected</span> Map&lt;String, Session&gt; sessions = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><span class="line"><span class="comment"> * Return the active Session, associated with this Manager, with the specified session id (if any); otherwise return null.</span></span><span class="line"><span class="comment"> * Parameters:</span></span><span class="line"><span class="comment"> * id The session id for the session to be returned</span></span><span class="line"><span class="comment"> * Throws:</span></span><span class="line"><span class="comment"> * java.lang.IllegalStateException if a new session cannot be instantiated for any reason</span></span><span class="line"><span class="comment"> * java.io.IOException if an input/output error occurs while processing this request</span></span><span class="line"><span class="comment"> */</span></span><span class="line"><span class="meta">@Override</span></span><span class="line"><span class="function"><span class="keyword">public</span> Session <span class="title">findSession</span><span class="params">(String id)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><span class="line"></span><span class="line">    <span class="keyword">if</span> (id == <span class="keyword">null</span>)</span><span class="line">        <span class="keyword">return</span> (<span class="keyword">null</span>);</span><span class="line">    <span class="keyword">return</span> sessions.get(id);</span><span class="line"></span><span class="line">&#125;</span><span class="line"></span><span class="line"><span class="comment">/**</span></span><span class="line"><span class="comment"> * The set of currently active Sessions for this Manager, keyed by session identifier.</span></span><span class="line"><span class="comment"> */</span></span><span class="line"><span class="keyword">protected</span> Map&lt;String, Session&gt; sessions = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span></pre></td></tr></table></figure>
 <h2 id="favicon-ico和session"><a href="#favicon-ico和session" class="headerlink" title="favicon.ico和session"></a>favicon.ico和session</h2><p>在浏览器中访问<code>favicon.ico</code>文件时，HTTP请求的header中不会发送用户当前的cookie信息，当服务器上使用MVC的拦截器时，就需要注意，不要拦截这个<code>favicon.ico</code>文件，因为在这个请求中不能获得用户的session，因此也不要在拦截器中使用<code>request.getSession()</code>方法来获得session，不小心可能会重置用户的session，最好是使用<code>request.getSession(false)</code>方法。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://grepcode.com/file/repo1.maven.org/maven2/org.apache.tomcat/tomcat-catalina/8.0.24/org/apache/catalina/connector/RequestFacade.java/" target="_blank" rel="external">grepCode org.apache.catalina.connector.RequestFacade</a></li>
-<li><a href="https://tomcat.apache.org/tomcat-8.0-doc/api/org/apache/catalina/connector/RequestFacade.html" target="_blank" rel="external">tomcat-8.0-doc</a></li>
+<li><a href="http://grepcode.com/file/repo1.maven.org/maven2/org.apache.tomcat/tomcat-catalina/8.0.24/org/apache/catalina/connector/RequestFacade.java/" target="_blank" rel="noopener">grepCode org.apache.catalina.connector.RequestFacade</a></li>
+<li><a href="https://tomcat.apache.org/tomcat-8.0-doc/api/org/apache/catalina/connector/RequestFacade.html" target="_blank" rel="noopener">tomcat-8.0-doc</a></li>
 </ol>
 
       
@@ -299,7 +299,8 @@
           <div class="post-nav-next post-nav-item">
             
               <a href="/blog/java/2016/10/18/java-weak-references.html" rel="next" title="java weak references">
-                上一篇：java weak references
+                <i class="fa fa-chevron-left"></i>
+                java weak references
               </a>
             
           </div>
@@ -307,7 +308,8 @@
           <div class="post-nav-prev post-nav-item">
             
               <a href="/blog/java/2016/10/26/java-threadlocal.html" rel="prev" title="java threadlocal">
-                下一篇：java threadlocal
+                <i class="fa fa-chevron-right"></i>
+                java threadlocal
               </a>
             
           </div>
@@ -356,7 +358,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -367,16 +369,14 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/blog/images/avatar.jpg"
-               alt="yuweijun" />
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="yuweijun">
           <p class="site-author-name" itemprop="name">yuweijun</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/blog/archives">
-              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-count">492</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -458,10 +458,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-github"></i>
   </span>

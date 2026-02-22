@@ -1,1 +1,1 @@
-[blog of yuweijun](http://www.4e00.com/blog/)
+[blog of yuweijun](https://yuweijun.github.io/blog/)

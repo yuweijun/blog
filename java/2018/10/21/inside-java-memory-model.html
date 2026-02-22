@@ -57,66 +57,66 @@
 <meta name="description" content="深入理解 Java 内存模型一：基础Doug Lea 关于JSR-133内存模型的说明 The JSR-133 Cookbook for Compiler Writers。 并发编程模型的分类在并发编程中，我们需要处理两个关键问题：  线程之间如何通信及线程之间如何同步（这里的线程是指并发执行的活动实体）。  通信是指线程之间以何种机制来交换信息。在命令式编程中，线程之间的通信机制有两种：  共享">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解 java 内存模型">
-<meta property="og:url" content="http://www.4e00.com/java/2018/10/21/inside-java-memory-model.html">
+<meta property="og:url" content="https://yuweijun.github.io/java/2018/10/21/inside-java-memory-model.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="深入理解 Java 内存模型一：基础Doug Lea 关于JSR-133内存模型的说明 The JSR-133 Cookbook for Compiler Writers。 并发编程模型的分类在并发编程中，我们需要处理两个关键问题：  线程之间如何通信及线程之间如何同步（这里的线程是指并发执行的活动实体）。  通信是指线程之间以何种机制来交换信息。在命令式编程中，线程之间的通信机制有两种：  共享">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-11.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-12.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-13.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-14.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/ordering-by-a-happens-beforerelationship.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-15.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-21.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-22.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-23.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-24.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/pipeline-functionality.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/cpu-stage-pipeline.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-31.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-32.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-33.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-34.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-35.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-36.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/write-buffers-with-bypassing-capability.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/overlapping-write-operations.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/non-blocking-read-operations.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-41.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-42.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-43.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-reorder-rules.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-barriers-ordering-rule.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-memory-fence-placements.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-44.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-45.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-46.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-47.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/mesi-protocal.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/caches-with-invalidate-queues.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/cpu-caches-intel-i7.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/cache-structure-of-the-intel-core-i7-processors.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-48.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/system-out-println.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-volatile-print-assembly.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-51.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-52.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-53.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-54.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-55.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-61.jpg">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-62.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-63.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-64.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-71.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-72.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-73.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-74.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-11.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-12.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-13.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-14.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/ordering-by-a-happens-beforerelationship.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-15.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-21.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-22.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-23.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-24.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/pipeline-functionality.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/cpu-stage-pipeline.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-31.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-32.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-33.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-34.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-35.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-36.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/write-buffers-with-bypassing-capability.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/overlapping-write-operations.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/non-blocking-read-operations.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-41.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-42.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-43.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-reorder-rules.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-barriers-ordering-rule.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-memory-fence-placements.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-44.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-45.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-46.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-47.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/mesi-protocal.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/caches-with-invalidate-queues.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/cpu-caches-intel-i7.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/cache-structure-of-the-intel-core-i7-processors.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-48.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/system-out-println.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-volatile-print-assembly.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-51.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-52.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-53.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-54.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-55.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-61.jpg">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-62.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-63.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-64.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-71.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-72.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-73.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-74.png">
 <meta property="og:updated_time" content="2019-04-30T12:55:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解 java 内存模型">
 <meta name="twitter:description" content="深入理解 Java 内存模型一：基础Doug Lea 关于JSR-133内存模型的说明 The JSR-133 Cookbook for Compiler Writers。 并发编程模型的分类在并发编程中，我们需要处理两个关键问题：  线程之间如何通信及线程之间如何同步（这里的线程是指并发执行的活动实体）。  通信是指线程之间以何种机制来交换信息。在命令式编程中，线程之间的通信机制有两种：  共享">
-<meta name="twitter:image" content="http://www.4e00.com/blog/img/java/jmm/jmm-11.png">
+<meta name="twitter:image" content="https://yuweijun.github.io/blog/img/java/jmm/jmm-11.png">
 
 
 
@@ -137,7 +137,7 @@
 
 
 
-  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/10/21/inside-java-memory-model.html">
+  <link rel="canonical" href="https://yuweijun.github.io/blog/java/2018/10/21/inside-java-memory-model.html">
 
   <title> 深入理解 java 内存模型 | 一 </title>
 </head>
@@ -209,7 +209,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttps://yuweijun.github.io/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>

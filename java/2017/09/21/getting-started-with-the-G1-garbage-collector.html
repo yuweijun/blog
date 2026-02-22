@@ -57,36 +57,36 @@
 <meta name="description" content="OverviewThis tutorial covers the basics of how to use the G1 garbage collector and how it can be used with the Hotspot JVM. You will learn how the G1 collector functions internally, the key command li">
 <meta property="og:type" content="article">
 <meta property="og:title" content="getting started with the g1 garbage collector">
-<meta property="og:url" content="http://www.4e00.com/java/2017/09/21/getting-started-with-the-G1-garbage-collector.html">
+<meta property="og:url" content="https://yuweijun.github.io/java/2017/09/21/getting-started-with-the-G1-garbage-collector.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="OverviewThis tutorial covers the basics of how to use the G1 garbage collector and how it can be used with the Hotspot JVM. You will learn how the G1 collector functions internally, the key command li">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/1-jvm-architecture.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/2-jvm-components.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/6-hotspot-heap-structure.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-heap-allocation.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/1-cms-heap-structure.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/2-how-young-gc-works.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/3-young-generation-collection.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/4-after-young-gc.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/5-old-generation-collection-with-cms.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/6-old-generation-collection-concurrent-sweep.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc/7-old-generation-collection-after-sweeping.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-heap-structure.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-heap-allocation.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/yong-generation-g1.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/young-generation-g1-eden.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/young-generation-g1-end.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-initial-marking-phase.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-concurrent-marking-phase.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-remarking-phase.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-copying-clean-phase.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-g1/g1-copying-clean-phase.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc/1-jvm-architecture.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc/2-jvm-components.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc/6-hotspot-heap-structure.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-g1/g1-heap-allocation.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc/1-cms-heap-structure.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc/2-how-young-gc-works.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc/3-young-generation-collection.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc/4-after-young-gc.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc/5-old-generation-collection-with-cms.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc/6-old-generation-collection-concurrent-sweep.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc/7-old-generation-collection-after-sweeping.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-g1/g1-heap-structure.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-g1/g1-heap-allocation.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-g1/yong-generation-g1.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-g1/young-generation-g1-eden.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-g1/young-generation-g1-end.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-g1/g1-initial-marking-phase.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-g1/g1-concurrent-marking-phase.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-g1/g1-remarking-phase.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-g1/g1-copying-clean-phase.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-g1/g1-copying-clean-phase.png">
 <meta property="og:updated_time" content="2020-03-06T01:24:26.124Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="getting started with the g1 garbage collector">
 <meta name="twitter:description" content="OverviewThis tutorial covers the basics of how to use the G1 garbage collector and how it can be used with the Hotspot JVM. You will learn how the G1 collector functions internally, the key command li">
-<meta name="twitter:image" content="http://www.4e00.com/blog/img/java/java-gc/1-jvm-architecture.png">
+<meta name="twitter:image" content="https://yuweijun.github.io/blog/img/java/java-gc/1-jvm-architecture.png">
 
 
 
@@ -107,7 +107,7 @@
 
 
 
-  <link rel="canonical" href="http://www.4e00.com/blog/java/2017/09/21/getting-started-with-the-G1-garbage-collector.html">
+  <link rel="canonical" href="https://yuweijun.github.io/blog/java/2017/09/21/getting-started-with-the-G1-garbage-collector.html">
 
   <title> getting started with the g1 garbage collector | 一 </title>
 </head>
@@ -179,7 +179,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttps://yuweijun.github.io/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>

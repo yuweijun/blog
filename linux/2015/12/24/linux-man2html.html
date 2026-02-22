@@ -57,7 +57,7 @@
 <meta name="description" content="在linux中，可以利用系统提供的man2html命令，将linux命令的man手册转成html代码，将下面的源码保存为man2html.sh，这个脚本可以将man批量转化成html代码。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux man2html script">
-<meta property="og:url" content="http://www.4e00.com/linux/2015/12/24/linux-man2html.html">
+<meta property="og:url" content="https://yuweijun.github.io/linux/2015/12/24/linux-man2html.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="在linux中，可以利用系统提供的man2html命令，将linux命令的man手册转成html代码，将下面的源码保存为man2html.sh，这个脚本可以将man批量转化成html代码。">
 <meta property="og:locale" content="default">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="http://www.4e00.com/blog/linux/2015/12/24/linux-man2html.html">
+  <link rel="canonical" href="https://yuweijun.github.io/blog/linux/2015/12/24/linux-man2html.html">
 
   <title> linux man2html script | 一 </title>
 </head>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttps://yuweijun.github.io/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -254,7 +254,7 @@
       
 
       
-        <p>在linux中，可以利用系统提供的<code>man2html</code>命令，将linux命令的man手册转成html代码，将下面的源码保存为<code>man2html.sh</code>，这个脚本可以将man批量转化成<a href="http://www.4e00.com/manpages/index.html">html代码</a>。</p>
+        <p>在linux中，可以利用系统提供的<code>man2html</code>命令，将linux命令的man手册转成html代码，将下面的源码保存为<code>man2html.sh</code>，这个脚本可以将man批量转化成<a href="https://yuweijun.github.io/manpages/index.html">html代码</a>。</p>
 <a id="more"></a>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><span class="line"></span><span class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> -eq 0 ]</span><span class="line"><span class="keyword">then</span></span><span class="line">    <span class="built_in">echo</span> <span class="string">"Usage: ./man2html.sh /path/to/man/dirctory /path/to/html/output/dirctory"</span></span><span class="line">    <span class="built_in">echo</span> <span class="string">"Exampe: ./man2html.sh /usr/share/man/man1 /tmp/html1"</span></span><span class="line"><span class="keyword">fi</span></span><span class="line"></span><span class="line">dir=/usr/share/man/man1</span><span class="line">output=/tmp/html1</span><span class="line"></span><span class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> -eq 1 ]</span><span class="line"><span class="keyword">then</span></span><span class="line">    dir=<span class="variable">$1</span></span><span class="line"><span class="keyword">elif</span> [ <span class="variable">$#</span> -eq 2 ]</span><span class="line"><span class="keyword">then</span></span><span class="line">    dir=<span class="variable">$1</span></span><span class="line">    output=<span class="variable">$2</span></span><span class="line"><span class="keyword">fi</span></span><span class="line"></span><span class="line"><span class="built_in">echo</span> <span class="string">"./man2html.sh <span class="variable">$&#123;dir&#125;</span> <span class="variable">$&#123;output&#125;</span>"</span></span><span class="line"></span><span class="line"><span class="keyword">if</span> [ ! -d <span class="variable">$output</span> ]</span><span class="line"><span class="keyword">then</span></span><span class="line">    mkdir -p <span class="variable">$output</span></span><span class="line"><span class="keyword">fi</span></span><span class="line"></span><span class="line"><span class="keyword">if</span> [ -d <span class="variable">$dir</span> ]</span><span class="line"><span class="keyword">then</span></span><span class="line">    mkdir -p /tmp/unzipped</span><span class="line">    <span class="built_in">cd</span> <span class="variable">$dir</span></span><span class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> *.gz; <span class="keyword">do</span></span><span class="line">        <span class="keyword">if</span> [ -f <span class="variable">$f</span> ]</span><span class="line">        <span class="keyword">then</span></span><span class="line">            filename=$(basename <span class="string">"<span class="variable">$&#123;f&#125;</span>"</span> .gz)</span><span class="line">            unzipfile=<span class="string">"/tmp/unzipped/<span class="variable">$&#123;filename&#125;</span>"</span></span><span class="line">            outputfilename=<span class="string">"<span class="variable">$&#123;output&#125;</span>/<span class="variable">$&#123;filename&#125;</span>.html"</span></span><span class="line"></span><span class="line">            gunzip -c <span class="string">"<span class="variable">$&#123;f&#125;</span>"</span> &gt; <span class="variable">$&#123;unzipfile&#125;</span></span><span class="line">            man2html <span class="variable">$&#123;unzipfile&#125;</span> &gt; <span class="variable">$&#123;outputfilename&#125;</span></span><span class="line"></span><span class="line">            sed -i <span class="string">'s#^Content-type: text/html$##'</span> <span class="variable">$&#123;outputfilename&#125;</span></span><span class="line">            sed -i <span class="string">'s#&lt;/HEAD&gt;#&lt;META charset="UTF-8"&gt;&lt;/HEAD&gt;#'</span> <span class="variable">$&#123;outputfilename&#125;</span></span><span class="line">        <span class="keyword">fi</span></span><span class="line">    <span class="keyword">done</span></span><span class="line"><span class="keyword">fi</span></span><span class="line"></span><span class="line"><span class="built_in">echo</span> <span class="string">"done!"</span></span></pre></td></tr></table></figure>
 <h3 id="man后面的数字说明"><a href="#man后面的数字说明" class="headerlink" title="man后面的数字说明"></a>man后面的数字说明</h3><ol>

@@ -57,30 +57,30 @@
 <meta name="description" content="GC Algorithms: ImplementationsNow that we have reviewed the core concepts behind GC algorithms, let us move to the specific implementations one can find inside the JVM. An important aspect to recogniz">
 <meta property="og:type" content="article">
 <meta property="og:title" content="gc algorithms: implementations">
-<meta property="og:url" content="http://www.4e00.com/java/2018/06/15/gc-algorithms-implements.html">
+<meta property="og:url" content="https://yuweijun.github.io/java/2018/06/15/gc-algorithms-implements.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="GC Algorithms: ImplementationsNow that we have reviewed the core concepts behind GC algorithms, let us move to the specific implementations one can find inside the JVM. An important aspect to recogniz">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/serial-gc-in-young-generation.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/serial-gc-in-old-gen-java.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/parallel-gc-in-young-generation-java.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/java-parallel-gc-in-old-generation.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/parallel-gc-in-young-generation-java.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/g1-06.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/g1-07.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/g1-08.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/g1-09.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/g1-10.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/g1-01.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/g1-02.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/g1-03.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/g1-04.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/g1-05.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/serial-gc-in-young-generation.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/serial-gc-in-old-gen-java.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/parallel-gc-in-young-generation-java.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/java-parallel-gc-in-old-generation.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/parallel-gc-in-young-generation-java.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/g1-06.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/g1-07.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/g1-08.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/g1-09.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/g1-10.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/g1-01.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/g1-02.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/g1-03.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/g1-04.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/g1-05.png">
 <meta property="og:updated_time" content="2020-03-06T01:24:26.134Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gc algorithms: implementations">
 <meta name="twitter:description" content="GC Algorithms: ImplementationsNow that we have reviewed the core concepts behind GC algorithms, let us move to the specific implementations one can find inside the JVM. An important aspect to recogniz">
-<meta name="twitter:image" content="http://www.4e00.com/blog/img/java/java-gc-algorithms/serial-gc-in-young-generation.png">
+<meta name="twitter:image" content="https://yuweijun.github.io/blog/img/java/java-gc-algorithms/serial-gc-in-young-generation.png">
 
 
 
@@ -101,7 +101,7 @@
 
 
 
-  <link rel="canonical" href="http://www.4e00.com/blog/java/2018/06/15/gc-algorithms-implements.html">
+  <link rel="canonical" href="https://yuweijun.github.io/blog/java/2018/06/15/gc-algorithms-implements.html">
 
   <title> gc algorithms: implementations | 一 </title>
 </head>
@@ -173,7 +173,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttps://yuweijun.github.io/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>

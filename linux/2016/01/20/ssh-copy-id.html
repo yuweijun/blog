@@ -57,7 +57,7 @@
 <meta name="description" content="之前服务器公钥配置，都是用ssh-keygen生成公钥私钥之后，是通过scp命令复制公钥到远程服务器后，再到远程服务器上将公钥追加到~/.ssh/authorized_keys文件中的。从别人的博客中得知有个ssh-copy-id命令，可以直接将公钥传到远程服务器的对应文件中，操作如下：  ssh-keygen -q -N &quot;&quot; -t rsa -f ~/.ssh/id_rsa ssh-copy-i">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ssh-copy-id命令详解">
-<meta property="og:url" content="http://www.4e00.com/linux/2016/01/20/ssh-copy-id.html">
+<meta property="og:url" content="https://yuweijun.github.io/linux/2016/01/20/ssh-copy-id.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="之前服务器公钥配置，都是用ssh-keygen生成公钥私钥之后，是通过scp命令复制公钥到远程服务器后，再到远程服务器上将公钥追加到~/.ssh/authorized_keys文件中的。从别人的博客中得知有个ssh-copy-id命令，可以直接将公钥传到远程服务器的对应文件中，操作如下：  ssh-keygen -q -N &quot;&quot; -t rsa -f ~/.ssh/id_rsa ssh-copy-i">
 <meta property="og:locale" content="default">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="http://www.4e00.com/blog/linux/2016/01/20/ssh-copy-id.html">
+  <link rel="canonical" href="https://yuweijun.github.io/blog/linux/2016/01/20/ssh-copy-id.html">
 
   <title> ssh-copy-id命令详解 | 一 </title>
 </head>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttps://yuweijun.github.io/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -268,7 +268,7 @@
 <p>If the -i option is used, or the ssh-add produced no output, then it uses the contents of the identity file. Once it has one or more fingerprints (by whatever means) it uses ssh to append them to <code>~/.ssh/authorized_keys</code> on the remote machine (creating the file, and directory, if necessary)</p>
 </blockquote>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="http://www.4e00.com/manpages/man1/ssh-copy-id.1.html">SSH-COPY-ID</a></li>
+<li><a href="https://yuweijun.github.io/manpages/man1/ssh-copy-id.1.html">SSH-COPY-ID</a></li>
 <li><a href="https://wiki.archlinux.org/index.php/SSH_keys_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="noopener">SSH keys (简体中文)</a>)</li>
 <li><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html" target="_blank" rel="noopener">SSH原理与运用（一）：远程登录</a></li>
 </ol>

@@ -57,18 +57,18 @@
 <meta name="description" content="当JavaScript运行时错误（包括语法错误）发生时，window会触发一个ErrorEvent接口的error事件，并执行window.onerror()，ErrorEvent接口的属性和方法可以参考下面截图。 当一项资源（如&amp;lt;img&amp;gt;或&amp;lt;script&amp;gt;）加载失败，加载资源的元素会触发一个Event接口的error事件，并执行该元素上的onerror()处理函数。这些e">
 <meta property="og:type" content="article">
 <meta property="og:title" content="report javascript error to server">
-<meta property="og:url" content="http://www.4e00.com/javascript/2017/09/18/report-javascript-error-to-server.html">
+<meta property="og:url" content="https://yuweijun.github.io/javascript/2017/09/18/report-javascript-error-to-server.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="当JavaScript运行时错误（包括语法错误）发生时，window会触发一个ErrorEvent接口的error事件，并执行window.onerror()，ErrorEvent接口的属性和方法可以参考下面截图。 当一项资源（如&amp;lt;img&amp;gt;或&amp;lt;script&amp;gt;）加载失败，加载资源的元素会触发一个Event接口的error事件，并执行该元素上的onerror()处理函数。这些e">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.4e00.com/blog/img/web/js/window-onerror-source.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/web/js/window-onerror-console.png">
-<meta property="og:image" content="http://www.4e00.com/blog/img/web/js/script-error.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/web/js/window-onerror-source.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/web/js/window-onerror-console.png">
+<meta property="og:image" content="https://yuweijun.github.io/blog/img/web/js/script-error.png">
 <meta property="og:updated_time" content="2020-03-06T01:24:26.123Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="report javascript error to server">
 <meta name="twitter:description" content="当JavaScript运行时错误（包括语法错误）发生时，window会触发一个ErrorEvent接口的error事件，并执行window.onerror()，ErrorEvent接口的属性和方法可以参考下面截图。 当一项资源（如&amp;lt;img&amp;gt;或&amp;lt;script&amp;gt;）加载失败，加载资源的元素会触发一个Event接口的error事件，并执行该元素上的onerror()处理函数。这些e">
-<meta name="twitter:image" content="http://www.4e00.com/blog/img/web/js/window-onerror-source.png">
+<meta name="twitter:image" content="https://yuweijun.github.io/blog/img/web/js/window-onerror-source.png">
 
 
 
@@ -89,7 +89,7 @@
 
 
 
-  <link rel="canonical" href="http://www.4e00.com/blog/javascript/2017/09/18/report-javascript-error-to-server.html">
+  <link rel="canonical" href="https://yuweijun.github.io/blog/javascript/2017/09/18/report-javascript-error-to-server.html">
 
   <title> report javascript error to server | 一 </title>
 </head>
@@ -161,7 +161,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttps://yuweijun.github.io/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -269,7 +269,7 @@
 <h2 id="测试-window-onerror-捕获异常"><a href="#测试-window-onerror-捕获异常" class="headerlink" title="测试 window.onerror 捕获异常"></a>测试 window.onerror 捕获异常</h2><p>客户端javascript的异常可以统一由<code>window.onerror</code>进行捕获，并且标准草案定义的也是<code>window.onerror</code>，一般不用<code>window.addEventListener</code>或<code>window.attachEvent</code>的形式去监听<code>window.onerror</code>。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fn = <span class="built_in">window</span>.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);</span><span class="line">    <span class="comment">// 函数中返回 return true，错误便不会暴露到控制台中。</span></span><span class="line">&#125;;</span><span class="line"><span class="comment">// 多次注册 error 事件，不会重复执行多个回调</span></span><span class="line"><span class="comment">// window.onerror 和 addEventListener 都执行了，并只执行了一次</span></span><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"error"</span>, fn);</span><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"error"</span>, fn);</span><span class="line"></span><span class="line"><span class="built_in">window</span>.onerror = <span class="function"><span class="keyword">function</span> (<span class="params">errorMessage, scriptURI, lineNumber, columnNumber, error</span>) </span>&#123;</span><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);</span><span class="line">    <span class="keyword">if</span> (error) &#123;</span><span class="line">        <span class="comment">// 标准草案实现</span></span><span class="line">        <span class="built_in">console</span>.log(error);</span><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><span class="line">        <span class="built_in">console</span>.log(&#123;<span class="attr">message</span>: errorMessage, <span class="attr">script</span>: scriptURI, <span class="attr">line</span>: lineNumber, <span class="attr">column</span>: columnNumber&#125;);</span><span class="line">    &#125;</span><span class="line">&#125;</span></pre></td></tr></table></figure>
 <a id="more"></a>
-<p>如上代码注释说明，多次注册error事件，不会重复执行多个回调，<code>window.onerror</code>和<code>window.addEventListener</code>都执行了，并只执行了一次。可以访问此<a href="https://www.4e00.com/tools/window-onerror.html">测试链接</a>查看错误信息，源码截图如下：</p>
+<p>如上代码注释说明，多次注册error事件，不会重复执行多个回调，<code>window.onerror</code>和<code>window.addEventListener</code>都执行了，并只执行了一次。可以访问此<a href="https://yuweijun.github.io/tools/window-onerror.html">测试链接</a>查看错误信息，源码截图如下：</p>
 <img src="/blog/img/web/js/window-onerror-source.png" class="image-lg" title="[window-onerror-source.png]">
 <p>错误截图如下：</p>
 <img src="/blog/img/web/js/window-onerror-console.png" class="image-lg" title="[window-onerror-console.png]">

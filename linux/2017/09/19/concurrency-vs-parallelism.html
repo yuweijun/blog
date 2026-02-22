@@ -57,7 +57,7 @@
 <meta name="description" content="Concurrency vs. ParallelismConcurrency和Parallelism是有关系但却又是不同的2个概念：  Concurrency: 并发，多个线程同时处理多个任务，多个线程之间有状态共享或者资源共享。 如2个线程竞争CPU。 如2个线程竞争同一个对象锁。 多个GC线程垃圾回收时，对可回收对象进行并发标记，最后并发清理。 并发相对于Serial执行而言，如Serial">
 <meta property="og:type" content="article">
 <meta property="og:title" content="concurrency vs. parallelism">
-<meta property="og:url" content="http://www.4e00.com/linux/2017/09/19/concurrency-vs-parallelism.html">
+<meta property="og:url" content="https://yuweijun.github.io/linux/2017/09/19/concurrency-vs-parallelism.html">
 <meta property="og:site_name" content="一">
 <meta property="og:description" content="Concurrency vs. ParallelismConcurrency和Parallelism是有关系但却又是不同的2个概念：  Concurrency: 并发，多个线程同时处理多个任务，多个线程之间有状态共享或者资源共享。 如2个线程竞争CPU。 如2个线程竞争同一个对象锁。 多个GC线程垃圾回收时，对可回收对象进行并发标记，最后并发清理。 并发相对于Serial执行而言，如Serial">
 <meta property="og:locale" content="default">
@@ -85,7 +85,7 @@
 
 
 
-  <link rel="canonical" href="http://www.4e00.com/blog/linux/2017/09/19/concurrency-vs-parallelism.html">
+  <link rel="canonical" href="https://yuweijun.github.io/blog/linux/2017/09/19/concurrency-vs-parallelism.html">
 
   <title> concurrency vs. parallelism | 一 </title>
 </head>
@@ -157,7 +157,7 @@
       
 
       <li class="menu-item menu-item-search">
-        <a href="https://www.google.com.hk/search?q=site%3Ahttp://www.4e00.com/blog/" class="popup-trigger">
+        <a href="https://www.google.com.hk/search?q=site%3Ahttps://yuweijun.github.io/blog/" class="popup-trigger">
           <i class="menu-item-icon fa fa-search fa-fw"></i>Search
         </a>
       </li>
@@ -273,7 +273,7 @@
 </li>
 </ol>
 <a id="more"></a>
-<h2 id="关于并行计算的一些观点"><a href="#关于并行计算的一些观点" class="headerlink" title="关于并行计算的一些观点"></a>关于并行计算的一些观点</h2><h3 id="Rob-Pike"><a href="#Rob-Pike" class="headerlink" title="Rob Pike"></a>Rob Pike</h3><p>Rob Pike在他的演讲-<a href="https://www.4e00.com/tools/concurrency-parallelism/concur.html">Concurrency is not Parallelism</a>中讨论了二者的关系和区别，最后结论摘录如下：</p>
+<h2 id="关于并行计算的一些观点"><a href="#关于并行计算的一些观点" class="headerlink" title="关于并行计算的一些观点"></a>关于并行计算的一些观点</h2><h3 id="Rob-Pike"><a href="#Rob-Pike" class="headerlink" title="Rob Pike"></a>Rob Pike</h3><p>Rob Pike在他的演讲-<a href="https://yuweijun.github.io/tools/concurrency-parallelism/concur.html">Concurrency is not Parallelism</a>中讨论了二者的关系和区别，最后结论摘录如下：</p>
 <h4 id="Difference"><a href="#Difference" class="headerlink" title="Difference"></a>Difference</h4><ol>
 <li>Concurrency is about dealing with lots of things at once.</li>
 <li>Parallelism is about doing lots of things at once.</li>
@@ -300,7 +300,7 @@
 <p>The term Concurrency refers to techniques that make program more usable. Concurrency can be implemented and is used a lot on single processing units, nonetheless it may benefit from multiple processing units with respect to speed. If an operating system is called a multi-tasking operating system, this is a synonym for supporting concurrency. If you can load multiple documents simultaneously in the tabs of your browser and you can still open menus and perform more actions, this is concurrency.</p>
 <p>If you run distributed-net computations in the background while working with interactive applications in the foreground, that is concurrency. On the other hand dividing a task into packets that can be computed via distributed-net clients, this is parallelism.</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://www.4e00.com/tools/concurrency-parallelism/concur.html">Concurrency is not Parallelism - Rob Pike</a></li>
+<li><a href="https://yuweijun.github.io/tools/concurrency-parallelism/concur.html">Concurrency is not Parallelism - Rob Pike</a></li>
 <li><a href="https://stackoverflow.com/questions/1050222/concurrency-vs-parallelism-what-is-the-difference" target="_blank" rel="noopener">Concurrency vs Parallelism - What is the difference?</a></li>
 <li><a href="https://softwareengineering.stackexchange.com/questions/190719/the-difference-between-concurrent-and-parallel-execution" target="_blank" rel="noopener">The difference between concurrent and parallel execution?</a></li>
 <li><a href="http://tutorials.jenkov.com/java-concurrency/concurrency-vs-parallelism.html" target="_blank" rel="noopener">Concurrency vs. Parallelism</a></li>
